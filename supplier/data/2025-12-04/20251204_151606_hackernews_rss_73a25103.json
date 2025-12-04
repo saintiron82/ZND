@@ -1,0 +1,16 @@
+{
+  "layout_type": "Featured",
+  "reasoning": "Valve의 오픈소스 기술 투자는 PC 게임의 접근성을 획기적으로 확장할 잠재력을 지니고 있어 중요도가 높습니다.",
+  "score": 9,
+  "summary": "밸브는 오픈소스 기술에 대한 투자를 통해 PC 게임을 Arm 기반 기기에서 직접 구동할 수 있는 길을 열고 있습니다. Proton과 Fex와 같은 호환성 계층 및 에뮬레이터는 개발자의 포팅 부담을 줄이고 게임 접근성을 극대화할 것입니다. 이는 향후 모바일 및 휴대용 기기에서의 게임 경험을 혁신할 핵심 동력입니다.",
+  "tags": [
+    "게임 개발",
+    "오픈소스",
+    "Arm 아키텍처"
+  ],
+  "title_ko": "밸브, 오픈소스 기술로 PC 게임의 Arm 생태계 확장 선언",
+  "url": "https://www.theverge.com/report/820656/valve-interview-arm-gaming-steamos-pierre-loup-griffais",
+  "source_id": "hackernews_rss",
+  "crawled_at": "2025-12-04T15:16:06.352545",
+  "original_title": "Steam Machine today, Steam Phones tomorrow"
+}

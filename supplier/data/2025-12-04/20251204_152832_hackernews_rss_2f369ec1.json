@@ -1,0 +1,16 @@
+{
+  "layout_type": "Featured",
+  "reasoning": "컴파일러 최적화의 핵심 원리를 설명하며, 다양한 코드 형태를 단일 명령어로 변환하는 능력을 강조하여 기술적 중요도가 높습니다.",
+  "score": 8,
+  "summary": "컴파일러는 다양한 형태의 덧셈 코드를 단일 'add' 명령어로 최적화하는 능력을 보여줍니다. 이는 코드를 중간 표현으로 변환하고 표준화된 형태로 분석하는 패턴 인식 능력 덕분입니다. 이러한 최적화는 개발자가 의도를 명확히 하는 코드를 작성하고 컴파일러에 효율적인 코드 생성을 맡길 수 있게 합니다.",
+  "tags": [
+    "컴파일러 최적화",
+    "코드 생성",
+    "중간 표현"
+  ],
+  "title_ko": "컴파일러 최적화: 다양한 덧셈 코드를 단일 명령어로 인식하는 능력",
+  "url": "https://xania.org/202512/03-more-adding-integers",
+  "source_id": "hackernews_rss",
+  "crawled_at": "2025-12-04T15:28:32.509552",
+  "original_title": "You can't fool the optimiser — Matt Godbolt’s blog"
+}

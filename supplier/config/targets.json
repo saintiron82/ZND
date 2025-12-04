@@ -1,0 +1,15 @@
+[
+  {
+    "id": "geeknews_new",
+    "type": "html",
+    "url": "https://news.hada.io/new",
+    "selector": "div.topic_row div.topictitle a",
+    "limit": 5
+  },
+  {
+    "id": "hackernews_rss",
+    "type": "rss",
+    "url": "https://news.ycombinator.com/rss",
+    "limit": 5
+  }
+]

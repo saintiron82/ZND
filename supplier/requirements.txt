@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+feedparser
+newspaper3k
+firebase-admin
+python-dotenv
+lxml_html_clean

@@ -3,7 +3,7 @@ module.exports = {
         {
             name: 'znd-web',
             script: 'node',
-            args: './node_modules/next/dist/bin/next start -p 8081',
+            args: './node_modules/next/dist/bin/next start -p 8080',
             cwd: './web',
             instances: 1,
             autorestart: true,

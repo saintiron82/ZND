@@ -10,27 +10,38 @@ import path from 'path';
 //       └── data
 const DATA_DIR = path.resolve(process.cwd(), '../supplier/data');
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
         if (!fs.existsSync(DATA_DIR)) {
             console.error(`Data directory not found: ${DATA_DIR}`);
-            return NextResponse.json({ articles: [] });
+            return NextResponse.json({ articles: [], currentDate: null, availableDates: [] });
         }
-
-        const articles: any[] = [];
 
         // Get all date directories (YYYY-MM-DD)
         const dateDirs = fs.readdirSync(DATA_DIR)
             .filter(file => fs.statSync(path.join(DATA_DIR, file)).isDirectory())
             .filter(file => /^\d{4}-\d{2}-\d{2}$/.test(file)) // Match YYYY-MM-DD format
             .sort()
-            .reverse(); // Newest dates first
+            .reverse(); // Newest dates first (descending)
 
-        // Limit to last 3 days to avoid reading too many files
-        const recentDirs = dateDirs.slice(0, 3);
+        if (dateDirs.length === 0) {
+            return NextResponse.json({ articles: [], currentDate: null, availableDates: [] });
+        }
 
-        for (const dateDir of recentDirs) {
-            const dirPath = path.join(DATA_DIR, dateDir);
+        // Determine target date
+        const { searchParams } = new URL(request.url);
+        const requestedDate = searchParams.get('date');
+
+        // Use requested date if valid and exists, otherwise default to latest
+        let targetDate = dateDirs[0];
+        if (requestedDate && dateDirs.includes(requestedDate)) {
+            targetDate = requestedDate;
+        }
+
+        const dirPath = path.join(DATA_DIR, targetDate);
+        const articles: any[] = [];
+
+        if (fs.existsSync(dirPath)) {
             const files = fs.readdirSync(dirPath)
                 .filter(file => file.endsWith('.json'));
 
@@ -59,7 +70,11 @@ export async function GET() {
             return dateB - dateA;
         });
 
-        return NextResponse.json({ articles });
+        return NextResponse.json({
+            articles,
+            currentDate: targetDate,
+            availableDates: dateDirs
+        });
 
     } catch (error) {
         console.error('Error serving articles:', error);

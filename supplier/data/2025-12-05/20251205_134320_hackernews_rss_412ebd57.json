@@ -1,0 +1,16 @@
+{
+  "layout_type": "Standard",
+  "reasoning": "The article provides a comparative analysis of Go, Rust, and Zig, focusing on their design philosophies and trade-offs, which is valuable for developers choosing a programming language.",
+  "score": 7,
+  "summary": "Go는 언어의 복잡성을 최소화하여 개발자가 언어 전체를 쉽게 이해하고 활용할 수 있도록 설계되었습니다. 적은 기능으로 인해 상용구 코드가 늘어날 수 있지만, 이는 언어의 단순성과 예측 가능성을 높이는 데 기여합니다. Go의 미니멀리즘은 현대적인 C와 유사한 접근 방식을 취하며, 언어의 핵심적인 부분에 집중하도록 유도합니다.",
+  "tags": [
+    "Go",
+    "Programming Languages",
+    "Software Development"
+  ],
+  "title_ko": "Go 언어의 미니멀리즘과 설계 철학",
+  "url": "https://sinclairtarget.com/blog/2025/08/thoughts-on-go-vs.-rust-vs.-zig/",
+  "source_id": "hackernews_rss",
+  "crawled_at": "2025-12-05T13:43:20.013724",
+  "original_title": "Thoughts on Go vs. Rust vs. Zig"
+}

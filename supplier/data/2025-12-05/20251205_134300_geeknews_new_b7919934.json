@@ -1,0 +1,16 @@
+{
+  "layout_type": "Standard",
+  "reasoning": "Let's Encrypt is reducing certificate validity periods to enhance internet security, a significant change for certificate management practices.",
+  "score": 8,
+  "summary": "Let's Encrypt가 인증서 유효 기간을 90일에서 45일로 단축하고, 인증 승인 재사용 기간도 30일에서 7시간으로 줄입니다. 이는 인터넷 보안 강화 및 인증서 폐기 기술 효율성 증대를 위한 CA/Browser Forum 요구사항 준수 조치입니다. 단계적 적용 및 ACME 프로필 설정을 통해 사용자 혼란을 최소화하며, 자동 갱신 시스템은 ACME Renewal Information(ARI) 활용을 권장합니다.",
+  "tags": [
+    "TLS",
+    "Certificate Management",
+    "Cybersecurity"
+  ],
+  "title_ko": "Let's Encrypt, 보안 강화를 위한 인증서 유효 기간 대폭 단축 시행",
+  "url": "https://letsencrypt.org/2025/12/02/from-90-to-45",
+  "source_id": "geeknews_new",
+  "crawled_at": "2025-12-05T13:43:00.665072",
+  "original_title": "Decreasing Certificate Lifetimes to 45 Days"
+}

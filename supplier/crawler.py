@@ -13,10 +13,15 @@ from src.mll_client import MLLClient
 from src.db_client import DBClient
 
 # Load environment variables
-load_dotenv()
-
 # Configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ENV_PATH = os.path.join(BASE_DIR, '.env')
+
+# Load environment variables
+load_dotenv(dotenv_path=ENV_PATH)
+
+print(f"DEBUG: Loaded MLL_API_URL: {os.getenv('MLL_API_URL')}")
+
 TARGETS_FILE = os.path.join(BASE_DIR, 'config', 'targets.json')
 
 def load_targets():

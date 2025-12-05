@@ -1,0 +1,16 @@
+{
+  "layout_type": "Featured",
+  "reasoning": "The research provides a detailed, first-hand account of AI's impact on software development roles within a leading AI company, offering unique insights into productivity gains, skill evolution, and emerging concerns.",
+  "score": 8,
+  "summary": "AI 기술 도입은 소프트웨어 개발자의 업무 방식을 근본적으로 변화시키며, 생산성 향상, 다재다능함 증대, 학습 속도 가속화를 가져옵니다. 그러나 심층적 전문성 약화, 동료 협업 감소, 직무 자동화 가능성에 대한 우려도 제기됩니다. 이는 AI 기술 발전이 가져올 광범위한 사회적 변화에 대한 선제적 논의의 필요성을 시사합니다.",
+  "tags": [
+    "AI",
+    "소프트웨어 개발",
+    "업무 생산성"
+  ],
+  "title_ko": "AI가 소프트웨어 개발자의 업무 방식을 혁신하는 방식: 생산성, 전문성, 그리고 미래 전망",
+  "url": "https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic",
+  "source_id": "geeknews_new",
+  "crawled_at": "2025-12-05T13:43:03.959875",
+  "original_title": "How AI is transforming work at Anthropic"
+}

@@ -1,0 +1,16 @@
+{
+  "layout_type": "Featured",
+  "reasoning": "LLM을 활용한 실제 보안 취약점 발견 및 CVE 획득 사례로, 기술적 중요도가 높고 업계에 미치는 영향이 클 것으로 예상됩니다.",
+  "score": 9,
+  "summary": "LLM을 활용하여 Django 및 Starlette에서 다수의 보안 취약점을 발견하고 CVE를 획득한 경험을 공유합니다. DEF CON 및 AIxCC와 같은 해킹 대회에서 LLM의 가능성을 확인하고, 실제 업무에 적용하여 취약점 분석 및 발견 능력을 향상시킨 사례입니다.",
+  "tags": [
+    "LLM",
+    "보안 취약점",
+    "Django"
+  ],
+  "title_ko": "LLM을 활용한 Django 및 Starlette 보안 취약점 발견 및 CVE 획득 사례",
+  "url": "https://new-blog.ch4n3.kr/llm-found-security-issues-from-django-ko/",
+  "source_id": "geeknews_new",
+  "crawled_at": "2025-12-05T13:54:57.711248",
+  "original_title": "$5짜리 프롬프트로 $2,418짜리 취약점 찾은 썰"
+}

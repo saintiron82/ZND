@@ -63,15 +63,21 @@ export async function GET(request: Request) {
             }
         }
 
-        // Sort by crawled_at descending
+        // Sort by score ascending (lower is better), then by crawled_at descending
         articles.sort((a, b) => {
+            if (a.score !== b.score) {
+                return a.score - b.score;
+            }
             const dateA = new Date(a.crawled_at).getTime();
             const dateB = new Date(b.crawled_at).getTime();
             return dateB - dateA;
         });
 
+        // Limit to top 20 items
+        const limitedArticles = articles.slice(0, 20);
+
         return NextResponse.json({
-            articles,
+            articles: limitedArticles,
             currentDate: targetDate,
             availableDates: dateDirs
         });

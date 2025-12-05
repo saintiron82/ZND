@@ -61,7 +61,79 @@ class DBClient:
         
         return False
 
+    def _calculate_edition(self, date_str, current_dt):
+        """Calculates the edition number based on time clusters of existing files."""
+        import glob
+        from datetime import datetime, timedelta
+
+        dir_path = os.path.join(self._get_data_dir(), date_str)
+        if not os.path.exists(dir_path):
+            return 1
+
+        # Get all JSON files
+        files = glob.glob(os.path.join(dir_path, '*.json'))
+        if not files:
+            return 1
+
+        timestamps = []
+        for f in files:
+            # Filename format: YYYYMMDD_HHMMSS_...
+            basename = os.path.basename(f)
+            try:
+                ts_str = basename.split('_')[1]
+                # We only care about time, but need date for comparison if needed. 
+                full_dt = datetime.strptime(f"{date_str} {ts_str}", '%Y-%m-%d %H%M%S')
+                timestamps.append(full_dt)
+            except (IndexError, ValueError):
+                continue
+
+        if not timestamps:
+            return 1
+
+        timestamps.sort()
+        
+        # Cluster timestamps by 10-minute gaps
+        clusters = 0
+        if timestamps:
+            clusters = 1
+            last_ts = timestamps[0]
+            for ts in timestamps[1:]:
+                if (ts - last_ts).total_seconds() > 600: # 10 minutes
+                    clusters += 1
+                last_ts = ts
+        
+        # Check if current time belongs to the last cluster or starts a new one
+        if timestamps:
+            last_existing_ts = timestamps[-1]
+            if (current_dt - last_existing_ts).total_seconds() > 600:
+                return clusters + 1
+            else:
+                return clusters
+        
+        return 1
+
     def save_article(self, article_data):
+        from datetime import datetime
+        
+        # Ensure crawled_at is set
+        crawled_at = article_data.get('crawled_at')
+        if isinstance(crawled_at, str):
+            try:
+                crawled_at_dt = datetime.fromisoformat(crawled_at)
+            except ValueError:
+                crawled_at_dt = datetime.now()
+        elif isinstance(crawled_at, datetime):
+            crawled_at_dt = crawled_at
+        else:
+            crawled_at_dt = datetime.now()
+            article_data['crawled_at'] = crawled_at_dt.isoformat()
+
+        # Calculate Edition
+        date_str = crawled_at_dt.strftime('%Y-%m-%d')
+        edition = self._calculate_edition(date_str, crawled_at_dt)
+        article_data['edition'] = edition
+        print(f"DEBUG: Calculated Edition: {edition}")
+
         # 1. Save to DB if available
         if self.db:
             try:
@@ -93,7 +165,7 @@ class DBClient:
             crawled_at_dt = crawled_at
         else:
             crawled_at_dt = datetime.now()
-
+        
         # Format: data/YYYY-MM-DD/YYYYMMDD_HHMMSS_{source_id}_{hash}.json
         date_str = crawled_at_dt.strftime('%Y-%m-%d')
         time_str = crawled_at_dt.strftime('%Y%m%d_%H%M%S')

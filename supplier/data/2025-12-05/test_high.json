@@ -1,0 +1,17 @@
+{
+    "layout_type": "Standard",
+    "reasoning": "High Tier Test",
+    "score": 3,
+    "summary": "This article should be 2x1 (High Tier).",
+    "tags": [
+        "High",
+        "Test"
+    ],
+    "title_ko": "High Tier Article (Score 3)",
+    "url": "https://example.com/high",
+    "source_id": "test",
+    "crawled_at": "2025-12-05T18:01:00",
+    "original_title": "High Test",
+    "edition": 1,
+    "id": "high_test"
+}

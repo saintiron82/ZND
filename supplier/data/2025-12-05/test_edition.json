@@ -1,0 +1,16 @@
+{
+    "layout_type": "Featured",
+    "reasoning": "Test article for edition display verification.",
+    "score": 0,
+    "summary": "This is a test article to verify that the 2nd Edition is displayed correctly in the header.",
+    "tags": [
+        "Test",
+        "Edition"
+    ],
+    "title_ko": "Edition Display Test Article",
+    "url": "https://example.com/test",
+    "source_id": "test_source",
+    "crawled_at": "2025-12-05T17:30:00.000000",
+    "original_title": "Test Article",
+    "edition": 2
+}

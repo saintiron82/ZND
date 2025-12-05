@@ -1,3 +1,5 @@
+const isWin = process.platform === 'win32';
+
 module.exports = {
     apps: [
         {
@@ -16,10 +18,10 @@ module.exports = {
             name: 'znd-crawler',
             script: 'crawler.py',
             cwd: './supplier',
-            interpreter: '/home/saintiron82/ZND/supplier/venv/bin/python3',
+            interpreter: isWin ? 'python' : '/home/saintiron82/ZND/supplier/venv/bin/python3',
             instances: 1,
             autorestart: false, // Don't restart automatically when it finishes
-            cron_restart: '0 7 * * *', // Run every day at 07:00
+            cron_restart: '0 7,19 * * *', // Run twice daily at 07:00 and 19:00
             watch: false,
         },
     ],

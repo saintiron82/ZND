@@ -15,6 +15,7 @@ interface Article {
     tags: string[];
     source_id: string;
     crawled_at: any;
+    edition?: number;
 }
 
 export default function Home() {
@@ -78,6 +79,33 @@ export default function Home() {
 
     const { prev, next } = getPrevNextDates();
 
+    // Helper to get ordinal suffix (1st, 2nd, 3rd, etc.)
+    const getOrdinal = (n: number) => {
+        const s = ["th", "st", "nd", "rd"];
+        const v = n % 100;
+        return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    };
+
+    const getHeaderInfo = () => {
+        if (!currentDate) return { vol: '...', issue: '...', edition: '...' };
+
+        const dateObj = new Date(currentDate);
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+
+        // Get edition from the first article, default to 1
+        const edition = articles.length > 0 && articles[0].edition ? articles[0].edition : 1;
+
+        return {
+            vol: year,
+            issue: `${month}${day}`,
+            edition: `${getOrdinal(edition)} Edition`
+        };
+    };
+
+    const headerInfo = getHeaderInfo();
+
     return (
         <main className="min-h-screen bg-paper dark:bg-zinc-900 p-4 md:p-8 font-sans transition-colors duration-300">
             <header className="mb-8 md:mb-10 max-w-7xl mx-auto border-b-4 border-double border-black dark:border-white pb-6 text-center">
@@ -91,7 +119,7 @@ export default function Home() {
                             {currentDate ? new Date(currentDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Loading...'}
                         </p>
                         <p className="text-[10px] text-zinc-400 mt-1 uppercase tracking-widest">
-                            Vol. 1 • Curated Global Insights
+                            Vol. {headerInfo.vol} • Issue {headerInfo.issue} • {headerInfo.edition}
                         </p>
                     </div>
                 </div>
@@ -128,35 +156,32 @@ export default function Home() {
                 <>
                     {articles.length > 0 ? (
                         <div className="max-w-7xl mx-auto">
-                            {/* Top Section: Lead + Sidebar */}
-                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border-t border-black dark:border-white border-b-4 border-double">
-                                {/* Lead Article (Left/Center - 8 cols) */}
-                                <div className="lg:col-span-8 border-r border-zinc-200 dark:border-zinc-800 p-4 md:p-6">
-                                    {articles[0] && (
-                                        <ArticleCard article={articles[0]} variant="lead" />
-                                    )}
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[minmax(200px,auto)] dense-grid" style={{ gridAutoFlow: 'dense' }}>
+                                {articles.map((article) => {
+                                    // Calculate grid span based on strict score rules
+                                    // Score 0-1: Hero (2x2)
+                                    // Score 2-3: High (2x1)
+                                    // Score 4-5: Mid (1x2)
+                                    // Score 6+: Base (1x1)
 
-                                {/* Sidebar (Right - 4 cols) */}
-                                <div className="lg:col-span-4 flex flex-col">
-                                    <div className="p-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/50">
-                                        <h3 className="font-bold text-xs uppercase tracking-widest text-zinc-500 text-center">Top Stories</h3>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        {articles.slice(1, 5).map((article) => (
-                                            <ArticleCard key={article.id} article={article} variant="sidebar" className="px-4" />
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
+                                    let spanClass = "col-span-1 row-span-1"; // Base Tier (Score 6+)
 
-                            {/* Feed Section (Bottom - 3 cols) */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-l border-zinc-200 dark:border-zinc-800">
-                                {articles.slice(5).map((article) => (
-                                    <div key={article.id} className="border-r border-b border-zinc-200 dark:border-zinc-800">
-                                        <ArticleCard article={article} variant="standard" />
-                                    </div>
-                                ))}
+                                    if (article.score <= 1) {
+                                        spanClass = "col-span-1 md:col-span-2 md:row-span-2"; // Hero
+                                    } else if (article.score <= 3) {
+                                        spanClass = "col-span-1 md:col-span-2 md:row-span-1"; // High
+                                    } else if (article.score <= 5) {
+                                        spanClass = "col-span-1 md:row-span-2"; // Mid
+                                    }
+
+                                    return (
+                                        <ArticleCard
+                                            key={article.id}
+                                            article={article}
+                                            className={`${spanClass} h-full`}
+                                        />
+                                    );
+                                })}
                             </div>
                         </div>
                     ) : (

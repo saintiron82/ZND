@@ -10,6 +10,18 @@ import path from 'path';
 //       └── data
 const DATA_DIR = path.resolve(process.cwd(), '../supplier/data');
 
+// Simple in-memory cache
+// Stores articles by date key
+let articleCache: {
+    [date: string]: {
+        timestamp: number;
+        articles: any[];
+    }
+} = {};
+
+// Cache duration: 1 hour (since data updates daily, this is safe and efficient)
+const CACHE_TTL = 60 * 60 * 1000;
+
 export async function GET(request: Request) {
     try {
         if (!fs.existsSync(DATA_DIR)) {
@@ -38,6 +50,19 @@ export async function GET(request: Request) {
             targetDate = requestedDate;
         }
 
+        // 1. Check Cache
+        const now = Date.now();
+        if (articleCache[targetDate] && (now - articleCache[targetDate].timestamp < CACHE_TTL)) {
+            // console.log(`[Cache Hit] Serving articles for ${targetDate}`);
+            return NextResponse.json({
+                articles: articleCache[targetDate].articles,
+                currentDate: targetDate,
+                availableDates: dateDirs
+            });
+        }
+
+        // 2. Cache Miss - Read from Disk
+        // console.log(`[Cache Miss] Loading articles for ${targetDate}`);
         const dirPath = path.join(DATA_DIR, targetDate);
         const articles: any[] = [];
 
@@ -69,6 +94,12 @@ export async function GET(request: Request) {
             const dateB = new Date(b.crawled_at).getTime();
             return dateB - dateA;
         });
+
+        // 3. Update Cache
+        articleCache[targetDate] = {
+            timestamp: now,
+            articles: articles
+        };
 
         return NextResponse.json({
             articles,

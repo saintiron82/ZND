@@ -5,7 +5,7 @@ from firebase_admin import credentials, firestore
 class DBClient:
     def __init__(self):
         self.db = self._initialize_firebase()
-        self.visited_urls = self._load_visited_urls()
+        self.history = self._load_history()
 
     def _initialize_firebase(self):
         service_account_key = os.getenv('FIREBASE_SERVICE_ACCOUNT_KEY', 'serviceAccountKey.json')
@@ -29,37 +29,60 @@ class DBClient:
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         return os.path.join(base_dir, 'data')
 
-    def _load_visited_urls(self):
+    def _load_history(self):
         import json
-        file_path = os.path.join(self._get_data_dir(), 'visited_urls.json')
+        file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
         if os.path.exists(file_path):
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    return set(json.load(f))
+                    return json.load(f)
             except Exception:
-                return set()
-        return set()
+                return {}
+        return {}
 
-    def _save_visited_urls(self):
+    def _save_history_file(self):
         import json
-        file_path = os.path.join(self._get_data_dir(), 'visited_urls.json')
+        file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w', encoding='utf-8') as f:
-            json.dump(list(self.visited_urls), f, ensure_ascii=False, indent=2)
-
-    def check_duplicate(self, url):
-        # Check in-memory set (fast)
-        if url in self.visited_urls:
-            return True
-            
-        # Optional: Double check DB if connected (for consistency across multiple runners)
-        if self.db:
-            docs = self.db.collection('articles').where('url', '==', url).limit(1).get()
-            if len(docs) > 0:
-                self.visited_urls.add(url) # Cache it
-                return True
         
+        # Limit to last 5000 entries (FIFO)
+        if len(self.history) > 5000:
+            # Sort by timestamp if available, otherwise just slice
+            # Since dicts are insertion-ordered in modern Python, slicing might work if we re-create it,
+            # but safer to just keep it simple or sort.
+            # For simplicity and performance, we'll just keep the last 5000 keys added if we assume append-only.
+            # But here we might be updating existing keys.
+            # Let's just keep the size in check roughly.
+            keys_to_keep = list(self.history.keys())[-5000:]
+            self.history = {k: self.history[k] for k in keys_to_keep}
+
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(self.history, f, ensure_ascii=False, indent=2)
+
+    def check_history(self, url):
+        """
+        Checks if the URL has been processed with a final state.
+        Returns True if status is ACCEPTED, REJECTED, or SKIPPED.
+        """
+        if url in self.history:
+            status = self.history[url].get('status')
+            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED']:
+                return True
         return False
+
+    def save_history(self, url, status, reason=None):
+        """
+        Records the processing state of a URL.
+        status: 'ACCEPTED', 'REJECTED', 'SKIPPED'
+        """
+        from datetime import datetime
+        
+        self.history[url] = {
+            'status': status,
+            'reason': reason,
+            'timestamp': datetime.now().isoformat()
+        }
+        self._save_history_file()
 
     def save_article(self, article_data):
         # 1. Save to DB if available
@@ -72,10 +95,9 @@ class DBClient:
         # 2. Save to individual file
         self._save_to_individual_file(article_data)
         
-        # 3. Update visited index
+        # 3. Update history as ACCEPTED
         if 'url' in article_data:
-            self.visited_urls.add(article_data['url'])
-            self._save_visited_urls()
+            self.save_history(article_data['url'], 'ACCEPTED', reason='high_score')
 
     def _save_to_individual_file(self, article_data):
         import json

@@ -1,4 +1,11 @@
 import React from 'react';
+import { ExternalLink, Clock, Hash } from 'lucide-react';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
 
 interface Article {
     id: string;
@@ -14,94 +21,97 @@ interface Article {
 
 interface ArticleCardProps {
     article: Article;
-    variant?: 'lead' | 'sidebar' | 'standard';
     className?: string;
+    hideSummary?: boolean; // Option to hide summary for small cards
+    showImage?: boolean;   // Option to show image (if we had one)
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article, variant = 'standard', className = '' }) => {
-    const { title_ko, summary, score, tags, url, crawled_at, source_id } = article;
+const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false }) => {
+    const { title_ko, summary, tags, url, crawled_at, source_id, score } = article;
+
+    // ZeroNoise Logic
+    // 0.0 ~ 2.9: Pure Signal (High Quality) -> Full Summary, Emphasized
+    // 3.0 ~ 6.0: General (Standard) -> Clamped Summary
+    // 6.0+: Discarded (Should be filtered out, but handle gracefully just in case)
+
+    const isPureSignal = score !== undefined && score < 3.0;
+
+    // Dynamic Density: Pure Signal gets full text, others get clamped
+    const summaryClass = isPureSignal
+        ? "line-clamp-none text-[15px] md:text-base"
+        : "line-clamp-4 text-sm md:text-[15px]";
+
+    // Card Style: Pure Signal gets a subtle border/shadow boost
+    const cardStyle = isPureSignal
+        ? "ring-1 ring-primary/20 bg-card/50 shadow-sm"
+        : "bg-card hover:bg-card/80";
+
+    // Score Color
+    const getScoreColor = (s: number) => {
+        if (s < 3.0) return "text-emerald-600 dark:text-emerald-400";
+        return "text-amber-600 dark:text-amber-400";
+    };
 
     // Date formatting
     const formatDate = (date: string | { seconds: number }) => {
         if (typeof date === 'string') {
-            return new Date(date).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+            return new Date(date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
         }
         if (date && typeof date === 'object' && 'seconds' in date) {
-            return new Date(date.seconds * 1000).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+            return new Date(date.seconds * 1000).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
         }
         return '';
     };
 
-    // Base container - no background, organic feel
-    const containerBase = `group flex flex-col justify-between transition-colors duration-200 ${className}`;
+    const dateStr = formatDate(crawled_at);
 
-    if (variant === 'lead') {
-        return (
-            <a href={url} target="_blank" rel="noopener noreferrer" className={`${containerBase} p-4 md:p-0`}>
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-zinc-500 border-b border-black dark:border-white pb-2 mb-2">
-                        <span>The Lead</span>
-                        <span>{formatDate(crawled_at)}</span>
-                    </div>
-                    <h2 className="text-4xl md:text-6xl font-black font-serif leading-tight text-zinc-900 dark:text-zinc-50 group-hover:text-indigo-800 dark:group-hover:text-indigo-300 transition-colors">
-                        {title_ko}
-                    </h2>
-                    <div className="text-lg md:text-xl font-serif leading-relaxed text-zinc-700 dark:text-zinc-300 columns-1 md:columns-2 gap-8">
-                        {summary}
-                    </div>
-                    <div className="flex items-center gap-3 mt-4">
-                        <span className="font-bold text-xs uppercase tracking-wider text-zinc-900 dark:text-zinc-100">{source_id}</span>
-                        {tags?.map(tag => (
-                            <span key={tag} className="text-[10px] uppercase tracking-wide text-zinc-500 border border-zinc-300 dark:border-zinc-700 px-1.5 py-0.5 rounded-full">
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            </a>
-        );
-    }
-
-    if (variant === 'sidebar') {
-        return (
-            <a href={url} target="_blank" rel="noopener noreferrer" className={`${containerBase} py-4 border-b border-zinc-200 dark:border-zinc-800 last:border-0`}>
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-lg font-bold font-serif leading-snug text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400">
-                        {title_ko}
-                    </h3>
-                    <p className="text-xs text-zinc-500 line-clamp-2 font-serif">
-                        {summary}
-                    </p>
-                    <div className="flex items-center justify-between text-[10px] text-zinc-400 uppercase tracking-wider">
-                        <span>{source_id}</span>
-                        <span>{formatDate(crawled_at)}</span>
-                    </div>
-                </div>
-            </a>
-        );
-    }
-
-    // Standard variant (Feed)
     return (
-        <a href={url} target="_blank" rel="noopener noreferrer" className={`${containerBase} p-5 border-b border-zinc-200 dark:border-zinc-800 md:border-b-0`}>
-            <div className="flex flex-col h-full gap-3">
-                <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-zinc-400">
-                    <span className="font-bold text-zinc-700 dark:text-zinc-300">{source_id}</span>
-                    <span>{formatDate(crawled_at)}</span>
+        <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+                "group flex flex-col justify-between h-full p-6 transition-all duration-300 rounded-xl",
+                cardStyle,
+                className
+            )}
+        >
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-widest text-muted-foreground font-sans">
+                    <div className="flex items-center gap-3">
+                        <span className="text-primary">{source_id}</span>
+                        {score !== undefined && (
+                            <span className={cn("flex items-center gap-1", getScoreColor(score))}>
+                                ZN {score.toFixed(1)}
+                            </span>
+                        )}
+                    </div>
+                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {dateStr}</span>
                 </div>
-                <h3 className="text-xl font-bold font-serif leading-snug text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-400">
+
+                <h3 className={cn(
+                    "font-black font-sans leading-[1.1] group-hover:text-primary transition-colors tracking-tight",
+                    hideSummary ? "text-lg line-clamp-3" : (isPureSignal ? "text-2xl md:text-4xl" : "text-xl md:text-2xl")
+                )}>
                     {title_ko}
                 </h3>
-                <p className="text-sm font-serif leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-4">
-                    {summary}
-                </p>
-                <div className="mt-auto pt-3 flex items-center gap-2">
+
+                {!hideSummary && (
+                    <p className={cn("text-muted-foreground leading-relaxed font-sans transition-all", summaryClass)}>
+                        {summary}
+                    </p>
+                )}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between">
+                <div className="flex gap-2 overflow-hidden">
                     {tags?.slice(0, 2).map(tag => (
-                        <span key={tag} className="text-[9px] uppercase tracking-wide text-zinc-400">
+                        <span key={tag} className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground bg-secondary px-2 py-1 rounded-sm whitespace-nowrap font-sans">
                             #{tag}
                         </span>
                     ))}
                 </div>
+                <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
         </a>
     );

@@ -1,0 +1,16 @@
+{
+  "title_ko": "Zerobyte: Restic 기반 백업 자동화 웹 인터페이스",
+  "summary": "Zerobyte는 Restic을 활용하여 원격 스토리지의 데이터 백업을 자동화하는 웹 기반 도구입니다. 암호화, 압축, 스케줄링 및 모니터링 기능을 제공하며, NFS, SMB, WebDAV 등 다양한 프로토콜을 지원합니다. 현재 0.x 버전으로 주요 변경 사항이 있을 수 있으며, Docker 및 Docker Compose 설치가 필요합니다.",
+  "score": 7,
+  "reasoning": "기사의 기술적 깊이가 부족하고, Restic의 기능을 단순히 나열하는 수준에 그치며, 구체적인 아키텍처나 성능 지표에 대한 정보가 없어 기술적 가치가 낮습니다.",
+  "layout_type": "Standard",
+  "tags": [
+    "Backend/DevOps",
+    "Cloud/Infra",
+    "Security"
+  ],
+  "url": "https://github.com/nicotsx/zerobyte",
+  "source_id": "geeknews_new",
+  "crawled_at": "2025-12-07T16:45:27.989077",
+  "original_title": "nicotsx/zerobyte: Backup automation for self-hosters"
+}

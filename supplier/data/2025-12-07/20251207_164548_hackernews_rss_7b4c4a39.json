@@ -1,0 +1,16 @@
+{
+  "title_ko": "실시간 적응형 인터페이스: 생성형 UI의 컴포넌트 기반 접근 방식",
+  "summary": "생성형 UI는 사용자의 맥락, 자연어 입력, 상호작용 기록에 실시간으로 적응하는 인터페이스입니다. 이는 고정된 경험 대신 소프트웨어가 사용자에게 맞춰 변화하는 패러다임을 제시합니다. LLM을 활용한 코드 생성과 달리, 사전 정의된 컴포넌트를 조립하는 방식으로 안정성과 실용성을 확보하며, 개발자는 단일 컴포넌트 라이브러리로 무한한 개인화를 지원합니다.",
+  "score": 4,
+  "reasoning": "이 기사는 생성형 UI의 개념과 중요성을 설명하지만, 구체적인 기술적 구현이나 아키텍처에 대한 깊이 있는 정보가 부족하여 기술적 신호 밀도가 낮습니다.",
+  "layout_type": "Standard",
+  "tags": [
+    "AI/LLM",
+    "Web/Frontend",
+    "Backend/DevOps"
+  ],
+  "url": "https://tambo.co/blog/posts/what-is-generative-ui",
+  "source_id": "hackernews_rss",
+  "crawled_at": "2025-12-07T16:45:48.373453",
+  "original_title": "What is Generative UI?"
+}

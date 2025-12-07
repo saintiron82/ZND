@@ -1,0 +1,12 @@
+{
+  "https://example.com/test_accepted": {
+    "status": "ACCEPTED",
+    "reason": "test_high_score",
+    "timestamp": "2025-12-08T00:02:13.532746"
+  },
+  "https://example.com/test_rejected": {
+    "status": "REJECTED",
+    "reason": "test_low_score",
+    "timestamp": "2025-12-08T00:02:13.533764"
+  }
+}

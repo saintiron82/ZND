@@ -88,7 +88,7 @@ def run_crawler():
         
         for link in article_links:
             # Check duplicate before processing
-            if db.check_duplicate(link):
+            if db.check_history(link):
                 print(f"Skipping duplicate: {link}")
                 continue
 
@@ -96,6 +96,7 @@ def run_crawler():
             content_data = extract_content(link)
             if not content_data or len(content_data['text']) < 200: 
                 print("  -> Content too short or failed extraction.")
+                db.save_history(link, 'SKIPPED', reason='short_content_or_failed')
                 continue
 
             print(f"Processing: {link}")
@@ -116,6 +117,7 @@ def run_crawler():
                 score = result_json.get('score', 0)
                 if score < 4:
                     print(f"🗑️ 저품질 기사 폐기 (Score: {score})")
+                    db.save_history(link, 'REJECTED', reason=f'low_score_{score}')
                     continue
                 
                 # 5. 데이터 병합 및 저장

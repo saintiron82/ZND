@@ -108,10 +108,19 @@ export async function GET(request: Request) {
         // Filter out noise (score < 4)
         const validArticles = articles.filter((a: any) => (a.score ?? 0) >= 4);
 
+        // Get available dates from local directories
+        const dataDir = path.join(process.cwd(), '../supplier/data');
+        let availableDates: string[] = [];
+        if (fs.existsSync(dataDir)) {
+            availableDates = fs.readdirSync(dataDir).filter(file => {
+                return fs.statSync(path.join(dataDir, file)).isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(file);
+            }).sort().reverse();
+        }
+
         return NextResponse.json({
             articles: validArticles,
-            currentDate: new Date().toISOString().split('T')[0],
-            availableDates: [],
+            currentDate: requestedDate || availableDates[0] || new Date().toISOString().split('T')[0],
+            availableDates: availableDates,
             source: source
         });
 

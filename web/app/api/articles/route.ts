@@ -1,89 +1,134 @@
 import { NextResponse } from 'next/server';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, query, orderBy, Timestamp } from 'firebase/firestore';
 import fs from 'fs';
 import path from 'path';
 
-// Define the path to the supplier data directory
-// Assuming the structure is:
-// d:\News
-//   ├── web
-//   └── supplier
-//       └── data
-const DATA_DIR = path.resolve(process.cwd(), '../supplier/data');
+// Cache duration: 1 minute
+export const revalidate = 60;
 
-export async function GET(request: Request) {
+async function getLocalArticles() {
     try {
-        if (!fs.existsSync(DATA_DIR)) {
-            console.error(`Data directory not found: ${DATA_DIR}`);
-            return NextResponse.json({ articles: [], currentDate: null, availableDates: [] });
+        // Assuming process.cwd() is the 'web' directory
+        const dataDir = path.join(process.cwd(), '../supplier/data');
+
+        if (!fs.existsSync(dataDir)) {
+            console.warn(`[API] Local data directory not found: ${dataDir}`);
+            return [];
         }
 
-        // Get all date directories (YYYY-MM-DD)
-        const dateDirs = fs.readdirSync(DATA_DIR)
-            .filter(file => fs.statSync(path.join(DATA_DIR, file)).isDirectory())
-            .filter(file => /^\d{4}-\d{2}-\d{2}$/.test(file)) // Match YYYY-MM-DD format
-            .sort()
-            .reverse(); // Newest dates first (descending)
-
-        if (dateDirs.length === 0) {
-            return NextResponse.json({ articles: [], currentDate: null, availableDates: [] });
-        }
-
-        // Determine target date
-        const { searchParams } = new URL(request.url);
-        const requestedDate = searchParams.get('date');
-
-        // Use requested date if valid and exists, otherwise default to latest
-        let targetDate = dateDirs[0];
-        if (requestedDate && dateDirs.includes(requestedDate)) {
-            targetDate = requestedDate;
-        }
-
-        const dirPath = path.join(DATA_DIR, targetDate);
         const articles: any[] = [];
 
-        if (fs.existsSync(dirPath)) {
-            const files = fs.readdirSync(dirPath)
-                .filter(file => file.endsWith('.json'));
+        // Read date directories (e.g., 2025-12-07)
+        const dateDirs = fs.readdirSync(dataDir).filter(file => {
+            return fs.statSync(path.join(dataDir, file)).isDirectory();
+        });
+
+        // Sort date dirs descending to get latest first
+        dateDirs.sort().reverse();
+
+        // Limit to last 3 days to avoid reading too many files
+        const recentDirs = dateDirs.slice(0, 3);
+
+        for (const dateDir of recentDirs) {
+            const fullPath = path.join(dataDir, dateDir);
+            const files = fs.readdirSync(fullPath).filter(f => f.endsWith('.json'));
 
             for (const file of files) {
                 try {
-                    const filePath = path.join(dirPath, file);
-                    const fileContent = fs.readFileSync(filePath, 'utf-8');
-                    const article = JSON.parse(fileContent);
-
-                    // Add ID if not present (use filename as ID)
+                    const content = fs.readFileSync(path.join(fullPath, file), 'utf-8');
+                    const article = JSON.parse(content);
+                    // Add ID if missing (use filename)
                     if (!article.id) {
                         article.id = file.replace('.json', '');
                     }
-
                     articles.push(article);
-                } catch (err) {
-                    console.error(`Error reading file ${file}:`, err);
+                } catch (e) {
+                    console.error(`[API] Error reading file ${file}:`, e);
                 }
             }
         }
 
-        // Sort by score ascending (lower is better), then by crawled_at descending
-        articles.sort((a, b) => {
-            if (a.score !== b.score) {
-                return a.score - b.score;
-            }
-            const dateA = new Date(a.crawled_at).getTime();
-            const dateB = new Date(b.crawled_at).getTime();
+        // Sort by crawled_at desc
+        return articles.sort((a, b) => {
+            const dateA = new Date(a.crawled_at || 0).getTime();
+            const dateB = new Date(b.crawled_at || 0).getTime();
             return dateB - dateA;
         });
 
-        // Limit to top 20 items
-        const limitedArticles = articles.slice(0, 20);
+    } catch (error) {
+        console.error('[API] Error reading local files:', error);
+        return [];
+    }
+}
+
+export async function GET(request: Request) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const requestedDate = searchParams.get('date');
+        const userAgent = request.headers.get('user-agent') || 'Unknown';
+        console.log(`[API Request] Time: ${new Date().toISOString()}, UA: ${userAgent}`);
+
+        let articles: any[] = [];
+        let source = 'Firestore';
+
+        try {
+            const articlesRef = collection(db, 'articles');
+            const q = query(articlesRef, orderBy('crawled_at', 'desc'));
+            const querySnapshot = await getDocs(q);
+
+            articles = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                let crawledAt = data.crawled_at;
+                if (crawledAt instanceof Timestamp) {
+                    crawledAt = crawledAt.toDate().toISOString();
+                } else if (crawledAt && typeof crawledAt.toDate === 'function') {
+                    crawledAt = crawledAt.toDate().toISOString();
+                }
+
+                return {
+                    id: doc.id,
+                    ...data,
+                    crawled_at: crawledAt
+                };
+            });
+        } catch (dbError) {
+            console.warn('[API] Firestore connection failed, trying local files...', dbError);
+        }
+
+        // Fallback to local files if DB returned nothing or failed
+        if (articles.length === 0) {
+            console.log('[API] No articles in DB, checking local files...');
+            articles = await getLocalArticles();
+            source = 'Local Files';
+        }
+
+        console.log(`[API] Returning ${articles.length} articles from ${source}`);
+
+        // Filter out noise (score < 4)
+        const validArticles = articles.filter((a: any) => (a.score ?? 0) >= 4);
+
+        // Get available dates from local directories
+        const dataDir = path.join(process.cwd(), '../supplier/data');
+        let availableDates: string[] = [];
+        if (fs.existsSync(dataDir)) {
+            availableDates = fs.readdirSync(dataDir).filter(file => {
+                return fs.statSync(path.join(dataDir, file)).isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(file);
+            }).sort().reverse();
+        }
 
         return NextResponse.json({
-            articles: limitedArticles,
-            currentDate: targetDate,
-            availableDates: dateDirs
+            articles: validArticles,
+            currentDate: requestedDate || availableDates[0] || new Date().toISOString().split('T')[0],
+            availableDates: availableDates,
+            source: source
         });
 
     } catch (error) {
         console.error('Error serving articles:', error);
-        return NextResponse.json({ error: 'Failed to fetch articles' }, { status: 500 });
+        return NextResponse.json({
+            articles: [],
+            error: 'Failed to load data.'
+        }, { status: 500 });
     }
 }

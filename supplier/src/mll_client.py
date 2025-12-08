@@ -7,6 +7,7 @@ class MLLClient:
     def __init__(self):
         # Default to localhost:5000 as per user example, but allow env override
         self.api_url = os.getenv("MLL_API_URL", "http://localhost:5000")
+        self.fallback_url = "http://localhost:3000"
         self.api_token = os.getenv("MLL_API_TOKEN")
         self.project_key = os.getenv("MLL_PROJECT_KEY", "news_factory")
         self.username = os.getenv("MLL_USERNAME", "external_bot_client")
@@ -20,7 +21,17 @@ class MLLClient:
         
         print(f"🔑 로그인 시도: {self.username} -> {url}")
         try:
-            resp = requests.post(url, json=payload, timeout=10)
+            try:
+                resp = requests.post(url, json=payload, timeout=10)
+            except requests.exceptions.ConnectionError:
+                if self.api_url != self.fallback_url:
+                    print(f"⚠️ [Login] Connection to {self.api_url} failed. Switching to fallback: {self.fallback_url}")
+                    self.api_url = self.fallback_url
+                    url = f"{self.api_url}/api/user/login"
+                    resp = requests.post(url, json=payload, timeout=10)
+                else:
+                    raise
+
             resp.raise_for_status()
             data = resp.json()
             
@@ -58,20 +69,29 @@ class MLLClient:
 
         print(f"\n🚀 [MLL Request] Sending request to: {url}")
         print(f"📝 [MLL Request] Payload (Preview): {text[:200]}...")
-
-        # Fail fast mode: No retries, raise exceptions.
-        print(f"\n🚀 [MLL Request] Sending request to: {url}")
-        print(f"� [MLL Request] Payload (Preview): {text[:200]}...")
         
         try:
             print(f"⏳ [MLL Request] Waiting for response...")
-            response = requests.post(url, headers=headers, json=payload, timeout=30)
-            
+            try:
+                response = requests.post(url, headers=headers, json=payload, timeout=30)
+            except requests.exceptions.ConnectionError:
+                if self.api_url != self.fallback_url:
+                    print(f"⚠️ [Analyze] Connection to {self.api_url} failed. Switching to fallback: {self.fallback_url}")
+                    self.api_url = self.fallback_url
+                    
+                    # Re-login is required because we switched servers
+                    if self.login():
+                        headers["Authorization"] = f"Bearer {self.api_token}"
+                        url = f"{self.api_url}/api/sandbox/chat"
+                        print(f"🚀 [MLL Request] Retrying request to: {url}")
+                        response = requests.post(url, headers=headers, json=payload, timeout=30)
+                    else:
+                        raise Exception("Login failed on fallback server")
+                else:
+                    raise
+
             print(f"📥 [MLL Response] Status Code: {response.status_code}")
             
-            # Print raw response text for debugging if status is not 200 or just always for now since we are debugging
-            # print(f"DEBUG: Raw Response Text: {response.text[:500]}...") 
-
             response.raise_for_status()
             data = response.json()
             

@@ -75,17 +75,17 @@ class DBClient:
         Records the processing state of a URL.
         status: 'ACCEPTED', 'REJECTED', 'SKIPPED'
         """
-        from datetime import datetime
+        from datetime import datetime, timezone
         
         self.history[url] = {
             'status': status,
             'reason': reason,
-            'timestamp': datetime.now().isoformat()
+            'timestamp': datetime.now(timezone.utc).isoformat()
         }
         self._save_history_file()
 
     def save_article(self, article_data):
-        from datetime import datetime
+        from datetime import datetime, timezone
         
         # Ensure crawled_at is set
         crawled_at = article_data.get('crawled_at')
@@ -93,11 +93,11 @@ class DBClient:
             try:
                 crawled_at_dt = datetime.fromisoformat(crawled_at)
             except ValueError:
-                crawled_at_dt = datetime.now()
+                crawled_at_dt = datetime.now(timezone.utc)
         elif isinstance(crawled_at, datetime):
             crawled_at_dt = crawled_at
         else:
-            crawled_at_dt = datetime.now()
+            crawled_at_dt = datetime.now(timezone.utc)
             article_data['crawled_at'] = crawled_at_dt.isoformat()
 
         # Calculate Edition
@@ -123,7 +123,7 @@ class DBClient:
     def _save_to_individual_file(self, article_data):
         import json
         import hashlib
-        from datetime import datetime
+        from datetime import datetime, timezone
         
         # Ensure crawled_at is a datetime object or string
         crawled_at = article_data.get('crawled_at')
@@ -131,11 +131,11 @@ class DBClient:
             try:
                 crawled_at_dt = datetime.fromisoformat(crawled_at)
             except ValueError:
-                crawled_at_dt = datetime.now()
+                crawled_at_dt = datetime.now(timezone.utc)
         elif isinstance(crawled_at, datetime):
             crawled_at_dt = crawled_at
         else:
-            crawled_at_dt = datetime.now()
+            crawled_at_dt = datetime.now(timezone.utc)
         
         # Format: data/YYYY-MM-DD/YYYYMMDD_HHMMSS_{source_id}_{hash}.json
         date_str = crawled_at_dt.strftime('%Y-%m-%d')

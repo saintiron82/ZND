@@ -5,7 +5,7 @@ import requests
 import feedparser
 from bs4 import BeautifulSoup
 from newspaper import Article
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 # Import custom clients
@@ -125,7 +125,7 @@ def run_crawler():
                     **result_json,          # MLL 분석 결과 (title_ko, summary...)
                     "url": link,            # 원본 링크
                     "source_id": target['id'],
-                    "crawled_at": datetime.now(), # Use local time or server timestamp
+                    "crawled_at": datetime.now(timezone.utc), # Use UTC
                     "original_title": content_data['title']
                 }
                 

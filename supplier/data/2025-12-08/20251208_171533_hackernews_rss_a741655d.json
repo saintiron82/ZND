@@ -1,0 +1,34 @@
+{
+  "title": "AI는 사람이 아닌 '단어 주머니': 의인화의 오류를 넘어서",
+  "zero_noise_score": 2.6,
+  "impact_score": 0.0,
+  "tags": [
+    "LLM",
+    "GEN_AI",
+    "ENGINEERING"
+  ],
+  "impact_entity_id": "TIER_Z_IRRELEVANT_SECTOR",
+  "impact_event_ids": [
+    "BIZ_AND_ADMIN_NEWS"
+  ],
+  "evidence": {
+    "credits": [
+      {
+        "id": "ENGINEERING_INSIGHT",
+        "value": 0.8,
+        "reason": "AI를 이해하기 위한 기존의 '의인화' 비유가 왜 잘못되었는지 설명하고, '단어 주머니(bag of words)'라는 새로운 개념적 모델을 제시하며 깊이 있는 통찰을 제공합니다."
+      }
+    ],
+    "penalties": [],
+    "modifiers": [],
+    "impact_entity_id": "TIER_Z_IRRELEVANT_SECTOR",
+    "impact_event_ids": [
+      "BIZ_AND_ADMIN_NEWS"
+    ]
+  },
+  "url": "https://www.experimental-history.com/p/bag-of-words-have-mercy-on-us",
+  "source_id": "hackernews_rss",
+  "crawled_at": "2025-12-08T17:15:33.733921+00:00",
+  "original_title": "Bag of words, have mercy on us",
+  "edition": "251208_MON_1"
+}

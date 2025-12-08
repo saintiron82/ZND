@@ -8,5 +8,130 @@
     "status": "REJECTED",
     "reason": "test_low_score",
     "timestamp": "2025-12-08T00:02:13.533764"
+  },
+  "https://github.com/ekalinin/sitemap.js": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:46:23.608543+00:00"
+  },
+  "topic?id=24850": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:46:23.609055+00:00"
+  },
+  "https://velog.io/@jeonjay/%EC%9A%B0%EB%A6%B0-%EC%96%B8%EC%A0%9C%EC%AF%A4-AI%EC%97%90%EA%B2%8C-%EB%8C%80%EC%B2%B4%EB%90%A0%EA%B9%8C": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:46:23.937159+00:00"
+  },
+  "topic?id=24871": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:46:23.938183+00:00"
+  },
+  "topic?id=24900": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:46:23.939780+00:00"
+  },
+  "topic?id=24876": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:46:23.940296+00:00"
+  },
+  "topic?id=24855": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:46:23.941841+00:00"
+  },
+  "https://github.com/nicotsx/zerobyte": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:46:51.920860+00:00"
+  },
+  "https://blogbyash.com/translation/great-pm-and-great-product-engineers/": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:47:20.027227+00:00"
+  },
+  "https://addyo.substack.com/p/21-lessons-from-14-years-at-google": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:47:43.413394+00:00"
+  },
+  "topic?id=24917": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:47:43.414404+00:00"
+  },
+  "https://github.com/Tongyi-MAI/Z-Image": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:48:21.849557+00:00"
+  },
+  "https://www.billboard.com/pro/suno-creates-spotify-catalog-music-two-weeks-pitch-deck/": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:48:56.756368+00:00"
+  },
+  "https://github.com/TheBoredTeam/boring.notch": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:49:28.703550+00:00"
+  },
+  "https://aisparkup.com/posts/7214": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:49:59.878692+00:00"
+  },
+  "https://blogbyash.com/translation/5-lessons-for-founders-and-ceos/": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:50:28.859039+00:00"
+  },
+  "https://www.theverge.com/report/829265/hoto-fanttik-profile-origins-xiaomi-aukey-tiktok": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:50:57.197556+00:00"
+  },
+  "https://matduggan.com/making-rss-more-fun/": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:51:26.757277+00:00"
+  },
+  "topic?id=24908": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:51:26.757788+00:00"
+  },
+  "topic?id=24854": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:51:26.759297+00:00"
+  },
+  "https://github.com/illarion/lockenv": {
+    "status": "REJECTED",
+    "reason": "low_score_0",
+    "timestamp": "2025-12-08T16:51:52.085255+00:00"
+  },
+  "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5804462": {
+    "status": "SKIPPED",
+    "reason": "short_content_or_failed",
+    "timestamp": "2025-12-08T16:51:52.327958+00:00"
+  },
+  "https://example.com/test_schema_v2": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-08T17:14:15.595276+00:00"
+  },
+  "https://www.experimental-history.com/p/bag-of-words-have-mercy-on-us": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-08T17:15:33.735331+00:00"
+  },
+  "https://asml.cyber.harvard.edu/2025/10/01/introducing-the-asml-activitypub-fuzzer-improving-testing-in-the-fediverse/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-08T17:15:57.505659+00:00"
   }
 }

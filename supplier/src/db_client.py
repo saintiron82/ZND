@@ -160,3 +160,12 @@ class DBClient:
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(article_data, f, ensure_ascii=False, indent=2)
         print(f"💾 Saved to {file_path}: {article_data.get('title_ko')}")
+
+    def _calculate_edition(self, date_str, date_obj):
+        """
+        Calculates the edition string, e.g., 251209_MON_1
+        """
+        day_str = date_obj.strftime('%a').upper()
+        # Default to issue 1 for now. 
+        # Real logic might need to check existing files to increment issue number.
+        return f"{date_obj.strftime('%y%m%d')}_{day_str}_1"

@@ -61,19 +61,24 @@ class MLLClient:
             "Content-Type": "application/json"
         }
         
+
         # User protocol uses "ASK" key
         payload = {
             "project_key": self.project_key,
             "ASK": text
         }
 
+        timeout_seconds = int(os.getenv("MLL_TIMEOUT", 60))
+        start_time = time.time()
+
         print(f"\n🚀 [MLL Request] Sending request to: {url}")
-        print(f"📝 [MLL Request] Payload (Preview): {text[:200]}...")
+        print(f"⏱️ [MLL Request] Timeout set to: {timeout_seconds}s")
+        # print(f"📝 [MLL Request] Payload (Preview): {text[:200]}...") # Too verbose if payload is large, maybe keep it?
         
         try:
             print(f"⏳ [MLL Request] Waiting for response...")
             try:
-                response = requests.post(url, headers=headers, json=payload, timeout=30)
+                response = requests.post(url, headers=headers, json=payload, timeout=timeout_seconds)
             except requests.exceptions.ConnectionError:
                 if self.api_url != self.fallback_url:
                     print(f"⚠️ [Analyze] Connection to {self.api_url} failed. Switching to fallback: {self.fallback_url}")
@@ -84,19 +89,20 @@ class MLLClient:
                         headers["Authorization"] = f"Bearer {self.api_token}"
                         url = f"{self.api_url}/api/sandbox/chat"
                         print(f"🚀 [MLL Request] Retrying request to: {url}")
-                        response = requests.post(url, headers=headers, json=payload, timeout=30)
+                        response = requests.post(url, headers=headers, json=payload, timeout=timeout_seconds)
                     else:
                         raise Exception("Login failed on fallback server")
                 else:
                     raise
 
-            print(f"📥 [MLL Response] Status Code: {response.status_code}")
+            elapsed_time = time.time() - start_time
+            print(f"📥 [MLL Response] Status Code: {response.status_code} (Took {elapsed_time:.2f}s)")
             
             response.raise_for_status()
             data = response.json()
             
             # Debug: Print the keys of the received JSON
-            print(f"🔍 [MLL Response Keys] {list(data.keys())}")
+            # print(f"🔍 [MLL Response Keys] {list(data.keys())}")
 
             if data.get("success"):
                 print(f"✅ [MLL Response] Success flag is True.")
@@ -131,5 +137,6 @@ class MLLClient:
                 raise Exception(f"API Error: {data.get('message')}")
 
         except Exception as e:
-            print(f"❌ [MLL Request] Critical Failure: {e}")
+            elapsed_time = time.time() - start_time
+            print(f"❌ [MLL Request] Critical Failure after {elapsed_time:.2f}s: {e}")
             raise e # Re-raise to stop the script

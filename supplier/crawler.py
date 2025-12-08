@@ -77,66 +77,82 @@ def run_crawler():
     consecutive_failures = 0
     MAX_CONSECUTIVE_FAILURES = 3
 
+
     for target in targets:
+        print(f"\n🎯 [Target] Processing target: {target['id']}")
         article_links = fetch_links(target)
         
         # Apply limit
         limit = target.get('limit', 5)
         article_links = article_links[:limit]
         
-        print(f"Found {len(article_links)} links (Limit: {limit}).")
+        print(f"🔗 [Links] Found {len(article_links)} links (Limit: {limit}).")
         
-        for link in article_links:
-            # Check duplicate before processing
-            if db.check_history(link):
-                print(f"Skipping duplicate: {link}")
-                continue
-
-            # 2. 본문 추출
-            content_data = extract_content(link)
-            if not content_data or len(content_data['text']) < 200: 
-                print("  -> Content too short or failed extraction.")
-                db.save_history(link, 'SKIPPED', reason='short_content_or_failed')
-                continue
-
-            print(f"Processing: {link}")
-
-            # Truncate text to avoid MLL token limits or timeouts
-            truncated_text = content_data['text'][:3000]
-
-            # 3. [Real] MLL에게 분석 요청
-            try:
-                result_json = mll.analyze_text(truncated_text)
-            except Exception as e:
-                print(f"❌ MLL Critical Error: {e}")
-                print("🛑 크롤러를 즉시 정지합니다.")
-                return
-
-            if result_json:
-                # 4. 점수 필터링 (ZeroNoise 철학)
-                score = result_json.get('score', 0)
-                if score < 4:
-                    print(f"🗑️ 저품질 기사 폐기 (Score: {score})")
-                    db.save_history(link, 'REJECTED', reason=f'low_score_{score}')
-                    continue
-                
-                # 5. 데이터 병합 및 저장
-                final_doc = {
-                    **result_json,          # MLL 분석 결과 (title_ko, summary...)
-                    "url": link,            # 원본 링크
-                    "source_id": target['id'],
-                    "crawled_at": datetime.now(timezone.utc), # Use UTC
-                    "original_title": content_data['title']
-                }
-                
-                db.save_article(final_doc)
-                print(f"💾 저장 완료: {result_json.get('title_ko')} (Score: {score})")
-            else:
-                print("⚠️ MLL 분석 실패 (None 반환).")
-                print("🛑 크롤러를 즉시 정지합니다.")
-                return
+        for i, link in enumerate(article_links):
+            print(f"\n--------------------------------------------------")
+            print(f"📄 [Item {i+1}/{len(article_links)}] Processing: {link}")
             
-            time.sleep(1) # Be polite
+            try:
+                # Check duplicate before processing
+                if db.check_history(link):
+                    print(f"⏭️ [Skip] Duplicate found in history.")
+                    continue
+
+                # 2. 본문 추출
+                print(f"📰 [Extract] Extracting content...")
+                content_data = extract_content(link)
+                if not content_data or len(content_data['text']) < 200: 
+                    print("⚠️ [Skip] Content too short or failed extraction.")
+                    db.save_history(link, 'SKIPPED', reason='short_content_or_failed')
+                    continue
+
+                # Truncate text to avoid MLL token limits or timeouts
+                truncated_text = content_data['text'][:3000]
+                print(f"✂️ [Extract] Text truncated to {len(truncated_text)} chars.")
+
+                # 3. [Real] MLL에게 분석 요청
+                print(f"🤖 [Analyze] Requesting MLL analysis...")
+                result_json = mll.analyze_text(truncated_text)
+
+                if result_json:
+                    # 4. 필터링 제거 (모든 데이터 저장)
+                    # 사용자 요청에 따라 모든 응답을 저장하고, 노출 여부는 프론트엔드에서 결정함.
+                    
+                    zero_noise_score = result_json.get('zero_noise_score', 0)
+                    impact_score = result_json.get('impact_score', 0)
+                    
+                    # 5. 데이터 병합 및 저장
+                    final_doc = {
+                        **result_json,          # MLL 분석 결과 (zero_noise_score, impact_score, title_ko, summary...)
+                        "url": link,            # 원본 링크
+                        "source_id": target['id'],
+                        "crawled_at": datetime.now(timezone.utc), # Use UTC
+                        "original_title": content_data['title']
+                    }
+                    
+                    print(f"💾 [Save] Saving article: {result_json.get('title_ko')} (ZS: {zero_noise_score}, IS: {impact_score})")
+                    db.save_article(final_doc)
+                    
+                    # Reset failure counter on success
+                    consecutive_failures = 0
+                    print(f"✅ [Success] Item processed successfully.")
+
+                else:
+                    print("⚠️ [Analyze] MLL returned None.")
+                    consecutive_failures += 1
+                    print(f"🚨 [Failure] Consecutive failures: {consecutive_failures}/{MAX_CONSECUTIVE_FAILURES}")
+                
+                time.sleep(1) # Be polite
+
+            except Exception as e:
+                print(f"❌ [Error] Failed to process item: {e}")
+                consecutive_failures += 1
+                print(f"🚨 [Failure] Consecutive failures: {consecutive_failures}/{MAX_CONSECUTIVE_FAILURES}")
+
+            # Check if we should stop
+            if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+                print(f"\n🛑 [Stop] Too many consecutive failures ({consecutive_failures}). Stopping crawler.")
+                return
 
 if __name__ == "__main__":
     run_crawler()

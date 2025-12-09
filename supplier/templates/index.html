@@ -77,12 +77,6 @@
             background: #d0e8ff;
         }
 
-        #link-list li.processed {
-            color: #888;
-            text-decoration: line-through;
-        }
-
-        /* Status Badges */
         .status-badge {
             display: inline-block;
             padding: 2px 6px;
@@ -91,7 +85,6 @@
             font-weight: bold;
             margin-right: 8px;
             color: white;
-            vertical-align: middle;
         }
 
         .badge-saved {
@@ -108,10 +101,8 @@
 
         .badge-worthless {
             background-color: #343a40;
-            /* Dark grey/black */
         }
 
-        /* Row styling based on status */
         .status-saved {
             border-left: 4px solid #28a745;
         }
@@ -178,19 +169,11 @@
             resize: vertical;
         }
 
-        .scores {
-            display: flex;
-            gap: 10px;
-        }
-
-        .scores .form-group {
-            flex: 1;
-        }
-
         .actions {
             margin-top: auto;
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .actions button {
@@ -200,6 +183,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            min-width: 100px;
         }
 
         .btn-save {
@@ -217,19 +201,6 @@
             color: white;
         }
 
-        h2 {
-            margin-top: 0;
-        }
-
-        pre {
-            white-space: pre-wrap;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: #333;
-        }
-
         .loading {
             opacity: 0.5;
             pointer-events: none;
@@ -241,15 +212,28 @@
 
     <div id="sidebar">
         <div class="header">
-            <h3>Manual Crawler</h3>
+            <h3>매뉴얼 크롤러</h3>
         </div>
         <div class="target-select">
             <select id="targetSelect">
-                <option value="">Select Target...</option>
+                <option value="">타겟 선택...</option>
             </select>
             <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="fetchLinks()" style="flex: 2;">Fetch Links</button>
-                <button onclick="scanContent()" style="flex: 1; background: #17a2b8; color: white;">Scan</button>
+                <button onclick="fetchLinks()" style="flex: 2;">링크 가져오기 (Fetch Links)</button>
+            </div>
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+                <button onclick="loadAndCopy()" style="background: #6610f2; color: white; font-size: 0.9em; flex: 2;">📥
+                    로드 & 프롬프트 복사</button>
+            </div>
+            <div style="margin-top: 5px;">
+                <button onclick="showBatchModal()"
+                    style="width: 100%; background: #28a745; color: white; font-size: 0.9em;">⚡ 일괄 적용 (Apply
+                    Batch)</button>
+            </div>
+            <div style="margin-top: 5px;">
+                <button onclick="showInspector()"
+                    style="width: 100%; background: #17a2b8; color: white; font-size: 0.9em;">🔍 배치 검사기
+                    (Inspector)</button>
             </div>
         </div>
         <ul id="link-list">
@@ -261,19 +245,19 @@
         <div class="content-area">
             <div class="preview-pane" id="previewPane">
                 <div style="color: #888; text-align: center; margin-top: 100px;">
-                    Select a link to preview content
+                    미리볼 링크를 선택하세요
                 </div>
             </div>
 
             <div class="input-pane">
                 <div class="form-group">
-                    <label>Original Title</label>
+                    <label>원본 제목 (Original Title)</label>
                     <input type="text" id="originalTitle" readonly style="background: #eee;">
                 </div>
 
                 <div class="form-group">
-                    <label>JSON Input</label>
-                    <textarea id="jsonInput" placeholder="Paste JSON here..."
+                    <label>JSON 입력 (Input)</label>
+                    <textarea id="jsonInput" placeholder="JSON을 여기에 붙여넣으세요..."
                         style="height: 300px; font-family: monospace;"></textarea>
                 </div>
 
@@ -284,464 +268,38 @@
 
                 <div class="actions">
                     <button class="btn-worthless" onclick="markWorthless()">무가치 (Worthless)</button>
-                    <button class="btn-skip" onclick="skipArticle()">Skip</button>
-                    <button class="btn-save" onclick="saveArticle()">Save & Next</button>
-                    <button onclick="verifyScore()" style="background: #17a2b8; color: white;">Verify Score</button>
-                    <!-- [NEW] Inject Correction -->
-                    <button onclick="injectCorrection()" style="background: #e0a800; color: white;">💉 Inject
-                        Correction</button>
+                    <button class="btn-skip" onclick="skipArticle()">건너뛰기 (Skip)</button>
+                    <button class="btn-save" onclick="saveArticle()">저장 & 다음</button>
+                    <button onclick="verifyScore()" style="background: #17a2b8; color: white;">점수 검증</button>
+                    <button onclick="injectCorrection()" style="background: #e0a800; color: white;">💉 수정 반영</button>
                 </div>
                 <div id="verifyResult" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;">
-                    <div id="verifyResult" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;">
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            let currentTargetId = '';
-            let currentLinks = [];
-            let currentLinkIndex = -1;
+    <!-- Batch Input Modal -->
+    <div id="batchModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div
+            style="background: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 800px; height: 80%; display: flex; flex-direction: column;">
+            <h3 style="margin-top: 0;">배치 JSON 결과 붙여넣기</h3>
+            <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">LLM이 생성한 JSON 응답을 여기에 붙여넣으세요.
+                Expected format: <code>{ "results": [ ... ] }</code> or <code>[ ... ]</code></p>
+            <textarea id="batchInput"
+                placeholder='{ "results": [ { "title_ko": "...", "zero_noise_score": 5.0 ... } ] }'
+                style="flex: 1; font-family: monospace; padding: 10px; border: 1px solid #ccc; resize: none;"></textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button onclick="closeBatchModal()" style="padding: 10px 20px; cursor: pointer;">취소</button>
+                <button onclick="applyBatchResults()"
+                    style="padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px;">파싱
+                    적용</button>
+            </div>
+        </div>
+    </div>
 
-            // Load targets on startup
-            fetch('/api/targets')
-                .then(res => res.json())
-                .then(targets => {
-                    const select = document.getElementById('targetSelect');
-                    targets.forEach(t => {
-                        const option = document.createElement('option');
-                        option.value = t.id;
-                        option.textContent = t.id;
-                        select.appendChild(option);
-                    });
-                });
-
-            function fetchLinks() {
-                const select = document.getElementById('targetSelect');
-                currentTargetId = select.value;
-                if (!currentTargetId) return alert('Please select a target');
-
-                const btn = document.querySelector('.target-select button');
-                btn.textContent = 'Fetching...';
-                btn.classList.add('loading');
-
-                fetch(`/api/fetch?target_id=${currentTargetId}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        currentLinks = data.links;
-                        renderLinks();
-                        btn.textContent = 'Fetch Links';
-                        btn.classList.remove('loading');
-                    })
-                    .catch(err => {
-                        alert('Error fetching links: ' + err);
-                        btn.textContent = 'Fetch Links';
-                        btn.classList.remove('loading');
-                    });
-            }
-
-            function renderLinks() {
-                const list = document.getElementById('link-list');
-                list.innerHTML = '';
-                currentLinks.forEach((item, index) => {
-                    const li = document.createElement('li');
-
-                    let statusClass = '';
-                    let badge = '';
-
-                    if (item.status === 'ACCEPTED') {
-                        statusClass = 'status-saved';
-                        badge = '<span class="status-badge badge-saved">SAVED</span>';
-                    } else if (item.status === 'SKIPPED') {
-                        statusClass = 'status-skipped';
-                        badge = '<span class="status-badge badge-skipped">SKIP</span>';
-                    } else if (item.status === 'INVALID') {
-                        statusClass = 'status-invalid';
-                        badge = '<span class="status-badge badge-invalid">BAD</span>';
-                    } else if (item.status === 'WORTHLESS') {
-                        statusClass = 'status-worthless';
-                        badge = '<span class="status-badge badge-worthless">TRASH</span>';
-                    }
-
-                    li.innerHTML = `${badge}${item.url}`;
-                    li.className = statusClass;
-
-                    li.onclick = () => loadArticle(index);
-                    if (index === currentLinkIndex) li.classList.add('active');
-                    list.appendChild(li);
-                });
-            }
-
-            function loadArticle(index) {
-                currentLinkIndex = index;
-                renderLinks(); // Update active state
-
-                const item = currentLinks[index];
-                const link = item.url;
-                document.getElementById('url').value = link;
-
-                // Clear inputs
-                document.getElementById('originalTitle').value = 'Loading...';
-                document.getElementById('jsonInput').value = '';
-                document.getElementById('previewPane').innerHTML = '<div style="text-align:center; margin-top:50px;">Loading content...</div>';
-
-                fetch(`/api/extract?url=${encodeURIComponent(link)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        document.getElementById('originalTitle').value = data.title || data.original_title || ''; // Handle both fresh and existing data
-
-                        // [NEW] Check if it's existing data (has source_id or known structure)
-                        if (data.source_id && data.zero_noise_score !== undefined) {
-                            document.getElementById('jsonInput').value = JSON.stringify(data, null, 2);
-                            alert('♻️ Loaded existing data for this URL.');
-                        } else {
-                            // Fresh crawl
-                            document.getElementById('jsonInput').value = '';
-                        }
-
-                        document.getElementById('previewPane').innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h2 style="margin: 0; font-size: 1.5em;">${data.title || data.title_ko || 'No Title'}</h2>
-                        <div style="white-space: nowrap;">
-                            <button onclick="copyContent()" style="padding: 5px 10px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; margin-right: 10px;">📋 Copy Content</button>
-                            <a href="${link}" target="_blank" style="text-decoration: none; color: #007bff; font-weight: bold; border: 1px solid #007bff; padding: 4px 8px; border-radius: 4px;">🔗 Original</a>
-                        </div>
-                    </div>
-                    <hr>
-                    <pre id="articleBody" style="white-space: pre-wrap; font-family: inherit;">${data.text || data.summary || 'No text content'}</pre>
-                `;
-                    })
-                    .catch(err => {
-                        document.getElementById('previewPane').innerHTML = `<div style="color:red">Error loading content: ${err}</div>`;
-                    });
-            }
-
-            function copyContent() {
-                const title = document.querySelector('#previewPane h2').innerText;
-                const body = document.getElementById('articleBody').innerText;
-                const content = `${title}\n\n${body}`;
-
-                navigator.clipboard.writeText(content).then(() => {
-                    const btn = document.querySelector('#previewPane button');
-                    const originalText = btn.textContent;
-                    btn.textContent = '✅ Copied!';
-                    setTimeout(() => btn.textContent = originalText, 1500);
-                }).catch(err => {
-                    alert('Failed to copy: ' + err);
-                });
-            }
-
-            function saveArticle() {
-                const jsonStr = document.getElementById('jsonInput').value;
-                let jsonData = {};
-
-                try {
-                    jsonData = JSON.parse(jsonStr);
-                } catch (e) {
-                    return alert('Invalid JSON: ' + e.message);
-                }
-
-                const data = {
-                    ...jsonData,
-                    url: document.getElementById('url').value,
-                    source_id: currentTargetId,
-                    original_title: document.getElementById('originalTitle').value
-                };
-
-                // Basic validation
-                if (!data.title_ko || !data.summary) {
-                    return alert('JSON must contain title_ko and summary');
-                }
-
-                fetch('/api/save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.status === 'success') {
-                            markAsProcessed('ACCEPTED');
-                            loadNext();
-                        } else {
-                            alert('Error saving: ' + res.error);
-                        }
-                    });
-            }
-
-            function verifyScore() {
-                const jsonStr = document.getElementById('jsonInput').value;
-                let jsonData = {};
-                try {
-                    jsonData = JSON.parse(jsonStr);
-                } catch (e) {
-                    return alert('Invalid JSON: ' + e.message);
-                }
-
-                const resultDiv = document.getElementById('verifyResult');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = 'Verifying...';
-                resultDiv.style.background = '#eee';
-                resultDiv.style.color = 'black';
-
-                fetch('/api/verify_score', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(jsonData)
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.error) {
-                            resultDiv.innerHTML = `Error: ${res.error}`;
-                            resultDiv.style.background = '#f8d7da';
-                        } else {
-                            const breakdown = res.breakdown || {};
-                            let html = '';
-
-                            // Header
-                            if (res.match) {
-                                html += `<div style="color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 10px;">✅ <b>MATCH!</b> (ZS: ${res.calculated_zs})</div>`;
-                            } else {
-                                html += `<div style="color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-                                ❌ <b>MISMATCH!</b><br>
-                                Rec: <b>${jsonData.zero_noise_score}</b> vs Calc: <b>${res.calculated_zs}</b> (Diff: ${res.diff.toFixed(2)})
-                                </div>`;
-                            }
-
-                            // Table Style
-                            html += `<table style="width: 100%; border-collapse: collapse; font-size: 0.9em; background: white;">`;
-                            html += `<tr style="background: #f1f1f1; text-align: left;"><th style="padding: 5px;">Item</th><th style="padding: 5px; text-align: right;">Value</th></tr>`;
-
-                            // Base
-                            html += `<tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Base Noise Level</td><td style="padding: 5px; text-align: right; border-bottom: 1px solid #eee;">5.0</td></tr>`;
-
-                            // Credits (Good -> Reduce Noise -> Negative Value in breakdown)
-                            if (breakdown.credits && breakdown.credits.length > 0) {
-                                breakdown.credits.forEach(c => {
-                                    html += `<tr><td style="padding: 5px; border-bottom: 1px solid #eee; color: blue;">- ${c.id} (Good)</td><td style="padding: 5px; text-align: right; border-bottom: 1px solid #eee; color: blue;">-${c.value}</td></tr>`;
-                                });
-                            }
-
-                            // Penalties (Bad -> Increase Noise -> Positive Value in breakdown)
-                            if (breakdown.penalties && breakdown.penalties.length > 0) {
-                                breakdown.penalties.forEach(p => {
-                                    html += `<tr><td style="padding: 5px; border-bottom: 1px solid #eee; color: red;">+ ${p.id} (Bad)</td><td style="padding: 5px; text-align: right; border-bottom: 1px solid #eee; color: red;">+${p.value}</td></tr>`;
-                                });
-                            }
-
-                            // Modifiers (Effect > 0 means Good -> Reduces Noise)
-                            if (breakdown.modifiers && breakdown.modifiers.length > 0) {
-                                breakdown.modifiers.forEach(m => {
-                                    const isGood = m.effect > 0;
-                                    const sign = isGood ? '-' : '+';
-                                    const color = isGood ? 'blue' : 'red';
-                                    const absEffect = Math.abs(m.effect);
-                                    html += `<tr><td style="padding: 5px; border-bottom: 1px solid #eee; color: ${color};">${sign} ${m.id}</td><td style="padding: 5px; text-align: right; border-bottom: 1px solid #eee; color: ${color};">${sign}${absEffect}</td></tr>`;
-                                });
-                            }
-
-                            // Summary Rows
-                            // Use default 0 if undefined to prevent toFixed error
-                            const zsRaw = breakdown.zs_raw !== undefined ? breakdown.zs_raw : 0;
-                            const zsClamped = breakdown.zs_clamped !== undefined ? breakdown.zs_clamped : 0;
-
-                            html += `<tr style="font-weight: bold; background: #fafafa;"><td style="padding: 5px;">Raw ZS</td><td style="padding: 5px; text-align: right;">${zsRaw.toFixed(2)}</td></tr>`;
-                            html += `<tr style="font-weight: bold; background: #333; color: white;"><td style="padding: 5px;">Final ZS (0~10)</td><td style="padding: 5px; text-align: right;">${res.calculated_zs}</td></tr>`;
-
-                            html += `</table>`;
-
-                            // [NEW] Impact Score Verification
-                            html += `<div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px;"></div>`;
-
-                            if (res.impact_match) {
-                                html += `<div style="color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 10px;">✅ <b>Impact MATCH!</b> (Score: ${breakdown.impact_calc})</div>`;
-                            } else {
-                                html += `<div style="color: #856404; background: #fff3cd; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-                                    ⚠️ <b>Impact MISMATCH!</b><br>
-                                    Rec: <b>${breakdown.impact_rec}</b> vs Calc: <b>${breakdown.impact_calc}</b> (Diff: ${breakdown.impact_diff.toFixed(2)})
-                                    </div>`;
-                            }
-
-                            html += `<table style="width: 100%; border-collapse: collapse; font-size: 0.9em; background: white;">`;
-                            html += `<tr style="background: #f1f1f1; text-align: left;"><th style="padding: 5px;">Impact Factor</th><th style="padding: 5px; text-align: right;">Weight</th></tr>`;
-
-                            // Entity
-                            if (breakdown.impact_entity) {
-                                const ent = breakdown.impact_entity;
-                                html += `<tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Entity: ${ent.id}</td><td style="padding: 5px; text-align: right; border-bottom: 1px solid #eee;">${ent.weight}</td></tr>`;
-                            }
-
-                            // Events
-                            if (breakdown.impact_events && breakdown.impact_events.length > 0) {
-                                breakdown.impact_events.forEach(e => {
-                                    html += `<tr><td style="padding: 5px; border-bottom: 1px solid #eee;">Event: ${e.id}</td><td style="padding: 5px; text-align: right; border-bottom: 1px solid #eee;">+${e.weight}</td></tr>`;
-                                });
-                            }
-
-                            html += `<tr style="font-weight: bold; background: #333; color: white;"><td style="padding: 5px;">Calculated Impact</td><td style="padding: 5px; text-align: right;">${breakdown.impact_calc}</td></tr>`;
-                            html += `</table>`;
-
-                            resultDiv.innerHTML = html;
-                            resultDiv.style.background = 'transparent'; // Reset container bg
-                            resultDiv.style.padding = '0'; // Reset padding
-
-                        }
-                    })
-                    .catch(err => {
-                        resultDiv.innerHTML = `Error: ${err}`;
-                    });
-            }
-
-            function markWorthless() {
-                const url = document.getElementById('url').value;
-                if (!url) return;
-
-                fetch('/api/worthless', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: url })
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.status === 'success') {
-                            markAsProcessed('WORTHLESS');
-                            loadNext();
-                        } else {
-                            alert('Error marking as worthless: ' + res.error);
-                        }
-                    });
-            }
-
-            function skipArticle() {
-                const url = document.getElementById('url').value;
-                if (!url) return;
-
-                fetch('/api/skip', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: url })
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.status === 'success') {
-                            markAsProcessed('SKIPPED');
-                            loadNext();
-                        } else {
-                            alert('Error skipping: ' + res.error);
-                        }
-                    });
-            }
-
-            function markAsProcessed(status) {
-                // Update local state
-                if (currentLinks[currentLinkIndex]) {
-                    currentLinks[currentLinkIndex].status = status;
-                }
-                renderLinks();
-            }
-
-            function loadNext() {
-                if (currentLinkIndex < currentLinks.length - 1) {
-                    loadArticle(currentLinkIndex + 1);
-                } else {
-                    alert('All links in this batch processed!');
-                }
-            }
-
-            function scanContent() {
-                if (currentLinks.length === 0) return alert('No links to scan');
-
-                const btn = document.querySelector('button[onclick="scanContent()"]');
-                const originalText = btn.textContent;
-                btn.textContent = 'Scanning...';
-                btn.disabled = true;
-
-                // Process in batches or one by one
-                let processed = 0;
-                const total = currentLinks.length;
-
-                // We'll do a simple loop for now, but in reality this should be a batch API
-                // For now, let's just check the ones that are NEW
-                const newItems = currentLinks.map((item, idx) => ({ ...item, idx })).filter(item => item.status === 'NEW');
-
-                if (newItems.length === 0) {
-                    alert('No new items to scan');
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                    return;
-                }
-
-                // Call a new API endpoint for batch checking
-                fetch('/api/check_quality', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ urls: newItems.map(i => i.url) })
-                })
-                    .then(res => res.json())
-                    .then(results => {
-                        // results: { url: 'valid'|'invalid' }
-                        results.forEach(r => {
-                            const item = currentLinks.find(l => l.url === r.url);
-                            if (item) {
-                                item.status = r.status === 'valid' ? 'NEW' : 'INVALID';
-                            }
-                        });
-                        renderLinks();
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    })
-                    .catch(err => {
-                        alert('Scan failed: ' + err);
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    });
-            }
-
-            function injectCorrection() {
-                const jsonStr = document.getElementById('jsonInput').value;
-                const url = document.getElementById('url').value;
-
-                if (!url) return alert('No URL loaded');
-
-                let jsonData = {};
-                try {
-                    jsonData = JSON.parse(jsonStr);
-                } catch (e) {
-                    return alert('Invalid JSON: ' + e.message);
-                }
-
-                // Confirm
-                if (!confirm('⚠️ Are you sure you want to overwrite the existing file with this content? \n(Original will be backed up)')) {
-                    return;
-                }
-
-                const btn = document.querySelector('button[onclick="injectCorrection()"]');
-                const originalText = btn.textContent;
-                btn.textContent = 'Injecting...';
-                btn.disabled = true;
-
-                fetch('/api/inject_correction', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ...jsonData, url: url })
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.status === 'success') {
-                            alert('✅ Success: ' + res.message);
-                        } else {
-                            alert('❌ Error: ' + res.error);
-                        }
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    })
-                    .catch(err => {
-                        alert('Connection Error: ' + err);
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    });
-            }
-        </script>
+    <script src="/static/js/manual_crawler.js"></script>
 </body>
 
 </html>

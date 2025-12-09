@@ -1,16 +1,52 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import ArticleCard from '@/components/ArticleCard';
+import ArticleDisplay from '@/components/ArticleDisplay';
+
+// CACHE CONFIGURATION
+// Revalidate this page every 0 seconds (No Cache).
+export const revalidate = 0;
 
 async function getData() {
   try {
-    // Navigate up from web/ to News/ then to supplier/data/articles.json
-    // process.cwd() is usually d:\News\web
-    const filePath = path.join(process.cwd(), '..', 'supplier', 'data', 'articles.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(fileContents);
+    // NEW: Read index.json manifest from date directories
+    const dataDir = path.join(process.cwd(), '..', 'supplier', 'data');
+    const entries = await fs.readdir(dataDir, { withFileTypes: true });
+
+    // Filter for directories that look like dates (YYYY-MM-DD)
+    const dateDirs = entries
+      .filter(dirent => dirent.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(dirent.name))
+      .map(dirent => path.join(dataDir, dirent.name));
+
+    const allArticles: any[] = [];
+
+    for (const dir of dateDirs) {
+      // Try to read index.json
+      const manifestPath = path.join(dir, 'index.json');
+      try {
+        const manifestContent = await fs.readFile(manifestPath, 'utf8');
+        const manifest = JSON.parse(manifestContent);
+        if (manifest.articles && Array.isArray(manifest.articles)) {
+          allArticles.push(...manifest.articles);
+        }
+      } catch (err) {
+        // Fallback: If index.json is missing (legacy folder?), scan regular json files
+        // console.warn(`Manifest missing for ${dir}, falling back to scan.`);
+        const files = await fs.readdir(dir);
+        const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json');
+        for (const file of jsonFiles) {
+          try {
+            const content = await fs.readFile(path.join(dir, file), 'utf8');
+            const article = JSON.parse(content);
+            if (article.id || article.url) allArticles.push(article);
+          } catch (e) { /* ignore */ }
+        }
+      }
+    }
+
+    return allArticles;
   } catch (error) {
-    console.error("Error reading articles:", error);
+    console.error("Error reading articles directories:", error);
     return [];
   }
 }
@@ -51,18 +87,36 @@ export default async function Home() {
           </p>
         </header>
 
-        {sortedDates.map(date => (
-          <section key={date} className="mb-16">
-            <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-200 mb-6 border-b border-zinc-200 dark:border-zinc-800 pb-2">
-              {date}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(300px,auto)]">
-              {groupedArticles[date].map((article: any, index: number) => (
-                <ArticleCard key={`${article.url}-${index}`} article={article} />
-              ))}
-            </div>
-          </section>
-        ))}
+        <div className="flex flex-col gap-12">
+          {sortedDates.map(date => {
+            // Sort articles by Combined Score (Descending) -> Highest Combined Score First
+            // Combined Score = (10 - ZNS) + Impact Score
+            // Lower ZNS (better quality) + Higher Impact = Higher Combined Score
+            const dateArticles = groupedArticles[date].sort((a: any, b: any) => {
+              const znsA = a.zero_noise_score || 0;
+              const znsB = b.zero_noise_score || 0;
+              const impactA = a.impact_score || 0;
+              const impactB = b.impact_score || 0;
+
+              const combinedA = (10 - znsA) + impactA;
+              const combinedB = (10 - znsB) + impactB;
+
+              return combinedB - combinedA;
+            });
+
+            return (
+              <section key={date} className="mb-0">
+                <h2 className="text-xl font-bold text-foreground mb-6 flex items-baseline gap-4 border-b border-border pb-2">
+                  <span className="font-serif italic text-3xl">{date.split('.')[2]}</span>
+                  <span className="text-muted-foreground text-sm uppercase tracking-widest font-sans">
+                    {new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long' })}
+                  </span>
+                </h2>
+                <ArticleDisplay articles={dateArticles} loading={false} error={null} />
+              </section>
+            );
+          })}
+        </div>
       </main>
     </div>
   );

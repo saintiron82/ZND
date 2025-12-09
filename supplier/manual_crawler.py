@@ -1,6 +1,7 @@
 import os
 import json
 import asyncio
+import glob
 from flask import Flask, render_template, request, jsonify
 from crawler import load_targets, fetch_links
 from src.db_client import DBClient
@@ -11,10 +12,68 @@ from datetime import datetime, timezone
 app = Flask(__name__)
 db = DBClient()
 robots_checker = RobotsChecker()
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+
+def update_manifest(date_str):
+    """
+    Updates or creates index.json for the given date directory.
+    Aggregates all .json files (excluding index.json) and saves them as a list.
+    """
+    try:
+        dir_path = os.path.join(DATA_DIR, date_str)
+        if not os.path.exists(dir_path):
+            return 
+            
+        json_files = glob.glob(os.path.join(dir_path, '*.json'))
+        articles = []
+        
+        for json_file in json_files:
+            if os.path.basename(json_file) == 'index.json':
+                continue
+                
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                    # [CRITICAL] Inject ID if missing
+                    if 'id' not in data:
+                         filename = os.path.basename(json_file)
+                         parts = filename.replace('.json', '').split('_')
+                         if len(parts) > 1:
+                             data['id'] = parts[-1]
+                         else:
+                             data['id'] = filename
+                             
+                    articles.append(data)
+            except Exception as e:
+                print(f"Error reading {json_file}: {e}")
+
+        # Sort by Impact Score Descending
+        articles.sort(key=lambda x: x.get('impact_score', 0), reverse=True)
+
+        manifest = {
+            "date": date_str,
+            "updated_at": datetime.now().isoformat(),
+            "count": len(articles),
+            "articles": articles
+        }
+
+        manifest_path = os.path.join(dir_path, 'index.json')
+        with open(manifest_path, 'w', encoding='utf-8') as f:
+            json.dump(manifest, f, ensure_ascii=False, indent=2)
+            
+        print(f"✅ [Manifest] Updated index.json for {date_str}")
+        
+    except Exception as e:
+        print(f"❌ [Manifest] Error updating manifest: {e}")
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/inspector')
+def inspector():
+    return render_template('inspector.html')
 
 @app.route('/api/targets')
 def get_targets():
@@ -25,28 +84,51 @@ def get_targets():
 def fetch():
     target_id = request.args.get('target_id')
     targets = load_targets()
-    target = next((t for t in targets if t['id'] == target_id), None)
     
-    if not target:
+    selected_targets = []
+    if target_id == 'all':
+        selected_targets = targets
+    else:
+        found = next((t for t in targets if t['id'] == target_id), None)
+        if found:
+            selected_targets = [found]
+    
+    if not selected_targets:
         return jsonify({'error': 'Target not found'}), 404
         
-    links = fetch_links(target)
+    all_links = []
     
-    # Apply limit
-    limit = target.get('limit', 5)
-    if limit:
-        links = links[:limit]
+    for target in selected_targets:
+        links = fetch_links(target)
+        
+        # Apply limit per targets
+        limit = target.get('limit', 5)
+        if limit:
+            links = links[:limit]
+            
+        # Store as tuple (url, source_id)
+        for link in links:
+             all_links.append((link, target['id']))
     
     # Return all links with status
     link_data = []
-    for link in links:
-        status = db.get_history_status(link)
+    seen_urls = set()
+    
+    for link_tuple in all_links:
+        url = link_tuple[0]
+        source_id = link_tuple[1]
+        
+        if url in seen_urls: continue
+        seen_urls.add(url)
+        
+        status = db.get_history_status(url)
         link_data.append({
-            'url': link,
+            'url': url,
+            'source_id': source_id,
             'status': status if status else 'NEW'
         })
             
-    return jsonify({'links': link_data, 'total': len(links)})
+    return jsonify({'links': link_data, 'total': len(link_data)})
 
 @app.route('/api/extract')
 def extract():
@@ -97,6 +179,30 @@ def extract():
         
     return jsonify(content)
 
+@app.route('/api/extract_batch', methods=['POST'])
+def extract_batch():
+    data = request.json
+    urls = data.get('urls', [])
+    
+    if not urls:
+        return jsonify([])
+
+    async def get_data_batch(url_list):
+        crawler = AsyncCrawler(use_playwright=True)
+        try:
+            await crawler.start()
+            # process_urls is faster than process_url in loop
+            return await crawler.process_urls(url_list)
+        finally:
+            await crawler.close()
+
+    try:
+        results = asyncio.run(get_data_batch(urls))
+        # Ensure results have 'url' field which process_urls adds
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({'error': f"Batch extraction failed: {str(e)}"}), 500
+
 @app.route('/api/save', methods=['POST'])
 def save():
     data = request.json
@@ -126,6 +232,12 @@ def save():
     try:
         print(f"💾 [Manual Save] Saving article: {final_doc.get('title_ko')}")
         db.save_article(final_doc)
+        
+        # [NEW] Update Manifest
+        # Extract date from crawled_at which we just set
+        date_str = final_doc['crawled_at'].split('T')[0]
+        update_manifest(date_str)
+        
         return jsonify({'status': 'success'})
     except Exception as e:
         print(f"❌ [Manual Save] Error: {e}")
@@ -314,6 +426,17 @@ def inject_correction():
         data['impact_score'] = scores['impact_score']
         
         success, message = db.inject_correction_with_backup(data, url)
+        
+        # [NEW] Update Manifest
+        try:
+            # Extract date from crawled_at or use current date if needed
+            # crawled_at format: "2025-12-09T..."
+            crawled_at = data.get('crawled_at')
+            if crawled_at:
+                date_str = crawled_at.split('T')[0]
+                update_manifest(date_str)
+        except Exception as e:
+            print(f"Warning: Failed to update manifest after injection: {e}")
         
         if success:
             return jsonify({

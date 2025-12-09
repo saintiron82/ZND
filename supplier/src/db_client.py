@@ -233,7 +233,10 @@ class DBClient:
         files = glob.glob(search_pattern, recursive=True)
         
         if not files:
-            return False, "Original file not found. Use Save instead."
+            # Fallback: If original not found, just save as new file
+            print(f"⚠️ [Inject] Original not found for {url}, saving as new.")
+            self._save_to_individual_file(article_data)
+            return True, "Created new file (Original not found)"
             
         # Use the most recent one
         files.sort(key=os.path.getmtime, reverse=True)

@@ -39,7 +39,7 @@ export default function PageFrame({
                             {prevDate && (
                                 <button
                                     onClick={() => onDateChange(prevDate)}
-                                    className="fixed left-8 top-32 flex flex-col items-center gap-2 p-3 text-foreground transition-all z-50 rounded-lg group opacity-40 hover:opacity-100 hover:bg-background/80 hover:backdrop-blur-sm hover:border hover:border-border hover:shadow-sm"
+                                    className="fixed left-8 top-32 flex flex-col items-center gap-2 p-3 text-foreground transition-all z-[60] rounded-lg group opacity-40 hover:opacity-100 hover:bg-background/80 hover:backdrop-blur-sm hover:border hover:border-border hover:shadow-sm"
                                 >
                                     <ChevronLeft className="w-10 h-10" />
                                     <span className="text-sm font-black tracking-widest uppercase whitespace-nowrap max-h-0 opacity-0 overflow-hidden group-hover:max-h-10 group-hover:opacity-100 transition-all duration-300">
@@ -50,7 +50,7 @@ export default function PageFrame({
                             {nextDate && (
                                 <button
                                     onClick={() => onDateChange(nextDate)}
-                                    className="fixed right-8 top-32 flex flex-col items-center gap-2 p-3 text-foreground transition-all z-50 rounded-lg group opacity-40 hover:opacity-100 hover:bg-background/80 hover:backdrop-blur-sm hover:border hover:border-border hover:shadow-sm"
+                                    className="fixed right-8 top-32 flex flex-col items-center gap-2 p-3 text-foreground transition-all z-[60] rounded-lg group opacity-40 hover:opacity-100 hover:bg-background/80 hover:backdrop-blur-sm hover:border hover:border-border hover:shadow-sm"
                                 >
                                     <ChevronRight className="w-10 h-10" />
                                     <span className="text-sm font-black tracking-widest uppercase whitespace-nowrap max-h-0 opacity-0 overflow-hidden group-hover:max-h-10 group-hover:opacity-100 transition-all duration-300">

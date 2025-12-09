@@ -1,0 +1,55 @@
+{
+  "title_ko": "비플, 머스크·저커버그 얼굴 로봇견 '레귤러 애니멀스' 전시…AI와 NFT 풍자 아트 논란",
+  "summary": "유명 디지털 아티스트 비플(Beeple)이 일론 머스크, 마크 저커버그 등 기술 거물의 얼굴 가면을 씌운 사족보행 로봇견 '레귤러 애니멀스'를 마이애미에서 전시하여 화제다.\n이 로봇은 AI로 처리된 이미지를 배설물 형태로 출력하며, 이는 기술 대기업 CEO들의 막대한 영향력을 풍자하고 AI의 렌즈를 통해 세상을 바라보게 될 현실을 표현하려는 의도이다.\n로봇은 대당 10만 달러(약 1.5억 원)에 판매 중이며, NFT와 로봇, AI 기술이 결합된 이 작품은 역동적인 조각 예술의 새로운 형태로 평가받고 있다.",
+  "zero_noise_score": 6.8,
+  "impact_score": 3.74,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사의 핵심 주체는 디지털 아티스트인 비플(Beeple)이며, 그가 제작하고 전시한 예술 작품에 관한 내용이다. 로봇의 등장인물은 비판의 대상이므로 주체가 될 수 없으며, 아티스트는 TIER 1~4에 해당하지 않아 TIER Z로 분류한다."
+    },
+    "events": [
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "비플은 NFT 아트 시장의 주류 진입에 결정적인 역할을 한 권위 있는 아티스트이며, 그의 작품 전시는 TIER Z 주체가 달성한 이례적 성과로 간주하여 이 가중치를 적용한다."
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "예술 작품 전시회는 시장 동향에 영향을 주지만, 직접적인 기술 또는 정책 변화는 아니므로 일상적 시장 동향 보고 수준의 영향력을 반영한다."
+      }
+    ]
+  },
+  "reasoning": "기사는 유명 아티스트(TIER Z)의 풍자 예술 작품 전시를 다루며, AI와 로봇 기술을 활용한 예술적 성과(ACADEMIC_COMPETITION_WIN)에 초점을 맞추고 있습니다. 작품 자체가 기술 거물을 풍자하고 있지만, 기사는 팩트 전달에 충실하고 지나친 선정성(SENSATIONAL_TITLE)이나 추측(FUTURE_PROMISE_ONLY) 없이 작품의 의도와 배경을 설명하여 비교적 높은 품질 점수를 유지했습니다.",
+  "tags": [
+    "AI_ETHICS",
+    "GEN_AI",
+    "AGENTS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 2
+      }
+    ],
+    "credits": [
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      },
+      {
+        "id": "INDUSTRY_CONSENSUS_CHECK",
+        "value": 2
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204591",
+  "source_id": "aitimes",
+  "original_title": "머스크·저커버그 얼굴 달린 1.5억짜리 로봇 강아지 등장",
+  "crawled_at": "2025-12-09T07:00:17.447599+00:00",
+  "edition": "251209_TUE_1"
+}

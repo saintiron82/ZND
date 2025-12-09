@@ -1,64 +1,102 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy, Timestamp } from 'firebase/firestore';
+// import { db } from '@/lib/firebase';
+// import { collection, getDocs, query, orderBy, Timestamp } from 'firebase/firestore';
 import fs from 'fs';
 import path from 'path';
 
-// Cache duration: 1 minute
-export const revalidate = 60;
+// Cache duration: 0 (No cache)
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
-async function getLocalArticles() {
+async function getLocalArticles(targetDate: string, requestHelper: { headers: Headers, result: { notModified: boolean, articles: any[], lastModified?: string } }) {
     try {
-        // Assuming process.cwd() is the 'web' directory
         const dataDir = path.join(process.cwd(), '../supplier/data');
-
         if (!fs.existsSync(dataDir)) {
-            console.warn(`[API] Local data directory not found: ${dataDir}`);
-            return [];
+            return;
         }
 
-        const articles: any[] = [];
+        const fullPath = path.join(dataDir, targetDate);
+        if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isDirectory()) {
+            return;
+        }
 
-        // Read date directories (e.g., 2025-12-07)
-        const dateDirs = fs.readdirSync(dataDir).filter(file => {
-            return fs.statSync(path.join(dataDir, file)).isDirectory();
-        });
+        // 1. Try to read daily_summary.json
+        const summaryPath = path.join(fullPath, 'daily_summary.json');
+        if (fs.existsSync(summaryPath)) {
+            try {
+                const summaryContent = fs.readFileSync(summaryPath, 'utf-8');
+                const summary = JSON.parse(summaryContent);
 
-        // Sort date dirs descending to get latest first
-        dateDirs.sort().reverse();
+                // Smart Caching Check
+                const lastModified = summary.last_updated; // Expect ISO string
+                requestHelper.result.lastModified = lastModified;
 
-        // Limit to last 3 days to avoid reading too many files
-        const recentDirs = dateDirs.slice(0, 3);
-
-        for (const dateDir of recentDirs) {
-            const fullPath = path.join(dataDir, dateDir);
-            const files = fs.readdirSync(fullPath).filter(f => f.endsWith('.json'));
-
-            for (const file of files) {
-                try {
-                    const content = fs.readFileSync(path.join(fullPath, file), 'utf-8');
-                    const article = JSON.parse(content);
-                    // Add ID if missing (use filename)
-                    if (!article.id) {
-                        article.id = file.replace('.json', '');
+                const ifModifiedSince = requestHelper.headers.get('if-modified-since');
+                if (ifModifiedSince && lastModified) {
+                    const ifModifiedTime = new Date(ifModifiedSince).getTime();
+                    const lastModifiedTime = new Date(lastModified).getTime();
+                    // Allow some small slack or exact match.
+                    if (lastModifiedTime <= ifModifiedTime + 1000) {
+                        requestHelper.result.notModified = true;
+                        return;
                     }
-                    articles.push(article);
-                } catch (e) {
-                    console.error(`[API] Error reading file ${file}:`, e);
+                }
+
+                if (summary.articles) {
+                    requestHelper.result.articles = summary.articles;
+                    return;
+                }
+            } catch (e) {
+                console.warn('[API] Error reading daily_summary.json, falling back to file scan:', e);
+            }
+        }
+
+        // 2. Fallback: Scan individual files
+        const articles: any[] = [];
+        const files = fs.readdirSync(fullPath).filter(f => f.endsWith('.json') && f !== 'daily_summary.json');
+
+        let maxMtime = 0;
+
+        for (const file of files) {
+            try {
+                const filePath = path.join(fullPath, file);
+                const stats = fs.statSync(filePath);
+                if (stats.mtimeMs > maxMtime) maxMtime = stats.mtimeMs;
+
+                const content = fs.readFileSync(filePath, 'utf-8');
+                const article = JSON.parse(content);
+
+                if (article.zero_noise_score !== undefined && article.score === undefined) {
+                    article.score = article.zero_noise_score;
+                }
+                if (!article.id) {
+                    article.id = file.replace('.json', '');
+                }
+                articles.push(article);
+            } catch (e) {
+                console.error(`[API] Error reading file ${file}:`, e);
+            }
+        }
+
+        // Use latest file mtime as Last-Modified if summary missing
+        if (maxMtime > 0) {
+            const lastModDate = new Date(maxMtime).toISOString();
+            requestHelper.result.lastModified = lastModDate;
+
+            const ifModifiedSince = requestHelper.headers.get('if-modified-since');
+            if (ifModifiedSince) {
+                const ifModifiedTime = new Date(ifModifiedSince).getTime();
+                if (Math.floor(maxMtime / 1000) * 1000 <= ifModifiedTime + 1000) {
+                    requestHelper.result.notModified = true;
+                    return;
                 }
             }
         }
 
-        // Sort by crawled_at desc
-        return articles.sort((a, b) => {
-            const dateA = new Date(a.crawled_at || 0).getTime();
-            const dateB = new Date(b.crawled_at || 0).getTime();
-            return dateB - dateA;
-        });
+        requestHelper.result.articles = articles;
 
     } catch (error) {
         console.error('[API] Error reading local files:', error);
-        return [];
     }
 }
 
@@ -69,46 +107,7 @@ export async function GET(request: Request) {
         const userAgent = request.headers.get('user-agent') || 'Unknown';
         console.log(`[API Request] Time: ${new Date().toISOString()}, UA: ${userAgent}`);
 
-        let articles: any[] = [];
-        let source = 'Firestore';
-
-        try {
-            const articlesRef = collection(db, 'articles');
-            const q = query(articlesRef, orderBy('crawled_at', 'desc'));
-            const querySnapshot = await getDocs(q);
-
-            articles = querySnapshot.docs.map(doc => {
-                const data = doc.data();
-                let crawledAt = data.crawled_at;
-                if (crawledAt instanceof Timestamp) {
-                    crawledAt = crawledAt.toDate().toISOString();
-                } else if (crawledAt && typeof crawledAt.toDate === 'function') {
-                    crawledAt = crawledAt.toDate().toISOString();
-                }
-
-                return {
-                    id: doc.id,
-                    ...data,
-                    crawled_at: crawledAt
-                };
-            });
-        } catch (dbError) {
-            console.warn('[API] Firestore connection failed, trying local files...', dbError);
-        }
-
-        // Fallback to local files if DB returned nothing or failed
-        if (articles.length === 0) {
-            console.log('[API] No articles in DB, checking local files...');
-            articles = await getLocalArticles();
-            source = 'Local Files';
-        }
-
-        console.log(`[API] Returning ${articles.length} articles from ${source}`);
-
-        // Filter out noise (score < 4)
-        const validArticles = articles.filter((a: any) => (a.score ?? 0) >= 4);
-
-        // Get available dates from local directories
+        // 1. Get available dates from local directories FIRST to determine default date
         const dataDir = path.join(process.cwd(), '../supplier/data');
         let availableDates: string[] = [];
         if (fs.existsSync(dataDir)) {
@@ -117,12 +116,62 @@ export async function GET(request: Request) {
             }).sort().reverse();
         }
 
+        // 2. Determine target date (Requested -> Latest Available -> Today)
+        const targetDate = requestedDate || availableDates[0] || new Date().toISOString().split('T')[0];
+
+        // Helper object to carry results
+        const resultHelper = {
+            notModified: false,
+            articles: [] as any[],
+            lastModified: undefined as string | undefined
+        };
+
+        // Fetch Local Articles with Smart Caching
+        await getLocalArticles(targetDate, { headers: request.headers, result: resultHelper });
+
+        // Handle 304 Not Modified
+        if (resultHelper.notModified) {
+            console.log(`[API] 304 Not Modified for ${targetDate}`);
+            return new NextResponse(null, { status: 304 });
+        }
+
+        let articles = resultHelper.articles;
+        const source = 'Local Files Only';
+
+        // Sort by crawled_at desc
+        articles.sort((a, b) => {
+            const dateA = new Date(a.crawled_at || 0).getTime();
+            const dateB = new Date(b.crawled_at || 0).getTime();
+            return dateB - dateA;
+        });
+
+        console.log(`[API] Returning ${articles.length} articles from ${source} for date ${targetDate}`);
+
+        let validArticles = articles.filter((a: any) => {
+            const score = a.score ?? a.zero_noise_score ?? 0;
+            return score >= 4;
+        });
+
+        // Date filter
+        validArticles = validArticles.filter((a: any) => {
+            if (!a.crawled_at) return false;
+            const dateStr = new Date(a.crawled_at).toISOString().split('T')[0];
+            return dateStr === targetDate;
+        });
+
+        const headers: any = {
+            'Content-Type': 'application/json',
+        };
+        if (resultHelper.lastModified) {
+            headers['Last-Modified'] = resultHelper.lastModified;
+        }
+
         return NextResponse.json({
             articles: validArticles,
-            currentDate: requestedDate || availableDates[0] || new Date().toISOString().split('T')[0],
+            currentDate: targetDate,
             availableDates: availableDates,
             source: source
-        });
+        }, { headers });
 
     } catch (error) {
         console.error('Error serving articles:', error);

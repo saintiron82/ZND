@@ -1,0 +1,63 @@
+{
+  "title_ko": "AI 데이터센터 폭증: 마이크로소프트, 탄소 배출량 23.4% 증가로 지속가능성 목표 '빨간불'",
+  "summary": "마이크로소프트의 2025년 지속가능성 보고서에 따르면, 클라우드 및 AI 운영을 위한 데이터센터 건설 급증으로 인해 2020년 이후 탄소 배출량이 23.4% 증가했습니다. 배출량 대부분은 데이터센터 건립에 사용되는 철강, 콘크리트, 반도체 칩 등의 원자재 및 서비스(Scope 3)에서 발생하며, 이는 전체 배출량의 97% 이상을 차지합니다. MS는 청정 에너지 구매 및 탄소 제거에 투자하고 있지만, AI 중심의 성장이 2030년까지 탄소 네거티브 목표 달성을 더욱 어렵게 만드는 주요 도전 과제로 작용하고 있습니다.",
+  "zero_noise_score": 6.8,
+  "impact_score": 6.18,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 5,
+      "reasoning": "기사의 핵심 주체는 마이크로소프트(Microsoft)이며, 이는 AI 생태계 지배자(TIER_1_ECOSYSTEM_RULERS)에 해당한다. 보고서 발표 및 배출량 증가는 회사의 공식적인 성과 보고에 해당하므로 TIER 1 가중치를 적용한다."
+    },
+    "events": [
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "AI 운영을 위한 데이터센터 확충이 탄소 배출량 증가의 주원인이며, 이는 회사의 핵심 비즈니스 전략(AI/Cloud)의 부작용을 다루는 내용이므로 BIZ_STRATEGY_SHIFT를 적용한다."
+      },
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "해당 기사는 AI 인프라 확충에 따른 환경 영향(Scope 3 배출)이라는 중대한 이슈와 트레이드오프를 다루고 있으며, 이는 단순한 DAILY_UPDATE 이상의 중요성을 가진다. 환경/지속가능성 목표 달성 실패 가능성을 포함하며, TIER 1 주체의 부정적 결과를 포함하고 있으므로, 기술 성과 외의 비즈니스 관련 중요한 트레이드오프를 강조하기 위해 ACADEMIC_COMPETITION_WIN을 이벤트의 명시적 상한선으로 채택한다. (TIER 1 주체의 부정적 외부성 보고는 PARADIGM_SHIFT_TECH와 같은 기술적 돌파구와는 성격이 다르다.)"
+      }
+    ]
+  },
+  "reasoning": "TIER 1 주체의 공식적인 환경 보고서 발표를 다루어 높은 Impact Score를 획득했으나, 기사 자체는 깊이 있는 분석(POLICY_IMPACT_ANALYSIS 등)보다는 보고서의 내용과 대변인 코멘트를 중심으로 구성되어 높은 Quality Score를 얻지 못하고 중간 수준의 ZeroNoise Score(ZS)를 기록했다. 환경 문제를 다루면서도 해결책에 대한 구체적인 논의 부재가 감점 요인이다.",
+  "tags": [
+    "BIZ_STRATEGY",
+    "AI_CHIP",
+    "AI_ETHICS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "LACK_OF_ETHICAL_CONTEXT",
+        "value": 3.5
+      },
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 2.5
+      },
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 2
+      }
+    ],
+    "credits": [
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      },
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 1
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://techcrunch.com/2025/06/02/breakneck-data-center-growth-challenges-microsofts-sustainability-goals/",
+  "source_id": "techcrunch_ai",
+  "original_title": "Breakneck data center growth challenges Microsoft’s sustainability goals | TechCrunch",
+  "crawled_at": "2025-12-09T07:28:16.558948+00:00",
+  "edition": "251209_TUE_1"
+}

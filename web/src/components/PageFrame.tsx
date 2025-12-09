@@ -63,8 +63,9 @@ export default function PageFrame({
                 })()}
             </div>
 
+            <Header currentDate={currentDate} />
+
             <div className="relative max-w-7xl mx-auto">
-                <Header currentDate={currentDate} />
 
                 {/* Mobile: Simple row below header */}
                 <div className="md:hidden flex justify-between items-center mb-6 px-2">

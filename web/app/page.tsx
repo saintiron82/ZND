@@ -33,7 +33,7 @@ export default function Home() {
         setLoading(true);
         try {
             const url = date ? `/api/articles?date=${date}` : '/api/articles';
-            const response = await fetch(url);
+            const response = await fetch(url, { cache: 'no-store' });
             if (!response.ok) {
                 throw new Error('Failed to fetch articles');
             }

@@ -1,15 +1,45 @@
 [
   {
-    "id": "geeknews_new",
+    "id": "aitimes",
     "type": "html",
-    "url": "https://news.hada.io/new",
-    "selector": "div.topic_row div.topictitle a",
-    "limit": 2
+    "url": "https://www.aitimes.com/",
+    "selector": "div.auto-content a",
+    "limit": 10
   },
   {
-    "id": "hackernews_rss",
+    "id": "techcrunch_ai",
     "type": "rss",
-    "url": "https://news.ycombinator.com/rss",
-    "limit": 2
+    "url": "https://techcrunch.com/tag/artificial-intelligence/feed/",
+    "limit": 10
+  },
+  {
+    "id": "venturebeat",
+    "type": "rss",
+    "url": "https://venturebeat.com/feed/",
+    "limit": 10
+  },
+  {
+    "id": "google_ai_blog",
+    "type": "rss",
+    "url": "https://blog.google/technology/ai/rss/",
+    "limit": 10
+  },
+  {
+    "id": "deepmind",
+    "type": "rss",
+    "url": "https://www.deepmind.com/blog/rss.xml",
+    "limit": 10
+  },
+  {
+    "id": "the_decoder",
+    "type": "rss",
+    "url": "https://the-decoder.com/feed/",
+    "limit": 10
+  },
+  {
+    "id": "techneedle",
+    "type": "rss",
+    "url": "https://techneedle.com/feed",
+    "limit": 10
   }
 ]

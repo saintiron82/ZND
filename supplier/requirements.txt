@@ -5,3 +5,6 @@ newspaper3k
 firebase-admin
 python-dotenv
 lxml_html_clean
+flask
+aiohttp
+playwright

@@ -1,0 +1,59 @@
+{
+  "title_ko": "QLoRA 파인튜닝으로 LLM의 '전략적 가치 편향'을 기술 중심 판단으로 성공적 개선",
+  "summary": "삼성 테크 블로그는 LLM이 기술 비교 시 **전략적 가치(SV)에 편중되는 문제**를 해결하기 위해 **PEFT 방식의 QLoRA 파인튜닝**을 적용한 실험 결과를 공유했습니다.\n연구팀은 편향된 응답을 기술 중심의 근거(기능적 목적, 기술적 고유성)로 재작성한 데이터셋을 구축하고, 이를 QLoRA로 미세 조정하여 대규모 리소스 없이도 **기술적 차별성에 집중**하는 LLM을 효율적으로 구현했습니다.\n이 접근법은 AI의 **윤리적/사회적 영향(편향 개선)**과 **기술적 깊이**를 동시에 확보하는 실용적인 LLM 조정 방법론을 제시합니다.",
+  "zero_noise_score": 1.5,
+  "impact_score": 5.15,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_3_GLOBAL_TECH",
+      "weight": 2.5,
+      "reasoning": "기사의 주체는 삼성 테크 블로그이며, 삼성은 AI 인프라를 보유한 글로벌 빅테크에 해당하므로 'TIER_3_GLOBAL_TECH' 가중치를 적용합니다."
+    },
+    "events": [
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "LLM의 편향을 개선하고 기술 중심의 판단을 학습시키는 것은 학술적/기술적 성과 달성(SOTA)의 일종으로 볼 수 있으며, TIER 3 주체가 받을 수 있는 기술 성과 관련 Impact Event의 상한선인 'ACADEMIC_COMPETITION_WIN'을 적용합니다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "LLM을 활용한 기술 비교 분석 과정에서 중요한 편향 개선 전략을 발표한 것은 'BIZ_STRATEGY_SHIFT'로 간주할 수 있습니다. (2개 이벤트 선택 가능)"
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "파인튜닝 기술(QLoRA)의 세부적인 적용 과정 설명은 'DAILY_UPDATE'로도 볼 수 있습니다. (3개 이벤트 선택 가능)"
+      }
+    ]
+  },
+  "reasoning": "AI의 핵심 과제인 LLM 편향 개선에 대해 구체적이고 재현 가능한 기술적 해결책(QLoRA 파인튜닝)을 제시함으로써 높은 품질 점수를 획득했으며, 글로벌 빅테크(삼성)의 기술 블로그 발표라는 점에서 상당한 영향력을 가집니다.",
+  "tags": [
+    "LLM",
+    "AI_ETHICS",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "ETHICAL_FRAMEWORK_DEBATE",
+        "value": 3.5
+      },
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 3
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://techblog.samsung.com/blog/article/75",
+  "source_id": "geeknews_new",
+  "original_title": "Samsung Tech Blog - 파인튜닝으로 LLM 편향 개선하기",
+  "crawled_at": "2025-12-09T05:45:21.119236+00:00",
+  "edition": "251209_TUE_1"
+}

@@ -1,0 +1,59 @@
+{
+  "title_ko": "AI 코딩 에이전트: 혁신과 현실 사이의 괴리, 엔터프라이즈 환경 도입 장벽 분석",
+  "summary": "AI 코딩 에이전트는 코드 생성의 용이성을 제공하지만, 대규모 엔터프라이즈 환경에서 통합, 확장성, 보안 및 유지보수 측면에서 심각한 한계를 드러내고 있습니다. 특히, 제한된 도메인 이해, 하드웨어 및 환경 인식 부족, 반복되는 환각 현상, 그리고 기업 수준의 보안/코딩 관행 미준수 등의 문제로 인해 개발자의 지속적인 '보모 역할(babysitting)'이 필요합니다. 궁극적으로 AI 에이전트의 가치는 코드 생성 능력보다 개발자가 아키텍처를 설계하고 구현을 검증하는 능력에 달려 있습니다.",
+  "zero_noise_score": 0.0,
+  "impact_score": 1.74,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사는 LinkedIn의 스태프 소프트웨어 엔지니어와 Microsoft의 ML 엔지니어라는 개별 전문가들의 경험과 의견을 담고 있습니다. 이는 TIER 1 기업의 공식적인 주도 발표가 아니며, 핵심 인물의 평가/의견으로 TIER_Z_GENERAL_PARTICIPANT 가중치를 적용합니다."
+    },
+    "events": [
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "AI 코딩 에이전트 도입과 관련된 개발 문화 및 전략의 변화(Babysitting, 디버깅 시간 증가 등)를 다루므로 BIZ_STRATEGY_SHIFT를 적용합니다."
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "AI 코딩 에이전트 사용 시 발생하는 일상적인 문제점(버그, 환경 오류, 구식 SDK 사용 등)과 시장 동향에 대한 보고 성격을 포함하므로 DAILY_UPDATE를 적용합니다."
+      }
+    ]
+  },
+  "reasoning": "현실적인 기술적 한계와 현업의 어려움을 심도 있게 분석하고 구체적인 리소스 제약 사항 및 트레이드오프를 제시하여 최고 품질 점수(V=10.0, ZS=0.0)를 획득했습니다. 영향력 측면에서는 개별 전문가의 의견 제시로 분류되어 상대적으로 낮은 IS 점수(1.74)를 받았습니다.",
+  "tags": [
+    "GEN_AI",
+    "WORK_IMPACT",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 0.3
+      }
+    ],
+    "credits": [
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 3
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      },
+      {
+        "id": "INDUSTRY_CONSENSUS_CHECK",
+        "value": 1
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://venturebeat.com/ai/why-ai-coding-agents-arent-production-ready-brittle-context-windows-broken",
+  "source_id": "venturebeat",
+  "original_title": "Why AI coding agents aren’t production-ready: Brittle context windows, broken refactors, missing operational awareness",
+  "crawled_at": "2025-12-09T07:32:38.024123+00:00",
+  "edition": "251209_TUE_1"
+}

@@ -1,0 +1,63 @@
+{
+  "title_ko": "AI 무용론은 기업의 리스크: 'AI 찌꺼기론'은 진정한 능력 발전을 은폐한다",
+  "summary": "AI의 빠른 발전에도 불구하고, 대중적 정서는 'AI 찌꺼기(AI slop)'라는 용어로 최신 AI 모델의 성과를 폄하하며 AI 발전이 둔화되고 있다는 부정적인 방향으로 급변했습니다. 컴퓨터 과학자이자 연구 엔지니어인 필자는 이러한 AI 무용론이 인류가 인지적 우위를 잃을 수 있다는 두려움에 대한 사회적 방어 기제이며, 실체가 없는 거품론과는 거리가 멀다고 주장합니다. 실제로 AI는 대부분의 인지 작업에서 인간을 능가할 정도로 빠르게 발전하고 있으며, 기업들의 AI 투자 증가는 이러한 현실을 뒷받침합니다.",
+  "zero_noise_score": 0.0,
+  "impact_score": 2.48,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사의 주요 주체는 '컴퓨터 과학자이자 연구 엔지니어'로, 특정 TIER 1 기업이나 규제 기관의 공식 입장이 아닌, 저명한 전문가의 평가 및 의견 제시이므로 ZND 규칙에 따라 TIER_Z_GENERAL_PARTICIPANT로 분류합니다."
+    },
+    "events": [
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "McKinsey 보고서, Deloitte 설문조사 등 조직의 AI 도입 및 투자 증가(20% 가치 창출, 85% 투자 증대)를 언급하며, AI 도입이 대규모 조직 전략 변경 및 핵심 제품 전략 변경의 근거가 될 수 있음을 시사합니다."
+      },
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "Gemini 3의 인상적인 도약 등 기술적 진보와 성능 향상에 대한 언급이 있으며, TIER Z 주체가 언급할 수 있는 기술 성과 관련 Impact Event의 상한선인 ACADEMIC_COMPETITION_WIN을 적용합니다."
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "GPT-5 출시와 같은 일반적인 제품 업데이트 및 시장 동향 보고가 간접적으로 언급됩니다."
+      }
+    ]
+  },
+  "reasoning": "AI 전문가의 깊이 있는 비판적 분석(Credit 합계 10.5로 품질 만점)을 담고 있으며, AI 거품론을 반박하는 객관적 데이터와 윤리적/사회적 파급 효과에 대한 건설적 논의를 제시하여 ZeroNoise Score가 0.0(최고 품질)로 산출되었습니다. Impact Score는 전문가 의견 기반으로 2.48로 평가됩니다.",
+  "tags": [
+    "AI_ETHICS",
+    "WORK_IMPACT",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "ETHICAL_FRAMEWORK_DEBATE",
+        "value": 3.5
+      },
+      {
+        "id": "COMPARATIVE_EVALUATION",
+        "value": 2.5
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      },
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 3
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://venturebeat.com/ai/ai-denial-is-becoming-an-enterprise-risk-why-dismissing-slop-obscures-real",
+  "source_id": "venturebeat",
+  "original_title": "AI denial is becoming an enterprise risk: Why dismissing “slop” obscures real capability gains",
+  "crawled_at": "2025-12-09T07:33:38.539618+00:00",
+  "edition": "251209_TUE_1"
+}

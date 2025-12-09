@@ -1,0 +1,46 @@
+{
+  "title_ko": "한글과컴퓨터, 전 직군 AI 에이전트 상시 활용 의무화로 '업무 AX' 전면 선언",
+  "summary": "한글과컴퓨터(한컴)는 내년부터 개발 직군뿐만 아니라 기획, 마케팅, 재무, 인사 등 비개발 직군을 포함한 전사 모든 직무에 AI 에이전트 상시 활용을 의무화한다고 발표했다.\n이는 업무 프로세스를 AI 중심으로 재설계하려는 김연수 대표의 강력한 의지를 반영한 조치로, 직무별 최적화된 버티컬 AI 솔루션을 선정하고 전사 밸류체인에 적용할 계획이다.\n한컴은 스스로를 AI 테스트베드로 삼아 내부 검증을 거쳐 실전형 AI 솔루션을 고객에게 제공하고, 단순 반복 업무를 AI가 대체함으로써 임직원들이 창의적 가치에 몰입할 수 있는 기업 문화로 유연하게 진화할 것을 기대하고 있다.",
+  "zero_noise_score": 6.0,
+  "impact_score": 3.09,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_3_GLOBAL_TECH",
+      "weight": 2.5,
+      "reasoning": "한글과컴퓨터(한컴)는 국내 소프트웨어 및 IT 분야의 주요 기업으로, AI 인프라를 보유한 글로벌 빅테크는 아니지만 AI 전환(AX)을 주도적으로 채택하고 전사적으로 적용하는 선도적 기업으로 TIER 3으로 분류하는 것이 적절하다."
+    },
+    "events": [
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "전 직군에 걸쳐 AI 에이전트 사용을 의무화하고 업무 프로세스를 AI 중심으로 재설계하는 것은 단순한 도구 도입을 넘어선, 일하는 방식과 사고방식 자체를 바꾸는 대규모 조직 및 핵심 제품 전략의 변경(AX 실증 실험)에 해당한다."
+      }
+    ]
+  },
+  "reasoning": "한컴의 전사적 AI 에이전트 의무화는 국내 기업의 AX 전환에 있어 주목할 만한 선도적 사례로, 중견 기술 기업(TIER 3)의 핵심 비즈니스 전략 변경(BIZ_STRATEGY_SHIFT)에 해당하여 적절한 영향력 점수를 부여했습니다. 기사 내용 자체는 기업의 공식 발표를 그대로 전달하고 있어 보도자료 톤(PRESS_RELEASE_TONE)의 페널티를 받았으나, 구체적인 적용 분야를 명시하고 전략적 의지를 밝혀 단순한 미래 약속(FUTURE_PROMISE_ONLY) 페널티는 피했습니다.",
+  "tags": [
+    "BIZ_STRATEGY",
+    "WORK_IMPACT",
+    "AGENTS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 2.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204597",
+  "source_id": "aitimes",
+  "original_title": "한컴 &quot;전 직군 AI 에이전트 사용 의무화&quot;",
+  "crawled_at": "2025-12-09T06:59:52.724045+00:00",
+  "edition": "251209_TUE_1"
+}

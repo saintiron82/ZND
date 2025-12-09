@@ -1,0 +1,55 @@
+{
+  "title_ko": "AI·로봇·빅데이터, 산업 전 과정을 연결하는 'STK 2026' 코엑스 전관 개최 예고",
+  "summary": "국내 최대 AI·테크 전문 전시회인 ‘STK 2026(스마트테크코리아)’이 2026년 6월 10일부터 12일까지 서울 코엑스 전관에서 개최됩니다. 이 행사는 'The Tech Nexus'를 주제로 AI&빅데이터쇼, 로보테크쇼 등 6개 전문 전시를 통해 산업 밸류체인 전반의 AX(AI Transformation) 흐름을 선도적으로 반영합니다. 40개국 이상 글로벌 기업과 바이어가 참여하는 B2B 전문 비즈니스 쇼로, 기술 컨퍼런스 '테크콘(TechCon)'과 함께 실질적인 기술 협력 및 시장 확장을 지원할 예정입니다.",
+  "zero_noise_score": 6.0,
+  "impact_score": 1.74,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사의 주체는 전시회 주최사인 엑스포럼(ExpoForum) 및 전시회 자체(STK 2026)로, AI 생태계 지배자나 정책 기관에 해당하지 않는 일반 기업/행사 주최 측이므로 TIER Z로 분류한다."
+    },
+    "events": [
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "주요 기술 발표나 전략적 변화가 아닌, 대규모 전문 전시회 개최 예고 및 프로그램 구성에 대한 단순 정보 제공이므로, 일상적인 시장 동향 보고에 가까운 'DAILY_UPDATE'로 분류한다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "전시회가 AI Transformation(AX) 시대의 흐름을 반영하여 6개 전문 전시 구성 및 'AI혁신(1층)에서 AI제조·유통물류 자동화(3층)'로 이어지는 로드맵을 구현하는 등 핵심 산업 전시 전략의 변경을 포함하고 있다."
+      }
+    ]
+  },
+  "reasoning": "STK 2026 개최 소식과 전시 구성을 다룬 기사로, 주최 주체(TIER Z)와 정보의 성격상 Impact Score는 낮다. 내용 자체는 전시회 홍보에 가까운 보도자료 톤이 강해 품질 점수(V)가 크게 하락하여 최종 ZeroNoise Score는 높게 산출되었다.",
+  "tags": [
+    "BIZ_STRATEGY",
+    "GEN_AI",
+    "AGENTS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 3
+      },
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 2.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "COMPARATIVE_EVALUATION",
+        "value": 2.5
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204600",
+  "source_id": "aitimes",
+  "original_title": "국내 최대 ‘STK 2026∙AI&amp;빅데이터쇼’, 내년 6월 코엑스 전관 개최",
+  "crawled_at": "2025-12-09T06:32:23.869932+00:00",
+  "edition": "251209_TUE_1"
+}

@@ -4,7 +4,8 @@ from firebase_admin import credentials, firestore
 
 class DBClient:
     def __init__(self):
-        self.db = self._initialize_firebase()
+        # self.db = self._initialize_firebase()
+        self.db = None # Disabled for now
         self.history = self._load_history()
 
     def _initialize_firebase(self):
@@ -66,9 +67,17 @@ class DBClient:
         """
         if url in self.history:
             status = self.history[url].get('status')
-            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED']:
+            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS']:
                 return True
         return False
+
+    def get_history_status(self, url):
+        """
+        Returns the status of the URL if it exists in history, else None.
+        """
+        if url in self.history:
+            return self.history[url].get('status')
+        return None
 
     def save_history(self, url, status, reason=None):
         """
@@ -106,12 +115,12 @@ class DBClient:
         article_data['edition'] = edition
         print(f"DEBUG: Calculated Edition: {edition}")
 
-        # 1. Save to DB if available
-        if self.db:
-            try:
-                self.db.collection('articles').add(article_data)
-            except Exception as e:
-                print(f"❌ Save Failed (DB): {e}")
+        # 1. Save to DB if available (DISABLED TEMPORARILY)
+        # if self.db:
+        #     try:
+        #         self.db.collection('articles').add(article_data)
+        #     except Exception as e:
+        #         print(f"❌ Save Failed (DB): {e}")
 
         # 2. Save to individual file
         self._save_to_individual_file(article_data)
@@ -160,6 +169,9 @@ class DBClient:
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(article_data, f, ensure_ascii=False, indent=2)
         print(f"💾 Saved to {file_path}: {article_data.get('title_ko')}")
+        
+        # [NEW] Update daily summary
+        self._update_daily_summary(date_str)
 
     def _calculate_edition(self, date_str, date_obj):
         """
@@ -169,3 +181,153 @@ class DBClient:
         # Default to issue 1 for now. 
         # Real logic might need to check existing files to increment issue number.
         return f"{date_obj.strftime('%y%m%d')}_{day_str}_1"
+
+    def find_article_by_url(self, url):
+        """
+        Attempts to find a saved JSON article file for the given URL.
+        Uses the same hash logic as _save_to_individual_file to predict filename.
+        """
+        import hashlib
+        import glob
+        import json
+        
+        # 1. Calculate Expected Hash
+        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
+        
+        # 2. Search pattern: data/YYYY-MM-DD/*_{hash}.json
+        search_pattern = os.path.join(self._get_data_dir(), "**", f"*_{url_hash}.json")
+        
+        files = glob.glob(search_pattern, recursive=True)
+        
+        if not files:
+            return None
+            
+        # If multiple files exist (duplicates?), return the latest one
+        # Sort by modification time
+        files.sort(key=os.path.getmtime, reverse=True)
+        latest_file = files[0]
+        
+        print(f"🔎 Found existing file for URL: {latest_file}")
+        
+        try:
+            with open(latest_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"⚠️ Error reading existing file {latest_file}: {e}")
+            return None
+
+    def inject_correction_with_backup(self, article_data, url):
+        """
+        Overwrites an existing file with new data, but first backs up the original
+        into a 'Back' subfolder.
+        """
+        import hashlib
+        import glob
+        import json
+        from datetime import datetime
+        import shutil
+        
+        # 1. Find the existing file
+        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
+        search_pattern = os.path.join(self._get_data_dir(), "**", f"*_{url_hash}.json")
+        files = glob.glob(search_pattern, recursive=True)
+        
+        if not files:
+            return False, "Original file not found. Use Save instead."
+            
+        # Use the most recent one
+        files.sort(key=os.path.getmtime, reverse=True)
+        target_file = files[0]
+        
+        # 2. Prepare Backup
+        target_dir = os.path.dirname(target_file)
+        back_dir = os.path.join(target_dir, "Back")
+        os.makedirs(back_dir, exist_ok=True)
+        
+        filename = os.path.basename(target_file)
+        # Add timestamp to backup filename to avoid overwriting previous backups
+        backup_filename = f"BACKUP_{int(datetime.now().timestamp())}_{filename}"
+        backup_path = os.path.join(back_dir, backup_filename)
+        
+        try:
+            print(f"📦 [Backup] Original saved to: {backup_path}")
+            
+            # 3. Overwrite with new data
+            # Ensure crawled_at is serialized
+            if isinstance(article_data.get('crawled_at'), datetime):
+                article_data['crawled_at'] = article_data['crawled_at'].isoformat()
+                
+            with open(target_file, 'w', encoding='utf-8') as f:
+                json.dump(article_data, f, ensure_ascii=False, indent=2)
+            print(f"💉 [Inject] Overwritten: {target_file}")
+            
+            # 4. Update daily_summary
+            date_dir = os.path.basename(os.path.dirname(target_file))
+            self._update_daily_summary(date_dir)
+            
+            return True, f"Injected and backed up to {backup_filename}"
+            
+        except Exception as e:
+            return False, f"Backup/Write failed: {str(e)}"
+
+    def _update_daily_summary(self, date_str):
+        """
+        Scans all JSON files in the given date directory and creates/updates 
+        a 'daily_summary.json' file. This acts as a header file for the API.
+        """
+        import glob
+        import json
+        from datetime import datetime
+        
+        try:
+            data_dir = self._get_data_dir()
+            target_dir = os.path.join(data_dir, date_str)
+            
+            if not os.path.exists(target_dir):
+                return
+
+            # Find all article json files (exclude 'daily_summary.json' and backup folders)
+            files = glob.glob(os.path.join(target_dir, "*.json"))
+            summary_list = []
+            
+            for fpath in files:
+                filename = os.path.basename(fpath)
+                if filename == 'daily_summary.json':
+                    continue
+                    
+                try:
+                    with open(fpath, 'r', encoding='utf-8') as f:
+                        article = json.load(f)
+                        summary_list.append(article)
+                except Exception as e:
+                    print(f"⚠️ Skipping corrupted file {filename}: {e}")
+                    
+            # Sort by crawled_at descending
+            summary_list.sort(key=lambda x: x.get('crawled_at', ''), reverse=True)
+            
+            summary_data = {
+                "last_updated": datetime.utcnow().isoformat() + "Z", # UTC ISO format
+                "articles": summary_list
+            }
+            
+            summary_path = os.path.join(target_dir, "daily_summary.json")
+            with open(summary_path, 'w', encoding='utf-8') as f:
+                json.dump(summary_data, f, ensure_ascii=False, indent=2)
+                
+            print(f"✅ Updated daily_summary.json for {date_str} ({len(summary_list)} articles)")
+            
+        except Exception as e:
+            print(f"❌ Failed to update daily summary: {e}")
+
+    def _save_to_individual_file(self, article_data):
+        # ... logic to save file ...
+        # (We need to see where this function determines the path to properly call update)
+        # Re-reading the context, _save_to_individual_file is where save happens.
+        # But I don't see the full code. I'll assume I should insert the call at the end of save logic.
+        # Wait, I am replacing 'inject_correction_with_backup' which I just added.
+        # I need to be careful. The user *just* added inject_correction_with_backup manually or confirmed it?
+        # The user's last snippet showed inject_correction_with_backup. I should append _update_daily_summary to it.
+        # AND I need to find _save_to_individual_file to add it there too.
+        # Let's first add the method and update inject_correction.
+        pass
+

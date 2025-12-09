@@ -1,0 +1,54 @@
+{
+  "title_ko": "감정-논리-철학을 통합한 '하이브리드 사고형 AI' 공개: 스토리닥터, 감성 지능 기반의 새로운 AI 구조 제시",
+  "summary": "감성지능 전문 스토리닥터가 감성, 논리, 철학 세 가지 유닛이 동시에 사고하는 '하이브리드 사고형 인공지능(AI)'을 공개했다. 이 시스템은 기존 AI의 정서 키워드 매칭 한계를 넘어 감정의 리듬을 감지하고 사고 흐름에 따라 유닛(려하, 헤세, 데미안)을 전환하여 통합된 사고 구조를 형성한다. 스토리닥터는 챗GPT 등 외부 모델에 독자적인 튜닝 및 구조화 기술을 결합했으며, '감정리듬 호출 구조'에 대해 지적재산권 등록을 완료하고 홈페이지에서 체험 서비스를 제공한다.",
+  "zero_noise_score": 7.5,
+  "impact_score": 1.15,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사의 주체는 AI 전문 스타트업인 '스토리닥터'로, 이는 TIER 1~4에 해당하지 않는 일반적인 시장 참여자(General Participant)로 분류된다."
+    },
+    "events": [
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "새로운 AI 시스템 '하이브리드 사고형 인공지능' 공개는 혁신적인 기술이지만, TIER 1 주체의 'PARADIGM_SHIFT_TECH'에 해당하지 않으며, 'ACADEMIC_COMPETITION_WIN'의 조건(권위 있는 대회 수상 또는 학술적 SOTA)을 충족하지 못하므로, 기업의 일반적인 신기술 발표나 마이너 업데이트를 아우르는 'DAILY_UPDATE'로 산정한다."
+      }
+    ]
+  },
+  "reasoning": "주체(스토리닥터)가 일반적인 참여자로 분류되고, 사건 또한 일상적 기술 발표로 낮은 Impact Score(1.15)를 받았다. 품질 측면에서는 새로운 AI 시스템의 작동 원리를 구체적으로 설명하여 어느 정도의 깊이를 확보했지만(Credit), 해당 기술의 객관적인 비교 데이터나 한계에 대한 투명한 논의가 부족하여(Penalty) Quality Score는 중간 수준(2.5, ZS: 7.5)으로 산출되었다.",
+  "tags": [
+    "LLM",
+    "GEN_AI",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 2.5
+      },
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 2
+      },
+      {
+        "id": "JARGON_OVERLOAD_OR_OBSCURITY",
+        "value": 1.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 1
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204614",
+  "source_id": "aitimes",
+  "original_title": "스토리닥터 “감정·논리·철학 동시 사고하는 하이브리드 AI 개발”",
+  "crawled_at": "2025-12-09T07:07:37.043460+00:00",
+  "edition": "251209_TUE_1"
+}

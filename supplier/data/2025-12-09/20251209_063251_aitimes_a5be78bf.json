@@ -1,0 +1,59 @@
+{
+  "title_ko": "네이버, '뉴립스 2025' 학회서 LLM 효율성 및 AI 안전성 강화 연구 등 AI 논문 10편 채택 쾌거",
+  "summary": "네이버는 세계적인 AI 학회인 ‘뉴립스 2025(NeurIPS 2025)’에서 LLM 효율 증대, 생성 AI 안전성 강화, 물리적 AI 확장 등을 다룬 논문 10편이 채택되는 성과를 거두었습니다. 특히, LLM의 메모리를 최대 4배 절약하고 속도를 2배 향상하는 캐시 압축 기술과 불필요한 추론 단계를 제거하는 기술을 선보였습니다. 네이버는 이번 성과를 통해 AI 풀 스택 전략과 기술력을 세계적으로 인정받았으며, 글로벌 인재 네트워크 구축에도 나섰습니다.",
+  "zero_noise_score": 4.5,
+  "impact_score": 5.74,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 5,
+      "reasoning": "네이버는 자체 AI 모델 '하이퍼클로바X'를 보유하고 있으며, 국내외 AI 생태계에서 주요한 역할을 수행하는 빅테크 기업으로 TIER 1 주체로 분류된다. 이 기사는 네이버의 주도적인 공식 학회 발표 성과를 다루고 있으므로 TIER 1 가중치를 적용한다."
+    },
+    "events": [
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "단순 학회 논문 채택 소식이지만, 발표된 연구 내용이 LLM 효율화, 안전성, 로보틱스 확장 등 광범위한 기술 혁신 방향을 담고 있어 일상적 업데이트 이상의 의미를 가진다. 하지만 논문 채택 자체는 학계의 일상적 이벤트로 볼 수 있다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "네이버가 학회에서 '연구에서 현실까지'를 주제로 리서치, 하이퍼클로바X, 온서비스 AI로 이어지는 AI 풀 스택 전략을 공유하고 논문 내용을 통해 실제 서비스와 산업 현장에 효율적으로 적용하기 위한 내용을 담았으므로, 핵심 제품 전략 및 AI 도입 전략의 방향성을 제시하는 것으로 간주하여 가중치를 적용한다."
+      }
+    ]
+  },
+  "reasoning": "AI 생태계의 주요 주체(TIER 1)인 네이버의 공식적인 학회 발표 성과를 다뤄 Impact Score가 높다. 기사는 구체적인 기술적 성과(LLM 캐시 압축, CoT 최적화 등)를 제시하며 품질을 높였으나, 일부 보도자료 톤과 학회 성과 단순 나열의 성격도 혼재되어 ZeroNoise Score는 중간 수준을 기록했다.",
+  "tags": [
+    "LLM",
+    "GEN_AI",
+    "AGENTS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 2.5
+      },
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 2
+      }
+    ],
+    "credits": [
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 3
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204636",
+  "source_id": "aitimes",
+  "original_title": "네이버, AI 학회 ‘뉴립스’에서 AI 논문 10편 채택",
+  "crawled_at": "2025-12-09T06:32:51.442752+00:00",
+  "edition": "251209_TUE_1"
+}

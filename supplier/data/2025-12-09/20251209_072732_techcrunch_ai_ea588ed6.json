@@ -1,0 +1,120 @@
+{
+  "title_ko": "AI 스타트업 퍼플렉시티, '스크래핑 금지' 사이트 무단 접근 논란: 클라우드플레어 연구 결과 발표",
+  "summary": "AI 스타트업 퍼플렉시티(Perplexity)가 robots.txt 등을 통해 데이터 스크래핑을 명시적으로 거부한 웹사이트의 콘텐츠를 무단으로 크롤링하고 있다는 클라우드플레어(Cloudflare)의 조사 결과가 발표되었습니다. 클라우드플레어는 퍼플렉시티가 크롤러의 'User Agent'와 'ASN'을 변경하는 방식으로 차단을 우회하려고 시도했다고 주장했으며, 이는 수만 개의 도메인에서 관찰되었습니다. 퍼플렉시티 측은 클라우드플레어의 주장을 '판매 전략'으로 일축하고 해당 봇이 자사 것이 아니라고 부인하며 논란이 가중되고 있습니다.",
+  "zero_noise_score": 5.0,
+  "impact_score": 4.18,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "핵심 주체인 퍼플렉시티(Perplexity)는 TIER 1 또는 TIER 2에 해당하지 않는 일반적인 AI 스타트업이므로 TIER Z GENERAL PARTICIPANT(1.0)를 적용합니다. 이 기사는 TIER 1 기업의 공식 발표가 아닌, 일반 스타트업의 윤리적/기술적 논란을 다루고 있습니다."
+    },
+    "events": [
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "이 기사는 TIER Z 주체에 대한 기술 성과나 중요한 학술적 논란(권위 있는 대회 수상/SOTA 달성)을 다루지 않으므로 해당 이벤트는 제외됩니다."
+      },
+      {
+        "id": "POLICY_OR_REGULATION",
+        "weight": 1.47,
+        "reasoning": "직접적인 법적/정책적 결정이나 규제 통과 소식은 아니므로 해당 이벤트는 제외됩니다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "대규모 조직 개편이나 핵심 제품 전략 변경 발표가 아니므로 해당 이벤트는 제외됩니다."
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "단순 제품 업데이트가 아닌, AI 산업 전체의 데이터 윤리 및 비즈니스 모델에 대한 중요한 논란이므로 DAILY_UPDATE는 적절하지 않습니다."
+      },
+      {
+        "id": "PARADIGM_SHIFT_TECH",
+        "weight": 1.18,
+        "reasoning": "TIER 1 주체가 아니므로 해당 이벤트는 적용할 수 없습니다. (규칙 명시)"
+      },
+      {
+        "id": "MAJOR_FUNDING_OR_ACQUISITION",
+        "weight": 0.88,
+        "reasoning": "자금 조달 또는 인수합병 소식이 아니므로 해당 이벤트는 제외됩니다."
+      },
+      {
+        "id": "AI_ETHICS_OR_DATA_PRACTICE_CONTROVERSY",
+        "weight": 2.47,
+        "reasoning": "AI 모델 학습에 필수적인 데이터 스크래핑/무단 사용 및 윤리적 논란을 다루고 있어, 이에 상응하는 Tier 2 수준의 영향력(2.47)을 적용합니다. (Entity Impact: 1.0 + Event Impact: 2.47)"
+      }
+    ]
+  },
+  "reasoning": "AI 스타트업 퍼플렉시티의 데이터 스크래핑 우회 논란은 AI 산업 전반의 데이터 이용 윤리 및 저작권 문제(LACK_OF_ETHICAL_CONTEXT에 해당)와 관련되나, 기사 자체는 특정 기업의 논란을 **Fact** 기반으로 보도하고 있어 중립적입니다. 따라서 Quality Score(V)는 BasePoint 5.0에서 변화가 없습니다. Impact Score(IS)는 일반 참가자인 Perplexity(1.0)의 데이터 윤리 논란(2.47)을 다루어 총 3.47입니다. (참고: 최종 출력 시 IS 점수는 Clamping을 거쳐 4.18로 조정됩니다.)",
+  "tags": [
+    "AI_ETHICS",
+    "GEN_AI",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "SENSATIONAL_TITLE",
+        "value": 0
+      },
+      {
+        "id": "LACK_OF_ETHICAL_CONTEXT",
+        "value": 0
+      },
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 0
+      },
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 0
+      },
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 0
+      },
+      {
+        "id": "JARGON_OVERLOAD_OR_OBSCURITY",
+        "value": 0
+      }
+    ],
+    "credits": [
+      {
+        "id": "POLICY_IMPACT_ANALYSIS",
+        "value": 0
+      },
+      {
+        "id": "ETHICAL_FRAMEWORK_DEBATE",
+        "value": 0
+      },
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 0
+      },
+      {
+        "id": "COMPARATIVE_EVALUATION",
+        "value": 0
+      },
+      {
+        "id": "INDUSTRY_CONSENSUS_CHECK",
+        "value": 0
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 0
+      },
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 0
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://techcrunch.com/2025/08/04/perplexity-accused-of-scraping-websites-that-explicitly-blocked-ai-scraping/",
+  "source_id": "techcrunch_ai",
+  "original_title": "Perplexity accused of scraping websites that explicitly blocked AI scraping | TechCrunch",
+  "crawled_at": "2025-12-09T07:27:32.322819+00:00",
+  "edition": "251209_TUE_1"
+}

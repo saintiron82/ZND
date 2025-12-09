@@ -1,0 +1,46 @@
+{
+  "title_ko": "메타, AI 전력 수요 충족 위해 1GW 규모 태양광 전력 구매 계약 체결... 환경 기여 논란은 여전",
+  "summary": "메타(Meta)는 방대한 AI 야망에 전력을 공급하기 위해 이번 주에 약 1기가와트(GW) 규모의 태양광 발전 구매 계약 3건을 체결하여, 올해 총 태양광 구매 규모를 3GW 이상으로 늘렸습니다. 텍사스 및 루이지애나 프로젝트를 통해 태양광 발전을 조달하지만, 루이지애나 계약은 환경 속성 증명서(EAC) 구매 방식으로 이루어져 실제 탄소 발자국 상쇄 효과에 대한 전문가들의 비판을 받고 있습니다. 전문가들은 AI로 급증하는 전력 사용량을 상쇄하려면 EAC 구매 대신 개발업체에 새로운 재생 에너지 설비 구축을 장려해야 한다고 지적합니다.",
+  "zero_noise_score": 7.5,
+  "impact_score": 5.59,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 5,
+      "reasoning": "기사의 주체는 Meta로, TIER 1_ECOSYSTEM_RULERS에 해당하는 주요 기업이며, 이는 AI 구동을 위한 전력 조달이라는 핵심 전략적 움직임에 관한 '주도적인 공식 발표'에 해당한다."
+    },
+    "events": [
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "AI 운영을 위한 대규모 전력 조달 계약은 기업의 핵심 제품 및 운영 전략을 변경하는 'BIZ_STRATEGY_SHIFT'에 해당한다."
+      }
+    ]
+  },
+  "reasoning": "TIER 1 기업의 핵심 AI 전략 발표로 인해 높은 Impact Score를 기록했으나, 기사 내용 중 환경 속성 증명서(EAC) 구매 방식에 대한 비판적 논의(LACK_OF_ETHICAL_CONTEXT 페널티)와 기존 EAC 제도의 한계 분석이 공존하여 Quality Score가 중립을 벗어난 낮은 수준에 머물렀다. (ZS는 높을수록 소음).",
+  "tags": [
+    "BIZ_STRATEGY",
+    "AI_ETHICS",
+    "GEN_AI"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "LACK_OF_ETHICAL_CONTEXT",
+        "value": 3.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 1.5
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://techcrunch.com/2025/10/31/meta-bought-1-gw-of-solar-this-week/",
+  "source_id": "techcrunch_ai",
+  "original_title": "Meta bought 1 GW of solar this week | TechCrunch",
+  "crawled_at": "2025-12-09T07:25:33.160020+00:00",
+  "edition": "251209_TUE_1"
+}

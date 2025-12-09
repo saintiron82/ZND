@@ -1,0 +1,55 @@
+{
+  "title_ko": "생산 준비 미흡: 엔터프라이즈 환경에서 AI 코딩 에이전트가 실패하는 7가지 실질적인 이유",
+  "summary": "AI 코딩 에이전트는 코드 생성은 용이하게 했지만, 실제 기업 환경에서 **확장성, 보안, 유지보수성** 측면에서 심각한 한계를 드러내고 있다. 에이전트는 거대한 코드베이스를 처리하지 못하는 **제한된 컨텍스트 및 서비스 한계**와, OS 환경 및 명령줄 인식을 제대로 못하는 **운영 인식 부족** 문제를 겪는다. 또한, **반복되는 환각** 오류를 해결하지 못하고, **구식 보안 및 SDK**를 사용하며, 개발자의 의도를 완벽히 파악하지 못해 **기술 부채**를 유발하는 등 실질적인 개발 시간 낭비를 초래하여 **'끊임없는 인간의 감시(Babysitting)'**를 요구한다.",
+  "zero_noise_score": 2.25,
+  "impact_score": 3.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사의 주요 내용은 LinkedIn 및 Microsoft 엔지니어 개인의 경험과 의견을 바탕으로 한 AI 코딩 에이전트의 실질적인 문제점 분석이다. 이는 '노벨상 수상자, 저명한 교수 등 핵심 인물의 평가나 의견 제시도 TIER 1 기업에 대한 것이더라도 이 가중치를 적용한다'는 TIER_Z_GENERAL_PARTICIPANT의 설명에 따라 분류된다."
+    },
+    "events": [
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "기사는 AI 코딩 에이전트의 일반적인 사용 사례, 제한 사항 및 개발자들의 대응 방식에 대한 일상적 시장 동향 및 기술적 의견을 다루고 있으므로 DAILY_UPDATE(0.15)를 적용한다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "기사 말미에 GitHub CEO의 발언을 인용하며 '코드를 작성하는 것에서 AI 에이전트가 수행하는 구현 작업을 설계하고 검증하는 것으로 이동했다'는 개발 패러다임의 변화를 언급하고 있어, AI 도입에 따른 기술 전략 변화(BIZ_STRATEGY_SHIFT)와 연관성이 있다."
+      }
+    ]
+  },
+  "reasoning": "AI 코딩 에이전트의 실질적 한계를 엔지니어의 경험을 바탕으로 기술 부채, 보안, 운영 인식 등 다차원적으로 깊이 있게 분석하여 **높은 품질 가점**을 획득했다. 다만, 주체가 개별 엔지니어이며 기술 패러다임 변화에 대한 의견 제시라는 점에서 **영향력 점수는 상대적으로 낮게 산출**되었다.",
+  "tags": [
+    "AGENTS",
+    "WORK_IMPACT",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "JARGON_OVERLOAD_OR_OBSCURITY",
+        "value": 0.75
+      }
+    ],
+    "credits": [
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 1.5
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 0.75
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://venturebeat.com/ai/why-ai-coding-agents-arent-production-ready-brittle-context-windows-broken",
+  "source_id": "venturebeat",
+  "original_title": "Why AI coding agents aren’t production-ready: Brittle context windows, broken refactors, missing operational awareness",
+  "crawled_at": "2025-12-09T07:40:50.216969+00:00",
+  "edition": "251209_TUE_1"
+}

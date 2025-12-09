@@ -1,0 +1,64 @@
+{
+  "title_ko": "Gridcare, AI 데이터센터 전력난 해소 위해 '숨겨진' 100GW 이상 전력망 용량 발견 및 중개",
+  "summary": "AI 데이터센터의 폭발적인 증가로 전력 수요가 급증했으나, 기존 전력망 연결에는 수년이 걸리는 병목 현상이 발생하고 있습니다.\nGridcare는 자체 개발한 AI 기반 분석 도구를 사용하여 기존 전력망에서 아직 활용되지 않은 100GW 이상의 잉여 전력 용량을 찾아냈습니다.\n이 스타트업은 이 데이터를 바탕으로 데이터센터 개발사와 전력 회사 간의 '매치메이커' 역할을 하며, 전력 확보에 어려움을 겪는 데이터센터에 유료로 서비스를 제공합니다.",
+  "zero_noise_score": 5.0,
+  "impact_score": 4.18,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사는 신생 스타트업인 Gridcare의 자체 기술과 사업 전략에 관한 내용으로, 이는 프로필의 TIER_Z_GENERAL_PARTICIPANT(일반 참여자)에 해당한다. TIER 1 주체의 평가/의견이 아닌 자체 기술 발표이기 때문에 TIER Z로 분류한다."
+    },
+    "events": [
+      {
+        "id": "MAJOR_FUNDING_OR_ACQUISITION",
+        "weight": 0.88,
+        "reasoning": "Gridcare가 1350만 달러(약 180억 원) 규모의 Seed 라운드 투자를 유치했다는 내용이 언급되었으나, $1B(10억 달러) 미만이므로 해당 가중치를 적용할 수 없다. (Zero Change Rule)"
+      },
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "TIER Z 주체인 Gridcare가 AI를 활용해 100GW 이상의 잠재 용량을 발견하고 이를 사업화하는 것은 '기술 성과'에 해당하며, 이는 TIER Z/4 주체가 받을 수 있는 기술 성과 관련 Impact Event의 상한선인 ACADEMIC_COMPETITION_WIN(권위 있는 대회 수상 또는 학술적 SOTA 달성 결과)으로 분류할 수 있다. 이는 AI와 인프라의 교차점에서 발생하는 중대한 기술적/사업적 성과로 간주된다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "Gridcare의 사업 모델 자체가 AI를 활용하여 데이터센터의 전력 공급 문제를 해결하는 새로운 '매치메이커' 비즈니스 전략이며, 이는 AI 도입으로 인한 핵심 제품 전략 변경 발표(BIZ_STRATEGY_SHIFT)로 볼 수 있다."
+      }
+    ]
+  },
+  "reasoning": "AI 데이터센터의 근본적인 문제인 전력망 병목 현상을 해결하려는 스타트업의 새로운 비즈니스 모델과 기술적 성과를 다루고 있어 영향력이 있으며(IS: 4.18), 기사 내용 자체는 기업의 발표를 충실히 전달하면서도 자화자찬 톤이 약하고 비교적 구체적인 기술적 접근(Generative AI 활용, 20만 개 시나리오 분석)을 언급하여 중립적인 품질(ZS: 5.0)을 유지했다.",
+  "tags": [
+    "AI_CHIP",
+    "BIZ_STRATEGY",
+    "GEN_AI"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 0
+      },
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 0
+      }
+    ],
+    "credits": [
+      {
+        "id": "RESOURCE_ANALYSIS",
+        "value": 0
+      },
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 0
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://techcrunch.com/2025/05/27/gridcare-thinks-more-than-100-gw-of-data-center-capacity-is-hiding-in-the-grid/",
+  "source_id": "techcrunch_ai",
+  "original_title": "Gridcare thinks more than 100 GW of data center capacity is hiding in the grid | TechCrunch",
+  "crawled_at": "2025-12-09T07:11:33.225697+00:00",
+  "edition": "251209_TUE_1"
+}

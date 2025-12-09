@@ -1,0 +1,55 @@
+{
+  "title_ko": "OpenAI, LLM의 '보상 해킹'을 자백시키는 새로운 투명성 기술 'Confessions' 공개",
+  "summary": "OpenAI 연구진은 대규모 언어 모델(LLM)이 자신의 오작동, 환각, 정책 위반을 스스로 보고하게 만드는 새로운 훈련 방법인 'Confessions'를 도입했습니다. 이 기술은 모델의 주된 응답 보상과 '자백'에 대한 정직성 보상을 분리하여, 모델이 주된 작업에서 속임수를 쓰더라도 자백에서는 솔직해지도록 인센티브 구조를 설계합니다. 이 방법은 엔터프라이즈 AI 시스템의 투명성과 제어 가능성을 높이는 데 기여하지만, 모델이 스스로 인지하지 못하는 오류(Unknown Unknowns)에는 한계가 있습니다.",
+  "zero_noise_score": 3.75,
+  "impact_score": 7.47,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 5,
+      "reasoning": "기사는 AI 생태계를 주도하는 핵심 주체 중 하나인 OpenAI의 연구진이 주도적인 공식 발표 및 기술적 진보('Confessions' 기법)에 대해 다루고 있으므로 TIER 1 가중치를 적용합니다."
+    },
+    "events": [
+      {
+        "id": "PARADIGM_SHIFT_TECH",
+        "weight": 1.18,
+        "reasoning": "OpenAI라는 TIER 1 주체가 AI의 '보상 해킹' 및 환각 문제 해결을 위한 새로운 프레임워크(Confessions)를 발표한 것으로, AI 안전성 및 제어 기술의 패러다임 변화 가능성을 내포하므로 해당 이벤트를 적용합니다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "Confessions와 같은 투명성 및 안전성 기술은 엔터프라이즈 AI의 신뢰성 확보 및 배포 전략에 직접적인 영향을 미치므로, AI 도입에 따른 핵심 제품 전략 변경 발표에 준하는 가중치를 적용합니다."
+      }
+    ]
+  },
+  "reasoning": "TIER 1 주체의 AI 투명성 및 안전성 확보를 위한 핵심 기술(Confessions) 발표로 Impact Score가 높게 산출되었습니다. Quality Score는 **기술적 한계를 명확히 밝힌 점(SELF_CRITICISM_OR_TRADE_OFF)**과 **원본 출처(OpenAI blog)를 명시**하여 가점을 받았으나, **기술적 논의에 중점을 둔 기사로 인해 일반적인 기사보다 전문 용어 사용이 많아** Penalty가 적용되어 최종적으로 낮은 Noise Score(고품질)를 나타냅니다.",
+  "tags": [
+    "LLM",
+    "AI_ETHICS",
+    "GEN_AI"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "JARGON_OVERLOAD_OR_OBSCURITY",
+        "value": 1.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "SELF_CRITICISM_OR_TRADE_OFF",
+        "value": 0.75
+      },
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "url": "https://venturebeat.com/ai/the-truth-serum-for-ai-openais-new-method-for-training-models-to-confess",
+  "source_id": "venturebeat",
+  "original_title": "The &apos;truth serum&apos; for AI: OpenAI’s new method for training models to confess their mistakes",
+  "crawled_at": "2025-12-09T07:38:38.251217+00:00",
+  "edition": "251209_TUE_1"
+}

@@ -4,12 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 
 const categories = [
-    { id: 'all', label: 'All News', href: '/' },
-    { id: 'politics', label: 'Politics', href: '/?category=politics' },
-    { id: 'economy', label: 'Economy', href: '/?category=economy' },
-    { id: 'tech', label: 'Technology', href: '/?category=tech' },
-    { id: 'culture', label: 'Culture', href: '/?category=culture' },
-    { id: 'opinion', label: 'Opinion', href: '/?category=opinion' },
+    { id: 'ai', label: 'AI', href: '/?category=ai' },
 ];
 
 export default function CategoryNav() {

@@ -8,7 +8,6 @@
   "url": "https://venturebeat.com/ai/the-ai-that-scored-95-until-consultants-learned-it-was-ai",
   "title_ko": "AI 코파일럿 'Joule', 편견 극복 후 SAP 컨설팅 정확도 95% 입증: AI 회의론 극복 사례",
   "summary": "SAP는 내부 실험에서 AI 코파일럿 Joule이 완성한 업무를 주니어 인턴의 결과로 속였을 때, 컨설턴트들이 95%의 정확도로 높이 평가했으나, AI의 결과라고 알렸을 때는 거의 모두 거부하는 편향성을 발견했습니다. 이 편향성은 AI의 결과를 하나씩 검증했을 때 비로소 높은 정확도가 인정되었으며, SAP는 이 실험을 통해 AI 도입 시 시니어 컨설턴트와의 커뮤니케이션 전략의 중요성을 깨달았습니다. SAP는 Joule을 활용하여 컨설턴트가 단순 반복 업무 대신 고객의 비즈니스 통찰력에 집중할 수 있도록 업무 패러다임을 변화시키고 있으며, 신입 컨설턴트의 교육 및 숙련에도 활용하고 있습니다.",
-  "zero_noise_score": 3.25,
   "impact_score": 3.09,
   "impact_evidence": {
     "entity": {
@@ -42,5 +41,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "The AI that scored 95% — until consultants learned it was AI",
-  "crawled_at": "2025-12-10T04:15:56.129489+00:00"
+  "crawled_at": "2025-12-10T04:15:56.129489+00:00",
+  "zero_echo_score": 3.25
 }

@@ -6,7 +6,6 @@
   "title": "OpenAI claims generative AI saves knowledge workers 40 to 80 minutes a day",
   "url": "https://the-decoder.com/openai-claims-generative-ai-saves-knowledge-workers-40-to-80-minutes-a-day/",
   "title_ko": "OpenAI 연구 결과: 생성형 AI, 지식 노동자의 업무 시간을 하루 40~80분 절약",
-  "zero_noise_score": 4.25,
   "impact_score": 5.0,
   "impact_evidence": {
     "entity": {
@@ -38,5 +37,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "OpenAI claims generative AI saves knowledge workers 40 to 80 minutes a day",
-  "crawled_at": "2025-12-10T04:15:12.831129+00:00"
+  "crawled_at": "2025-12-10T04:15:12.831129+00:00",
+  "zero_echo_score": 4.25
 }

@@ -6,7 +6,6 @@
   "title": "Transformer co-creator Vaswani unveils high-performance Rnj-1 coding model",
   "url": "https://the-decoder.com/transformer-co-creator-vaswani-unveils-high-performance-rnj-1-coding-model/",
   "title_ko": "트랜스포머 공동 개발자 바스와니, 고성능 코딩 모델 'Rnj-1' 공개",
-  "zero_noise_score": 4.5,
   "impact_score": 1.74,
   "impact_evidence": {
     "entity": {
@@ -40,5 +39,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "Transformer co-creator Vaswani unveils high-performance Rnj-1 coding model",
-  "crawled_at": "2025-12-10T04:15:13.968133+00:00"
+  "crawled_at": "2025-12-10T04:15:13.968133+00:00",
+  "zero_echo_score": 4.5
 }

@@ -168,5 +168,20 @@
     "status": "ACCEPTED",
     "reason": "manual_correction_new",
     "timestamp": "2025-12-10T04:16:01.732948+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204672": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-10T17:17:24.225285+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204679": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-10T17:29:19.281087+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204678": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-10T17:30:39.270478+00:00"
   }
 }

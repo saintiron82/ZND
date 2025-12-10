@@ -4,6 +4,29 @@ let currentLinkIndex = -1;
 let currentTargetId = '';
 let loadedContents = {}; // url -> content data
 
+// Field name normalization helper
+function normalizeFieldNames(data) {
+    const normalized = { ...data };
+
+    // Find and normalize zero_echo_score variations (case-insensitive)
+    const keys = Object.keys(normalized);
+    for (const key of keys) {
+        if (key.toLowerCase() === 'zero_echo_score' && key !== 'zero_echo_score') {
+            normalized.zero_echo_score = normalized[key];
+            delete normalized[key];
+            console.log(`[Normalize] Renamed '${key}' to 'zero_echo_score'`);
+        }
+        // Also handle old zero_noise_score
+        if (key.toLowerCase() === 'zero_noise_score') {
+            normalized.zero_echo_score = normalized[key];
+            delete normalized[key];
+            console.log(`[Normalize] Migrated '${key}' to 'zero_echo_score'`);
+        }
+    }
+
+    return normalized;
+}
+
 // 페이지 로드 시 타겟 목록 초기화
 document.addEventListener('DOMContentLoaded', function () {
     loadTargets();
@@ -104,7 +127,7 @@ function loadArticle(index) {
         document.getElementById('originalTitle').value = data.title || data.original_title || '';
 
         // Check if it's existing data (has source_id or scores) OR modified batch data
-        if ((data.source_id && data.zero_noise_score !== undefined) || data.zero_noise_score !== undefined) {
+        if ((data.source_id && data.zero_echo_score !== undefined) || data.zero_echo_score !== undefined) {
             document.getElementById('jsonInput').value = JSON.stringify(data, null, 2);
             verifyScore();
         } else {
@@ -204,6 +227,11 @@ function verifyScore() {
         return alert('Invalid JSON: ' + e.message);
     }
 
+    // Normalize field names (handle case variations like zero_Echo_score, Zero_echo_score, etc.)
+    jsonData = normalizeFieldNames(jsonData);
+    // Update the input with normalized data
+    document.getElementById('jsonInput').value = JSON.stringify(jsonData, null, 2);
+
     const resultDiv = document.getElementById('verifyResult');
     resultDiv.style.display = 'block';
     resultDiv.innerHTML = 'Verifying...';
@@ -230,7 +258,7 @@ function verifyScore() {
                 } else {
                     html += `<div style="color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
                     ❌ <b>MISMATCH!</b><br>
-                    Rec: <b>${jsonData.zero_noise_score}</b> vs Calc: <b>${res.calculated_zs}</b> (Diff: ${res.diff.toFixed(2)})
+                    Rec: <b>${jsonData.zero_echo_score}</b> vs Calc: <b>${res.calculated_zs}</b> (Diff: ${res.diff.toFixed(2)})
                     </div>`;
                 }
 
@@ -467,7 +495,7 @@ function copyAllForPrompt() {
 
     const N = currentLinks.length;
     let text = `${N}개의 항목에 대해서 개별로 평가하라.\n이 목록은 해당 그룹에 해당하는 리스트이다.\n`;
-    text += `응답은 반드시 Valid JSON List 포맷으로 작성하라. \n예시: { "results": [ { "title_ko": "...", "zero_noise_score": 5.0, "impact_score": 3.5, "summary": "...", "reasoning": "..." } ] }\n\n`;
+    text += `응답은 반드시 Valid JSON List 포맷으로 작성하라. \n예시: { "results": [ { "title_ko": "...", "zero_echo_score": 5.0, "impact_score": 3.5, "summary": "...", "reasoning": "..." } ] }\n\n`;
 
     currentLinks.forEach((linkItem, index) => {
         const data = loadedContents[linkItem.url];
@@ -518,7 +546,7 @@ function injectCorrection() {
                 alert('✅ Success: ' + res.message);
 
                 if (res.new_scores) {
-                    jsonData.zero_noise_score = res.new_scores.zs_final;
+                    jsonData.zero_echo_score = res.new_scores.zs_final;
                     jsonData.impact_score = res.new_scores.impact_score;
                     document.getElementById('jsonInput').value = JSON.stringify(jsonData, null, 2);
 
@@ -584,8 +612,8 @@ function applyBatchResults() {
 
         Object.assign(loadedContents[url], resItem);
 
-        if (resItem.zero_noise_score !== undefined) {
-            loadedContents[url].zero_noise_score = parseFloat(resItem.zero_noise_score);
+        if (resItem.zero_echo_score !== undefined) {
+            loadedContents[url].zero_echo_score = parseFloat(resItem.zero_echo_score);
         }
         if (resItem.impact_score !== undefined) {
             loadedContents[url].impact_score = parseFloat(resItem.impact_score);

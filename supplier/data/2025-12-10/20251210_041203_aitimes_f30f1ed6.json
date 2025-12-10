@@ -10,7 +10,6 @@
   "title": "트럼프 &quot;중국에 엔비디아 H200 칩 수출 허용&quot;",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204629",
   "title_ko": "트럼프, '국가 안보 수수료 25%' 조건으로 엔비디아 H200 칩의 중국 수출 조건부 허용",
-  "zero_noise_score": 0.25,
   "impact_score": 6.89,
   "impact_evidence": {
     "entity": {
@@ -71,5 +70,6 @@
   },
   "source_id": "aitimes",
   "original_title": "트럼프 &quot;중국에 엔비디아 H200 칩 수출 허용&quot;",
-  "crawled_at": "2025-12-10T04:12:03.897179+00:00"
+  "crawled_at": "2025-12-10T04:12:03.897179+00:00",
+  "zero_echo_score": 0.25
 }

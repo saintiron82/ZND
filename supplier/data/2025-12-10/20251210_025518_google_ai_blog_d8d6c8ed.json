@@ -8,7 +8,6 @@
   "title": "Transforming Nordic classrooms through responsible AI partnerships",
   "url": "https://blog.google/around-the-globe/google-europe/transforming-nordic-classrooms-through-responsible-ai-partnerships/",
   "title_ko": "노르웨이, GDPR 준수 확인 후 구글 워크스페이스 교육용 사용 '청신호': 북유럽 교육 현장의 AI 전환",
-  "zero_noise_score": 5.25,
   "impact_score": 7.06,
   "impact_evidence": {
     "entity": {
@@ -52,5 +51,6 @@
   },
   "source_id": "google_ai_blog",
   "original_title": "Transforming Nordic classrooms through responsible AI partnerships",
-  "crawled_at": "2025-12-10T02:55:18.925387+00:00"
+  "crawled_at": "2025-12-10T02:55:18.925387+00:00",
+  "zero_echo_score": 5.25
 }

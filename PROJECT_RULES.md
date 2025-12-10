@@ -3,17 +3,17 @@
 MLL API 계약 준수 및 콘텐츠 통제
 API 엔드포인트: MLL 엔진의 /api/sandbox/chat과 같은 간단한 API를 호출하여 기사 분석을 요청합니다.
 
-Noise Index 정의: 저희 ZND의 **Noise Index (0.0~10.0)**를 정의하는 Blueprint, Rule 같은 자산을 MLL API를 통해 명시적으로 설계하고 튜닝하여, 기사의 **점수(Score)**를 받습니다.
+Noise Index 정의: 저희 ZED의 **Noise Index (0.0~10.0)**를 정의하는 Blueprint, Rule 같은 자산을 MLL API를 통해 명시적으로 설계하고 튜닝하여, 기사의 **점수(Score)**를 받습니다.
 
 2. 크롤링 및 데이터 무결성 확보
 파이프라인 무결성: Python 크롤러(crawler.py) 코드가 안정적으로 실행되어야 합니다.
 
-저품질 필터링: MLL로부터 받은 점수를 기준으로 4점 미만인 기사는 'ZeroNoise' 철학에 따라 폐기하고, 통과된 기사만 DB에 저장되도록 데이터 무결성을 관리해야 합니다.
+저품질 필터링: MLL로부터 받은 점수를 기준으로 4점 미만인 기사는 'ZeroEcho' 철학에 따라 폐기하고, 통과된 기사만 DB에 저장되도록 데이터 무결성을 관리해야 합니다.
 
 3. 사용자 경험 (UX) 구현
 동적 배치: 웹(Next.js) 코드(web/app/page.tsx)를 통해 선별된 기사들을 Layout Type(Hero, Featured, Standard 등)에 따라 동적으로 배치합니다.
 
-인지 부하 절감: 이 동적 배치와 ZN Certified 마크 같은 UX 기능으로 독자의 **'시간과 인지 부하를 절감'**하는 가치를 제공합니다.
+인지 부하 절감: 이 동적 배치와 ZE Certified 마크 같은 UX 기능으로 독자의 **'시간과 인지 부하를 절감'**하는 가치를 제공합니다.
 
 ## General Rules
 계획을 새우는 것도 한국어로 준비하라

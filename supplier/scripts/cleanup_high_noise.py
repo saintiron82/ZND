@@ -22,7 +22,7 @@ def cleanup(data_dir, dry_run=True):
                 data = json.load(f)
             
             # Check Zero Noise Score
-            zs = float(data.get('zero_noise_score', 0))
+            zs = float(data.get('zero_echo_score', 0))
             if zs >= 7.0:
                 targets.append((file_path, zs, data.get('title_ko')))
                 

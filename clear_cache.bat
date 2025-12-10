@@ -4,7 +4,7 @@ setlocal enabledelayedexpansion
 
 echo.
 echo ========================================
-echo   ZeroNoise Daily - Cache Clear Tool
+echo   ZeroEcho Daily - Cache Clear Tool
 echo ========================================
 echo.
 

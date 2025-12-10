@@ -2,11 +2,11 @@
 import { LayoutOptimizer } from './layoutOptimizer';
 
 const mockArticles = [
-    { id: '1', impact_score: 9.0, zero_noise_score: 1.0, summary: 'Article 1 - Best' },
-    { id: '2', impact_score: 8.0, zero_noise_score: 2.0, summary: 'Article 2 - Second' },
-    { id: '3', impact_score: 7.0, zero_noise_score: 3.0, summary: 'Article 3 - Third' },
-    { id: '4', impact_score: 6.0, zero_noise_score: 4.0, summary: 'Article 4 - Low' },
-    { id: '5', impact_score: 5.0, zero_noise_score: 5.0, summary: 'Article 5 - Low' },
+    { id: '1', impact_score: 9.0, zero_echo_score: 1.0, summary: 'Article 1 - Best' },
+    { id: '2', impact_score: 8.0, zero_echo_score: 2.0, summary: 'Article 2 - Second' },
+    { id: '3', impact_score: 7.0, zero_echo_score: 3.0, summary: 'Article 3 - Third' },
+    { id: '4', impact_score: 6.0, zero_echo_score: 4.0, summary: 'Article 4 - Low' },
+    { id: '5', impact_score: 5.0, zero_echo_score: 5.0, summary: 'Article 5 - Low' },
 ];
 
 const optimizer = new LayoutOptimizer(10);

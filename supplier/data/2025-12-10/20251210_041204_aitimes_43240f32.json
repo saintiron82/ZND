@@ -10,7 +10,6 @@
   "title": "정부, 전력수급기본계획 수립 본격화…&quot;에너지전환 설계도 마련&quot;",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204661",
   "title_ko": "기후에너지환경부, 제12차 전력수급기본계획 착수…'재생에너지 중심 전환 설계도' 마련",
-  "zero_noise_score": 3.5,
   "impact_score": 4.97,
   "impact_evidence": {
     "entity": {
@@ -52,5 +51,6 @@
   },
   "source_id": "aitimes",
   "original_title": "정부, 전력수급기본계획 수립 본격화…&quot;에너지전환 설계도 마련&quot;",
-  "crawled_at": "2025-12-10T04:12:04.610663+00:00"
+  "crawled_at": "2025-12-10T04:12:04.610663+00:00",
+  "zero_echo_score": 3.5
 }

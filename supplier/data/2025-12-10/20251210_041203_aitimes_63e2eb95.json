@@ -10,7 +10,6 @@
   "title": "오픈AI &quot;AI로 근로자 하루 평균 1시간 절약&quot;",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204645",
   "title_ko": "오픈AI 조사 결과: AI 활용 근로자 하루 1시간 절약, 기업 고객 100만 돌파하며 생산성 ROI 입증",
-  "zero_noise_score": 2.88,
   "impact_score": 6.88,
   "impact_evidence": {
     "entity": {
@@ -63,5 +62,6 @@
   },
   "source_id": "aitimes",
   "original_title": "오픈AI &quot;AI로 근로자 하루 평균 1시간 절약&quot;",
-  "crawled_at": "2025-12-10T04:12:03.757057+00:00"
+  "crawled_at": "2025-12-10T04:12:03.757057+00:00",
+  "zero_echo_score": 2.88
 }

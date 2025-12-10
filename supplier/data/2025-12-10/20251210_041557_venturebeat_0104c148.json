@@ -8,7 +8,6 @@
   "url": "https://venturebeat.com/data-infrastructure/databricks-officeqa-uncovers-disconnect-ai-agents-ace-abstract-tests-but",
   "title_ko": "Databricks, 실제 기업 업무 반영한 AI 벤치마크 'OfficeQA' 공개: 기존 학술 평가지표의 한계 지적",
   "summary": "Databricks는 기존의 학술적 AI 벤치마크(HLE, ARC-AGI-2 등)가 실제 기업이 요구하는 복잡한 문서 기반 작업(Grounded Reasoning) 능력을 제대로 측정하지 못하고 있음을 지적하며, 이를 보완하기 위해 'OfficeQA' 벤치마크를 개발했습니다. OfficeQA는 미국 재무부 회보(Treasury Bulletins)와 같은 복잡한 비정형 문서 및 표 데이터를 기반으로 질문에 답하는 능력을 평가하며, 현재 최신 AI 에이전트들도 45% 미만의 정확도를 보여 기업 환경과의 큰 격차를 드러냈습니다. 이 벤치마크는 기업의 경제적 가치가 높은 실제 문서 작업에 AI 연구 노력을 집중하도록 유도하는 것을 목표로 합니다.",
-  "zero_noise_score": 1.75,
   "impact_score": 3.24,
   "impact_evidence": {
     "entity": {
@@ -51,5 +50,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "Databricks releases enterprise-focused OfficeQA AI benchmark after finding academic tests miss real-world document tasks",
-  "crawled_at": "2025-12-10T04:15:57.801889+00:00"
+  "crawled_at": "2025-12-10T04:15:57.801889+00:00",
+  "zero_echo_score": 1.75
 }

@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-    title: "ZeroNoise Daily",
+    title: "ZeroEcho Daily",
     description: "Curated high-importance news from around the world.",
 };
 

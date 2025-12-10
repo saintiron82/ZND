@@ -8,7 +8,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 def calculate_zs(data):
     """
-    Calculates ZeroNoise Score based on Direct Noise Logic (User Requirement).
+    Calculates ZeroEcho Score based on Direct Noise Logic (User Requirement).
     Start at 5.0.
     Credits (Good) -> Decrease Score (-)
     Penalties (Bad) -> Increase Score (+)
@@ -84,10 +84,10 @@ def verify_files(data_dir):
                 data = json.load(f)
                 
             # Skip if basic fields are missing (might be a non-article json)
-            if 'zero_noise_score' not in data:
+            if 'zero_echo_score' not in data:
                 continue
                 
-            recorded_zs = float(data.get('zero_noise_score', 0))
+            recorded_zs = float(data.get('zero_echo_score', 0))
             calculated_zs, debug = calculate_zs(data)
             
             # Allow small float error
@@ -114,8 +114,8 @@ def verify_files(data_dir):
 
 if __name__ == "__main__":
     # Assuming script is run from supplier directory or similar, but let's use absolute path relative to script location
-    # Script is in d:\ZND\supplier\scripts\verify_zs.py
-    # Data is in d:\ZND\supplier\data
+    # Script is in d:\ZED\supplier\scripts\verify_zs.py
+    # Data is in d:\ZED\supplier\data
     
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     data_dir = os.path.join(base_dir, 'data')

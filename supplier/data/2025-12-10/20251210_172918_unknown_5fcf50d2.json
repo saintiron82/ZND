@@ -1,0 +1,52 @@
+{
+  "title_ko": "머스크, '그록 4.2' 3주 내 출시 예고… 그록 5는 수개월 뒤",
+  "summary": "일론 머스크가 X를 통해 '그록 4.2'를 약 3주 뒤, '그록 5'를 수개월 뒤 출시할 것이라고 밝혔다. 이는 그록 앱의 트래픽이 제미나이를 앞섰다는 데이터와 최근 '알파 아레나'에서 그록 4.2 추정 모델이 우승했다는 루머가 확산되는 가운데 나온 발표다. 한편 오픈AI와 구글 등 경쟁사들도 차세대 모델 출시 및 업데이트를 준비하며 AI 모델 경쟁이 가속화되고 있다.",
+  "impact_score": 1.89,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사의 주체인 xAI는 Tier 1(OpenAI, Google 등)이나 Tier 2~3 명단에 명시되지 않은 스타트업이므로, 프로필 규칙에 따라 Tier Z로 분류함."
+    },
+    "events": [
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "Tier Z 주체인 xAI의 모델이 트레이딩 토너먼트에서 우승하고 트래픽 경쟁에서 제미나이를 앞섰다는 성과(SOTA급 달성)를 포함함."
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "출시 일정에 대한 단순 예고 및 트래픽 증감 등 시장 동향 업데이트."
+      }
+    ]
+  },
+  "reasoning": "객관적인 트래픽 데이터와 외부 대회 성과를 인용하여 비교 평가(Credit)를 수행했으나, 핵심 내용이 미래 시점의 출시 예고(Future Promise)에 의존하고 있어 품질 점수가 소폭 조정되었으며, 주체인 xAI의 등급 제한으로 인해 파급력 점수는 낮게 산정됨.",
+  "tags": [
+    "LLM",
+    "GEN_AI",
+    "AGENTS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 1.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "COMPARATIVE_EVALUATION",
+        "value": 1.25
+      },
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "zero_echo_score": 4.75,
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204679",
+  "crawled_at": "2025-12-10T17:29:18.102265+00:00"
+}

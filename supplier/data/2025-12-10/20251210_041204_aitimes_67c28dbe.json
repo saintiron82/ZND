@@ -10,7 +10,6 @@
   "title": "신재생에너지주, 국내외 변수에 동반 반등…전력난·정책 기대감이 촉매",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204663",
   "title_ko": "AI 데이터센터 전력난 우려·한국 정책 기대감, 신재생에너지주 동반 반등 촉매",
-  "zero_noise_score": 3.5,
   "impact_score": 3.76,
   "impact_evidence": {
     "entity": {
@@ -57,5 +56,6 @@
   },
   "source_id": "aitimes",
   "original_title": "신재생에너지주, 국내외 변수에 동반 반등…전력난·정책 기대감이 촉매",
-  "crawled_at": "2025-12-10T04:12:04.318539+00:00"
+  "crawled_at": "2025-12-10T04:12:04.318539+00:00",
+  "zero_echo_score": 3.5
 }

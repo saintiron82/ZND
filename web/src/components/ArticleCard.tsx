@@ -15,7 +15,7 @@ export interface Article {
     summary: string;
     impact_score?: number;
     title?: string;
-    zero_noise_score?: number;
+    zero_echo_score?: number;
     score?: number;
     layout_type?: string;
     url: string;
@@ -50,10 +50,10 @@ const getAwardStyle = (award: string) => {
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true }) => {
-    const { id, title_ko, summary, tags, url, crawled_at, source_id, impact_score, zero_noise_score, awards } = article;
+    const { id, title_ko, summary, tags, url, crawled_at, source_id, impact_score, zero_echo_score, awards } = article;
 
-    // Use zero_noise_score for quality indication
-    const znScore = zero_noise_score ?? 0;
+    // Use zero_echo_score for quality indication
+    const zeScore = zero_echo_score ?? 0;
 
     // ... (score color logic) ...
     const getScoreColor = (s: number) => {
@@ -132,8 +132,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground font-sans shrink-0">
                     <div className="flex items-center gap-3">
                         <span className="text-primary/80">{source_id}</span>
-                        <span className={cn("flex items-center gap-1", getScoreColor(znScore))}>
-                            ZN {znScore.toFixed(1)}
+                        <span className={cn("flex items-center gap-1", getScoreColor(zeScore))}>
+                            ZE {zeScore.toFixed(1)}
                         </span>
                     </div>
                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {dateStr}</span>

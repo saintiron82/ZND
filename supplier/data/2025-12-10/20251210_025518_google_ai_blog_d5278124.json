@@ -8,7 +8,6 @@
   "title": "How we’re supporting the next generation of innovators",
   "url": "https://blog.google/outreach-initiatives/education/next-gen-computer-science-innovators/",
   "title_ko": "구글, AI 교육 혁신 가속화: Hour of AI 참여 및 500만 달러 이상 기부",
-  "zero_noise_score": 5.75,
   "impact_score": 6.47,
   "impact_evidence": {
     "entity": {
@@ -52,5 +51,6 @@
   },
   "source_id": "google_ai_blog",
   "original_title": "How we’re supporting the next generation of innovators",
-  "crawled_at": "2025-12-10T02:55:18.664163+00:00"
+  "crawled_at": "2025-12-10T02:55:18.664163+00:00",
+  "zero_echo_score": 5.75
 }

@@ -6,7 +6,6 @@
   "title": "Big AI’s biggest names rally around the Agentic AI Foundation to set agent standards",
   "url": "https://the-decoder.com/big-ais-biggest-names-rally-around-the-agentic-ai-foundation-to-set-agent-standards/",
   "title_ko": "주요 AI 기업들, 리눅스 재단 주도 'Agentic AI Foundation' 설립: 에이전트 표준화 추진",
-  "zero_noise_score": 4.5,
   "impact_score": 5.0,
   "impact_evidence": {
     "entity": {
@@ -34,5 +33,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "Big AI’s biggest names rally around the Agentic AI Foundation to set agent standards",
-  "crawled_at": "2025-12-10T04:15:10.058193+00:00"
+  "crawled_at": "2025-12-10T04:15:10.058193+00:00",
+  "zero_echo_score": 4.5
 }

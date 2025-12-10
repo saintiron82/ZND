@@ -6,7 +6,6 @@
   "title": "Report: Aging power grid puts OpenAI and Microsoft's growth at risk",
   "url": "https://the-decoder.com/report-aging-power-grid-puts-openai-and-microsofts-growth-at-risk/",
   "title_ko": "보고서: 노후화된 전력망, OpenAI 및 Microsoft의 AI 성장 위협",
-  "zero_noise_score": 3.15,
   "impact_score": 5.0,
   "impact_evidence": {
     "entity": {
@@ -42,5 +41,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "Report: Aging power grid puts OpenAI and Microsoft's growth at risk",
-  "crawled_at": "2025-12-10T04:15:13.561785+00:00"
+  "crawled_at": "2025-12-10T04:15:13.561785+00:00",
+  "zero_echo_score": 3.15
 }

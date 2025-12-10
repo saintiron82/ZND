@@ -11,7 +11,7 @@ export interface ArticleWithSize {
     id: string;
     cols: number;
     rows: number;
-    zeroNoiseScore: number;
+    zeroEchoScore: number;
     impactScore: number;
     summary: string;
     awards?: string[]; // Award badges: "Today's Headline", "Zero Noise Award", "Hot Topic"
@@ -246,7 +246,7 @@ export class LayoutOptimizer {
         // Sort by ZS score (lower is better), then by how well it fills the gap
         fittingArticles.sort((a, b) => {
             // Primary: ZS score (ascending - lower is better quality)
-            const zsDiff = a.zeroNoiseScore - b.zeroNoiseScore;
+            const zsDiff = a.zeroEchoScore - b.zeroEchoScore;
             if (Math.abs(zsDiff) > 0.5) return zsDiff;
 
             // Secondary: Fill efficiency (prefer articles that fill more of the gap)
@@ -272,14 +272,14 @@ export class LayoutOptimizer {
             ...a,
             id: a.id || a.url || `article-${index}`, // Fallback to url or index
             ...calculateArticleSize(a),
-            zeroNoiseScore: a.zero_noise_score || 0,
+            zeroEchoScore: a.zero_echo_score || 0,
             impactScore: a.impact_score || 0
         }));
 
         // Sort by Combined Score (primary placement order)
         const sortedArticles = [...articlesWithSize].sort((a, b) => {
-            const combinedA = (10 - a.zeroNoiseScore) + a.impactScore;
-            const combinedB = (10 - b.zeroNoiseScore) + b.impactScore;
+            const combinedA = (10 - a.zeroEchoScore) + a.impactScore;
+            const combinedB = (10 - b.zeroEchoScore) + b.impactScore;
             return combinedB - combinedA;
         });
 
@@ -293,13 +293,13 @@ export class LayoutOptimizer {
 
         // Find award winners
         const byCombo = [...articlesWithSize].sort((a, b) => {
-            const combinedA = (10 - a.zeroNoiseScore) + a.impactScore;
-            const combinedB = (10 - b.zeroNoiseScore) + b.impactScore;
+            const combinedA = (10 - a.zeroEchoScore) + a.impactScore;
+            const combinedB = (10 - b.zeroEchoScore) + b.impactScore;
             return combinedB - combinedA;
         });
 
         const byZS = [...articlesWithSize].sort((a, b) => {
-            const zsDiff = a.zeroNoiseScore - b.zeroNoiseScore; // Lower is better
+            const zsDiff = a.zeroEchoScore - b.zeroEchoScore; // Lower is better
             if (Math.abs(zsDiff) < 0.01) {
                 return b.impactScore - a.impactScore; // Tiebreaker: higher IS
             }

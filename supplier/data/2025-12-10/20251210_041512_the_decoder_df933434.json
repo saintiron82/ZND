@@ -6,7 +6,6 @@
   "title": "Google faces an antitrust probe for using web and YouTube content in AI without opt-out or fair pay",
   "url": "https://the-decoder.com/google-faces-an-antitrust-probe-for-using-web-and-youtube-content-in-ai-without-opt-out-or-fair-pay/",
   "title_ko": "구글, 웹 및 유튜브 콘텐츠 AI 학습 무단 사용 의혹으로 EU 반독점 조사 직면",
-  "zero_noise_score": 3.48,
   "impact_score": 3.5,
   "impact_evidence": {
     "entity": {
@@ -38,5 +37,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "Google faces an antitrust probe for using web and YouTube content in AI without opt-out or fair pay",
-  "crawled_at": "2025-12-10T04:15:12.490651+00:00"
+  "crawled_at": "2025-12-10T04:15:12.490651+00:00",
+  "zero_echo_score": 3.48
 }

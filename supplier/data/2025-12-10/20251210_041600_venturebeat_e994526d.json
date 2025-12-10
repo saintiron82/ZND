@@ -8,7 +8,6 @@
   "url": "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for",
   "title_ko": "Zhipu AI, 도구 호출 기능 탑재한 오픈소스 멀티모달 비전 모델 'GLM-4.6V' 출시",
   "summary": "중국 AI 스타트업 Zhipu AI(Z.ai)가 멀티모달 추론 및 프론트엔드 자동화에 최적화된 새로운 오픈소스 비전-언어 모델(VLM) 'GLM-4.6V' 시리즈(106B 및 9B)를 출시했습니다. 이 모델의 핵심 혁신은 VLM에 '네이티브 함수 호출(native function calling)' 기능을 도입하여, 시각적 입력(이미지, 영상)을 검색, 크롭, 차트 인식 등의 도구에 직접 파라미터로 전달할 수 있게 한 점입니다. GLM-4.6V는 128,000 토큰의 긴 컨텍스트 길이를 지원하며, 20개 이상의 벤치마크에서 SOTA 수준의 성능을 달성했으며, MIT 라이선스로 배포되어 기업의 상업적 이용에 높은 유연성을 제공합니다.",
-  "zero_noise_score": 3.0,
   "impact_score": 1.89,
   "impact_evidence": {
     "entity": {
@@ -51,5 +50,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "Z.ai debuts open source GLM-4.6V, a native tool-calling vision model",
-  "crawled_at": "2025-12-10T04:16:00.182157+00:00"
+  "crawled_at": "2025-12-10T04:16:00.182157+00:00",
+  "zero_echo_score": 3.0
 }

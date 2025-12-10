@@ -10,7 +10,6 @@
   "title": "[양현상 칼럼] &quot;60조 캐나다 잠수함”, 우리는 또 '상품'만 팔고 있다",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204667",
   "title_ko": "韓 방산, 캐나다 60조 잠수함 수주전 '파트너십' 아닌 '상품' 판매 전략 답습 경고",
-  "zero_noise_score": 1.0,
   "impact_score": 3.47,
   "impact_evidence": {
     "entity": {
@@ -66,5 +65,6 @@
   },
   "source_id": "aitimes",
   "original_title": "[양현상 칼럼] &quot;60조 캐나다 잠수함”, 우리는 또 '상품'만 팔고 있다",
-  "crawled_at": "2025-12-10T04:12:04.162595+00:00"
+  "crawled_at": "2025-12-10T04:12:04.162595+00:00",
+  "zero_echo_score": 1.0
 }

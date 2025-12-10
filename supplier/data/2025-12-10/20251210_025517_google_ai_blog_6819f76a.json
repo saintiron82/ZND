@@ -7,7 +7,6 @@
   "title": "Learn more about AI in the workplace in our new research report.",
   "url": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
   "title_ko": "AI 도입, 시간 절약보다 혁신 잠재력 극대화: 글로벌 기업 임원 설문조사 결과",
-  "zero_noise_score": 6.0,
   "impact_score": 1.15,
   "impact_evidence": {
     "entity": {
@@ -40,5 +39,6 @@
   },
   "source_id": "google_ai_blog",
   "original_title": "Learn more about AI in the workplace in our new research report.",
-  "crawled_at": "2025-12-10T02:55:17.840830+00:00"
+  "crawled_at": "2025-12-10T02:55:17.840830+00:00",
+  "zero_echo_score": 6.0
 }

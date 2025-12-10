@@ -45,7 +45,7 @@ export default function Sidebar() {
                 {/* Logo Area */}
                 <div className="h-20 flex items-center justify-center border-b border-zinc-100 dark:border-zinc-900">
                     <div className={cn("font-serif font-black text-2xl tracking-tighter transition-opacity", isCollapsed ? "md:opacity-0 md:hidden" : "opacity-100")}>
-                        ZN<span className="text-indigo-600">.</span>D
+                        ZE<span className="text-indigo-600">.</span>D
                     </div>
                     <div className={cn("font-serif font-black text-xl tracking-tighter absolute transition-opacity", isCollapsed ? "md:opacity-100" : "opacity-0 hidden")}>
                         Z

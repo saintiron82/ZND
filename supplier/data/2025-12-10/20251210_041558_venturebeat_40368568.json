@@ -8,7 +8,6 @@
   "title": "Brand-context AI: The missing requirement for marketing AI",
   "url": "https://venturebeat.com/ai/brand-context-ai-the-missing-requirement-for-marketing-ai",
   "title_ko": "AI 마케팅의 성패는 '브랜드 컨텍스트'에 달려: BlueOcean CEO가 말하는 수평적 인텔리전스의 중요성",
-  "zero_noise_score": 3.5,
   "impact_score": 1.59,
   "impact_evidence": {
     "entity": {
@@ -50,5 +49,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "Brand-context AI: The missing requirement for marketing AI",
-  "crawled_at": "2025-12-10T04:15:58.474802+00:00"
+  "crawled_at": "2025-12-10T04:15:58.474802+00:00",
+  "zero_echo_score": 3.5
 }

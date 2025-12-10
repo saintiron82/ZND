@@ -8,7 +8,6 @@
   "title": "Transforming Nordic classrooms through responsible AI partnerships",
   "url": "https://blog.google/around-the-globe/google-europe/transforming-nordic-classrooms-through-responsible-ai-partnerships/",
   "title_ko": "노르딕 교육 혁신: 스웨덴은 제미나이 도입, 노르웨이는 GDPR 준수 확보",
-  "zero_noise_score": 0.75,
   "impact_score": 8.51,
   "impact_evidence": {
     "entity": {
@@ -75,5 +74,6 @@
   },
   "source_id": "google_ai_blog",
   "original_title": "Transforming Nordic classrooms through responsible AI partnerships",
-  "crawled_at": "2025-12-10T04:08:43.638184+00:00"
+  "crawled_at": "2025-12-10T04:08:43.638184+00:00",
+  "zero_echo_score": 0.75
 }

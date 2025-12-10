@@ -182,17 +182,17 @@ async def main():
                     result_json = mll.analyze_text(truncated_text)
                     
                     if result_json:
-                        if result_json.get('zero_noise_score', 0) == 0:
+                        if result_json.get('zero_echo_score', 0) == 0:
                              # Sometimes MLL might return 0 if it thinks it's bad? 
                              # But let's trust the score.
                              pass
                         
-                        zero_noise_score = result_json.get('zero_noise_score', 0)
+                        zero_echo_score = result_json.get('zero_echo_score', 0)
                         impact_score = result_json.get('impact_score', 0)
                         
                         # [NEW] Check High Noise (>= 7)
-                        if zero_noise_score >= 7.0:
-                            print(f"⚠️ [Skip] High Noise Score ({zero_noise_score}): {url}")
+                        if zero_echo_score >= 7.0:
+                            print(f"⚠️ [Skip] High Noise Score ({zero_echo_score}): {url}")
                             db.save_history(url, 'WORTHLESS', reason='high_noise_auto')
                             continue
 
@@ -206,7 +206,7 @@ async def main():
                             "summary_extracted": data.get('summary') # Add extracted summary if any
                         }
                         
-                        print(f"💾 [Save] Saving article: {result_json.get('title_ko')} (ZS: {zero_noise_score})")
+                        print(f"💾 [Save] Saving article: {result_json.get('title_ko')} (ZS: {zero_echo_score})")
                         db.save_article(final_doc)
                         print(f"✅ [Success] Item processed successfully.")
                     else:

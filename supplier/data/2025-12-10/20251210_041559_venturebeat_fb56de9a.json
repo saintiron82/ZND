@@ -8,7 +8,6 @@
   "title": "Tracking every decision, dollar and delay: The new process intelligence engine driving public-sector progress",
   "url": "https://venturebeat.com/ai/tracking-every-decision-dollar-and-delay-the-new-process-intelligence-engine",
   "title_ko": "오클라호마주, Celonis PI 엔진 도입으로 1천만 달러 부적절 지출 적발: 공공 부문 AI 프로세스 혁신 사례",
-  "zero_noise_score": 3.75,
   "impact_score": 5.12,
   "impact_evidence": {
     "entity": {
@@ -56,5 +55,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "Tracking every decision, dollar and delay: The new process intelligence engine driving public-sector progress",
-  "crawled_at": "2025-12-10T04:15:59.457159+00:00"
+  "crawled_at": "2025-12-10T04:15:59.457159+00:00",
+  "zero_echo_score": 3.75
 }

@@ -7,7 +7,7 @@ from src.db_client import DBClient
 mock_mll_response = {
     "title_ko": "테스트 기사 제목",
     "summary": "테스트 요약입니다.",
-    "zero_noise_score": 2.5,
+    "zero_echo_score": 2.5,
     "impact_score": 8.0,
     "impact_evidence": {
         "entity": {"id": "TEST_ENTITY", "weight": 5.0, "reasoning": "Test reasoning"},
@@ -37,7 +37,7 @@ def test_save():
         "original_title": "Original English Title"
     }
     
-    print(f"💾 Saving document with ZS: {final_doc['zero_noise_score']}, IS: {final_doc['impact_score']}")
+    print(f"💾 Saving document with ZS: {final_doc['zero_echo_score']}, IS: {final_doc['impact_score']}")
     
     try:
         db.save_article(final_doc)
@@ -63,10 +63,10 @@ def test_save():
                 # Verify content
                 with open(os.path.join(data_dir, f), 'r', encoding='utf-8') as json_file:
                     saved_data = json.load(json_file)
-                    if saved_data.get('zero_noise_score') == 2.5:
-                        print("✅ zero_noise_score matches.")
+                    if saved_data.get('zero_echo_score') == 2.5:
+                        print("✅ zero_echo_score matches.")
                     else:
-                        print(f"❌ zero_noise_score mismatch: {saved_data.get('zero_noise_score')}")
+                        print(f"❌ zero_echo_score mismatch: {saved_data.get('zero_echo_score')}")
                         
                     if saved_data.get('impact_score') == 8.0:
                         print("✅ impact_score matches.")

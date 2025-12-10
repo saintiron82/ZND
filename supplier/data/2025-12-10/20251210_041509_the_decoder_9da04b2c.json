@@ -6,7 +6,6 @@
   "title": "Mistral's open coding model Devstral 2 claims sevenfold cost advantage over Claude Sonnet",
   "url": "https://the-decoder.com/mistrals-open-coding-model-devstral-2-claims-sevenfold-cost-advantage-over-claude-sonnet/",
   "title_ko": "미스트랄, 오픈 코딩 모델 '데브스트랄 2' 공개: 클로드 소네트 대비 7배 비용 효율성 주장",
-  "zero_noise_score": 5.0,
   "impact_score": 2.33,
   "impact_evidence": {
     "entity": {
@@ -50,5 +49,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "Mistral's open coding model Devstral 2 claims sevenfold cost advantage over Claude Sonnet",
-  "crawled_at": "2025-12-10T04:15:09.794748+00:00"
+  "crawled_at": "2025-12-10T04:15:09.794748+00:00",
+  "zero_echo_score": 5.0
 }

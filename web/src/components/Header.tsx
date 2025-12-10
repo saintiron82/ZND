@@ -15,7 +15,7 @@ export default function Header({ currentDate }: { currentDate?: string | null })
 
             <div className="flex flex-col items-center max-w-7xl mx-auto">
                 <h1 className="font-black tracking-tighter text-foreground font-sans leading-none flex items-baseline gap-2 md:gap-4 justify-center text-4xl md:text-6xl">
-                    ZeroNoise<span className="text-primary">.</span>
+                    ZeroEcho<span className="text-primary">.</span>
                     <span className="font-light italic text-muted-foreground tracking-normal font-serif text-2xl md:text-4xl">Daily</span>
                 </h1>
 

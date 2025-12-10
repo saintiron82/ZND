@@ -10,7 +10,6 @@
   "title": "﻿코난, 설명 가능한 ‘XAI’ 도입 가속...&quot;신뢰성﻿·안전성 높인다&quot;",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204655",
   "title_ko": "코난테크놀로지, KAIST와 협력해 LLM 환각 제거 및 국방 AI에 '설명 가능한 AI(XAI)' 접목",
-  "zero_noise_score": 4.62,
   "impact_score": 2.33,
   "impact_evidence": {
     "entity": {
@@ -58,5 +57,6 @@
   },
   "source_id": "aitimes",
   "original_title": "﻿코난, 설명 가능한 ‘XAI’ 도입 가속...&quot;신뢰성﻿·안전성 높인다&quot;",
-  "crawled_at": "2025-12-10T04:12:02.747723+00:00"
+  "crawled_at": "2025-12-10T04:12:02.747723+00:00",
+  "zero_echo_score": 4.62
 }

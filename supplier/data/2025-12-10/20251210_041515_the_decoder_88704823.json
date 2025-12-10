@@ -6,7 +6,6 @@
   "title": "70% of creative professionals fear stigma over AI use, Anthropic study finds",
   "url": "https://the-decoder.com/70-of-creative-professionals-hide-ai-use-from-colleagues-due-to-stigma-anthropic-study-finds/",
   "title_ko": "창작 전문가 70%, AI 사용에 대한 '낙인' 우려: Anthropic 연구 결과",
-  "zero_noise_score": 3.5,
   "impact_score": 1.0,
   "impact_evidence": {
     "entity": {
@@ -38,5 +37,6 @@
   },
   "source_id": "the_decoder",
   "original_title": "70% of creative professionals fear stigma over AI use, Anthropic study finds",
-  "crawled_at": "2025-12-10T04:15:15.210278+00:00"
+  "crawled_at": "2025-12-10T04:15:15.210278+00:00",
+  "zero_echo_score": 3.5
 }

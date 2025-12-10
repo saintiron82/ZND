@@ -10,7 +10,6 @@
   "title": "앤트로픽, 슬랙 사용 중 '클로드 코드' 작동 기능 추가",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204639",
   "title_ko": "앤트로픽, 슬랙 대화 맥락 활용해 코드 작성·실행 가능한 '클로드 코드' 기능 통합",
-  "zero_noise_score": 3.38,
   "impact_score": 6.92,
   "impact_evidence": {
     "entity": {
@@ -63,5 +62,6 @@
   },
   "source_id": "aitimes",
   "original_title": "앤트로픽, 슬랙 사용 중 '클로드 코드' 작동 기능 추가",
-  "crawled_at": "2025-12-10T04:12:03.104962+00:00"
+  "crawled_at": "2025-12-10T04:12:03.104962+00:00",
+  "zero_echo_score": 3.38
 }

@@ -8,7 +8,6 @@
   "title": "Anthropic&apos;s Claude Code can now read your Slack messages and write code for you",
   "url": "https://venturebeat.com/ai/anthropics-claude-code-can-now-read-your-slack-messages-and-write-code-for",
   "title_ko": "Anthropic 'Claude Code', Slack 통합으로 엔지니어링 워크플로우 깊숙이 침투: 6개월 만에 10억 달러 매출 달성",
-  "zero_noise_score": 3.75,
   "impact_score": 6.03,
   "impact_evidence": {
     "entity": {
@@ -47,5 +46,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "Anthropic&apos;s Claude Code can now read your Slack messages and write code for you",
-  "crawled_at": "2025-12-10T04:16:01.358057+00:00"
+  "crawled_at": "2025-12-10T04:16:01.358057+00:00",
+  "zero_echo_score": 3.75
 }

@@ -10,7 +10,6 @@
   "title": "'1등 모델' 효과로 제미나이 모바일 다운로드 소폭 증가...챗GPT는 감소",
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204641",
   "title_ko": "제미나이 3 출시 후 모바일 앱 다운로드 소폭 증가, 그러나 챗GPT가 사용량 압도적 우위 유지",
-  "zero_noise_score": 1.25,
   "impact_score": 5.0,
   "impact_evidence": {
     "entity": {
@@ -41,5 +40,6 @@
   },
   "source_id": "aitimes",
   "original_title": "'1등 모델' 효과로 제미나이 모바일 다운로드 소폭 증가...챗GPT는 감소",
-  "crawled_at": "2025-12-10T04:12:03.491163+00:00"
+  "crawled_at": "2025-12-10T04:12:03.491163+00:00",
+  "zero_echo_score": 1.25
 }

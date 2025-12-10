@@ -66,8 +66,8 @@ async function getLocalArticles(targetDate: string, requestHelper: { headers: He
                 const content = fs.readFileSync(filePath, 'utf-8');
                 const article = JSON.parse(content);
 
-                if (article.zero_noise_score !== undefined && article.score === undefined) {
-                    article.score = article.zero_noise_score;
+                if (article.zero_echo_score !== undefined && article.score === undefined) {
+                    article.score = article.zero_echo_score;
                 }
                 if (!article.id) {
                     article.id = file.replace('.json', '');
@@ -148,8 +148,8 @@ export async function GET(request: Request) {
         console.log(`[API] Returning ${articles.length} articles from ${source} for date ${targetDate}`);
 
         let validArticles = articles.filter((a: any) => {
-            const score = a.score ?? a.zero_noise_score ?? 0;
-            // Filter out articles with High Noise (ZeroNoise Score >= 7.0)
+            const score = a.score ?? a.zero_echo_score ?? 0;
+            // Filter out articles with High Noise (ZeroEcho Score >= 7.0)
             return score < 7.0;
         });
 

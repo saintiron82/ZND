@@ -5,7 +5,6 @@
   "title": "2025 at Google",
   "url": "https://blog.google/technology/ai/look-back-2025/",
   "title_ko": "구글 '2025년 검색어 결산': 올해의 검색 트렌드 분석",
-  "zero_noise_score": 7.5,
   "impact_score": 5.15,
   "impact_evidence": {
     "entity": {
@@ -41,5 +40,6 @@
   },
   "source_id": "google_ai_blog",
   "original_title": "2025 at Google",
-  "crawled_at": "2025-12-10T02:55:18.345398+00:00"
+  "crawled_at": "2025-12-10T02:55:18.345398+00:00",
+  "zero_echo_score": 7.5
 }

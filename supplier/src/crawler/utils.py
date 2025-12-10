@@ -22,7 +22,7 @@ class RobotsChecker:
         try:
             # Use requests for better SSL/network handling
             # Set a browser-like User-Agent to avoid being blocked
-            headers = {'User-Agent': 'Mozilla/5.0 (compatible; ZNDBot/1.0; +http://example.com/bot)'}
+            headers = {'User-Agent': 'Mozilla/5.0 (compatible; ZEDBot/1.0; +http://example.com/bot)'}
             response = requests.get(f"{base_url}/robots.txt", headers=headers, timeout=10, verify=False) 
             
             if response.status_code == 200:

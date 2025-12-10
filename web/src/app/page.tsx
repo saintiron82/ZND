@@ -90,11 +90,11 @@ export default async function Home() {
         <div className="flex flex-col gap-12">
           {sortedDates.map(date => {
             // Sort articles by Combined Score (Descending) -> Highest Combined Score First
-            // Combined Score = (10 - ZNS) + Impact Score
-            // Lower ZNS (better quality) + Higher Impact = Higher Combined Score
+            // Combined Score = (10 - ZES) + Impact Score
+            // Lower ZES (better quality) + Higher Impact = Higher Combined Score
             const dateArticles = groupedArticles[date].sort((a: any, b: any) => {
-              const znsA = a.zero_noise_score || 0;
-              const znsB = b.zero_noise_score || 0;
+              const znsA = a.zero_echo_score || 0;
+              const znsB = b.zero_echo_score || 0;
               const impactA = a.impact_score || 0;
               const impactB = b.impact_score || 0;
 

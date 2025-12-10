@@ -8,7 +8,6 @@
   "url": "https://venturebeat.com/ai/mistral-launches-powerful-devstral-2-coding-model-including-open-source",
   "title_ko": "Mistral, 개발자 맞춤형 'Devstral 2' 및 터미널 에이전트 'Vibe CLI' 출시: 오픈 소스 라이선스 논란",
   "summary": "프랑스 AI 스타트업 Mistral이 소프트웨어 엔지니어링에 최적화된 새로운 모델 'Devstral 2'(123B)와 노트북에서도 구동 가능한 'Devstral Small 2'(24B)를 발표했습니다. 특히, 터미널 환경에 직접 통합되는 에이전트 'Mistral Vibe CLI'를 함께 공개하여 개발자 경험을 개선하고자 합니다. Devstral 2는 SWE-bench에서 72.2%의 높은 성능을 보였으며, DeepSeek V3.2보다 5배 작으면서도 성능을 능가하는 효율성을 자랑합니다. 주목할 점은 Devstral 2의 라이선스가 월매출 2천만 달러 초과 기업의 사용을 제한하는 '수정된 MIT 라이선스'라는 점이며, 이는 완전한 오픈 소스 정책과의 충돌 지점으로 작용합니다.",
-  "zero_noise_score": 3.0,
   "impact_score": 1.89,
   "impact_evidence": {
     "entity": {
@@ -51,5 +50,6 @@
   },
   "source_id": "venturebeat",
   "original_title": "Mistral launches powerful Devstral 2 coding model including open source, laptop-friendly version",
-  "crawled_at": "2025-12-10T04:15:56.776297+00:00"
+  "crawled_at": "2025-12-10T04:15:56.776297+00:00",
+  "zero_echo_score": 3.0
 }

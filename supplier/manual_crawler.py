@@ -14,6 +14,31 @@ db = DBClient()
 robots_checker = RobotsChecker()
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 
+def normalize_field_names(data):
+    """
+    Normalize field names to handle case variations.
+    e.g., zero_Echo_score, Zero_echo_score -> zero_echo_score
+    Also migrates legacy zero_noise_score field.
+    """
+    if not isinstance(data, dict):
+        return data
+    
+    normalized = dict(data)
+    keys_to_check = list(normalized.keys())
+    
+    for key in keys_to_check:
+        key_lower = key.lower()
+        # Handle zero_echo_score variations
+        if key_lower == 'zero_echo_score' and key != 'zero_echo_score':
+            normalized['zero_echo_score'] = normalized.pop(key)
+            print(f"[Normalize] Renamed '{key}' to 'zero_echo_score'")
+        # Handle legacy zero_noise_score
+        elif key_lower == 'zero_noise_score':
+            normalized['zero_echo_score'] = normalized.pop(key)
+            print(f"[Normalize] Migrated '{key}' to 'zero_echo_score'")
+    
+    return normalized
+
 def update_manifest(date_str):
     """
     Updates or creates index.json for the given date directory.
@@ -222,10 +247,10 @@ def extract_batch():
 
 @app.route('/api/save', methods=['POST'])
 def save():
-    data = request.json
+    data = normalize_field_names(request.json)
     
     # Validate required fields
-    required_fields = ['url', 'source_id', 'title_ko', 'summary', 'zero_noise_score', 'impact_score', 'original_title']
+    required_fields = ['url', 'source_id', 'title_ko', 'summary', 'zero_echo_score', 'impact_score', 'original_title']
     for field in required_fields:
         if field not in data:
             return jsonify({'error': f'Missing field: {field}'}), 400
@@ -240,15 +265,15 @@ def save():
         "source_id": data['source_id'],
         "title_ko": data['title_ko'],
         "summary": data['summary'],
-        "zero_noise_score": float(data['zero_noise_score']),
+        "zero_echo_score": float(data['zero_echo_score']),
         "impact_score": float(data['impact_score']),
         "original_title": data['original_title'],
         "crawled_at": datetime.now(timezone.utc).isoformat()
     })
     
     # [NEW] Check Noise Score (NS >= 7 -> Worthless)
-    if float(data['zero_noise_score']) >= 7.0:
-        print(f"⚠️ [Manual Save] ZS is high ({data['zero_noise_score']}), marking as WORTHLESS.")
+    if float(data['zero_echo_score']) >= 7.0:
+        print(f"⚠️ [Manual Save] ZS is high ({data['zero_echo_score']}), marking as WORTHLESS.")
         db.save_history(data['url'], 'WORTHLESS', reason='high_noise_manual_save')
         return jsonify({'error': 'Article has High Noise (>= 7). Marked as WORTHLESS and not saved.'}), 400
 
@@ -326,7 +351,7 @@ def check_quality():
 
 def _calculate_scores(data):
     """
-    Helper function to calculate ZeroNoise Score and Impact Score based on evidence.
+    Helper function to calculate ZeroEcho Score and Impact Score based on evidence.
     Returns a dictionary with calculated values and breakdown.
     """
     # 1. Base Score
@@ -389,7 +414,7 @@ def _calculate_scores(data):
 
 @app.route('/api/verify_score', methods=['POST'])
 def verify_score():
-    data = request.json
+    data = normalize_field_names(request.json)
     try:
         calc_result = _calculate_scores(data)
         
@@ -398,7 +423,7 @@ def verify_score():
         breakdown = calc_result['breakdown']
         
         # ZS Check
-        recorded_zs = float(data.get('zero_noise_score', 0))
+        recorded_zs = float(data.get('zero_echo_score', 0))
         diff = abs(recorded_zs - calculated_zs)
         is_match = (diff <= 0.1)
         
@@ -445,7 +470,7 @@ def inject_correction():
         scores = _calculate_scores(data)
         
         # Update data with calculated scores
-        data['zero_noise_score'] = scores['zs_final']
+        data['zero_echo_score'] = scores['zs_final']
         data['impact_score'] = scores['impact_score']
 
         # [NEW] Check Noise Score (NS >= 7 -> Worthless)

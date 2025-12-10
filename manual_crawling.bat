@@ -1,32 +1,40 @@
 @echo off
 setlocal
-title ZND Manual Crawler
+title ZED Manual Crawler
 
 :: Move to the script's directory (Project Root)
 cd /d "%~dp0"
 
-if not exist .venv (
-    echo [ERROR] Virtual environment '.venv' not found in project root!
+if not exist supplier\venv (
+    echo [ERROR] Virtual environment 'supplier\venv' not found!
     echo Please ensure you have set up the python environment.
     pause
     exit /b
 )
 
-echo [ZND] Activating virtual environment...
-call .venv\Scripts\activate
+echo [ZED] Activating virtual environment...
+call supplier\venv\Scripts\activate
 
 where python
 python --version
 
-echo [ZND] Moving to supplier directory...
+:: Kill any existing process on port 5500
+echo [ZED] Checking for existing services on port 5500...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5500 ^| findstr LISTENING') do (
+    echo [ZED] Found existing process PID: %%a - Terminating...
+    taskkill /F /PID %%a >nul 2>&1
+)
+echo [ZED] Port 5500 is now available.
+
+echo [ZED] Moving to supplier directory...
 cd supplier
 
-echo [ZND] Opening browser...
+echo [ZED] Opening browser...
 :: Start browser slightly before server to ensure it's ready when window pops up, 
 :: though user might need to refresh if server is slow.
 start http://localhost:5500
 
-echo [ZND] Starting Manual Crawler Server...
+echo [ZED] Starting Manual Crawler Server...
 python manual_crawler.py
 
 pause

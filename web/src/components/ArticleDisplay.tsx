@@ -1,92 +1,95 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ArticleCard, { Article } from './ArticleCard';
 import { Calendar } from 'lucide-react';
+import { LAYOUT_CONFIG } from '../config/layoutConfig';
+import { optimizeArticleOrder } from '../utils/layoutOptimizer';
 
 interface ArticleDisplayProps {
     articles: Article[];
     loading: boolean;
     error: string | null;
+    currentDate?: string;  // 피드백용 날짜 (YYYY-MM-DD)
 }
 
 // Deterministic hash to keep layout stable between renders/hydrations
 const getHash = (str: string) => {
+    if (!str) return 0;
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
         const char = str.charCodeAt(i);
         hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
+        hash = hash & hash;
     }
     return Math.abs(hash);
 };
 
-const getSizeFromScore = (score: number, id: string, summary: string = '', title: string = ''): string => {
-    // 1. Calculate Initial Target Area based on Impact Score
-    const s = score || 0;
-    // Base 8 (4x2) + Logarithmic Growth
-    let targetArea = 8 + Math.log2(s + 1) * 2.5;
+// Physics-Based Layout Calculator (High-Res 10px Grid + Random Width)
+// NO MINIMUM HEIGHT CONSTRAINTS - Cards shrink to fit content exactly
+const getSizeFromScore = (score: number, id: string, summary: string = '', title: string = ''): { className: string, cols: number, rows: number } => {
+    const { constraints, physics, grid } = LAYOUT_CONFIG;
 
-    // 2. Calculate Content Demand and Grid Capacity
-    // - Title is larger, counts as ~3x char weight
-    // - 1 Grid Cell (150x110) can hold roughly 70-80 chars of normal text density
-    const CHARS_PER_CELL = 75;
-    const titleDemand = (title.length || 0) * 3;
-    const summaryDemand = (summary.length || 0);
-    const totalContentDemand = titleDemand + summaryDemand;
+    const textLength = summary.length;
+    const minW = constraints.minWidth;
+    const maxW = constraints.maxWidth;
 
-    // 3. Determine Shape Dimensions based on targetArea
-    // (This is a simplified simulation to check capacity)
-    // We assume default shape is roughly rectangular
-    let cols = 4;
-    let rows = 2; // Default 4x2 = 8
-
-    if (targetArea >= 24) { cols = 6; rows = 4; } // 24
-    else if (targetArea >= 16) { cols = 4; rows = 4; } // 16
-    else if (targetArea >= 12) { cols = 4; rows = 3; } // 12
-
-    let currentCapacity = cols * rows * CHARS_PER_CELL;
-
-    // 4. Adjust Dimensions based on Demand/Capacity Ratio
-
-    // Case A: Content Overlay (Demand > Capacity) -> EXPAND
-    // If content exceeds 90% of capacity, we need more space immediately
-    if (totalContentDemand > currentCapacity * 0.9) {
-        // Boost area significantly to jump to next tier
-        targetArea = Math.max(targetArea + 8, Math.ceil(totalContentDemand / CHARS_PER_CELL));
-    }
-
-    // Case B: Excessive Whitespace (Demand < Capacity) -> SHRINK
-    // If content uses less than 40% of capacity, we should shrink
-    else if (totalContentDemand < currentCapacity * 0.4) {
-        // Reduce area, but respect minimums
-        targetArea = Math.max(8, targetArea - 4);
-    }
-
+    // 1. Determine WIDTH (Random + Score Bias for Variety)
     const hash = getHash(id);
+    const widthRange = maxW - minW + 1;
+    let cols = minW + (hash % widthRange);
 
-    // 5. Map Adjusted Target Area to Actual Grid Classes
-    // Massive (Area >= 24) -> 6x4 (24) or 8x3 (24)
-    if (targetArea >= 24) {
-        return hash % 2 === 0 ? "md:col-span-6 md:row-span-4" : "md:col-span-8 md:row-span-3";
+    // Bias: High Impact articles (Score > 7) get wider cards
+    if (score >= 7.0) {
+        cols = Math.max(cols, 6);
     }
+    cols = Math.min(cols, maxW);
 
-    // Huge (Area >= 16) -> 4x4 (16)
-    if (targetArea >= 16) {
-        return "md:col-span-4 md:row-span-4";
-    }
+    // 2. Physics Calculation - Exact Pixel Height Needed
+    const availableWidthPx = (cols * physics.colWidthPx) - physics.paddingPx - ((cols - 1) * grid.gap);
+    const charsPerLine = availableWidthPx / physics.charWidthPx;
+    const estimatedLines = Math.ceil(textLength / charsPerLine);
 
-    // Large (Area >= 12) -> 4x3 (12) or 3x4 (12)
-    if (targetArea >= 12) {
-        return hash % 2 === 0 ? "md:col-span-4 md:row-span-3" : "md:col-span-3 md:row-span-4";
-    }
+    // RequiredHeight = Header(Title+Meta) + TextBody + Padding
+    const requiredHeightPx = physics.headerHeightPx + (estimatedLines * physics.lineHeightPx) + physics.paddingPx;
 
-    // MINIMUM SIZE: 8 CELLS (4x2 or 2x4)
-    const minHash = hash % 3;
-    if (minHash === 0) return "md:col-span-4 md:row-span-2"; // 4x2
-    if (minHash === 1) return "md:col-span-2 md:row-span-4"; // 2x4
-    return "md:col-span-4 md:row-span-2"; // Default
+    // 3. High-Res Grid Quantization (10px steps)
+    // Formula: Height = Rows*10 + (Rows-1)*16 = 26*Rows - 16
+    // So: Rows = (Height + 16) / 26
+    const gapPx = 16;
+    const trackPx = grid.cellHeight; // 10
+
+    let rows = Math.ceil((requiredHeightPx + gapPx) / (trackPx + gapPx));
+
+    // MINIMAL floor only - just prevent degenerate tiny cards
+    // 5 rows = ~100px = enough for title only
+    const MIN_ROWS = 5;
+    rows = Math.max(rows, MIN_ROWS);
+
+    // Max cap for very long articles
+    rows = Math.min(rows, 80);
+
+    // Column class mappings for Tailwind
+    const colMap: Record<number, string> = {
+        3: "md:col-span-3",
+        4: "md:col-span-4",
+        5: "md:col-span-5",
+        6: "md:col-span-6",
+        7: "md:col-span-7",
+        8: "md:col-span-8",
+        9: "md:col-span-9",
+        10: "md:col-span-10"
+    };
+
+    const colClass = colMap[cols] || "md:col-span-4";
+
+    return { className: colClass, cols, rows };
 };
 
-export default function ArticleDisplay({ articles, loading, error }: ArticleDisplayProps) {
+export default function ArticleDisplay({ articles, loading, error, currentDate }: ArticleDisplayProps) {
+    // Apply Gap-Filling Algorithm to optimize article order
+    const optimizedArticles = useMemo(() => {
+        if (!articles || articles.length === 0) return [];
+        return optimizeArticleOrder(articles);
+    }, [articles]);
 
     if (loading) {
         return (
@@ -105,7 +108,7 @@ export default function ArticleDisplay({ articles, loading, error }: ArticleDisp
         );
     }
 
-    if (articles.length === 0) {
+    if (optimizedArticles.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
                 <Calendar className="w-12 h-12 mb-4 opacity-50" />
@@ -116,49 +119,66 @@ export default function ArticleDisplay({ articles, loading, error }: ArticleDisp
 
     return (
         <div className="w-full">
-            {/* 8-Column Grid (Tetris Layout) */}
-            <div className="grid grid-cols-2 md:grid-cols-8 gap-4 auto-rows-[110px] grid-flow-dense">
-                {articles.map((article, index) => {
-                    // Card size is based on Impact Score ONLY
-                    const impactScore = article.impact_score || 0;
+            {/* 10-Column Grid with High-Res 10px Rows */}
+            <div className="grid grid-cols-2 md:grid-cols-10 gap-4 auto-rows-[10px] grid-flow-dense">
+                {optimizedArticles.map((article, index) => {
+                    const key = article.id || `article-${index}`;
 
+                    // Headline article - special handling
                     if (index === 0) {
-                        return (
-                            <React.Fragment key={article.id}>
-                                {/* Left Spacer (Block Col 1, Row 1-3) */}
-                                <div className="hidden md:block md:col-start-1 md:row-start-1 md:row-span-3 pointer-events-none" />
+                        // Use pre-calculated size from optimizer if available, otherwise calculate
+                        const cols = article.cols || 6;
+                        const rows = article.rows ? Math.max(article.rows, 15) : 15;
 
-                                {/* The Headline Article (Center, Row 1-3) */}
-                                <div className="md:col-start-2 md:col-span-6 md:row-start-1 md:row-span-3 flex flex-col">
+                        return (
+                            <React.Fragment key={key}>
+                                <div className="hidden md:block md:col-start-1 md:col-span-2 md:row-start-1 pointer-events-none" style={{ gridRowEnd: `span ${rows}` }} />
+                                <div className="md:col-start-3 md:col-span-6 md:row-start-1 flex flex-col" style={{ gridRowEnd: `span ${rows}` }}>
                                     <ArticleCard
                                         article={article}
                                         className="h-full font-sans"
                                         hideSummary={false}
+                                        cols={6}
+                                        rows={rows}
+                                        currentDate={currentDate}
                                     />
                                 </div>
-
-                                {/* Right Spacer (Block Col 8, Row 1-3) */}
-                                <div className="hidden md:block md:col-start-8 md:row-start-1 md:row-span-3 pointer-events-none" />
+                                <div className="hidden md:block md:col-start-9 md:col-span-2 md:row-start-1 pointer-events-none" style={{ gridRowEnd: `span ${rows}` }} />
                             </React.Fragment>
                         );
                     }
 
-                    const gridClass = getSizeFromScore(
-                        impactScore,
-                        article.id,
-                        article.summary || '',
-                        article.title_ko || article.title || ''
-                    );
+                    // Use pre-calculated sizes from optimizer directly (no recalculation!)
+                    // The optimizer already calculated optimal sizes for gap-filling
+                    const cols = article.cols || 4;
+                    const rows = article.rows || 10;
 
-                    // Hide summary for very small blocks to keep it clean
-                    const isSmall = gridClass.includes("col-span-1") && gridClass.includes("row-span-1");
+                    // Column class mapping
+                    const colMap: Record<number, string> = {
+                        3: "md:col-span-3",
+                        4: "md:col-span-4",
+                        5: "md:col-span-5",
+                        6: "md:col-span-6",
+                        7: "md:col-span-7",
+                        8: "md:col-span-8",
+                        9: "md:col-span-9",
+                        10: "md:col-span-10"
+                    };
+                    const colClass = colMap[cols] || "md:col-span-4";
 
                     return (
-                        <div key={article.id} className={`${gridClass} flex flex-col`}>
+                        <div
+                            key={key}
+                            className={`${colClass} flex flex-col`}
+                            style={{ gridRowEnd: `span ${rows}` }}
+                        >
                             <ArticleCard
                                 article={article}
                                 className="h-full font-sans"
-                                hideSummary={isSmall}
+                                hideSummary={false}
+                                cols={cols}
+                                rows={rows}
+                                currentDate={currentDate}
                             />
                         </div>
                     );

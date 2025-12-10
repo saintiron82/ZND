@@ -1,0 +1,62 @@
+{
+  "author": [
+    "김해원 기자"
+  ],
+  "image": "https://cdn.aitimes.com/news/photo/202512/204655_205963_3258.png",
+  "modified_at": "2025-12-09T17:47:50+09:00",
+  "published_at": "2025-12-09T17:35:00+09:00",
+  "summary": "코난테크놀로지는 과기부·IITP 과제에 공동 연구 기관으로 참여하며 설명 가능한 인공지능(XAI) 기술을 개발, 비전 AI와 LLM 사업에 접목할 계획이다. 이 XAI 기술은 AI 판단 과정의 신뢰성과 투명성을 높이며, PnP 방식으로 다양한 모델에 재학습 없이 적용 가능하다. 또한 KAIST와 협력하여 LLM 내부의 환각 현상 원인 규명 및 제거 기술을 연구 중이며, 국방 분야 XAI 기술 고도화에 집중하고 내년에 LLM으로 사업 영역을 확대할 방침이다.",
+  "text": "(사진=코난테크놀로지) 인공지능(AI) 전문 코난테크놀로지(대표 김영섬)는 설명가능한 인공지능(XAI)을 개발, 자체 비전 AI와 대형언어모델(LLM) 사업에 접목할 계획이라고 9일 밝혔다. 코난테크놀로지는 과학기술정보통신부와 정보통신기획평가원(IITP)이 추진하는 '플러그앤플레이(PnP) 방식으로 설명 가능성을 제공하는 인공지능 기술 개발 및 인공지능 시스템에 대한 설명 제공 검증' 과제에 공동 연구 기관으로 참여 중이다. 연구는 2022년부터 2026년까지 5년간 수행된다. XAI는 AI 시스템 결과에 영향을 미치는 주요 요소를 사람이 이해할 수 있는 형태로 설명하는 기술이다. AI 판단 과정과 결정 근거를 확인할 수 있어 신뢰성, 투명성을 높인다. 여기에 PnP 방식이 적용되면 다양한 모델을 연결할 수 있으며, 설명 가능성을 고려하지 않은 모델에도 재학습 없이 일관적으로 적용 가능하다는 설명이다. KAIST의 총괄로 ‘LLM 내부의 환각 현상 원인 규명 및 제거 기술’ 연구도 진행 중이다. LLM의 내부 구조를 분석하고 환각 발생 원인을 규명·제거하는 기술로, 의료와 제조 등 고위험 분야에서 안전성과 신뢰성을 갖춘 AI 서비스 구축에 활용된다. 코난테크놀로지는 국방 분야 XAI 원천기술 고도화와 군 도메인 맞춤형 적용 연구에 집중하며 내년에는 사업 영역을 LLM까지 확대할 계획이다. 강현수 코난테크놀로지 인공지능연구소 이사는 “앞으로도 KAIST 설명가능 인공지능연구센터와 협력을 통해 XAI의 기술적 토대 마련과 상용화에 주력하겠다”라고 말했다. 김해원 기자 hwkim@aitimes.com",
+  "title": "﻿코난, 설명 가능한 ‘XAI’ 도입 가속...&quot;신뢰성﻿·안전성 높인다&quot;",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204655",
+  "title_ko": "코난테크놀로지, KAIST와 협력해 LLM 환각 제거 및 국방 AI에 '설명 가능한 AI(XAI)' 접목",
+  "zero_noise_score": 4.62,
+  "impact_score": 2.33,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "코난테크놀로지는 AI 전문 기업이나, TIER 1(OpenAI, Google 등)에 해당하지 않는 국내 기업으로, TIER Z(일반 참여자)로 분류된다."
+    },
+    "events": [
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "TIER Z 주체가 정부 과제(IITP) 및 KAIST와 공동 연구를 진행하며 LLM 환각 제거와 XAI 기술 개발에 참여하는 것은 학술적/연구적 성과에 준하는 이벤트로 간주할 수 있다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "XAI 기술을 자체 비전 AI 및 LLM 사업에 접목하고 국방 분야 기술 고도화와 LLM 사업 확대를 계획하는 것은 핵심 제품 전략 및 사업 영역의 변경에 해당한다."
+      }
+    ]
+  },
+  "reasoning": "TIER Z 주체의 AI 기술 개발 및 사업 전략 변경 기사로 Impact Score는 중간 수준이다. XAI의 투명성/신뢰성 측면의 기술적 중요성을 설명하는 동시에, KAIST 등 연구기관과의 구체적인 협력 프로젝트를 제시하여 Credit을 얻었으나, 아직 '계획' 단계의 내용이 많아 Future Promise Penalty를 일부 상쇄하는 데 그쳤다.",
+  "tags": [
+    "LLM",
+    "AGENTS",
+    "AI_ETHICS"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 0.75
+      }
+    ],
+    "credits": [
+      {
+        "id": "ETHICAL_FRAMEWORK_DEBATE",
+        "value": 0.875
+      },
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 0.25
+      }
+    ],
+    "modifiers": []
+  },
+  "source_id": "aitimes",
+  "original_title": "﻿코난, 설명 가능한 ‘XAI’ 도입 가속...&quot;신뢰성﻿·안전성 높인다&quot;",
+  "crawled_at": "2025-12-10T04:12:02.747723+00:00"
+}

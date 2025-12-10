@@ -1,0 +1,42 @@
+{
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/google_eu_logo_wall.jpeg",
+  "published_at": "Tue, 09 Dec 2025 12:57:44 GMT",
+  "summary": "유럽연합 집행위원회(European Commission)는 Google이 지배적 시장 지위를 남용하여 웹 게시자 및 YouTube 크리에이터의 콘텐츠를 부당하게 AI 학습에 활용하고 경쟁사 AI 모델을 차별했는지 여부에 대한 공식 반독점 조사를 시작했습니다. 조사 대상은 'AI Overviews' 및 'AI Mode'에 콘텐츠를 무단 사용하고 보상하지 않은 행위입니다. 특히, 게시자는 Google 검색에서 제외되지 않기 위해 AI 스크래핑을 차단할 수 없고, YouTube 크리에이터는 AI 학습을 위한 광범위한 이용 권한을 거부할 수 없는 '전부 아니면 전무' 상황에 놓였다는 점이 핵심 쟁점입니다.",
+  "text": "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. Content Summary The European Commission is targeting Google once again. Regulators in Brussels have launched a formal antitrust investigation to determine if the tech giant is illegally harvesting content from web publishers and YouTube creators to power its AI services. Ad The core suspicion is that Google is exploiting its dominant market position to force unfair terms on publishers and creators. According to the Commission's press release, the investigation also examines whether Google gives its own AI models privileged access to training data, effectively walling off competitors. \"A free and democratic society depends on diverse media, open access to information, and a vibrant creative landscape. These values are central to who we are as Europeans,\" said Teresa Ribera, Executive Vice President of the Commission. \"AI is bringing remarkable innovation and many benefits for people and businesses across Europe, but this progress cannot come at the expense of the principles at the heart of our societies. This is why we are investigating whether Google may have imposed unfair terms and conditions on publishers and content creators, while placing rival AI models developers at a disadvantage, in breach of EU competition rules.\" Google's \"all or nothing\" ultimatum The investigation centers on Google's \"AI Overviews\" and \"AI Mode.\" The former places AI-generated summaries above traditional search results, while the latter functions as a conversational chatbot. Ad Ad THE DECODER Newsletter The most important AI news straight to your inbox. ✓ Weekly ✓ Free ✓ Cancel at any time Please leave this field empty The Commission takes issue with how Google uses publisher content for these services without compensation. More critically, publishers reportedly lack a viable choice in the matter. Blocking Google's AI scraper effectively means disappearing from Google Search entirely—an existential threat for media outlets that depend on search traffic to survive. Monopolizing YouTube data Investigators are also scrutinizing YouTube. The accusation is that Google trains its models on user-uploaded videos without paying creators or offering them a way to opt out. To use the platform, creators must grant Google extensive usage rights, including for AI training. If they refuse, they cannot upload. Crucially, while Google grants itself unrestricted access to this data, its platform guidelines specifically prohibit competing AI developers from doing the same. This double standard could constitute a breach of Article 102 of the EU Treaty, which prohibits the abuse of a dominant market position. It's worth noting that YouTube rolled out settings late last year that let some creators decide whether third-party AI companies can use their videos for model training. However, these controls don't appear to apply to Google's own AI training practices—a distinction that likely matters to EU regulators. The media industry's prisoner's dilemma The dependence of content providers on Big Tech looks like a calculated strategy. By cutting exclusive licensing deals with a handful of major publishers, companies like Google and OpenAI lock in the data they need while legitimizing their business models. This dynamic creates a prisoner's dilemma for smaller players. Once the system is in place, they're forced to hand over their content just to remain visible in AI-generated responses. Over time, this lets Google and other platform providers dictate terms, a pattern that played out before with the rise of web search. Journalism professor Jeff Jarvis has called these payments from Big Tech hush money, arguing they're designed to head off copyright lawsuits rather than build sustainable business models for news. Ad",
+  "title": "Google faces an antitrust probe for using web and YouTube content in AI without opt-out or fair pay",
+  "url": "https://the-decoder.com/google-faces-an-antitrust-probe-for-using-web-and-youtube-content-in-ai-without-opt-out-or-fair-pay/",
+  "title_ko": "구글, 웹 및 유튜브 콘텐츠 AI 학습 무단 사용 의혹으로 EU 반독점 조사 직면",
+  "zero_noise_score": 3.48,
+  "impact_score": 3.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_2_POLICY_BODIES",
+      "weight": 3.5,
+      "reasoning": "유럽연합 집행위원회(EU Commission)가 Google에 대한 공식 반독점 조사를 시작하는 법적/정책적 결정을 주도했으므로 TIER 2 Policy Bodies로 분류한다."
+    },
+    "events": []
+  },
+  "reasoning": "EU 집행위원회(TIER 2 주체)가 Google의 AI 학습 관행에 대한 공식 반독점 조사를 시작한 것은 시장 및 법적 판도를 뒤집을 수 있는 정책적 결정이지만, 아직 '조사 시작' 단계이므로 TIER 2 엔티티 가중치만 적용하여 중간 수준의 영향력(IS 3.5)을 가진다. 기사는 구체적인 법적 쟁점(Article 102), 업계 의존성(미디어의 죄수의 딜레마) 분석(POLICY_IMPACT_ANALYSIS), 윤리적 문제(저작권 및 공정성 부재)를 다루고 있으므로 높은 품질(ZS 4.5)로 평가된다.",
+  "tags": [
+    "REGULATION",
+    "AI_ETHICS",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "POLICY_IMPACT_ANALYSIS",
+        "value": 1
+      },
+      {
+        "id": "ETHICAL_FRAMEWORK_DEBATE",
+        "value": 0.525
+      }
+    ],
+    "modifiers": []
+  },
+  "source_id": "the_decoder",
+  "original_title": "Google faces an antitrust probe for using web and YouTube content in AI without opt-out or fair pay",
+  "crawled_at": "2025-12-10T04:15:12.490651+00:00"
+}

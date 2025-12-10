@@ -1,0 +1,62 @@
+{
+  "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/airesearchsocial.max-1440x810.png",
+  "modified_at": "2025-12-09T17:25:41.311924+00:00",
+  "published_at": "2025-12-09T17:00:00+00:00",
+  "summary": "글로벌 경영진 및 지식 노동자를 대상으로 한 새로운 조사에 따르면, AI로 혁신하는 조직들은 단순한 시간 절약을 넘어선 실질적인 성과를 보고 있습니다. AI를 도입한 고도로 변화된 조직들은 혁신 57% 증가, 일상 업무 시간 39% 감소, 업무 창의성 65% 향상을 보고했습니다. 이는 AI 채택의 가장 큰 이점이 잠재력 확장임을 시사합니다.",
+  "text": "A new global survey of executives, decision makers and knowledge workers reveals that organizations truly transforming with AI are seeing real results that move their businesses and allow employees to focus on meaningful work. The biggest gains from adopting AI aren’t about saving time — they’re about expanding potential. Highly transformed organizations surveyed report that AI: Increases innovation by 57% Decreases time spent on mundane tasks by 39% Improves work creativity by 65% Read the full research report, “Beyond AI Optimism: Five ways to move your business from saving time to sparking innovation,” or visit the Workspace blog for key takeaways.",
+  "title": "Learn more about AI in the workplace in our new research report.",
+  "url": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
+  "title_ko": "AI, 단순 시간 절약 넘어 혁신 가속: 글로벌 경영진 설문 보고서",
+  "zero_noise_score": 8.25,
+  "impact_score": 1.74,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "기사에서 AI 도입의 효과를 보고하는 주체는 '경영진, 의사 결정권자, 지식 노동자'이며, 이는 특정 Tier 1~4 기업이 아닌 광범위한 일반 참가자로 분류된다."
+    },
+    "events": [
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "AI 도입으로 인한 업무 혁신 및 조직 변화에 대한 보고이므로, 비즈니스 전략 변화의 영향으로 볼 수 있다."
+      },
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "새로운 리서치 보고서 발표라는 형식은 일상적인 업데이트 및 시장 동향 보고의 성격도 지닌다."
+      }
+    ]
+  },
+  "reasoning": "AI 도입의 긍정적 효과를 강조하는 조사 보고서이나, 구체적인 기술적 깊이나 정책 분석이 부재하고, 주체가 일반 참가자(TIER Z)에 해당하여 ZeroNoise Score(6.75)가 높고 Impact Score(1.74)는 낮게 산출되었다.",
+  "tags": [
+    "BIZ_STRATEGY",
+    "WORK_IMPACT"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 1.5
+      },
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 1.25
+      },
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 1
+      }
+    ],
+    "credits": [
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "source_id": "google_ai_blog",
+  "original_title": "Learn more about AI in the workplace in our new research report.",
+  "crawled_at": "2025-12-10T04:08:42.964848+00:00"
+}

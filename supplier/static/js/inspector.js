@@ -1,457 +1,368 @@
-let links = [];
-let loadedContents = {};
-let currentIndex = -1;
+// Batch Processor Logic
 
-// Load data from opener
+let allLinks = [];      // Flattened list of all links
+let sourceGroups = {};  // Map: source_id -> [linkObj, ...]
+let loadedContent = {}; // Map: url -> contentData
+let currentGroup = null; // Current selected source_id
+
 window.onload = function () {
-    if (!window.opener) {
-        // Standalone mode - just wait for user to click Load
+    // Initial state handled by HTML mostly.
+
+    // Set default Header Instruction
+    const defaultHeader = "";
+
+    const headerEl = document.getElementById('promptHeader');
+    if (headerEl) headerEl.value = defaultHeader;
+
+    // Load Cache
+    loadContentCache();
+};
+
+// --- Step 1: Load List Only ---
+async function loadTargetList() {
+    showLoading('Fetching Target List...');
+    try {
+        // 1. Fetch List Only
+        const res = await fetch('/api/fetch?target_id=all');
+        const data = await res.json();
+        allLinks = data.links;
+
+        // 2. Group by Source
+        sourceGroups = {};
+        allLinks.forEach(link => {
+            const sid = link.source_id || 'unknown';
+            if (!sourceGroups[sid]) sourceGroups[sid] = [];
+            sourceGroups[sid].push(link);
+        });
+
+        // 3. Render List with Checkboxes
+        renderGroupList(true);
+
+        // Show Action Button
+        document.getElementById('groupActionArea').style.display = 'block';
+
+        log(`Loaded list: ${allLinks.length} items. Select targets and click Fetch.`, 'success');
+
+    } catch (e) {
+        log('Error loading list: ' + e, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+function renderGroupList(showCheckboxes = true) {
+    const container = document.getElementById('groupList');
+    container.innerHTML = '';
+
+    const sortedKeys = Object.keys(sourceGroups).sort();
+
+    sortedKeys.forEach(sid => {
+        const items = sourceGroups[sid];
+        const newCount = items.filter(i => i.status === 'NEW').length;
+
+        const div = document.createElement('div');
+        div.className = 'group-item';
+
+        const isSelected = currentGroup === sid;
+        if (isSelected) div.classList.add('active');
+
+        div.onclick = (e) => {
+            // Check if clicked element is checkbox or button
+            if (e.target.type !== 'checkbox' && e.target.tagName !== 'BUTTON') {
+                selectGroup(sid);
+            }
+        };
+
+        const chkId = `chk-${sid}`;
+        div.innerHTML = `
+            <div style="display:flex; align-items:center;">
+                <input type="checkbox" id="${chkId}" class="group-chk" value="${sid}" checked style="margin-right:10px; transform:scale(1.2);">
+                <div style="flex:1;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:bold; font-size:1.1em;">${sid}</span>
+                        <button onclick="resetGroupStatus('${sid}')" title="Reset all to NEW" style="font-size:0.8em; padding:2px 6px; cursor:pointer;">↺</button>
+                    </div>
+                    <div class="group-stat">
+                        Total: ${items.length} | <span style="color:${newCount > 0 ? 'red' : 'green'}">New: ${newCount}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function resetGroupStatus(sid) {
+    if (!confirm(`Reset all items in '${sid}' to NEW?`)) return;
+
+    // 1. Reset Status
+    sourceGroups[sid].forEach(i => i.status = 'NEW');
+
+    // 2. Clear Cache for these items so they re-fetch
+    sourceGroups[sid].forEach(i => {
+        delete loadedContent[i.url];
+    });
+    saveContentCache(); // Save the cleared state
+
+    renderGroupList();
+    if (currentGroup === sid) selectGroup(sid); // Refresh prompt if active
+}
+
+// --- Step 2: Fetch Content for Selected ---
+
+async function fetchSelectedContent() {
+    const checkboxes = document.querySelectorAll('.group-chk:checked');
+    const selectedSids = Array.from(checkboxes).map(cb => cb.value);
+
+    if (selectedSids.length === 0) return alert("Please select at least one group.");
+
+    // Collect all NEW items from selected groups
+    let itemsToFetch = [];
+    selectedSids.forEach(sid => {
+        const newItems = sourceGroups[sid].filter(i => i.status === 'NEW');
+        itemsToFetch = itemsToFetch.concat(newItems);
+    });
+
+    if (itemsToFetch.length === 0) {
+        log("No NEW items found in selected groups.", 'info');
+        // Still allow selecting groups to see existing data if any?
+        if (selectedSids.length > 0) selectGroup(selectedSids[0]);
         return;
     }
 
-    try {
-        // Reference parent data if available to start with
-        if (window.opener.batchInspectorLinks) {
-            links = window.opener.batchInspectorLinks;
-        } else {
-            links = window.opener.currentLinks || [];
-        }
-
-        loadedContents = window.opener.loadedContents || {};
-
-        document.getElementById('count').innerText = links.length;
-        renderList();
-
-        if (links.length > 0) {
-            const firstSource = links[0].source_id || 'unknown';
-            selectItem(`BATCH:${firstSource}`);
-            loadRest();
-        }
-    } catch (e) {
-        console.warn("Error accessing parent window: " + e);
-    }
-};
-
-async function loadAllAndPrepare() {
-    const btn = document.querySelector('button[onclick="loadAllAndPrepare()"]');
-    const originalText = btn.textContent;
-    btn.textContent = 'Fetching ALL Links...';
-    btn.disabled = true;
+    showLoading(`Extracting content for ${itemsToFetch.length} items... (This may take a while)`);
 
     try {
-        // 1. Fetch ALL Links (target_id=all)
-        const res = await fetch(`/api/fetch?target_id=all`);
-        const data = await res.json();
-        const newLinks = data.links || [];
-
-        if (newLinks.length === 0) {
-            alert('No links found.');
-            btn.textContent = originalText;
-            btn.disabled = false;
-            return;
-        }
-
-        // 2. Set Links
-        links = newLinks;
-        document.getElementById('count').innerText = links.length;
-        renderList();
-
-        // 3. Load Content for ALL links
-        btn.textContent = `Loading Content (${links.length})...`;
-
-        // Chunking requests if too many? For now, let's try one big batch or chunks of 20
         const chunkSize = 20;
-        const urls = links.map(l => l.url);
+        const urls = itemsToFetch.map(i => i.url);
 
-        for (let i = 0; i < urls.length; i += chunkSize) {
-            const chunk = urls.slice(i, i + chunkSize);
-            btn.textContent = `Loading Content (${i}/${urls.length})...`;
+        const missingUrls = urls.filter(u => !loadedContent[u] || (!loadedContent[u].text && !loadedContent[u].summary));
 
-            try {
+        if (missingUrls.length > 0) {
+            for (let i = 0; i < missingUrls.length; i += chunkSize) {
+                const chunk = missingUrls.slice(i, i + chunkSize);
+                document.getElementById('loadingText').innerText = `Extracting ${Math.min(i + chunkSize, missingUrls.length)} / ${missingUrls.length}...`;
+
                 const contentRes = await fetch('/api/extract_batch', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ urls: chunk })
                 });
-                const contentData = await contentRes.json();
-
-                if (contentData.error) throw new Error(contentData.error);
-
-                contentData.forEach(item => {
-                    loadedContents[item.url] = item;
-                    if (window.opener && window.opener.loadedContents) {
-                        window.opener.loadedContents[item.url] = item;
-                    }
+                const fetchedList = await contentRes.json();
+                fetchedList.forEach(item => {
+                    loadedContent[item.url] = item;
                 });
-                renderList(); // Update icons progressively
-            } catch (err) {
-                console.error("Batch chunk failed", err);
             }
         }
 
-        // 4. Finished
-        renderList();
+        log(`Content ready for ${itemsToFetch.length} items!`, 'success');
 
-        // Select first group
-        const groups = getGroups();
-        const firstSid = Object.keys(groups)[0];
-        if (firstSid) {
-            selectItem(`BATCH:${firstSid}`);
+        // Save Cache
+        saveContentCache();
+
+        // Automatically select the first checked group
+        if (selectedSids.length > 0) {
+            selectGroup(selectedSids[0]);
         }
-
-        alert(`✅ Loaded ALL: ${links.length} items across ${Object.keys(groups).length} groups.`);
 
     } catch (e) {
-        alert('Error: ' + e);
+        log('Error fetching content: ' + e, 'error');
     } finally {
-        btn.textContent = originalText;
-        btn.disabled = false;
+        hideLoading();
     }
 }
 
-function loadInspectorTargets() {
-    const select = document.getElementById('inspectorTargetSelect');
-    fetch('/api/targets')
-        .then(res => res.json())
-        .then(targets => {
-            select.innerHTML = '<option value="">Select Target...</option>';
-            targets.forEach(t => {
-                const opt = document.createElement('option');
-                opt.value = t.id;
-                opt.textContent = t.name || t.id;
-                select.appendChild(opt);
-            });
-        })
-        .catch(err => {
-            select.innerHTML = '<option value="">Error loading targets</option>';
-        });
-}
+function selectGroup(sid) {
+    currentGroup = sid;
 
-async function loadTargetAndPrepare() {
-    const btn = document.querySelector('button[onclick="loadTargetAndPrepare()"]');
-    const originalText = btn.textContent;
-    const select = document.getElementById('inspectorTargetSelect');
-    const targetId = select.value;
-
-    if (!targetId) return alert('Please select a target first.');
-
-    btn.textContent = 'Fetching Links...';
-    btn.disabled = true;
-
-    try {
-        // 1. Fetch Links for Target
-        const res = await fetch(`/api/fetch?target_id=${targetId}`);
-        const data = await res.json();
-        const newLinks = data.links || [];
-
-        if (newLinks.length === 0) {
-            alert('No links found for this target.');
-            btn.textContent = originalText;
-            btn.disabled = false;
-            return;
-        }
-
-        // 2. Merge Links (Avoid Duplicates if needed, but usually we just want to work on this batch)
-        // Strategy: Replace current list or Append? 
-        // Request said "fetch list of targets units", implies working on that unit.
-        // Let's Replace to be clean, or Append if we want to build a big list.
-        // User said "Fetch by Link Target List Unit", implies looking at that Unit.
-        // Let's clear and set to this new unit for clarity.
-
-        // Resetting global links
-        links = newLinks;
-        document.getElementById('count').innerText = links.length;
-        renderList();
-
-        // 3. Select the Group Immediately
-        selectItem(`BATCH:${targetId}`);
-
-        // 4. Load Content for all keys
-        btn.textContent = `Loading Content (${links.length})...`;
-
-        // Use batch extract for speed
-        const urls = links.map(l => l.url);
-        const contentRes = await fetch('/api/extract_batch', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ urls: urls })
-        });
-        const contentData = await contentRes.json();
-
-        if (contentData.error) throw new Error(contentData.error);
-
-        // Update loadedContents
-        contentData.forEach(item => {
-            loadedContents[item.url] = item;
-            // Sync with parent if exists
-            if (window.opener && window.opener.loadedContents) {
-                window.opener.loadedContents[item.url] = item;
-            }
-        });
-
-        // Refresh UI
-        renderList();
-        // Re-select to update prompt
-        selectItem(`BATCH:${targetId}`);
-
-        alert(`✅ Loaded and Prepared ${links.length} items for ${targetId}`);
-
-    } catch (e) {
-        alert('Error: ' + e);
-    } finally {
-        btn.textContent = originalText;
-        btn.disabled = false;
+    // Highlight UI
+    document.querySelectorAll('.group-item').forEach(el => el.classList.remove('active'));
+    const chk = document.getElementById(`chk-${sid}`);
+    if (chk) {
+        chk.closest('.group-item').classList.add('active');
     }
+
+    // Clear Result
+    document.getElementById('inputArea').value = '';
+
+    // Generate Prompt
+    generatePromptForGroup(sid);
 }
 
-async function loadRest() {
-    for (let i = 0; i < links.length; i++) {
-        const item = links[i];
-        const url = item.url;
-        const data = loadedContents[url] || item;
+async function generatePromptForGroup(sid) {
+    const items = sourceGroups[sid];
+    const newItems = items.filter(i => i.status === 'NEW');
 
-        // If no text, fetch it
-        if (!data.text && !data.summary) {
-            try {
-                const res = await fetch(`/api/extract?url=${encodeURIComponent(url)}`);
-                const fetchedData = await res.json();
-
-                // Update cache
-                const merged = { ...data, ...fetchedData };
-                loadedContents[url] = merged;
-                if (window.opener && window.opener.loadedContents) {
-                    window.opener.loadedContents[url] = merged;
-                }
-
-                // Update list icon
-                renderList();
-            } catch (e) {
-                console.error("Failed to autoload", url, e);
-            }
-        }
-    }
-}
-
-// Helper to group by source
-function getGroups() {
-    const groups = {};
-    links.forEach(l => {
-        const sid = l.source_id || 'unknown';
-        if (!groups[sid]) groups[sid] = [];
-        groups[sid].push(l);
-    });
-    return groups;
-}
-
-function renderList() {
-    const container = document.getElementById('listContainer');
-    container.innerHTML = '';
-
-    const groups = getGroups();
-    const sourceIds = Object.keys(groups);
-
-    sourceIds.forEach(sid => {
-        // Batch Header Item
-        const batchDiv = document.createElement('div');
-        batchDiv.className = 'list-item';
-        batchDiv.style.background = '#e9ecef';
-        batchDiv.style.fontWeight = 'bold';
-
-        if (currentIndex === `BATCH:${sid}`) {
-            batchDiv.classList.add('active');
-            batchDiv.style.background = '#007bff';
-        }
-
-        batchDiv.innerHTML = `📁 [${sid}] Group Batch (${groups[sid].length})`;
-        batchDiv.onclick = () => selectItem(`BATCH:${sid}`);
-        container.appendChild(batchDiv);
-
-        // Individual Items
-        groups[sid].forEach((item) => {
-            const globalIdx = links.indexOf(item);
-
-            const div = document.createElement('div');
-            div.className = 'list-item';
-            div.style.paddingLeft = '20px'; // Indent
-            if (globalIdx === currentIndex) div.classList.add('active');
-
-            let icon = '⚪';
-            const data = loadedContents[item.url];
-            if (data) {
-                if (data.zero_noise_score !== undefined) icon = '✅';
-                else if (data.text || data.summary) icon = '📄';
-            }
-
-            div.innerHTML = `<span class="status-icon">${icon}</span> ${item.title || 'No Title'}`;
-            div.onclick = () => selectItem(globalIdx);
-            container.appendChild(div);
-        });
-    });
-}
-
-function selectItem(indexOrBatchId) {
-    currentIndex = indexOrBatchId;
-    renderList();
-
-    const promptArea = document.getElementById('promptArea');
-    const inputArea = document.getElementById('inputArea');
-    const btnSave = document.getElementById('btnSave');
-
-    // --- BATCH MODE ---
-    if (typeof indexOrBatchId === 'string' && indexOrBatchId.startsWith('BATCH:')) {
-        const sid = indexOrBatchId.split(':')[1];
-        const groupLinks = links.filter(l => (l.source_id || 'unknown') === sid);
-
-        btnSave.textContent = `⚡ Apply Batch (${sid})`;
-
-        // Generate Group Batch Prompt
-        let text = `${groupLinks.length}개의 항목에 대해서 개별로 평가하라.\n이 목록은 '${sid}' 그룹에 해당하는 리스트이다.\n`;
-        text += `응답은 반드시 Valid JSON List 포맷으로 작성하라. \n예시: { "results": [ { "title_ko": "...", "zero_noise_score": 5.0, "impact_score": 3.5, "summary": "...", "reasoning": "..." } ] }\n\n`;
-
-        let loadedCount = 0;
-        groupLinks.forEach((linkItem, i) => {
-            const data = loadedContents[linkItem.url] || linkItem;
-            if (data.text || data.summary) {
-                const title = data.title || data.original_title || 'No Title';
-                const body = data.text || data.summary || 'No content';
-                text += `--- Item ${i + 1} ---\nOriginalURL: ${linkItem.url}\nTitle: ${title}\nBody:\n${body}\n\n`;
-                loadedCount++;
-            } else {
-                text += `--- Item ${i + 1} ---\n(Loading...)\n\n`;
-            }
-        });
-
-        if (loadedCount < groupLinks.length) {
-            text = "(아직 모든 문서가 로드되지 않았습니다. 잠시만 기다려주세요...)\n\n" + text;
-        }
-
-        promptArea.value = text;
-        inputArea.value = "";
+    if (newItems.length === 0) {
+        document.getElementById('promptArea').value = "(No 'NEW' items in this group to process)";
+        document.getElementById('promptStatus').textContent = 'Idle';
         return;
     }
 
-    // --- SINGLE MODE ---
-    btnSave.textContent = "💾 Verify & Save";
-    const item = links[currentIndex];
-    if (!item) return;
+    // Build Body Only
+    let bodyText = '';
+    let loadedCount = 0;
 
-    const url = item.url;
-    let data = loadedContents[url] || item;
+    newItems.forEach((link, idx) => {
+        const content = loadedContent[link.url] || {};
+        const title = content.title || content.original_title || link.url;
+        let body = content.text || content.summary || '(Content not loaded yet. Click Fetch Content first.)';
 
-    function updatePrompt(d) {
-        const title = d.title || d.original_title || d.title_ko || 'No Title';
-        const body = d.text || d.summary || 'No text content';
-        const prompt = `${title}\n\n${body}\n\n위 문서를 평가하고 결과를 JSON으로 반환하라.`;
-        promptArea.value = prompt;
+        if (content.text || content.summary) loadedCount++;
 
-        if (d.zero_noise_score !== undefined) {
-            inputArea.value = JSON.stringify(d, null, 2);
-        } else {
-            inputArea.value = '';
-        }
-    }
+        if (body.length > 5000) body = body.substring(0, 5000) + "...(truncated)";
 
-    if (data.text || data.summary) {
-        updatePrompt(data);
+        bodyText += `--- Article ${idx + 1} ---\n`;
+        bodyText += `Title: ${title}\n`;
+        bodyText += `Body:\n${body}\n\n`;
+    });
+
+    const countInfo = `${newItems.length}개의 기사를 전달했으니 ${newItems.length}개의 JSON 묶음으로 답하라\n\n`;
+    document.getElementById('promptArea').value = countInfo + bodyText;
+
+    if (loadedCount < newItems.length) {
+        document.getElementById('promptStatus').textContent = `Warning: Only ${loadedCount}/${newItems.length} loaded`;
     } else {
-        promptArea.value = "Loading content...";
-        inputArea.value = "";
-
-        fetch(`/api/extract?url=${encodeURIComponent(url)}`)
-            .then(res => res.json())
-            .then(fetched => {
-                data = { ...data, ...fetched };
-                loadedContents[url] = data;
-                if (window.opener) window.opener.loadedContents[url] = data;
-                if (currentIndex === indexOrBatchId) updatePrompt(data);
-                renderList();
-            })
-            .catch(err => {
-                promptArea.value = "Error: " + err;
-            });
+        document.getElementById('promptStatus').textContent = `Ready (${newItems.length} items)`;
     }
 }
 
 function copyPrompt() {
-    const text = document.getElementById('promptArea').value;
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = document.querySelector('button[onclick="copyPrompt()"]');
+    const header = document.getElementById('promptHeader').value;
+    const body = document.getElementById('promptArea').value;
+    if (!body) return;
+
+    const fullPrompt = header + "\n" + body;
+
+    navigator.clipboard.writeText(fullPrompt).then(() => {
+        const btn = document.getElementById('btnCopy');
         const orig = btn.innerText;
-        btn.innerText = "✅ Copied";
-        setTimeout(() => btn.innerText = orig, 1000);
-    });
+        btn.innerText = "✅ Copied!";
+        setTimeout(() => btn.innerText = orig, 1500);
+        log('Prompt copied to clipboard', 'info');
+    }).catch(err => log('Failed to copy: ' + err, 'error'));
 }
 
-function saveItem() {
-    const inputArea = document.getElementById('inputArea');
-    const jsonStr = inputArea.value;
-    let jsonData = {};
+// --- Step 4: Batch Processing ---
 
+async function processBatch() {
+    const rawInput = document.getElementById('inputArea').value;
+    if (!rawInput.trim()) return alert('Paste JSON first!');
+
+    let jsonStr = rawInput.trim();
+    // Remove markdown
+    jsonStr = jsonStr.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
+
+    let results = [];
     try {
-        jsonData = JSON.parse(jsonStr);
+        const parsed = JSON.parse(jsonStr);
+        if (Array.isArray(parsed)) results = parsed;
+        else if (parsed.results && Array.isArray(parsed.results)) results = parsed.results;
+        else throw new Error("JSON must be a list or {results: []}");
     } catch (e) {
-        return alert("Invalid JSON");
+        return alert('Invalid JSON: ' + e.message);
     }
 
-    // --- BATCH SAVE ---
-    if (typeof currentIndex === 'string' && currentIndex.startsWith('BATCH:')) {
-        const sid = currentIndex.split(':')[1];
-        const groupLinks = links.filter(l => (l.source_id || 'unknown') === sid);
+    if (results.length === 0) return alert('No results found in JSON');
+    if (!currentGroup) return alert('No group selected');
 
-        let results = [];
-        if (Array.isArray(jsonData)) results = jsonData;
-        else if (jsonData.results && Array.isArray(jsonData.results)) results = jsonData.results;
-        else return alert('JSON must be a list or have "results" list.');
+    const items = sourceGroups[currentGroup].filter(i => i.status === 'NEW');
 
-        let updated = 0;
-        results.forEach((res, i) => {
-            if (i >= groupLinks.length) return;
-            const link = groupLinks[i];
-
-            if (!loadedContents[link.url]) loadedContents[link.url] = { url: link.url };
-            Object.assign(loadedContents[link.url], res);
-
-            if (window.opener && window.opener.loadedContents) {
-                if (!window.opener.loadedContents[link.url]) window.opener.loadedContents[link.url] = { url: link.url };
-                Object.assign(window.opener.loadedContents[link.url], res);
-            }
-            updated++;
-        });
-
-        alert(`✅ Applied batch results to ${updated} items in group ${sid}.`);
-        renderList();
-        return;
+    if (items.length !== results.length) {
+        if (!confirm(`Count Mismatch! \nExpected (NEW items): ${items.length}\nProvided (JSON): ${results.length}\n\nProceed mapping by order?`)) return;
     }
 
-    // --- SINGLE SAVE ---
-    const item = links[currentIndex];
-    const url = item.url;
-    const btn = document.getElementById('btnSave');
+    showLoading('Processing & Saving...');
 
-    btn.textContent = 'Saving...';
-    btn.disabled = true;
+    let successCount = 0;
 
-    fetch('/api/inject_correction', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...jsonData, url: url })
-    })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
-                if (window.opener.loadedContents[url]) Object.assign(window.opener.loadedContents[url], jsonData);
-                loadedContents[url] = window.opener.loadedContents[url];
-                renderList();
-                alert("✅ Saved!");
+    for (let i = 0; i < Math.min(items.length, results.length); i++) {
+        const itemLink = items[i];
+        const resData = results[i];
+
+        try {
+            let finalDoc = { ...loadedContent[itemLink.url], ...resData };
+
+            finalDoc.url = itemLink.url;
+            finalDoc.source_id = currentGroup;
+            if (!finalDoc.original_title && finalDoc.title) finalDoc.original_title = finalDoc.title;
+
+            const saveRes = await fetch('/api/inject_correction', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(finalDoc)
+            });
+            const saveJson = await saveRes.json();
+
+            if (saveJson.status === 'success') {
+                log(`✅ Saved: ${finalDoc.title_ko || itemLink.url}`, 'success');
+                itemLink.status = 'ACCEPTED';
+                successCount++;
             } else {
-                alert("Error: " + res.error);
+                log(`❌ Failed: ${itemLink.url} - ${saveJson.error}`, 'error');
             }
-            btn.textContent = '💾 Verify & Save';
-            btn.disabled = false;
-        })
-        .catch(err => {
-            alert("Network Error: " + err);
-            btn.textContent = '💾 Verify & Save';
-            btn.disabled = false;
-        });
+        } catch (err) {
+            log(`❌ Error processing ${itemLink.url}: ${err}`, 'error');
+        }
+    }
+
+    hideLoading();
+    log(`Batch Complete. Saved ${successCount} / ${results.length}`, 'success');
+    renderGroupList();
+    document.getElementById('inputArea').value = '';
+
+    // Save cache after processing (optional, maybe clear used items? No, keep them for reference)
+    saveContentCache();
+}
+
+// --- Utils ---
+
+function log(msg, type = 'info') {
+    const area = document.getElementById('logArea');
+    const div = document.createElement('div');
+    div.className = `log-entry log-${type}`;
+    div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+    area.insertBefore(div, area.firstChild);
+}
+
+function showLoading(msg) {
+    document.getElementById('loadingText').innerText = msg;
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+}
+
+// --- Caching Logic ---
+const CACHE_KEY = 'inspector_content_cache';
+
+function saveContentCache() {
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(loadedContent));
+        // log('Content cache saved (Browser)', 'info'); 
+    } catch (e) {
+        console.error("Cache Save Error", e);
+    }
+}
+
+function loadContentCache() {
+    try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) {
+            const data = JSON.parse(raw);
+            loadedContent = { ...loadedContent, ...data };
+            log(`Restored ${Object.keys(data).length} cached items.`, 'info');
+        }
+    } catch (e) {
+        console.error("Cache Load Error", e);
+    }
+}
+
+function clearContentCache() {
+    if (!confirm("Clear local content cache?")) return;
+    localStorage.removeItem(CACHE_KEY);
+    loadedContent = {};
+    log('Cache cleared.', 'success');
+    renderGroupList(); // Update UI (red/green counts might change if we relied on loaded status, but mainly data is gone)
 }

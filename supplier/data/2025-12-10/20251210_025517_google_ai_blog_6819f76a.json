@@ -1,0 +1,44 @@
+{
+  "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/airesearchsocial.max-1440x810.png",
+  "modified_at": "2025-12-09T17:25:41.311924+00:00",
+  "published_at": "2025-12-09T17:00:00+00:00",
+  "summary": "글로벌 경영진 및 지식 근로자 대상 설문조사에 따르면, AI 도입의 가장 큰 이점은 단순한 시간 절약이 아닌 잠재력 확대에 있다. AI를 통해 크게 변화한 조직들은 혁신 57% 증가, 작업 창의성 65% 향상 등의 실질적인 성과를 보고했다. 본 기사는 기업이 AI를 통해 시간 절약 단계를 넘어 혁신을 촉발하는 방법을 담은 연구 보고서의 주요 내용을 요약한다.",
+  "text": "A new global survey of executives, decision makers and knowledge workers reveals that organizations truly transforming with AI are seeing real results that move their businesses and allow employees to focus on meaningful work. The biggest gains from adopting AI aren’t about saving time — they’re about expanding potential. Highly transformed organizations surveyed report that AI: Increases innovation by 57% Decreases time spent on mundane tasks by 39% Improves work creativity by 65% Read the full research report, “Beyond AI Optimism: Five ways to move your business from saving time to sparking innovation,” or visit the Workspace blog for key takeaways.",
+  "title": "Learn more about AI in the workplace in our new research report.",
+  "url": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
+  "title_ko": "AI 도입, 시간 절약보다 혁신 잠재력 극대화: 글로벌 기업 임원 설문조사 결과",
+  "zero_noise_score": 6.0,
+  "impact_score": 1.15,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "특정 기업의 공식 발표가 아닌, '글로벌 설문조사' 및 '연구 보고서' 내용을 인용하는 기사로, 주체는 일반적인 '연구 기관/보고서'로 분류되어 TIER_Z_GENERAL_PARTICIPANT가 적용된다."
+    },
+    "events": [
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "새로운 연구 보고서의 발표와 관련된 내용이지만, 광범위한 트렌드 보고 및 일반적 업데이트 성격에 가까워 DAILY_UPDATE를 적용한다."
+      }
+    ]
+  },
+  "reasoning": "객관적인 설문조사 데이터를 인용하고 있지만, 원본 보고서의 깊이 있는 분석 없이 주요 통계 수치만 나열하는 얕은 보고(SHALLOW_REPORTING)로 판단되어 품질 점수가 하락했으며, 주체 및 사건의 영향력이 낮아(TIER_Z, DAILY_UPDATE) 영향력 점수가 낮게 산출되었다.",
+  "tags": [
+    "WORK_IMPACT",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 1
+      }
+    ],
+    "credits": [],
+    "modifiers": []
+  },
+  "source_id": "google_ai_blog",
+  "original_title": "Learn more about AI in the workplace in our new research report.",
+  "crawled_at": "2025-12-10T02:55:17.840830+00:00"
+}

@@ -41,6 +41,12 @@ class DBClient:
                 return {}
         return {}
 
+    def reload_history(self):
+        """Force reload history from disk"""
+        self.history = self._load_history()
+        print(f"🔄 History reloaded. {len(self.history)} items.")
+
+
     def _save_history_file(self):
         import json
         file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
@@ -151,7 +157,8 @@ class DBClient:
         time_str = crawled_at_dt.strftime('%Y%m%d_%H%M%S')
         
         # Create directory: data/YYYY-MM-DD
-        dir_path = os.path.join(self._get_data_dir(), date_str)
+        data_dir = self._get_data_dir()
+        dir_path = os.path.join(data_dir, date_str)
         os.makedirs(dir_path, exist_ok=True)
         
         # Generate hash for uniqueness (using URL)
@@ -166,9 +173,12 @@ class DBClient:
         if isinstance(article_data.get('crawled_at'), datetime):
             article_data['crawled_at'] = article_data['crawled_at'].isoformat()
             
-        with open(file_path, 'w', encoding='utf-8') as f:
-            json.dump(article_data, f, ensure_ascii=False, indent=2)
-        print(f"💾 Saved to {file_path}: {article_data.get('title_ko')}")
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(article_data, f, ensure_ascii=False, indent=2)
+            print(f"💾 Saved to {file_path}: {article_data.get('title_ko')}")
+        except Exception as e:
+            print(f"❌ Error saving file: {e}")
         
         # [NEW] Update daily summary
         self._update_daily_summary(date_str)
@@ -236,11 +246,25 @@ class DBClient:
             # Fallback: If original not found, just save as new file
             print(f"⚠️ [Inject] Original not found for {url}, saving as new.")
             self._save_to_individual_file(article_data)
+            
+            # [Fix] Update History for new file too
+            if url:
+                self.save_history(url, 'ACCEPTED', reason='manual_correction_new')
+                
             return True, "Created new file (Original not found)"
             
         # Use the most recent one
         files.sort(key=os.path.getmtime, reverse=True)
-        target_file = files[0]
+        target_file = files[0] # This is the EXISTING file (e.g. in 2025-12-09)
+        
+        # [NEW LOGIC] Check if we should move it to TODAY's folder?
+        # Since we updated crawled_at to NOW in manual_crawler.py, _save_to_individual_file 
+        # will target TODAY's folder.
+        # So we should Backup the OLD file, and then call _save_to_individual_file (which creates NEW file strings).
+        # We should NOT overwrite target_file if it's in a different folder.
+        
+        current_date_str = datetime.now().strftime('%Y-%m-%d')
+        existing_date_dir = os.path.basename(os.path.dirname(target_file))
         
         # 2. Prepare Backup
         target_dir = os.path.dirname(target_file)
@@ -248,27 +272,38 @@ class DBClient:
         os.makedirs(back_dir, exist_ok=True)
         
         filename = os.path.basename(target_file)
-        # Add timestamp to backup filename to avoid overwriting previous backups
         backup_filename = f"BACKUP_{int(datetime.now().timestamp())}_{filename}"
         backup_path = os.path.join(back_dir, backup_filename)
         
         try:
+            # Move/Copy logic
+            shutil.copy2(target_file, backup_path)
             print(f"📦 [Backup] Original saved to: {backup_path}")
             
-            # 3. Overwrite with new data
-            # Ensure crawled_at is serialized
-            if isinstance(article_data.get('crawled_at'), datetime):
-                article_data['crawled_at'] = article_data['crawled_at'].isoformat()
+            # 3. Save New Data:
+            # If the dates are different (e.g. Old=2025-12-09, New=2025-12-10 via crawled_at)
+            # We should probably SAVE AS NEW FILE in the new directory.
+            # And maybe LEAVE the old file as artifact? Or delete it?
+            # User wants "Run Date Basis". So let's create a NEW file in the NEW directory.
+            # We already backed up the old one.
+            
+            # Actually, just calling _save_to_individual_file(article_data) will do exactly what we want:
+            # It generates path based on article_data['crawled_at'] (which is NOW).
+            # So if that path is diff from target_file, we get a new file.
+            
+            self._save_to_individual_file(article_data)
+            
+            # 4. Update History
+            if url:
+                self.save_history(url, 'ACCEPTED', reason='manual_correction')
                 
-            with open(target_file, 'w', encoding='utf-8') as f:
-                json.dump(article_data, f, ensure_ascii=False, indent=2)
-            print(f"💉 [Inject] Overwritten: {target_file}")
+            # SPECIAL: If we saved to a NEW location, should we delete the old file to avoid dupes?
+            # Or keep it as history?
+            # Usually keep it, but it might confuse the crawler if it finds multiple.
+            # find_article_by_url looks for ALL matches and takes latest.
+            # So having 2 files (09 and 10) is fine, the 10 will be latest.
             
-            # 4. Update daily_summary
-            date_dir = os.path.basename(os.path.dirname(target_file))
-            self._update_daily_summary(date_dir)
-            
-            return True, f"Injected and backed up to {backup_filename}"
+            return True, f"Injected into current date folder. Backup at {backup_filename}"
             
         except Exception as e:
             return False, f"Backup/Write failed: {str(e)}"
@@ -322,15 +357,5 @@ class DBClient:
         except Exception as e:
             print(f"❌ Failed to update daily summary: {e}")
 
-    def _save_to_individual_file(self, article_data):
-        # ... logic to save file ...
-        # (We need to see where this function determines the path to properly call update)
-        # Re-reading the context, _save_to_individual_file is where save happens.
-        # But I don't see the full code. I'll assume I should insert the call at the end of save logic.
-        # Wait, I am replacing 'inject_correction_with_backup' which I just added.
-        # I need to be careful. The user *just* added inject_correction_with_backup manually or confirmed it?
-        # The user's last snippet showed inject_correction_with_backup. I should append _update_daily_summary to it.
-        # AND I need to find _save_to_individual_file to add it there too.
-        # Let's first add the method and update inject_correction.
-        pass
+
 

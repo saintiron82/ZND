@@ -169,7 +169,7 @@ async def main():
                 
                 if not text or len(text) < 200:
                     print(f"⚠️ [Skip] Content too short or failed extraction: {url}")
-                    db.save_history(url, 'SKIPPED', reason='short_content_or_failed')
+                    db.save_history(url, 'WORTHLESS', reason='short_content_or_failed')
                     continue
 
                 # Truncate text
@@ -182,14 +182,25 @@ async def main():
                     result_json = mll.analyze_text(truncated_text)
                     
                     if result_json:
+                        if result_json.get('zero_noise_score', 0) == 0:
+                             # Sometimes MLL might return 0 if it thinks it's bad? 
+                             # But let's trust the score.
+                             pass
+                        
                         zero_noise_score = result_json.get('zero_noise_score', 0)
                         impact_score = result_json.get('impact_score', 0)
                         
+                        # [NEW] Check High Noise (>= 7)
+                        if zero_noise_score >= 7.0:
+                            print(f"⚠️ [Skip] High Noise Score ({zero_noise_score}): {url}")
+                            db.save_history(url, 'WORTHLESS', reason='high_noise_auto')
+                            continue
+
                         final_doc = {
                             **result_json,
                             "url": url,
                             "source_id": target['id'],
-                            "crawled_at": datetime.now(timezone.utc),
+                            "crawled_at": datetime.now(timezone.utc).isoformat(),
                             "original_title": title,
                             "image": data.get('image'), # Add image from extractor
                             "summary_extracted": data.get('summary') # Add extracted summary if any

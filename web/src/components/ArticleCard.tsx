@@ -1,7 +1,9 @@
 import React from 'react';
+import { LAYOUT_CONFIG } from '../config/layoutConfig';
 import { ExternalLink, Clock } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import ZSFeedbackButtons from './ZSFeedbackButtons';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -20,29 +22,47 @@ export interface Article {
     tags: string[];
     source_id: string;
     crawled_at: string | { seconds: number };
+    awards?: string[]; // Award badges: "Today's Headline", "Zero Noise Award", "Hot Topic"
 }
 
 interface ArticleCardProps {
     article: Article;
     className?: string;
     hideSummary?: boolean;
+    cols?: number;
+    rows?: number;
+    currentDate?: string;  // 피드백용 날짜 (YYYY-MM-DD)
+    showFeedback?: boolean; // 피드백 버튼 표시 여부
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false }) => {
-    const { title_ko, summary, tags, url, crawled_at, source_id, impact_score, zero_noise_score } = article;
+// Award badge styling
+const getAwardStyle = (award: string) => {
+    switch (award) {
+        case "Today's Headline":
+            return "bg-gradient-to-r from-amber-400 to-orange-500 text-white";
+        case "Zero Noise Award":
+            return "bg-gradient-to-r from-emerald-400 to-teal-500 text-white";
+        case "Hot Topic":
+            return "bg-gradient-to-r from-rose-400 to-pink-500 text-white";
+        default:
+            return "bg-primary text-primary-foreground";
+    }
+};
+
+const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true }) => {
+    const { id, title_ko, summary, tags, url, crawled_at, source_id, impact_score, zero_noise_score, awards } = article;
 
     // Use zero_noise_score for quality indication
     const znScore = zero_noise_score ?? 0;
 
-    // Low ZeroNoise Score (Clean) = Green, High (Noise) = Amber/Red
-    // Assuming standard ZN scale: 0-3 Good, 3-6 Okay, 6+ Bad
+    // ... (score color logic) ...
     const getScoreColor = (s: number) => {
         if (s < 3.0) return "text-emerald-600 dark:text-emerald-400";
         if (s < 6.0) return "text-amber-600 dark:text-amber-400";
         return "text-red-600 dark:text-red-400";
     };
 
-    // Date formatting
+    // ... (date format logic) ...
     const formatDate = (date: string | { seconds: number }) => {
         if (typeof date === 'string') {
             return new Date(date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
@@ -56,16 +76,29 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
     const dateStr = formatDate(crawled_at);
 
     // Dynamic Title Size based on Impact Score
-    // ADJUSTMENT: Reduced sizes AGAIN (Very Compact)
     const getTitleSize = (s?: number) => {
         const score = s || 0;
         if (hideSummary) return "text-[10px] md:text-xs";
 
-        if (score >= 7.5) return "text-xl md:text-3xl";  // Ultra Impact (was 4xl)
-        if (score >= 6) return "text-lg md:text-2xl";    // High Impact (was 3xl)
-        if (score >= 4) return "text-base md:text-xl";   // Medium-High (was 2xl)
-        if (score >= 2) return "text-sm md:text-lg";     // Medium (was xl)
-        return "text-xs md:text-base";                   // Low Impact (was lg)
+        if (score >= 7.5) return "text-xl md:text-3xl";
+        if (score >= 6) return "text-lg md:text-2xl";
+        if (score >= 4) return "text-base md:text-xl";
+        if (score >= 2) return "text-sm md:text-lg";
+        return "text-xs md:text-base";
+    };
+
+    // Dynamic Line Clamp based on actual Height (High-Res 10px Rows)
+    // HeightPx = (rows * 10) + ((rows - 1) * 16). (Include Gap-4 = 16px)
+    // Fixed Overhead (Title/Date/Pad) ~= 100px.
+    // LineHeight ~= 24px.
+    const gapPx = 16;
+    const heightPx = (rows * 10) + Math.max(0, rows - 1) * gapPx;
+    const maxLines = Math.max(3, Math.floor((heightPx - 100) / 24));
+
+    // 클릭 이벤트 버블링 방지를 위한 핸들러
+    const handleFeedbackClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
     };
 
     return (
@@ -79,6 +112,23 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
             )}
         >
             <div className="flex flex-col gap-3 flex-1 min-h-0">
+                {/* Award Badges */}
+                {awards && awards.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 shrink-0">
+                        {awards.map(award => (
+                            <span
+                                key={award}
+                                className={cn(
+                                    "text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm",
+                                    getAwardStyle(award)
+                                )}
+                            >
+                                🏆 {award}
+                            </span>
+                        ))}
+                    </div>
+                )}
+
                 <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground font-sans shrink-0">
                     <div className="flex items-center gap-3">
                         <span className="text-primary/80">{source_id}</span>
@@ -97,7 +147,15 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 </h3>
 
                 {!hideSummary && (
-                    <p className="text-muted-foreground leading-relaxed font-sans text-sm overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                    <p
+                        className="text-muted-foreground leading-relaxed font-sans text-sm"
+                        style={{
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: maxLines,
+                            overflow: 'hidden'
+                        }}
+                    >
                         {summary}
                     </p>
                 )}
@@ -111,10 +169,23 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                         </span>
                     ))}
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-2">
+                    {/* ZS Feedback Buttons */}
+                    {showFeedback && currentDate && id && (
+                        <div onClick={handleFeedbackClick}>
+                            <ZSFeedbackButtons
+                                articleId={id}
+                                date={currentDate}
+                                size="sm"
+                            />
+                        </div>
+                    )}
+                    <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
             </div>
         </a>
     );
 };
 
 export default ArticleCard;
+

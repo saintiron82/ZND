@@ -1,0 +1,47 @@
+{
+  "image": "https://the-decoder.com/wp-content/uploads/2023/11/H200-Graphic.jpg",
+  "published_at": "Tue, 09 Dec 2025 12:58:56 GMT",
+  "summary": "도널드 트럼프 미국 행정부가 엔비디아의 H200 AI 가속기의 중국 수출을 조건부로 허가할 계획입니다. 로이터 통신에 따르면, 미국은 25%의 관세를 부과할 것을 요구하고 있으며, 이는 당초 논의되었던 15%보다 높은 수준입니다. 이번 규제 완화는 H200에 한정되며, 최신 '블랙웰' 및 '루빈' 아키텍처는 여전히 수출이 금지됩니다. 정부는 전면적인 금수 조치가 중국의 자체 AI 칩 개발을 가속화하는 것을 막기 위한 타협책으로 보고 있습니다.",
+  "text": "Max is the managing editor of THE DECODER, bringing his background in philosophy to explore questions of consciousness and whether machines truly think or just pretend to. Content Summary The US government under Donald Trump plans to authorize the export of Nvidia's H200 AI accelerators to China, subject to conditions. In exchange, the US demands a 25 percent levy, while the most powerful models remain banned. Ad President Donald Trump announced plans to approve the export of Nvidia's H200 processors to China. As Reuters reports, citing a post on Truth Social, the authorization is tied to a 25 percent fee payable to the US government. Trump stated he informed Chinese President Xi Jinping of the move, who reportedly reacted positively. The US Department of Commerce is currently working out the details of the agreement. According to Trump, the new rule will also apply to other US chipmakers like AMD and Intel. The 25 percent fee is significantly higher than the 15 percent discussed in August. A government official explained the mechanism to Reuters: The levy will be collected as an import tax when chips are imported into the US from their manufacturing site in Taiwan. There, they undergo a security review by US officials before being forwarded to approved customers in China. Ad Ad THE DECODER Newsletter The most important AI news straight to your inbox. ✓ Weekly ✓ Free ✓ Cancel at any time Please leave this field empty Top-tier models remain off-limits The easing of export restrictions applies specifically to the H200 chip, Nvidia's second-most powerful AI accelerator. The cutting-edge \"Blackwell\" generation and the upcoming \"Rubin\" architecture are explicitly excluded from this agreement, according to Trump. According to a report by the Institute for Progress, the H200 is nearly six times more powerful than the H20, previously the strongest chip legally exportable to China. However, a performance gap remains: Blackwell chips are roughly 1.5 times faster at AI training and up to five times faster at inference than the H200. Government officials view the decision as a compromise. The goal is to prevent a total embargo from accelerating China's own efforts to develop competitive AI chips through companies like Huawei. In a statement, Nvidia called the move a thoughtful balance that benefits America. It remains unclear how Chinese authorities will respond, though a Financial Times report suggests Beijing may restrict access to Nvidia's advanced H200 chips. According to the report, Chinese regulators are discussing ways to limit authorized access to these AI chips. Beijing had previously warned domestic companies against using US technology. At the same time, numerous local infrastructure projects continue to plan with Nvidia chips. Ad",
+  "title": "Trump approves Nvidia H200 sales, but China may not bite",
+  "url": "https://the-decoder.com/trump-approves-nvidia-h200-sales-but-china-may-not-bite/",
+  "title_ko": "트럼프, 엔비디아 H200 대중국 판매 조건부 승인: 25% 관세 요구",
+  "zero_noise_score": 3.69,
+  "impact_score": 3.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_2_POLICY_BODIES",
+      "weight": 3.5,
+      "reasoning": "미국 정부(US Gov)가 AI 칩 수출 정책 및 규제(25% 관세, 특정 칩 수출 금지)를 공식 발표했으므로 TIER 2 Policy Bodies로 분류한다."
+    },
+    "events": []
+  },
+  "reasoning": "미국 정부의 핵심 AI 반도체 수출 정책(TIER 2 주체) 발표는 업계 판도에 영향을 미치는 법적/정책적 결정이지만, 실제 법안 통과가 아닌 '계획' 발표이므로 POLICY_OR_REGULATION 이벤트는 미적용되며, 중간 정도의 영향력(IS 3.5)을 가진다. 기사는 H200과 H20의 성능 비교 등 객관적인 데이터(COMPARATIVE_EVALUATION)와 정책이 중국 자체 개발에 미칠 영향에 대한 깊이 있는 분석(POLICY_IMPACT_ANALYSIS)을 제공하여 품질이 높다(ZS 3.75).",
+  "tags": [
+    "AI_CHIP",
+    "REGULATION",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 0.3125
+      }
+    ],
+    "credits": [
+      {
+        "id": "POLICY_IMPACT_ANALYSIS",
+        "value": 1
+      },
+      {
+        "id": "COMPARATIVE_EVALUATION",
+        "value": 0.625
+      }
+    ],
+    "modifiers": []
+  },
+  "source_id": "the_decoder",
+  "original_title": "Trump approves Nvidia H200 sales, but China may not bite",
+  "crawled_at": "2025-12-10T04:15:11.798232+00:00"
+}

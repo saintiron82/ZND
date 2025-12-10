@@ -76,11 +76,13 @@ export default function Home() {
             prevDate={prev}
             nextDate={next}
             onDateChange={handleDateChange}
+            articles={articles}
         >
             <ArticleDisplay
                 articles={articles}
                 loading={loading}
                 error={error}
+                currentDate={currentDate || undefined}
             />
         </PageFrame>
     );

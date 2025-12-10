@@ -1,0 +1,45 @@
+{
+  "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/EOY_Collection_ss.max-1440x810.png",
+  "summary": "본 기사는 구글이 매년 발표하는 'Year in Search 2025'에 대한 간략한 소개를 담고 있다. 이는 한 해 동안 사람들이 무엇을, 그리고 어떻게 검색했는지에 대한 트렌드를 탐색하는 보고서이다. 기사의 내용은 검색어 결산 보고서에 대한 안내 외에 다른 구체적인 정보나 분석을 포함하고 있지 않다.",
+  "text": "Year in Search 2025: What and how we searched this year Learn more about Google’s Year in Search, which explores search trends from 2025.",
+  "title": "2025 at Google",
+  "url": "https://blog.google/technology/ai/look-back-2025/",
+  "title_ko": "구글 '2025년 검색어 결산': 올해의 검색 트렌드 분석",
+  "zero_noise_score": 7.5,
+  "impact_score": 5.15,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 5,
+      "reasoning": "Google의 공식 연례 발표인 'Year in Search'에 대한 기사로, TIER 1 ECOSYSTEM RULERS의 '주도적인 공식 발표'로 간주되어 해당 가중치를 적용한다."
+    },
+    "events": [
+      {
+        "id": "DAILY_UPDATE",
+        "weight": 0.15,
+        "reasoning": "검색어 결산은 정례적인 연간 보고서 발표에 해당하므로 DAILY_UPDATE를 적용한다."
+      }
+    ]
+  },
+  "reasoning": "Google의 공식 발표(TIER 1)에 대한 기사로 영향력 점수는 높으나, 본문 내용이 보고서 제목 및 목적만 나열하고 그 이상의 실질적인 정보나 분석을 제공하지 않아(SHALLOW_REPORTING, FUTURE_PROMISE_ONLY) 품질 점수가 크게 하락하였다.",
+  "tags": [
+    "DAILY_UPDATE"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "FUTURE_PROMISE_ONLY",
+        "value": 1.5
+      },
+      {
+        "id": "SHALLOW_REPORTING",
+        "value": 1
+      }
+    ],
+    "credits": [],
+    "modifiers": []
+  },
+  "source_id": "google_ai_blog",
+  "original_title": "2025 at Google",
+  "crawled_at": "2025-12-10T02:55:18.345398+00:00"
+}

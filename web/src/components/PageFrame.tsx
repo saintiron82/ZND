@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import CategoryNav from './CategoryNav';
 import Footer from './Footer';
+import TrendingKeywords from './TrendingKeywords';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PageFrameProps {
@@ -10,6 +11,7 @@ interface PageFrameProps {
     prevDate: string | null;
     nextDate: string | null;
     onDateChange: (date: string) => void;
+    articles?: Array<{ tags?: string[] }>; // For trending keywords
 }
 
 export default function PageFrame({
@@ -17,7 +19,8 @@ export default function PageFrame({
     currentDate,
     prevDate,
     nextDate,
-    onDateChange
+    onDateChange,
+    articles = []
 }: PageFrameProps) {
     return (
         <div className="min-h-screen bg-background text-foreground p-4 md:p-8 relative">
@@ -62,6 +65,13 @@ export default function PageFrame({
                     );
                 })()}
             </div>
+
+            {/* Trending Keywords Sidebar - Desktop Only */}
+            {articles.length > 0 && (
+                <div className="hidden xl:block fixed right-8 top-56 w-56 z-50">
+                    <TrendingKeywords articles={articles} maxItems={5} />
+                </div>
+            )}
 
             <Header currentDate={currentDate} />
 
@@ -112,3 +122,4 @@ export default function PageFrame({
         </div>
     );
 }
+

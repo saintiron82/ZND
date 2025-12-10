@@ -176,6 +176,13 @@ def extract():
 
     if not content:
         return jsonify({'error': 'Failed to extract content'}), 500
+
+    # [NEW] Check content length
+    text_len = len(content.get('text', ''))
+    if text_len < 200:
+        db.save_history(url, 'WORTHLESS', reason='text_too_short_manual')
+        print(f"⚠️ [Manual Extract] Text too short ({text_len}), marked as WORTHLESS: {url}")
+        return jsonify({'error': f"Article content too short ({text_len} chars). Marked as WORTHLESS."}), 400
         
     return jsonify(content)
 
@@ -198,8 +205,18 @@ def extract_batch():
 
     try:
         results = asyncio.run(get_data_batch(urls))
-        # Ensure results have 'url' field which process_urls adds
-        return jsonify(results)
+        
+        # [NEW] Filter worthless
+        valid_results = []
+        for res in results:
+            text_len = len(res.get('text', ''))
+            if text_len < 200:
+                 db.save_history(res['url'], 'WORTHLESS', reason='text_too_short_manual_batch')
+                 print(f"⚠️ [Manual Batch] Text too short ({text_len}), marked as WORTHLESS: {res['url']}")
+            else:
+                 valid_results.append(res)
+
+        return jsonify(valid_results)
     except Exception as e:
         return jsonify({'error': f"Batch extraction failed: {str(e)}"}), 500
 
@@ -229,6 +246,12 @@ def save():
         "crawled_at": datetime.now(timezone.utc).isoformat()
     })
     
+    # [NEW] Check Noise Score (NS >= 7 -> Worthless)
+    if float(data['zero_noise_score']) >= 7.0:
+        print(f"⚠️ [Manual Save] ZS is high ({data['zero_noise_score']}), marking as WORTHLESS.")
+        db.save_history(data['url'], 'WORTHLESS', reason='high_noise_manual_save')
+        return jsonify({'error': 'Article has High Noise (>= 7). Marked as WORTHLESS and not saved.'}), 400
+
     try:
         print(f"💾 [Manual Save] Saving article: {final_doc.get('title_ko')}")
         db.save_article(final_doc)
@@ -424,6 +447,19 @@ def inject_correction():
         # Update data with calculated scores
         data['zero_noise_score'] = scores['zs_final']
         data['impact_score'] = scores['impact_score']
+
+        # [NEW] Check Noise Score (NS >= 7 -> Worthless)
+        if scores['zs_final'] >= 7.0:
+             print(f"⚠️ [Inject] ZS is high ({scores['zs_final']}), marking as WORTHLESS.")
+             db.save_history(url, 'WORTHLESS', reason='high_noise_manual_inject')
+             return jsonify({
+                 'status': 'error', 
+                 'error': f"Article has High Noise ({scores['zs_final']}). Marked as WORTHLESS and NOT saved."
+             }), 400
+
+        # [NEW] Force update date to NOW (execution time) so it saves in today's folder
+        now_utc = datetime.now(timezone.utc)
+        data['crawled_at'] = now_utc.isoformat()
         
         success, message = db.inject_correction_with_backup(data, url)
         
@@ -460,6 +496,14 @@ def mark_worthless():
     try:
         db.save_history(url, 'WORTHLESS', reason='manual_worthless')
         return jsonify({'status': 'success'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/system/reload_history', methods=['POST'])
+def reload_server_history():
+    try:
+        db.reload_history()
+        return jsonify({'status': 'success', 'message': 'History reloaded from disk'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

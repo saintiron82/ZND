@@ -149,7 +149,8 @@ export async function GET(request: Request) {
 
         let validArticles = articles.filter((a: any) => {
             const score = a.score ?? a.zero_noise_score ?? 0;
-            return score >= 4;
+            // Filter out articles with High Noise (ZeroNoise Score >= 7.0)
+            return score < 7.0;
         });
 
         // Date filter

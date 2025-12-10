@@ -1,12 +1,18 @@
 'use client';
 
 import React from 'react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header({ currentDate }: { currentDate?: string | null }) {
     return (
         <header
             className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-4 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
         >
+            {/* 테마 토글 버튼 - 우측 상단 고정 */}
+            <div className="absolute right-4 top-4">
+                <ThemeToggle />
+            </div>
+
             <div className="flex flex-col items-center max-w-7xl mx-auto">
                 <h1 className="font-black tracking-tighter text-foreground font-sans leading-none flex items-baseline gap-2 md:gap-4 justify-center text-4xl md:text-6xl">
                     ZeroNoise<span className="text-primary">.</span>

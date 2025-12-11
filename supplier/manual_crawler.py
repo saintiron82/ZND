@@ -10,6 +10,20 @@ from src.crawler.utils import RobotsChecker
 from src.crawler.core import AsyncCrawler
 from datetime import datetime, timezone
 
+# Import shared core logic (source of truth for all crawlers)
+from src.core_logic import (
+    get_url_hash as _core_get_url_hash,
+    get_article_id,
+    get_cache_path as _core_get_cache_path,
+    load_from_cache as _core_load_from_cache,
+    save_to_cache as _core_save_to_cache,
+    normalize_field_names as _core_normalize_field_names,
+    update_manifest as _core_update_manifest,
+    normalize_url_for_dedupe,
+    HistoryStatus,
+    get_data_filename,
+)
+
 app = Flask(__name__)
 db = DBClient()
 robots_checker = RobotsChecker()
@@ -17,63 +31,22 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
 
 # --- URL-based Text Caching ---
+# These functions now delegate to core_logic module for consistency
 def get_url_hash(url):
     """Generate a short hash from URL for cache filename."""
-    return hashlib.md5(url.encode()).hexdigest()[:12]
+    return _core_get_url_hash(url)
 
 def get_cache_path(url, date_str=None):
     """Get cache file path for URL. Uses today's date if not specified."""
-    if date_str is None:
-        date_str = datetime.now().strftime('%Y-%m-%d')
-    url_hash = get_url_hash(url)
-    cache_dir = os.path.join(CACHE_DIR, date_str)
-    return os.path.join(cache_dir, f'{url_hash}.json')
+    return _core_get_cache_path(url, date_str)
 
 def load_from_cache(url):
     """Load cached content for URL. Searches ALL date folders, not just today."""
-    url_hash = get_url_hash(url)
-    filename = f'{url_hash}.json'
-    
-    # Search all date folders for this URL's cache
-    if os.path.exists(CACHE_DIR):
-        for date_folder in os.listdir(CACHE_DIR):
-            date_path = os.path.join(CACHE_DIR, date_folder)
-            if not os.path.isdir(date_path):
-                continue
-            cache_path = os.path.join(date_path, filename)
-            if os.path.exists(cache_path):
-                try:
-                    with open(cache_path, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        print(f"📦 [Cache] Loaded from cache ({date_folder}): {url[:50]}...")
-                        return data
-                except Exception as e:
-                    print(f"⚠️ [Cache] Error reading cache: {e}")
-    return None
+    return _core_load_from_cache(url)
 
 def save_to_cache(url, content):
     """Save content to cache for URL. Auto-generates article_id and cached_at if not present."""
-    from datetime import datetime, timezone
-    
-    cache_path = get_cache_path(url)
-    cache_dir = os.path.dirname(cache_path)
-    
-    # Auto-generate article_id if not present
-    if 'article_id' not in content:
-        content['article_id'] = get_url_hash(url)[:6]
-    
-    # Auto-add cached_at timestamp if not present
-    if 'cached_at' not in content:
-        content['cached_at'] = datetime.now(timezone.utc).isoformat()
-    
-    try:
-        os.makedirs(cache_dir, exist_ok=True)
-        with open(cache_path, 'w', encoding='utf-8') as f:
-            json.dump(content, f, ensure_ascii=False, indent=2)
-        print(f"💾 [Cache] Saved to cache: {url[:50]}...")
-    except Exception as e:
-        print(f"⚠️ [Cache] Error saving cache: {e}")
-
+    return _core_save_to_cache(url, content)
 
 def normalize_field_names(data):
     """
@@ -81,77 +54,14 @@ def normalize_field_names(data):
     e.g., zero_Echo_score, Zero_echo_score -> zero_echo_score
     Also migrates legacy zero_noise_score field.
     """
-    if not isinstance(data, dict):
-        return data
-    
-    normalized = dict(data)
-    keys_to_check = list(normalized.keys())
-    
-    for key in keys_to_check:
-        key_lower = key.lower()
-        # Handle zero_echo_score variations
-        if key_lower == 'zero_echo_score' and key != 'zero_echo_score':
-            normalized['zero_echo_score'] = normalized.pop(key)
-            print(f"[Normalize] Renamed '{key}' to 'zero_echo_score'")
-        # Handle legacy zero_noise_score
-        elif key_lower == 'zero_noise_score':
-            normalized['zero_echo_score'] = normalized.pop(key)
-            print(f"[Normalize] Migrated '{key}' to 'zero_echo_score'")
-    
-    return normalized
+    return _core_normalize_field_names(data)
 
 def update_manifest(date_str):
     """
     Updates or creates index.json for the given date directory.
     Aggregates all .json files (excluding index.json) and saves them as a list.
     """
-    try:
-        dir_path = os.path.join(DATA_DIR, date_str)
-        if not os.path.exists(dir_path):
-            return 
-            
-        json_files = glob.glob(os.path.join(dir_path, '*.json'))
-        articles = []
-        
-        for json_file in json_files:
-            if os.path.basename(json_file) == 'index.json':
-                continue
-                
-            try:
-                with open(json_file, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    
-                    # [CRITICAL] Inject ID if missing
-                    if 'id' not in data:
-                         filename = os.path.basename(json_file)
-                         parts = filename.replace('.json', '').split('_')
-                         if len(parts) > 1:
-                             data['id'] = parts[-1]
-                         else:
-                             data['id'] = filename
-                             
-                    articles.append(data)
-            except Exception as e:
-                print(f"Error reading {json_file}: {e}")
-
-        # Sort by Impact Score Descending
-        articles.sort(key=lambda x: x.get('impact_score', 0), reverse=True)
-
-        manifest = {
-            "date": date_str,
-            "updated_at": datetime.now().isoformat(),
-            "count": len(articles),
-            "articles": articles
-        }
-
-        manifest_path = os.path.join(dir_path, 'index.json')
-        with open(manifest_path, 'w', encoding='utf-8') as f:
-            json.dump(manifest, f, ensure_ascii=False, indent=2)
-            
-        print(f"✅ [Manifest] Updated index.json for {date_str}")
-        
-    except Exception as e:
-        print(f"❌ [Manifest] Error updating manifest: {e}")
+    return _core_update_manifest(date_str)
 
 @app.route('/')
 def index():
@@ -932,6 +842,11 @@ def extract_batch():
 
 @app.route('/api/save', methods=['POST'])
 def save():
+    """
+    Save article - uses unified pipeline (same as auto crawler).
+    """
+    from src.pipeline import save_article as pipeline_save
+    
     data = normalize_field_names(request.json)
     
     # Validate required fields
@@ -939,74 +854,38 @@ def save():
     for field in required_fields:
         if field not in data:
             return jsonify({'error': f'Missing field: {field}'}), 400
-            
-    # Construct final document
-    # Start with request data to include all extra fields (tags, evidence, etc.)
-    final_doc = data.copy()
     
-    # Get article_id from cache or generate from URL hash (NEVER from request data!)
-    cached = load_from_cache(data['url'])
-    article_id = (cached.get('article_id') if cached else None) or get_url_hash(data['url'])[:6]
+    # Use unified pipeline for saving
+    result = pipeline_save(data, source_id=data.get('source_id'))
     
-    # Ensure critical fields are set/overwritten correctly
-    final_doc.update({
-        "article_id": article_id,
-        "url": data['url'],
-        "source_id": data['source_id'],
-        "title_ko": data['title_ko'],
-        "summary": data['summary'],
-        "zero_echo_score": float(data['zero_echo_score']),
-        "impact_score": float(data['impact_score']),
-        "original_title": data['original_title'],
-        "crawled_at": datetime.now(timezone.utc).isoformat()
-    })
-    
-    # [NEW] Check Noise Score (NS >= 7 -> Worthless)
-    if float(data['zero_echo_score']) >= 7.0:
-        print(f"⚠️ [Manual Save] ZS is high ({data['zero_echo_score']}), marking as WORTHLESS.")
-        db.save_history(data['url'], 'WORTHLESS', reason='high_noise_manual_save')
-        return jsonify({'error': 'Article has High Noise (>= 7). Marked as WORTHLESS and not saved.'}), 400
-
-    try:
-        print(f"💾 [Manual Save] Saving article: {final_doc.get('title_ko')} (source: {final_doc.get('source_id')})")
-        db.save_article(final_doc)
-        
-        # [NEW] Update Manifest
-        # Extract date from crawled_at which we just set
-        date_str = final_doc['crawled_at'].split('T')[0]
-        update_manifest(date_str)
-        
-        # [NEW] Return saved file info
-        url_hash = get_url_hash(data['url'])[:8]
-        source_id = final_doc.get('source_id', 'unknown')
-        filename = f"{source_id}_{url_hash}.json"
-        
+    if result.get('status') == 'saved':
         return jsonify({
             'status': 'success',
             'data_file': {
-                'filename': filename,
-                'date': date_str,
-                'path': f"data/{date_str}/{filename}"
+                'filename': result.get('filename'),
+                'date': result.get('date'),
+                'path': f"data/{result.get('date')}/{result.get('filename')}"
             }
         })
-    except Exception as e:
-        print(f"❌ [Manual Save] Error: {e}")
-        return jsonify({'error': str(e)}), 500
+    elif result.get('status') == 'worthless':
+        return jsonify({'error': f"Article marked as worthless: {result.get('reason')}"}), 400
+    else:
+        return jsonify({'error': result.get('error', 'Unknown error')}), 500
 
 @app.route('/api/skip', methods=['POST'])
 def skip():
+    """Skip article - uses unified pipeline."""
+    from src.pipeline import mark_skipped
+    
     data = request.json
     url = data.get('url')
     reason = data.get('reason', 'manual_skip')
     
     if not url:
         return jsonify({'error': 'URL is required'}), 400
-        
-    try:
-        db.save_history(url, 'SKIPPED', reason=reason)
-        return jsonify({'status': 'success'})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    
+    result = mark_skipped(url, reason)
+    return jsonify({'status': 'success', **result})
 
 @app.route('/api/check_quality', methods=['POST'])
 def check_quality():
@@ -1175,8 +1054,10 @@ def inject_correction():
         data['zero_echo_score'] = scores['zs_final']
         data['impact_score'] = scores['impact_score']
 
-        # [NEW] Check Noise Score (NS >= 7 -> Worthless)
-        if scores['zs_final'] >= 7.0:
+        # Check Noise Score (threshold from config)
+        from src.core_logic import get_config
+        high_noise_threshold = get_config('scoring', 'high_noise_threshold', default=7.0)
+        if scores['zs_final'] >= high_noise_threshold:
              print(f"⚠️ [Inject] ZS is high ({scores['zs_final']}), marking as WORTHLESS.")
              db.save_history(url, 'WORTHLESS', reason='high_noise_manual_inject')
              return jsonify({

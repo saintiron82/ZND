@@ -13,6 +13,18 @@ from src.mll_client import MLLClient
 from src.db_client import DBClient
 from src.crawler.utils import RobotsChecker
 
+# Import shared core logic (source of truth for all crawlers)
+from src.core_logic import (
+    get_url_hash,
+    get_article_id,
+    load_from_cache,
+    save_to_cache,
+    normalize_field_names,
+    update_manifest,
+    HistoryStatus,
+    get_data_filename,
+)
+
 # Load environment variables
 # Configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -104,123 +116,70 @@ def run_crawler():
     asyncio.run(main())
 
 async def main():
+    """
+    Auto Crawler - Orchestrates the unified pipeline.
+    Only difference from manual: loops through targets automatically.
+    """
+    from src.pipeline import process_article, get_db
+    from src.core_logic import get_config
+    
     # 1. 클라이언트 초기화
     mll = MLLClient()
-    db = DBClient()
-    # Initialize AsyncCrawler (Playwright for robustness, or configurable)
-    crawler = AsyncCrawler(use_playwright=True, max_concurrency=5)
+    db = get_db()
     
     targets = load_targets()
     
-    try:
-        for target in targets:
-            print(f"\n🎯 [Target] Processing target: {target['id']}")
-            
-            # 1. Fetch Links (Keep existing sync logic for discovery)
-            # This could be made async later, but it's fast enough for now.
-            article_links = fetch_links(target)
-            
-            # Apply limit
-            limit = target.get('limit', 5)
-            article_links = article_links[:limit]
-            
-            print(f"🔗 [Links] Found {len(article_links)} links (Limit: {limit}).")
-            
-            # 2. Filter duplicates
-            new_links = []
-            for link in article_links:
-                if db.check_history(link):
-                    print(f"⏭️ [Skip] Duplicate found in history: {link}")
+    for target in targets:
+        print(f"\n🎯 [Target] Processing target: {target['id']}")
+        
+        # 1. Fetch Links
+        article_links = fetch_links(target)
+        
+        # Apply limit
+        limit = target.get('limit', 5)
+        article_links = article_links[:limit]
+        
+        print(f"🔗 [Links] Found {len(article_links)} links (Limit: {limit}).")
+        
+        # 2. Filter duplicates (quick check)
+        new_links = []
+        for link in article_links:
+            if db.check_history(link):
+                print(f"⏭️ [Skip] Duplicate: {link[:50]}...")
+            else:
+                new_links.append(link)
+        
+        if not new_links:
+            print("✨ No new links to process.")
+            continue
+
+        # 3. Process each article using unified pipeline
+        print(f"🚀 [Process] Processing {len(new_links)} new links...")
+        
+        for url in new_links:
+            try:
+                result = await process_article(
+                    url=url,
+                    source_id=target['id'],
+                    mll_client=mll,
+                    skip_mll=False  # Auto mode uses MLL
+                )
+                
+                status = result.get('status', 'unknown')
+                if status == 'saved':
+                    print(f"✅ [Success] Saved: {result.get('article_id')}")
+                elif status == 'worthless':
+                    print(f"🚫 [Worthless] {result.get('reason')}")
+                elif status == 'mll_failed':
+                    print(f"⚠️ [MLL Failed] {result.get('reason')}")
+                elif status == 'already_processed':
+                    print(f"⏭️ [Skip] Already: {result.get('history_status')}")
                 else:
-                    new_links.append(link)
-            
-            if not new_links:
-                print("✨ No new links to process.")
-                continue
-
-            # 3. Crawl (Fetch + Extract) in parallel
-            print(f"🚀 [Crawl] Processing {len(new_links)} new links with AsyncCrawler...")
-            results = await crawler.process_urls(new_links)
-            
-            # 4. Analyze & Save
-            for data in results:
-                url = data['url']
-                text = data.get('text', '')
-                title = data.get('title', '')
-                published_at = data.get('published_at')
-
-                # Filter by age
-                if published_at:
-                    # Parse if string (from JSON-LD maybe?) or usage object
-                    # Extractor usually returns strings for JSON-LD, datetime for newspaper
-                    # normalize to datetime
-                    if isinstance(published_at, str):
-                        try:
-                            # Simple attempt or use dateparser if available. 
-                            # For now, let's trust newspaper's datetime or simple ISO
-                            published_at = datetime.fromisoformat(published_at.replace('Z', '+00:00'))
-                        except:
-                            pass # Failed to parse, keep it
-
-                    if not is_recent(published_at):
-                        print(f"⏳ [Skip] Article too old: {url} ({published_at})")
-                        db.save_history(url, 'SKIPPED', reason='too_old')
-                        continue
-                
-                if not text or len(text) < 200:
-                    print(f"⚠️ [Skip] Content too short or failed extraction: {url}")
-                    db.save_history(url, 'WORTHLESS', reason='short_content_or_failed')
-                    continue
-
-                # Truncate text
-                truncated_text = text[:3000]
-                print(f"✂️ [Extract] Text truncated to {len(truncated_text)} chars.")
-
-                # MLL Analysis
-                print(f"🤖 [Analyze] Requesting MLL analysis for: {title}")
-                try:
-                    result_json = mll.analyze_text(truncated_text)
+                    print(f"❓ [Unknown] {status}: {result}")
                     
-                    if result_json:
-                        if result_json.get('zero_echo_score', 0) == 0:
-                             # Sometimes MLL might return 0 if it thinks it's bad? 
-                             # But let's trust the score.
-                             pass
-                        
-                        zero_echo_score = result_json.get('zero_echo_score', 0)
-                        impact_score = result_json.get('impact_score', 0)
-                        
-                        # [NEW] Check High Noise (>= 7)
-                        if zero_echo_score >= 7.0:
-                            print(f"⚠️ [Skip] High Noise Score ({zero_echo_score}): {url}")
-                            db.save_history(url, 'WORTHLESS', reason='high_noise_auto')
-                            continue
+            except Exception as e:
+                print(f"❌ [Error] Failed to process {url}: {e}")
 
-                        final_doc = {
-                            **result_json,
-                            "url": url,
-                            "source_id": target['id'],
-                            "crawled_at": datetime.now(timezone.utc).isoformat(),
-                            "original_title": title,
-                            "image": data.get('image'), # Add image from extractor
-                            "summary_extracted": data.get('summary') # Add extracted summary if any
-                        }
-                        
-                        print(f"💾 [Save] Saving article: {result_json.get('title_ko')} (ZS: {zero_echo_score})")
-                        db.save_article(final_doc)
-                        print(f"✅ [Success] Item processed successfully.")
-                    else:
-                        print("⚠️ [Analyze] MLL returned None.")
-                        # We might want to save as failed or retry?
-                        
-                except Exception as e:
-                    print(f"❌ [Error] MLL/Save failed for {url}: {e}")
-                
-                # Polite delay between analysis calls if needed (though MLL API handles it)
-                # await asyncio.sleep(1) 
-
-    finally:
-        await crawler.close()
 
 if __name__ == "__main__":
     run_crawler()

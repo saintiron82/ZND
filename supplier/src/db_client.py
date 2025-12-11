@@ -69,11 +69,11 @@ class DBClient:
     def check_history(self, url):
         """
         Checks if the URL has been processed with a final state.
-        Returns True if status is ACCEPTED, REJECTED, or SKIPPED.
+        Returns True if status is ACCEPTED, REJECTED, SKIPPED, WORTHLESS, or MLL_FAILED.
         """
         if url in self.history:
             status = self.history[url].get('status')
-            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS']:
+            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS', 'MLL_FAILED']:
                 return True
         return False
 

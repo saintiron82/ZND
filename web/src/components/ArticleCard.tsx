@@ -23,6 +23,8 @@ export interface Article {
     source_id: string;
     crawled_at: string | { seconds: number };
     awards?: string[]; // Award badges: "Today's Headline", "Zero Noise Award", "Hot Topic"
+    cols?: number;
+    rows?: number;
 }
 
 interface ArticleCardProps {

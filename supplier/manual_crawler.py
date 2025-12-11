@@ -355,44 +355,86 @@ def search_cache():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+def _normalize_url_for_dedupe(url):
+    """Normalize URL for deduplication check (ignore scheme, trailing slash)."""
+    if not url: return ""
+    try:
+        from urllib.parse import urlparse, urlunparse
+        parsed = urlparse(url)
+        # Normalize scheme to http (or empty) to ignore http/https diff
+        # Remove trailing slash from path
+        path = parsed.path.rstrip('/')
+        
+        # Reconstruct without scheme
+        # We prefer to keep netloc/path/query/params/fragment
+        # But to match http vs https, we can just strip the scheme part
+        # simplified: lower case, strip scheme, strip trailing slash
+        
+        # Simplified manual normalization:
+        # 1. Strip whitespace
+        norm = url.strip()
+        # 2. To lowercase (usually safe for domains, maybe not for complex query params but acceptable for dedupe)
+        # Actually query params are case sensitive commonly. Let's ONLY lower casing the scheme/netloc?
+        # Too complex. Let's just strip trailing slash and scheme.
+        
+        # Remove scheme
+        if norm.startswith('https://'):
+            norm = norm[8:]
+        elif norm.startswith('http://'):
+            norm = norm[7:]
+            
+        # Remove trailing slash
+        if norm.endswith('/'):
+            norm = norm[:-1]
+            
+        return norm
+    except:
+        return url
+
+def _get_duplicate_groups():
+    """Helper to find duplicate cache files."""
+    url_to_files = {}  # Normalized_URL -> list of cache files
+    
+    if os.path.exists(CACHE_DIR):
+        for date_folder in os.listdir(CACHE_DIR):
+            date_path = os.path.join(CACHE_DIR, date_folder)
+            if not os.path.isdir(date_path):
+                continue
+            
+            for filename in os.listdir(date_path):
+                if not filename.endswith('.json'):
+                    continue
+                
+                filepath = os.path.join(date_path, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        url = data.get('url', '')
+                        if url:
+                            norm_url = _normalize_url_for_dedupe(url)
+                            if norm_url not in url_to_files:
+                                url_to_files[norm_url] = []
+                            url_to_files[norm_url].append({
+                                'filename': filename,
+                                'date': date_folder,
+                                'path': filepath,
+                                'cached_at': data.get('cached_at', ''),
+                                'original_url': url
+                            })
+                except:
+                    pass
+                    
+    # Filter to only groups with > 1 file
+    return {k: v for k, v in url_to_files.items() if len(v) > 1}
+
 @app.route('/api/find_duplicate_caches')
 def find_duplicate_caches():
     """Find duplicate cache files (same URL in multiple files)."""
     try:
-        url_to_files = {}  # URL -> list of cache files
-        
-        if os.path.exists(CACHE_DIR):
-            for date_folder in os.listdir(CACHE_DIR):
-                date_path = os.path.join(CACHE_DIR, date_folder)
-                if not os.path.isdir(date_path):
-                    continue
-                
-                for filename in os.listdir(date_path):
-                    if not filename.endswith('.json'):
-                        continue
-                    
-                    filepath = os.path.join(date_path, filename)
-                    try:
-                        with open(filepath, 'r', encoding='utf-8') as f:
-                            data = json.load(f)
-                            url = data.get('url', '')
-                            if url:
-                                if url not in url_to_files:
-                                    url_to_files[url] = []
-                                url_to_files[url].append({
-                                    'filename': filename,
-                                    'date': date_folder,
-                                    'path': filepath,
-                                    'cached_at': data.get('cached_at', '')
-                                })
-                    except:
-                        pass
-        
-        # Filter to only URLs with duplicates
-        duplicates = {url: files for url, files in url_to_files.items() if len(files) > 1}
+        duplicates = _get_duplicate_groups()
         
         # Sort files within each duplicate group by cached_at (keep newest)
-        for url, files in duplicates.items():
+        for _, files in duplicates.items():
             files.sort(key=lambda x: x.get('cached_at', ''), reverse=True)
         
         return jsonify({
@@ -408,35 +450,10 @@ def cleanup_duplicate_caches():
     """Delete duplicate cache files, keeping the newest one for each URL."""
     try:
         deleted_count = 0
-        url_to_files = {}
-        
-        if os.path.exists(CACHE_DIR):
-            for date_folder in os.listdir(CACHE_DIR):
-                date_path = os.path.join(CACHE_DIR, date_folder)
-                if not os.path.isdir(date_path):
-                    continue
-                
-                for filename in os.listdir(date_path):
-                    if not filename.endswith('.json'):
-                        continue
-                    
-                    filepath = os.path.join(date_path, filename)
-                    try:
-                        with open(filepath, 'r', encoding='utf-8') as f:
-                            data = json.load(f)
-                            url = data.get('url', '')
-                            if url:
-                                if url not in url_to_files:
-                                    url_to_files[url] = []
-                                url_to_files[url].append({
-                                    'path': filepath,
-                                    'cached_at': data.get('cached_at', '')
-                                })
-                    except:
-                        pass
+        duplicates = _get_duplicate_groups()
         
         # Delete duplicates (keep newest)
-        for url, files in url_to_files.items():
+        for _, files in duplicates.items():
             if len(files) > 1:
                 # Sort by cached_at descending (newest first)
                 files.sort(key=lambda x: x.get('cached_at', ''), reverse=True)
@@ -445,7 +462,7 @@ def cleanup_duplicate_caches():
                     try:
                         os.remove(file_info['path'])
                         deleted_count += 1
-                        print(f"🗑️ [Cleanup] Deleted duplicate: {file_info['path']}")
+                        print(f"🗑️ [Cleanup] Deleted duplicate: {file_info['path']} (Dup of {files[0]['original_url']})")
                     except Exception as e:
                         print(f"⚠️ [Cleanup] Failed to delete: {file_info['path']} - {e}")
         
@@ -1252,6 +1269,174 @@ def reload_server_history():
     try:
         db.reload_history()
         return jsonify({'status': 'success', 'message': 'History reloaded from disk'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/find_duplicate_data')
+def find_duplicate_data():
+    """Find duplicate DATA files (processed articles) by URL."""
+    try:
+        url_to_files = {}
+        
+        if os.path.exists(DATA_DIR):
+            for date_folder in os.listdir(DATA_DIR):
+                date_path = os.path.join(DATA_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json') or filename in ['daily_summary.json', 'index.json']:
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url', '')
+                            if url:
+                                norm_url = _normalize_url_for_dedupe(url)
+                                if norm_url not in url_to_files:
+                                    url_to_files[norm_url] = []
+                                url_to_files[norm_url].append({
+                                    'filename': filename,
+                                    'date': date_folder,
+                                    'path': filepath,
+                                    'crawled_at': data.get('crawled_at', ''),
+                                    'title': data.get('title_ko', data.get('title', '')),
+                                    'original_url': url
+                                })
+                    except:
+                        pass
+        
+        # Filter to only URLs with duplicates
+        duplicates = {url: files for url, files in url_to_files.items() if len(files) > 1}
+        
+        # Sort files within each duplicate group by crawled_at (keep newest)
+        for _, files in duplicates.items():
+            files.sort(key=lambda x: x.get('crawled_at', ''), reverse=True)
+            
+        return jsonify({
+            'duplicates': duplicates,
+            'total_duplicate_urls': len(duplicates),
+            'total_duplicate_files': sum(len(f) - 1 for f in duplicates.values())
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cleanup_duplicate_data', methods=['POST'])
+def cleanup_duplicate_data():
+    """
+    Delete duplicate DATA files.
+    Priority to keep:
+    1. Data file with article_id matching the current CACHE.
+    2. If no cache match (or cache missing), keep the newest file (crawled_at).
+    Delete all others in the group.
+    """
+    try:
+        deleted_count = 0
+        dates_affected = set()
+        
+        # Scan for duplicates again
+        url_to_files = {}
+        if os.path.exists(DATA_DIR):
+            for date_folder in os.listdir(DATA_DIR):
+                date_path = os.path.join(DATA_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json') or filename in ['daily_summary.json', 'index.json']:
+                        continue
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url', '')
+                            if url:
+                                norm_url = _normalize_url_for_dedupe(url)
+                                if norm_url not in url_to_files:
+                                    url_to_files[norm_url] = []
+                                url_to_files[norm_url].append({
+                                    'filename': filename,
+                                    'path': filepath,
+                                    'crawled_at': data.get('crawled_at', ''),
+                                    'date': date_folder,
+                                    'original_url': url,
+                                    'article_id': data.get('article_id')
+                                })
+                    except:
+                        pass
+
+        # Cleanup
+        for norm_url, files in url_to_files.items():
+            if len(files) > 1:
+                # Get current cache info for this URL (using the first original_url as representative)
+                # Note: original_url might differ slightly (http vs https), but load_from_cache uses exact URL hash.
+                # Ideally we try to find cache for ANY of the original URLs in the group? 
+                # Or just the first one? Users said "same URL".
+                # Let's try to find cache for the most likely URL (e.g. https).
+                # But actually, `load_from_cache` expects the exact URL string used to generate hash.
+                # Let's stick to the URL from the newest file as the "canonical" one to check cache.
+                
+                # Pre-sort by newest to pick a good candidate for cache check
+                files.sort(key=lambda x: x.get('crawled_at', ''), reverse=True)
+                candidate_url = files[0]['original_url']
+                
+                cached_data = load_from_cache(candidate_url)
+                cached_article_id = cached_data.get('article_id') if cached_data else None
+                
+                # Custom Sort Function
+                def priority_sort(file_info):
+                    # 1. Match Cache (Strongest)
+                    is_cache_match = (file_info.get('article_id') == cached_article_id) and (cached_article_id is not None) and (file_info.get('article_id') is not None)
+                    
+                    # 2. Has Article ID (Completeness)
+                    # If cache is missing, we still prefer a file that HAS an ID over one that might be corrupt/missing it
+                    has_article_id = (file_info.get('article_id') is not None) and (file_info.get('article_id') != "")
+                    
+                    # 3. Timestamp (Recency)
+                    timestamp = file_info.get('crawled_at', '')
+                    
+                    # Sort tuple: (True, True, "2025...") > (False, True, "2024...")
+                    return (is_cache_match, has_article_id, timestamp)
+
+                # Sort descending (True first, Newest first)
+                files.sort(key=priority_sort, reverse=True)
+                
+                # Debug log
+                winner = files[0]
+                is_winner_match = (winner.get('article_id') == cached_article_id) and (cached_article_id is not None)
+                print(f"🔍 [Data Cleanup] Group: {norm_url}")
+                print(f"   Cache ID: {cached_article_id}")
+                print(f"   Winner: {winner['filename']} (ID: {winner.get('article_id')}, Match: {is_winner_match})")
+                
+                # Delete all except the first (Winner)
+                # This satisfies "1. 모든 URL 중 한개는 무조건 남겨야 한다." because we slice [1:]
+                for file_info in files[1:]:
+                    try:
+                        os.remove(file_info['path'])
+                        deleted_count += 1
+                        dates_affected.add(file_info['date'])
+                        reason = []
+                        if is_winner_match: reason.append("Mismatch Cache")
+                        elif not file_info.get('article_id'): reason.append("No ID")
+                        reason.append("Older")
+                        
+                        print(f"🗑️ [Data Cleanup] Deleted: {os.path.basename(file_info['path'])} ({', '.join(reason)})")
+                    except Exception as e:
+                        print(f"⚠️ [Data Cleanup] Failed to delete: {file_info['path']} - {e}")
+
+        # Update Manifest/Summary for affected dates
+        for date_str in dates_affected:
+            try:
+                update_manifest(date_str)
+            except:
+                pass
+
+        return jsonify({
+            'status': 'success',
+            'deleted_count': deleted_count,
+            'message': f'Deleted {deleted_count} duplicate data files'
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

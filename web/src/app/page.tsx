@@ -2,50 +2,112 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import ArticleCard from '@/components/ArticleCard';
 import ArticleDisplay from '@/components/ArticleDisplay';
+import { optimizeArticleOrder } from '@/utils/layoutOptimizer';
 
 // CACHE CONFIGURATION
-// Revalidate this page every 0 seconds (No Cache).
-export const revalidate = 0;
+// Revalidate this page every 1 hour (ISR).
+// We rely on view_model.json for persistence, but ISR helps unnecessary reads.
+export const revalidate = 3600;
 
 async function getData() {
   try {
-    // NEW: Read index.json manifest from date directories
     const dataDir = path.join(process.cwd(), '..', 'supplier', 'data');
+    const cacheRootDir = path.join(process.cwd(), 'data_cache'); // web/data_cache
+
+    // DEBUG LOGGING
+    const debugLog = async (msg: string) => {
+      const logPath = path.join(process.cwd(), 'debug_log.txt');
+      try {
+        await fs.appendFile(logPath, msg + '\n');
+      } catch (e) {
+        console.error('Failed to write debug log', e);
+      }
+    };
+    await debugLog(`[${new Date().toISOString()}] getData called. CacheDir: ${cacheRootDir}`);
+
+    // Ensure cache root exists
+    try {
+      await fs.mkdir(cacheRootDir, { recursive: true });
+    } catch (e) { /* ignore if exists */ }
+
     const entries = await fs.readdir(dataDir, { withFileTypes: true });
 
     // Filter for directories that look like dates (YYYY-MM-DD)
     const dateDirs = entries
       .filter(dirent => dirent.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(dirent.name))
-      .map(dirent => path.join(dataDir, dirent.name));
+      .map(dirent => ({
+        name: dirent.name,
+        sourcePath: path.join(dataDir, dirent.name),
+        cachePath: path.join(cacheRootDir, dirent.name)
+      }));
 
     const allArticles: any[] = [];
 
-    for (const dir of dateDirs) {
-      // Try to read index.json
-      const manifestPath = path.join(dir, 'index.json');
+    for (const { name, sourcePath, cachePath } of dateDirs) {
+      const viewModelPath = path.join(cachePath, 'view_model.json');
+
+      try {
+        // [Fast Path] Try to read view_model.json from Web Cache
+        const viewModelContent = await fs.readFile(viewModelPath, 'utf8');
+        const viewModel = JSON.parse(viewModelContent);
+        if (viewModel.articles && Array.isArray(viewModel.articles)) {
+          allArticles.push(...viewModel.articles);
+          continue; // Successfully loaded from cache
+        }
+      } catch (err) {
+        // Cache missing, proceed to generation
+      }
+
+      // [Calculated Path] Read raw data from Supplier, calculate layout, and save to Web Cache
+      let dirArticles: any[] = [];
+      const manifestPath = path.join(sourcePath, 'index.json');
+
       try {
         const manifestContent = await fs.readFile(manifestPath, 'utf8');
         const manifest = JSON.parse(manifestContent);
         if (manifest.articles && Array.isArray(manifest.articles)) {
-          allArticles.push(...manifest.articles);
+          dirArticles = manifest.articles;
         }
       } catch (err) {
-        // Fallback: If index.json is missing (legacy folder?), scan regular json files
-        // console.warn(`Manifest missing for ${dir}, falling back to scan.`);
-        const files = await fs.readdir(dir);
-        const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json');
-        for (const file of jsonFiles) {
-          try {
-            const content = await fs.readFile(path.join(dir, file), 'utf8');
-            const article = JSON.parse(content);
-            if (article.id || article.url) allArticles.push(article);
-          } catch (e) { /* ignore */ }
+        // Fallback: Scan individual JSON files
+        try {
+          const files = await fs.readdir(sourcePath);
+          const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json' && file !== 'view_model.json');
+          for (const file of jsonFiles) {
+            try {
+              const content = await fs.readFile(path.join(sourcePath, file), 'utf8');
+              const article = JSON.parse(content);
+              if (article.id || article.url) dirArticles.push(article);
+            } catch (e) { /* ignore */ }
+          }
+        } catch (e) { /* dir missing? */ }
+      }
+
+      if (dirArticles.length > 0) {
+        // Calculate Layout
+        await debugLog(`[Layout] Calculating for ${name}...`);
+        const optimizedArticles = optimizeArticleOrder(dirArticles);
+
+        // Save to Web Cache (BAKING)
+        try {
+          await fs.mkdir(cachePath, { recursive: true }); // Ensure date dir exists in cache
+          const viewModel = {
+            generated_at: new Date().toISOString(),
+            articles: optimizedArticles
+          };
+          await fs.writeFile(viewModelPath, JSON.stringify(viewModel, null, 2), 'utf8');
+          await debugLog(`[Layout] Saved view_model.json to ${viewModelPath}`);
+        } catch (writeErr) {
+          console.error(`[Layout] Failed to save view_model.json:`, writeErr);
+          await debugLog(`[Error] Failed to save view_model: ${JSON.stringify(writeErr)}`);
         }
+
+        allArticles.push(...optimizedArticles);
       }
     }
 
     // Filter out articles without article_id
-    return allArticles.filter(article => article.article_id);
+    return allArticles.filter(article => article.article_id || article.id);
   } catch (error) {
     console.error("Error reading articles directories:", error);
     return [];
@@ -90,20 +152,14 @@ export default async function Home() {
 
         <div className="flex flex-col gap-12">
           {sortedDates.map(date => {
-            // Sort articles by Combined Score (Descending) -> Highest Combined Score First
-            // Combined Score = (10 - ZES) + Impact Score
-            // Lower ZES (better quality) + Higher Impact = Higher Combined Score
-            const dateArticles = groupedArticles[date].sort((a: any, b: any) => {
-              const znsA = a.zero_echo_score || 0;
-              const znsB = b.zero_echo_score || 0;
-              const impactA = a.impact_score || 0;
-              const impactB = b.impact_score || 0;
+            // Articles are ALREADY sorted and optimized by the server-side logic (or loaded from view_model)
+            // We just render them. 
+            // Note: The grouping logic above might disrupt the strict order if optimizeArticleOrder 
+            // returned a flat list for the whole dir. 
+            // Since we process PER DIR (which usually maps to PER DATE), the order within the group should be preserved
+            // exactly as it was in the optimizedArticles array.
 
-              const combinedA = (10 - znsA) + impactA;
-              const combinedB = (10 - znsB) + impactB;
-
-              return combinedB - combinedA;
-            });
+            const dateArticles = groupedArticles[date];
 
             return (
               <section key={date} className="mb-0">
@@ -122,3 +178,4 @@ export default async function Home() {
     </div>
   );
 }
+

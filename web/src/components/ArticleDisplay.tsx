@@ -85,9 +85,18 @@ const getSizeFromScore = (score: number, id: string, summary: string = '', title
 };
 
 export default function ArticleDisplay({ articles, loading, error, currentDate }: ArticleDisplayProps) {
-    // Apply Gap-Filling Algorithm to optimize article order
+    // Optimization Logic:
+    // If articles already have layout data (cols, rows) from server-side baking, use them directly.
+    // Otherwise, generate layout client-side (fallback).
     const optimizedArticles = useMemo(() => {
         if (!articles || articles.length === 0) return [];
+
+        // Check if first article already has layout info (fast check)
+        // If so, assume entire list is pre-baked (view_model.json)
+        if (articles[0].cols && articles[0].rows) {
+            return articles;
+        }
+
         return optimizeArticleOrder(articles);
     }, [articles]);
 

@@ -632,6 +632,75 @@ function cleanupDuplicateCaches() {
         .catch(err => alert('정리 실패: ' + err));
 }
 
+// 중복 데이터 찾기 (Processed Articles)
+function findDuplicateData() {
+    const btn = document.querySelector('button[onclick="findDuplicateData()"]');
+    // If button not found (e.g. if we haven't added it to HTML yet), safe fail or just skip UI update
+    const originalText = btn ? btn.textContent : '중복 데이터';
+    if (btn) {
+        btn.textContent = '검색 중...';
+        btn.disabled = true;
+    }
+
+    fetch('/api/find_duplicate_data')
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert('오류: ' + data.error);
+                if (btn) {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+                return;
+            }
+
+            if (data.total_duplicate_urls === 0) {
+                alert('중복 데이터가 없습니다! ✅');
+                if (btn) {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+                return;
+            }
+
+            // Show duplicates and ask if user wants to clean up
+            const msg = `중복 데이터 URL: ${data.total_duplicate_urls}개\n삭제 가능한 파일: ${data.total_duplicate_files}개\n\n정리하시겠습니까? (최신 파일만 유지)`;
+
+            if (confirm(msg)) {
+                cleanupDuplicateData();
+            }
+
+            if (btn) {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        })
+        .catch(err => {
+            alert('중복 데이터 검색 실패: ' + err);
+            if (btn) {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+}
+
+// 중복 데이터 정리
+function cleanupDuplicateData() {
+    fetch('/api/cleanup_duplicate_data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert(`✅ ${res.deleted_count}개의 중복 데이터 파일을 삭제했습니다.\n(Manifest 자동 업데이트됨)`);
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('데이터 정리 실패: ' + err));
+}
+
 // 미연결 DATA 파일 찾기 (캐시에서 참조되지 않는 파일)
 function findOrphanDataFiles() {
     const btn = document.querySelector('button[onclick="findOrphanDataFiles()"]');

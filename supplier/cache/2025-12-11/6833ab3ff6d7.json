@@ -1,0 +1,50 @@
+{
+  "title_ko": "딥시크, 차세대 모델 개발에 '블랙웰' 칩 사용...내년 2월 출시 목표",
+  "article_id": "7f651u",
+  "summary": "중국 AI 기업 딥시크가 미국의 수출 통제 대상인 엔비디아의 차세대 '블랙웰' 칩 수천 개를 밀반입하여 차세대 모델 개발에 활용했다는 주장이 제기되었습니다. 이처럼 '유령 데이터센터'를 통한 밀수 구조는 추적이 어려우며, 엔비디아는 GPU의 위치를 파악할 수 있는 '위치 검증' 기술을 시험 중이라고 밝혔습니다. 딥시크는 희소 연산에 최적화된 블랙웰 칩을 바탕으로 내년 2월 설 연휴 이전 차세대 모델 출시를 목표하고 있으나, 일정보다는 성능을 우선하겠다는 원칙을 고수하고 있습니다.",
+  "zero_Echo_score": 5,
+  "impact_score": 9.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 4
+    },
+    "events": [
+      {
+        "id": "REGULATORY_ENFORCEMENT",
+        "weight": 2.5
+      },
+      {
+        "id": "MAJOR_TECH_OPENING",
+        "weight": 3
+      }
+    ]
+  },
+  "tags": [
+    "REGULATION",
+    "HARDWARE_ACCEL",
+    "MODEL_RELEASE"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "NON_TECHNICAL_FOCUS",
+        "value": 0.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "Overall review": "ZS 5.0으로 정보와 노이즈의 중간 수준입니다. TIER 1 기업과 규제 이슈가 결합되어 IS는 9.5로 매우 높습니다. 칩 밀수 및 위치 검증 기술 등 지정학적 리스크와 기술 개발의 충돌이라는 중대한 생태계 이슈를 다루나, 기술 원리보다 가십성 이슈에 치중한 점이 품질 점수를 하락시켰습니다.",
+  "review_en": "With a ZS of 5.0, the article is moderately informative. The IS is very high at 9.5 due to the convergence of a Tier 1 company (NVIDIA) and major regulatory issues (US export control, chip smuggling). While it covers the critical geopolitical conflict and its impact on tech development, the focus on sensational business/gossip over technical deep-dive lowered the quality score.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204696",
+  "source_id": "aitimes",
+  "original_title": "&quot;딥시크, 차세대 모델 개발에 '블랙웰' 칩 사용...내년 2월 출시 목표&quot;",
+  "saved": true,
+  "saved_at": "2025-12-11T05:30:56.317Z"
+}

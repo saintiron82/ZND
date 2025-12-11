@@ -1,0 +1,53 @@
+{
+  "title_ko": "에센셜AI, 트랜스포머 저자의 8B 오픈소스 모델 'Rnj-1' 출시",
+  "summary": "트랜스포머 논문의 공동 저자 아시시 바스와니가 이끄는 에센셜AI가 첫 번째 오픈소스 모델 'Rnj-1'을 공개했다. 80억(8B) 파라미터 규모의 이 모델은 코딩과 STEM 분야에 최적화되었으며, 동급 모델 대비 우수한 벤치마크 성능을 기록했다. 이는 빅테크 중심의 AI 경쟁 속에서 오픈소스 진영의 중요한 기술적 진전으로 평가받는다.",
+  "zero_Echo_score": 2,
+  "impact_score": 6.0,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_2_KEY_INNOVATORS",
+      "weight": 3,
+      "reasoning": "창업자의 권위(트랜스포머 저자)와 기술적 파급력을 고려하여 단순 스타트업이 아닌 핵심 혁신 기업(Tier 2)으로 간주함."
+    },
+    "events": [
+      {
+        "id": "MAJOR_TECH_OPENING",
+        "weight": 3,
+        "reasoning": "고성능 오픈소스 모델의 가중치 공개는 AI 연구 및 개발 생태계에 직접적인 기여를 하는 중요 사건임."
+      }
+    ]
+  },
+  "reasoning": "AI 아키텍처의 창시자가 내놓은 신규 모델로, 구체적인 파라미터 정보와 오픈소스 공개(Hugging Face) 등 검증 가능한 자산을 제공하여 정보의 품질이 매우 높음.",
+  "tags": [
+    "OPEN_SOURCE",
+    "MODEL_RELEASE",
+    "BENCHMARK"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "REPRODUCIBLE_ASSETS",
+        "value": 2
+      },
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 2
+      },
+      {
+        "id": "COMPARATIVE_BENCHMARK",
+        "value": 2
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": false
+      }
+    ]
+  },
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204692",
+  "source_id": "aitimes",
+  "zero_echo_score": 0.0,
+  "crawled_at": "2025-12-11T01:49:46.027352+00:00"
+}

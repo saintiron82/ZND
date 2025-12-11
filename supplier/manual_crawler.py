@@ -2,6 +2,7 @@ import os
 import json
 import asyncio
 import glob
+import hashlib
 from flask import Flask, render_template, request, jsonify
 from crawler import load_targets, fetch_links
 from src.db_client import DBClient
@@ -13,6 +14,66 @@ app = Flask(__name__)
 db = DBClient()
 robots_checker = RobotsChecker()
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
+
+# --- URL-based Text Caching ---
+def get_url_hash(url):
+    """Generate a short hash from URL for cache filename."""
+    return hashlib.md5(url.encode()).hexdigest()[:12]
+
+def get_cache_path(url, date_str=None):
+    """Get cache file path for URL. Uses today's date if not specified."""
+    if date_str is None:
+        date_str = datetime.now().strftime('%Y-%m-%d')
+    url_hash = get_url_hash(url)
+    cache_dir = os.path.join(CACHE_DIR, date_str)
+    return os.path.join(cache_dir, f'{url_hash}.json')
+
+def load_from_cache(url):
+    """Load cached content for URL. Searches ALL date folders, not just today."""
+    url_hash = get_url_hash(url)
+    filename = f'{url_hash}.json'
+    
+    # Search all date folders for this URL's cache
+    if os.path.exists(CACHE_DIR):
+        for date_folder in os.listdir(CACHE_DIR):
+            date_path = os.path.join(CACHE_DIR, date_folder)
+            if not os.path.isdir(date_path):
+                continue
+            cache_path = os.path.join(date_path, filename)
+            if os.path.exists(cache_path):
+                try:
+                    with open(cache_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        print(f"📦 [Cache] Loaded from cache ({date_folder}): {url[:50]}...")
+                        return data
+                except Exception as e:
+                    print(f"⚠️ [Cache] Error reading cache: {e}")
+    return None
+
+def save_to_cache(url, content):
+    """Save content to cache for URL. Auto-generates article_id and cached_at if not present."""
+    from datetime import datetime, timezone
+    
+    cache_path = get_cache_path(url)
+    cache_dir = os.path.dirname(cache_path)
+    
+    # Auto-generate article_id if not present
+    if 'article_id' not in content:
+        content['article_id'] = get_url_hash(url)[:6]
+    
+    # Auto-add cached_at timestamp if not present
+    if 'cached_at' not in content:
+        content['cached_at'] = datetime.now(timezone.utc).isoformat()
+    
+    try:
+        os.makedirs(cache_dir, exist_ok=True)
+        with open(cache_path, 'w', encoding='utf-8') as f:
+            json.dump(content, f, ensure_ascii=False, indent=2)
+        print(f"💾 [Cache] Saved to cache: {url[:50]}...")
+    except Exception as e:
+        print(f"⚠️ [Cache] Error saving cache: {e}")
+
 
 def normalize_field_names(data):
     """
@@ -105,6 +166,505 @@ def get_targets():
     targets = load_targets()
     return jsonify(targets)
 
+@app.route('/api/dates')
+def get_dates():
+    """Get list of available dates from data folder."""
+    try:
+        dates = []
+        if os.path.exists(DATA_DIR):
+            for item in os.listdir(DATA_DIR):
+                item_path = os.path.join(DATA_DIR, item)
+                # Check if it's a directory and matches YYYY-MM-DD format
+                if os.path.isdir(item_path) and len(item) == 10 and item[4] == '-' and item[7] == '-':
+                    # Count articles in this folder (excluding index.json)
+                    json_files = [f for f in os.listdir(item_path) if f.endswith('.json') and f != 'index.json']
+                    dates.append({
+                        'date': item,
+                        'count': len(json_files)
+                    })
+        
+        # Sort by date descending (newest first)
+        dates.sort(key=lambda x: x['date'], reverse=True)
+        return jsonify(dates)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/articles_by_date')
+def get_articles_by_date():
+    """Get list of cached articles for a specific date (reads from CACHE folder)."""
+    date_str = request.args.get('date')
+    if not date_str:
+        return jsonify({'error': 'Date parameter is required'}), 400
+    
+    try:
+        # Build a map of URL -> data filename for quick lookup
+        url_to_data_file = {}
+        if os.path.exists(DATA_DIR):
+            for date_folder in os.listdir(DATA_DIR):
+                data_date_path = os.path.join(DATA_DIR, date_folder)
+                if not os.path.isdir(data_date_path):
+                    continue
+                for data_file in os.listdir(data_date_path):
+                    if not data_file.endswith('.json') or data_file == 'index.json':
+                        continue
+                    data_filepath = os.path.join(data_date_path, data_file)
+                    try:
+                        with open(data_filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            if data.get('url'):
+                                url_to_data_file[data['url']] = {
+                                    'filename': data_file,
+                                    'date': date_folder,
+                                    'path': data_filepath
+                                }
+                    except:
+                        pass
+        
+        # Read from CACHE folder
+        cache_date_dir = os.path.join(CACHE_DIR, date_str)
+        if not os.path.exists(cache_date_dir):
+            return jsonify({'error': f'No cache for date: {date_str}'}), 404
+        
+        articles = []
+        for filename in os.listdir(cache_date_dir):
+            if not filename.endswith('.json'):
+                continue
+            
+            filepath = os.path.join(cache_date_dir, filename)
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                    # Check status from history
+                    url = data.get('url', '')
+                    status = db.get_history_status(url) if url else 'NEW'
+                    
+                    # Find linked data file
+                    linked_data = url_to_data_file.get(url)
+                    
+                    articles.append({
+                        'url': url,
+                        'title_ko': data.get('title_ko', data.get('title', '')),
+                        'original_title': data.get('original_title', ''),
+                        'source_id': data.get('source_id', 'unknown'),
+                        'zero_echo_score': data.get('zero_echo_score'),
+                        'impact_score': data.get('impact_score'),
+                        'summary': data.get('summary', ''),
+                        'filename': filename,
+                        'filepath': filepath,  # cache path for deletion
+                        'status': status if status else 'NEW',
+                        'cached': True,
+                        'data_file': linked_data,  # 연결된 data 파일 정보
+                        'content': data
+                    })
+            except Exception as e:
+                print(f"⚠️ Error reading {filename}: {e}")
+        
+        # Sort by impact_score descending (if available), else by filename
+        articles.sort(key=lambda x: (x.get('impact_score') or 0, x.get('filename', '')), reverse=True)
+        
+        return jsonify({
+            'date': date_str,
+            'articles': articles,
+            'total': len(articles)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/search_cache')
+def search_cache():
+    """Search cache files by filename across all dates. Also shows linked data file."""
+    query = request.args.get('q', '').lower()
+    if not query:
+        return jsonify({'error': 'Query parameter (q) is required'}), 400
+    
+    try:
+        # Build a map of URL -> data filename for quick lookup
+        url_to_data_file = {}
+        if os.path.exists(DATA_DIR):
+            for date_folder in os.listdir(DATA_DIR):
+                data_date_path = os.path.join(DATA_DIR, date_folder)
+                if not os.path.isdir(data_date_path):
+                    continue
+                for data_file in os.listdir(data_date_path):
+                    if not data_file.endswith('.json') or data_file == 'index.json':
+                        continue
+                    data_filepath = os.path.join(data_date_path, data_file)
+                    try:
+                        with open(data_filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            if data.get('url'):
+                                url_to_data_file[data['url']] = {
+                                    'filename': data_file,
+                                    'date': date_folder,
+                                    'path': data_filepath
+                                }
+                    except:
+                        pass
+        
+        results = []
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            
+                            # Search in: filename, title, article_id
+                            title_field = (data.get('title', '') or data.get('title_ko', '') or '').lower()
+                            article_id = (data.get('article_id', '') or '').lower()
+                            
+                            # Check if query matches any field
+                            if query in filename.lower() or query in title_field or query in article_id:
+                                url = data.get('url', '')
+                                linked_data = url_to_data_file.get(url)
+                                
+                                results.append({
+                                    'filename': filename,
+                                    'date': date_folder,
+                                    'path': filepath,
+                                    'url': url,
+                                    'title': data.get('title', data.get('title_ko', '')),
+                                    'article_id': data.get('article_id', ''),
+                                    'data_file': linked_data  # 연결된 data 파일 정보
+                                })
+                    except Exception:
+                        # Include file even if can't read
+                        if query in filename.lower():
+                            results.append({
+                                'filename': filename,
+                                'date': date_folder,
+                                'path': filepath
+                            })
+        
+        results.sort(key=lambda x: x.get('date', ''), reverse=True)
+        
+        return jsonify({
+            'query': query,
+            'results': results,
+            'total': len(results)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/find_duplicate_caches')
+def find_duplicate_caches():
+    """Find duplicate cache files (same URL in multiple files)."""
+    try:
+        url_to_files = {}  # URL -> list of cache files
+        
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url', '')
+                            if url:
+                                if url not in url_to_files:
+                                    url_to_files[url] = []
+                                url_to_files[url].append({
+                                    'filename': filename,
+                                    'date': date_folder,
+                                    'path': filepath,
+                                    'cached_at': data.get('cached_at', '')
+                                })
+                    except:
+                        pass
+        
+        # Filter to only URLs with duplicates
+        duplicates = {url: files for url, files in url_to_files.items() if len(files) > 1}
+        
+        # Sort files within each duplicate group by cached_at (keep newest)
+        for url, files in duplicates.items():
+            files.sort(key=lambda x: x.get('cached_at', ''), reverse=True)
+        
+        return jsonify({
+            'duplicates': duplicates,
+            'total_duplicate_urls': len(duplicates),
+            'total_duplicate_files': sum(len(f) - 1 for f in duplicates.values())  # -1 to keep one
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cleanup_duplicate_caches', methods=['POST'])
+def cleanup_duplicate_caches():
+    """Delete duplicate cache files, keeping the newest one for each URL."""
+    try:
+        deleted_count = 0
+        url_to_files = {}
+        
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url', '')
+                            if url:
+                                if url not in url_to_files:
+                                    url_to_files[url] = []
+                                url_to_files[url].append({
+                                    'path': filepath,
+                                    'cached_at': data.get('cached_at', '')
+                                })
+                    except:
+                        pass
+        
+        # Delete duplicates (keep newest)
+        for url, files in url_to_files.items():
+            if len(files) > 1:
+                # Sort by cached_at descending (newest first)
+                files.sort(key=lambda x: x.get('cached_at', ''), reverse=True)
+                # Delete all except the first (newest)
+                for file_info in files[1:]:
+                    try:
+                        os.remove(file_info['path'])
+                        deleted_count += 1
+                        print(f"🗑️ [Cleanup] Deleted duplicate: {file_info['path']}")
+                    except Exception as e:
+                        print(f"⚠️ [Cleanup] Failed to delete: {file_info['path']} - {e}")
+        
+        return jsonify({
+            'status': 'success',
+            'deleted_count': deleted_count,
+            'message': f'Deleted {deleted_count} duplicate cache files'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/find_orphan_data_files')
+def find_orphan_data_files():
+    """Find DATA files that have no corresponding cache file (by URL or article_id)."""
+    try:
+        # Build sets of URLs and article_ids from cache
+        cached_urls = set()
+        cached_article_ids = set()
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url')
+                            article_id = data.get('article_id')
+                            if url:
+                                cached_urls.add(url)
+                            if article_id:
+                                cached_article_ids.add(article_id)
+                    except:
+                        pass
+        
+        # Find DATA files without corresponding cache (check both URL and article_id)
+        orphan_files = []
+        if os.path.exists(DATA_DIR):
+            for date_folder in os.listdir(DATA_DIR):
+                date_path = os.path.join(DATA_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json') or filename in ['daily_summary.json', 'index.json']:
+                        continue
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url')
+                            article_id = data.get('article_id')
+                            # Check if connected by URL OR article_id
+                            is_connected = (url and url in cached_urls) or (article_id and article_id in cached_article_ids)
+                            if not is_connected:
+                                orphan_files.append({
+                                    'filename': filename,
+                                    'date': date_folder,
+                                    'path': filepath,
+                                    'url': url,
+                                    'article_id': article_id,
+                                    'title': data.get('title_ko', data.get('title', ''))
+                                })
+                    except:
+                        pass
+        
+        return jsonify({
+            'orphan_files': orphan_files,
+            'total': len(orphan_files),
+            'cached_urls_count': len(cached_urls),
+            'cached_article_ids_count': len(cached_article_ids)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cleanup_orphan_data_files', methods=['POST'])
+def cleanup_orphan_data_files():
+    """Delete DATA files that have no corresponding cache file (by URL or article_id)."""
+    try:
+        # Build sets of URLs and article_ids from cache
+        cached_urls = set()
+        cached_article_ids = set()
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url')
+                            article_id = data.get('article_id')
+                            if url:
+                                cached_urls.add(url)
+                            if article_id:
+                                cached_article_ids.add(article_id)
+                    except:
+                        pass
+        
+        # Delete DATA files without corresponding cache (check both URL and article_id)
+        deleted_count = 0
+        dates_affected = set()
+        if os.path.exists(DATA_DIR):
+            for date_folder in os.listdir(DATA_DIR):
+                date_path = os.path.join(DATA_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json') or filename in ['daily_summary.json', 'index.json']:
+                        continue
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                            url = data.get('url')
+                            article_id = data.get('article_id')
+                            # Check if connected by URL OR article_id
+                            is_connected = (url and url in cached_urls) or (article_id and article_id in cached_article_ids)
+                            if not is_connected:
+                                os.remove(filepath)
+                                deleted_count += 1
+                                dates_affected.add(date_folder)
+                                print(f"🗑️ [Cleanup] Deleted unconnected data file: {filepath}")
+                    except Exception as e:
+                        print(f"⚠️ [Cleanup] Error processing {filepath}: {e}")
+        
+        # Update daily summaries for affected dates
+        for date_str in dates_affected:
+            try:
+                db._update_daily_summary(date_str)
+            except:
+                pass
+        
+        return jsonify({
+            'status': 'success',
+            'deleted_count': deleted_count,
+            'message': f'Deleted {deleted_count} unconnected data files'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/delete_cache_file', methods=['POST'])
+def delete_cache_file():
+    """Delete a cache file by its filepath. Only works for cache folder, not data folder."""
+    data = request.json
+    filepath = data.get('filepath')
+    
+    if not filepath:
+        return jsonify({'error': 'Filepath is required'}), 400
+    
+    # Security: Only allow deletion within CACHE directory (NOT data)
+    abs_filepath = os.path.abspath(filepath)
+    abs_cache_dir = os.path.abspath(CACHE_DIR)
+    
+    if not abs_filepath.startswith(abs_cache_dir):
+        return jsonify({'error': 'Can only delete files in cache directory'}), 403
+    
+    try:
+        if os.path.exists(filepath):
+            os.remove(filepath)
+            print(f"🗑️ [Delete] Deleted cache: {filepath}")
+            return jsonify({'status': 'success', 'message': f'Deleted: {filepath}'})
+        else:
+            return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        print(f"❌ [Delete] Error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cleanup_cache_file', methods=['POST'])
+def cleanup_cache_file():
+    """Clean up a cache file - keep only url, article_id, cached_at. Remove body/title/etc."""
+    data = request.json
+    filepath = data.get('filepath')
+    
+    if not filepath:
+        return jsonify({'error': 'Filepath is required'}), 400
+    
+    # Security: Only allow cleanup within CACHE directory
+    abs_filepath = os.path.abspath(filepath)
+    abs_cache_dir = os.path.abspath(CACHE_DIR)
+    
+    if not abs_filepath.startswith(abs_cache_dir):
+        return jsonify({'error': 'Can only clean files in cache directory'}), 403
+    
+    try:
+        if not os.path.exists(filepath):
+            return jsonify({'error': 'File not found'}), 404
+        
+        # Read current data
+        with open(filepath, 'r', encoding='utf-8') as f:
+            current_data = json.load(f)
+        
+        # Keep only essential fields
+        cleaned_data = {
+            'url': current_data.get('url', ''),
+            'article_id': current_data.get('article_id', ''),
+            'cached_at': current_data.get('cached_at', ''),
+            'source_id': current_data.get('source_id', ''),
+            'cleaned_at': datetime.now().isoformat(),
+            'status': 'CLEANED'
+        }
+        
+        # Write back cleaned data
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(cleaned_data, f, ensure_ascii=False, indent=2)
+        
+        print(f"🧹 [Cleanup] Cleaned cache: {filepath}")
+        return jsonify({'status': 'success', 'message': f'Cleaned: {filepath}'})
+    except Exception as e:
+        print(f"❌ [Cleanup] Error: {e}")
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/fetch')
 def fetch():
     target_id = request.args.get('target_id')
@@ -147,11 +707,22 @@ def fetch():
         seen_urls.add(url)
         
         status = db.get_history_status(url)
-        link_data.append({
+        
+        # Check if cached and load content
+        cached_data = load_from_cache(url)
+        
+        link_item = {
             'url': url,
             'source_id': source_id,
-            'status': status if status else 'NEW'
-        })
+            'status': status if status else 'NEW',
+            'cached': cached_data is not None
+        }
+        
+        # Include cached content if available
+        if cached_data:
+            link_item['content'] = cached_data
+        
+        link_data.append(link_item)
             
     return jsonify({'links': link_data, 'total': len(link_data)})
 
@@ -161,13 +732,13 @@ def extract():
     if not url:
         return jsonify({'error': 'URL is required'}), 400
 
-    # [NEW] Check if file exists physically first (Robustness)
-    existing_data = db.find_article_by_url(url)
-    if existing_data:
-        print(f"♻️ [Extract] Loaded existing data from generic search for: {url}")
-        return jsonify(existing_data)
+    # Check cache first (ONLY cache, not data folder)
+    cached = load_from_cache(url)
+    if cached:
+        print(f"📦 [Extract] Loaded from cache: {url}")
+        return jsonify(cached)
 
-    # Check robots.txt (Checking afterwards is fine, but if we have data we skip fetch)
+    # Check robots.txt before crawling
     if not robots_checker.can_fetch(url):
         return jsonify({'error': 'Disallowed by robots.txt'}), 403
 
@@ -208,8 +779,81 @@ def extract():
         db.save_history(url, 'WORTHLESS', reason='text_too_short_manual')
         print(f"⚠️ [Manual Extract] Text too short ({text_len}), marked as WORTHLESS: {url}")
         return jsonify({'error': f"Article content too short ({text_len} chars). Marked as WORTHLESS."}), 400
+    
+    # [NEW] Save to cache
+    save_to_cache(url, content)
         
     return jsonify(content)
+
+@app.route('/api/force_extract')
+def force_extract():
+    """Force extract from URL - ignores cache and existing data files, always crawls fresh."""
+    url = request.args.get('url')
+    if not url:
+        return jsonify({'error': 'URL is required'}), 400
+    
+    # Check robots.txt
+    if not robots_checker.can_fetch(url):
+        return jsonify({'error': 'Disallowed by robots.txt'}), 403
+    
+    print(f"🔄 [Force Extract] Starting fresh crawl for: {url}")
+    
+    async def get_data():
+        crawler = AsyncCrawler(use_playwright=True)
+        try:
+            await crawler.start()
+            return await crawler.process_url(url)
+        finally:
+            await crawler.close()
+    
+    try:
+        content = asyncio.run(get_data())
+    except Exception as e:
+        return jsonify({'error': f"Extraction failed: {str(e)}"}), 500
+    
+    if not content:
+        return jsonify({'error': 'Failed to extract content'}), 500
+    
+    # Check content length
+    text_len = len(content.get('text', ''))
+    if text_len < 200:
+        db.save_history(url, 'WORTHLESS', reason='text_too_short_manual')
+        print(f"⚠️ [Force Extract] Text too short ({text_len}), marked as WORTHLESS: {url}")
+        return jsonify({'error': f"Article content too short ({text_len} chars). Marked as WORTHLESS."}), 400
+    
+    # Save to cache (overwrites existing if any)
+    save_to_cache(url, content)
+    print(f"✅ [Force Extract] Successfully cached: {url}")
+    
+    return jsonify(content)
+
+@app.route('/api/update_cache', methods=['POST'])
+def update_cache():
+    """Update cache with analysis results (LLM JSON response). Merges with existing cache to preserve original content."""
+    data = request.json
+    url = data.get('url')
+    new_content = data.get('content')
+    
+    if not url or not new_content:
+        return jsonify({'error': 'URL and content are required'}), 400
+    
+    try:
+        # Load existing cache first to preserve original content (title, text)
+        existing = load_from_cache(url) or {}
+        
+        # REMOVE text/title/article_id from new_content to prevent overwriting original
+        # These fields should ONLY come from crawling, not from evaluation JSON
+        # article_id must be preserved from cache or generated from URL hash
+        protected_fields = ('text', 'title', 'article_id')
+        safe_content = {k: v for k, v in new_content.items() if k not in protected_fields}
+        
+        # Merge: existing data + safe content (preserves original title, text, article_id)
+        merged = {**existing, **safe_content}
+        
+        save_to_cache(url, merged)
+        return jsonify({'status': 'success', 'message': 'Cache updated (merged)'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/extract_batch', methods=['POST'])
 def extract_batch():
@@ -218,6 +862,19 @@ def extract_batch():
     
     if not urls:
         return jsonify([])
+
+    # [NEW] Check cache first, separate cached and uncached URLs
+    cached_results = []
+    urls_to_fetch = []
+    
+    for url in urls:
+        cached = load_from_cache(url)
+        if cached:
+            cached_results.append(cached)
+        else:
+            urls_to_fetch.append(url)
+    
+    print(f"📦 [Batch] Cache hits: {len(cached_results)}, Need to fetch: {len(urls_to_fetch)}")
 
     async def get_data_batch(url_list):
         crawler = AsyncCrawler(use_playwright=True)
@@ -229,11 +886,22 @@ def extract_batch():
             await crawler.close()
 
     try:
-        results = asyncio.run(get_data_batch(urls))
+        # Only fetch URLs not in cache
+        fetched_results = []
+        if urls_to_fetch:
+            fetched_results = asyncio.run(get_data_batch(urls_to_fetch))
+            
+            # Save fetched results to cache
+            for res in fetched_results:
+                if res.get('url'):
+                    save_to_cache(res['url'], res)
+        
+        # Combine cached and fetched results
+        all_results = cached_results + fetched_results
         
         # [NEW] Filter worthless
         valid_results = []
-        for res in results:
+        for res in all_results:
             text_len = len(res.get('text', ''))
             if text_len < 200:
                  db.save_history(res['url'], 'WORTHLESS', reason='text_too_short_manual_batch')
@@ -259,8 +927,13 @@ def save():
     # Start with request data to include all extra fields (tags, evidence, etc.)
     final_doc = data.copy()
     
+    # Get article_id from cache or generate from URL hash (NEVER from request data!)
+    cached = load_from_cache(data['url'])
+    article_id = (cached.get('article_id') if cached else None) or get_url_hash(data['url'])[:6]
+    
     # Ensure critical fields are set/overwritten correctly
     final_doc.update({
+        "article_id": article_id,
         "url": data['url'],
         "source_id": data['source_id'],
         "title_ko": data['title_ko'],
@@ -278,7 +951,7 @@ def save():
         return jsonify({'error': 'Article has High Noise (>= 7). Marked as WORTHLESS and not saved.'}), 400
 
     try:
-        print(f"💾 [Manual Save] Saving article: {final_doc.get('title_ko')}")
+        print(f"💾 [Manual Save] Saving article: {final_doc.get('title_ko')} (source: {final_doc.get('source_id')})")
         db.save_article(final_doc)
         
         # [NEW] Update Manifest
@@ -286,7 +959,19 @@ def save():
         date_str = final_doc['crawled_at'].split('T')[0]
         update_manifest(date_str)
         
-        return jsonify({'status': 'success'})
+        # [NEW] Return saved file info
+        url_hash = get_url_hash(data['url'])[:8]
+        source_id = final_doc.get('source_id', 'unknown')
+        filename = f"{source_id}_{url_hash}.json"
+        
+        return jsonify({
+            'status': 'success',
+            'data_file': {
+                'filename': filename,
+                'date': date_str,
+                'path': f"data/{date_str}/{filename}"
+            }
+        })
     except Exception as e:
         print(f"❌ [Manual Save] Error: {e}")
         return jsonify({'error': str(e)}), 500
@@ -522,6 +1207,44 @@ def mark_worthless():
         db.save_history(url, 'WORTHLESS', reason='manual_worthless')
         return jsonify({'status': 'success'})
     except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/refresh', methods=['POST'])
+def refresh_article():
+    """Reset article to NEW state - clear cache and history."""
+    data = request.json
+    url = data.get('url')
+    
+    if not url:
+        return jsonify({'error': 'URL is required'}), 400
+        
+    try:
+        # 1. Delete from cache - search ALL date folders
+        url_hash = get_url_hash(url)
+        deleted_count = 0
+        
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                cache_file = os.path.join(date_path, f'{url_hash}.json')
+                if os.path.exists(cache_file):
+                    os.remove(cache_file)
+                    deleted_count += 1
+                    print(f"🗑️ [Refresh] Deleted cache: {cache_file}")
+        
+        if deleted_count == 0:
+            print(f"⚠️ [Refresh] No cache found for URL hash: {url_hash}")
+        
+        # 2. Remove from history (reset to NEW)
+        db.remove_from_history(url)
+        print(f"🔄 [Refresh] Removed from history: {url}")
+        
+        return jsonify({'status': 'success', 'message': f'Article reset to NEW state (deleted {deleted_count} cache files)'})
+    except Exception as e:
+        print(f"❌ [Refresh] Error: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/system/reload_history', methods=['POST'])

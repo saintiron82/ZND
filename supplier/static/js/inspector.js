@@ -4,6 +4,7 @@ let allLinks = [];      // Flattened list of all links
 let sourceGroups = {};  // Map: source_id -> [linkObj, ...]
 let loadedContent = {}; // Map: url -> contentData
 let currentGroup = null; // Current selected source_id
+let articleIdMap = {};  // Map: articleId -> url (for hash-based matching)
 
 window.onload = function () {
     // Initial state handled by HTML mostly.
@@ -189,6 +190,11 @@ function selectGroup(sid) {
     generatePromptForGroup(sid);
 }
 
+// Generate a short unique hash ID for article matching
+function generateArticleId() {
+    return Math.random().toString(36).substring(2, 8);
+}
+
 async function generatePromptForGroup(sid) {
     const items = sourceGroups[sid];
     const newItems = items.filter(i => i.status === 'NEW');
@@ -199,7 +205,10 @@ async function generatePromptForGroup(sid) {
         return;
     }
 
-    // Build Body Only
+    // Reset article ID map for this batch
+    articleIdMap = {};
+
+    // Build Body with Article IDs
     let bodyText = '';
     let loadedCount = 0;
 
@@ -212,12 +221,17 @@ async function generatePromptForGroup(sid) {
 
         if (body.length > 5000) body = body.substring(0, 5000) + "...(truncated)";
 
-        bodyText += `--- Article ${idx + 1} ---\n`;
-        bodyText += `Title: ${title}\n`;
-        bodyText += `Body:\n${body}\n\n`;
+        // Generate unique hash ID for this article
+        const articleId = generateArticleId();
+        articleIdMap[articleId] = link.url;
+
+        bodyText += `--- Article : ${idx + 1}\n`;
+        bodyText += `---article_id : ${articleId}\n`;
+        bodyText += `---Title: ${title}\n`;
+        bodyText += `---Body:\n${body}\n\n`;
     });
 
-    const countInfo = `${newItems.length}개의 기사를 전달했으니 ${newItems.length}개의 JSON 묶음으로 답하라\n\n`;
+    const countInfo = `${newItems.length}개의 기사를 전달했으니 ${newItems.length}개의 JSON 묶음으로 답하라.\n각 응답에 반드시 "article_id" 필드를 포함하여 해당 기사의 ID를 명시하라.\n\n`;
     document.getElementById('promptArea').value = countInfo + bodyText;
 
     if (loadedCount < newItems.length) {
@@ -255,9 +269,20 @@ async function processBatch() {
 
     let results = [];
     try {
-        const parsed = JSON.parse(jsonStr);
+        let parsed = JSON.parse(jsonStr);
+
+        // Auto-extract if LLM sent schema format with properties containing actual values
+        if (parsed.properties && parsed.type === 'object') {
+            console.log('[processBatch] Detected schema format, extracting properties values...');
+            parsed = parsed.properties;
+        }
+
         if (Array.isArray(parsed)) results = parsed;
         else if (parsed.results && Array.isArray(parsed.results)) results = parsed.results;
+        else if (parsed.title_ko || parsed.article_id) {
+            // Single result object, wrap it in array
+            results = [parsed];
+        }
         else throw new Error("JSON must be a list or {results: []}");
     } catch (e) {
         return alert('Invalid JSON: ' + e.message);
@@ -268,22 +293,54 @@ async function processBatch() {
 
     const items = sourceGroups[currentGroup].filter(i => i.status === 'NEW');
 
-    if (items.length !== results.length) {
-        if (!confirm(`Count Mismatch! \nExpected (NEW items): ${items.length}\nProvided (JSON): ${results.length}\n\nProceed mapping by order?`)) return;
+    // Check if results have article_id (hash-based matching)
+    const hasArticleIds = results.every(r => r.article_id);
+
+    if (!hasArticleIds) {
+        // Fallback to order-based matching with warning
+        if (!confirm(`⚠️ 응답에 article_id가 없습니다!\n순서 기반 매칭을 사용합니다.\n\nExpected: ${items.length}개\nProvided: ${results.length}개\n\n계속하시겠습니까?`)) return;
     }
 
     showLoading('Processing & Saving...');
 
     let successCount = 0;
+    let skippedCount = 0;
 
-    for (let i = 0; i < Math.min(items.length, results.length); i++) {
-        const itemLink = items[i];
+    for (let i = 0; i < results.length; i++) {
         const resData = results[i];
+        let itemLink = null;
+        let url = null;
+
+        if (hasArticleIds && resData.article_id) {
+            // Hash-based matching
+            url = articleIdMap[resData.article_id];
+            if (!url) {
+                log(`⚠️ Unknown article_id: ${resData.article_id}`, 'error');
+                skippedCount++;
+                continue;
+            }
+            itemLink = items.find(item => item.url === url);
+        } else {
+            // Fallback: order-based matching
+            if (i < items.length) {
+                itemLink = items[i];
+                url = itemLink.url;
+            }
+        }
+
+        if (!itemLink) {
+            log(`⚠️ No matching item for result ${i + 1}`, 'error');
+            skippedCount++;
+            continue;
+        }
 
         try {
-            let finalDoc = { ...loadedContent[itemLink.url], ...resData };
+            let finalDoc = { ...loadedContent[url], ...resData };
 
-            finalDoc.url = itemLink.url;
+            // Remove article_id from final doc (it's only for matching)
+            delete finalDoc.article_id;
+
+            finalDoc.url = url;
             finalDoc.source_id = currentGroup;
             if (!finalDoc.original_title && finalDoc.title) finalDoc.original_title = finalDoc.title;
 
@@ -295,23 +352,23 @@ async function processBatch() {
             const saveJson = await saveRes.json();
 
             if (saveJson.status === 'success') {
-                log(`✅ Saved: ${finalDoc.title_ko || itemLink.url}`, 'success');
+                log(`✅ Saved: ${finalDoc.title_ko || url}`, 'success');
                 itemLink.status = 'ACCEPTED';
                 successCount++;
             } else {
-                log(`❌ Failed: ${itemLink.url} - ${saveJson.error}`, 'error');
+                log(`❌ Failed: ${url} - ${saveJson.error}`, 'error');
             }
         } catch (err) {
-            log(`❌ Error processing ${itemLink.url}: ${err}`, 'error');
+            log(`❌ Error processing ${url}: ${err}`, 'error');
         }
     }
 
     hideLoading();
-    log(`Batch Complete. Saved ${successCount} / ${results.length}`, 'success');
+    log(`Batch Complete. Saved ${successCount} / ${results.length}` + (skippedCount > 0 ? ` (Skipped: ${skippedCount})` : ''), 'success');
     renderGroupList();
     document.getElementById('inputArea').value = '';
 
-    // Save cache after processing (optional, maybe clear used items? No, keep them for reference)
+    // Save cache after processing
     saveContentCache();
 }
 

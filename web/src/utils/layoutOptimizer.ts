@@ -277,6 +277,7 @@ export class LayoutOptimizer {
         }));
 
         // Sort by Combined Score (primary placement order)
+        // Award winners will be placed first in Phase 0, then remaining by this order
         const sortedArticles = [...articlesWithSize].sort((a, b) => {
             const combinedA = (10 - a.zeroEchoScore) + a.impactScore;
             const combinedB = (10 - b.zeroEchoScore) + b.impactScore;
@@ -290,15 +291,20 @@ export class LayoutOptimizer {
         // 1. Today's Headline: Best Combined Score (10 - ZS) + IS
         // 2. Zero Noise Award: Lowest ZS (tiebreaker: highest IS)
         // 3. Hot Topic: Highest IS
+        // NOTE: Only articles WITH tags can win awards
 
-        // Find award winners
-        const byCombo = [...articlesWithSize].sort((a, b) => {
+        // Filter only articles with tags for award consideration
+        const withTags = articlesWithSize.filter(a => a.tags && Array.isArray(a.tags) && a.tags.length > 0);
+        const awardCandidates = withTags.length > 0 ? withTags : articlesWithSize; // Fallback if no tags at all
+
+        // Find award winners (only from candidates with tags)
+        const byCombo = [...awardCandidates].sort((a, b) => {
             const combinedA = (10 - a.zeroEchoScore) + a.impactScore;
             const combinedB = (10 - b.zeroEchoScore) + b.impactScore;
             return combinedB - combinedA;
         });
 
-        const byZS = [...articlesWithSize].sort((a, b) => {
+        const byZS = [...awardCandidates].sort((a, b) => {
             const zsDiff = a.zeroEchoScore - b.zeroEchoScore; // Lower is better
             if (Math.abs(zsDiff) < 0.01) {
                 return b.impactScore - a.impactScore; // Tiebreaker: higher IS
@@ -306,7 +312,7 @@ export class LayoutOptimizer {
             return zsDiff;
         });
 
-        const byIS = [...articlesWithSize].sort((a, b) => b.impactScore - a.impactScore);
+        const byIS = [...awardCandidates].sort((a, b) => b.impactScore - a.impactScore);
 
         // Assign awards (an article can win multiple)
         const awardMap = new Map<string, string[]>();
@@ -323,40 +329,37 @@ export class LayoutOptimizer {
         if (byZS.length > 0) addAward(byZS[0].id, "Zero Noise Award");
         if (byIS.length > 0) addAward(byIS[0].id, "Hot Topic");
 
-        // Build Top 3 list (unique articles with awards)
+        // Build Top 3 list (unique articles with actual awards ONLY - no runner-ups)
         const top3Ids: string[] = [];
         const usedForTop3 = new Set<string>();
 
-        // Helper to get next unused winner for a category
-        const getNextWinner = (sortedList: ArticleWithSize[]): ArticleWithSize | null => {
-            for (const article of sortedList) {
-                if (!usedForTop3.has(article.id)) {
-                    return article;
-                }
-            }
-            return null;
-        };
+        // Get actual award winners (1st place only)
+        const headlineWinnerId = byCombo.length > 0 ? byCombo[0].id : null;
+        const zeroNoiseWinnerId = byZS.length > 0 ? byZS[0].id : null;
+        const hotTopicWinnerId = byIS.length > 0 ? byIS[0].id : null;
 
-        // Slot 1: Today's Headline winner (or runner-up if already used)
-        const headlineWinner = getNextWinner(byCombo);
-        if (headlineWinner) {
-            top3Ids.push(headlineWinner.id);
-            usedForTop3.add(headlineWinner.id);
+        // Slot 1: Today's Headline (always first)
+        if (headlineWinnerId && !usedForTop3.has(headlineWinnerId)) {
+            top3Ids.push(headlineWinnerId);
+            usedForTop3.add(headlineWinnerId);
         }
 
-        // Slot 2: Zero Noise Award winner (or runner-up if already used)
-        const zeroNoiseWinner = getNextWinner(byZS);
-        if (zeroNoiseWinner) {
-            top3Ids.push(zeroNoiseWinner.id);
-            usedForTop3.add(zeroNoiseWinner.id);
+        // Slot 2: Zero Noise Award (only if different from Headline)
+        if (zeroNoiseWinnerId && !usedForTop3.has(zeroNoiseWinnerId)) {
+            top3Ids.push(zeroNoiseWinnerId);
+            usedForTop3.add(zeroNoiseWinnerId);
         }
 
-        // Slot 3: Hot Topic winner (or runner-up if already used)
-        const hotTopicWinner = getNextWinner(byIS);
-        if (hotTopicWinner) {
-            top3Ids.push(hotTopicWinner.id);
-            usedForTop3.add(hotTopicWinner.id);
+        // Slot 3: Hot Topic (only if different from above)
+        if (hotTopicWinnerId && !usedForTop3.has(hotTopicWinnerId)) {
+            top3Ids.push(hotTopicWinnerId);
+            usedForTop3.add(hotTopicWinnerId);
         }
+
+        // Get article objects for logging
+        const headlineWinner = headlineWinnerId ? articlesWithSize.find(a => a.id === headlineWinnerId) : null;
+        const zeroNoiseWinner = zeroNoiseWinnerId ? articlesWithSize.find(a => a.id === zeroNoiseWinnerId) : null;
+        const hotTopicWinner = hotTopicWinnerId ? articlesWithSize.find(a => a.id === hotTopicWinnerId) : null;
 
         console.log(`[Awards] Today's Headline: ${headlineWinner?.id?.substring(0, 30)}`);
         console.log(`[Awards] Zero Noise Award: ${zeroNoiseWinner?.id?.substring(0, 30)}`);

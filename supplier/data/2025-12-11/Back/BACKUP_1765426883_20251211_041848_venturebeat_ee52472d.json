@@ -1,0 +1,50 @@
+{
+  "title_ko": "OpenAI report reveals a 6x productivity gap between AI power users and everyone else",
+  "article_id": "cj49m3",
+  "summary": "OpenAI의 보고서에 따르면, AI 도구를 적극적으로 활용하는 상위 5% 사용자는 일반 사용자보다 6배 더 많은 메시지를 전송하며, 특히 코딩 관련 메시지는 17배에 달하는 등 극심한 생산성 격차가 벌어지고 있습니다. 이는 접근성의 문제가 아닌 AI를 일상적인 습관으로 만든 사용자와 그렇지 않은 사용자 간의 격차이며, AI 활용도가 높은 직원은 7개 이상의 작업을 수행하여 주당 10시간 이상을 절약합니다.\n한편, MIT의 연구는 기업이 수십억 달러를 투자했음에도 5%만이 변혁적인 결과를 얻는 'GenAI Divide' 현상을 지적하며, 이는 기술 자체가 아닌 조직 구조와 변화 관리의 문제임을 시사합니다.",
+  "impact_score": 5.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 4
+    },
+    "events": [
+      {
+        "id": "ANALYST_IMPACT_BOOST",
+        "weight": 1.5
+      }
+    ]
+  },
+  "tags": [
+    "BIZ_IMPACT",
+    "LLM",
+    "BENCHMARK"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "USER_FEEDBACK_DATA",
+        "value": 1
+      },
+      {
+        "id": "COMPARATIVE_BENCHMARK",
+        "value": 1
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "ENGINEERING_BLOG",
+        "applied": true
+      }
+    ]
+  },
+  "Overall review": "ZS 2.0으로 매우 **낮은 노이즈(Pure Signal)** 수준이며, OpenAI와 MIT 보고서 기반의 구체적인 데이터가 AI 활용의 심층적 통찰력을 제공하여 **높은 품질**을 보임. IS 5.5로 **높은 파급력**을 가지며, AI 시대의 생산성 격차라는 핵심 비즈니스 이슈를 다뤄 기업 전략에 중대한 영향을 미칠 수 있음.",
+  "review_en": "With a low ZS of 2.0 (Pure Signal), the article provides deep insights into AI usage with concrete data from OpenAI and MIT reports, indicating high quality. The IS of 5.5 suggests a **high impact**, addressing the critical business issue of the AI productivity gap which can significantly affect corporate strategy.",
+  "zero_echo_score": 2.0,
+  "url": "https://venturebeat.com/ai/openai-report-reveals-a-6x-productivity-gap-between-ai-power-users-and",
+  "source_id": "venturebeat",
+  "original_title": "OpenAI report reveals a 6x productivity gap between AI power users and everyone else",
+  "crawled_at": "2025-12-11T04:18:48.678694+00:00",
+  "edition": "251211_THU_1"
+}

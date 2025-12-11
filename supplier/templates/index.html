@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual Crawler Processor</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -15,26 +19,23 @@
             overflow: hidden;
         }
 
+        /* 사이드바 */
         #sidebar {
-            width: 300px;
+            width: 280px;
             background: #f4f4f4;
             border-right: 1px solid #ddd;
             display: flex;
             flex-direction: column;
         }
 
-        #main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
         .header {
-            padding: 20px;
+            padding: 15px;
             background: #333;
             color: white;
+        }
+
+        .header h3 {
+            margin: 0;
         }
 
         .target-select {
@@ -66,7 +67,7 @@
             padding: 10px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         #link-list li:hover {
@@ -124,66 +125,157 @@
             text-decoration: line-through;
         }
 
-        .content-area {
-            display: flex;
+        /* 센터 영역: 상하 2분할 */
+        #center {
             flex: 1;
-            gap: 20px;
-            height: 100%;
-        }
-
-        .preview-pane {
-            flex: 1;
-            border: 1px solid #ddd;
-            padding: 20px;
-            overflow-y: auto;
-            background: #fff;
-            border-radius: 5px;
-        }
-
-        .input-pane {
-            width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .form-group textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        .actions {
-            margin-top: auto;
-            display: flex;
+            padding: 10px;
             gap: 10px;
+            overflow: hidden;
+        }
+
+        .center-top,
+        .center-bottom {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .center-top {
+            flex: 0 0 45%;
+        }
+
+        .center-bottom {
+            flex: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .preview-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .preview-content h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .preview-content pre {
+            margin: 0;
+            white-space: pre-wrap;
+            font-family: inherit;
+            line-height: 1.5;
+            font-size: 0.9em;
+        }
+
+        .center-bottom textarea {
+            flex: 1;
+            border: none;
+            border-top: 1px solid #eee;
+            padding: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85em;
+            resize: none;
+        }
+
+        /* 우측 영역 */
+        #right-panel {
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 10px 10px 0;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .right-top,
+        .right-bottom {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .right-top {
+            flex: 0 0 40%;
+        }
+
+        .right-bottom {
+            flex: 1;
+        }
+
+        .right-summary {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+            margin-bottom: 10px;
+            max-height: 120px;
+        }
+
+        .summary-content {
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 0.9em;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .verify-content {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 0.85em;
+        }
+
+        .json-preview {
+            flex: 1;
+            overflow: auto;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 10px;
+            margin: 0;
+            font-size: 0.8em;
+            white-space: pre-wrap;
+        }
+
+        /* 버튼 영역 */
+        .action-bar {
+            display: flex;
+            gap: 6px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
             flex-wrap: wrap;
         }
 
-        .actions button {
+        .action-bar button {
             flex: 1;
-            padding: 10px;
+            padding: 8px 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            min-width: 100px;
+            font-size: 0.85em;
+            min-width: 60px;
         }
 
         .btn-save {
@@ -201,6 +293,16 @@
             color: white;
         }
 
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-gray {
+            background: #6c757d;
+            color: white;
+        }
+
         .loading {
             opacity: 0.5;
             pointer-events: none;
@@ -209,7 +311,7 @@
 </head>
 
 <body>
-
+    <!-- 사이드바 -->
     <div id="sidebar">
         <div class="header">
             <h3>매뉴얼 크롤러</h3>
@@ -219,21 +321,62 @@
                 <option value="">타겟 선택...</option>
             </select>
             <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="fetchLinks()" style="flex: 2;">링크 가져오기 (Fetch Links)</button>
+                <button onclick="fetchLinks()" style="flex: 2;">링크 가져오기</button>
             </div>
             <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="loadAndCopy()" style="background: #6610f2; color: white; font-size: 0.9em; flex: 2;">📥
-                    로드 & 프롬프트 복사</button>
+                <button onclick="loadAndCopy()"
+                    style="background: #6610f2; color: white; font-size: 0.85em; flex: 1;">📥 로드 & 복사</button>
+                <button onclick="batchLoadOnly()"
+                    style="background: #fd7e14; color: white; font-size: 0.85em; flex: 1;">📦 일괄 로드</button>
             </div>
             <div style="margin-top: 5px;">
                 <button onclick="showBatchModal()"
-                    style="width: 100%; background: #28a745; color: white; font-size: 0.9em;">⚡ 일괄 적용 (Apply
-                    Batch)</button>
+                    style="width: 100%; background: #28a745; color: white; font-size: 0.85em;">⚡ 일괄 적용</button>
             </div>
             <div style="margin-top: 5px;">
                 <button onclick="showInspector()"
-                    style="width: 100%; background: #17a2b8; color: white; font-size: 0.9em;">🔍 배치 검사기
-                    (Inspector)</button>
+                    style="width: 100%; background: #17a2b8; color: white; font-size: 0.85em;">🔍 배치 검사기</button>
+            </div>
+        </div>
+        <!-- 날짜별 기사 조회 -->
+        <div class="target-select" style="border-top: 2px solid #007bff; background: #e7f1ff;">
+            <label style="font-size: 0.8em; font-weight: bold; color: #007bff;">📅 날짜별 기사 조회</label>
+            <input type="date" id="dateSelect" style="width: 100%; padding: 5px; margin-top: 5px;">
+            <button onclick="loadArticlesByDate()"
+                style="width: 100%; margin-top: 5px; background: #007bff; color: white; font-weight: bold;">
+                📂 날짜별 조회
+            </button>
+        </div>
+        <!-- URL로 캐시 준비 -->
+        <div class="target-select" style="border-top: 2px solid #20c997; background: #d4edda;">
+            <label style="font-size: 0.8em; font-weight: bold; color: #20c997;">➕ URL로 캐시 준비</label>
+            <input type="text" id="prepareUrlInput" placeholder="URL 입력..."
+                style="width: 100%; padding: 5px; margin-top: 5px;" onkeypress="if(event.key==='Enter') prepareCache()">
+            <button onclick="prepareCache()"
+                style="width: 100%; margin-top: 5px; background: #20c997; color: white; font-weight: bold;">
+                📥 캐시 준비
+            </button>
+        </div>
+        <!-- 캐시 검색 -->
+        <div class="target-select" style="border-top: 2px solid #e83e8c; background: #fce4ec;">
+            <label style="font-size: 0.8em; font-weight: bold; color: #e83e8c;">🔍 캐시 검색</label>
+            <input type="text" id="cacheSearchInput" placeholder="파일명 검색..."
+                style="width: 100%; padding: 5px; margin-top: 5px;" onkeypress="if(event.key==='Enter') searchCache()">
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+                <button onclick="searchCache()" style="flex: 2; background: #e83e8c; color: white; font-weight: bold;">
+                    🔎 검색
+                </button>
+                <button onclick="findDuplicateCaches()"
+                    style="flex: 1; background: #6c757d; color: white; font-size: 0.8em;" title="중복 캐시 찾기">
+                    🔄 중복
+                </button>
+            </div>
+            <div style="margin-top: 5px;">
+                <button onclick="findOrphanDataFiles()"
+                    style="width: 100%; background: #dc3545; color: white; font-size: 0.85em; font-weight: bold;"
+                    title="캐시에서 참조되지 않는 DATA 파일 찾기 및 삭제">
+                    🧹 데이터 정리
+                </button>
             </div>
         </div>
         <ul id="link-list">
@@ -241,41 +384,79 @@
         </ul>
     </div>
 
-    <div id="main">
-        <div class="content-area">
-            <div class="preview-pane" id="previewPane">
-                <div style="color: #888; text-align: center; margin-top: 100px;">
+    <!-- 센터 영역: 상하 2분할 -->
+    <div id="center">
+        <!-- 상: 원문 미리보기 -->
+        <div class="center-top">
+            <div class="section-header">
+                <span>📄 원문 (Original)</span>
+                <div>
+                    <button onclick="copyContent()"
+                        style="padding: 4px 8px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; margin-right: 5px; font-size: 0.8em;">📋
+                        Copy</button>
+                    <a id="originalLink" href="#" target="_blank"
+                        style="text-decoration: none; color: #007bff; font-weight: bold; border: 1px solid #007bff; padding: 3px 8px; border-radius: 4px; font-size: 0.8em;">🔗
+                        원본</a>
+                </div>
+            </div>
+            <div id="previewPane" class="preview-content">
+                <div style="color: #888; text-align: center; margin-top: 50px;">
                     미리볼 링크를 선택하세요
                 </div>
             </div>
+        </div>
 
-            <div class="input-pane">
-                <div class="form-group">
-                    <label>원본 제목 (Original Title)</label>
-                    <input type="text" id="originalTitle" readonly style="background: #eee;">
-                </div>
-
-                <div class="form-group">
-                    <label>JSON 입력 (Input)</label>
-                    <textarea id="jsonInput" placeholder="JSON을 여기에 붙여넣으세요..."
-                        style="height: 300px; font-family: monospace;"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>URL</label>
-                    <input type="text" id="url" readonly style="background: #eee; font-size: 0.8em;">
-                </div>
-
-                <div class="actions">
-                    <button class="btn-worthless" onclick="markWorthless()">무가치 (Worthless)</button>
-                    <button class="btn-skip" onclick="skipArticle()">건너뛰기 (Skip)</button>
-                    <button class="btn-save" onclick="saveArticle()">저장 & 다음</button>
-                    <button onclick="verifyScore()" style="background: #17a2b8; color: white;">점수 검증</button>
-                    <button onclick="injectCorrection()" style="background: #e0a800; color: white;">💉 수정 반영</button>
-                </div>
-                <div id="verifyResult" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;">
-                </div>
+        <!-- 하: 평가 JSON 입력 -->
+        <div class="center-bottom">
+            <div class="section-header">
+                <span>📝 평가 JSON</span>
+                <input type="text" id="url" readonly
+                    style="flex: 1; margin-left: 10px; background: #eee; font-size: 0.7em; padding: 3px 6px; border: 1px solid #ccc; border-radius: 3px;">
             </div>
+            <textarea id="jsonInput" placeholder="LLM이 생성한 평가 JSON을 여기에 붙여넣으세요..."
+                oninput="updateFinalCardPreview()"></textarea>
+            <input type="hidden" id="originalTitle">
+        </div>
+    </div>
+
+    <!-- 우측 영역: JSON 써머리 + 점수 검증 + 최종 JSON -->
+    <div id="right-panel">
+        <!-- JSON 써머리 -->
+        <div class="right-summary">
+            <div class="section-header">
+                <span>📋 JSON 써머리</span>
+            </div>
+            <div id="jsonSummary" class="summary-content">
+                평가 JSON을 붙여넣으면 요약이 표시됩니다.
+            </div>
+        </div>
+
+        <!-- 점수 검증 결과 -->
+        <div class="right-top">
+            <div class="section-header">
+                <span>📊 점수 검증</span>
+            </div>
+            <div id="verifyResult" class="verify-content">
+                점수 검증 버튼을 누르면 결과가 표시됩니다.
+            </div>
+        </div>
+
+        <!-- 최종 저장될 JSON -->
+        <div class="right-bottom">
+            <div class="section-header">
+                <span>📦 최종 기사카드</span>
+                <span id="cardStatus" style="font-size: 0.75em; color: #888;"></span>
+            </div>
+            <pre id="finalCardPreview" class="json-preview">평가 JSON을 입력하면 최종 저장될 형태가 여기에 표시됩니다.</pre>
+        </div>
+
+        <!-- 버튼 영역 -->
+        <div class="action-bar">
+            <button onclick="refreshArticle()" class="btn-gray" title="리프레시">🔄</button>
+            <button onclick="markWorthless()" class="btn-worthless">무가치</button>
+            <button onclick="skipArticle()" class="btn-skip">스킵</button>
+            <button onclick="verifyAndApply()" class="btn-info">✓ 검증</button>
+            <button onclick="saveArticle()" class="btn-save">💾 저장</button>
         </div>
     </div>
 
@@ -285,8 +466,7 @@
         <div
             style="background: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 800px; height: 80%; display: flex; flex-direction: column;">
             <h3 style="margin-top: 0;">배치 JSON 결과 붙여넣기</h3>
-            <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">LLM이 생성한 JSON 응답을 여기에 붙여넣으세요.
-                Expected format: <code>{ "results": [ ... ] }</code> or <code>[ ... ]</code></p>
+            <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">LLM이 생성한 JSON 응답을 여기에 붙여넣으세요.</p>
             <textarea id="batchInput"
                 placeholder='{ "results": [ { "title_ko": "...", "zero_noise_score": 5.0 ... } ] }'
                 style="flex: 1; font-family: monospace; padding: 10px; border: 1px solid #ccc; resize: none;"></textarea>
@@ -295,6 +475,24 @@
                 <button onclick="applyBatchResults()"
                     style="padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px;">파싱
                     적용</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Source ID Selection Modal -->
+    <div id="sourceModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
+            <h3 style="margin-top: 0; color: #e83e8c;">⚠️ Source ID 필요</h3>
+            <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">소스를 선택해주세요:</p>
+            <select id="sourceSelect"
+                style="width: 100%; padding: 10px; font-size: 1em; margin-bottom: 15px; border: 2px solid #e83e8c; border-radius: 4px;">
+            </select>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="closeSourceModal()"
+                    style="padding: 10px 20px; cursor: pointer; background: #6c757d; color: white; border: none; border-radius: 4px;">취소</button>
+                <button onclick="confirmSourceSelection()"
+                    style="padding: 10px 20px; cursor: pointer; background: #20c997; color: white; border: none; border-radius: 4px; font-weight: bold;">확인</button>
             </div>
         </div>
     </div>

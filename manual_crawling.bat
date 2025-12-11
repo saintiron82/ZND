@@ -5,15 +5,29 @@ title ZED Manual Crawler
 :: Move to the script's directory (Project Root)
 cd /d "%~dp0"
 
-if not exist supplier\venv (
-    echo [ERROR] Virtual environment 'supplier\venv' not found!
+:: Check for virtual environment in multiple locations (fallback order)
+set VENV_PATH=
+if exist supplier\venv (
+    set VENV_PATH=supplier\venv
+) else if exist supplier\.venv (
+    set VENV_PATH=supplier\.venv
+) else if exist venv (
+    set VENV_PATH=venv
+) else if exist .venv (
+    set VENV_PATH=.venv
+)
+
+if "%VENV_PATH%"=="" (
+    echo [ERROR] Virtual environment not found!
+    echo Searched locations: supplier\venv, supplier\.venv, venv, .venv
     echo Please ensure you have set up the python environment.
     pause
     exit /b
 )
 
+echo [ZED] Found virtual environment at: %VENV_PATH%
 echo [ZED] Activating virtual environment...
-call supplier\venv\Scripts\activate
+call %VENV_PATH%\Scripts\activate
 
 where python
 python --version

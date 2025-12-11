@@ -44,7 +44,8 @@ async function getData() {
       }
     }
 
-    return allArticles;
+    // Filter out articles without article_id
+    return allArticles.filter(article => article.article_id);
   } catch (error) {
     console.error("Error reading articles directories:", error);
     return [];

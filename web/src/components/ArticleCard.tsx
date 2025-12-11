@@ -130,12 +130,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 )}
 
                 <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground font-sans shrink-0">
-                    <div className="flex items-center gap-3">
-                        <span className="text-primary/80">{source_id}</span>
-                        <span className={cn("flex items-center gap-1", getScoreColor(zeScore))}>
-                            ZE {zeScore.toFixed(1)}
-                        </span>
-                    </div>
+                    <span className={cn("flex items-center gap-1", getScoreColor(zeScore))}>
+                        ZE {zeScore.toFixed(1)}
+                    </span>
                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {dateStr}</span>
                 </div>
 
@@ -162,7 +159,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
             </div>
 
             <div className="mt-4 pt-3 border-t border-border/40 flex items-center justify-between shrink-0">
-                <div className="flex gap-1 overflow-hidden">
+                <div className="flex gap-1.5 items-center overflow-hidden">
+                    <span className="text-[10px] font-bold text-primary/80 whitespace-nowrap font-sans">{source_id}</span>
+                    {tags && tags.length > 0 && <span className="text-muted-foreground/50">·</span>}
                     {tags?.slice(0, 2).map(tag => (
                         <span key={tag} className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded-sm whitespace-nowrap font-sans">
                             #{tag}

@@ -19,12 +19,6 @@
     "limit": 10
   },
   {
-    "id": "google_ai_blog",
-    "type": "rss",
-    "url": "https://blog.google/technology/ai/rss/",
-    "limit": 10
-  },
-  {
     "id": "deepmind",
     "type": "rss",
     "url": "https://www.deepmind.com/blog/rss.xml",

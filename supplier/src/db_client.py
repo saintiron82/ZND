@@ -99,6 +99,17 @@ class DBClient:
         }
         self._save_history_file()
 
+    def remove_from_history(self, url):
+        """
+        Removes a URL from history, effectively resetting it to NEW state.
+        """
+        if url in self.history:
+            del self.history[url]
+            self._save_history_file()
+            print(f"🗑️ [History] Removed from history: {url[:50]}...")
+        else:
+            print(f"⚠️ [History] URL not found in history: {url[:50]}...")
+
     def save_article(self, article_data):
         from datetime import datetime, timezone
         
@@ -152,9 +163,8 @@ class DBClient:
         else:
             crawled_at_dt = datetime.now(timezone.utc)
         
-        # Format: data/YYYY-MM-DD/YYYYMMDD_HHMMSS_{source_id}_{hash}.json
+        # Format: data/YYYY-MM-DD/{source_id}_{hash}.json (simplified)
         date_str = crawled_at_dt.strftime('%Y-%m-%d')
-        time_str = crawled_at_dt.strftime('%Y%m%d_%H%M%S')
         
         # Create directory: data/YYYY-MM-DD
         data_dir = self._get_data_dir()
@@ -164,9 +174,10 @@ class DBClient:
         # Generate hash for uniqueness (using URL)
         url = article_data.get('url', '')
         url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
-        source_id = article_data.get('source_id', 'unknown')
+        source_id = article_data.get('source_id') or 'unknown'  # Handle empty string too
         
-        filename = f"{time_str}_{source_id}_{url_hash}.json"
+        # Simplified filename: source_id_hash.json
+        filename = f"{source_id}_{url_hash}.json"
         file_path = os.path.join(dir_path, filename)
         
         # Convert datetime objects to string for JSON serialization
@@ -336,6 +347,10 @@ class DBClient:
                 try:
                     with open(fpath, 'r', encoding='utf-8') as f:
                         article = json.load(f)
+                        # Skip articles without article_id
+                        if not article.get('article_id'):
+                            print(f"⚠️ Skipping article without article_id: {filename}")
+                            continue
                         summary_list.append(article)
                 except Exception as e:
                     print(f"⚠️ Skipping corrupted file {filename}: {e}")

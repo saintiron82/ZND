@@ -1,0 +1,115 @@
+{
+  "title_ko": "FACTS Benchmark Suite: LLM의 사실 정확성을 체계적으로 평가하는 새로운 방법",
+  "article_id": "x6xyza",
+  "summary": "LLM의 사실 정확성 평가를 위해 Kaggle과 협력하여 'FACTS Benchmark Suite'를 공개했습니다. 이 벤치마크는 내부 지식 접근을 측정하는 Parametric, 검색 능력을 평가하는 Search, 이미지 관련 사실성을 테스트하는 Multimodal, 그리고 컨텍스트 접지 능력을 평가하는 Grounding Benchmark - v2, 총 네 가지로 구성됩니다. 총 3,513개의 예시로 이루어져 있으며, Kaggle이 비공개 평가 세트 관리 및 LLM 순위표 호스팅을 담당합니다.",
+  "impact_score": 6.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_2_KEY_INNOVATORS",
+      "weight": 3
+    },
+    "events": [
+      {
+        "id": "MAJOR_TECH_OPENING",
+        "weight": 3
+      },
+      {
+        "id": "ROUTINE_UPDATE",
+        "weight": 0.5
+      }
+    ]
+  },
+  "tags": [
+    "BENCHMARK",
+    "MODEL_RELEASE",
+    "OPEN_SOURCE"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "UNVERIFIABLE_CLAIMS",
+        "value": 0
+      },
+      {
+        "id": "VAGUE_FUTURE_PROMISE",
+        "value": 0
+      },
+      {
+        "id": "LACK_OF_LIMITATION",
+        "value": 0
+      },
+      {
+        "id": "NON_TECHNICAL_FOCUS",
+        "value": 0
+      },
+      {
+        "id": "SHALLOW_LISTICLE",
+        "value": 0
+      },
+      {
+        "id": "ANALYST_BIAS_PENALTY",
+        "value": 0
+      }
+    ],
+    "credits": [
+      {
+        "id": "USER_FEEDBACK_DATA",
+        "value": 0
+      },
+      {
+        "id": "OPEN_DATASET_RELEASE",
+        "value": 1
+      },
+      {
+        "id": "ETHICAL_TRANSPARENCY",
+        "value": 0
+      },
+      {
+        "id": "REPRODUCIBLE_ASSETS",
+        "value": 0
+      },
+      {
+        "id": "RESOURCE_EFFICIENCY_ANALYSIS",
+        "value": 0
+      },
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 0
+      },
+      {
+        "id": "COMPARATIVE_BENCHMARK",
+        "value": 1
+      },
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 0
+      },
+      {
+        "id": "FAILURE_ANALYSIS",
+        "value": 0
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "ACADEMIC_PAPER_SOURCE",
+        "applied": false
+      },
+      {
+        "id": "ENGINEERING_BLOG",
+        "applied": false
+      },
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": false
+      }
+    ]
+  },
+  "Overall review": "LLM의 사실 정확성이라는 핵심 이슈에 초점을 맞춘 새로운 벤치마크 스위트 공개 기사입니다. Kaggle 협력 및 데이터 공개로 투명성과 검증 가능성을 확보했으나, 기술적인 깊이 있는 분석이 부족하여 노이즈 지수는 중간 수준입니다.",
+  "review_en": "This article announces a new benchmark suite focusing on the core issue of LLM factuality. Collaboration with Kaggle and public data release ensure transparency and verifiability, but the lack of deep technical analysis results in a medium Noise Index (ZS).",
+  "zero_echo_score": 3.0,
+  "url": "https://deepmind.google/blog/facts-benchmark-suite-systematically-evaluating-the-factuality-of-large-language-models/",
+  "source_id": "deepmind",
+  "original_title": "FACTS Benchmark Suite: a new way to systematically evaluate LLMs factuality",
+  "crawled_at": "2025-12-11T06:29:07.747664+00:00",
+  "edition": "251211_THU_1"
+}

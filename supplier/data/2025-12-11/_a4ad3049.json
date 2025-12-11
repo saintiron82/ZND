@@ -1,0 +1,53 @@
+{
+  "title_ko": "오픈AI·앤트로픽·구글, 에이전트 표준 공동 협력체 출범",
+  "article_id": "a4ad30",
+  "summary": "오픈AI, 앤트로픽, 구글 등 주요 빅테크 기업들이 리눅스 재단 주도로 AI 에이전트 상호 운용성을 위한 표준화 협력체 'AAIF'를 공식 출범했다. 이들은 앤트로픽의 MCP, 오픈AI의 Agents.md 등을 핵심 오픈소스 기술로 채택하여 에이전트 간 연결 방식을 규격화할 계획이다. 이는 폐쇄적인 독점 생태계를 방지하고 개방형 기술 표준을 마련하기 위한 중대한 합의로 평가받는다.",
+  "impact_score": 10.0,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_GRAND_ALLIANCE",
+      "weight": 5
+    },
+    "events": [
+      {
+        "id": "INDUSTRY_STANDARD_ESTABLISHMENT",
+        "weight": 4
+      },
+      {
+        "id": "MAJOR_TECH_OPENING",
+        "weight": 3
+      }
+    ]
+  },
+  "tags": [
+    "AGENTIC_AI",
+    "STANDARDIZATION",
+    "OPEN_SOURCE"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "REPRODUCIBLE_ASSETS",
+        "value": 0.8
+      },
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 0.4
+      },
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "Overall review": "주요 경쟁사인 OpenAI, Anthropic, Google이 리눅스 재단 하에 결집하여 'AAIF'를 설립한 것은 AI 에이전트 생태계의 '파편화'를 막는 기념비적인 사건이다. 실체가 분명한 오픈소스 기술(MCP 등)을 표준으로 채택하여 즉각적인 산업 영향력이 예상된다.",
+  "review_en": "The establishment of the 'AAIF' by major competitors like OpenAI, Anthropic, and Google under the Linux Foundation is a monumental event preventing the fragmentation of the AI agent ecosystem. The adoption of tangible open-source technologies (such as MCP) as standards suggests immediate industrial impact.",
+  "zero_echo_score": 3.3,
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204690",
+  "source_id": "",
+  "original_title": "오픈AI·앤트로픽·구글, 에이전트 표준 공동 협력체 출범",
+  "crawled_at": "2025-12-11T08:48:41.333051+00:00",
+  "edition": "251211_THU_1"
+}

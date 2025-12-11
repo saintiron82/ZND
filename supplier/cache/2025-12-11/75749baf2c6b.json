@@ -1,0 +1,51 @@
+{
+  "title_ko": "Meta is reportedly ditching open Llama models for Avocado, a closed model built for direct sales",
+  "article_id": "ayrc3k",
+  "summary": "블룸버그 소스에 따르면 Meta가 오픈소스 Llama 전략에서 벗어나 내년 봄 출시를 목표로 하는 클로즈드 모델 'Avocado' 개발에 집중하고 있다고 합니다. 이 모델은 직접 판매를 통해 수익을 창출할 것으로 예상됩니다. 특히, 개발 과정에서 Google Gemma, OpenAI gpt-oss, Alibaba Qwen 등 외부 모델을 학습에 사용하는 것으로 알려졌는데, 이는 중국 기술 사용에 대한 마크 저커버그 CEO의 과거 경고와 상충됩니다.",
+  "impact_score": 5.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 4
+    },
+    "events": [
+      {
+        "id": "ANALYST_IMPACT_BOOST",
+        "weight": 1.5
+      }
+    ]
+  },
+  "tags": [
+    "LLM",
+    "BIZ_IMPACT",
+    "MODEL_RELEASE"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "VAGUE_FUTURE_PROMISE",
+        "value": 1
+      },
+      {
+        "id": "NON_TECHNICAL_FOCUS",
+        "value": 1
+      }
+    ],
+    "credits": [
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 1
+      }
+    ],
+    "modifiers": []
+  },
+  "Overall review": "Meta의 오픈소스 포기 가능성을 보도한 기사로, (IS 5.5) 업계 파급력은 있으나, (ZS 8.5) 블룸버그 소스 기반의 미검증된 미래 계획과 비즈니스 측면에 치우쳐 노이즈 지수가 매우 높게 산출됨.",
+  "review_en": "The article reports on Meta's potential abandonment of open source. While it has moderate industry impact (IS 5.5), the reliance on unverified future plans from Bloomberg sources and its focus on business strategy over technical details result in a very high noise score (ZS 8.5).",
+  "zero_echo_score": 6,
+  "url": "https://the-decoder.com/meta-is-reportedly-ditching-open-llama-models-for-avocado-a-closed-model-built-for-direct-sales/",
+  "source_id": "the_decoder",
+  "original_title": "Meta is reportedly ditching open Llama models for Avocado, a closed model built for direct sales",
+  "saved": true,
+  "saved_at": "2025-12-11T06:31:52.345Z",
+  "cached_at": "2025-12-11T06:31:52.652667+00:00"
+}

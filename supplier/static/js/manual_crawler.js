@@ -3,6 +3,159 @@ let currentLinks = [];
 let currentLinkIndex = -1;
 let currentTargetId = '';
 let loadedContents = {}; // url -> content data
+let articleIdMap = {};   // articleId -> url (for hash-based matching)
+
+// 실시간 최종 카드 미리보기 업데이트
+function updateFinalCardPreview() {
+    const url = document.getElementById('url').value;
+    const jsonStr = document.getElementById('jsonInput').value;
+    const originalTitle = document.getElementById('originalTitle').value;
+
+    if (!jsonStr.trim()) {
+        document.getElementById('finalCardPreview').textContent = '평가 JSON을 입력하면 최종 저장될 형태가 여기에 표시됩니다.';
+        document.getElementById('cardStatus').textContent = '';
+        document.getElementById('jsonSummary').textContent = '평가 JSON을 붙여넣으면 요약이 표시됩니다.';
+        return;
+    }
+
+    try {
+        let jsonData = JSON.parse(jsonStr);
+        jsonData = normalizeFieldNames(jsonData);
+
+        // Auto-extract if LLM sent schema format
+        if (jsonData.properties && jsonData.type === 'object') {
+            jsonData = jsonData.properties;
+        }
+
+        // Article ID validation
+        const originalData = loadedContents[url] || {};
+        const expectedId = originalData.article_id;
+        const receivedId = jsonData.article_id;
+
+        if (expectedId && receivedId && expectedId !== receivedId) {
+            document.getElementById('cardStatus').textContent = '⚠️ ID 불일치!';
+            document.getElementById('cardStatus').style.color = '#dc3545';
+            document.getElementById('jsonSummary').textContent = `❌ ID 불일치: 예상 ${expectedId}, 받은 ${receivedId}`;
+            document.getElementById('finalCardPreview').textContent = `JSON의 article_id(${receivedId})가 현재 기사(${expectedId})와 일치하지 않습니다.\n\n다른 기사의 결과를 붙여넣은 것 같습니다.`;
+            return;
+        }
+
+        // Generate final card by merging original content + evaluation
+        const finalCard = {
+            ...originalData,
+            ...jsonData,
+            url: url,
+            source_id: currentTargetId,
+            original_title: originalTitle
+        };
+
+        // Remove internal fields
+        delete finalCard.article_id;
+
+        document.getElementById('finalCardPreview').textContent = JSON.stringify(finalCard, null, 2);
+
+        // Display ZS and IS prominently
+        const zs = finalCard.zero_echo_score;
+        const is = finalCard.impact_score;
+        const statusText = `ZS: ${zs !== undefined ? zs : '?'} | IS: ${is !== undefined ? is : '?'}`;
+        document.getElementById('cardStatus').textContent = statusText;
+        document.getElementById('cardStatus').style.color = (zs !== undefined && is !== undefined) ? '#28a745' : '#e0a800';
+
+        // Display summary
+        const summary = finalCard.summary || jsonData.summary || '';
+        document.getElementById('jsonSummary').textContent = summary || '(summary 없음)';
+    } catch (e) {
+        document.getElementById('finalCardPreview').textContent = 'JSON 파싱 에러: ' + e.message;
+        document.getElementById('cardStatus').textContent = '✗ 에러';
+        document.getElementById('cardStatus').style.color = '#dc3545';
+    }
+}
+
+// 점수 검증 및 자동 반영
+function verifyAndApply() {
+    const jsonStr = document.getElementById('jsonInput').value;
+    if (!jsonStr.trim()) {
+        document.getElementById('verifyResult').innerHTML = '평가 JSON을 먼저 입력하세요.';
+        return;
+    }
+
+    let jsonData = {};
+    try {
+        jsonData = JSON.parse(jsonStr);
+    } catch (e) {
+        document.getElementById('verifyResult').innerHTML = '<span style="color:red">Invalid JSON: ' + e.message + '</span>';
+        return;
+    }
+
+    // Auto-extract if LLM sent schema format
+    if (jsonData.properties && jsonData.type === 'object') {
+        jsonData = jsonData.properties;
+    }
+
+    jsonData = normalizeFieldNames(jsonData);
+
+    const resultDiv = document.getElementById('verifyResult');
+    resultDiv.innerHTML = 'Verifying...';
+
+    fetch('/api/verify_score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jsonData)
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.error) {
+                resultDiv.innerHTML = `<span style="color:red">Error: ${res.error}</span>`;
+            } else {
+                // ZS 검증
+                const zsMatch = res.match;
+                const zsMatchText = zsMatch ? '✓' : '✗';
+                const zsMatchColor = zsMatch ? '#28a745' : '#dc3545';
+
+                // IS 검증
+                const isMatch = res.impact_match;
+                const isMatchText = isMatch ? '✓' : '✗';
+                const isMatchColor = isMatch ? '#28a745' : '#dc3545';
+
+                let html = `<div style="display:flex; gap:15px; margin-bottom:8px;">`;
+                html += `<div><strong>ZS</strong> <span style="color:${zsMatchColor}">${zsMatchText}</span> ${res.calculated_zs}</div>`;
+                html += `<div><strong>IS</strong> <span style="color:${isMatchColor}">${isMatchText}</span> ${res.breakdown?.impact_calc || 'N/A'}</div>`;
+                html += `</div>`;
+
+                html += `<div style="font-size:0.85em; color:#666;">`;
+                html += `기록: ZS=${jsonData.zero_echo_score || 'N/A'} | IS=${jsonData.impact_score || 'N/A'}`;
+                html += `</div>`;
+
+                if (res.breakdown) {
+                    html += `<div style="margin-top:5px; font-size:0.8em; color:#888;">`;
+                    html += `크레딧: -${res.breakdown.credits_sum || 0} | 페널티: +${res.breakdown.penalties_sum || 0}`;
+                    html += `</div>`;
+                }
+
+                // Auto-apply calculated scores if mismatch (with clamping 0-10)
+                let autoApplied = false;
+                if (!zsMatch && res.calculated_zs !== undefined) {
+                    jsonData.zero_echo_score = Math.max(0, Math.min(10, res.calculated_zs));
+                    autoApplied = true;
+                }
+                if (!isMatch && res.breakdown?.impact_calc !== undefined) {
+                    jsonData.impact_score = Math.max(0, Math.min(10, res.breakdown.impact_calc));
+                    autoApplied = true;
+                }
+
+                if (autoApplied) {
+                    document.getElementById('jsonInput').value = JSON.stringify(jsonData, null, 2);
+                    updateFinalCardPreview();
+                    html += `<div style="margin-top:5px; color:#e0a800;"><strong>→ 점수 자동 반영!</strong></div>`;
+                }
+
+                resultDiv.innerHTML = html;
+            }
+        })
+        .catch(err => {
+            resultDiv.innerHTML = `<span style="color:red">Error: ${err}</span>`;
+        });
+}
 
 // Field name normalization helper
 function normalizeFieldNames(data) {
@@ -30,7 +183,17 @@ function normalizeFieldNames(data) {
 // 페이지 로드 시 타겟 목록 초기화
 document.addEventListener('DOMContentLoaded', function () {
     loadTargets();
+    initializeDatePicker();
 });
+
+// 날짜 선택기 초기화 (오늘 날짜로)
+function initializeDatePicker() {
+    const dateInput = document.getElementById('dateSelect');
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+    }
+}
 
 function loadTargets() {
     const select = document.getElementById('targetSelect');
@@ -53,6 +216,484 @@ function loadTargets() {
         });
 }
 
+// 날짜별 기사 조회
+function loadArticlesByDate() {
+    const dateInput = document.getElementById('dateSelect');
+    const dateStr = dateInput.value;
+
+    if (!dateStr) {
+        return alert('날짜를 선택해주세요.');
+    }
+
+    const btn = document.querySelector('button[onclick="loadArticlesByDate()"]');
+    const originalText = btn.textContent;
+    btn.textContent = '로딩 중...';
+    btn.disabled = true;
+
+    fetch(`/api/articles_by_date?date=${dateStr}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert('오류: ' + data.error);
+                btn.textContent = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            // Clear target selection and reset state
+            document.getElementById('targetSelect').value = '';
+            currentTargetId = '__DATE__' + dateStr;  // Special marker
+
+            // Convert articles to currentLinks format
+            currentLinks = data.articles.map(article => ({
+                url: article.url,
+                source_id: article.source_id,
+                status: article.status,
+                cached: true,
+                filepath: article.filepath,  // cache file path for direct deletion
+                data_file: article.data_file,  // linked data file info
+                content: article.content
+            }));
+
+            // Also populate loadedContents
+            data.articles.forEach(article => {
+                loadedContents[article.url] = article.content;
+            });
+
+            renderLinks();
+            btn.textContent = originalText;
+            btn.disabled = false;
+
+            // Show total count
+            console.log(`📅 [Date] Loaded ${data.total} articles for ${dateStr}`);
+        })
+        .catch(err => {
+            alert('날짜별 기사 로드 실패: ' + err);
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
+}
+
+// URL로 캐시 준비
+function prepareCache() {
+    const input = document.getElementById('prepareUrlInput');
+    const url = input.value.trim();
+
+    if (!url) {
+        return alert('URL을 입력해주세요.');
+    }
+
+    // Basic URL validation
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return alert('올바른 URL을 입력해주세요.\n(http:// 또는 https://로 시작해야 합니다)');
+    }
+
+    const btn = document.querySelector('button[onclick="prepareCache()"]');
+    const originalText = btn.textContent;
+    btn.textContent = '크롤링 중...';
+    btn.disabled = true;
+
+    fetch(`/api/extract?url=${encodeURIComponent(url)}`)
+        .then(res => res.json())
+        .then(data => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+
+            if (data.error) {
+                alert('오류: ' + data.error);
+                return;
+            }
+
+            // Check if source_id is missing - show modal for selection
+            let sourceId = data.source_id;
+            if (!sourceId || sourceId.trim() === '') {
+                // Show source selection modal
+                showSourceModal(url, data);
+                return; // Will continue in confirmSourceSelection
+            }
+
+            // Complete the cache preparation
+            completeCachePrepare(url, data, sourceId);
+        })
+        .catch(err => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            alert('캐시 준비 실패: ' + err);
+        });
+}
+
+// Pending cache data for modal
+let pendingCacheUrl = null;
+let pendingCacheData = null;
+
+function showSourceModal(url, data) {
+    pendingCacheUrl = url;
+    pendingCacheData = data;
+
+    // Populate dropdown with sources from targets
+    const select = document.getElementById('sourceSelect');
+    select.innerHTML = '<option value="">-- 소스 선택 --</option>';
+
+    // Get sources from loaded targets
+    fetch('/api/targets')
+        .then(res => res.json())
+        .then(targets => {
+            // Get unique source IDs
+            const sources = [...new Set(targets.map(t => t.id))];
+            sources.forEach(src => {
+                const option = document.createElement('option');
+                option.value = src;
+                option.textContent = src;
+                select.appendChild(option);
+            });
+            // Add "other" option for manual entry
+            const otherOption = document.createElement('option');
+            otherOption.value = '__OTHER__';
+            otherOption.textContent = '기타 (직접 입력)';
+            select.appendChild(otherOption);
+        });
+
+    // Show modal
+    document.getElementById('sourceModal').style.display = 'flex';
+}
+
+function closeSourceModal() {
+    document.getElementById('sourceModal').style.display = 'none';
+    pendingCacheUrl = null;
+    pendingCacheData = null;
+
+    // Reset button
+    const btn = document.querySelector('button[onclick="prepareCache()"]');
+    if (btn) {
+        btn.textContent = '📥 캐시 준비';
+        btn.disabled = false;
+    }
+}
+
+function confirmSourceSelection() {
+    const select = document.getElementById('sourceSelect');
+    let sourceId = select.value;
+
+    if (!sourceId) {
+        alert('소스를 선택해주세요.');
+        return;
+    }
+
+    // Handle "other" option
+    if (sourceId === '__OTHER__') {
+        sourceId = prompt('소스 ID를 직접 입력해주세요 (예: naver, daum):');
+        if (!sourceId || sourceId.trim() === '') {
+            alert('소스 ID가 필요합니다.');
+            return;
+        }
+        sourceId = sourceId.trim().toLowerCase();
+    }
+
+    // Close modal
+    document.getElementById('sourceModal').style.display = 'none';
+
+    // Update cache with source_id
+    pendingCacheData.source_id = sourceId;
+    fetch('/api/update_cache', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: pendingCacheUrl, content: { source_id: sourceId } })
+    });
+
+    // Complete the preparation
+    completeCachePrepare(pendingCacheUrl, pendingCacheData, sourceId);
+
+    pendingCacheUrl = null;
+    pendingCacheData = null;
+}
+
+function completeCachePrepare(url, data, sourceId) {
+    // Reset button
+    const btn = document.querySelector('button[onclick="prepareCache()"]');
+    if (btn) {
+        btn.textContent = '📥 캐시 준비';
+        btn.disabled = false;
+    }
+
+    // Create item
+    const newItem = {
+        url: url,
+        source_id: sourceId,
+        status: 'NEW',
+        cached: true,
+        content: data
+    };
+
+    // Add to beginning of list
+    currentLinks.unshift(newItem);
+    loadedContents[url] = data;
+
+    // Clear input
+    document.getElementById('prepareUrlInput').value = '';
+
+    // Render and select the new item
+    renderLinks();
+    loadArticle(0);
+
+    console.log(`📥 [Prepare Cache] Success: ${url} (source: ${sourceId})`);
+    alert(`캐시 준비 완료!\nSource: ${sourceId}\nTitle: ${data.title || 'N/A'}`);
+}
+
+// 캐시 파일 검색
+function searchCache() {
+    const input = document.getElementById('cacheSearchInput');
+    const query = input.value.trim();
+
+    if (!query) {
+        return alert('검색어를 입력해주세요.');
+    }
+
+    const btn = document.querySelector('button[onclick="searchCache()"]');
+    const originalText = btn.textContent;
+    btn.textContent = '검색 중...';
+    btn.disabled = true;
+
+    fetch(`/api/search_cache?q=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert('오류: ' + data.error);
+                btn.textContent = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            if (data.total === 0) {
+                alert(`"${query}"에 대한 검색 결과가 없습니다.`);
+                btn.textContent = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            // Display results in link list
+            currentTargetId = '__SEARCH__' + query;
+            currentLinks = data.results.map(item => ({
+                url: item.url || item.path,
+                source_id: 'cache',
+                status: 'CACHE',
+                cached: true,
+                filename: item.filename,
+                date: item.date
+            }));
+
+            renderSearchResults(data.results);
+            btn.textContent = originalText;
+            btn.disabled = false;
+
+            console.log(`🔍 [Search] Found ${data.total} files for "${query}"`);
+        })
+        .catch(err => {
+            alert('검색 실패: ' + err);
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
+}
+
+// 검색 결과 렌더링 (파일명 중심)
+function renderSearchResults(results) {
+    const list = document.getElementById('link-list');
+    list.innerHTML = '';
+
+    results.forEach((item, index) => {
+        const li = document.createElement('li');
+
+        // X 버튼 (캐시 삭제)
+        const deleteBtn = `<button onclick="event.stopPropagation(); deleteCacheFile('${item.path.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}', ${index})" style="background:#dc3545; color:white; border:none; padding:1px 4px; border-radius:3px; font-size:0.6em; margin-right:3px; cursor:pointer;" title="캐시 삭제">✕</button>`;
+
+        // 연결된 data 파일 표시 (있으면 녹색 마크)
+        const dataFileMark = item.data_file
+            ? `<span style="background:#28a745; color:white; padding:2px 4px; border-radius:3px; font-size:0.6em; margin-right:3px;" title="저장됨: ${item.data_file.filename}">DATA</span>`
+            : '';
+
+        li.innerHTML = `
+            ${deleteBtn}
+            <span style="background:#e83e8c; color:white; padding:2px 6px; border-radius:3px; font-size:0.65em; margin-right:3px;">${item.date}</span>
+            ${dataFileMark}
+            <span style="word-break:break-all; font-size:0.85em;">${item.filename}</span>
+        `;
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.cursor = 'pointer';
+
+        li.onclick = () => {
+            // Load the cache file content
+            currentLinkIndex = index;
+            // Highlight active
+            document.querySelectorAll('#link-list li').forEach(l => l.classList.remove('active'));
+            li.classList.add('active');
+
+            // Show file info including linked data file
+            const dataInfo = item.data_file
+                ? `\n\n📁 [연결된 Data 파일]\n파일명: ${item.data_file.filename}\n날짜: ${item.data_file.date}`
+                : '\n\n(저장된 Data 파일 없음)';
+
+            document.getElementById('url').value = item.path || item.url || '';
+            document.getElementById('previewPane').innerHTML = `
+                <h2>${item.title || item.filename}</h2>
+                <hr>
+                <pre>📦 [캐시 파일]
+파일명: ${item.filename}
+날짜: ${item.date}
+URL: ${item.url || 'N/A'}
+Article ID: ${item.article_id || 'N/A'}${dataInfo}</pre>
+            `;
+        };
+
+        list.appendChild(li);
+    });
+}
+
+// 캐시 파일 정리 (기초 정보만 유지, 본문 등 제거)
+function deleteCacheFile(filepath, index) {
+    if (!confirm(`캐시를 정리하시겠습니까?\n(기초 정보만 남기고 본문/제목 등 제거)\n${filepath}`)) return;
+
+    fetch('/api/cleanup_cache_file', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filepath: filepath })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                // Update visual to show cleaned status
+                const listItems = document.querySelectorAll('#link-list li');
+                if (listItems[index]) {
+                    listItems[index].style.opacity = '0.5';
+                    listItems[index].style.textDecoration = 'line-through';
+                }
+                console.log('[Cache Cleanup] Success:', filepath);
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('Error cleaning cache: ' + err));
+}
+
+// 중복 캐시 찾기
+function findDuplicateCaches() {
+    const btn = document.querySelector('button[onclick="findDuplicateCaches()"]');
+    const originalText = btn.textContent;
+    btn.textContent = '검색 중...';
+    btn.disabled = true;
+
+    fetch('/api/find_duplicate_caches')
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert('오류: ' + data.error);
+                btn.textContent = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            if (data.total_duplicate_urls === 0) {
+                alert('중복 캐시가 없습니다! ✅');
+                btn.textContent = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            // Show duplicates and ask if user wants to clean up
+            const msg = `중복 URL: ${data.total_duplicate_urls}개\n삭제 가능한 파일: ${data.total_duplicate_files}개\n\n정리하시겠습니까? (최신 파일만 유지)`;
+
+            if (confirm(msg)) {
+                cleanupDuplicateCaches();
+            }
+
+            btn.textContent = originalText;
+            btn.disabled = false;
+        })
+        .catch(err => {
+            alert('중복 검색 실패: ' + err);
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
+}
+
+// 중복 캐시 정리 (최신 유지, 나머지 삭제)
+function cleanupDuplicateCaches() {
+    fetch('/api/cleanup_duplicate_caches', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert(`✅ ${res.deleted_count}개의 중복 캐시 파일을 삭제했습니다.`);
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('정리 실패: ' + err));
+}
+
+// 미연결 DATA 파일 찾기 (캐시에서 참조되지 않는 파일)
+function findOrphanDataFiles() {
+    const btn = document.querySelector('button[onclick="findOrphanDataFiles()"]');
+    const originalText = btn.textContent;
+    btn.textContent = '검색 중...';
+    btn.disabled = true;
+
+    fetch('/api/find_orphan_data_files')
+        .then(res => res.json())
+        .then(data => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+
+            if (data.error) {
+                alert('오류: ' + data.error);
+                return;
+            }
+
+            if (data.total === 0) {
+                alert(`✅ 모든 DATA 파일이 캐시에서 참조되고 있습니다.\n(캐시 URL: ${data.cached_urls_count}개)`);
+                return;
+            }
+
+            // Show orphan files and ask if user wants to clean up
+            let fileList = data.orphan_files.slice(0, 10).map(f =>
+                `📄 ${f.filename} (${f.date})\n   ${f.title || 'No title'}`
+            ).join('\n');
+
+            if (data.total > 10) {
+                fileList += `\n... 외 ${data.total - 10}개`;
+            }
+
+            const msg = `🧹 데이터 정리\n\n미연결 DATA 파일: ${data.total}개\n(캐시에서 참조되지 않는 파일)\n\n${fileList}\n\n삭제하시겠습니까?`;
+
+            if (confirm(msg)) {
+                cleanupOrphanDataFiles();
+            }
+        })
+        .catch(err => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            alert('검색 실패: ' + err);
+        });
+}
+
+// 미연결 DATA 파일 삭제
+function cleanupOrphanDataFiles() {
+    fetch('/api/cleanup_orphan_data_files', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert(`✅ ${res.deleted_count}개의 미연결 DATA 파일을 삭제했습니다.\n(daily_summary 자동 업데이트됨)`);
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('정리 실패: ' + err));
+}
+
 function fetchLinks() {
     const select = document.getElementById('targetSelect');
     currentTargetId = select.value;
@@ -66,8 +707,16 @@ function fetchLinks() {
         .then(res => res.json())
         .then(data => {
             currentLinks = data.links;
+
+            // Pre-load cached content into loadedContents
+            currentLinks.forEach(item => {
+                if (item.content) {
+                    loadedContents[item.url] = item.content;
+                }
+            });
+
             renderLinks();
-            btn.textContent = 'Fetch Links';
+            btn.textContent = '링크 가져오기';
             btn.classList.remove('loading');
         })
         .catch(err => {
@@ -100,13 +749,95 @@ function renderLinks() {
             badge = '<span class="status-badge badge-worthless">TRASH</span>';
         }
 
-        li.innerHTML = `${badge}${item.url}`;
+        // 상태 마크: 없음 → CACHE(article_id 있음) → JSON(score 있음) → OK(저장완료)
+        let stateMark = '';
+        const content = item.content || loadedContents[item.url];
+
+        if (item.status === 'ACCEPTED') {
+            // 이미 저장 완료됨
+            stateMark = '<span style="background:#28a745; color:white; padding:2px 6px; border-radius:3px; font-size:0.65em; margin-right:3px;">OK</span>';
+        } else if (content && content.zero_echo_score !== undefined) {
+            // JSON 평가 결과가 있음
+            stateMark = '<span style="background:#6610f2; color:white; padding:2px 6px; border-radius:3px; font-size:0.65em; margin-right:3px;">JSON</span>';
+        } else if (content && content.article_id) {
+            // article_id가 있어야 CACHE (제대로 생성된 캐시)
+            stateMark = '<span style="background:#17a2b8; color:white; padding:2px 6px; border-radius:3px; font-size:0.65em; margin-right:3px;">CACHE</span>';
+        }
+        // article_id 없으면 마크 없음 (미생성)
+
+        // Data file link mark (shows if cache is linked to saved data file)
+        let dataFileMark = '';
+        if (item.data_file) {
+            dataFileMark = `<span style="background:#28a745; color:white; padding:2px 4px; border-radius:3px; font-size:0.6em; margin-right:3px;" title="저장됨: ${item.data_file.filename}">DATA</span>`;
+        }
+
+        // Reset button (only show if content exists)
+        let resetBtn = '';
+        if (content || item.cached) {
+            resetBtn = `<button onclick="event.stopPropagation(); resetCache(${index})" style="background:#dc3545; color:white; border:none; padding:1px 4px; border-radius:3px; font-size:0.6em; margin-right:3px; cursor:pointer;" title="캐시 삭제">✕</button>`;
+        }
+
+        li.innerHTML = `${badge}${stateMark}${dataFileMark}${resetBtn}<span style="word-break:break-all;">${item.url}</span>`;
         li.className = statusClass;
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
 
         li.onclick = () => loadArticle(index);
         if (index === currentLinkIndex) li.classList.add('active');
         list.appendChild(li);
     });
+}
+
+// Reset cache for a specific article (cleanup, not delete)
+function resetCache(index) {
+    const item = currentLinks[index];
+    if (!item) return;
+
+    const displayPath = item.filepath || item.url;
+    if (!confirm(`캐시를 정리하시겠습니까?\n(기초 정보만 남기고 본문/제목 등 제거)\n${displayPath}`)) return;
+
+    // If filepath exists, use cleanup API (keeps url, article_id, cached_at)
+    if (item.filepath) {
+        fetch('/api/cleanup_cache_file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filepath: item.filepath })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
+                    // Update local state - mark as cleaned
+                    delete loadedContents[item.url];
+                    item.content = null;
+                    item.status = 'CLEANED';
+                    renderLinks();
+                    console.log('[Cache Cleanup] Success:', item.filepath);
+                } else {
+                    alert('Error: ' + res.error);
+                }
+            })
+            .catch(err => alert('Error cleaning cache: ' + err));
+    } else {
+        // Fallback: URL-based cleanup (searches all date folders)
+        fetch('/api/refresh', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: item.url })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
+                    delete loadedContents[item.url];
+                    item.cached = false;
+                    item.status = 'NEW';
+                    renderLinks();
+                    console.log('[Cache Reset] Success (url):', item.url);
+                } else {
+                    alert('Error: ' + res.error);
+                }
+            })
+            .catch(err => alert('Error resetting cache: ' + err));
+    }
 }
 
 function loadArticle(index) {
@@ -117,34 +848,41 @@ function loadArticle(index) {
     const link = item.url;
     document.getElementById('url').value = link;
 
-    // Clear inputs
+    // Clear ALL display items when switching articles
     document.getElementById('originalTitle').value = 'Loading...';
     document.getElementById('jsonInput').value = '';
     document.getElementById('previewPane').innerHTML = '<div style="text-align:center; margin-top:50px;">Loading content...</div>';
+    document.getElementById('jsonSummary').textContent = '로딩 중...';
+    document.getElementById('verifyResult').innerHTML = '점수 검증 버튼을 누르면 결과가 표시됩니다.';
+    document.getElementById('finalCardPreview').textContent = '평가 JSON을 입력하면 최종 저장될 형태가 여기에 표시됩니다.';
+    document.getElementById('cardStatus').textContent = '';
 
     // Helper to render
     const render = (data) => {
         document.getElementById('originalTitle').value = data.title || data.original_title || '';
 
+        // Update original link
+        document.getElementById('originalLink').href = link;
+
         // Check if it's existing data (has source_id or scores) OR modified batch data
         if ((data.source_id && data.zero_echo_score !== undefined) || data.zero_echo_score !== undefined) {
             document.getElementById('jsonInput').value = JSON.stringify(data, null, 2);
-            verifyScore();
+            document.getElementById('jsonSummary').textContent = data.summary || '(summary 없음)';
+            updateFinalCardPreview();
+            verifyAndApply();
         } else {
             document.getElementById('jsonInput').value = '';
-            document.getElementById('verifyResult').style.display = 'none';
+            document.getElementById('jsonSummary').textContent = '평가 JSON을 붙여넣으면 요약이 표시됩니다.';
+            document.getElementById('verifyResult').innerHTML = '점수 검증 버튼을 누르면 결과가 표시됩니다.';
+            document.getElementById('finalCardPreview').textContent = '평가 JSON을 입력하면 최종 저장될 형태가 여기에 표시됩니다.';
+            document.getElementById('cardStatus').textContent = '';
         }
 
+        // Render preview (simplified for new UI)
         document.getElementById('previewPane').innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h2 style="margin: 0; font-size: 1.5em;">${data.title || data.title_ko || 'No Title'}</h2>
-                <div style="white-space: nowrap;">
-                    <button onclick="copyContent()" style="padding: 5px 10px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; margin-right: 10px;">📋 Copy Content</button>
-                    <a href="${link}" target="_blank" style="text-decoration: none; color: #007bff; font-weight: bold; border: 1px solid #007bff; padding: 4px 8px; border-radius: 4px;">🔗 Original</a>
-                </div>
-            </div>
+            <h2>${data.title || data.title_ko || 'No Title'}</h2>
             <hr>
-            <pre id="articleBody" style="white-space: pre-wrap; font-family: inherit;">${data.text || data.summary || 'No text content'}</pre>
+            <pre id="articleBody">${data.text || data.summary || 'No text content'}</pre>
         `;
     };
 
@@ -154,11 +892,18 @@ function loadArticle(index) {
         return;
     }
 
-    // Fallback to fetch
+    // Fallback to fetch (this will also save to server cache)
     fetch(`/api/extract?url=${encodeURIComponent(link)}`)
         .then(res => res.json())
         .then(data => {
             loadedContents[link] = data;
+
+            // Update cached flag so CACHE mark shows immediately
+            if (currentLinks[currentLinkIndex]) {
+                currentLinks[currentLinkIndex].cached = true;
+            }
+            renderLinks();
+
             render(data);
         })
         .catch(err => {
@@ -169,13 +914,29 @@ function loadArticle(index) {
 function copyContent() {
     const title = document.querySelector('#previewPane h2').innerText;
     const body = document.getElementById('articleBody').innerText;
-    const content = `${title}\n\n${body}`;
+    const url = document.getElementById('url').value;
+
+    // Use article_id from cache, or generate from URL hash
+    const item = currentLinks[currentLinkIndex];
+    const data = item?.content || loadedContents[url];
+    const articleId = data?.article_id || getArticleIdFromUrl(url);
+    articleIdMap[articleId] = url;
+
+    const content = `--- Article : ${currentLinkIndex + 1}
+---article_id : ${articleId}
+---Title: ${title}
+---Body:
+${body}
+
+---`;
 
     navigator.clipboard.writeText(content).then(() => {
-        const btn = document.querySelector('#previewPane button');
-        const originalText = btn.textContent;
-        btn.textContent = '✅ Copied!';
-        setTimeout(() => btn.textContent = originalText, 1500);
+        const btn = document.querySelector('.center-top button');
+        if (btn) {
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => btn.textContent = originalText, 1500);
+        }
     }).catch(err => {
         alert('Failed to copy: ' + err);
     });
@@ -191,10 +952,20 @@ function saveArticle() {
         return alert('Invalid JSON: ' + e.message);
     }
 
+    // Get source_id from multiple sources with fallback
+    const url = document.getElementById('url').value;
+    const cached = loadedContents[url] || {};
+    const currentItem = currentLinks[currentLinkIndex] || {};
+    const sourceId = cached.source_id || currentItem.source_id || currentTargetId || '';
+
+    if (!sourceId) {
+        return alert('Source ID가 없습니다. 소스를 먼저 선택해주세요.');
+    }
+
     const data = {
         ...jsonData,
-        url: document.getElementById('url').value,
-        source_id: currentTargetId,
+        url: url,
+        source_id: sourceId,
         original_title: document.getElementById('originalTitle').value
     };
 
@@ -210,6 +981,19 @@ function saveArticle() {
         .then(res => res.json())
         .then(res => {
             if (res.status === 'success') {
+                // [NEW] Update cache with saved data + saved status + data_file info
+                const savedData = {
+                    ...data,
+                    saved: true,
+                    saved_at: new Date().toISOString(),
+                    data_file: res.data_file  // Include the saved data file info
+                };
+                fetch('/api/update_cache', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: data.url, content: savedData })
+                }).catch(err => console.warn('[Cache Update] Failed:', err));
+
                 markAsProcessed('ACCEPTED');
                 loadNext();
             } else {
@@ -227,9 +1011,15 @@ function verifyScore() {
         return alert('Invalid JSON: ' + e.message);
     }
 
+    // Auto-extract if LLM sent schema format with properties containing actual values
+    if (jsonData.properties && jsonData.type === 'object') {
+        console.log('[verifyScore] Detected schema format, extracting properties values...');
+        jsonData = jsonData.properties;
+    }
+
     // Normalize field names (handle case variations like zero_Echo_score, Zero_echo_score, etc.)
     jsonData = normalizeFieldNames(jsonData);
-    // Update the input with normalized data
+    // Update the input with normalized data (cleaned format)
     document.getElementById('jsonInput').value = JSON.stringify(jsonData, null, 2);
 
     const resultDiv = document.getElementById('verifyResult');
@@ -391,6 +1181,46 @@ function markAsProcessed(status) {
     renderLinks();
 }
 
+function refreshArticle() {
+    const url = document.getElementById('url').value;
+    if (!url) return alert('No article loaded');
+
+    if (!confirm('🔄 이 기사의 분석 결과를 소거하고 NEW 상태로 되돌리시겠습니까?\\n(캐시 및 히스토리가 삭제됩니다)')) {
+        return;
+    }
+
+    fetch('/api/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                // Clear local state
+                delete loadedContents[url];
+
+                // Reset status to NEW
+                if (currentLinks[currentLinkIndex]) {
+                    currentLinks[currentLinkIndex].status = 'NEW';
+                }
+
+                // Clear UI
+                document.getElementById('jsonInput').value = '';
+                document.getElementById('verifyResult').style.display = 'none';
+
+                renderLinks();
+                alert('✅ 리프레시 완료! 기사가 NEW 상태로 되돌려졌습니다.');
+
+                // Reload article to get fresh content
+                loadArticle(currentLinkIndex);
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('Error: ' + err));
+}
+
 function loadNext() {
     if (currentLinkIndex < currentLinks.length - 1) {
         loadArticle(currentLinkIndex + 1);
@@ -489,13 +1319,30 @@ function loadAndCopy() {
     });
 }
 
+// Generate article ID from URL hash (consistent for same URL)
+function getArticleIdFromUrl(url) {
+    // Simple hash function to match Python's get_url_hash
+    let hash = 0;
+    for (let i = 0; i < url.length; i++) {
+        const char = url.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash).toString(16).substring(0, 6);
+}
+
 function copyAllForPrompt() {
     const keys = Object.keys(loadedContents);
     if (keys.length === 0) return alert('Please "Load All" content first!');
 
+    // Reset article ID map for this batch
+    articleIdMap = {};
+
     const N = currentLinks.length;
     let text = `${N}개의 항목에 대해서 개별로 평가하라.\n이 목록은 해당 그룹에 해당하는 리스트이다.\n`;
-    text += `응답은 반드시 Valid JSON List 포맷으로 작성하라. \n예시: { "results": [ { "title_ko": "...", "zero_echo_score": 5.0, "impact_score": 3.5, "summary": "...", "reasoning": "..." } ] }\n\n`;
+    text += `응답은 반드시 Valid JSON List 포맷으로 작성하라.\n`;
+    text += `각 응답에 반드시 "article_id" 필드를 포함하여 해당 기사의 ID를 명시하라.\n`;
+    text += `예시: { "results": [ { "article_id": "abc123", "title_ko": "...", "zero_echo_score": 5.0, "impact_score": 3.5, "summary": "...", "reasoning": "..." } ] }\n\n`;
 
     currentLinks.forEach((linkItem, index) => {
         const data = loadedContents[linkItem.url];
@@ -504,8 +1351,14 @@ function copyAllForPrompt() {
         const title = data.title || data.title_ko || 'No Title';
         const body = data.text || data.summary || 'No text content';
 
-        text += `--- Item ${index + 1} ---\n`;
-        text += `${title}\n\n${body}\n\n`;
+        // Use article_id from cache (already stored), or generate from URL hash
+        const articleId = data.article_id || getArticleIdFromUrl(linkItem.url);
+        articleIdMap[articleId] = linkItem.url;
+
+        text += `--- Article : ${index + 1}\n`;
+        text += `---article_id : ${articleId}\n`;
+        text += `---Title: ${title}\n`;
+        text += `---Body:\n${body}\n\n`;
     });
 
     navigator.clipboard.writeText(text).then(() => {
@@ -595,34 +1448,65 @@ function applyBatchResults() {
 
     if (results.length === 0) return alert('No results found in JSON.');
 
-    if (results.length !== currentLinks.length) {
-        if (!confirm(`⚠️ Count Mismatch!\nLinks: ${currentLinks.length}\nResults: ${results.length}\n\nApply anyway (by order)?`)) {
-            return;
+    // Check if results have article_id (hash-based matching)
+    const hasArticleIds = results.every(r => r.article_id);
+
+    if (!hasArticleIds) {
+        // Fallback to order-based matching with warning
+        if (results.length !== currentLinks.length) {
+            if (!confirm(`⚠️ article_id가 없어 순서 기반 매칭을 사용합니다.\nLinks: ${currentLinks.length}\nResults: ${results.length}\n\n계속하시겠습니까?`)) {
+                return;
+            }
         }
     }
 
     let updatedCount = 0;
-    results.forEach((resItem, index) => {
-        if (index >= currentLinks.length) return;
+    let skippedCount = 0;
 
-        const linkItem = currentLinks[index];
-        const url = linkItem.url;
+    results.forEach((resItem, index) => {
+        let url = null;
+
+        if (hasArticleIds && resItem.article_id) {
+            // Hash-based matching
+            url = articleIdMap[resItem.article_id];
+            if (!url) {
+                console.warn(`Unknown article_id: ${resItem.article_id}`);
+                skippedCount++;
+                return;
+            }
+        } else {
+            // Fallback: order-based matching
+            if (index >= currentLinks.length) return;
+            url = currentLinks[index].url;
+        }
 
         if (!loadedContents[url]) loadedContents[url] = { url: url };
 
-        Object.assign(loadedContents[url], resItem);
+        // Remove article_id from final data (it's only for matching)
+        const { article_id, ...restData } = resItem;
+        Object.assign(loadedContents[url], restData);
 
-        if (resItem.zero_echo_score !== undefined) {
-            loadedContents[url].zero_echo_score = parseFloat(resItem.zero_echo_score);
+        if (restData.zero_echo_score !== undefined) {
+            loadedContents[url].zero_echo_score = parseFloat(restData.zero_echo_score);
         }
-        if (resItem.impact_score !== undefined) {
-            loadedContents[url].impact_score = parseFloat(resItem.impact_score);
+        if (restData.impact_score !== undefined) {
+            loadedContents[url].impact_score = parseFloat(restData.impact_score);
         }
+
+        // [NEW] Update server cache with analysis results
+        fetch('/api/update_cache', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: url, content: loadedContents[url] })
+        }).catch(err => console.warn('[Cache Update] Failed:', err));
 
         updatedCount++;
     });
 
-    alert(`✅ Applied results to ${updatedCount} items.\nReview them one by one and click 'Save'.`);
+    let message = `✅ Applied results to ${updatedCount} items.`;
+    if (skippedCount > 0) message += `\n⚠️ Skipped ${skippedCount} items (unknown article_id).`;
+    message += `\nReview them one by one and click 'Save'.`;
+    alert(message);
     closeBatchModal();
 
     if (currentLinkIndex >= 0) {
@@ -656,4 +1540,110 @@ function showIndependentInspector() {
             btn.textContent = originalText;
             btn.classList.remove('loading');
         });
+}
+
+// 일괄 로드만 (프롬프트 복사 없이)
+function batchLoadOnly() {
+    if (currentLinks.length === 0) return alert('링크를 먼저 가져오세요.');
+
+    const uncached = currentLinks.filter(item => !item.cached && !loadedContents[item.url]);
+    if (uncached.length === 0) {
+        return alert('모든 링크가 이미 캐시되어 있습니다.');
+    }
+
+    if (!confirm(`${uncached.length}개 링크를 일괄 로드하시겠습니까?`)) return;
+
+    const urls = uncached.map(item => item.url);
+
+    fetch('/api/extract_batch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: urls })
+    })
+        .then(res => res.json())
+        .then(results => {
+            if (!Array.isArray(results)) {
+                return alert('Error: ' + (results.error || 'Unknown error'));
+            }
+
+            results.forEach(data => {
+                loadedContents[data.url] = data;
+                // Update cached flag
+                const item = currentLinks.find(l => l.url === data.url);
+                if (item) {
+                    item.cached = true;
+                    item.content = data;
+                }
+            });
+
+            renderLinks();
+            alert(`✅ ${results.length}개 링크 일괄 로드 완료!`);
+        })
+        .catch(err => alert('Error: ' + err));
+}
+
+// 로드 & 프롬프트 복사
+function loadAndCopy() {
+    if (currentLinks.length === 0) return alert('링크를 먼저 가져오세요.');
+
+    const uncached = currentLinks.filter(item => !item.cached && !loadedContents[item.url]);
+    const urls = uncached.map(item => item.url);
+
+    // If all cached, build prompt from cache
+    const buildPrompt = () => {
+        articleIdMap = {}; // Reset
+        let bodyText = '';
+
+        currentLinks.forEach((item, idx) => {
+            const data = item.content || loadedContents[item.url];
+            if (!data) return;
+
+            const title = data.title || data.title_ko || 'No Title';
+            const body = data.text || data.summary || '';
+            // Use article_id from cache, or generate from URL hash
+            const articleId = data.article_id || getArticleIdFromUrl(item.url);
+            articleIdMap[articleId] = item.url;
+
+            bodyText += `--- Article : ${idx + 1}\n`;
+            bodyText += `---article_id : ${articleId}\n`;
+            bodyText += `---Title: ${title}\n`;
+            bodyText += `---Body:\n${body}\n\n---\n\n`;
+        });
+
+        navigator.clipboard.writeText(bodyText).then(() => {
+            alert(`✅ ${currentLinks.length}개 기사 프롬프트 복사 완료!`);
+        });
+    };
+
+    if (urls.length === 0) {
+        // All cached, just copy
+        buildPrompt();
+        return;
+    }
+
+    // Need to load first
+    fetch('/api/extract_batch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: urls })
+    })
+        .then(res => res.json())
+        .then(results => {
+            if (!Array.isArray(results)) {
+                return alert('Error: ' + (results.error || 'Unknown error'));
+            }
+
+            results.forEach(data => {
+                loadedContents[data.url] = data;
+                const item = currentLinks.find(l => l.url === data.url);
+                if (item) {
+                    item.cached = true;
+                    item.content = data;
+                }
+            });
+
+            renderLinks();
+            buildPrompt();
+        })
+        .catch(err => alert('Error: ' + err));
 }

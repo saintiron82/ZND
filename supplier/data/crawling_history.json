@@ -318,5 +318,35 @@
     "status": "ACCEPTED",
     "reason": "high_score",
     "timestamp": "2025-12-11T14:54:00.453360+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204718": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-12T01:20:59.421262+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204740": {
+    "status": "MLL_FAILED",
+    "reason": "error: HTTPConnectionPool(host='localhost', port=8000): R",
+    "timestamp": "2025-12-12T05:14:01.182786+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204735": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-12T05:34:33.492697+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204738": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (10.0 >= 7.0)",
+    "timestamp": "2025-12-12T05:36:55.565195+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204734": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-12T05:45:43.127366+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204710": {
+    "status": "MLL_FAILED",
+    "reason": "error: API Error: [invoke_v2] LLM 호출 실패: Error code: 400 ",
+    "timestamp": "2025-12-12T05:55:39.666330+00:00"
   }
 }

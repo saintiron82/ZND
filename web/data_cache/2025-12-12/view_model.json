@@ -1,0 +1,83 @@
+{
+  "generated_at": "2025-12-12T01:22:54.410Z",
+  "articles": [
+    {
+      "title": "모티프, 글로벌 모델 성능 평가서 11위...”12.7B 규모로 이뤄낸 성과”",
+      "summary": "모티프테크놀로지스의 자체 개발 대형언어모델 모티프 12.7B가 AA의 지능순위에서 11위를 차지했다. 400GPU·5.5T 토큰의 비교적 적은 자원으로도 높은 성능을 입증했고, 그룹 차등 어텐션과 뮤온 옵티마이저 등 독자 기술이 핵심 요인으로 꼽힌다. AA는 수학적 추론과 에이전트 기능에서 강점을 언급하며 올해 주목할 만한 모델로 소개했다.",
+      "published_at": "2025-12-11T16:47:59+09:00",
+      "modified_at": "2025-12-11T18:35:08+09:00",
+      "author": [
+        "장세민 기자"
+      ],
+      "image": "https://cdn.aitimes.com/news/photo/202512/204718_206053_5416.png",
+      "text": "기사를 읽어드립니다. (사진=모티프) 모티프테크놀로지스(대표 임정환)는 최근 선보인 자체 개발 대형언어모델(LLM) ‘모티프(Motif) 12.7B’가 글로벌 LLM 성능 평가 ‘아티피셜 애널리시스 인덱스’에서 11위를 기록했다고 11일 밝혔다. 지난 11월 허깅페이스에 오픈 소스로 공개된 ‘모티프 12.7B’는 모티프테크놀로지스가 프롬 스크래치 방식으로 모델 구축부터 데이터 학습까지 전 과정을 직접 수행한 모델이다. 이 모델은 11일 현재 LLM 평가 전문 아티피셜 애널리시스(AA)’의 지능 순위에서 45점으로, 전체 11위를 기록했다. 앞선 10개 모델의 점수와는 차이가 있지만, 대부분 매개변수가 1000억개를 넘는 모델이라는 점을 감안하면 상당한 성능으로 볼 수 있다. 실제로 글로벌 동급 사이즈 모델 중에서 가장 높은 점수를 기록한 것은 물론, 매개변수가 675B에 달하는 '미스트랄 라지 3'와 같은 대형 모델보다도 높은 점수를 받았다. 또, 이는 국내 모델 중 1위에 해당한다. 아티피셜 애널리시스는 모티프 12.7B가 수학적 추론과 에이전트 기능에서 강점을 보인다며, 올해 출시된 주목할 만한 AI 모델 중 하나라고 소개했다. 아티피셜 애널리시스 인덱스 순위 (사진=AA) 모티프는 모레(대표 조강원)의 자회사로, GPU의 효율성을 최대로 끌어올려 모델을 학습하는 능력을 갖추고 있다. 모레는 자체 모델로 2024년 1월 허깅페이스 1위를 차지한 경험이 있는데, 당시 모델을 개발했던 팀이 분사한 것이다. 또, AMD GPU로 구성된 대규모 클러스터를 활용해 LLM에 이어 이미지 생성 모델을 개발하는 데에도 성공한 바 있다. 이번 모델은 400장 규모의 GPU와 5.5T 토큰이라는 적은 사전 학습량, 그리고 12.7B 매개변수만으로 높은 성능의 모델을 독자 개발할 수 있었다고 강조했다. 또 ‘그룹 차등 어텐션(Grouped Differential Attention)’과 ‘뮤온 옵티마이저(Muon Optimizer) 병렬화 알고리즘’ 등 독자개발 기술을 활용했다. 그룹 차등 어텐션 기술은 모델의 안정성과 추론 능력 향상을 위해 최신 모델들에서 널리 사용되고 있는 차등 어텐션 메커니즘을 개선한 것이다. 환각을 줄이고 추론 성능을 크게 끌어올려 준다는 설명이다. 뮤온 옵티마이저 병렬화는 LLM 학습 효율 저하의 주요 원인으로 꼽혀왔던 멀티노드 분산 환경에서의 노드 간 통신과 동기화 병목 문제를 해결해 준다. 이런 기술을 바탕으로, 앞으로 더 큰 모델에서 더 높은 성능 달성이 가능할 것이라고 전했다. 임정환 모티프테크놀로지스 대표는 “앞으로도 독자적인 LLM 개발 기술과 도전 정신을 바탕으로 글로벌 오픈 소스 LLM 경쟁의 최전선에서 더 높은 효율과 성능의 모델들을 지속적으로 선보일 계획\"이라고 말했다. 자세한 모델 정보는 웹사이트에서 확인할 수 있다. 장세민 기자 semim99@aitimes.com",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204718",
+      "type": "object",
+      "title_ko": "모티프 12.7B가 AA 지능 인덱스에서 11위 기록",
+      "article_id": "db8b26",
+      "impact_score": 5,
+      "impact_evidence": {
+        "entity": {
+          "id": "TIER_Z_GENERAL",
+          "weight": 1
+        },
+        "events": [
+          {
+            "id": "PARADIGM_SHIFT_RELEASE",
+            "weight": 4
+          }
+        ]
+      },
+      "tags": [
+        "OPEN_SOURCE",
+        "MODEL_RELEASE",
+        "GEN_AI"
+      ],
+      "evidence": {
+        "penalties": [],
+        "credits": [
+          {
+            "id": "ARCHITECTURAL_DEEP_DIVE",
+            "value": 0.9
+          },
+          {
+            "id": "COMPARATIVE_BENCHMARK",
+            "value": 0.8
+          },
+          {
+            "id": "RESOURCE_EFFICIENCY_ANALYSIS",
+            "value": 0.6
+          },
+          {
+            "id": "OPEN_DATASET_RELEASE",
+            "value": 0.7
+          }
+        ],
+        "modifiers": [
+          {
+            "id": "IRRELEVANT_ENTITY_NOISE",
+            "applied": true
+          }
+        ]
+      },
+      "Overall review": "AA 순위 11위 달성은 오픈 소스 공개와 독자 기술의 영향으로 평가가 상승했다. 다만 대형 모델 대비 상대적 파편화된 비교이므로 시장 영향은 중간이며, 기술적 기여와 실용성은 여전히 주목할 만하다.",
+      "review_en": "The AA ranking at 11th reflects a notable performance driven by open-source release and the model's own architectural innovations. While the impact on the market is moderate due to the relative scale, the technical contributions and practical potential are worth watching.",
+      "zero_echo_score": 0,
+      "source_id": "aitimes",
+      "crawled_at": "2025-12-12T01:20:59.418668+00:00",
+      "original_title": "모티프, 글로벌 모델 성능 평가서 11위...”12.7B 규모로 이뤄낸 성과”",
+      "edition": "251212_FRI_1",
+      "id": "aitimes_db8b2639",
+      "score": 0,
+      "cols": 10,
+      "rows": 11,
+      "zeroEchoScore": 0,
+      "impactScore": 5,
+      "awards": [
+        "Today's Headline",
+        "Zero Noise Award",
+        "Hot Topic"
+      ]
+    }
+  ]
+}

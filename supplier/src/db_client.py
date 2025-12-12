@@ -190,9 +190,6 @@ class DBClient:
             print(f"💾 Saved to {file_path}: {article_data.get('title_ko')}")
         except Exception as e:
             print(f"❌ Error saving file: {e}")
-        
-        # [NEW] Update daily summary
-        self._update_daily_summary(date_str)
 
     def _calculate_edition(self, date_str, date_obj):
         """
@@ -318,59 +315,4 @@ class DBClient:
             
         except Exception as e:
             return False, f"Backup/Write failed: {str(e)}"
-
-    def _update_daily_summary(self, date_str):
-        """
-        Scans all JSON files in the given date directory and creates/updates 
-        a 'daily_summary.json' file. This acts as a header file for the API.
-        """
-        import glob
-        import json
-        from datetime import datetime
-        
-        try:
-            data_dir = self._get_data_dir()
-            target_dir = os.path.join(data_dir, date_str)
-            
-            if not os.path.exists(target_dir):
-                return
-
-            # Find all article json files (exclude 'daily_summary.json' and backup folders)
-            files = glob.glob(os.path.join(target_dir, "*.json"))
-            summary_list = []
-            
-            for fpath in files:
-                filename = os.path.basename(fpath)
-                if filename == 'daily_summary.json':
-                    continue
-                    
-                try:
-                    with open(fpath, 'r', encoding='utf-8') as f:
-                        article = json.load(f)
-                        # Skip articles without article_id
-                        if not article.get('article_id'):
-                            print(f"⚠️ Skipping article without article_id: {filename}")
-                            continue
-                        summary_list.append(article)
-                except Exception as e:
-                    print(f"⚠️ Skipping corrupted file {filename}: {e}")
-                    
-            # Sort by crawled_at descending
-            summary_list.sort(key=lambda x: x.get('crawled_at', ''), reverse=True)
-            
-            summary_data = {
-                "last_updated": datetime.utcnow().isoformat() + "Z", # UTC ISO format
-                "articles": summary_list
-            }
-            
-            summary_path = os.path.join(target_dir, "daily_summary.json")
-            with open(summary_path, 'w', encoding='utf-8') as f:
-                json.dump(summary_data, f, ensure_ascii=False, indent=2)
-                
-            print(f"✅ Updated daily_summary.json for {date_str} ({len(summary_list)} articles)")
-            
-        except Exception as e:
-            print(f"❌ Failed to update daily summary: {e}")
-
-
 

@@ -225,34 +225,178 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
 
 def normalize_field_names(data: dict) -> dict:
     """
-    Normalize field names to handle case variations.
-    e.g., zero_Echo_score, Zero_echo_score -> zero_echo_score
-    Also migrates legacy zero_noise_score field.
+    Normalize field names to handle case variations and nested structures.
+    Supports:
+    1. Nested 'Impact' object -> top-level 'impact_score', 'impact_evidence'
+    2. Nested 'ZeroEcho' object -> top-level 'zero_echo_score', 'evidence'
+    3. Case variations (Zero_Echo_Score -> zero_echo_score)
+    4. Legacy field migration (zero_noise_score -> zero_echo_score)
     
     Args:
         data: Input data dict
     
     Returns:
-        Normalized data dict
+        Normalized flat data dict
     """
     if not isinstance(data, dict):
         return data
     
     normalized = dict(data)
-    keys_to_check = list(normalized.keys())
     
+    # --- 0. Unwrap 'response_schema' if present (Support for structured output) ---
+    if 'response_schema' in normalized and isinstance(normalized['response_schema'], dict):
+        print(f"[Normalize] Unwrapped 'response_schema' layer")
+        # Merge schema content into top level
+        # We prioritize schema content, but keep existing top-level keys if not in schema
+        schema_content = normalized.pop('response_schema')
+        for k, v in schema_content.items():
+            normalized[k] = v
+            
+    # --- 1. Flatten 'Impact' Object ---
+    if 'Impact' in normalized and isinstance(normalized['Impact'], dict):
+        impact_obj = normalized['Impact']
+        # Extract impact_score
+        if 'impact_score' not in normalized and 'impact_score' in impact_obj:
+            normalized['impact_score'] = impact_obj['impact_score']
+        
+        # Extract evidence/review if needed
+        if 'impact_evidence' in impact_obj:
+            # If compatible with top-level format, move it
+            if 'impact_evidence' not in normalized:
+                normalized['impact_evidence'] = impact_obj['impact_evidence']
+        
+        # Extract reviews
+        if 'impact_review_ko' in impact_obj:
+            normalized['impact_review_ko'] = impact_obj['impact_review_ko']
+        if 'impact_review_en' in impact_obj:
+            normalized['impact_review_en'] = impact_obj['impact_review_en']
+            
+    # --- 2. Flatten 'ZeroEcho' Object ---
+    if 'ZeroEcho' in normalized and isinstance(normalized['ZeroEcho'], dict):
+        ze_obj = normalized['ZeroEcho']
+        
+        # Extract ZeroEchoScore (handle case variations inside object)
+        ze_score = ze_obj.get('ZeroEchoScore') or ze_obj.get('zero_echo_score') or ze_obj.get('Zero_Echo_Score')
+        if ze_score is not None:
+            normalized['zero_echo_score'] = ze_score
+            
+        # Extract Evidence (penalties, credits, modifiers)
+        # We need to construct the 'evidence' object expected by the system
+        evidence_structure = {
+            "penalties": ze_obj.get('penalties', []),
+            "credits": ze_obj.get('credits', []),
+            "modifiers": ze_obj.get('modifiers', [])
+        }
+        
+        # Only set if not already present (or if present is empty)
+        if 'evidence' not in normalized or not normalized['evidence']:
+            normalized['evidence'] = evidence_structure
+            
+        # Extract reviews
+        if 'zeroechoscore_review_ko' in ze_obj:
+            normalized['zeroechoscore_review_ko'] = ze_obj['zeroechoscore_review_ko']
+        if 'zeroechoscore_review_en' in ze_obj:
+            normalized['zeroechoscore_review_en'] = ze_obj['zeroechoscore_review_en']
+
+    # --- 3. Top-level Normalization & Cleanup ---
+    keys_to_check = list(normalized.keys())
     for key in keys_to_check:
         key_lower = key.lower()
+        
         # Handle zero_echo_score variations
-        if key_lower == 'zero_echo_score' and key != 'zero_echo_score':
-            normalized['zero_echo_score'] = normalized.pop(key)
-            print(f"[Normalize] Renamed '{key}' to 'zero_echo_score'")
+        if key_lower in ['zero_echo_score', 'zeroechoscore', 'zero_echo'] and key != 'zero_echo_score':
+            if 'zero_echo_score' not in normalized:
+                normalized['zero_echo_score'] = normalized.pop(key)
+                print(f"[Normalize] Renamed '{key}' to 'zero_echo_score'")
+            else:
+                # Duplicate, just remove the non-standard one
+                normalized.pop(key)
+                
         # Handle legacy zero_noise_score
         elif key_lower == 'zero_noise_score':
-            normalized['zero_echo_score'] = normalized.pop(key)
-            print(f"[Normalize] Migrated '{key}' to 'zero_echo_score'")
+            if 'zero_echo_score' not in normalized:
+                normalized['zero_echo_score'] = normalized.pop(key)
+                print(f"[Normalize] Migrated '{key}' to 'zero_echo_score'")
+            else:
+                normalized.pop(key)
+
+        # Handle Impact Score variations
+        elif key_lower == 'impact_score' and key != 'impact_score':
+             if 'impact_score' not in normalized:
+                normalized['impact_score'] = normalized.pop(key)
+
+    # Ensure scores are float/int
+    if 'impact_score' in normalized:
+        try:
+            normalized['impact_score'] = float(normalized['impact_score'])
+        except:
+            pass
+            
+    if 'zero_echo_score' in normalized:
+        try:
+            normalized['zero_echo_score'] = float(normalized['zero_echo_score'])
+        except:
+            pass
+
+    return recalculate_scores(normalized)
+
+
+def recalculate_scores(data: dict) -> dict:
+    """
+    Recalculate scores based on evidence to ensure integrity.
     
-    return normalized
+    Logic:
+    - Zero Echo Score:
+        - Base: 5.0
+        - Credits: Add values
+        - Penalties: Subtract values
+        - Limit: 0.0 ~ 10.0
+        
+    Args:
+        data: Normalized data dict
+        
+    Returns:
+        Data dict with validated stores
+    """
+    # 1. Zero Echo Score Validation
+    if 'evidence' in data and isinstance(data['evidence'], dict):
+        evidence = data['evidence']
+        
+        # Calculate calculated_score
+        # Base Score is 5.0 (Standard starting point)
+        calculated_score = 5.0
+        
+        # Add Credits
+        credits_list = evidence.get('credits', [])
+        if isinstance(credits_list, list):
+            for item in credits_list:
+                val = float(item.get('value', 0))
+                calculated_score += val
+                
+        # Subtract Penalties
+        penalties_list = evidence.get('penalties', [])
+        if isinstance(penalties_list, list):
+            for item in penalties_list:
+                val = float(item.get('value', 0))
+                calculated_score -= val
+                
+        # Clamp to 0.0 - 10.0
+        calculated_score = max(0.0, min(10.0, calculated_score))
+        calculated_score = round(calculated_score, 1)
+        
+        # Compare with existing score
+        original_score = float(data.get('zero_echo_score', 0))
+        
+        if abs(original_score - calculated_score) > 0.1:
+            print(f"⚠️ [Score Correction] ZeroEcho: {original_score} -> {calculated_score} (Based on Evidence)")
+            data['zero_echo_score'] = calculated_score
+            data['score_corrected'] = True
+            
+        # Ensure it's set if missing
+        if 'zero_echo_score' not in data:
+            data['zero_echo_score'] = calculated_score
+
+    return data
 
 
 # ==============================================================================
@@ -288,16 +432,21 @@ def update_manifest(date_str: str) -> bool:
                 with open(json_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     
-                    # Inject ID if missing (from filename hash)
-                    if 'id' not in data:
-                        filename = os.path.basename(json_file)
-                        parts = filename.replace('.json', '').split('_')
-                        if len(parts) > 1:
-                            data['id'] = parts[-1]
-                        else:
-                            data['id'] = filename
-                             
-                    articles.append(data)
+                    # Extract article_id from data or filename
+                    article_id = data.get('article_id')
+                    if not article_id:
+                        parts = basename.replace('.json', '').split('_')
+                        article_id = parts[-1] if len(parts) > 1 else basename.replace('.json', '')
+                    
+                    # Get impact_score for sorting
+                    impact_score = data.get('impact_score', 0)
+                    
+                    # Lightweight index entry: only article_id and filename
+                    articles.append({
+                        "article_id": article_id,
+                        "filename": basename,
+                        "impact_score": impact_score  # Keep for sorting, can be used for quick filtering
+                    })
             except Exception as e:
                 print(f"Error reading {json_file}: {e}")
 

@@ -35,7 +35,9 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 print(f"DEBUG: Loaded MLL_API_URL: {os.getenv('MLL_API_URL')}")
 
-TARGETS_FILE = os.path.join(BASE_DIR, 'config', 'targets.json')
+# 크롤링 설정 (환경변수 우선, 없으면 기본값)
+TARGETS_FILE = os.path.join(BASE_DIR, os.getenv('TARGETS_FILE', 'config/targets.json'))
+CRAWL_LIMIT = int(os.getenv('CRAWL_LIMIT', 999))  # 글로벌 크롤링 수량 제한
 
 def load_targets():
     """Loads target configurations from JSON."""
@@ -135,11 +137,12 @@ async def main():
         # 1. Fetch Links
         article_links = fetch_links(target)
         
-        # Apply limit
-        limit = target.get('limit', 5)
-        article_links = article_links[:limit]
+        # Apply limit (타겟 설정과 ENV 중 낮은 값 적용)
+        target_limit = target.get('limit', 5)
+        effective_limit = min(target_limit, CRAWL_LIMIT)
+        article_links = article_links[:effective_limit]
         
-        print(f"🔗 [Links] Found {len(article_links)} links (Limit: {limit}).")
+        print(f"🔗 [Links] Found {len(article_links)} links (Target limit: {target_limit}, Env limit: {CRAWL_LIMIT}, Applied: {effective_limit}).")
         
         # 2. Filter duplicates (quick check)
         new_links = []

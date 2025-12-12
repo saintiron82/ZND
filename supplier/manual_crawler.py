@@ -768,11 +768,14 @@ def update_cache():
         # Load existing cache first to preserve original content (title, text)
         existing = load_from_cache(url) or {}
         
+        # Normalize the new content field names (Handles nested Impact/ZeroEcho objects)
+        new_content_normalized = normalize_field_names(new_content)
+        
         # REMOVE text/title/article_id from new_content to prevent overwriting original
         # These fields should ONLY come from crawling, not from evaluation JSON
         # article_id must be preserved from cache or generated from URL hash
         protected_fields = ('text', 'title', 'article_id')
-        safe_content = {k: v for k, v in new_content.items() if k not in protected_fields}
+        safe_content = {k: v for k, v in new_content_normalized.items() if k not in protected_fields}
         
         # Merge: existing data + safe content (preserves original title, text, article_id)
         merged = {**existing, **safe_content}

@@ -4,6 +4,9 @@ import ArticleCard from '@/components/ArticleCard';
 import ArticleDisplay from '@/components/ArticleDisplay';
 import { optimizeArticleOrder } from '@/utils/layoutOptimizer';
 
+
+import HomePageClient from '@/components/HomePageClient';
+
 // CACHE CONFIGURATION
 // Revalidate this page every 1 hour (ISR).
 // We rely on view_model.json for persistence, but ISR helps unnecessary reads.
@@ -65,14 +68,32 @@ async function getData() {
       try {
         const manifestContent = await fs.readFile(manifestPath, 'utf8');
         const manifest = JSON.parse(manifestContent);
+
+        // NEW: Lightweight index - load individual files
         if (manifest.articles && Array.isArray(manifest.articles)) {
-          dirArticles = manifest.articles;
+          for (const entry of manifest.articles) {
+            // Check if this is a lightweight entry (has filename) or full article
+            if (entry.filename) {
+              // Lightweight index: load individual file
+              try {
+                const articlePath = path.join(sourcePath, entry.filename);
+                const articleContent = await fs.readFile(articlePath, 'utf8');
+                const article = JSON.parse(articleContent);
+                dirArticles.push(article);
+              } catch (e) {
+                console.error(`Failed to load article: ${entry.filename}`, e);
+              }
+            } else {
+              // Legacy full article in index (backward compatible)
+              dirArticles.push(entry);
+            }
+          }
         }
       } catch (err) {
         // Fallback: Scan individual JSON files
         try {
           const files = await fs.readdir(sourcePath);
-          const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json' && file !== 'view_model.json');
+          const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json' && file !== 'view_model.json' && file !== 'daily_summary.json');
           for (const file of jsonFiles) {
             try {
               const content = await fs.readFile(path.join(sourcePath, file), 'utf8');
@@ -116,66 +137,7 @@ async function getData() {
 
 export default async function Home() {
   const articles = await getData();
-
-  // Group articles by date (YYYY-MM-DD)
-  const groupedArticles: { [key: string]: any[] } = {};
-  articles.forEach((article: any) => {
-    let dateStr = '';
-    if (typeof article.crawled_at === 'string') {
-      dateStr = new Date(article.crawled_at).toLocaleDateString();
-    } else if (article.crawled_at && typeof article.crawled_at === 'object' && 'seconds' in article.crawled_at) {
-      dateStr = new Date(article.crawled_at.seconds * 1000).toLocaleDateString();
-    }
-
-    if (dateStr) {
-      if (!groupedArticles[dateStr]) {
-        groupedArticles[dateStr] = [];
-      }
-      groupedArticles[dateStr].push(article);
-    }
-  });
-
-  // Sort dates descending
-  const sortedDates = Object.keys(groupedArticles).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-
-  return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black p-8">
-      <main className="max-w-7xl mx-auto">
-        <header className="mb-12 text-center">
-          <h1 className="text-4xl font-bold text-zinc-900 dark:text-white mb-4">
-            Latest Tech News
-          </h1>
-          <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Curated tech news and insights, powered by AI.
-          </p>
-        </header>
-
-        <div className="flex flex-col gap-12">
-          {sortedDates.map(date => {
-            // Articles are ALREADY sorted and optimized by the server-side logic (or loaded from view_model)
-            // We just render them. 
-            // Note: The grouping logic above might disrupt the strict order if optimizeArticleOrder 
-            // returned a flat list for the whole dir. 
-            // Since we process PER DIR (which usually maps to PER DATE), the order within the group should be preserved
-            // exactly as it was in the optimizedArticles array.
-
-            const dateArticles = groupedArticles[date];
-
-            return (
-              <section key={date} className="mb-0">
-                <h2 className="text-xl font-bold text-foreground mb-6 flex items-baseline gap-4 border-b border-border pb-2">
-                  <span className="font-serif italic text-3xl">{date.split('.')[2]}</span>
-                  <span className="text-muted-foreground text-sm uppercase tracking-widest font-sans">
-                    {new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long' })}
-                  </span>
-                </h2>
-                <ArticleDisplay articles={dateArticles} loading={false} error={null} />
-              </section>
-            );
-          })}
-        </div>
-      </main>
-    </div>
-  );
+  return <HomePageClient articles={articles} />;
 }
+
 

@@ -1,0 +1,107 @@
+{
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204735",
+  "source_id": "aitimes",
+  "title": "카카오, 멀티모달모델 개발 과정·성능 공개...”한국형 서비스에 특화”",
+  "text": "(사진=카카오) 카카오(대표 정신아)는 12일 공식 테크블로그를 통해 ▲한국적 맥락 이해에 최적화된 통합 멀티모달 언어모델 ‘카나나-o(Kanana-o)’ ▲멀티모달 임베딩 모델 ‘카나나-v-임베딩(Kanana-v-embedding)’의 개발 과정과 성능을 공개했다. 지난 5월 처음 공개한 카나나-o는 텍스트, 음성, 이미지를 동시 이해하고 실시간으로 답변하는 통합 멀티모달 언어모델이다. 글로벌 모델보다 한국어 맥락 이해에 뛰어난 성능을 보였으며, 사람처럼 자연스럽고 풍부한 표현력을 갖추고 있는 것을 특징으로 소개했다. 공개 이후 음성 인식과 음성 합성, 감정 인식에 대한 성능을 유지하며 멀티모달 지시 이행, 발화 표현력 등을 꾸준히 개선했다고 전했다. 이에 따라 사용자 의도를 정확하게 파악하는 것은 물론, 풍부한 표현이 가능해졌다는 설명이다. 자체 구축 데이터셋으로 학습을 진행한 것이 핵심이라고 전했다. 단순 질의응답을 넘어서 요약, 감정 및 의도 해석, 오류 수정, 형식 변환, 번역 등 과업을 수행할 수 있도록 성능을 끌어올렸다고 강조했다. 또, 고품질 음성 데이터와 직접 선호 최적화(DPO) 기술을 적용해 억양, 감정, 호흡 등을 정교하게 학습시켰다는 설명이다. 미세한 음색과 어조 변화 등에 따른 감정 표현 능력까지 향상하기 위해 호스트와 게스트가 대화를 주고받는 ‘팟캐스트’ 형태의 데이터셋을 구축했다. 그 결과, 끊김 없이 자연스럽게 이어지는 멀티 턴(Multi-turn) 대화도 가능해졌다고 전했다. 벤치마크 평가 결과, 카나나-o는 영어 음성 성능에서 'GPT-4o'나 '제미나이 2.5 프로' 등에 비하면 약간 부족한 성능을 보였지만, 한국어 음성 인식 및 합성, 감정 인식 능력에서는 월등히 높은 수준을 기록했다. 앞으로는 더 자연스러운 동시 대화(Full-duplex)와 상황에 맞는 사운드스케이프(Soundscape, 소리환경)를 실시간 생성할 수 있는 진화된 모델로 발전시킬 예정이다. (사진=카카오) 이번에 공개된 ‘카나나-v-임베딩’은 이미지 검색의 핵심 기술로, 텍스트와 이미지를 동시에 이해 및 처리할 수 있는 한국형 멀티모달 모델이다. 텍스트로 이미지를 검색하거나, 사용자가 선택한 이미지와 관련된 정보를 검색, 이미지가 포함된 문서 검색 등을 지원한다. 실제 서비스 적용을 목표로 개발된 만큼, 한국어와 한국 문화에 대한 이해도가 탁월하다는 설명이다. ‘경복궁’이나 ‘붕어빵’ 같은 고유명사는 물론, 오타가 포함된 단어도 문맥을 파악해 정확한 이미지를 찾아준다고 전했다. 또, '한복 입고 찍은 단체 사진'처럼 복합적인 조건도 정확히 이해, 조건 일부에만 해당하는 사진을 걸러낼 수 있는 변별력을 갖췄다고 전했다. 이를 위해 한국어 멀티모달 데이터셋 ‘KoEmbed’를 구축했다. 기존 공개 데이터셋들은 대부분 영어 중심이라 한국어 서비스 환경을 충분히 반영하지 못했다는 것이다. 이를 보온하기 위해 Sent, Word, Count, Place, Simlmg 등 5가지 세부 데이터셋을 구축했다. 이 모델은 현재 카카오 내부에서 광고 소재의 유사도를 분석하고 심사하는 시스템에 적용돼 있다. 이후 비디오나 음성으로 범위를 확대해 더 다양한 서비스에도 적용할 계획이다. (사진=카카오) 한편, 카카오는 고성능 고효율 모델인 ‘카나나-2’의 개발도 준비하고 있다. 온디바이스 구동 모델에 초점을 맞췄다. 김병학 카카오 카나나 성과 리더는 “자체 AI 모델 카나나는 단순 정보 나열 수준을 넘어, 사용자의 감정을 이해하며 친숙하고 자연스럽게 대화하는 AI가 될 수 있도록 한국적 맥락의 이해와 표현력을 높여가고자 한다”라며 “실제 서비스 환경을 통해 사용자들의 일상 속 AI 기술 경험을 만들어 나가고, 사람처럼 상호작용 할 수 있는 AI의 구현에 주력해 갈 것”이라고 말했다. 자세한 내용은 카카오 테크블로그에서 확인할 수 있다. 장세민 기자 semim99@aitimes.com",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204735_206072_123.jpeg",
+  "summary": "카카오(대표 정신아)는 12일 공식 테크블로그를 통해 ▲한국적 맥락 이해에 최적화된 통합 멀티모달 언어모델 ‘카나나-o(Kanana-o)’ ▲멀티모달 임베딩 모델 ‘카나나-v-임베딩(Kanana-v-embedding)’의 개발 과정과 성능을 공개했다. 지난 5월 처음 공개한 카나나-o는 텍스트, 음성, 이미지를 동시 이해하고 실시간으로 답변하는 통합 멀티모달 언어모델이다. 글로벌 모델보다 한국어 맥락 이해에 뛰어난 성능을 보였으며, 사람처럼 자연스럽고 풍부한 표현력을 갖추고 있는 것을 특징으로 소개했다. 공개 이후 음성 인식과 음성",
+  "published_at": "2025-12-12T12:39:56+09:00",
+  "article_id": "876da2",
+  "cached_at": "2025-12-12T05:18:51.556687+00:00",
+  "title_ko": "카카오, 한국어 맥락 최적화 멀티모달 모델 카나나-o와 카나나-v-임베딩 개발 공개",
+  "summary_ko": "카카오는 한국어 맥락에 최적화된 멀티모달 모델 카나나-o와 멀티모달 임베딩 카나나-v-임베딩의 개발과 성능을 공개했다. 카나나-o는 한국어 음성 인식·합성·감정 인식에서 강점을 보이고 KoEmbed 기반으로 성능이 개선되며 카나나-2 온디바이스 구동도 예고했다. 벤치마크에서 영어 영역은 다소 뒤처지나 한국어 측면은 우수하다.",
+  "Impact": {
+    "impact_score": 5.0,
+    "impact_evidence": {
+      "entity": {
+        "id": "TIER_Z_GENERAL",
+        "weight": 1.0
+      },
+      "events": [
+        {
+          "id": "DATASET_RELEASE",
+          "weight": 2.0
+        },
+        {
+          "id": "MAJOR_PRODUCT_INTEGRATION",
+          "weight": 2.0
+        }
+      ]
+    },
+    "impact_review_ko": "한국어 멀티모달 강점과 KoEmbed 데이터 개선으로 국내 생태계에 실질적 영향. 다만 글로벌 영향은 중간 수준으로 판단.",
+    "impact_review_en": "Korean multimodal strengths and KoEmbed data boost domestic AI; global impact remains moderate."
+  },
+  "ZeroEcho": {
+    "ZeroEchoScore": 6.8,
+    "penalties": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "value": 3.0
+      }
+    ],
+    "credits": [
+      {
+        "id": "COMPARATIVE_BENCHMARK",
+        "value": 1.2
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": true
+      }
+    ],
+    "zeroechoscore_review_ko": "엔티티 제약으로 ZS가 중간값으로 나타났지만, 카나나의 한국어 멀티모달 성능은 의미 있는 진전이다.",
+    "zeroechoscore_review_en": "Entity noise pushes ZS mid-range, but KanaNa's Korean multimodal gains are meaningful."
+  },
+  "tags": [
+    "MODEL_RELEASE",
+    "BENCHMARK",
+    "ON_DEVICE"
+  ],
+  "impact_score": 5.0,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL",
+      "weight": 1.0
+    },
+    "events": [
+      {
+        "id": "DATASET_RELEASE",
+        "weight": 2.0
+      },
+      {
+        "id": "MAJOR_PRODUCT_INTEGRATION",
+        "weight": 2.0
+      }
+    ]
+  },
+  "impact_review_ko": "한국어 멀티모달 강점과 KoEmbed 데이터 개선으로 국내 생태계에 실질적 영향. 다만 글로벌 영향은 중간 수준으로 판단.",
+  "impact_review_en": "Korean multimodal strengths and KoEmbed data boost domestic AI; global impact remains moderate.",
+  "zero_echo_score": 6.8,
+  "evidence": {
+    "penalties": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "value": 3.0
+      }
+    ],
+    "credits": [
+      {
+        "id": "COMPARATIVE_BENCHMARK",
+        "value": 1.2
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": true
+      }
+    ]
+  },
+  "zeroechoscore_review_ko": "엔티티 제약으로 ZS가 중간값으로 나타났지만, 카나나의 한국어 멀티모달 성능은 의미 있는 진전이다.",
+  "zeroechoscore_review_en": "Entity noise pushes ZS mid-range, but KanaNa's Korean multimodal gains are meaningful.",
+  "crawled_at": "2025-12-12T05:34:33.490469+00:00",
+  "original_title": "카카오, 멀티모달모델 개발 과정·성능 공개...”한국형 서비스에 특화”",
+  "edition": "251212_FRI_1"
+}

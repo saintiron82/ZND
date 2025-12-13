@@ -227,10 +227,11 @@ def normalize_field_names(data: dict) -> dict:
     """
     Normalize field names to handle case variations and nested structures.
     Supports:
-    1. Nested 'Impact' object -> top-level 'impact_score', 'impact_evidence'
-    2. Nested 'ZeroEcho' object -> top-level 'zero_echo_score', 'evidence'
-    3. Case variations (Zero_Echo_Score -> zero_echo_score)
-    4. Legacy field migration (zero_noise_score -> zero_echo_score)
+    1. NEW: raw_analysis -> 점수 계산 (score_engine 사용)
+    2. Nested 'Impact' object -> top-level 'impact_score', 'impact_evidence'
+    3. Nested 'ZeroEcho' object -> top-level 'zero_echo_score', 'evidence'
+    4. Case variations (Zero_Echo_Score -> zero_echo_score)
+    5. Legacy field migration (zero_noise_score -> zero_echo_score)
     
     Args:
         data: Input data dict
@@ -242,6 +243,25 @@ def normalize_field_names(data: dict) -> dict:
         return data
     
     normalized = dict(data)
+    
+    # --- raw_analysis 처리 (v6.2 - 바로 계산) ---
+    if 'raw_analysis' in normalized:
+        try:
+            from src.score_engine import process_raw_analysis
+            
+            raw = normalized.get('raw_analysis')
+            scores = process_raw_analysis(raw)
+            
+            if scores:
+                # 바로 계산된 점수 적용 (기존값 체크 없이)
+                normalized['impact_score'] = scores.get('impact_score', 0)
+                normalized['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
+                normalized['evidence'] = scores.get('evidence', {})
+                normalized['impact_evidence'] = scores.get('impact_evidence', {})
+                
+                print(f"✅ [ScoreEngine] Calculated: impact={scores.get('impact_score')}, ze={scores.get('zero_echo_score')}")
+        except Exception as e:
+            print(f"⚠️ [ScoreEngine] Error processing raw_analysis: {e}")
     
     # --- 0. Unwrap 'response_schema' if present (Support for structured output) ---
     if 'response_schema' in normalized and isinstance(normalized['response_schema'], dict):
@@ -338,7 +358,7 @@ def normalize_field_names(data: dict) -> dict:
         except:
             pass
 
-    return recalculate_scores(normalized)
+    return normalized  # recalculate_scores 제거 - raw_analysis에서 직접 계산함
 
 
 def recalculate_scores(data: dict) -> dict:

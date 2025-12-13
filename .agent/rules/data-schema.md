@@ -1,4 +1,8 @@
-﻿# Data & Quality Rules
+---
+trigger: always_on
+---
+
+# Data & Quality Rules
 
 ## Core Data Schema (articles collection)
 | Field Name | Type | Key Constraint |

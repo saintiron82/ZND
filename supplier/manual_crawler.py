@@ -1324,6 +1324,481 @@ def cleanup_duplicate_data():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# ==============================================================================
+# 자동화 파이프라인 API (5단계 + ALL)
+# ==============================================================================
+
+STAGING_DIR = os.path.join(os.path.dirname(__file__), 'staging')
+
+@app.route('/api/automation/collect', methods=['POST'])
+def automation_collect():
+    """
+    1️⃣ 링크 수집: 모든 활성 타겟에서 새 링크 수집
+    - 히스토리에 없는 링크만 반환
+    """
+    try:
+        targets = load_targets()
+        all_links = []
+        
+        for target in targets:
+            links = fetch_links(target)
+            limit = target.get('limit', 5)
+            links = links[:limit]
+            
+            for link in links:
+                # 히스토리 체크 (이미 처리된 것 제외)
+                if not db.check_history(link):
+                    all_links.append({
+                        'url': link,
+                        'source_id': target['id'],
+                        'target_name': target.get('name', target['id'])
+                    })
+        
+        # 중복 제거
+        seen = set()
+        unique_links = []
+        for item in all_links:
+            if item['url'] not in seen:
+                seen.add(item['url'])
+                unique_links.append(item)
+        
+        print(f"📡 [Collect] 수집 완료: {len(unique_links)} 새 링크")
+        return jsonify({
+            'success': True,
+            'links': unique_links,
+            'total': len(unique_links),
+            'message': f'{len(unique_links)}개 새 링크 수집 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Collect] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/automation/extract', methods=['POST'])
+def automation_extract():
+    """
+    2️⃣ 콘텐츠 추출: 수집된 링크 → 캐시 저장
+    - 이미 캐시된 것은 건너뜀
+    """
+    try:
+        data = request.json or {}
+        # 링크 목록이 없으면 자동 수집
+        links = data.get('links')
+        
+        if not links:
+            # 자동으로 collect 먼저 실행
+            targets = load_targets()
+            links = []
+            for target in targets:
+                fetched = fetch_links(target)[:target.get('limit', 5)]
+                for url in fetched:
+                    if not db.check_history(url):
+                        links.append({'url': url, 'source_id': target['id']})
+        
+        extracted_count = 0
+        skipped_count = 0
+        failed_count = 0
+        
+        async def extract_all():
+            nonlocal extracted_count, skipped_count, failed_count
+            crawler = AsyncCrawler(use_playwright=True)
+            try:
+                await crawler.start()
+                for item in links:
+                    url = item['url'] if isinstance(item, dict) else item
+                    source_id = item.get('source_id', 'unknown') if isinstance(item, dict) else 'unknown'
+                    
+                    # 캐시 체크
+                    cached = load_from_cache(url)
+                    if cached and cached.get('text'):
+                        skipped_count += 1
+                        continue
+                    
+                    try:
+                        content = await crawler.process_url(url)
+                        if content and len(content.get('text', '')) >= 200:
+                            content['source_id'] = source_id
+                            save_to_cache(url, content)
+                            extracted_count += 1
+                        else:
+                            failed_count += 1
+                    except Exception as e:
+                        print(f"⚠️ [Extract] Failed: {url[:50]}... - {e}")
+                        failed_count += 1
+            finally:
+                await crawler.close()
+        
+        asyncio.run(extract_all())
+        
+        print(f"📥 [Extract] 추출: {extracted_count}, 스킵: {skipped_count}, 실패: {failed_count}")
+        return jsonify({
+            'success': True,
+            'extracted': extracted_count,
+            'skipped': skipped_count,
+            'failed': failed_count,
+            'message': f'추출 {extracted_count}개 완료 (스킵 {skipped_count}, 실패 {failed_count})'
+        })
+    except Exception as e:
+        print(f"❌ [Extract] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/automation/analyze', methods=['POST'])
+def automation_analyze():
+    """
+    3️⃣ MLL 분석: mll_status가 없는 캐시만 분석
+    """
+    try:
+        from src.mll_client import MLLClient
+        from src.core_logic import get_config
+        
+        mll = MLLClient()
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        cache_date_dir = os.path.join(CACHE_DIR, today_str)
+        
+        analyzed_count = 0
+        skipped_count = 0
+        failed_count = 0
+        
+        # 오늘 캐시 폴더 스캔
+        if os.path.exists(cache_date_dir):
+            for filename in os.listdir(cache_date_dir):
+                if not filename.endswith('.json'):
+                    continue
+                
+                filepath = os.path.join(cache_date_dir, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        cache_data = json.load(f)
+                    
+                    # 이미 분석됨
+                    if cache_data.get('mll_status') or cache_data.get('raw_analysis'):
+                        skipped_count += 1
+                        continue
+                    
+                    # 본문이 없으면 스킵
+                    text = cache_data.get('text', '')
+                    if len(text) < 200:
+                        skipped_count += 1
+                        continue
+                    
+                    # MLL 분석
+                    max_text = get_config('crawler', 'max_text_length_for_analysis', default=3000)
+                    truncated_text = text[:max_text]
+                    
+                    mll_result = mll.analyze_text(truncated_text)
+                    
+                    if mll_result:
+                        # 분석 결과 병합
+                        mll_result = normalize_field_names(mll_result)
+                        cache_data.update(mll_result)
+                        cache_data['mll_status'] = 'analyzed'
+                        cache_data['analyzed_at'] = datetime.now(timezone.utc).isoformat()
+                        
+                        with open(filepath, 'w', encoding='utf-8') as f:
+                            json.dump(cache_data, f, ensure_ascii=False, indent=2)
+                        
+                        analyzed_count += 1
+                    else:
+                        cache_data['mll_status'] = 'failed'
+                        with open(filepath, 'w', encoding='utf-8') as f:
+                            json.dump(cache_data, f, ensure_ascii=False, indent=2)
+                        failed_count += 1
+                        
+                except Exception as e:
+                    print(f"⚠️ [Analyze] Error on {filename}: {e}")
+                    failed_count += 1
+        
+        print(f"🤖 [Analyze] 분석: {analyzed_count}, 스킵: {skipped_count}, 실패: {failed_count}")
+        return jsonify({
+            'success': True,
+            'analyzed': analyzed_count,
+            'skipped': skipped_count,
+            'failed': failed_count,
+            'message': f'MLL 분석 {analyzed_count}개 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Analyze] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/automation/stage', methods=['POST'])
+def automation_stage():
+    """
+    4️⃣ 조판 (Staging): 분석 완료된 캐시 → staging 폴더로 복사
+    - 점수 재검증 포함
+    - 마스터 검토용 미리보기
+    """
+    try:
+        from src.score_engine import calculate_scores
+        from src.core_logic import get_config
+        
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        cache_date_dir = os.path.join(CACHE_DIR, today_str)
+        staging_date_dir = os.path.join(STAGING_DIR, today_str)
+        
+        # Staging 폴더 생성
+        os.makedirs(staging_date_dir, exist_ok=True)
+        
+        staged_count = 0
+        skipped_count = 0
+        rejected_count = 0
+        
+        high_noise_threshold = get_config('scoring', 'high_noise_threshold', default=7.0)
+        
+        if os.path.exists(cache_date_dir):
+            for filename in os.listdir(cache_date_dir):
+                if not filename.endswith('.json'):
+                    continue
+                
+                filepath = os.path.join(cache_date_dir, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        cache_data = json.load(f)
+                    
+                    # 분석 안 된 것은 스킵
+                    if cache_data.get('mll_status') != 'analyzed':
+                        skipped_count += 1
+                        continue
+                    
+                    # 이미 staging 됨
+                    if cache_data.get('staged'):
+                        skipped_count += 1
+                        continue
+                    
+                    # 점수 재검증 (raw_analysis 있으면)
+                    if cache_data.get('raw_analysis'):
+                        try:
+                            scores = calculate_scores(cache_data['raw_analysis'])
+                            cache_data['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
+                            cache_data['impact_score'] = scores.get('impact_score', 0.0)
+                        except Exception as e:
+                            print(f"⚠️ [Stage] Score calc error: {e}")
+                    
+                    # 고노이즈 필터링
+                    zs = float(cache_data.get('zero_echo_score', 5.0))
+                    if zs >= high_noise_threshold:
+                        cache_data['rejected'] = True
+                        cache_data['reject_reason'] = f'high_noise ({zs})'
+                        rejected_count += 1
+                    
+                    # Staging 데이터 준비
+                    staging_data = {
+                        **cache_data,
+                        'staged_at': datetime.now(timezone.utc).isoformat(),
+                        'staged': True
+                    }
+                    
+                    # Staging 폴더에 저장
+                    staging_filepath = os.path.join(staging_date_dir, filename)
+                    with open(staging_filepath, 'w', encoding='utf-8') as f:
+                        json.dump(staging_data, f, ensure_ascii=False, indent=2)
+                    
+                    # 원본 캐시에도 staged 표시
+                    cache_data['staged'] = True
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(cache_data, f, ensure_ascii=False, indent=2)
+                    
+                    staged_count += 1
+                    
+                except Exception as e:
+                    print(f"⚠️ [Stage] Error on {filename}: {e}")
+        
+        print(f"📋 [Stage] 조판: {staged_count}, 스킵: {skipped_count}, 거부: {rejected_count}")
+        return jsonify({
+            'success': True,
+            'staged': staged_count,
+            'skipped': skipped_count,
+            'rejected': rejected_count,
+            'staging_dir': staging_date_dir,
+            'message': f'조판 {staged_count}개 완료 (거부 {rejected_count}개)'
+        })
+    except Exception as e:
+        print(f"❌ [Stage] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/automation/publish', methods=['POST'])
+def automation_publish():
+    """
+    5️⃣ 발행: staging → data 폴더 + 웹 동기화
+    - rejected 아닌 것만 발행
+    """
+    try:
+        from src.pipeline import save_article
+        
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        staging_date_dir = os.path.join(STAGING_DIR, today_str)
+        
+        published_count = 0
+        skipped_count = 0
+        failed_count = 0
+        
+        if os.path.exists(staging_date_dir):
+            for filename in os.listdir(staging_date_dir):
+                if not filename.endswith('.json'):
+                    continue
+                
+                filepath = os.path.join(staging_date_dir, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        staging_data = json.load(f)
+                    
+                    # 이미 발행됨
+                    if staging_data.get('published'):
+                        skipped_count += 1
+                        continue
+                    
+                    # rejected는 스킵
+                    if staging_data.get('rejected'):
+                        skipped_count += 1
+                        continue
+                    
+                    # 필수 필드 체크
+                    required = ['url', 'title_ko', 'summary', 'zero_echo_score', 'impact_score']
+                    missing = [f for f in required if f not in staging_data]
+                    if missing:
+                        print(f"⚠️ [Publish] Missing fields {missing}: {filename}")
+                        skipped_count += 1
+                        continue
+                    
+                    # 발행
+                    result = save_article(staging_data, source_id=staging_data.get('source_id'))
+                    
+                    if result.get('status') == 'saved':
+                        # 발행 완료 표시
+                        staging_data['published'] = True
+                        staging_data['published_at'] = datetime.now(timezone.utc).isoformat()
+                        staging_data['data_file'] = result.get('filename')
+                        
+                        with open(filepath, 'w', encoding='utf-8') as f:
+                            json.dump(staging_data, f, ensure_ascii=False, indent=2)
+                        
+                        published_count += 1
+                    else:
+                        failed_count += 1
+                        
+                except Exception as e:
+                    print(f"⚠️ [Publish] Error on {filename}: {e}")
+                    failed_count += 1
+        
+        print(f"🚀 [Publish] 발행: {published_count}, 스킵: {skipped_count}, 실패: {failed_count}")
+        return jsonify({
+            'success': True,
+            'published': published_count,
+            'skipped': skipped_count,
+            'failed': failed_count,
+            'message': f'발행 {published_count}개 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Publish] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/automation/all', methods=['POST'])
+def automation_all():
+    """
+    ⚡ ALL: 1~4단계 연속 실행 (발행 제외)
+    """
+    try:
+        results = {}
+        
+        # 1. 수집
+        with app.test_client() as client:
+            resp = client.post('/api/automation/collect')
+            results['collect'] = resp.get_json()
+        
+        # 2. 추출
+        with app.test_client() as client:
+            resp = client.post('/api/automation/extract', 
+                              json={'links': results['collect'].get('links', [])})
+            results['extract'] = resp.get_json()
+        
+        # 3. 분석
+        with app.test_client() as client:
+            resp = client.post('/api/automation/analyze')
+            results['analyze'] = resp.get_json()
+        
+        # 4. 조판
+        with app.test_client() as client:
+            resp = client.post('/api/automation/stage')
+            results['stage'] = resp.get_json()
+        
+        print(f"⚡ [ALL] 파이프라인 완료")
+        return jsonify({
+            'success': True,
+            'results': results,
+            'message': '1~4단계 파이프라인 완료 (발행 대기중)'
+        })
+    except Exception as e:
+        print(f"❌ [ALL] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/staging')
+def staging_preview():
+    """Staging 미리보기 페이지"""
+    return render_template('staging.html')
+
+
+@app.route('/api/staging/list')
+def staging_list():
+    """Staging 폴더의 기사 목록 반환"""
+    try:
+        date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
+        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        
+        articles = []
+        
+        if os.path.exists(staging_date_dir):
+            for filename in os.listdir(staging_date_dir):
+                if not filename.endswith('.json'):
+                    continue
+                
+                filepath = os.path.join(staging_date_dir, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    
+                    articles.append({
+                        'filename': filename,
+                        'filepath': filepath,
+                        'url': data.get('url', ''),
+                        'title': data.get('title', ''),
+                        'title_ko': data.get('title_ko', ''),
+                        'summary': data.get('summary', ''),
+                        'zero_echo_score': data.get('zero_echo_score'),
+                        'impact_score': data.get('impact_score'),
+                        'source_id': data.get('source_id', ''),
+                        'rejected': data.get('rejected', False),
+                        'reject_reason': data.get('reject_reason', ''),
+                        'published': data.get('published', False),
+                        'staged_at': data.get('staged_at', ''),
+                    })
+                except Exception as e:
+                    print(f"⚠️ [Staging List] Error reading {filename}: {e}")
+        
+        # 정렬: 발행됨 → 대기중 → 거부됨
+        def sort_key(a):
+            if a['published']:
+                return (0, a.get('staged_at', ''))
+            elif a['rejected']:
+                return (2, a.get('staged_at', ''))
+            else:
+                return (1, a.get('staged_at', ''))
+        
+        articles.sort(key=sort_key, reverse=True)
+        
+        return jsonify({
+            'date': date_str,
+            'articles': articles,
+            'total': len(articles)
+        })
+    except Exception as e:
+        print(f"❌ [Staging List] Error: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     # Port 5500 as requested
     app.run(debug=True, port=5500)

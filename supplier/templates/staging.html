@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staging Preview - 마스터 전용</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            color: #eee;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-refresh {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .btn-publish {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-card .label {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .stat-staged .value {
+            color: #4ecdc4;
+        }
+
+        .stat-rejected .value {
+            color: #dc3545;
+        }
+
+        .stat-published .value {
+            color: #28a745;
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 15px;
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s;
+        }
+
+        .article-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .article-card.rejected {
+            border-left-color: #dc3545;
+            opacity: 0.6;
+        }
+
+        .article-card.published {
+            border-left-color: #28a745;
+        }
+
+        .article-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .article-summary {
+            font-size: 0.9em;
+            color: #ccc;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+
+        .score-zs {
+            background: #45b7d1;
+            color: white;
+        }
+
+        .score-is {
+            background: #96ceb4;
+            color: #333;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .status-staged {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .status-rejected {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-published {
+            background: #28a745;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📋 Staging Preview <span style="font-size: 0.6em; color: #888;">(마스터 전용)</span></h1>
+        <div class="header-actions">
+            <button class="btn btn-refresh" onclick="loadStaging()">🔄 새로고침</button>
+            <button class="btn btn-publish" onclick="publishAll()">🚀 전체 발행</button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card stat-staged">
+            <div class="value" id="stagedCount">-</div>
+            <div class="label">대기중</div>
+        </div>
+        <div class="stat-card stat-rejected">
+            <div class="value" id="rejectedCount">-</div>
+            <div class="label">거부됨</div>
+        </div>
+        <div class="stat-card stat-published">
+            <div class="value" id="publishedCount">-</div>
+            <div class="label">발행됨</div>
+        </div>
+    </div>
+
+    <div id="articleGrid" class="article-grid">
+        <div class="loading">로딩 중...</div>
+    </div>
+
+    <script>
+        let stagingData = [];
+
+        async function loadStaging() {
+            const grid = document.getElementById('articleGrid');
+            grid.innerHTML = '<div class="loading">로딩 중...</div>';
+
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const response = await fetch(`/api/staging/list?date=${today}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    grid.innerHTML = `<div class="empty-state">오류: ${data.error}</div>`;
+                    return;
+                }
+
+                stagingData = data.articles || [];
+                renderArticles();
+                updateStats();
+            } catch (error) {
+                grid.innerHTML = `<div class="empty-state">로드 실패: ${error.message}</div>`;
+            }
+        }
+
+        function renderArticles() {
+            const grid = document.getElementById('articleGrid');
+
+            if (stagingData.length === 0) {
+                grid.innerHTML = '<div class="empty-state">Staging 데이터가 없습니다.<br>먼저 조판을 실행해주세요.</div>';
+                return;
+            }
+
+            grid.innerHTML = stagingData.map(article => {
+                const cardClass = article.rejected ? 'rejected' : (article.published ? 'published' : '');
+                const statusClass = article.rejected ? 'rejected' : (article.published ? 'published' : 'staged');
+                const statusText = article.rejected ? '거부됨' : (article.published ? '발행됨' : '대기중');
+
+                return `
+                    <div class="article-card ${cardClass}">
+                        <div class="article-title">${article.title_ko || article.title || '제목 없음'}</div>
+                        <div class="article-summary">${(article.summary || '').slice(0, 150)}...</div>
+                        <div class="article-meta">
+                            <span class="score-badge score-zs">ZS: ${article.zero_echo_score?.toFixed(1) || '-'}</span>
+                            <span class="score-badge score-is">IS: ${article.impact_score?.toFixed(1) || '-'}</span>
+                            <span class="status-badge status-${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const staged = stagingData.filter(a => !a.rejected && !a.published).length;
+            const rejected = stagingData.filter(a => a.rejected).length;
+            const published = stagingData.filter(a => a.published).length;
+
+            document.getElementById('stagedCount').textContent = staged;
+            document.getElementById('rejectedCount').textContent = rejected;
+            document.getElementById('publishedCount').textContent = published;
+        }
+
+        async function publishAll() {
+            const staged = stagingData.filter(a => !a.rejected && !a.published).length;
+
+            if (staged === 0) {
+                alert('발행할 기사가 없습니다.');
+                return;
+            }
+
+            if (!confirm(`${staged}개 기사를 발행하시겠습니까?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/automation/publish', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`✅ 발행 완료!\n\n${result.message}`);
+                    loadStaging();
+                } else {
+                    alert(`❌ 발행 실패\n\n${result.error}`);
+                }
+            } catch (error) {
+                alert(`❌ 오류: ${error.message}`);
+            }
+        }
+
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', loadStaging);
+    </script>
+</body>
+
+</html>

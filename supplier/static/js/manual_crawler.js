@@ -1716,3 +1716,67 @@ function loadAndCopy() {
         })
         .catch(err => alert('Error: ' + err));
 }
+
+// ==============================================================================
+// 🤖 자동화 파이프라인 함수
+// ==============================================================================
+
+const STEP_NAMES = {
+    'collect': '1️⃣ 링크 수집',
+    'extract': '2️⃣ 콘텐츠 추출',
+    'analyze': '3️⃣ MLL 분석',
+    'stage': '4️⃣ 조판',
+    'publish': '5️⃣ 발행',
+    'all': '⚡ ALL (1~4)'
+};
+
+async function runAuto(step) {
+    const stepName = STEP_NAMES[step] || step;
+
+    // 발행은 확인 필요
+    if (step === 'publish') {
+        if (!confirm(`⚠️ 발행을 진행하시겠습니까?\n\nStaging의 기사가 실제 프로덕션에 배포됩니다.`)) {
+            return;
+        }
+    }
+
+    // 버튼 비활성화
+    const buttons = document.querySelectorAll('.target-select button');
+    buttons.forEach(btn => btn.disabled = true);
+
+    try {
+        const response = await fetch(`/api/automation/${step}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // 결과 요약 표시
+            let summary = `✅ ${stepName} 완료!\n\n${result.message}`;
+
+            // ALL인 경우 상세 결과 표시
+            if (step === 'all' && result.results) {
+                summary += '\n\n--- 상세 ---';
+                for (const [key, val] of Object.entries(result.results)) {
+                    summary += `\n${STEP_NAMES[key] || key}: ${val.message || 'OK'}`;
+                }
+            }
+
+            alert(summary);
+        } else {
+            alert(`❌ ${stepName} 실패\n\n${result.error}`);
+        }
+    } catch (error) {
+        alert(`❌ 오류: ${error.message}`);
+    } finally {
+        // 버튼 다시 활성화
+        buttons.forEach(btn => btn.disabled = false);
+    }
+}
+
+function openStaging() {
+    window.open('/staging', '_blank');
+}
+

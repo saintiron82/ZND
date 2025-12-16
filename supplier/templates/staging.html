@@ -201,6 +201,81 @@
             padding: 50px;
             color: #888;
         }
+
+        /* 모달 스타일 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1e1e2e;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #444;
+            background: #2a2a3e;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .modal-close {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .json-view {
+            background: #0d0d14;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #4ec9b0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .article-card {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -208,8 +283,9 @@
     <div class="header">
         <h1>📋 Staging Preview <span style="font-size: 0.6em; color: #888;">(마스터 전용)</span></h1>
         <div class="header-actions">
+            <button class="btn" style="background: #6c757d; color: white;" onclick="toggleSelectAll()">☑️ 전체 선택</button>
             <button class="btn btn-refresh" onclick="loadStaging()">🔄 새로고침</button>
-            <button class="btn btn-publish" onclick="publishAll()">🚀 전체 발행</button>
+            <button class="btn btn-publish" onclick="publishAll()">🚀 선택 발행</button>
         </div>
     </div>
 
@@ -230,6 +306,19 @@
 
     <div id="articleGrid" class="article-grid">
         <div class="loading">로딩 중...</div>
+    </div>
+
+    <!-- 상세보기 모달 -->
+    <div id="detailModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>📄 <span id="modalTitle">파일 상세</span></h3>
+                <button class="modal-close" onclick="closeModal()">✕ 닫기</button>
+            </div>
+            <div class="modal-body">
+                <pre id="jsonContent" class="json-view"></pre>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -269,9 +358,17 @@
                 const cardClass = article.rejected ? 'rejected' : (article.published ? 'published' : '');
                 const statusClass = article.rejected ? 'rejected' : (article.published ? 'published' : 'staged');
                 const statusText = article.rejected ? '거부됨' : (article.published ? '발행됨' : '대기중');
+                const canSelect = !article.rejected && !article.published;
+                const checkboxHtml = canSelect
+                    ? `<input type="checkbox" class="article-checkbox" data-filename="${article.filename}" onclick="toggleCheck(event)" onchange="updateSelectedCount()" style="width:18px; height:18px; cursor:pointer;">`
+                    : '';
 
                 return `
-                    <div class="article-card ${cardClass}">
+                    <div class="article-card ${cardClass}" onclick="showDetail('${article.filename}')">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <span style="font-size: 0.75em; color: #888;">📎 ${article.article_id || article.filename?.replace('.json', '') || '-'}</span>
+                            ${checkboxHtml}
+                        </div>
                         <div class="article-title">${article.title_ko || article.title || '제목 없음'}</div>
                         <div class="article-summary">${(article.summary || '').slice(0, 150)}...</div>
                         <div class="article-meta">
@@ -295,21 +392,24 @@
         }
 
         async function publishAll() {
-            const staged = stagingData.filter(a => !a.rejected && !a.published).length;
+            // 체크된 기사만 선택
+            const checkboxes = document.querySelectorAll('.article-checkbox:checked');
+            const selectedFiles = Array.from(checkboxes).map(cb => cb.dataset.filename);
 
-            if (staged === 0) {
-                alert('발행할 기사가 없습니다.');
+            if (selectedFiles.length === 0) {
+                alert('발행할 기사를 선택해주세요.');
                 return;
             }
 
-            if (!confirm(`${staged}개 기사를 발행하시겠습니까?`)) {
+            if (!confirm(`${selectedFiles.length}개 기사를 발행하시겠습니까?`)) {
                 return;
             }
 
             try {
-                const response = await fetch('/api/automation/publish', {
+                const response = await fetch('/api/staging/publish_selected', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filenames: selectedFiles })
                 });
                 const result = await response.json();
 
@@ -322,6 +422,58 @@
             } catch (error) {
                 alert(`❌ 오류: ${error.message}`);
             }
+        }
+
+        // 모달 열기 - 파일 상세 보기
+        async function showDetail(filename) {
+            const modal = document.getElementById('detailModal');
+            const titleEl = document.getElementById('modalTitle');
+            const contentEl = document.getElementById('jsonContent');
+
+            titleEl.textContent = filename;
+            contentEl.textContent = '로딩 중...';
+            modal.classList.add('active');
+
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const response = await fetch(`/api/staging/file?date=${today}&filename=${filename}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    contentEl.textContent = `오류: ${data.error}`;
+                } else {
+                    contentEl.textContent = JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                contentEl.textContent = `로드 실패: ${error.message}`;
+            }
+        }
+
+        // 모달 닫기
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        // 체크박스 토글 (이벤트 버블링 방지)
+        function toggleCheck(event, filename) {
+            event.stopPropagation();
+        }
+
+        // 선택된 기사 수 업데이트
+        function updateSelectedCount() {
+            const checkboxes = document.querySelectorAll('.article-checkbox:checked');
+            const count = checkboxes.length;
+            const btn = document.querySelector('.btn-publish');
+            btn.textContent = count > 0 ? `🚀 선택 발행 (${count})` : '🚀 선택 발행';
+        }
+
+        // 전체 선택/해제
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('.article-checkbox');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+            updateSelectedCount();
         }
 
         // 페이지 로드 시 실행

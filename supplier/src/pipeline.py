@@ -299,9 +299,16 @@ async def process_article(
         max_text = get_config('crawler', 'max_text_length_for_analysis', default=3000)
         truncated_text = content.get('text', '')[:max_text]
         
-        print(f"🤖 [MLL] Analyzing: {content.get('title', '')[:50]}...")
+        # Prepare data object for ZED V0.9 Analysis
+        article_data = {
+            'article_id': get_article_id(url),
+            'title': content.get('title', 'Unknown'),
+            'text': truncated_text
+        }
+        
+        print(f"🤖 [MLL] Analyzing (V0.9): {content.get('title', '')[:50]}...")
         try:
-            mll_result = mll_client.analyze_text(truncated_text)
+            mll_result = mll_client.analyze_article(article_data)
             
             if not mll_result:
                 return mark_mll_failed(url, 'no_response')
@@ -312,6 +319,7 @@ async def process_article(
             
         except Exception as e:
             return mark_mll_failed(url, f'error: {str(e)[:50]}')
+
     
     # 6. Prepare final document
     final_doc = {

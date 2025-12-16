@@ -1,0 +1,196 @@
+{
+  "article_id": "20569c",
+  "cached_at": "2025-12-16T08:04:09.916238+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/adobe_photoshop_chatgpt-e1765706892582.png",
+  "published_at": "Sun, 14 Dec 2025 10:04:19 GMT",
+  "summary": "어도비가 포토샵, 아크로뱃, 익스프레스를 챗GPT 인터페이스에 직접 통합했다. 사용자들은 텍스트 명령으로 이미지를 편집하거나 PDF를 수정할 수 있게 되었다. 이는 'Apps & Connectors' 설정을 통해 연동되며, 복잡한 작업도 대화형으로 수행 가능하다.",
+  "text": "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. Adobe has integrated Photoshop, Acrobat, and Express directly into ChatGPT's interface. Users can now edit images and documents for free using text commands. The Photoshop integration lets people customize photos with simple descriptions; changing backgrounds or adding effects, for example. Adobe Express handles design tasks like creating invitations from templates, while Acrobat makes it possible to edit PDFs like resumes right in the chat. Ad To set it up, go to \"Apps & Connectors\" in ChatGPT's settings, select the Adobe app you want, and click \"Connect.\" Then tap the plus sign in the chat, find the app under \"More,\" and type your command. Alternatively, type \"/AdobePhotoshop,\" \"/AdobeExpress,\" or \"/AdobeAcrobat\" followed by what you want to do. Adobe says commands work best when they're clear and specific, with complex tasks broken into individual steps. After each edit, sliders let users adjust the results. Ad",
+  "title": "Adobe brings Photoshop, Acrobat, and Express directly to ChatGPT",
+  "url": "https://the-decoder.com/adobe-brings-photoshop-acrobat-and-express-directly-to-chatgpt/",
+  "title_ko": "어도비, 챗GPT 내 포토샵 및 아크로뱃 기능 통합",
+  "tags": [
+    "Integration",
+    "GenAI",
+    "Productivity"
+  ],
+  "impact_score": 5.5,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Adobe",
+      "WHO_Primary_Tier_Source": "Fallback General (Tier 2 - Market Shaper)",
+      "WHO_Entity_Tier": 2,
+      "WHO_Secondary_Entity": "OpenAI",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|2 - 1| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 4,
+      "SOTA_Check_Result": "Integration"
+    },
+    "Scores": {
+      "IW_Score": 3,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 0.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 1,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "Tier 2 기업의 주요 제품이 Tier 1 플랫폼과 결합(Strategic Alliance). 실질적인 기능 업데이트(Now)."
+    }
+  },
+  "zero_echo_score": 2.8,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0,
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 1,
+          "Weight": 1.6,
+          "Evidence": "Live feature rollout"
+        },
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": 0.75,
+          "Weight": 0.84,
+          "Evidence": "Clear usage instructions"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "실제 사용 가능한 기능 업데이트를 명확히 설명함. 검증된 비즈니스 성과(서비스 런칭)에 해당."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "20569c",
+    "Meta": {
+      "Headline": "어도비, 챗GPT 내 포토샵 및 아크로뱃 기능 통합",
+      "summary": "어도비가 포토샵, 아크로뱃, 익스프레스를 챗GPT 인터페이스에 직접 통합했다. 사용자들은 텍스트 명령으로 이미지를 편집하거나 PDF를 수정할 수 있게 되었다. 이는 'Apps & Connectors' 설정을 통해 연동되며, 복잡한 작업도 대화형으로 수행 가능하다.",
+      "Tag": [
+        "Integration",
+        "GenAI",
+        "Productivity"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [],
+      "Marketing_Jargon_Count": 0,
+      "Qualifier_Check": "Clean",
+      "Sales_Intent": "Medium"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Adobe",
+        "WHO_Primary_Tier_Source": "Fallback General (Tier 2 - Market Shaper)",
+        "WHO_Entity_Tier": 2,
+        "WHO_Secondary_Entity": "OpenAI",
+        "WHO_Secondary_Tier": 1,
+        "Gap_Calculation_Log": "|2 - 1| = 1 -> Score 0.5",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 4,
+        "SOTA_Check_Result": "Integration"
+      },
+      "Scores": {
+        "IW_Score": 3,
+        "Gap_Score": 0.5,
+        "Context_Bonus": 0.5,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 1,
+          "Criticality_Total": 0.5
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "Tier 2 기업의 주요 제품이 Tier 1 플랫폼과 결합(Strategic Alliance). 실질적인 기능 업데이트(Now)."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0,
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_4_Proven_Application",
+            "Raw_Score": 1,
+            "Weight": 1.6,
+            "Evidence": "Live feature rollout"
+          },
+          {
+            "ID": "P_7_Signal_To_Noise",
+            "Raw_Score": 0.75,
+            "Weight": 0.84,
+            "Evidence": "Clear usage instructions"
+          }
+        ],
+        "Negative_Scores": []
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "실제 사용 가능한 기능 업데이트를 명확히 설명함. 검증된 비즈니스 성과(서비스 런칭)에 해당."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "Adobe brings Photoshop, Acrobat, and Express directly to ChatGPT",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 1,
+          "Weight": 1.6,
+          "Evidence": "Live feature rollout"
+        },
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": 0.75,
+          "Weight": 0.84,
+          "Evidence": "Clear usage instructions"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "commentary": {
+      "ZES_Summary": "실제 사용 가능한 기능 업데이트를 명확히 설명함. 검증된 비즈니스 성과(서비스 런칭)에 해당."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 3,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 0.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 1,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Adobe",
+      "WHO_Primary_Tier_Source": "Fallback General (Tier 2 - Market Shaper)",
+      "WHO_Entity_Tier": 2,
+      "WHO_Secondary_Entity": "OpenAI",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|2 - 1| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 4,
+      "SOTA_Check_Result": "Integration"
+    },
+    "reasoning": {
+      "Score_Justification": "Tier 2 기업의 주요 제품이 Tier 1 플랫폼과 결합(Strategic Alliance). 실질적인 기능 업데이트(Now)."
+    }
+  },
+  "crawled_at": "2025-12-16T09:52:40.451496+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:52:40.455527+00:00",
+  "staged_at": "2025-12-16T10:01:03.722297+00:00",
+  "staged": true
+}

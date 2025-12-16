@@ -1,0 +1,202 @@
+{
+  "article_id": "ce0e14",
+  "author": [
+    "장세민 기자"
+  ],
+  "cached_at": "2025-12-16T07:59:28.288342+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204848_206218_252.png",
+  "modified_at": "2025-12-16T16:40:44+09:00",
+  "published_at": "2025-12-16T16:40:44+09:00",
+  "summary": "AI 스타트업 라이너가 AI 논문의 핵심 내용을 요약 및 시각 자료 위주로 제공하는 '논문 퀵 리뷰' 페이지를 오픈함. 연구자들의 탐색 비효율 개선 목표.",
+  "text": "(사진=라이너) AI 전문 라이너(대표 김진우)는 AI 논문을 더 빠르고 정확하게 탐색할 수 있는 ‘논문 퀵 리뷰(Quick Review)’ 페이지를 공식 오픈했다고 16일 밝혔다. 라이너는 간단한 텍스트 프롬프트로 사용자 의도와 연구 목적을 파악해 ‘맞춤 논문’을 제시하는 기능을 제공 중이다. 이는 라이너 서비스의 ‘문헌조사’ 리서치 에이전트 형태로 구현돼 있다. 이번에는 시각 자료 중심의 정리나 핵심 정리 등 더 세부적인 사항을 한눈에 제공하기 위해 퀵 리뷰 페이지를 선보였다. 급증하는 AI 논문 속에서 연구자들이 겪는 가장 큰 어려움으로 참고 논문을 선별하는 데 지나치게 많은 시간을 소요하는 점을 꼽았다. 제목과 초록만으로는 충분한 정보를 얻기 어렵기 때문에, 논문 전체 내용을 확인하는 비효율적인 과정을 반복해야 한다는 설명이다. 라이너는 이를 해결하기 위해 퀵 리뷰를 출시했다. 논문 평가에 필요한 핵심 정보를 한 페이지에 요약해 제공하며, 연구 목표와 방법론, 주요 결과뿐만 아니라 출판 연도, 인용 횟수, 연관 논문까지 제시해 논문의 최신성 및 영향력, 연구 맥락을 즉시 파악할 수 있다고 소개했다. 특히, AI 연구자가 연구 관련성을 파악하기 위해 확인하는 핵심 시각 자료(Figure)를 중심으로 구성, 원문을 모두 읽지 않고도 논문의 기여도와 연구와의 연결성을 빠르게 평가할 수 있도록 기획했다. ▲뉴립스(NeurIPS) ▲ICLR(표현학습국제학회) ▲ICML(국제머신러닝학회) ▲CVPR(컴퓨터비전패턴인식학회) ▲ICCV(국제컴퓨터비전학회)를 포함해, '컴퓨터 비전(CV)' ‘자연어처리(NLP)’ ‘데이터마이닝’ 등 각 분야를 아우르는 글로벌 톱 18 AI 학회의 최신 논문을 우선 제공한다. ‘멀티모달 AI’ ‘머신러닝 이론 및 방법론’ ‘시계열 데이터 처리’ 등 12개의 세부 주제 필터링 기능도 갖췄다. 논문 퀵 리뷰는 라이너의 AI 검색 및 리서치 에이전트 서비스와는 별도로, 라이너 공식 홈페이지에 마련됐다. 홈페이지 상단의 ‘더 알아보기’ 메뉴에서 ‘논문 리뷰’ 카테고리를 선택하면 복잡한 절차 없이 논문 분석 콘텐츠를 열람할 수 있다. 김진우 라이너 대표는 “유의미한 논문을 찾기 위해 연구자가 감내하던 단순 반복 검토 과정은 이제 기술을 통해 해결해야 할 과제”라며 “논문 퀵 리뷰는 이러한 탐색의 비효율을 획기적으로 줄여 빠른 판단을 돕는 핵심 도구”라고 말했다 장세민 기자 semim99@aitimes.com",
+  "title": "라이너, 글로벌 AI 학회 논문 한눈에 보는 ‘퀵 리뷰’ 페이지 오픈",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204848",
+  "title_ko": "라이너, 글로벌 AI 학회 논문 한눈에 보는 ‘퀵 리뷰’ 페이지 오픈",
+  "tags": [
+    "Liner",
+    "Academic Service",
+    "Product Launch"
+  ],
+  "impact_score": 3.8,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Liner",
+      "WHO_Primary_Tier_Source": "General Definition (Tier 4 - Startup)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": null,
+      "Gap_Calculation_Log": "|4 (Entity) - 3 (Evidence)| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 1,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Niche Utility"
+    },
+    "Scores": {
+      "IW_Score": 0.25,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 0,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 3,
+        "Criticality_Total": 0
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "Startup launching a utility tool. Useful but low global impact magnitude."
+    }
+  },
+  "zero_echo_score": 6.1,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0.75,
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 0.5,
+          "Weight": 1.6,
+          "Evidence": "Service Live"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 0.75,
+          "Weight": "-2.5",
+          "Evidence": "User Acquisition Intent"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "서비스 홍보 목적이 뚜렷함. '획기적'이라는 표현은 마케팅적 수사로 판단됨."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "ce0e14",
+    "Meta": {
+      "Headline": "라이너, 글로벌 AI 학회 논문 한눈에 보는 ‘퀵 리뷰’ 페이지 오픈",
+      "summary": "AI 스타트업 라이너가 AI 논문의 핵심 내용을 요약 및 시각 자료 위주로 제공하는 '논문 퀵 리뷰' 페이지를 오픈함. 연구자들의 탐색 비효율 개선 목표.",
+      "Tag": [
+        "Liner",
+        "Academic Service",
+        "Product Launch"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "획기적으로 (Drastically/Revolutionary)",
+        "핵심 도구 (Key tool)"
+      ],
+      "Marketing_Jargon_Count": 2,
+      "Qualifier_Check": "Clean",
+      "Sales_Intent": "High"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Liner",
+        "WHO_Primary_Tier_Source": "General Definition (Tier 4 - Startup)",
+        "WHO_Entity_Tier": 4,
+        "WHO_Secondary_Entity": "N/A",
+        "WHO_Secondary_Tier": null,
+        "Gap_Calculation_Log": "|4 (Entity) - 3 (Evidence)| = 1 -> Score 0.5",
+        "WHAT_X_Magnitude": 1,
+        "WHAT_Y_Evidence": 3,
+        "SOTA_Check_Result": "Niche Utility"
+      },
+      "Scores": {
+        "IW_Score": 0.25,
+        "Gap_Score": 0.5,
+        "Context_Bonus": 0,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 3,
+          "Criticality_Total": 0
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "Startup launching a utility tool. Useful but low global impact magnitude."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0.75,
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_4_Proven_Application",
+            "Raw_Score": 0.5,
+            "Weight": 1.6,
+            "Evidence": "Service Live"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_8_Promotional_Intent",
+            "Raw_Score": 0.75,
+            "Weight": "-2.5",
+            "Evidence": "User Acquisition Intent"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "서비스 홍보 목적이 뚜렷함. '획기적'이라는 표현은 마케팅적 수사로 판단됨."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "라이너, 글로벌 AI 학회 논문 한눈에 보는 ‘퀵 리뷰’ 페이지 오픈",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 0.5,
+          "Weight": 1.6,
+          "Evidence": "Service Live"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 0.75,
+          "Weight": "-2.5",
+          "Evidence": "User Acquisition Intent"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "서비스 홍보 목적이 뚜렷함. '획기적'이라는 표현은 마케팅적 수사로 판단됨."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 0.25,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 0,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 3,
+        "Criticality_Total": 0
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Liner",
+      "WHO_Primary_Tier_Source": "General Definition (Tier 4 - Startup)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": null,
+      "Gap_Calculation_Log": "|4 (Entity) - 3 (Evidence)| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 1,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Niche Utility"
+    },
+    "reasoning": {
+      "Score_Justification": "Startup launching a utility tool. Useful but low global impact magnitude."
+    }
+  },
+  "crawled_at": "2025-12-16T09:17:16.494985+00:00",
+  "edition": "251216_TUE_1"
+}

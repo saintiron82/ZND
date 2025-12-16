@@ -1,0 +1,260 @@
+{
+  "article_id": "4b8674",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-16T09:55:03.856088+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204839_206220_381.png",
+  "modified_at": "2025-12-16T18:00:00+09:00",
+  "published_at": "2025-12-16T18:00:00+09:00",
+  "summary": "앨런 AI 연구소(Ai2)가 토크나이저 없이 바이트 단위로 텍스트를 처리하는 새로운 오픈 모델 '볼모'를 출시했다. 기존 '올모 3'를 증류(Distillation)하여 개발 비용을 낮추면서도 코딩과 수학 등에서 높은 성능을 기록했다. 이는 오탈자 처리와 다국어 환경에 강점을 가지며 연구 및 엣지 환경에서의 활용성이 기대된다.",
+  "text": "(사진=Ai2) 엔터프라이즈 환경에서 다국어·저자원 언어·잡음이 많은 텍스트를 안정적으로 처리하려는 수요가 늘어나면서, 토크나이저가 필요 없는 ‘바이트 수준(byte-level) 언어 모델’이 다시 주목받고 있다. 앨런 AI 연구소(Ai2)는 15일(현지시간) 기존 대형언어모델(LLM)을 바이트 단위로 전환하는 방식의 새로운 오픈 모델 ‘ 볼모(Bolmo) ’를 공개했다. Ai2는 ▲볼모 7B ▲볼모 1B 두가지 모델을 출시하며, 이를 “완전 오픈 소스인 최초의 경쟁력 있는 바이트 수준 언어모델 패밀리”라고 소개했다. 바이트 수준 모델은 입력 문장을 UTF-8 원시 바이트로 분해 처리해, 사전에 정의된 어휘나 토크나이저가 필요 없다. 사용 가능한 바이트 값은 256개뿐이지만, UTF-8은 이들을 조합하여 수십만개 유니코드 문자를 표현할 수 있다. 엄밀히 말하면 바이트 수준의 토크나이저를 사용한다. 'GPT-2'나 'GPT-3'가 이런 방식을 사용했다. 현재 대부분 언어 모델은 ​​서브워드 토큰, 즉 문자와 단어 사이에 위치하는 'inter' 'national' ' ization' 과 같은 덩어리를 사용한다. 이는 모델의 성능을 크게 향상했지만, 단점도 있다. 문자 수준의 이해 부족, 공백과 드문 단어의 어색한 처리, 언어별 차이에 따른 한계, 모든 토큰을 동일하게 취급하는 유연성 없는 컴퓨팅 자원 할당 방식 등이다. 바이트 수준 모델은 매력적인 대안을 제시한다는 설명이다. 바이트 수준 모델은 입력 문장을 UTF-8 원시 바이트로 분해 처리해, 사전에 정의된 어휘나 토크나이저가 필요 없다. 사용 가능한 바이트 값은 256개뿐이지만, UTF-8은 이들을 조합하여 수십만개 유니코드 문자를 표현할 수 있다. 엄밀히 말하면 바이트 수준의 토크나이저를 사용한다. 'GPT-2'나 'GPT-3'가 이런 방식을 사용했다. 기존 모델은 문제를 풀 때 데이터에 존재하지 않는 모르는 단어가 등장하면 문제를 해결하는 것이 어려워진다. 그러나, 바이트 수준 모델은 바이트 단위 결합으로 어떤 문자나 단어도 표현할 수 있다. 그 결과 오탈자와 희귀 언어, 비정형 텍스트에 강하고, 콘텐츠 모더레이션이나 엣지 환경, 다국어 애플리케이션에 적합하다는 평가를 받는다는 설명이다. 볼모 아키텍처. 토크나이제이션 및 임베딩 단계 T는 입력 텍스트를 바이트 단위로, 각 바이트당 하나의 표현으로 변환한다. 이 표현들은 mLSTM 블록으로 구성된 로컬 인코더 E를 통해 문맥화된다. (사진=Ai2) 하지만 문제점도 있다. 바이트 수준 모델을 구축하려면 처음부터 모델을 학습해야 하는데, 이는 비용이 많이 든다. 또 서브워드 모델의 발전을 앞지른 데이터 큐레이션, 아키텍처, 사후 학습 기술의 빠른 개선 속도를 따라잡기 어렵다는 설명이다. 따라서 바이트 수준 접근 방식은 실용적인 선택지가 되기보다는 연구 분야에 머물러 왔다는 것이다. Ai2는 이 문제를 풀기 위해 기존 서브워드 모델인 ‘올모 3’를 바이트화하는 방식을 선택했다. 서브워드 모델은 하나의 단어를 더 작은 단위의 여러 서브워드로 분리해서 인코딩 및 임베딩한다. 새 모델을 처음부터 다시 학습하는 대신, 이미 검증된 올모 3의 핵심 구조와 성능을 그대로 활용해 입력 단위를 바이트 수준으로 바꾼 것이다. 이를 통해 개발 비용과 실패 위험을 크게 낮출 수 있었다고 전했. 볼모는 기존 서브워드 모델의 한계로 지적된 고정 어휘로 인한 표현력 부족과 효율성 제약을 극복하면서, 성능은 선도적인 서브워드 LLM과 유사한 수준을 유지한다. 특히 이번 연구의 차별점은 바이트 수준 모델과 서브워드 모델 사이의 표현력 차이를 줄여, 지식을 정확하게 이전(증류)할 수 있도록 구조를 설계했다는 점이다. 이를 통해 일반적인 사전학습 예산의 1% 미만만 투자해 서브워드 모델을 바이트 모델로 전환할 수 있다는 설명이다. 학습은 두 단계로 진행됐다. 먼저 1단계에서는 올모 3 트랜스포머를 그대로 둔 채, 로컬 인코더·디코더와 경계 예측기, 언어모델링 헤드만 학습해 비교적 적은 비용과 빠른 속도로 바이트화했다. 이 단계에는 약 98억 토큰의 데이터가 사용됐다. 이후 2단계에서는 모델 전체를 학습 대상으로 전환, 추가 학습을 진행하며 성능을 끌어올렸다. 이때는 올모 플래그십 모델에 활용된 ‘돌마 3(Dolma 3)’ 데이터 혼합과 공개 코드, 문자 단위 데이터가 동시에 사용됐다. 볼모 7B 벤치마크 결과 (사진=Ai2) 성능 평가에서도 의미 있는 결과가 나왔다. 수학, 과학·공학(STEM) 추론, 질의응답, 일반 상식, 코딩 등을 평가한 결과, 볼모 7B는 '큐트(CUTE)'나 '엑시큐트(EXECUTE)' 같은 문자 중심 벤치마크에서 더 좋은 성적을 냈고, 기반 모델인 올모 3보다 정확도도 높아졌다. 특히 코딩과 수학, 객관식 문제, 문자 이해 능력에서는 같은 규모의 다른 모델들보다 뛰어난 성과를 보였다. 또 토큰을 많이 압축하는 방식으로 학습해, 실행 속도 역시 기존 서브워드 모델과 견줄 만한 수준에 도달했다고 Ai2는 설명했다. 볼모의 체크포인트와 코드는 허깅페이스 와 깃허브 를 통해 공개됐다. 특히 모델 크기가 7B와 1B에 불과, 추론 비용과 속도 면에서 실제 배포와 활용이 용이하다는 점을 강조했다. 박찬 기자 cpark@aitimes.com",
+  "title": "Ai2, 토크나이저 없는 바이트 수준 모델 ‘볼모’ 공개",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204839",
+  "title_ko": "Ai2, 토크나이저 없는 바이트 단위 LLM '볼모(Bolmo)' 공개",
+  "tags": [
+    "LLM",
+    "Byte-Level",
+    "Open_Source"
+  ],
+  "impact_score": 6.5,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Allen Institute for AI (Ai2)",
+      "WHO_Primary_Tier_Source": "Academic_Media (Tier 2 Mapping)",
+      "WHO_Entity_Tier": 2,
+      "WHO_Secondary_Entity": "OpenAI (GPT Reference)",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|2 - 3| = 1 -> Score +0.5",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 4,
+      "SOTA_Check_Result": "Technical Niche Breakthrough (Byte-level)"
+    },
+    "Scores": {
+      "IW_Score": 3,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 1.5,
+        "Criticality_Total": 0
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "연구소 레벨의 기술적 성취이나, '최초' 주장에 대한 검증이 필요. 상용화 파급력보다는 학술적/기술적 의미가 큼."
+    }
+  },
+  "zero_echo_score": 3.8,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0.75,
+      "Penalty_Clipping_Indicator": true
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": 1,
+          "Weight": 1.8,
+          "Evidence": "바이트 수준 처리 아키텍처 및 증류 방식 상세 기술"
+        },
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "HuggingFace 및 GitHub 공개로 즉시 검증 가능"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": 0.75,
+          "Weight": -3.5,
+          "Evidence": "'최초의 경쟁력 있는' 등의 수식어 사용으로 인한 Scanner Penalty 적용"
+        },
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0,
+          "Weight": -2,
+          "Evidence": "단점을 언급(비용 문제 등)하여 균형 유지"
+        },
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 0,
+          "Weight": -2.5,
+          "Evidence": "None"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "기술적 깊이가 뛰어나고 오픈소스로 공개되어 투명성이 높으나, '최초' 타이틀 강조에 따른 PR Scanner 페널티가 적용됨. 실질적 성능 검증 데이터는 충분함."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "4b8674",
+    "Meta": {
+      "Headline": "Ai2, 토크나이저 없는 바이트 단위 LLM '볼모(Bolmo)' 공개",
+      "summary": "앨런 AI 연구소(Ai2)가 토크나이저 없이 바이트 단위로 텍스트를 처리하는 새로운 오픈 모델 '볼모'를 출시했다. 기존 '올모 3'를 증류(Distillation)하여 개발 비용을 낮추면서도 코딩과 수학 등에서 높은 성능을 기록했다. 이는 오탈자 처리와 다국어 환경에 강점을 가지며 연구 및 엣지 환경에서의 활용성이 기대된다.",
+      "Tag": [
+        "LLM",
+        "Byte-Level",
+        "Open_Source"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "최초 (First)",
+        "선도적인 (Leading)"
+      ],
+      "Marketing_Jargon_Count": 2,
+      "Qualifier_Check": "Found 'First' claim",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Allen Institute for AI (Ai2)",
+        "WHO_Primary_Tier_Source": "Academic_Media (Tier 2 Mapping)",
+        "WHO_Entity_Tier": 2,
+        "WHO_Secondary_Entity": "OpenAI (GPT Reference)",
+        "WHO_Secondary_Tier": 1,
+        "Gap_Calculation_Log": "|2 - 3| = 1 -> Score +0.5",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 4,
+        "SOTA_Check_Result": "Technical Niche Breakthrough (Byte-level)"
+      },
+      "Scores": {
+        "IW_Score": 3,
+        "Gap_Score": 0.5,
+        "Context_Bonus": 1.5,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 1.5,
+          "Criticality_Total": 0
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "연구소 레벨의 기술적 성취이나, '최초' 주장에 대한 검증이 필요. 상용화 파급력보다는 학술적/기술적 의미가 큼."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0.75,
+        "Penalty_Clipping_Indicator": true
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_3_Deep_Tech_Insight",
+            "Raw_Score": 1,
+            "Weight": 1.8,
+            "Evidence": "바이트 수준 처리 아키텍처 및 증류 방식 상세 기술"
+          },
+          {
+            "ID": "P_1_Verifiable_Source",
+            "Raw_Score": 1,
+            "Weight": 2,
+            "Evidence": "HuggingFace 및 GitHub 공개로 즉시 검증 가능"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_1_Ad_Exaggeration",
+            "Raw_Score": 0.75,
+            "Weight": -3.5,
+            "Evidence": "'최초의 경쟁력 있는' 등의 수식어 사용으로 인한 Scanner Penalty 적용"
+          },
+          {
+            "ID": "N_3_Intentional_Bias",
+            "Raw_Score": 0,
+            "Weight": -2,
+            "Evidence": "단점을 언급(비용 문제 등)하여 균형 유지"
+          },
+          {
+            "ID": "N_8_Promotional_Intent",
+            "Raw_Score": 0,
+            "Weight": -2.5,
+            "Evidence": "None"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "기술적 깊이가 뛰어나고 오픈소스로 공개되어 투명성이 높으나, '최초' 타이틀 강조에 따른 PR Scanner 페널티가 적용됨. 실질적 성능 검증 데이터는 충분함."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "Ai2, 토크나이저 없는 바이트 수준 모델 ‘볼모’ 공개",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": 1,
+          "Weight": 1.8,
+          "Evidence": "바이트 수준 처리 아키텍처 및 증류 방식 상세 기술"
+        },
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "HuggingFace 및 GitHub 공개로 즉시 검증 가능"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": 0.75,
+          "Weight": -3.5,
+          "Evidence": "'최초의 경쟁력 있는' 등의 수식어 사용으로 인한 Scanner Penalty 적용"
+        },
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0,
+          "Weight": -2,
+          "Evidence": "단점을 언급(비용 문제 등)하여 균형 유지"
+        },
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 0,
+          "Weight": -2.5,
+          "Evidence": "None"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "기술적 깊이가 뛰어나고 오픈소스로 공개되어 투명성이 높으나, '최초' 타이틀 강조에 따른 PR Scanner 페널티가 적용됨. 실질적 성능 검증 데이터는 충분함."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 3,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 1.5,
+        "Criticality_Total": 0
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Allen Institute for AI (Ai2)",
+      "WHO_Primary_Tier_Source": "Academic_Media (Tier 2 Mapping)",
+      "WHO_Entity_Tier": 2,
+      "WHO_Secondary_Entity": "OpenAI (GPT Reference)",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|2 - 3| = 1 -> Score +0.5",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 4,
+      "SOTA_Check_Result": "Technical Niche Breakthrough (Byte-level)"
+    },
+    "reasoning": {
+      "Score_Justification": "연구소 레벨의 기술적 성취이나, '최초' 주장에 대한 검증이 필요. 상용화 파급력보다는 학술적/기술적 의미가 큼."
+    }
+  },
+  "crawled_at": "2025-12-16T09:56:28.204467+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:56:28.209154+00:00",
+  "staged_at": "2025-12-16T10:01:04.380426+00:00",
+  "staged": true
+}

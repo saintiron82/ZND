@@ -107,12 +107,10 @@ function verifyAndApply() {
             if (res.error) {
                 resultDiv.innerHTML = `<span style="color:red">Error: ${res.error}</span>`;
             } else {
-                // ZS 검증
                 const zsMatch = res.match;
                 const zsMatchText = zsMatch ? '✓' : '✗';
                 const zsMatchColor = zsMatch ? '#28a745' : '#dc3545';
 
-                // IS 검증
                 const isMatch = res.impact_match;
                 const isMatchText = isMatch ? '✓' : '✗';
                 const isMatchColor = isMatch ? '#28a745' : '#dc3545';
@@ -126,13 +124,27 @@ function verifyAndApply() {
                 html += `기록: ZS=${jsonData.zero_echo_score || 'N/A'} | IS=${jsonData.impact_score || 'N/A'}`;
                 html += `</div>`;
 
-                if (res.breakdown) {
+                // --- V0.9 or Legacy Breakdown ---
+                if (res.breakdown?.schema === 'V0.9') {
+                    html += `<div style="margin-top:10px; font-size:0.8em; background:#e7f1ff; padding:8px; border-radius:4px;">`;
+                    html += `<strong>📊 V0.9 Schema</strong><br>`;
+                    // IS Components
+                    const isComp = res.breakdown.is_components || {};
+                    html += `<div style="margin-top:5px;"><b>IS 구성:</b> IW=${isComp.IW_Score || 0}, Gap=${isComp.Gap_Score || 0}, Ctx=${isComp.Context_Bonus || 0}, Scope=${isComp.Scope_Total || 0}, Crit=${isComp.Criticality_Total || 0}, Adj=${isComp.Adjustment_Score || 0}</div>`;
+                    // ZES Vector
+                    const zesVec = res.breakdown.zes_vector || {};
+                    const posCount = (zesVec.positive || []).length;
+                    const negCount = (zesVec.negative || []).length;
+                    html += `<div><b>ZES 벡터:</b> Positive(${posCount}), Negative(${negCount})</div>`;
+                    html += `</div>`;
+                } else if (res.breakdown) {
+                    // Legacy Breakdown
                     html += `<div style="margin-top:5px; font-size:0.8em; color:#888;">`;
                     html += `크레딧: -${res.breakdown.credits_sum || 0} | 페널티: +${res.breakdown.penalties_sum || 0}`;
                     html += `</div>`;
                 }
 
-                // Auto-apply calculated scores if mismatch (with clamping 0-10)
+                // Auto-apply
                 let autoApplied = false;
                 if (!zsMatch && res.calculated_zs !== undefined) {
                     jsonData.zero_echo_score = Math.max(0, Math.min(10, res.calculated_zs));
@@ -1402,37 +1414,38 @@ function getArticleIdFromUrl(url) {
 
 function copyAllForPrompt() {
     const keys = Object.keys(loadedContents);
-    if (keys.length === 0) return alert('Please "Load All" content first!');
+    if (keys.length === 0) return alert('먼저 "일괄 로드"를 실행하세요!');
 
     // Reset article ID map for this batch
     articleIdMap = {};
 
-    const N = currentLinks.length;
-    let text = `${N}개의 항목에 대해서 개별로 평가하라.\n이 목록은 해당 그룹에 해당하는 리스트이다.\n`;
-    text += `응답은 반드시 Valid JSON List 포맷으로 작성하라.\n`;
-    text += `각 응답에 반드시 "article_id" 필드를 포함하여 해당 기사의 ID를 명시하라.\n`;
-    text += `예시: { "results": [ { "article_id": "abc123", "title_ko": "...", "zero_echo_score": 5.0, "impact_score": 3.5, "summary": "...", "reasoning": "..." } ] }\n\n`;
+    // Build JSON array for V0.9 Input Format
+    const inputArray = [];
 
     currentLinks.forEach((linkItem, index) => {
         const data = loadedContents[linkItem.url];
         if (!data) return;
 
         const title = data.title || data.title_ko || 'No Title';
-        const body = data.text || data.summary || 'No text content';
+        const body = data.text || data.summary || '';
 
-        // Use article_id from cache (already stored), or generate from URL hash
+        // Use article_id from cache, or generate from URL hash
         const articleId = data.article_id || getArticleIdFromUrl(linkItem.url);
         articleIdMap[articleId] = linkItem.url;
 
-        text += `--- Article : ${index + 1}\n`;
-        text += `---article_id : ${articleId}\n`;
-        text += `---Title: ${title}\n`;
-        text += `---Body:\n${body}\n\n`;
+        inputArray.push({
+            "Article_ID": articleId,
+            "Title": title,
+            "Body": body
+        });
     });
 
-    navigator.clipboard.writeText(text).then(() => {
-        alert('✅ Copied formatted prompt to clipboard!');
-    }).catch(err => alert('Failed to copy: ' + err));
+    // Format as JSON string
+    const jsonStr = JSON.stringify(inputArray, null, 2);
+
+    navigator.clipboard.writeText(jsonStr).then(() => {
+        alert(`✅ V0.9 포맷으로 ${inputArray.length}개 기사 입력 JSON을 클립보드에 복사했습니다!`);
+    }).catch(err => alert('복사 실패: ' + err));
 }
 
 function injectCorrection() {
@@ -1517,13 +1530,12 @@ function applyBatchResults() {
 
     if (results.length === 0) return alert('No results found in JSON.');
 
-    // Check if results have article_id (hash-based matching)
-    const hasArticleIds = results.every(r => r.article_id);
+    // V0.9 uses "Article_ID", Legacy uses "article_id"
+    const hasArticleIds = results.every(r => r.Article_ID || r.article_id);
 
     if (!hasArticleIds) {
-        // Fallback to order-based matching with warning
         if (results.length !== currentLinks.length) {
-            if (!confirm(`⚠️ article_id가 없어 순서 기반 매칭을 사용합니다.\nLinks: ${currentLinks.length}\nResults: ${results.length}\n\n계속하시겠습니까?`)) {
+            if (!confirm(`⚠️ Article_ID가 없어 순서 기반 매칭을 사용합니다.\nLinks: ${currentLinks.length}\nResults: ${results.length}\n\n계속하시겠습니까?`)) {
                 return;
             }
         }
@@ -1534,35 +1546,82 @@ function applyBatchResults() {
 
     results.forEach((resItem, index) => {
         let url = null;
+        // V0.9: Article_ID, Legacy: article_id
+        const articleId = resItem.Article_ID || resItem.article_id;
 
-        if (hasArticleIds && resItem.article_id) {
-            // Hash-based matching
-            url = articleIdMap[resItem.article_id];
+        if (hasArticleIds && articleId) {
+            url = articleIdMap[articleId];
             if (!url) {
-                console.warn(`Unknown article_id: ${resItem.article_id}`);
+                console.warn(`Unknown Article_ID: ${articleId}`);
                 skippedCount++;
                 return;
             }
         } else {
-            // Fallback: order-based matching
             if (index >= currentLinks.length) return;
             url = currentLinks[index].url;
         }
 
         if (!loadedContents[url]) loadedContents[url] = { url: url };
 
-        // Remove article_id from final data (it's only for matching)
-        const { article_id, ...restData } = resItem;
-        Object.assign(loadedContents[url], restData);
+        // --- V0.9 Schema Handling ---
+        let processedData = {};
 
-        if (restData.zero_echo_score !== undefined) {
-            loadedContents[url].zero_echo_score = parseFloat(restData.zero_echo_score);
-        }
-        if (restData.impact_score !== undefined) {
-            loadedContents[url].impact_score = parseFloat(restData.impact_score);
+        // Meta (title_ko, summary, tags)
+        if (resItem.Meta) {
+            processedData.title_ko = resItem.Meta.Headline || resItem.Meta.title_ko;
+            processedData.summary = resItem.Meta.summary;
+            processedData.tags = resItem.Meta.Tag || resItem.Meta.tags || [];
         }
 
-        // [NEW] Update server cache with analysis results
+        // Impact Score (IS) Calculation from Impact_Analysis_IS
+        if (resItem.Impact_Analysis_IS && resItem.Impact_Analysis_IS.Scores) {
+            const scores = resItem.Impact_Analysis_IS.Scores;
+            let is = 0.0;
+            is += parseFloat(scores.IW_Score || 0);
+            is += parseFloat(scores.Gap_Score || 0);
+            is += parseFloat(scores.Context_Bonus || 0);
+            // Scope_Total and Criticality_Total are nested inside IE_Breakdown_Total
+            const ieBreakdown = scores.IE_Breakdown_Total || {};
+            is += parseFloat(ieBreakdown.Scope_Total || 0);
+            is += parseFloat(ieBreakdown.Criticality_Total || 0);
+            is += parseFloat(scores.Adjustment_Score || 0);
+            processedData.impact_score = Math.round(Math.max(0, Math.min(10, is)) * 10) / 10;
+            processedData.impact_evidence = resItem.Impact_Analysis_IS; // Store full struct for verification
+        } else if (resItem.impact_score !== undefined) {
+            processedData.impact_score = parseFloat(resItem.impact_score);
+        }
+
+        // Zero Echo Score (ZES) Calculation from Evidence_Analysis_ZES (Base 5.0)
+        // Formula: ZES = 5 - (Positive + Negative)
+        if (resItem.Evidence_Analysis_ZES && resItem.Evidence_Analysis_ZES.ZES_Score_Vector) {
+            const vector = resItem.Evidence_Analysis_ZES.ZES_Score_Vector;
+            let zesSum = 0.0;
+            if (vector.Positive_Scores) {
+                vector.Positive_Scores.forEach(p => { zesSum += parseFloat(p.Raw_Score || 0) * parseFloat(p.Weight || 1); });
+            }
+            if (vector.Negative_Scores) {
+                vector.Negative_Scores.forEach(n => { zesSum += parseFloat(n.Raw_Score || 0) * parseFloat(n.Weight || 1); });
+            }
+            // ZES = 5 - (sum)
+            let zes = 5.0 - zesSum;
+            processedData.zero_echo_score = Math.round(Math.max(0, Math.min(10, zes)) * 10) / 10;
+            processedData.evidence = resItem.Evidence_Analysis_ZES;
+        } else if (resItem.zero_echo_score !== undefined) {
+            processedData.zero_echo_score = parseFloat(resItem.zero_echo_score);
+        }
+
+        // Legacy flat fields fallback (if V0.9 structures not present)
+        if (!processedData.title_ko && resItem.title_ko) processedData.title_ko = resItem.title_ko;
+        if (!processedData.summary && resItem.summary) processedData.summary = resItem.summary;
+        if (!processedData.tags && resItem.tags) processedData.tags = resItem.tags;
+
+        // Store raw analysis for potential re-verification
+        processedData.raw_analysis = resItem;
+
+        // Merge into loaded content
+        Object.assign(loadedContents[url], processedData);
+
+        // Update server cache
         fetch('/api/update_cache', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1572,11 +1631,12 @@ function applyBatchResults() {
         updatedCount++;
     });
 
-    let message = `✅ Applied results to ${updatedCount} items.`;
-    if (skippedCount > 0) message += `\n⚠️ Skipped ${skippedCount} items (unknown article_id).`;
-    message += `\nReview them one by one and click 'Save'.`;
+    let message = `✅ ${updatedCount}개 기사에 결과를 적용했습니다.`;
+    if (skippedCount > 0) message += `\n⚠️ ${skippedCount}개 건너뜀 (알 수 없는 Article_ID).`;
+    message += `\n각 기사를 검토하고 '저장'을 클릭하세요.`;
     alert(message);
     closeBatchModal();
+    renderLinks(); // Refresh link list to show updated status
 
     if (currentLinkIndex >= 0) {
         loadArticle(currentLinkIndex);

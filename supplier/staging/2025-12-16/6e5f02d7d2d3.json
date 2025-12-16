@@ -1,0 +1,243 @@
+{
+  "article_id": "6e5f02",
+  "author": [
+    "김해원 기자"
+  ],
+  "cached_at": "2025-12-16T07:59:28.285687+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204840_206208_1049.jpg",
+  "modified_at": "2025-12-16T15:32:48+09:00",
+  "published_at": "2025-12-16T15:32:48+09:00",
+  "summary": "SK텔레콤 정재헌 대표가 타운홀 미팅을 통해 통신과 AI를 양대 축으로 하는 기업 체질 개선을 선언했다. 핵심 성과 지표를 EBITDA에서 투하자본이익률(ROIC)로 변경하여 실질 생산성을 높이고 글로벌 빅테크와 경쟁하겠다는 의지를 밝혔다. 구체적 성과보다는 향후 전략 방향성과 조직 문화(AX 내재화)에 초점을 맞추고 있다.",
+  "text": "(사진=SKT) SK텔레콤(대표 정재헌)은 서울 을지로 본사에서 타운홀을 열고 이동통신 사업(MNO)과 인공지능(AI) 사업을 중심으로 전사 혁신에 나선다고 16일 밝혔다. 정재헌 SKT CEO는 \"이제부터 CEO의 C를 '체인지(Change)'로 바꾼다\"라며 자신을 '변화관리 최고책임자(Change Executive Officer)'로 규정하는 등 혁신 의지를 다졌다. MNO 사업 영역은 '고객이 곧 업의 본질'이라고 정의했다. 품질·보안·안전 등 기본과 원칙을 핵심으로 삼아 고객 신뢰를 회복하겠다는 목표를 세웠다. 이에 핵심 관리 지표를 EBITDA(상각 전 영업이익)에서 ROIC(투하자본이익률)로 전환한다고 선언했다. ROIC는 자본 효율성과 가치 창출 여부를 판단하는 지표로 중장기 경쟁력과 투자 우선순위 등을 파악할 수 있다. '실질 생산성' 중심으로 경영 패러다임을 전환하겠다는 뜻이다. AI 사업에 대해서는 \"그간 새로운 실험과 인큐베이팅을 반복하면서 일정 부분 유무형 자산을 확보했다\"라며 \"앞으로는 우리가 잘할 수 있는 분야를 선택과 집중해 글로벌 빅테크의 속도에 맞춰 경쟁해야 한다\"라고 강조했다. AI 데이터센터와 고부가가치 솔루션 영역 사업을 확대하고 제조 AI와 독자 모델 등 특화 영역에 집중해 성과를 창출하겠다는 방침이다. 구성원 AI 내재화도 강조했다. 전사 AI 전환(AX)을 위해 ▲전 구성원 대상 AI 도구 활용 지원 ▲업무용 AI 개발 프로세스 정립 ▲아이디어 교류 목적 AX 대시보드 구축 등을 추진한다. 정 CEO는 \"다시 뛰는 SKT가 되기 위해서는 구성원 모두가 공유하고 구체적으로 실행하는 진취적 역량을 가져야 한다\"라며 \"실패에 대한 책임은 경영진이 질 테니 구성원들은 창의력을 발휘해 혁신에 앞장설 수 있도록 지원하겠다\"라고 말했다. 김해원 기자 hwkim@aitimes.com",
+  "title": "﻿정재헌 SKT 대표 &quot;빅테크 맞서 AI 집중...AX 내재화 추진”",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204840",
+  "title_ko": "SKT, AI 중심 전사 혁신 및 ROIC 지표 도입 선언",
+  "tags": [
+    "SKT",
+    "Corporate Strategy",
+    "AI Transformation"
+  ],
+  "impact_score": 4.5,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "SK Telecom",
+      "WHO_Primary_Tier_Source": "Hardware_Supply (Related/Fallback Tier 3)",
+      "WHO_Entity_Tier": 3,
+      "WHO_Secondary_Entity": "Global Big Tech",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|3 (Entity) - 3 (Source)| = 0 -> Score +1.0",
+      "WHAT_X_Magnitude": 3,
+      "WHAT_Y_Evidence": 1,
+      "SOTA_Check_Result": "Strategic Plan (Not SOTA)"
+    },
+    "Scores": {
+      "IW_Score": 2,
+      "Gap_Score": 1,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": "2.5 (T3_Strategy vs T3_Macro)",
+        "Criticality_Total": "0.5 (Proven: 0.0 + Biz: 0.5)"
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "주요 기업의 전략 전환(Paradigm Shift)으로 맥락 점수는 높으나, 구체적 성과(Provenness)가 부재하여 Criticality 낮음."
+    }
+  },
+  "zero_echo_score": 4.7,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0.75,
+      "Penalty_Clipping_Indicator": true
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "CEO 주재 타운홀 미팅 공식 발언"
+        },
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": 0.5,
+          "Weight": 1.8,
+          "Evidence": "ROIC 도입 등 경영 전략적 깊이는 존재하나 기술적 깊이는 부족"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_2_Unsubstantiated",
+          "Raw_Score": 0.75,
+          "Weight": -1.5,
+          "Evidence": "'글로벌 빅테크와 경쟁' 등 구체적 방법론 없는 주장"
+        },
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0.75,
+          "Weight": -2,
+          "Evidence": "미래 청사진 위주의 긍정적 전망만 제시 (Risk 언급 부재)"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "전형적인 비전 선포형 기사로, '혁신', '체인지' 등 마케팅 용어 비중이 높음. 현재 시점의 실증 데이터(Evidence)가 부족하여 ZES 패널티 적용됨."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "6e5f02",
+    "Meta": {
+      "Headline": "SKT, AI 중심 전사 혁신 및 ROIC 지표 도입 선언",
+      "summary": "SK텔레콤 정재헌 대표가 타운홀 미팅을 통해 통신과 AI를 양대 축으로 하는 기업 체질 개선을 선언했다. 핵심 성과 지표를 EBITDA에서 투하자본이익률(ROIC)로 변경하여 실질 생산성을 높이고 글로벌 빅테크와 경쟁하겠다는 의지를 밝혔다. 구체적 성과보다는 향후 전략 방향성과 조직 문화(AX 내재화)에 초점을 맞추고 있다.",
+      "Tag": [
+        "SKT",
+        "Corporate Strategy",
+        "AI Transformation"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "혁신 (Innovation)",
+        "글로벌 빅테크 경쟁 (Ranking/Status Aspiration)",
+        "솔루션 영역 확대 (Sales)"
+      ],
+      "Marketing_Jargon_Count": 3,
+      "Qualifier_Check": "Found Aspirational Claims",
+      "Sales_Intent": "Medium"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "SK Telecom",
+        "WHO_Primary_Tier_Source": "Hardware_Supply (Related/Fallback Tier 3)",
+        "WHO_Entity_Tier": 3,
+        "WHO_Secondary_Entity": "Global Big Tech",
+        "WHO_Secondary_Tier": 1,
+        "Gap_Calculation_Log": "|3 (Entity) - 3 (Source)| = 0 -> Score +1.0",
+        "WHAT_X_Magnitude": 3,
+        "WHAT_Y_Evidence": 1,
+        "SOTA_Check_Result": "Strategic Plan (Not SOTA)"
+      },
+      "Scores": {
+        "IW_Score": 2,
+        "Gap_Score": 1,
+        "Context_Bonus": 1.5,
+        "IE_Breakdown_Total": {
+          "Scope_Total": "2.5 (T3_Strategy vs T3_Macro)",
+          "Criticality_Total": "0.5 (Proven: 0.0 + Biz: 0.5)"
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "주요 기업의 전략 전환(Paradigm Shift)으로 맥락 점수는 높으나, 구체적 성과(Provenness)가 부재하여 Criticality 낮음."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0.75,
+        "Penalty_Clipping_Indicator": true
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_1_Verifiable_Source",
+            "Raw_Score": 1,
+            "Weight": 2,
+            "Evidence": "CEO 주재 타운홀 미팅 공식 발언"
+          },
+          {
+            "ID": "P_3_Deep_Tech_Insight",
+            "Raw_Score": 0.5,
+            "Weight": 1.8,
+            "Evidence": "ROIC 도입 등 경영 전략적 깊이는 존재하나 기술적 깊이는 부족"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_2_Unsubstantiated",
+            "Raw_Score": 0.75,
+            "Weight": -1.5,
+            "Evidence": "'글로벌 빅테크와 경쟁' 등 구체적 방법론 없는 주장"
+          },
+          {
+            "ID": "N_3_Intentional_Bias",
+            "Raw_Score": 0.75,
+            "Weight": -2,
+            "Evidence": "미래 청사진 위주의 긍정적 전망만 제시 (Risk 언급 부재)"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "전형적인 비전 선포형 기사로, '혁신', '체인지' 등 마케팅 용어 비중이 높음. 현재 시점의 실증 데이터(Evidence)가 부족하여 ZES 패널티 적용됨."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "﻿정재헌 SKT 대표 &quot;빅테크 맞서 AI 집중...AX 내재화 추진”",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "CEO 주재 타운홀 미팅 공식 발언"
+        },
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": 0.5,
+          "Weight": 1.8,
+          "Evidence": "ROIC 도입 등 경영 전략적 깊이는 존재하나 기술적 깊이는 부족"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_2_Unsubstantiated",
+          "Raw_Score": 0.75,
+          "Weight": -1.5,
+          "Evidence": "'글로벌 빅테크와 경쟁' 등 구체적 방법론 없는 주장"
+        },
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0.75,
+          "Weight": -2,
+          "Evidence": "미래 청사진 위주의 긍정적 전망만 제시 (Risk 언급 부재)"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "전형적인 비전 선포형 기사로, '혁신', '체인지' 등 마케팅 용어 비중이 높음. 현재 시점의 실증 데이터(Evidence)가 부족하여 ZES 패널티 적용됨."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 2,
+      "Gap_Score": 1,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": "2.5 (T3_Strategy vs T3_Macro)",
+        "Criticality_Total": "0.5 (Proven: 0.0 + Biz: 0.5)"
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "SK Telecom",
+      "WHO_Primary_Tier_Source": "Hardware_Supply (Related/Fallback Tier 3)",
+      "WHO_Entity_Tier": 3,
+      "WHO_Secondary_Entity": "Global Big Tech",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|3 (Entity) - 3 (Source)| = 0 -> Score +1.0",
+      "WHAT_X_Magnitude": 3,
+      "WHAT_Y_Evidence": 1,
+      "SOTA_Check_Result": "Strategic Plan (Not SOTA)"
+    },
+    "reasoning": {
+      "Score_Justification": "주요 기업의 전략 전환(Paradigm Shift)으로 맥락 점수는 높으나, 구체적 성과(Provenness)가 부재하여 Criticality 낮음."
+    }
+  },
+  "crawled_at": "2025-12-16T09:28:30.650481+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:28:30.653942+00:00",
+  "staged_at": "2025-12-16T10:01:04.393911+00:00",
+  "staged": true
+}

@@ -1,0 +1,198 @@
+{
+  "article_id": "eaf7f7",
+  "cached_at": "2025-12-16T08:04:09.914386+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2024/02/white_house_US_AI_style.png",
+  "published_at": "Sun, 14 Dec 2025 11:01:40 GMT",
+  "summary": "비영리 단체 CHT는 트럼프 행정부의 새로운 행정 명령이 주 차원의 AI 규제를 무력화하여 공공 안전을 위협한다고 비판했다. 이들은 연방 차원의 대체 규제 없이 '책임의 공백'을 만들고 있다고 주장하며, 딥페이크와 사기 등 AI 부작용에 대한 정부의 보호를 촉구했다.",
+  "text": "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. The Center for Humane Technology (CHT), a nonprofit organization advocating for ethical technology, has criticized a new executive order from the Trump administration that aims to undermine state AI laws. Ad According to the CHT, the regulation puts public safety at risk by preventing states from meaningfully regulating AI. At the same time, it offers no national replacement framework, creating what the organization calls a vacuum in accountability. Americans understand the potential benefits and dangers of this technology. They believe government should help regulate AI, not provide a regulatory shield to an industry that prioritizes growth at any cost. (CHT) The CHT points to documented AI harms, including deepfakes, fraud, and chatbot-related suicides among young people. Social media already showed what happens when technology goes unregulated, the organization argues. The government should protect the public instead of caving to the tech industry. Trump argues that varying state regulations are slowing down the industry. AI companies like Anthropic, OpenAI, and Google support national regulation. Ad",
+  "title": "CHT blasts Trump's executive order for creating an AI accountability vacuum",
+  "url": "https://the-decoder.com/cht-blasts-trumps-executive-order-for-creating-an-ai-accountability-vacuum/",
+  "title_ko": "CHT, 트럼프의 AI 행정 명령 비판 및 책임 공백 경고",
+  "tags": [
+    "Ethics",
+    "Policy",
+    "Advocacy"
+  ],
+  "impact_score": 3.5,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "CHT",
+      "WHO_Primary_Tier_Source": "Fallback General (Tier 4 - NGO)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "USA Gov",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|4 - 1| = 3 -> Score -0.5",
+      "WHAT_X_Magnitude": 3,
+      "WHAT_Y_Evidence": 1,
+      "SOTA_Check_Result": "Advocacy"
+    },
+    "Scores": {
+      "IW_Score": 1,
+      "Gap_Score": -0.5,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "Tier 4 단체의 Tier 1 정부 정책 평가(Evaluation) 및 비판. Governance 이슈로 사회적 중요도 높음."
+    }
+  },
+  "zero_echo_score": 5.6,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0,
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": 0.5,
+          "Weight": 0.84,
+          "Evidence": "Clear stance on policy impact"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0.5,
+          "Weight": -2,
+          "Evidence": "Advocacy/One-sided criticism"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "구체적인 피해 사례를 언급했으나, 본질적으로 특정 단체의 주장에 기반한 비판적 성명임."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "eaf7f7",
+    "Meta": {
+      "Headline": "CHT, 트럼프의 AI 행정 명령 비판 및 책임 공백 경고",
+      "summary": "비영리 단체 CHT는 트럼프 행정부의 새로운 행정 명령이 주 차원의 AI 규제를 무력화하여 공공 안전을 위협한다고 비판했다. 이들은 연방 차원의 대체 규제 없이 '책임의 공백'을 만들고 있다고 주장하며, 딥페이크와 사기 등 AI 부작용에 대한 정부의 보호를 촉구했다.",
+      "Tag": [
+        "Ethics",
+        "Policy",
+        "Advocacy"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [],
+      "Marketing_Jargon_Count": 0,
+      "Qualifier_Check": "Clean",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "CHT",
+        "WHO_Primary_Tier_Source": "Fallback General (Tier 4 - NGO)",
+        "WHO_Entity_Tier": 4,
+        "WHO_Secondary_Entity": "USA Gov",
+        "WHO_Secondary_Tier": 1,
+        "Gap_Calculation_Log": "|4 - 1| = 3 -> Score -0.5",
+        "WHAT_X_Magnitude": 3,
+        "WHAT_Y_Evidence": 1,
+        "SOTA_Check_Result": "Advocacy"
+      },
+      "Scores": {
+        "IW_Score": 1,
+        "Gap_Score": -0.5,
+        "Context_Bonus": 1.5,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 0.5,
+          "Criticality_Total": 1
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "Tier 4 단체의 Tier 1 정부 정책 평가(Evaluation) 및 비판. Governance 이슈로 사회적 중요도 높음."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0,
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_7_Signal_To_Noise",
+            "Raw_Score": 0.5,
+            "Weight": 0.84,
+            "Evidence": "Clear stance on policy impact"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_3_Intentional_Bias",
+            "Raw_Score": 0.5,
+            "Weight": -2,
+            "Evidence": "Advocacy/One-sided criticism"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "구체적인 피해 사례를 언급했으나, 본질적으로 특정 단체의 주장에 기반한 비판적 성명임."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "CHT blasts Trump's executive order for creating an AI accountability vacuum",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": 0.5,
+          "Weight": 0.84,
+          "Evidence": "Clear stance on policy impact"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0.5,
+          "Weight": -2,
+          "Evidence": "Advocacy/One-sided criticism"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "구체적인 피해 사례를 언급했으나, 본질적으로 특정 단체의 주장에 기반한 비판적 성명임."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 1,
+      "Gap_Score": -0.5,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "CHT",
+      "WHO_Primary_Tier_Source": "Fallback General (Tier 4 - NGO)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "USA Gov",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|4 - 1| = 3 -> Score -0.5",
+      "WHAT_X_Magnitude": 3,
+      "WHAT_Y_Evidence": 1,
+      "SOTA_Check_Result": "Advocacy"
+    },
+    "reasoning": {
+      "Score_Justification": "Tier 4 단체의 Tier 1 정부 정책 평가(Evaluation) 및 비판. Governance 이슈로 사회적 중요도 높음."
+    }
+  },
+  "crawled_at": "2025-12-16T09:52:40.125570+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:52:40.129529+00:00",
+  "staged": true
+}

@@ -1,0 +1,242 @@
+{
+  "article_id": "95232d",
+  "author": "VB Staff",
+  "cached_at": "2025-12-16T08:04:13.345295+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/3TXe0hgWfdDkdCl4d3mMcL/848b1f96ed7aa639b6f5dc38e157f29e/Capital_One_VB_Convo_hero.jpg?w=800&amp;q=75",
+  "modified_at": "2025-12-15T15:00:16.834Z",
+  "published_at": "2025-12-15T07:00-08:00",
+  "text": "Presented by Capital One Software Tokenization is emerging as a cornerstone of modern data security, helping businesses separate the value of their data from its risk. During this VB in Conversation, Ravi Raghu, president, Capital One Software, talks about the ways tokenization can help reduce the value of breached data and preserve underlying data format and usability, including Capital One’s own experience leveraging tokenization at scale. Tokenization, Raghu asserts, is a far superior technology. It converts sensitive data into a nonsensitive digital replacement, called a token, that maps back to the original, which is secured in a digital vault. The token placeholder preserves both the format and the utility of the sensitive data, and can be used across applications — including AI models. Because tokenization removes the need to manage encryption keys or dedicate compute to constant encrypting and decrypting, it offers one of the most scalable ways for companies to protect their most sensitive data, he added. \"The killer part, from a security standpoint, when you think about it relative to other methods, if a bad actor gets hold of the data, they get hold of tokens,\" he explained. \"The actual data is not sitting with the token, unlike other methods like encryption, where the actual data sits there, just waiting for someone to get hold of a key or use brute force to get to the real data. From every angle this is the ideal way one ought to go about protecting sensitive data.\" The tokenization differentiator Most organizations are just scratching the surface of data security, adding security at the very end, when data is read, to prevent an end user from accessing it. At minimum, organizations should focus on securing data on write, as it’s being stored. But best-in-class organizations go even further, protecting data at birth, the moment it’s created. At one end of the safety spectrum is a simple lock-and-key approach that restricts access but leaves the underlying data intact. More advanced methods, like masking or modifying data, permanently alter its meaning — which can compromise its usefulness. File-level encryption provides broader protection for large volumes of stored data, but when you get down to field-level encryption (for example, a Social Security number), it becomes a bigger challenge. It takes a great deal of compute to encrypt a single field, and then to decrypt it at the point of usage. And still it has a fatal flaw: the original data is still right there, only needing the key to get access. Tokenization avoids these pitfalls by replacing the original data with a surrogate that has no intrinsic value. If the token is intercepted — whether by the wrong person or the wrong machine — the data itself remains secure. The business value of tokenization \"Fundamentally you’re protecting data, and that’s priceless,\" Raghu said. \"Another thing that’s priceless – can you use that for modeling purposes subsequently? On the one hand, it’s a protection thing, and on the other hand it’s a business enabling thing.\" Because tokenization preserves the structure and ordinality of the original data, it can still be used for modeling and analytics, turning protection into a business enabler. Take private health data governed by HIPAA for example: tokenization means that data canbeused to build pricing models or for gene therapy research, while remaining compliant. \"If your data is already protected, you can then proliferate the usage of data across the entire enterprise and have everybody creating more and more value out of the data,\" Raghu said. \"Conversely, if you don’t have that, there’s a lot of reticence for enterprises today to have more people access it, or have more and more AI agents access their data. Ironically, they’re limiting the blast radius of innovation. The tokenization impact is massive, and there are many metrics you could use to measure that – operational impact, revenue impact, and obviously the peace of mind from a security standpoint.\" Breaking down adoption barriers Until now, the fundamental challenge with traditional tokenization has been performance. AI requires a scale and speed that is unprecedented. That's one of the major challenges Capital One addresses with Databolt, its vaultless tokenization solution, which can produce up to 4 million tokens per second. \"Capital One has gone through tokenization for more than a decade. We started doing it because we’re serving our 100 million banking customers. We want to protect that sensitive data,\" Raghu said. \"We’ve eaten our own dog food with our internal tokenization capability, over 100 billion times a month. We’ve taken that know-how and that capability, scale, and speed, and innovated so that the world can leverage it, so that it’s a commercial offering.\" Vaultless tokenization is an advanced form of tokenization that does not require a central database (vault) to store token mappings. Instead, it uses mathematical algorithms, cryptographic techniques, and deterministic mapping to generate tokens dynamically.This approach is faster, more scalable, and eliminates the security risk associated with managing a vault. \"We realized that for the scale and speed demands that we had, we needed to build out that capability ourselves,\" Raghu said. \"We’ve been iterating continuously on making sure that it can scale up to hundreds of billions of operations a month. All of our innovation has been around building IP and capability to do that thing at a battle-tested scale within our enterprise, for the purpose of serving our customers.\" While conventional tokenization methods can involve some complexity and slow down operations, Databolt seamlessly integrates with encrypted data warehouses, allowing businesses to maintain robust security without slowing performance or operations. Tokenization occurs in the customer’s environment, removing the need to communicate with an external network to perform tokenization operations, which can also slow performance. \"We believe that fundamentally, tokenization should be easy to adopt,\" Raghu said. \"You should be able to secure your data very quickly and operate at the speed and scale and cost needs that organizations have. I think that’s been a critical barrier so far for the mass scale adoption of tokenization. In an AI world, that’s going to become a huge enabler.\" Don't miss the whole conversation with Ravi Raghu, president, Capital One Software, here.",
+  "title": "Tokenization takes the lead in the fight for data security",
+  "url": "https://venturebeat.com/ai/tokenization-takes-the-lead-in-the-fight-for-data-security",
+  "title_ko": "데이터 보안의 핵심, 토큰화(Tokenization) 기술의 부상",
+  "summary": "Capital One Software는 토큰화 기술이 데이터 가치와 리스크를 분리하는 현대 보안의 초석이라고 강조한다. 기존 암호화와 달리 볼트리스(Vaultless) 방식의 'Databolt' 솔루션은 초당 400만 건의 처리가 가능하며 AI 모델링에도 데이터를 안전하게 활용할 수 있게 한다. 이는 보안성과 비즈니스 유용성을 동시에 만족시키는 확장 가능한 솔루션으로 제시된다.",
+  "tags": [
+    "Cybersecurity",
+    "Tokenization",
+    "FinTech"
+  ],
+  "impact_score": 5.0,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Capital One Software",
+      "WHO_Primary_Tier_Source": "Fallback (Tier 3 - Major Player)",
+      "WHO_Entity_Tier": 3,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": 0,
+      "Gap_Calculation_Log": "|3 (Entity) - 3 (Self/PR)| = 0 -> Score +1.0",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 2,
+      "SOTA_Check_Result": "Niche Utility (Existing Tech Optimization)"
+    },
+    "Scores": {
+      "IW_Score": 2,
+      "Gap_Score": 1,
+      "Context_Bonus": 0,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 1.5,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "자사 PR 기사로 신뢰성 갭은 없으나 객관적 검증이 부족함. 기술적 개선(Update) 수준의 임팩트."
+    }
+  },
+  "zero_echo_score": 8.6,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 1.75,
+      "Penalty_Clipping_Indicator": true
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 0.5,
+          "Weight": 1.4,
+          "Evidence": "400만 토큰/초, 월 1,000억 회 내부 처리 데이터 제시"
+        },
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 0.5,
+          "Weight": 1.6,
+          "Evidence": "자사 내부(Capital One) 1억 명 고객 대상 적용 사례"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": 0.75,
+          "Weight": "-3.5",
+          "Evidence": "Ref: 'Killer part', 'Unprecedented', 'Ideal way' 등 주관적 최상급 표현"
+        },
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 1,
+          "Weight": "-2.5",
+          "Evidence": "Ref: 'Presented by' 스폰서십 명시 및 솔루션(Databolt) 홍보"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "전형적인 기업 홍보 기사(Advertorial)로, 자사 솔루션의 우수성을 강조하기 위해 주관적 수식어를 다수 사용함. 내부 데이터 외 객관적 벤치마크 부재로 감점."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "95232d",
+    "Meta": {
+      "Headline": "데이터 보안의 핵심, 토큰화(Tokenization) 기술의 부상",
+      "summary": "Capital One Software는 토큰화 기술이 데이터 가치와 리스크를 분리하는 현대 보안의 초석이라고 강조한다. 기존 암호화와 달리 볼트리스(Vaultless) 방식의 'Databolt' 솔루션은 초당 400만 건의 처리가 가능하며 AI 모델링에도 데이터를 안전하게 활용할 수 있게 한다. 이는 보안성과 비즈니스 유용성을 동시에 만족시키는 확장 가능한 솔루션으로 제시된다.",
+      "Tag": [
+        "Cybersecurity",
+        "Tokenization",
+        "FinTech"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "Unprecedented (전무후무/압도적)",
+        "Ideal way (완벽/최고)",
+        "Commercial offering (상용화/영업)"
+      ],
+      "Marketing_Jargon_Count": 3,
+      "Qualifier_Check": "Presented by Capital One Software (Sponsored)",
+      "Sales_Intent": "High"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Capital One Software",
+        "WHO_Primary_Tier_Source": "Fallback (Tier 3 - Major Player)",
+        "WHO_Entity_Tier": 3,
+        "WHO_Secondary_Entity": "N/A",
+        "WHO_Secondary_Tier": 0,
+        "Gap_Calculation_Log": "|3 (Entity) - 3 (Self/PR)| = 0 -> Score +1.0",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 2,
+        "SOTA_Check_Result": "Niche Utility (Existing Tech Optimization)"
+      },
+      "Scores": {
+        "IW_Score": 2,
+        "Gap_Score": 1,
+        "Context_Bonus": 0,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 1.5,
+          "Criticality_Total": 0.5
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "자사 PR 기사로 신뢰성 갭은 없으나 객관적 검증이 부족함. 기술적 개선(Update) 수준의 임팩트."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 1.75,
+        "Penalty_Clipping_Indicator": true
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_5_Objective_Evidence",
+            "Raw_Score": 0.5,
+            "Weight": 1.4,
+            "Evidence": "400만 토큰/초, 월 1,000억 회 내부 처리 데이터 제시"
+          },
+          {
+            "ID": "P_4_Proven_Application",
+            "Raw_Score": 0.5,
+            "Weight": 1.6,
+            "Evidence": "자사 내부(Capital One) 1억 명 고객 대상 적용 사례"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_1_Ad_Exaggeration",
+            "Raw_Score": 0.75,
+            "Weight": "-3.5",
+            "Evidence": "Ref: 'Killer part', 'Unprecedented', 'Ideal way' 등 주관적 최상급 표현"
+          },
+          {
+            "ID": "N_8_Promotional_Intent",
+            "Raw_Score": 1,
+            "Weight": "-2.5",
+            "Evidence": "Ref: 'Presented by' 스폰서십 명시 및 솔루션(Databolt) 홍보"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "전형적인 기업 홍보 기사(Advertorial)로, 자사 솔루션의 우수성을 강조하기 위해 주관적 수식어를 다수 사용함. 내부 데이터 외 객관적 벤치마크 부재로 감점."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Tokenization takes the lead in the fight for data security",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 0.5,
+          "Weight": 1.4,
+          "Evidence": "400만 토큰/초, 월 1,000억 회 내부 처리 데이터 제시"
+        },
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 0.5,
+          "Weight": 1.6,
+          "Evidence": "자사 내부(Capital One) 1억 명 고객 대상 적용 사례"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": 0.75,
+          "Weight": "-3.5",
+          "Evidence": "Ref: 'Killer part', 'Unprecedented', 'Ideal way' 등 주관적 최상급 표현"
+        },
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 1,
+          "Weight": "-2.5",
+          "Evidence": "Ref: 'Presented by' 스폰서십 명시 및 솔루션(Databolt) 홍보"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "전형적인 기업 홍보 기사(Advertorial)로, 자사 솔루션의 우수성을 강조하기 위해 주관적 수식어를 다수 사용함. 내부 데이터 외 객관적 벤치마크 부재로 감점."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 2,
+      "Gap_Score": 1,
+      "Context_Bonus": 0,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 1.5,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Capital One Software",
+      "WHO_Primary_Tier_Source": "Fallback (Tier 3 - Major Player)",
+      "WHO_Entity_Tier": 3,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": 0,
+      "Gap_Calculation_Log": "|3 (Entity) - 3 (Self/PR)| = 0 -> Score +1.0",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 2,
+      "SOTA_Check_Result": "Niche Utility (Existing Tech Optimization)"
+    },
+    "reasoning": {
+      "Score_Justification": "자사 PR 기사로 신뢰성 갭은 없으나 객관적 검증이 부족함. 기술적 개선(Update) 수준의 임팩트."
+    }
+  },
+  "crawled_at": "2025-12-16T09:54:25.900616+00:00",
+  "status": "worthless",
+  "reason": "high_noise (8.6 >= 7.0)",
+  "rejected": true,
+  "reject_reason": "high_noise (8.6)",
+  "staged_at": "2025-12-16T10:01:04.402680+00:00",
+  "staged": true
+}

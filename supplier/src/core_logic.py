@@ -156,6 +156,7 @@ def load_from_cache(url: str) -> dict | None:
     """
     Load cached content for URL.
     Searches ALL date folders, not just today.
+    Auto-deletes corrupted (invalid JSON) cache files.
     
     Args:
         url: The URL to find in cache
@@ -179,6 +180,15 @@ def load_from_cache(url: str) -> dict | None:
                         data = json.load(f)
                         print(f"📦 [Cache] Loaded from cache ({date_folder}): {url[:50]}...")
                         return data
+                except json.JSONDecodeError as e:
+                    # Auto-delete corrupted cache file
+                    print(f"🗑️ [Cache] Corrupted JSON detected, auto-deleting: {cache_path}")
+                    print(f"   Error: {e}")
+                    try:
+                        os.remove(cache_path)
+                        print(f"   ✅ Deleted corrupted file")
+                    except Exception as del_err:
+                        print(f"   ❌ Failed to delete: {del_err}")
                 except Exception as e:
                     print(f"⚠️ [Cache] Error reading cache: {e}")
     return None
@@ -244,8 +254,36 @@ def normalize_field_names(data: dict) -> dict:
     
     normalized = dict(data)
     
-    # --- raw_analysis 처리 (v6.2 - 바로 계산) ---
-    if 'raw_analysis' in normalized:
+    # --- V0.9 Schema Support (Impact_Analysis_IS) ---
+    if 'Impact_Analysis_IS' in normalized:
+        try:
+            from src.score_engine import process_raw_analysis
+            
+            # Calculate scores using the new engine
+            scores = process_raw_analysis(normalized)
+            
+            if scores:
+                normalized['impact_score'] = scores.get('impact_score', 0)
+                normalized['zero_echo_score'] = scores.get('zero_echo_score', 0)
+                normalized['evidence'] = scores.get('evidence', {})
+                normalized['impact_evidence'] = scores.get('impact_evidence', {})
+                
+                print(f"✅ [ScoreEngine] V0.9 Calculated: impact={normalized['impact_score']}, ze={normalized['zero_echo_score']}")
+        except Exception as e:
+            print(f"⚠️ [ScoreEngine] Error processing V0.9 Analysis: {e}")
+
+        # Meta Data Mapping
+        if 'Meta' in normalized and isinstance(normalized['Meta'], dict):
+            meta = normalized['Meta']
+            if 'Headline' in meta:
+                normalized['title_ko'] = meta['Headline'] # V0.9 calls it Headline (User instructions: translate to KR)
+            if 'summary' in meta:
+                normalized['summary'] = meta['summary']
+            if 'Tag' in meta:
+                normalized['tags'] = meta['Tag']
+            
+    # --- Legacy raw_analysis 처리 (v6.2 - 바로 계산) ---
+    elif 'raw_analysis' in normalized:
         try:
             from src.score_engine import process_raw_analysis
             
@@ -272,7 +310,7 @@ def normalize_field_names(data: dict) -> dict:
         for k, v in schema_content.items():
             normalized[k] = v
             
-    # --- 1. Flatten 'Impact' Object ---
+    # --- 1. Flatten 'Impact' Object (Legacy) ---
     if 'Impact' in normalized and isinstance(normalized['Impact'], dict):
         impact_obj = normalized['Impact']
         # Extract impact_score
@@ -291,7 +329,7 @@ def normalize_field_names(data: dict) -> dict:
         if 'impact_review_en' in impact_obj:
             normalized['impact_review_en'] = impact_obj['impact_review_en']
             
-    # --- 2. Flatten 'ZeroEcho' Object ---
+    # --- 2. Flatten 'ZeroEcho' Object (Legacy) ---
     if 'ZeroEcho' in normalized and isinstance(normalized['ZeroEcho'], dict):
         ze_obj = normalized['ZeroEcho']
         

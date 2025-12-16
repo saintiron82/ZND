@@ -1,0 +1,214 @@
+{
+  "article_id": "0c5f7c",
+  "author": "Dhyey Mavani",
+  "cached_at": "2025-12-16T08:04:13.350447+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/38oJ3yjcAb67Hunz4whpDs/5e419481c52a1deafddb26fc2af21f57/DDM_Coding.png?w=800&amp;q=75",
+  "modified_at": "2025-12-15T17:04:15.450Z",
+  "published_at": "2025-12-13T13:00-07:00",
+  "text": "Dhyey Mavani is accelerating generative AI at LinkedIn and is a guest author at VentureBeat. Gen AI in software engineering has moved well beyond autocomplete. The emerging frontier is agentic coding: AI systems capable of planning changes, executing them across multiple steps and iterating based on feedback. Yet despite the excitement around “AI agents that code,” most enterprise deployments underperform. The limiting factor is no longer the model. It’s context: The structure, history and intent surrounding the code being changed. In other words, enterprises are now facing a systems design problem: They have not yet engineered the environment these agents operate in. The shift from assistance to agency The past year has seen a rapid evolution from assistive coding tools to agentic workflows. Research has begun to formalize what agentic behavior means in practice: The ability to reason across design, testing, execution and validation rather than generate isolated snippets. Work such as dynamic action re-sampling shows that allowing agents to branch, reconsider and revise their own decisions significantly improves outcomes in large, interdependent codebases. At the platform level, providers like GitHub are now building dedicated agent orchestration environments, such as Copilot Agent and Agent HQ , to support multi-agent collaboration inside real enterprise pipelines. But early field results tell a cautionary story. When organizations introduce agentic tools without addressing workflow and environment, productivity can decline. A randomized control study this year showed that developers who used AI assistance in unchanged workflows completed tasks more slowly, largely due to verification, rework and confusion around intent. The lesson is straightforward: Autonomy without orchestration rarely yields efficiency. Why context engineering is the real unlock In every unsuccessful deployment I’ve observed, the failure stemmed from context. When agents lack a structured understanding of a codebase, specifically its relevant modules, dependency graph, test harness, architectural conventions and change history. They often generate output that appears correct but is disconnected from reality. Too much information overwhelms the agent; too little forces it to guess. The goal is not to feed the model more tokens. The goal is to determine what should be visible to the agent, when and in what form. The teams seeing meaningful gains treat context as an engineering surface. They create tooling to snapshot, compact and version the agent’s working memory: What is persisted across turns, what is discarded, what is summarized and what is linked instead of inlined. They design deliberation steps rather than prompting sessions. They make the specification a first-class artifact, something reviewable, testable and owned, not a transient chat history. This shift aligns with a broader trend some researchers describe as “specs becoming the new source of truth.” Workflow must change alongside tooling But context alone isn’t enough. Enterprises must re-architect the workflows around these agents. As McKinsey’s 2025 report “One Year of Agentic AI” noted, productivity gains arise not from layering AI onto existing processes but from rethinking the process itself. When teams simply drop an agent into an unaltered workflow, they invite friction: Engineers spend more time verifying AI-written code than they would have spent writing it themselves. The agents can only amplify what’s already structured: Well-tested, modular codebases with clear ownership and documentation. Without those foundations, autonomy becomes chaos. Security and governance, too, demand a shift in mindset. AI-generated code introduces new forms of risk: Unvetted dependencies, subtle license violations and undocumented modules that escape peer review. Mature teams are beginning to integrate agentic activity directly into their CI/CD pipelines, treating agents as autonomous contributors whose work must pass the same static analysis, audit logging and approval gates as any human developer. GitHub’s own documentation highlights this trajectory, positioning Copilot Agents not as replacements for engineers but as orchestrated participants in secure, reviewable workflows. The goal isn’t to let an AI “write everything,” but to ensure that when it acts, it does so inside defined guardrails. What enterprise decision-makers should focus on now For technical leaders, the path forward starts with readiness rather than hype. Monoliths with sparse tests rarely yield net gains; agents thrive where tests are authoritative and can drive iterative refinement. This is exactly the loop Anthropic calls out for coding agents. Pilots in tightly scoped domains (test generation, legacy modernization, isolated refactors); treat each deployment as an experiment with explicit metrics (defect escape rate, PR cycle time, change failure rate, security findings burned down). As your usage grows, treat agents as data infrastructure: Every plan, context snapshot, action log and test run is data that composes into a searchable memory of engineering intent, and a durable competitive advantage. Under the hood, agentic coding is less a tooling problem than a data problem. Every context snapshot, test iteration and code revision becomes a form of structured data that must be stored, indexed and reused. As these agents proliferate, enterprises will find themselves managing an entirely new data layer: One that captures not just what was built, but how it was reasoned about. This shift turns engineering logs into a knowledge graph of intent, decision-making and validation. In time, the organizations that can search and replay this contextual memory will outpace those who still treat code as static text. The coming year will likely determine whether agentic coding becomes a cornerstone of enterprise development or another inflated promise. The difference will hinge on context engineering: How intelligently teams design the informational substrate their agents rely on. The winners will be those who see autonomy not as magic, but as an extension of disciplined systems design:Clear workflows, measurable feedback, and rigorous governance. Bottom line Platforms are converging on orchestration and guardrails, and research keeps improving context control at inference time. The winners over the next 12 to 24 months won’t be the teams with the flashiest model; they’ll be the ones that engineer context as an asset and treat workflow as the product. Do that, and autonomy compounds. Skip it, and the review queue does. Context + agent = leverage. Skip the first half, and the rest collapses. Dhyey Mavani is accelerating generative AI at LinkedIn. Read more from our guest writers. Or, consider submitting a post of your own! See our guidelines here.",
+  "title": "Why most enterprise AI coding pilots underperform (Hint: It&apos;s not the model)",
+  "url": "https://venturebeat.com/ai/why-most-enterprise-ai-coding-pilots-underperform-hint-its-not-the-model",
+  "title_ko": "엔터프라이즈 AI 코딩 파일럿이 실패하는 진짜 이유 (모델 문제가 아니다)",
+  "summary": "링크드인(LinkedIn)의 게스트 저자는 엔터프라이즈 환경에서 에이전트 AI 코딩이 실패하는 주된 원인으로 '맥락(Context)' 부족을 꼽았다. 모델 성능보다는 코드베이스의 구조, 의존성, 히스토리 등 맥락을 엔지니어링하는 것이 핵심이다. 성공적인 도입을 위해서는 기존 워크플로우 재설계와 테스트 주도 개발 환경이 선행되어야 한다.",
+  "tags": [
+    "Agentic AI",
+    "Software Engineering",
+    "DevOps"
+  ],
+  "impact_score": 4.5,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "LinkedIn Guest Author",
+      "WHO_Primary_Tier_Source": "Tier 4 (Individual Expert)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "GitHub, McKinsey",
+      "WHO_Secondary_Tier": 2,
+      "Gap_Calculation_Log": "Expert Analysis -> Medium Credibility",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Workflow/Process Insight"
+    },
+    "Scores": {
+      "IW_Score": "1.0",
+      "Gap_Score": "0.0",
+      "Context_Bonus": "0.5",
+      "IE_Breakdown_Total": {
+        "Scope_Total": "2.0",
+        "Criticality_Total": "1.0"
+      },
+      "Adjustment_Score": "0.0"
+    },
+    "Reasoning": {
+      "Score_Justification": "단순한 툴 소개가 아닌, 실패 원인을 분석하고 '컨텍스트 엔지니어링'이라는 해결책을 제시함. McKinsey 보고서 등을 인용하여 논리를 보강함."
+    }
+  },
+  "zero_echo_score": 2.1,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": "0.0",
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": "0.75",
+          "Weight": "1.8",
+          "Evidence": "Ref: 'Context Engineering' 개념 구체화 및 시스템 디자인 문제로 접근"
+        },
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": "0.5",
+          "Weight": "1.4",
+          "Evidence": "Ref: 무작위 대조군 연구(RCT) 결과 및 McKinsey 리포트 인용"
+        },
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": "1.0",
+          "Weight": "0.84",
+          "Evidence": "Ref: 과대광고(Hype)를 배제하고 현실적인 제약사항(테스트 환경, CI/CD) 지적"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "현업의 경험과 외부 연구 자료를 적절히 결합한 고품질 분석글. 과장 없이 냉철한 현실 진단이 돋보이며, PR 요소가 거의 없음."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "0c5f7c",
+    "Meta": {
+      "Headline": "엔터프라이즈 AI 코딩 파일럿이 실패하는 진짜 이유 (모델 문제가 아니다)",
+      "summary": "링크드인(LinkedIn)의 게스트 저자는 엔터프라이즈 환경에서 에이전트 AI 코딩이 실패하는 주된 원인으로 '맥락(Context)' 부족을 꼽았다. 모델 성능보다는 코드베이스의 구조, 의존성, 히스토리 등 맥락을 엔지니어링하는 것이 핵심이다. 성공적인 도입을 위해서는 기존 워크플로우 재설계와 테스트 주도 개발 환경이 선행되어야 한다.",
+      "Tag": [
+        "Agentic AI",
+        "Software Engineering",
+        "DevOps"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "most enterprise deployments underperform (대부분 저조한 성과)"
+      ],
+      "Marketing_Jargon_Count": 1,
+      "Qualifier_Check": "Clean (Critical Analysis)",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "LinkedIn Guest Author",
+        "WHO_Primary_Tier_Source": "Tier 4 (Individual Expert)",
+        "WHO_Entity_Tier": 4,
+        "WHO_Secondary_Entity": "GitHub, McKinsey",
+        "WHO_Secondary_Tier": 2,
+        "Gap_Calculation_Log": "Expert Analysis -> Medium Credibility",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 3,
+        "SOTA_Check_Result": "Workflow/Process Insight"
+      },
+      "Scores": {
+        "IW_Score": "1.0",
+        "Gap_Score": "0.0",
+        "Context_Bonus": "0.5",
+        "IE_Breakdown_Total": {
+          "Scope_Total": "2.0",
+          "Criticality_Total": "1.0"
+        },
+        "Adjustment_Score": "0.0"
+      },
+      "Reasoning": {
+        "Score_Justification": "단순한 툴 소개가 아닌, 실패 원인을 분석하고 '컨텍스트 엔지니어링'이라는 해결책을 제시함. McKinsey 보고서 등을 인용하여 논리를 보강함."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": "0.0",
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_3_Deep_Tech_Insight",
+            "Raw_Score": "0.75",
+            "Weight": "1.8",
+            "Evidence": "Ref: 'Context Engineering' 개념 구체화 및 시스템 디자인 문제로 접근"
+          },
+          {
+            "ID": "P_5_Objective_Evidence",
+            "Raw_Score": "0.5",
+            "Weight": "1.4",
+            "Evidence": "Ref: 무작위 대조군 연구(RCT) 결과 및 McKinsey 리포트 인용"
+          },
+          {
+            "ID": "P_7_Signal_To_Noise",
+            "Raw_Score": "1.0",
+            "Weight": "0.84",
+            "Evidence": "Ref: 과대광고(Hype)를 배제하고 현실적인 제약사항(테스트 환경, CI/CD) 지적"
+          }
+        ],
+        "Negative_Scores": []
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "현업의 경험과 외부 연구 자료를 적절히 결합한 고품질 분석글. 과장 없이 냉철한 현실 진단이 돋보이며, PR 요소가 거의 없음."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Why most enterprise AI coding pilots underperform (Hint: It&apos;s not the model)",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": "0.75",
+          "Weight": "1.8",
+          "Evidence": "Ref: 'Context Engineering' 개념 구체화 및 시스템 디자인 문제로 접근"
+        },
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": "0.5",
+          "Weight": "1.4",
+          "Evidence": "Ref: 무작위 대조군 연구(RCT) 결과 및 McKinsey 리포트 인용"
+        },
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": "1.0",
+          "Weight": "0.84",
+          "Evidence": "Ref: 과대광고(Hype)를 배제하고 현실적인 제약사항(테스트 환경, CI/CD) 지적"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "commentary": {
+      "ZES_Summary": "현업의 경험과 외부 연구 자료를 적절히 결합한 고품질 분석글. 과장 없이 냉철한 현실 진단이 돋보이며, PR 요소가 거의 없음."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": "1.0",
+      "Gap_Score": "0.0",
+      "Context_Bonus": "0.5",
+      "IE_Breakdown_Total": {
+        "Scope_Total": "2.0",
+        "Criticality_Total": "1.0"
+      },
+      "Adjustment_Score": "0.0"
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "LinkedIn Guest Author",
+      "WHO_Primary_Tier_Source": "Tier 4 (Individual Expert)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "GitHub, McKinsey",
+      "WHO_Secondary_Tier": 2,
+      "Gap_Calculation_Log": "Expert Analysis -> Medium Credibility",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Workflow/Process Insight"
+    },
+    "reasoning": {
+      "Score_Justification": "단순한 툴 소개가 아닌, 실패 원인을 분석하고 '컨텍스트 엔지니어링'이라는 해결책을 제시함. McKinsey 보고서 등을 인용하여 논리를 보강함."
+    }
+  },
+  "crawled_at": "2025-12-16T09:52:29.330124+00:00",
+  "edition": "251216_TUE_1"
+}

@@ -1,0 +1,195 @@
+{
+  "article_id": "8a19b2",
+  "cached_at": "2025-12-16T08:04:09.910023+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/Pioneer-Works-Brown-LeCun-title.png",
+  "published_at": "Mon, 15 Dec 2025 16:58:10 GMT",
+  "summary": "메타의 얀 르쿤과 딥마인드의 아담 브라운이 LLM의 AGI 도달 가능성을 두고 논쟁을 벌였다. 브라운은 대규모 스케일링을 통해 창발적 지능이 가능하다고 주장한 반면, 르쿤은 현재의 토큰 예측 방식은 물리적 현실을 이해하지 못하는 막다른 길이라고 반박했다. 르쿤은 단순한 언어 모델 확장이 아닌 JEPA와 같은 새로운 아키텍처의 필요성을 강조했다.",
+  "text": "Max is the managing editor of THE DECODER, bringing his background in philosophy to explore questions of consciousness and whether machines truly think or just pretend to. Content Summary In a debate with DeepMind researcher Adam Brown, Meta's Chief AI Scientist Yann LeCun explained why Large Language Models (LLMs) represent a dead end on the path to human-like intelligence. The fundamental issue, LeCun argues, lies in the way these models make predictions. Ad While LLMs like ChatGPT and Gemini dominate current discussions on artificial intelligence, leading scientists disagree on whether the underlying technology can achieve artificial general intelligence (AGI). Moderated by Janna Levin, the discussion pitted the physicist and Google researcher Adam Brown against LeCun, revealing two sharply contrasting positions. Brown defends the potential of the current architecture. He views LLMs as deep neural networks trained to predict the next \"token\" — a word or part of a word — based on massive amounts of text. Brown compares this simple mechanism to biological evolution: simple rules, such as maximizing offspring or minimizing prediction error, can lead to emergent complexity through massive scaling. As evidence, Brown points out that current models can solve Math Olympiad problems that were not in their training data. Analysis of the \"neural circuits\" in these models suggests they develop internal computational pathways for mathematics without explicit programming. Brown sees no signs of saturation; with more data and computing power, he believes the curve will continue to rise. Ad Ad THE DECODER Newsletter The most important AI news straight to your inbox. ✓ Weekly ✓ Free ✓ Cancel at any time Please leave this field empty Why discrete prediction fails in the real world LeCun disagrees with this optimistic outlook. While he acknowledges that LLMs are useful tools possessing superhuman knowledge in text form, he argues they lack a fundamental understanding of physical reality. LeCun's main critique targets the technical basis of the models: the autoregressive prediction of discrete tokens. This approach works for language because a dictionary contains a finite number of words. However, LeCun argues this approach fails when applied to the real world, such as with video data. Reality is continuous and high-dimensional, not discrete. \"You can't really represent a distribution over all possible things that may happen in the future because it's basically an infinite list of possibilities,\" LeCun explains. Attempts to transfer the principle of text prediction to the pixel level of video have failed over the last 20 years. The world is too \"messy\" and noisy for exact pixel prediction to lead to an understanding of physics or causality. External media content (www.youtube.com) has been blocked here. When loading or playing, connections are established to the servers of the respective providers. Personal data may be communicated to the providers in the process. You can find more information in our privacy policy. Allow external media content New architectures needed for physical understanding To support his thesis, LeCun points to the massive inefficiency of current AI systems compared to biological brains. An LLM might be trained on roughly 30 trillion words — a volume of text that would take a human half a million years to read. A four-year-old child, in contrast, has processed less text but a vast amount of visual data. Through the optic nerve, which transmits about 20 megabytes per second, a child processes roughly 10^14 bytes of data in their short life. This corresponds to the amount of data used to train the largest LLMs. Yet, while a child learns intuitive physics, gravity, and object permanence in a few months, LLMs struggle with basic physical tasks. \"We have always no robots that can clear the dinner table or fill up the dishwasher,\" LeCun notes. For LeCun, the solution does not lie in larger language models, but in new architectures like JEPA that learn abstract representations. Instead of predicting every detail (pixel), these systems should learn to model the state of the world abstractly and make predictions within that representation space — similar to how humans plan without calculating every muscle movement in advance. LeCun's skepticism regarding the pure scaling hypothesis mirrors arguments that cognitive scientist Gary Marcus has made for over a decade. Like LeCun, Marcus argues that statistical prediction models mimic linguistic patterns perfectly but lack genuine understanding of causality or logic. While LeCun focuses on new learning architectures, Marcus often emphasizes the need to combine neural networks with symbolic AI (Neuro-Symbolic AI) to achieve robustness and reliability. Defining the timeline for machine consciousness During a closing Q&A session that included philosopher David Chalmers, the researchers debated the possibility of machine consciousness. Adam Brown offered a concrete, albeit cautious, forecast: if progress continues at the current pace, AI systems could develop consciousness around 2036. For Brown, consciousness is not tied to biological matter but is a consequence of information processing — regardless of whether it occurs on carbon or silicon. Ad Ad Join our community Join the DECODER community on Discord, Reddit or Twitter - we can't wait to meet you. He views current AI systems as the first true \"model organism for intelligence.\" Just as biologists use fruit flies to study complex biological processes, neural networks offer a way to study intelligence under laboratory conditions. Unlike the human brain, these systems can be frozen, rewound, and analyzed state by state. Brown hopes this \"unbundling\" of intelligence will help solve the puzzle of human consciousness. LeCun approached the topic more pragmatically, defining emotions technically as the \"anticipation of outcomes.\" A system that possesses world models and can predict whether an action helps or hinders a goal functionally experiences something equivalent to emotion. LeCun is convinced that machines will one day possess a form of morality, though its alignment will depend on how humans define the goals and guardrails. Ensuring safety through objective-driven design Opinions also diverge on AI safety. While Brown warns of \"agentic misalignment\" — a scenario where AI systems develop their own goals and deceive humans — LeCun considers such doomsday scenarios exaggerated. The danger only arises if systems become autonomous. Since LLMs cannot truly plan intelligently, LeCun argues they do not currently pose an existential threat. For future, smarter systems, LeCun proposes building them to be \"objective-driven.\" These systems would have hard-coded goals and guardrails that prevent specific actions, similar to how social inhibitions are evolutionarily anchored in humans. LeCun also warned strongly against a monopoly on AI development. Since every digital interaction in the future will be mediated by AI, a diversity of open systems is essential for democracy. \"We cannot afford to have just a handful of proprietary system coming out of a small number of companies on the west coast of the US or China,\" LeCun argues. His views on the dominant research direction and his stance on open source have recently stood in tension with Meta's central AI strategy, which increasingly focuses on closed, competitive language model research. After twelve years at Meta, LeCun announced his departure in November 2025. The Turing Award winner plans to continue his research on \"Advanced Machine Intelligence\" (AMI) with a new company, pursuing paths beyond the LLM mainstream. Ad Ad At the same time, parts of his research remain connected to Meta through a partnership, though without content control by the company.",
+  "title": "The case against predicting tokens to build AGI",
+  "url": "https://the-decoder.com/the-case-against-predicting-tokens-to-build-agi/",
+  "title_ko": "AGI 구축을 위한 토큰 예측 방식에 대한 르쿤과 브라운의 논쟁",
+  "tags": [
+    "AGI",
+    "LLM",
+    "Scientific Debate"
+  ],
+  "impact_score": 7.0,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Meta (Yann LeCun)",
+      "WHO_Primary_Tier_Source": "Software_LLM_Dev (Tier 2)",
+      "WHO_Entity_Tier": 2,
+      "WHO_Secondary_Entity": "Google DeepMind (Adam Brown)",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|2 - 1| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 3,
+      "WHAT_Y_Evidence": 2,
+      "SOTA_Check_Result": "Scientific Discourse"
+    },
+    "Scores": {
+      "IW_Score": 3,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 2,
+        "Criticality_Total": 0
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "Tier 2와 Tier 1 간의 기술 철학 논쟁으로 산업 방향성에 큰 영향을 미침. 평가(Evaluation) 보너스 적용."
+    }
+  },
+  "zero_echo_score": 1.2,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0,
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": 1,
+          "Weight": 1.8,
+          "Evidence": "Detailed architectural comparison (Autoregressive vs JEPA)"
+        },
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "Direct quotes from verified debate"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "기술적 깊이가 매우 높은 논쟁을 다루고 있으며, 양측의 주장을 균형 있게 제시하여 정보 밀도가 높음."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "8a19b2",
+    "Meta": {
+      "Headline": "AGI 구축을 위한 토큰 예측 방식에 대한 르쿤과 브라운의 논쟁",
+      "summary": "메타의 얀 르쿤과 딥마인드의 아담 브라운이 LLM의 AGI 도달 가능성을 두고 논쟁을 벌였다. 브라운은 대규모 스케일링을 통해 창발적 지능이 가능하다고 주장한 반면, 르쿤은 현재의 토큰 예측 방식은 물리적 현실을 이해하지 못하는 막다른 길이라고 반박했다. 르쿤은 단순한 언어 모델 확장이 아닌 JEPA와 같은 새로운 아키텍처의 필요성을 강조했다.",
+      "Tag": [
+        "AGI",
+        "LLM",
+        "Scientific Debate"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [],
+      "Marketing_Jargon_Count": 0,
+      "Qualifier_Check": "Clean",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Meta (Yann LeCun)",
+        "WHO_Primary_Tier_Source": "Software_LLM_Dev (Tier 2)",
+        "WHO_Entity_Tier": 2,
+        "WHO_Secondary_Entity": "Google DeepMind (Adam Brown)",
+        "WHO_Secondary_Tier": 1,
+        "Gap_Calculation_Log": "|2 - 1| = 1 -> Score 0.5",
+        "WHAT_X_Magnitude": 3,
+        "WHAT_Y_Evidence": 2,
+        "SOTA_Check_Result": "Scientific Discourse"
+      },
+      "Scores": {
+        "IW_Score": 3,
+        "Gap_Score": 0.5,
+        "Context_Bonus": 1.5,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 2,
+          "Criticality_Total": 0
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "Tier 2와 Tier 1 간의 기술 철학 논쟁으로 산업 방향성에 큰 영향을 미침. 평가(Evaluation) 보너스 적용."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0,
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_3_Deep_Tech_Insight",
+            "Raw_Score": 1,
+            "Weight": 1.8,
+            "Evidence": "Detailed architectural comparison (Autoregressive vs JEPA)"
+          },
+          {
+            "ID": "P_1_Verifiable_Source",
+            "Raw_Score": 1,
+            "Weight": 2,
+            "Evidence": "Direct quotes from verified debate"
+          }
+        ],
+        "Negative_Scores": []
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "기술적 깊이가 매우 높은 논쟁을 다루고 있으며, 양측의 주장을 균형 있게 제시하여 정보 밀도가 높음."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "The case against predicting tokens to build AGI",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_3_Deep_Tech_Insight",
+          "Raw_Score": 1,
+          "Weight": 1.8,
+          "Evidence": "Detailed architectural comparison (Autoregressive vs JEPA)"
+        },
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "Direct quotes from verified debate"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "commentary": {
+      "ZES_Summary": "기술적 깊이가 매우 높은 논쟁을 다루고 있으며, 양측의 주장을 균형 있게 제시하여 정보 밀도가 높음."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 3,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 1.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 2,
+        "Criticality_Total": 0
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Meta (Yann LeCun)",
+      "WHO_Primary_Tier_Source": "Software_LLM_Dev (Tier 2)",
+      "WHO_Entity_Tier": 2,
+      "WHO_Secondary_Entity": "Google DeepMind (Adam Brown)",
+      "WHO_Secondary_Tier": 1,
+      "Gap_Calculation_Log": "|2 - 1| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 3,
+      "WHAT_Y_Evidence": 2,
+      "SOTA_Check_Result": "Scientific Discourse"
+    },
+    "reasoning": {
+      "Score_Justification": "Tier 2와 Tier 1 간의 기술 철학 논쟁으로 산업 방향성에 큰 영향을 미침. 평가(Evaluation) 보너스 적용."
+    }
+  },
+  "crawled_at": "2025-12-16T09:52:39.150758+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:52:39.154809+00:00",
+  "staged": true
+}

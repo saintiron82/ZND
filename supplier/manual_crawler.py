@@ -167,6 +167,15 @@ def get_articles_by_date():
                         'data_file': linked_data,  # 연결된 data 파일 정보
                         'content': data
                     })
+            except json.JSONDecodeError as e:
+                # Auto-delete corrupted cache file
+                print(f"🗑️ [Cache] Corrupted JSON detected, auto-deleting: {filepath}")
+                print(f"   Error: {e}")
+                try:
+                    os.remove(filepath)
+                    print(f"   ✅ Deleted corrupted file: {filename}")
+                except Exception as del_err:
+                    print(f"   ❌ Failed to delete: {del_err}")
             except Exception as e:
                 print(f"⚠️ Error reading {filename}: {e}")
         
@@ -261,6 +270,55 @@ def search_cache():
             'query': query,
             'results': results,
             'total': len(results)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/find_by_article_ids', methods=['POST'])
+def find_by_article_ids():
+    """Find cache files by article_ids. Returns mapping of article_id -> cache data."""
+    data = request.json
+    article_ids = data.get('article_ids', [])
+    
+    if not article_ids:
+        return jsonify({'error': 'article_ids array is required'}), 400
+    
+    try:
+        # Build article_id -> cache data mapping
+        result = {}
+        article_id_set = set(article_ids)
+        
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            cache_data = json.load(f)
+                            aid = cache_data.get('article_id')
+                            if aid and aid in article_id_set:
+                                result[aid] = {
+                                    'url': cache_data.get('url'),
+                                    'source_id': cache_data.get('source_id'),
+                                    'saved': cache_data.get('saved', False),
+                                    'title_ko': cache_data.get('title_ko', cache_data.get('title', '')),
+                                    'cache_path': filepath,
+                                    'content': cache_data
+                                }
+                    except:
+                        pass
+        
+        return jsonify({
+            'found': result,
+            'found_count': len(result),
+            'requested_count': len(article_ids)
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -638,6 +696,10 @@ def fetch():
         # Check if cached and load content
         cached_data = load_from_cache(url)
         
+        # [FIX] 캐시에 saved: true가 있으면 ACCEPTED 처리
+        if cached_data and cached_data.get('saved'):
+            status = 'ACCEPTED'
+        
         link_item = {
             'url': url,
             'source_id': source_id,
@@ -935,45 +997,84 @@ def check_quality():
 
 def _calculate_scores(data):
     """
-    Helper function to calculate ZeroEcho Score and Impact Score based on evidence.
-    Returns a dictionary with calculated values and breakdown.
+    Helper function to calculate ZeroEcho Score and Impact Score.
+    Supports both V0.9 and Legacy schemas.
     """
-    # 1. Base Score
+    # --- V0.9 Schema Detection ---
+    if 'Impact_Analysis_IS' in data or 'Evidence_Analysis_ZES' in data:
+        # V0.9 Impact Score Calculation
+        calculated_impact = 0.0
+        is_breakdown = {}
+        if 'Impact_Analysis_IS' in data:
+            scores = data['Impact_Analysis_IS'].get('Scores', {})
+            is_breakdown = scores
+            calculated_impact += float(scores.get('IW_Score', 0))
+            calculated_impact += float(scores.get('Gap_Score', 0))
+            calculated_impact += float(scores.get('Context_Bonus', 0))
+            # Scope_Total and Criticality_Total are nested inside IE_Breakdown_Total
+            ie_breakdown = scores.get('IE_Breakdown_Total', {})
+            calculated_impact += float(ie_breakdown.get('Scope_Total', 0))
+            calculated_impact += float(ie_breakdown.get('Criticality_Total', 0))
+            calculated_impact += float(scores.get('Adjustment_Score', 0))
+        calculated_impact = round(max(0.0, min(10.0, calculated_impact)), 1)
+
+        # V0.9 ZES Calculation (Base 5.0)
+        # Formula: ZES = 5 - (Positive + Negative)
+        # Since Negative weights are already negative, we sum all and subtract from base
+        ZS_final = 5.0  # Base score
+        zes_sum = 0.0
+        zes_breakdown = {'base': 5.0, 'positive': [], 'negative': []}
+        if 'Evidence_Analysis_ZES' in data:
+            vector = data['Evidence_Analysis_ZES'].get('ZES_Score_Vector', {})
+            positive_scores = vector.get('Positive_Scores', [])
+            negative_scores = vector.get('Negative_Scores', [])
+            zes_breakdown['positive'] = positive_scores
+            zes_breakdown['negative'] = negative_scores
+            # Sum all weighted scores
+            for p in positive_scores:
+                zes_sum += float(p.get('Raw_Score', 0)) * float(p.get('Weight', 1))
+            for n in negative_scores:
+                zes_sum += float(n.get('Raw_Score', 0)) * float(n.get('Weight', 1))
+        # ZES = 5 - (sum)
+        ZS_final = 5.0 - zes_sum
+        ZS_final = round(max(0.0, min(10.0, ZS_final)), 1)
+
+        return {
+            'zs_final': ZS_final,
+            'zs_raw': ZS_final,
+            'impact_score': calculated_impact,
+            'breakdown': {
+                'schema': 'V0.9',
+                'is_components': is_breakdown,
+                'zes_vector': zes_breakdown,
+                'zs_clamped': ZS_final,
+                'impact_calc': calculated_impact
+            }
+        }
+
+    # --- Legacy Schema Fallback ---
     V = 5.0
-    
-    # 2. Credits (Good -> Reduce Noise)
     evidence = data.get('evidence', {})
     credits = evidence.get('credits', [])
     credit_sum = sum(float(item.get('value', 0.0)) for item in credits)
-    V -= credit_sum # 5.0 - Credits
+    V -= credit_sum
     
-    # 3. Penalties (Bad -> Increase Noise)
     penalties = evidence.get('penalties', [])
     penalty_sum = sum(float(item.get('value', 0.0)) for item in penalties)
-    V += penalty_sum # (5.0 - Credits) + Penalties
+    V += penalty_sum
     
-    # 4. Modifiers (Effect > 0 means Good -> Reduces Noise)
     modifiers = evidence.get('modifiers', [])
     modifier_sum = sum(float(item.get('effect', 0.0)) for item in modifiers)
-    # If modifier effect is positive (good), it reduces noise. 
-    # If negative (bad), it increases noise? 
-    # Logic in verify_score was: V -= effect. 
-    # Let's keep consistency: ZS = ZS_prev - effect.
-    V -= modifier_sum 
+    V -= modifier_sum
     
     ZS = V
-    
-    # 5. Clamping (0.0 to 10.0)
     ZS_final = max(0.0, min(10.0, ZS))
     
-    # 6. Impact Score
     impact_evidence = data.get('impact_evidence', {})
     entity = impact_evidence.get('entity', {})
     entity_weight = float(entity.get('weight', 0.0))
-    
     events = impact_evidence.get('events', [])
     event_weight_sum = sum(float(ev.get('weight', 0.0)) for ev in events)
-        
     calculated_impact = round(entity_weight + event_weight_sum, 2)
     
     return {
@@ -981,6 +1082,7 @@ def _calculate_scores(data):
         'zs_raw': ZS,
         'impact_score': calculated_impact,
         'breakdown': {
+            'schema': 'Legacy',
             'base': 5.0,
             'credits': credits,
             'penalties': penalties,
@@ -1530,7 +1632,7 @@ def automation_stage():
     - 마스터 검토용 미리보기
     """
     try:
-        from src.score_engine import calculate_scores
+        from src.score_engine import process_raw_analysis
         from src.core_logic import get_config
         
         today_str = datetime.now().strftime('%Y-%m-%d')
@@ -1556,8 +1658,13 @@ def automation_stage():
                     with open(filepath, 'r', encoding='utf-8') as f:
                         cache_data = json.load(f)
                     
-                    # 분석 안 된 것은 스킵
-                    if cache_data.get('mll_status') != 'analyzed':
+                    # 분석 안 된 것은 스킵 (raw_analysis 있거나 saved면 분석 완료로 간주)
+                    is_analyzed = (
+                        cache_data.get('mll_status') == 'analyzed' or
+                        cache_data.get('raw_analysis') is not None or
+                        cache_data.get('saved') is True
+                    )
+                    if not is_analyzed:
                         skipped_count += 1
                         continue
                     
@@ -1569,7 +1676,7 @@ def automation_stage():
                     # 점수 재검증 (raw_analysis 있으면)
                     if cache_data.get('raw_analysis'):
                         try:
-                            scores = calculate_scores(cache_data['raw_analysis'])
+                            scores = process_raw_analysis(cache_data['raw_analysis'])
                             cache_data['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
                             cache_data['impact_score'] = scores.get('impact_score', 0.0)
                         except Exception as e:
@@ -1763,6 +1870,7 @@ def staging_list():
                     articles.append({
                         'filename': filename,
                         'filepath': filepath,
+                        'article_id': data.get('article_id', ''),
                         'url': data.get('url', ''),
                         'title': data.get('title', ''),
                         'title_ko': data.get('title_ko', ''),
@@ -1797,6 +1905,103 @@ def staging_list():
     except Exception as e:
         print(f"❌ [Staging List] Error: {e}")
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/staging/file')
+def staging_file():
+    """특정 Staging 파일 상세 내용 반환"""
+    try:
+        date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
+        filename = request.args.get('filename')
+        
+        if not filename:
+            return jsonify({'error': 'filename is required'}), 400
+        
+        filepath = os.path.join(STAGING_DIR, date_str, filename)
+        
+        if not os.path.exists(filepath):
+            return jsonify({'error': 'File not found'}), 404
+        
+        with open(filepath, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/staging/publish_selected', methods=['POST'])
+def staging_publish_selected():
+    """선택된 Staging 파일만 발행"""
+    try:
+        from src.pipeline import save_article
+        
+        data = request.json or {}
+        filenames = data.get('filenames', [])
+        
+        if not filenames:
+            return jsonify({'success': False, 'error': '선택된 파일이 없습니다.'}), 400
+        
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        staging_date_dir = os.path.join(STAGING_DIR, today_str)
+        
+        published_count = 0
+        failed_count = 0
+        
+        for filename in filenames:
+            filepath = os.path.join(staging_date_dir, filename)
+            
+            if not os.path.exists(filepath):
+                print(f"⚠️ [Publish Selected] File not found: {filename}")
+                failed_count += 1
+                continue
+            
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    staging_data = json.load(f)
+                
+                # 이미 발행됨 또는 거부됨
+                if staging_data.get('published') or staging_data.get('rejected'):
+                    continue
+                
+                # 필수 필드 체크
+                required = ['url', 'title_ko', 'summary', 'zero_echo_score', 'impact_score']
+                missing = [f for f in required if f not in staging_data]
+                if missing:
+                    print(f"⚠️ [Publish Selected] Missing fields {missing}: {filename}")
+                    failed_count += 1
+                    continue
+                
+                # 발행
+                result = save_article(staging_data, source_id=staging_data.get('source_id'))
+                
+                if result.get('status') == 'saved':
+                    staging_data['published'] = True
+                    staging_data['published_at'] = datetime.now(timezone.utc).isoformat()
+                    staging_data['data_file'] = result.get('filename')
+                    
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(staging_data, f, ensure_ascii=False, indent=2)
+                    
+                    published_count += 1
+                    print(f"✅ [Publish Selected] {filename} → {result.get('filename')}")
+                else:
+                    failed_count += 1
+                    
+            except Exception as e:
+                print(f"⚠️ [Publish Selected] Error on {filename}: {e}")
+                failed_count += 1
+        
+        print(f"🚀 [Publish Selected] 완료: {published_count}개 발행, {failed_count}개 실패")
+        return jsonify({
+            'success': True,
+            'published': published_count,
+            'failed': failed_count,
+            'message': f'{published_count}개 기사 발행 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Publish Selected] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 if __name__ == '__main__':

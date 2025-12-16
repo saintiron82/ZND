@@ -1,0 +1,239 @@
+{
+  "article_id": "b0bd09",
+  "author": [
+    "장세민 기자"
+  ],
+  "cached_at": "2025-12-16T08:47:21.244687+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204851_206224_944.png",
+  "modified_at": "2025-12-16T17:21:32+09:00",
+  "published_at": "2025-12-16T17:21:32+09:00",
+  "summary": "네이버의 'AI 브리핑'이 전체 검색 비중의 20%를 넘어서며 2분기 목표를 달성했음을 공식 발표했다. 일반 검색 대비 클릭률 8% 상승, 체류 시간 20% 증가라는 구체적인 정량 지표와 함께 벡터 인덱싱 기술의 3배 확장을 언급했다. 향후 쇼핑 에이전트와 대화형 AI 탭 등 서비스 확장 로드맵도 함께 제시되었다.",
+  "text": "(사진=네이버) 네이버(대표 최수연)는 AI 검색 요약 서비스 ‘AI 브리핑’ 검색 비중이 전체 검색량의 20%를 돌파했다고 16일 밝혔다. 네이버는 지난 2분기 실적발표에서 이미 AI 브리핑 관련 성과와 목표를 밝힌 바 있다. AI 브리핑이 포함된 검색어는 8% 더 클릭률이 높으며, 페이지에 체류하는 시간도 20% 이상 더 길다는 내용이다. 당시에는 연말까지 AI 브리핑 검색 비중 목표로 '통합 검색 쿼리 20% 이상'을 제시한 바 있다. 이날 발표는 목표를 달성, AI 온서비스 전략의 효과를 입증했다는 내용이다. 특히, 방대한 양의 검색 결과를 요약해 제공하고 상단에 보여줌으로써 사용자의 긍정적인 반응을 이끌어냈다고 전했다. 네이버는 지난 6월 서비스 출시 이후로 엔터테인먼트, 스포츠, 금융, 공공 등 검색 카테고리에 AI 브리핑을 확장해 왔다. AI 검색의 핵심 기술인 ‘벡터 인덱싱’의 규모가 3배 이상 확장, 검색 품질 및 콘텐츠 범위가 향상했다고 설명했다. 한편, 네이버는 대화형 AI 탭과 쇼핑 에이전트 등을 출시할 예정이다. 쇼핑에이전트는 내년 봄, AI 탭은 여름에 선보일 계획이다. 단순 답변 제시를 넘어, 실행 옵션을 제안하는 방식으로 발전한다는 전략이다. 장세민 기자 semim99@aitimes.com",
+  "title": "네이버 “AI브리핑, 검색 비중 20% 돌파”",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204851",
+  "title_ko": "네이버, AI 검색 점유율 20% 돌파 및 품질 지표 공개",
+  "tags": [
+    "Naver",
+    "Search AI",
+    "Performance Metrics"
+  ],
+  "impact_score": 3.5,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Naver",
+      "WHO_Primary_Tier_Source": "Software_LLM_Dev (Tier 3)",
+      "WHO_Entity_Tier": 3,
+      "WHO_Secondary_Entity": "None",
+      "WHO_Secondary_Tier": null,
+      "Gap_Calculation_Log": "|3 (Entity) - 3 (Source)| = 0 -> Score +1.0",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Domestic Milestone (Service Optimization)"
+    },
+    "Scores": {
+      "IW_Score": 2,
+      "Gap_Score": 1,
+      "Context_Bonus": 0.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": "2.5 (T3_Product vs T3_Macro)",
+        "Criticality_Total": "1.5 (Proven: 1.0 + Biz: 0.5)"
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "구체적인 수치(20%, 8% 등)로 성과를 입증했으며, 국내 검색 시장(Tier 3 Macro)에 미치는 영향력이 확인됨."
+    }
+  },
+  "zero_echo_score": 0.9,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0,
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "공식 실적 발표 및 구체적 수치 제시"
+        },
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 1,
+          "Weight": 1.4,
+          "Evidence": "검색 비중 20%, 체류시간 20% 등 정량 데이터 풍부"
+        },
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 0.75,
+          "Weight": 1.6,
+          "Evidence": "이미 서비스 중이며 목표 달성 확인됨"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0.25,
+          "Weight": -2,
+          "Evidence": "자사 성과 위주의 발표이나 수치로 뒷받침됨"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "PR 스캐너상 과장된 표현 없이 실적과 데이터를 중심으로 기술된 고신뢰도 기사임. 정량적 근거가 명확하여 증거 점수가 높음."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "b0bd09",
+    "Meta": {
+      "Headline": "네이버, AI 검색 점유율 20% 돌파 및 품질 지표 공개",
+      "summary": "네이버의 'AI 브리핑'이 전체 검색 비중의 20%를 넘어서며 2분기 목표를 달성했음을 공식 발표했다. 일반 검색 대비 클릭률 8% 상승, 체류 시간 20% 증가라는 구체적인 정량 지표와 함께 벡터 인덱싱 기술의 3배 확장을 언급했다. 향후 쇼핑 에이전트와 대화형 AI 탭 등 서비스 확장 로드맵도 함께 제시되었다.",
+      "Tag": [
+        "Naver",
+        "Search AI",
+        "Performance Metrics"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [],
+      "Marketing_Jargon_Count": 0,
+      "Qualifier_Check": "Clean",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Naver",
+        "WHO_Primary_Tier_Source": "Software_LLM_Dev (Tier 3)",
+        "WHO_Entity_Tier": 3,
+        "WHO_Secondary_Entity": "None",
+        "WHO_Secondary_Tier": null,
+        "Gap_Calculation_Log": "|3 (Entity) - 3 (Source)| = 0 -> Score +1.0",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 3,
+        "SOTA_Check_Result": "Domestic Milestone (Service Optimization)"
+      },
+      "Scores": {
+        "IW_Score": 2,
+        "Gap_Score": 1,
+        "Context_Bonus": 0.5,
+        "IE_Breakdown_Total": {
+          "Scope_Total": "2.5 (T3_Product vs T3_Macro)",
+          "Criticality_Total": "1.5 (Proven: 1.0 + Biz: 0.5)"
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "구체적인 수치(20%, 8% 등)로 성과를 입증했으며, 국내 검색 시장(Tier 3 Macro)에 미치는 영향력이 확인됨."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0,
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_1_Verifiable_Source",
+            "Raw_Score": 1,
+            "Weight": 2,
+            "Evidence": "공식 실적 발표 및 구체적 수치 제시"
+          },
+          {
+            "ID": "P_5_Objective_Evidence",
+            "Raw_Score": 1,
+            "Weight": 1.4,
+            "Evidence": "검색 비중 20%, 체류시간 20% 등 정량 데이터 풍부"
+          },
+          {
+            "ID": "P_4_Proven_Application",
+            "Raw_Score": 0.75,
+            "Weight": 1.6,
+            "Evidence": "이미 서비스 중이며 목표 달성 확인됨"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_3_Intentional_Bias",
+            "Raw_Score": 0.25,
+            "Weight": -2,
+            "Evidence": "자사 성과 위주의 발표이나 수치로 뒷받침됨"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "PR 스캐너상 과장된 표현 없이 실적과 데이터를 중심으로 기술된 고신뢰도 기사임. 정량적 근거가 명확하여 증거 점수가 높음."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "네이버 “AI브리핑, 검색 비중 20% 돌파”",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_1_Verifiable_Source",
+          "Raw_Score": 1,
+          "Weight": 2,
+          "Evidence": "공식 실적 발표 및 구체적 수치 제시"
+        },
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 1,
+          "Weight": 1.4,
+          "Evidence": "검색 비중 20%, 체류시간 20% 등 정량 데이터 풍부"
+        },
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 0.75,
+          "Weight": 1.6,
+          "Evidence": "이미 서비스 중이며 목표 달성 확인됨"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_3_Intentional_Bias",
+          "Raw_Score": 0.25,
+          "Weight": -2,
+          "Evidence": "자사 성과 위주의 발표이나 수치로 뒷받침됨"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "PR 스캐너상 과장된 표현 없이 실적과 데이터를 중심으로 기술된 고신뢰도 기사임. 정량적 근거가 명확하여 증거 점수가 높음."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 2,
+      "Gap_Score": 1,
+      "Context_Bonus": 0.5,
+      "IE_Breakdown_Total": {
+        "Scope_Total": "2.5 (T3_Product vs T3_Macro)",
+        "Criticality_Total": "1.5 (Proven: 1.0 + Biz: 0.5)"
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Naver",
+      "WHO_Primary_Tier_Source": "Software_LLM_Dev (Tier 3)",
+      "WHO_Entity_Tier": 3,
+      "WHO_Secondary_Entity": "None",
+      "WHO_Secondary_Tier": null,
+      "Gap_Calculation_Log": "|3 (Entity) - 3 (Source)| = 0 -> Score +1.0",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Domestic Milestone (Service Optimization)"
+    },
+    "reasoning": {
+      "Score_Justification": "구체적인 수치(20%, 8% 등)로 성과를 입증했으며, 국내 검색 시장(Tier 3 Macro)에 미치는 영향력이 확인됨."
+    }
+  },
+  "crawled_at": "2025-12-16T09:28:30.403101+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:28:30.406645+00:00",
+  "staged_at": "2025-12-16T10:01:04.409369+00:00",
+  "staged": true
+}

@@ -998,8 +998,99 @@ def check_quality():
 def _calculate_scores(data):
     """
     Helper function to calculate ZeroEcho Score and Impact Score.
-    Supports both V0.9 and Legacy schemas.
+    Supports V1.0, V0.9, and Legacy schemas.
     """
+    
+    # --- V1.0 Schema Detection (IS_Analysis, ZES_Raw_Metrics) ---
+    if 'IS_Analysis' in data or 'ZES_Raw_Metrics' in data:
+        # V1.0 Impact Score: IS = IW + IE
+        # IW = Tier_Score + Gap_Score
+        # IE = Scope_Total + Criticality_Total
+        calculated_impact = 0.0
+        is_breakdown = {}
+        
+        if 'IS_Analysis' in data:
+            calculations = data['IS_Analysis'].get('Calculations', {})
+            iw_analysis = calculations.get('IW_Analysis', {})
+            ie_analysis = calculations.get('IE_Analysis', {})
+            
+            tier_score = float(iw_analysis.get('Tier_Score', 0))
+            gap_score = float(iw_analysis.get('Gap_Score', 0))
+            iw_total = tier_score + gap_score
+            
+            ie_inputs = ie_analysis.get('Inputs', {})
+            scope_total = float(ie_inputs.get('Scope_Matrix_Score', 0))
+            criticality_total = float(ie_inputs.get('Criticality_Total', 0))
+            ie_total = scope_total + criticality_total
+            
+            calculated_impact = iw_total + ie_total
+            
+            is_breakdown = {
+                'IW_Analysis': {'Tier_Score': tier_score, 'Gap_Score': gap_score, 'IW_Total': iw_total},
+                'IE_Analysis': {'Scope_Total': scope_total, 'Criticality_Total': criticality_total, 'IE_Total': ie_total},
+                'Score_Commentary': data['IS_Analysis'].get('Score_Commentary', '')
+            }
+        
+        calculated_impact = round(max(0.0, min(10.0, calculated_impact)), 1)
+        
+        # V1.0 ZES Calculation
+        # S = (T1 + T2 + T3) / 3
+        # N = (P1 + P2 + P3) / 3
+        # U = (V1 + V2 + V3) / 3
+        # ZS = 10 - (((S + 10 - N) / 2) * (U / 10) + Fine_Adjustment)
+        ZS_final = 5.0
+        zes_breakdown = {}
+        
+        if 'ZES_Raw_Metrics' in data:
+            metrics = data['ZES_Raw_Metrics']
+            
+            signal = metrics.get('Signal', {})
+            t1 = float(signal.get('T1', 0))
+            t2 = float(signal.get('T2', 0))
+            t3 = float(signal.get('T3', 0))
+            s = (t1 + t2 + t3) / 3.0
+            
+            noise = metrics.get('Noise', {})
+            p1 = float(noise.get('P1', 0))
+            p2 = float(noise.get('P2', 0))
+            p3 = float(noise.get('P3', 0))
+            n = (p1 + p2 + p3) / 3.0
+            
+            utility = metrics.get('Utility', {})
+            v1 = float(utility.get('V1', 0))
+            v2 = float(utility.get('V2', 0))
+            v3 = float(utility.get('V3', 0))
+            u = (v1 + v2 + v3) / 3.0
+            
+            fine_adj_obj = metrics.get('Fine_Adjustment', {})
+            fine_adjustment = float(fine_adj_obj.get('Score', 0))
+            
+            inner = (s + 10 - n) / 2.0
+            weighted = inner * (u / 10.0)
+            zs_raw = 10.0 - (weighted + fine_adjustment)
+            ZS_final = round(max(0.0, min(10.0, zs_raw)), 1)
+            
+            zes_breakdown = {
+                'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'S_Avg': round(s, 2)},
+                'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'N_Avg': round(n, 2)},
+                'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'U_Avg': round(u, 2)},
+                'Fine_Adjustment': fine_adjustment,
+                'ZS_Raw': round(zs_raw, 2)
+            }
+        
+        return {
+            'zs_final': ZS_final,
+            'zs_raw': ZS_final,
+            'impact_score': calculated_impact,
+            'breakdown': {
+                'schema': 'V1.0',
+                'is_components': is_breakdown,
+                'zes_metrics': zes_breakdown,
+                'zs_clamped': ZS_final,
+                'impact_calc': calculated_impact
+            }
+        }
+    
     # --- V0.9 Schema Detection ---
     if 'Impact_Analysis_IS' in data or 'Evidence_Analysis_ZES' in data:
         # V0.9 Impact Score Calculation
@@ -1019,9 +1110,7 @@ def _calculate_scores(data):
         calculated_impact = round(max(0.0, min(10.0, calculated_impact)), 1)
 
         # V0.9 ZES Calculation (Base 5.0)
-        # Formula: ZES = 5 - (Positive + Negative)
-        # Since Negative weights are already negative, we sum all and subtract from base
-        ZS_final = 5.0  # Base score
+        ZS_final = 5.0
         zes_sum = 0.0
         zes_breakdown = {'base': 5.0, 'positive': [], 'negative': []}
         if 'Evidence_Analysis_ZES' in data:
@@ -1030,12 +1119,10 @@ def _calculate_scores(data):
             negative_scores = vector.get('Negative_Scores', [])
             zes_breakdown['positive'] = positive_scores
             zes_breakdown['negative'] = negative_scores
-            # Sum all weighted scores
             for p in positive_scores:
                 zes_sum += float(p.get('Raw_Score', 0)) * float(p.get('Weight', 1))
             for n in negative_scores:
                 zes_sum += float(n.get('Raw_Score', 0)) * float(n.get('Weight', 1))
-        # ZES = 5 - (sum)
         ZS_final = 5.0 - zes_sum
         ZS_final = round(max(0.0, min(10.0, ZS_final)), 1)
 

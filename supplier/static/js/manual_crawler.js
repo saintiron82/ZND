@@ -124,8 +124,27 @@ function verifyAndApply() {
                 html += `기록: ZS=${jsonData.zero_echo_score || 'N/A'} | IS=${jsonData.impact_score || 'N/A'}`;
                 html += `</div>`;
 
-                // --- V0.9 or Legacy Breakdown ---
-                if (res.breakdown?.schema === 'V0.9') {
+                // --- V1.0 Schema Breakdown ---
+                if (res.breakdown?.schema === 'V1.0') {
+                    html += `<div style="margin-top:10px; font-size:0.8em; background:#fff3cd; padding:8px; border-radius:4px;">`;
+                    html += `<strong>📊 V1.0 Schema</strong><br>`;
+                    // IS Components
+                    const isComp = res.breakdown.is_components || {};
+                    const iwAnalysis = isComp.IW_Analysis || {};
+                    const ieAnalysis = isComp.IE_Analysis || {};
+                    html += `<div style="margin-top:5px;"><b>IS 구성:</b> Tier=${iwAnalysis.Tier_Score || 0}, Gap=${iwAnalysis.Gap_Score || 0}, IW=${iwAnalysis.IW_Total || 0}</div>`;
+                    html += `<div><b>IE 구성:</b> Scope=${ieAnalysis.Scope_Total || 0}, Crit=${ieAnalysis.Criticality_Total || 0}, IE=${ieAnalysis.IE_Total || 0}</div>`;
+                    // ZES Metrics
+                    const zesMetrics = res.breakdown.zes_metrics || {};
+                    html += `<div style="margin-top:5px;"><b>ZES 메트릭:</b></div>`;
+                    html += `<div>Signal(S): T1=${zesMetrics.Signal?.T1 || 0}, T2=${zesMetrics.Signal?.T2 || 0}, T3=${zesMetrics.Signal?.T3 || 0} → Avg=${zesMetrics.Signal?.S_Avg || 0}</div>`;
+                    html += `<div>Noise(N): P1=${zesMetrics.Noise?.P1 || 0}, P2=${zesMetrics.Noise?.P2 || 0}, P3=${zesMetrics.Noise?.P3 || 0} → Avg=${zesMetrics.Noise?.N_Avg || 0}</div>`;
+                    html += `<div>Utility(U): V1=${zesMetrics.Utility?.V1 || 0}, V2=${zesMetrics.Utility?.V2 || 0}, V3=${zesMetrics.Utility?.V3 || 0} → Avg=${zesMetrics.Utility?.U_Avg || 0}</div>`;
+                    html += `<div>Fine_Adj=${zesMetrics.Fine_Adjustment || 0} → ZS_Raw=${zesMetrics.ZS_Raw || 0}</div>`;
+                    html += `</div>`;
+                }
+                // --- V0.9 Schema Breakdown ---
+                else if (res.breakdown?.schema === 'V0.9') {
                     html += `<div style="margin-top:10px; font-size:0.8em; background:#e7f1ff; padding:8px; border-radius:4px;">`;
                     html += `<strong>📊 V0.9 Schema</strong><br>`;
                     // IS Components

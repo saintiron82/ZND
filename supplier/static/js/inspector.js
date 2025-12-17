@@ -408,52 +408,134 @@ async function processBatch() {
         }
 
         try {
-            // --- V0.9 Schema Processing ---
+            // --- Schema Detection & Processing ---
             let processedData = {};
 
-            // Meta (title_ko, summary, tags)
-            if (resData.Meta) {
-                processedData.title_ko = resData.Meta.Headline || resData.Meta.title_ko;
-                processedData.summary = resData.Meta.summary;
-                processedData.tags = resData.Meta.Tag || resData.Meta.tags || [];
+            // ========== V1.0 Schema (IS_Analysis, ZES_Raw_Metrics) ==========
+            if (resData.IS_Analysis || resData.ZES_Raw_Metrics) {
+                // V1.0 Meta
+                if (resData.Meta) {
+                    processedData.title_ko = resData.Meta.Headline || resData.Meta.title_ko;
+                    processedData.summary = resData.Meta.Summary || resData.Meta.summary;
+                    processedData.tags = resData.Meta.Tag || resData.Meta.tags || [];
+                }
+
+                // V1.0 IS Calculation: IS = IW + IE
+                // IW = Tier_Score + Gap_Score
+                // IE = Scope_Total + Criticality_Total
+                if (resData.IS_Analysis && resData.IS_Analysis.Calculations) {
+                    const calc = resData.IS_Analysis.Calculations;
+                    const iwAnalysis = calc.IW_Analysis || {};
+                    const ieAnalysis = calc.IE_Analysis || {};
+                    const ieInputs = ieAnalysis.Inputs || {};
+
+                    const tierScore = parseFloat(iwAnalysis.Tier_Score || 0);
+                    const gapScore = parseFloat(iwAnalysis.Gap_Score || 0);
+                    const iwTotal = tierScore + gapScore;
+
+                    const scopeTotal = parseFloat(ieInputs.Scope_Matrix_Score || 0);
+                    const criticalityTotal = parseFloat(ieInputs.Criticality_Total || 0);
+                    const ieTotal = scopeTotal + criticalityTotal;
+
+                    const isScore = iwTotal + ieTotal;
+                    processedData.impact_score = Math.round(Math.max(0, Math.min(10, isScore)) * 10) / 10;
+                    processedData.IS_Analysis = resData.IS_Analysis;
+                }
+
+                // V1.0 ZES Calculation:
+                // S = (T1 + T2 + T3) / 3
+                // N = (P1 + P2 + P3) / 3
+                // U = (V1 + V2 + V3) / 3
+                // ZS = 10 - (((S + 10 - N) / 2) * (U / 10) + Fine_Adjustment)
+                if (resData.ZES_Raw_Metrics) {
+                    const metrics = resData.ZES_Raw_Metrics;
+
+                    const signal = metrics.Signal || {};
+                    const t1 = parseFloat(signal.T1 || 0);
+                    const t2 = parseFloat(signal.T2 || 0);
+                    const t3 = parseFloat(signal.T3 || 0);
+                    const s = (t1 + t2 + t3) / 3.0;
+
+                    const noise = metrics.Noise || {};
+                    const p1 = parseFloat(noise.P1 || 0);
+                    const p2 = parseFloat(noise.P2 || 0);
+                    const p3 = parseFloat(noise.P3 || 0);
+                    const n = (p1 + p2 + p3) / 3.0;
+
+                    const utility = metrics.Utility || {};
+                    const v1 = parseFloat(utility.V1 || 0);
+                    const v2 = parseFloat(utility.V2 || 0);
+                    const v3 = parseFloat(utility.V3 || 0);
+                    const u = (v1 + v2 + v3) / 3.0;
+
+                    const fineAdjObj = metrics.Fine_Adjustment || {};
+                    const fineAdj = parseFloat(fineAdjObj.Score || 0);
+
+                    const inner = (s + 10 - n) / 2.0;
+                    const weighted = inner * (u / 10.0);
+                    const zes = 10.0 - (weighted + fineAdj);
+
+                    processedData.zero_echo_score = Math.round(Math.max(0, Math.min(10, zes)) * 10) / 10;
+                    processedData.ZES_Raw_Metrics = resData.ZES_Raw_Metrics;
+                }
+
+                processedData.schema_version = 'V1.0';
+            }
+            // ========== V0.9 Schema (Impact_Analysis_IS, Evidence_Analysis_ZES) ==========
+            else if (resData.Impact_Analysis_IS || resData.Evidence_Analysis_ZES) {
+                // Meta (title_ko, summary, tags)
+                if (resData.Meta) {
+                    processedData.title_ko = resData.Meta.Headline || resData.Meta.title_ko;
+                    processedData.summary = resData.Meta.summary;
+                    processedData.tags = resData.Meta.Tag || resData.Meta.tags || [];
+                }
+
+                // Impact Score (IS) Calculation from Impact_Analysis_IS
+                if (resData.Impact_Analysis_IS && resData.Impact_Analysis_IS.Scores) {
+                    const scores = resData.Impact_Analysis_IS.Scores;
+                    let is = 0.0;
+                    is += parseFloat(scores.IW_Score || 0);
+                    is += parseFloat(scores.Gap_Score || 0);
+                    is += parseFloat(scores.Context_Bonus || 0);
+                    const ieBreakdown = scores.IE_Breakdown_Total || {};
+                    is += parseFloat(ieBreakdown.Scope_Total || 0);
+                    is += parseFloat(ieBreakdown.Criticality_Total || 0);
+                    is += parseFloat(scores.Adjustment_Score || 0);
+                    processedData.impact_score = Math.round(Math.max(0, Math.min(10, is)) * 10) / 10;
+                    processedData.Impact_Analysis_IS = resData.Impact_Analysis_IS;
+                }
+
+                // Zero Echo Score (ZES) Calculation from Evidence_Analysis_ZES (Base 5.0)
+                if (resData.Evidence_Analysis_ZES && resData.Evidence_Analysis_ZES.ZES_Score_Vector) {
+                    const vector = resData.Evidence_Analysis_ZES.ZES_Score_Vector;
+                    let zesSum = 0.0;
+                    if (vector.Positive_Scores) {
+                        vector.Positive_Scores.forEach(p => { zesSum += parseFloat(p.Raw_Score || 0) * parseFloat(p.Weight || 1); });
+                    }
+                    if (vector.Negative_Scores) {
+                        vector.Negative_Scores.forEach(n => { zesSum += parseFloat(n.Raw_Score || 0) * parseFloat(n.Weight || 1); });
+                    }
+                    let zes = 5.0 - zesSum;
+                    processedData.zero_echo_score = Math.round(Math.max(0, Math.min(10, zes)) * 10) / 10;
+                    processedData.Evidence_Analysis_ZES = resData.Evidence_Analysis_ZES;
+                }
+
+                processedData.schema_version = 'V0.9';
+            }
+            // ========== Legacy Flat Fields ==========
+            else {
+                if (resData.title_ko) processedData.title_ko = resData.title_ko;
+                if (resData.summary) processedData.summary = resData.summary;
+                if (resData.tags) processedData.tags = resData.tags;
+                if (resData.impact_score !== undefined) processedData.impact_score = parseFloat(resData.impact_score);
+                if (resData.zero_echo_score !== undefined) processedData.zero_echo_score = parseFloat(resData.zero_echo_score);
+                processedData.schema_version = 'Legacy';
             }
 
-            // Impact Score (IS) Calculation from Impact_Analysis_IS
-            if (resData.Impact_Analysis_IS && resData.Impact_Analysis_IS.Scores) {
-                const scores = resData.Impact_Analysis_IS.Scores;
-                let is = 0.0;
-                is += parseFloat(scores.IW_Score || 0);
-                is += parseFloat(scores.Gap_Score || 0);
-                is += parseFloat(scores.Context_Bonus || 0);
-                // Scope_Total and Criticality_Total are nested inside IE_Breakdown_Total
-                const ieBreakdown = scores.IE_Breakdown_Total || {};
-                is += parseFloat(ieBreakdown.Scope_Total || 0);
-                is += parseFloat(ieBreakdown.Criticality_Total || 0);
-                is += parseFloat(scores.Adjustment_Score || 0);
-                processedData.impact_score = Math.round(Math.max(0, Math.min(10, is)) * 10) / 10;
-                processedData.Impact_Analysis_IS = resData.Impact_Analysis_IS;
-            } else if (resData.impact_score !== undefined) {
-                processedData.impact_score = parseFloat(resData.impact_score);
-            }
-
-            // Zero Echo Score (ZES) Calculation from Evidence_Analysis_ZES (Base 5.0)
-            // Formula: ZES = 5 - (Positive + Negative)
-            if (resData.Evidence_Analysis_ZES && resData.Evidence_Analysis_ZES.ZES_Score_Vector) {
-                const vector = resData.Evidence_Analysis_ZES.ZES_Score_Vector;
-                let zesSum = 0.0;
-                if (vector.Positive_Scores) {
-                    vector.Positive_Scores.forEach(p => { zesSum += parseFloat(p.Raw_Score || 0) * parseFloat(p.Weight || 1); });
-                }
-                if (vector.Negative_Scores) {
-                    vector.Negative_Scores.forEach(n => { zesSum += parseFloat(n.Raw_Score || 0) * parseFloat(n.Weight || 1); });
-                }
-                // ZES = 5 - (sum)
-                let zes = 5.0 - zesSum;
-                processedData.zero_echo_score = Math.round(Math.max(0, Math.min(10, zes)) * 10) / 10;
-                processedData.Evidence_Analysis_ZES = resData.Evidence_Analysis_ZES;
-            } else if (resData.zero_echo_score !== undefined) {
-                processedData.zero_echo_score = parseFloat(resData.zero_echo_score);
-            }
+            // Legacy flat fields fallback (ensure basic fields exist)
+            if (!processedData.title_ko && resData.title_ko) processedData.title_ko = resData.title_ko;
+            if (!processedData.summary && resData.summary) processedData.summary = resData.summary;
+            if (!processedData.tags && resData.tags) processedData.tags = resData.tags;
 
             // Legacy flat fields fallback
             if (!processedData.title_ko && resData.title_ko) processedData.title_ko = resData.title_ko;

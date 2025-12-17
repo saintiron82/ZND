@@ -237,11 +237,13 @@ def normalize_field_names(data: dict) -> dict:
     """
     Normalize field names to handle case variations and nested structures.
     Supports:
-    1. NEW: raw_analysis -> 점수 계산 (score_engine 사용)
-    2. Nested 'Impact' object -> top-level 'impact_score', 'impact_evidence'
-    3. Nested 'ZeroEcho' object -> top-level 'zero_echo_score', 'evidence'
-    4. Case variations (Zero_Echo_Score -> zero_echo_score)
-    5. Legacy field migration (zero_noise_score -> zero_echo_score)
+    1. V1.0: IS_Analysis, ZES_Raw_Metrics -> 점수 계산 (score_engine 사용)
+    2. V0.9: Impact_Analysis_IS, Evidence_Analysis_ZES -> 점수 계산
+    3. Legacy raw_analysis -> 점수 계산
+    4. Nested 'Impact' object -> top-level 'impact_score', 'impact_evidence'
+    5. Nested 'ZeroEcho' object -> top-level 'zero_echo_score', 'evidence'
+    6. Case variations (Zero_Echo_Score -> zero_echo_score)
+    7. Legacy field migration (zero_noise_score -> zero_echo_score)
     
     Args:
         data: Input data dict
@@ -254,12 +256,46 @@ def normalize_field_names(data: dict) -> dict:
     
     normalized = dict(data)
     
-    # --- V0.9 Schema Support (Impact_Analysis_IS) ---
-    if 'Impact_Analysis_IS' in normalized:
+    # --- V1.0 Schema Support (IS_Analysis, ZES_Raw_Metrics) ---
+    if 'IS_Analysis' in normalized or 'ZES_Raw_Metrics' in normalized:
         try:
             from src.score_engine import process_raw_analysis
             
-            # Calculate scores using the new engine
+            # Calculate scores using V1.0 engine
+            scores = process_raw_analysis(normalized)
+            
+            if scores:
+                normalized['impact_score'] = scores.get('impact_score', 0)
+                normalized['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
+                normalized['evidence'] = scores.get('evidence', {})
+                normalized['impact_evidence'] = scores.get('impact_evidence', {})
+                normalized['schema_version'] = scores.get('schema_version', 'V1.0')
+                
+                print(f"✅ [Normalize] V1.0 Calculated: IS={normalized['impact_score']}, ZES={normalized['zero_echo_score']}")
+        except Exception as e:
+            print(f"⚠️ [Normalize] Error processing V1.0 Analysis: {e}")
+        
+        # V1.0 Meta Data Mapping
+        if 'Meta' in normalized and isinstance(normalized['Meta'], dict):
+            meta = normalized['Meta']
+            if 'Headline' in meta:
+                normalized['title_ko'] = meta['Headline']
+            if 'Summary' in meta:
+                normalized['summary'] = meta['Summary']
+            # Tag는 V0.9 호환
+            if 'Tag' in meta:
+                normalized['tags'] = meta['Tag']
+        
+        # V1.0 Article_ID Mapping
+        if 'Article_ID' in normalized and 'article_id' not in normalized:
+            normalized['article_id'] = normalized['Article_ID']
+    
+    # --- V0.9 Schema Support (Impact_Analysis_IS) ---
+    elif 'Impact_Analysis_IS' in normalized or 'Evidence_Analysis_ZES' in normalized:
+        try:
+            from src.score_engine import process_raw_analysis
+            
+            # Calculate scores using the engine
             scores = process_raw_analysis(normalized)
             
             if scores:
@@ -268,15 +304,15 @@ def normalize_field_names(data: dict) -> dict:
                 normalized['evidence'] = scores.get('evidence', {})
                 normalized['impact_evidence'] = scores.get('impact_evidence', {})
                 
-                print(f"✅ [ScoreEngine] V0.9 Calculated: impact={normalized['impact_score']}, ze={normalized['zero_echo_score']}")
+                print(f"✅ [Normalize] V0.9 Calculated: IS={normalized['impact_score']}, ZES={normalized['zero_echo_score']}")
         except Exception as e:
-            print(f"⚠️ [ScoreEngine] Error processing V0.9 Analysis: {e}")
+            print(f"⚠️ [Normalize] Error processing V0.9 Analysis: {e}")
 
-        # Meta Data Mapping
+        # V0.9 Meta Data Mapping
         if 'Meta' in normalized and isinstance(normalized['Meta'], dict):
             meta = normalized['Meta']
             if 'Headline' in meta:
-                normalized['title_ko'] = meta['Headline'] # V0.9 calls it Headline (User instructions: translate to KR)
+                normalized['title_ko'] = meta['Headline']
             if 'summary' in meta:
                 normalized['summary'] = meta['summary']
             if 'Tag' in meta:
@@ -297,9 +333,9 @@ def normalize_field_names(data: dict) -> dict:
                 normalized['evidence'] = scores.get('evidence', {})
                 normalized['impact_evidence'] = scores.get('impact_evidence', {})
                 
-                print(f"✅ [ScoreEngine] Calculated: impact={scores.get('impact_score')}, ze={scores.get('zero_echo_score')}")
+                print(f"✅ [Normalize] Calculated: IS={scores.get('impact_score')}, ZES={scores.get('zero_echo_score')}")
         except Exception as e:
-            print(f"⚠️ [ScoreEngine] Error processing raw_analysis: {e}")
+            print(f"⚠️ [Normalize] Error processing raw_analysis: {e}")
     
     # --- 0. Unwrap 'response_schema' if present (Support for structured output) ---
     if 'response_schema' in normalized and isinstance(normalized['response_schema'], dict):

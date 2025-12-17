@@ -1,0 +1,230 @@
+{
+  "article_id": "0d2f8d",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-17T14:49:00.482756+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204878_206260_2720.png",
+  "modified_at": "2025-12-17T16:51:22+09:00",
+  "published_at": "2025-12-17T16:30:19+09:00",
+  "summary": "오픈AI가 아마존으로부터 약 100억 달러 규모의 투자를 유치하기 위한 협상을 진행 중입니다. 이번 협상에는 아마존의 자체 AI 칩 '트레이니엄' 사용과 전자상거래 파트너십이 포함될 전망입니다. 성사 시 오픈AI는 인프라 비용을 절감하고, 아마존은 AI 클라우드 시장에서의 입지를 크게 강화할 것으로 보입니다.",
+  "text": "기사를 읽어드립니다. (사진=셔터스톡) 오픈AI가 아마존과 100억달러(약 14조8000억원) 규모의 투자 유치에 대해 논의 중인 것으로 알려졌다. 여기에는 아마존의 클라우드 서비스와 자체 개발 AI 칩, 그리고 전자상거래 등 다양한 파트너십이 포함된 것으로 전해졌다. 디 인포메이션은 16일(현지시간) 복수의 소식통을 인용, 아마존이 오픈AI와 5000억달러(약 740조원)를 상회하는 기업 가치를 기준으로 100억달러 투자를 논의 중이라고 보도했다 이에 따르면, 이번 협상이 타결되면 오픈AI는 아마존 웹 서비스(AWS)로부터 서버를 임대하는 데 드는 비용 충당에 도움이 될 수 있다. 오픈AI는 지난달 AWS로부터 서버를 임대하는 데 7년간 380억달러를 지출할 것이라고 발표한 바 있다. 당시에는 엔비디아 칩을 활용한다는 내용이었다. 그러나 이번에는 아마존이 개발한 '트레이니엄(Trainium)' 사용이 포함됐다. 그동안 아마존은 마이크로소프트(MS)와 구글에 비해 AI 클라우드 사업에 뒤처진다는 평을 받았는데, 이번 거래가 성사되면 칩 임대 사업에 큰 도움이 될 수 있다. 앞서 아마존은 지난 10월 앤트로픽과의 계약을 통해 '트레이니엄 2' 100만장을 탑재한 데이터센터 '프로젝트 레이니어(Project Rainier)’를 가동한다고 밝힌 바 있다. 이 상황에서 오픈AI까지 가세하면, 엄청난 홍보가 될 수 있다. 하지만, 이번 계약에는 아마존의 '베드록(Bedrock)' 서비스를 통해 오픈AI 모델을 제공하는 것은 포함되지 않는다. 이는 MS가 여전히 독점권을 가지고 있기 때문이다. 또 두 회사는 상거래 파트너십에 대해서도 논의한 것으로 밝혀졌다. 소식통에 따르면, 오픈AI는 '챗GPT'에 타사 앱을 포함하는 기능을 통해 월마트와 쇼피파이, 인스타카트 등 전자 상거래 기업을 잇달아 유치했다. 세게 최대의 온라인 마켓인 아마존이 합류하면 큰 힘을 받게 된다. 구체적으로 어떤 형태로 협력이 진행될지는 알려진 바 없다. 여기에 오픈AI는 아마존에 '챗GPT 엔터프라이즈'를 판매할 계획도 있는 것으로 전해졌다. 이번 논의는 오픈AI가 기업 구조변경을 완료한 10월경 시작됐으며, 조건은 변경될 수 있는 것으로 전해졌다. 또 아마존 투자 유치를 시작으로 오픈AI가 새로운 대규모 펀딩 라운드에 나설 가능성도 거론됐다. 이번 거래가 성사되면 아마존은 엔비디아와 AMD에 이어 오픈AI에 투자하는 AI 칩 제조사 중 하나가 된다. 한편, 아마존은 2023년부터 앤트로픽에 집중 투자하며 파트너십을 확장해 왔다. 그동안 80억달러를 투자했으며, 추가 투자도 검토 중인 것으로 알려졌다. 이처럼 칩 제조사와 클라우드 공급자, AI 기업 등은 이제 복잡한 협력 관계를 이루게 됐다. 임대준 기자 ydj@aitimes.com",
+  "title": "&quot;오픈AI, 아마존과 100억달러 투자 유치 협상 중...AI 칩 사용 포함&quot;",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204878",
+  "title_ko": "오픈AI-아마존, 100억 달러 투자 및 AI 칩 협력 논의",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "오픈AI(T1)와 아마존(T2) 간의 대규모 자금 투입 및 칩 사용 계약 건으로 P4 적용. T1-T2 간의 전략적 결합으로 높은 Gap Score 발생.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Amazon",
+          "Se_Tier": 2
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 1,
+        "IW_Score": 4
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 0.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 4.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 6,
+      "T3": 8,
+      "Rationale": "투자 액수, 기업 가치, 구체적 칩 명칭 등 포함"
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "객관적 보도 톤 유지"
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 4,
+      "V3": 8,
+      "Rationale": "빅테크 간 역학 관계 변화를 보여주는 핵심 정보"
+    },
+    "Fine_Adjustment": {
+      "Score": -0.3,
+      "Reason": "협상 중인 단계로 확정되지 않은 미래 계획 중심"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "0d2f8d",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "오픈AI-아마존, 100억 달러 투자 및 AI 칩 협력 논의",
+      "Summary": "오픈AI가 아마존으로부터 약 100억 달러 규모의 투자를 유치하기 위한 협상을 진행 중입니다. 이번 협상에는 아마존의 자체 AI 칩 '트레이니엄' 사용과 전자상거래 파트너십이 포함될 전망입니다. 성사 시 오픈AI는 인프라 비용을 절감하고, 아마존은 AI 클라우드 시장에서의 입지를 크게 강화할 것으로 보입니다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "오픈AI(T1)와 아마존(T2) 간의 대규모 자금 투입 및 칩 사용 계약 건으로 P4 적용. T1-T2 간의 전략적 결합으로 높은 Gap Score 발생.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Amazon",
+            "Se_Tier": 2
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 1,
+          "IW_Score": 4
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 0.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "투자 액수, 기업 가치, 구체적 칩 명칭 등 포함"
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "객관적 보도 톤 유지"
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 4,
+        "V3": 8,
+        "Rationale": "빅테크 간 역학 관계 변화를 보여주는 핵심 정보"
+      },
+      "Fine_Adjustment": {
+        "Score": -0.3,
+        "Reason": "협상 중인 단계로 확정되지 않은 미래 계획 중심"
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "&quot;오픈AI, 아마존과 100억달러 투자 유치 협상 중...AI 칩 사용 포함&quot;",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 7.0,
+        "T2": 6.0,
+        "T3": 8.0,
+        "S_Avg": 7.0,
+        "Rationale": "투자 액수, 기업 가치, 구체적 칩 명칭 등 포함"
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.33,
+        "Rationale": "객관적 보도 톤 유지"
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 4.0,
+        "V3": 8.0,
+        "U_Avg": 7.0,
+        "Rationale": "빅테크 간 역학 관계 변화를 보여주는 핵심 정보"
+      },
+      "Fine_Adjustment": -0.3,
+      "Fine_Reason": "협상 중인 단계로 확정되지 않은 미래 계획 중심",
+      "ZS_Raw": 4.82,
+      "ZS_Final": 4.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "투자 액수, 기업 가치, 구체적 칩 명칭 등 포함"
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "객관적 보도 톤 유지"
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 4,
+        "V3": 8,
+        "Rationale": "빅테크 간 역학 관계 변화를 보여주는 핵심 정보"
+      },
+      "Fine_Adjustment": {
+        "Score": -0.3,
+        "Reason": "협상 중인 단계로 확정되지 않은 미래 계획 중심"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 1.0,
+        "IW_Total": 4.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 0.5,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "오픈AI(T1)와 아마존(T2) 간의 대규모 자금 투입 및 칩 사용 계약 건으로 P4 적용. T1-T2 간의 전략적 결합으로 높은 Gap Score 발생."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Amazon",
+      "Se_Tier": 2
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 0.5,
+      "SOTA_Check_Result": "True"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-17T15:43:34.185504+00:00",
+  "edition": "251217_WED_1",
+  "saved": true,
+  "saved_at": "2025-12-17T15:43:34.190888+00:00",
+  "staged_at": "2025-12-17T15:45:39.418645+00:00",
+  "staged": true
+}

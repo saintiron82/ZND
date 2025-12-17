@@ -140,6 +140,8 @@ class DBClient:
         #         print(f"❌ Save Failed (DB): {e}")
 
         # 2. Save to individual file
+        # Ensure status is recorded in the file itself (crucial for batch logic)
+        article_data['status'] = 'ACCEPTED'
         self._save_to_individual_file(article_data)
         
         # 3. Update history as ACCEPTED

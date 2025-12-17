@@ -27,11 +27,36 @@
             padding: 15px 20px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .header h1 {
             margin: 0;
             font-size: 1.5em;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .filter-group label {
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .header-actions {
@@ -40,7 +65,7 @@
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -111,6 +136,7 @@
             padding: 15px;
             border-left: 4px solid #4ecdc4;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .article-card:hover {
@@ -190,19 +216,14 @@
             color: white;
         }
 
+        .loading,
         .empty-state {
             text-align: center;
             padding: 50px;
             color: #888;
         }
 
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: #888;
-        }
-
-        /* 모달 스타일 */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -273,19 +294,74 @@
             overflow-y: auto;
         }
 
-        .article-card {
-            cursor: pointer;
+        /* Schema Badge Colors */
+        .schema-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-right: 5px;
+            color: #fff;
+        }
+
+        .schema-v1 {
+            background: #6f42c1;
+        }
+
+        .schema-v09 {
+            background: #fd7e14;
+        }
+
+        .schema-hybrid {
+            background: #20c997;
+        }
+
+        .schema-legacy {
+            background: #6c757d;
+        }
+
+        .schema-unknown {
+            background: #343a40;
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <h1>📋 Staging Preview <span style="font-size: 0.6em; color: #888;">(마스터 전용)</span></h1>
-        <div class="header-actions">
-            <button class="btn" style="background: #6c757d; color: white;" onclick="toggleSelectAll()">☑️ 전체 선택</button>
-            <button class="btn btn-refresh" onclick="loadStaging()">🔄 새로고침</button>
-            <button class="btn btn-publish" onclick="publishAll()">🚀 선택 발행</button>
+        <div style="display:flex; flex-direction:column; gap:5px;">
+            <h1>📋 Staging Preview <span style="font-size: 0.6em; color: #888;">(마스터 전용)</span></h1>
+            <div style="font-size:0.8em; color:#aaa;">허용된 버전만 표시되며, 표시된 항목만 발행 가능합니다.</div>
+        </div>
+
+        <div class="header-controls">
+            <!-- Schema Filter -->
+            <div class="filter-group">
+                <span style="font-size:0.8em; color:#ccc; font-weight:bold;">👁️ 표시 필터:</span>
+                <label><input type="checkbox" id="filter-v1" checked onchange="renderArticles()"> <span
+                        class="schema-badge schema-v1">V1.0</span></label>
+                <label><input type="checkbox" id="filter-hybrid" checked onchange="renderArticles()"> <span
+                        class="schema-badge schema-hybrid">V0.9 (Hybrid)</span></label>
+                <label><input type="checkbox" id="filter-v09" checked onchange="renderArticles()"> <span
+                        class="schema-badge schema-v09">V0.9 (Std)</span></label>
+                <label><input type="checkbox" id="filter-legacy" onchange="renderArticles()"> <span
+                        class="schema-badge schema-legacy">Legacy</span></label>
+            </div>
+
+            <!-- Timezone Toggle -->
+            <div class="filter-group">
+                <span style="font-size:0.8em; color:#ccc; font-weight:bold;">🕒 시간:</span>
+                <label><input type="radio" name="tz" value="local" checked onchange="toggleTimezone('local')">
+                    Local</label>
+                <label><input type="radio" name="tz" value="gmt" onchange="toggleTimezone('gmt')"> GMT</label>
+            </div>
+
+            <div class="header-actions">
+                <button class="btn" style="background: #6c757d; color: white;" onclick="toggleSelectAll()">☑️ 전체
+                    선택</button>
+                <button class="btn btn-refresh" onclick="loadStaging()">🔄 새로고침</button>
+                <button class="btn btn-publish" onclick="publishAll()">🚀 선택 발행</button>
+            </div>
         </div>
     </div>
 
@@ -323,13 +399,22 @@
 
     <script>
         let stagingData = [];
+        let curTimezone = 'local'; // 'local' or 'gmt'
 
+        function toggleTimezone(tz) {
+            curTimezone = tz;
+            renderArticles();
+        }
         async function loadStaging() {
             const grid = document.getElementById('articleGrid');
             grid.innerHTML = '<div class="loading">로딩 중...</div>';
 
             try {
-                const today = new Date().toISOString().split('T')[0];
+                // Use local time for date param
+                const now = new Date();
+                const today = now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0');
                 const response = await fetch(`/api/staging/list?date=${today}`);
                 const data = await response.json();
 
@@ -346,6 +431,10 @@
             }
         }
 
+        function getArticleSchema(article) {
+            return (article.impact_evidence && article.impact_evidence.schema_version) || 'Unknown';
+        }
+
         function renderArticles() {
             const grid = document.getElementById('articleGrid');
 
@@ -354,34 +443,141 @@
                 return;
             }
 
-            grid.innerHTML = stagingData.map(article => {
-                const cardClass = article.rejected ? 'rejected' : (article.published ? 'published' : '');
-                const statusClass = article.rejected ? 'rejected' : (article.published ? 'published' : 'staged');
-                const statusText = article.rejected ? '거부됨' : (article.published ? '발행됨' : '대기중');
-                const canSelect = !article.rejected && !article.published;
-                const checkboxHtml = canSelect
-                    ? `<input type="checkbox" class="article-checkbox" data-filename="${article.filename}" onclick="toggleCheck(event)" onchange="updateSelectedCount()" style="width:18px; height:18px; cursor:pointer;">`
-                    : '';
+            // Group ALL data first
+            const grouped = {};
+            stagingData.forEach(article => {
+                const dateRaw = article.crawled_at || article.cached_at || article.saved_at || 'Unknown';
+                let dateKey = 'Unknown';
 
-                return `
-                    <div class="article-card ${cardClass}" onclick="showDetail('${article.filename}')">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <span style="font-size: 0.75em; color: #888;">📎 ${article.article_id || article.filename?.replace('.json', '') || '-'}</span>
-                            ${checkboxHtml}
-                        </div>
-                        <div class="article-title">${article.title_ko || article.title || '제목 없음'}</div>
-                        <div class="article-summary">${(article.summary || '').slice(0, 150)}...</div>
-                        <div class="article-meta">
-                            <span class="score-badge score-zs">ZS: ${article.zero_echo_score?.toFixed(1) || '-'}</span>
-                            <span class="score-badge score-is">IS: ${article.impact_score?.toFixed(1) || '-'}</span>
-                            <span class="status-badge status-${statusClass}">${statusText}</span>
+                if (dateRaw !== 'Unknown') {
+                    const d = new Date(dateRaw);
+                    if (curTimezone === 'gmt') {
+                        dateKey = d.toISOString().split('T')[0];
+                    } else {
+                        // Local YYYY-MM-DD
+                        const year = d.getFullYear();
+                        const month = String(d.getMonth() + 1).padStart(2, '0');
+                        const day = String(d.getDate()).padStart(2, '0');
+                        dateKey = `${year}-${month}-${day}`;
+                    }
+                }
+
+                if (!grouped[dateKey]) grouped[dateKey] = [];
+                grouped[dateKey].push(article);
+            });
+
+            // Sort Dates Descending
+            const sortedDates = Object.keys(grouped).sort().reverse();
+
+            // Get Filter Status
+            const showV1 = document.getElementById('filter-v1').checked;
+            const showHybrid = document.getElementById('filter-hybrid').checked;
+            const showV09 = document.getElementById('filter-v09').checked;
+            const showLegacy = document.getElementById('filter-legacy').checked;
+
+            let html = '';
+
+            sortedDates.forEach(date => {
+                const allArticles = grouped[date];
+
+                // Filter articles for this specific group
+                const visibleArticles = allArticles.filter(article => {
+                    const schema = getArticleSchema(article);
+                    if (schema === 'V1.0' && !showV1) return false;
+                    if (schema === 'V0.9-Hybrid' && !showHybrid) return false;
+                    if (schema === 'V0.9' && !showV09) return false;
+                    if ((schema === 'Legacy' || schema === 'Unknown') && !showLegacy) return false;
+                    return true;
+                });
+
+                const hiddenCount = allArticles.length - visibleArticles.length;
+
+                // Render Header ALWAYS (User Requirement)
+                html += `
+                    <div style="width:100%; margin-top:20px; margin-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:5px; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin:0; color:#4ecdc4;">📅 ${date} <span style="font-size:0.7em; color:#aaa;">(${visibleArticles.length} 표시 / ${allArticles.length} 전체)</span></h3>
+                        <div style="display: flex; gap: 5px; align-items: center;">
+                            <select id="schemaSelect-${date}" class="btn" style="padding: 4px 8px; background: #343a40; color: white; border: 1px solid #6c757d;">
+                                <option value="" selected>자동 감지 (Auto)</option>
+                                <option value="V0.9-Hybrid">V0.9 (수동/Hybrid)</option>
+                                <option value="V1.0">V1.0 (표준)</option>
+                                <option value="V0.9">V0.9 (구형/Standard)</option>
+                            </select>
+                            <button class="btn" style="padding: 4px 8px; font-size: 0.8em; background: #6c757d; color: white;" onclick="toggleDateGroup('${date}')">☑️ 전체 선택</button>
+                            <button class="btn" style="padding: 4px 8px; font-size: 0.8em; background: #ffc107; color: #333;" onclick="recalculateGroup('${date}')">⚡ 점수 재계산</button>
+                            <button class="btn" style="padding: 4px 8px; font-size: 0.8em; background: #dc3545; color: white;" onclick="rejectGroup('${date}')">🗑️ 모두 무시</button>
                         </div>
                     </div>
                 `;
-            }).join('');
+
+                // Render Articles
+                if (visibleArticles.length === 0) {
+                    html += `<div style="padding:20px; text-align:center; color:#666; font-style:italic; border-bottom:1px dashed #444; margin-bottom:10px;">이 날짜에 표시할 기사가 없습니다. (${hiddenCount}개 숨겨짐)</div>`;
+                } else {
+                    html += visibleArticles.map(article => {
+                        const cardClass = article.rejected ? 'rejected' : (article.published ? 'published' : '');
+                        const statusClass = article.rejected ? 'rejected' : (article.published ? 'published' : 'staged');
+                        const statusText = article.rejected ? '거부됨' : (article.published ? '발행됨' : '대기중');
+                        const canSelect = !article.rejected && !article.published;
+                        const checkboxHtml = canSelect
+                            ? `<input type="checkbox" class="article-checkbox" data-filename="${article.filename}" data-date="${date}" onclick="toggleCheck(event)" onchange="updateSelectedCount()" style="width:18px; height:18px; cursor:pointer;">`
+                            : '';
+
+                        let schemaVer = getArticleSchema(article);
+                        let badgeClass = 'schema-unknown';
+                        let badgeText = schemaVer;
+
+                        if (schemaVer === 'V1.0') { badgeClass = 'schema-v1'; }
+                        else if (schemaVer === 'V0.9') { badgeClass = 'schema-v09'; }
+                        else if (schemaVer === 'V0.9-Hybrid') { badgeClass = 'schema-hybrid'; badgeText = 'Hybrid'; }
+                        else if (schemaVer === 'Legacy') { badgeClass = 'schema-legacy'; }
+
+                        if (badgeText === 'Unknown') badgeText = '';
+
+                        // Time display
+                        const dateRaw = article.crawled_at || article.cached_at || 'Unknown';
+                        let timeStr = '';
+                        if (dateRaw !== 'Unknown') {
+                            const d = new Date(dateRaw);
+                            if (curTimezone === 'gmt') {
+                                // e.g. 15:04:05 (GMT)
+                                timeStr = d.toISOString().substring(11, 19) + ' (GMT)';
+                            } else {
+                                // e.g. 15:04:05
+                                timeStr = d.toTimeString().split(' ')[0];
+                            }
+                        }
+
+                        return `
+                            <div class="article-card ${cardClass}" onclick="showDetail('${article.filename}')">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <div style="display:flex; align-items:center;">
+                                        ${badgeText ? `<span class="schema-badge ${badgeClass}">${badgeText}</span>` : ''}
+                                        <span style="font-size: 0.75em; color: #888; margin-right:5px;">${timeStr}</span>
+                                        <span style="font-size: 0.75em; color: #666;">📎 ${article.article_id || article.filename?.replace('.json', '') || '-'}</span>
+                                    </div>
+                                    ${checkboxHtml}
+                                </div>
+                                <div class="article-title">${article.title_ko || article.title || '제목 없음'}</div>
+                                <div class="article-summary">${(article.summary || '').slice(0, 150)}...</div>
+                                <div class="article-meta">
+                                    <span class="score-badge score-zs">ZS: ${article.zero_echo_score?.toFixed(1) || '-'}</span>
+                                    <span class="score-badge score-is">IS: ${article.impact_score?.toFixed(1) || '-'}</span>
+                                    <span class="status-badge status-${statusClass}">${statusText}</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            });
+
+            grid.innerHTML = html;
         }
 
         function updateStats() {
+            // Stats should probably reflect TOTAL loaded content, not just visible.
+            // Or visible? If I Publish All, it publishes selected visible ones.
+            // Let's keep these general stats.
             const staged = stagingData.filter(a => !a.rejected && !a.published).length;
             const rejected = stagingData.filter(a => a.rejected).length;
             const published = stagingData.filter(a => a.published).length;
@@ -392,7 +588,7 @@
         }
 
         async function publishAll() {
-            // 체크된 기사만 선택
+            // Check only Visible checkboxes
             const checkboxes = document.querySelectorAll('.article-checkbox:checked');
             const selectedFiles = Array.from(checkboxes).map(cb => cb.dataset.filename);
 
@@ -424,7 +620,6 @@
             }
         }
 
-        // 모달 열기 - 파일 상세 보기
         async function showDetail(filename) {
             const modal = document.getElementById('detailModal');
             const titleEl = document.getElementById('modalTitle');
@@ -435,7 +630,10 @@
             modal.classList.add('active');
 
             try {
-                const today = new Date().toISOString().split('T')[0];
+                const now = new Date();
+                const today = now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0');
                 const response = await fetch(`/api/staging/file?date=${today}&filename=${filename}`);
                 const data = await response.json();
 
@@ -449,18 +647,15 @@
             }
         }
 
-        // 모달 닫기
         function closeModal(event) {
             if (event && event.target !== event.currentTarget) return;
             document.getElementById('detailModal').classList.remove('active');
         }
 
-        // 체크박스 토글 (이벤트 버블링 방지)
         function toggleCheck(event, filename) {
             event.stopPropagation();
         }
 
-        // 선택된 기사 수 업데이트
         function updateSelectedCount() {
             const checkboxes = document.querySelectorAll('.article-checkbox:checked');
             const count = checkboxes.length;
@@ -468,7 +663,6 @@
             btn.textContent = count > 0 ? `🚀 선택 발행 (${count})` : '🚀 선택 발행';
         }
 
-        // 전체 선택/해제
         function toggleSelectAll() {
             const checkboxes = document.querySelectorAll('.article-checkbox');
             const allChecked = Array.from(checkboxes).every(cb => cb.checked);
@@ -476,7 +670,104 @@
             updateSelectedCount();
         }
 
-        // 페이지 로드 시 실행
+        function toggleDateGroup(date) {
+            const checkboxes = document.querySelectorAll(`.article-checkbox[data-date="${date}"]`);
+            if (checkboxes.length === 0) return; // Nothing to toggle
+
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+            updateSelectedCount();
+        }
+
+        async function recalculateGroup(date) {
+            const checkboxes = document.querySelectorAll(`.article-checkbox[data-date="${date}"]`);
+            // Note: This only selects visible checkboxes because hidden ones are not in DOM.
+            // This is desired behavior: Only recalculate what I can see.
+            const filenames = Array.from(checkboxes).map(cb => cb.dataset.filename);
+
+            const schemaSelect = document.getElementById(`schemaSelect-${date}`);
+            const selectedSchema = schemaSelect ? schemaSelect.value : null;
+
+            if (filenames.length === 0) {
+                alert('재계산할 가능한 기사가 이 그룹에 없습니다 (필터링됨?).');
+                return;
+            }
+
+            let msg = `[${date}] 그룹의 ${filenames.length}개 기사 점수를 재계산하시겠습니까?`;
+            if (selectedSchema) msg += `\n(적용 스키마: ${selectedSchema})`;
+
+            if (!confirm(msg)) {
+                return;
+            }
+
+            try {
+                document.getElementById('articleGrid').innerHTML = '<div class="loading">점수 재계산 중...</div>';
+
+                const response = await fetch('/api/staging/recalculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        date: new Date().getFullYear() + '-' + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + String(new Date().getDate()).padStart(2, '0'),
+                        filenames: filenames,
+                        schema_version: selectedSchema
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`✅ 재계산 완료: ${result.message}`);
+                    loadStaging();
+                } else {
+                    alert(`❌ 실패: ${result.error}`);
+                    loadStaging();
+                }
+            } catch (error) {
+                alert(`❌ 오류: ${error.message}`);
+                loadStaging();
+            }
+        }
+
+        async function rejectGroup(date) {
+            const checkboxes = document.querySelectorAll(`.article-checkbox[data-date="${date}"]`);
+            // Only Visible
+            const filenames = Array.from(checkboxes).map(cb => cb.dataset.filename);
+
+            if (filenames.length === 0) {
+                alert('거부할 가능한 기사가 이 그룹에 없습니다 (필터링됨?).');
+                return;
+            }
+
+            if (!confirm(`⚠️ [${date}] 그룹의 ${filenames.length}개 기사를 모두 '거부(Reject)' 처리하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+                return;
+            }
+
+            try {
+                document.getElementById('articleGrid').innerHTML = '<div class="loading">일괄 거부 처리 중...</div>';
+
+                const response = await fetch('/api/staging/reject_selected', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        filenames: filenames
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`✅ 처리 완료: ${result.message}`);
+                    loadStaging();
+                } else {
+                    alert(`❌ 실패: ${result.error}`);
+                    loadStaging();
+                }
+            } catch (error) {
+                alert(`❌ 오류: ${error.message}`);
+                loadStaging();
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', loadStaging);
     </script>
 </body>

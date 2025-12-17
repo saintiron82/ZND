@@ -1,0 +1,230 @@
+{
+  "article_id": "87973b",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-17T14:49:00.485814+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204881_206263_1756.png",
+  "modified_at": "2025-12-17T18:00:00+09:00",
+  "published_at": "2025-12-17T18:00:00+09:00",
+  "summary": "AI 검색 스타트업 퍼플렉시티가 전문가와 학생을 위한 연구 특화 아이패드 앱을 선보였습니다. 화면 분할과 확장된 사이드바 등 생산성 기능을 강화해 웹 버전과 유사한 경험을 제공합니다. 이는 고관여 유료 사용자층을 확보하기 위한 차별화된 멀티 플랫폼 전략의 일환입니다.",
+  "text": "(사진=퍼플렉시티) 퍼플렉시티가 기존 아이폰 앱과는 별개로 아이패드용 앱을 출시했다. 고급 연구 기능을 활용하는 유료 사용자를 위한 업그레이드다. 퍼플렉시티는 16일(현지시간) 앱스토어를 통해 아이패드용 앱을 출시했다. 이 회사는 앞서 아이패드 앱을 출시했지만, 이는 휴대폰 버전을 확대한 것에 불과했다. 이번에는 퍼플렉시티의 핵심 경쟁력인 '정확한 출처 기반 답변'을 바탕으로, 일반 검색보다 더 많은 인용 정보를 학생과 전문가에게 제공한다. 복잡한 연구를 진행하는 전문가들이 단순히 챗봇과 대화하는 것을 넘어, 여러 출처를 동시에 참조하고 분석하며 보고서를 작성하는 데 최적화됐다는 설명이다. 또 아이패드의 화면 분할 기능을 활용해 사용자가 퍼플렉시티 채팅을 다른 앱과 동시에 실행할 수 있도록 했다. 여기에 모바일 버전보다 더 커진 사이드바를 통해 애플리케이션의 다른 기능을 더 쉽게 찾을 수 있어, 퍼플렉시티의 웹 버전과 흡사해졌다. 이번 개편은 퍼플렉시티가 고급 연구 기능을 확장함에 따라 비즈니스 사용자들의 사용량이 증가한 데 따른 것이라고 블룸버그를 통해 밝혔다. 이 회사의 유료 구독 서비스인 '퍼플렉시티 프로'는 고급 검색 모드와 추가 기능을 제공하는데, 아이패드 앱은 프로 사용자들의 연구 워크플로우를 완성하도록 설계됐다. 이처럼 AI 검색 경쟁이 치열해 짐에 따라, 핵심 사용자층을 겨냥한 차별화 전략으로 볼 수 있다. 퍼플렉시티는 더 많은 사용자를 확보하기 위해 다양한 플랫폼에 제품을 출시해 왔다. 최근에는 AI 브라우저인 '코멧(Comet)'을 안드로이드 기기에서도 사용할 수 있도록 했다. 몇주 안에 애플용 브라우저도 출시할 계획이다. 임대준 기자 ydj@aitimes.com",
+  "title": "퍼플렉시티, '연구'에 특화된 아이패드용 앱 출시",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204881",
+  "title_ko": "퍼플렉시티, 연구 특화 아이패드 앱 출시",
+  "tags": [],
+  "impact_score": 2.0,
+  "IS_Analysis": {
+    "Score_Commentary": "퍼플렉시티(T4-AI 스타트업)가 직접 제품을 출시했으므로 P4 적용. 단순 기기 확장 수준이므로 영향력 범위는 제한적임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Perplexity",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 5.5,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 7,
+      "T3": 6,
+      "Rationale": "UI/UX 변경 사항 및 멀티태스킹 기능 구체적 설명"
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "사용자 편의성 중심의 보도"
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 9,
+      "V3": 5,
+      "Rationale": "기존 아이패드 사용자에게 높은 실용성 제공"
+    },
+    "Fine_Adjustment": {
+      "Score": -0.2,
+      "Reason": "대세에 큰 영향을 주는 사건이라기보다 서비스 개선의 성격"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "87973b",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "퍼플렉시티, 연구 특화 아이패드 앱 출시",
+      "Summary": "AI 검색 스타트업 퍼플렉시티가 전문가와 학생을 위한 연구 특화 아이패드 앱을 선보였습니다. 화면 분할과 확장된 사이드바 등 생산성 기능을 강화해 웹 버전과 유사한 경험을 제공합니다. 이는 고관여 유료 사용자층을 확보하기 위한 차별화된 멀티 플랫폼 전략의 일환입니다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "퍼플렉시티(T4-AI 스타트업)가 직접 제품을 출시했으므로 P4 적용. 단순 기기 확장 수준이므로 영향력 범위는 제한적임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Perplexity",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "UI/UX 변경 사항 및 멀티태스킹 기능 구체적 설명"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "사용자 편의성 중심의 보도"
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 9,
+        "V3": 5,
+        "Rationale": "기존 아이패드 사용자에게 높은 실용성 제공"
+      },
+      "Fine_Adjustment": {
+        "Score": -0.2,
+        "Reason": "대세에 큰 영향을 주는 사건이라기보다 서비스 개선의 성격"
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "퍼플렉시티, '연구'에 특화된 아이패드용 앱 출시",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 7.0,
+        "T2": 7.0,
+        "T3": 6.0,
+        "S_Avg": 6.67,
+        "Rationale": "UI/UX 변경 사항 및 멀티태스킹 기능 구체적 설명"
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.67,
+        "Rationale": "사용자 편의성 중심의 보도"
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 9.0,
+        "V3": 5.0,
+        "U_Avg": 6.33,
+        "Rationale": "기존 아이패드 사용자에게 높은 실용성 제공"
+      },
+      "Fine_Adjustment": -0.2,
+      "Fine_Reason": "대세에 큰 영향을 주는 사건이라기보다 서비스 개선의 성격",
+      "ZS_Raw": 5.45,
+      "ZS_Final": 5.5
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "UI/UX 변경 사항 및 멀티태스킹 기능 구체적 설명"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "사용자 편의성 중심의 보도"
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 9,
+        "V3": 5,
+        "Rationale": "기존 아이패드 사용자에게 높은 실용성 제공"
+      },
+      "Fine_Adjustment": {
+        "Score": -0.2,
+        "Reason": "대세에 큰 영향을 주는 사건이라기보다 서비스 개선의 성격"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 2.0,
+      "IS_Final": 2.0,
+      "Score_Commentary": "퍼플렉시티(T4-AI 스타트업)가 직접 제품을 출시했으므로 P4 적용. 단순 기기 확장 수준이므로 영향력 범위는 제한적임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Perplexity",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "Par"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-17T15:43:35.220409+00:00",
+  "edition": "251217_WED_1",
+  "saved": true,
+  "saved_at": "2025-12-17T15:43:35.226110+00:00",
+  "staged_at": "2025-12-17T15:45:39.441415+00:00",
+  "staged": true
+}

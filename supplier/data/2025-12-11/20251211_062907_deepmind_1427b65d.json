@@ -111,5 +111,7 @@
   "source_id": "deepmind",
   "original_title": "FACTS Benchmark Suite: a new way to systematically evaluate LLMs factuality",
   "crawled_at": "2025-12-11T06:29:07.747664+00:00",
-  "edition": "251211_THU_1"
+  "edition": "251211_THU_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.748503"
 }

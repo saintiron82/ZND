@@ -167,9 +167,12 @@ def load_from_cache(url: str) -> dict | None:
     url_hash = get_url_hash(url)
     filename = f'{url_hash}.json'
     
-    # Search all date folders for this URL's cache
+    # Search all date folders for this URL's cache (Newest first)
     if os.path.exists(CACHE_DIR):
-        for date_folder in os.listdir(CACHE_DIR):
+        # [FIX] Sort folders by date descending to ensure we load the latest cache
+        date_folders = sorted(os.listdir(CACHE_DIR), reverse=True)
+        
+        for date_folder in date_folders:
             date_path = os.path.join(CACHE_DIR, date_folder)
             if not os.path.isdir(date_path):
                 continue

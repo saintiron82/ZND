@@ -424,6 +424,16 @@
                 ⚡ ALL (1~4 연속)
             </button>
         </div>
+        <!-- 🚀 하이브리드 배치 (Hybrid Batch) -->
+        <div class="target-select" style="border-top: 2px solid #6610f2; background: #e2d9f3;">
+            <label style="font-size: 0.8em; font-weight: bold; color: #6610f2;">🚀 하이브리드 배치</label>
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+                <button onclick="openHybridBatchModal()"
+                    style="width: 100%; background: #6610f2; color: white; font-weight: bold; font-size: 0.9em; padding: 8px;">
+                    ⚡ 조판/배치 관리자 (Batch Manager)
+                </button>
+            </div>
+        </div>
         <ul id="link-list">
             <!-- Links will be populated here -->
         </ul>
@@ -505,21 +515,83 @@
         </div>
     </div>
 
-    <!-- Batch Input Modal -->
-    <div id="batchModal"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <!-- Hybrid Batch Processing Modal -->
+    <div id="hybridBatchModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;">
         <div
-            style="background: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 800px; height: 80%; display: flex; flex-direction: column;">
-            <h3 style="margin-top: 0;">배치 JSON 결과 붙여넣기</h3>
-            <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">LLM이 생성한 JSON 응답을 여기에 붙여넣으세요.</p>
-            <textarea id="batchInput"
-                placeholder='{ "results": [ { "title_ko": "...", "zero_noise_score": 5.0 ... } ] }'
-                style="flex: 1; font-family: monospace; padding: 10px; border: 1px solid #ccc; resize: none;"></textarea>
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                <button onclick="closeBatchModal()" style="padding: 10px 20px; cursor: pointer;">취소</button>
-                <button onclick="applyBatchResults()"
-                    style="padding: 10px 20px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 4px;">파싱
-                    적용</button>
+            style="background: white; width: 90%; max-width: 1200px; height: 90%; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+
+            <!-- Modal Header -->
+            <div
+                style="padding: 15px; background: #333; color: white; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">⚡ 하이브리드 배치 처리 (Hybrid Batch Processing)</h3>
+                <button onclick="closeHybridBatchModal()"
+                    style="background: none; border: none; color: white; font-size: 1.5em; cursor: pointer;">&times;</button>
+            </div>
+
+            <!-- Modal Body -->
+            <div style="flex: 1; display: flex; overflow: hidden;">
+
+                <!-- Left Panel: Ready Bundles -->
+                <div
+                    style="width: 300px; background: #f8f9fa; border-right: 1px solid #ddd; display: flex; flex-direction: column;">
+                    <div style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold; background: #e9ecef;">
+                        📂 준비된 번들 (Ready Bundles)
+                        <button onclick="fetchReadyBatches()"
+                            style="float: right; font-size: 0.8em; cursor: pointer;">🔄</button>
+                    </div>
+                    <div id="batchList" style="flex: 1; overflow-y: auto; padding: 5px;">
+                        <!-- Batch Items will be populated here -->
+                        <div style="text-align: center; padding: 20px; color: #888;">로딩 중...</div>
+                    </div>
+                </div>
+
+                <!-- Center Panel: Workflow -->
+                <div
+                    style="flex: 1; display: flex; flex-direction: column; padding: 15px; gap: 15px; background: #fff;">
+
+                    <!-- Step 1: Export -->
+                    <div
+                        style="flex: 1; display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
+                        <div
+                            style="padding: 8px 12px; background: #e3f2fd; border-bottom: 1px solid #bbdefb; font-weight: bold; color: #1565c0; display: flex; justify-content: space-between; align-items: center;">
+                            <span>1️⃣ 내보내기 (Export Prompt)</span>
+                            <span id="selectedBatchName"
+                                style="font-size: 0.8em; font-weight: normal; color: #555;">(번들을 선택하세요)</span>
+                        </div>
+                        <textarea id="batchExportContent" readonly
+                            style="flex: 1; border: none; padding: 10px; font-family: monospace; font-size: 0.85em; resize: none; background: #fafafa;"
+                            placeholder="좌측 목록에서 번들을 선택하면 프롬프트용 데이터가 여기에 표시됩니다."></textarea>
+                        <div style="padding: 8px; border-top: 1px solid #eee; text-align: right; background: #fafafa;">
+                            <button onclick="copyBatchExport()"
+                                style="background: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                                📋 클립보드 복사
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Import -->
+                    <div
+                        style="flex: 1; display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
+                        <div
+                            style="padding: 8px 12px; background: #e8f5e9; border-bottom: 1px solid #c8e6c9; font-weight: bold; color: #2e7d32;">
+                            2️⃣ 주입하기 (Import Results)
+                        </div>
+                        <textarea id="batchImportContent"
+                            style="flex: 1; border: none; padding: 10px; font-family: monospace; font-size: 0.85em; resize: none;"
+                            placeholder="LLM에서 처리된 JSON 결과를 여기에 붙여넣으세요. ([...])"></textarea>
+                        <div
+                            style="padding: 8px; border-top: 1px solid #eee; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+                            <span id="importStatus" style="font-size: 0.85em; color: #666;"></span>
+                            <button onclick="processBatchInjection()"
+                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                                ⚡ 결과 주입 및 처리
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -542,7 +614,7 @@
         </div>
     </div>
 
-    <script src="/static/js/manual_crawler.js"></script>
+    <script src="/static/js/manual_crawler.js?v=3.0"></script>
 </body>
 
 </html>

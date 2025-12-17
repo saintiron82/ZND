@@ -197,6 +197,8 @@
         <div class="pane-header">
             <span>1. Targets</span>
             <div style="display:flex; gap:5px;">
+                <button onclick="fetchAllNewContent()" title="Fetch content for ALL new items"
+                    style="background:#17a2b8;">📥 All</button>
                 <button onclick="loadTargetList()" title="Fetch fresh list of targets">🔄 List</button>
                 <button onclick="clearContentCache()" title="Clear Local Storage" style="background:#555;">🗑️
                     Cache</button>
@@ -270,7 +272,7 @@
         <h2 id="loadingText">Processing...</h2>
     </div>
 
-    <script src="/static/js/inspector.js"></script>
+    <script src="/static/js/inspector.js?v=2.7"></script>
 
 </body>
 

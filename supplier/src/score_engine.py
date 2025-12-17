@@ -4,21 +4,17 @@ ZED Scoring Engine v8.0 (ZED V1.0.0 Schema Compatible)
 Supports:
 - V1.0.0 Schema (IS_Analysis, ZES_Raw_Metrics)
 - V0.9 Schema (Impact_Analysis_IS, Evidence_Analysis_ZES) [Legacy]
-
-V1.0.0 Calculations:
-- Impact Score (IS):
-  - IW = Tier_Score + Gap_Score
-  - IE = Scope_Total + Criticality_Total
-  - IS = IW + IE (Clamp 0-10)
-
-- ZeroEcho Score (ZES):
-  - S = (T1 + T2 + T3) / 3
-  - N = (P1 + P2 + P3) / 3
-  - U = (V1 + V2 + V3) / 3
-  - ZS = 10 - (((S + 10 - N) / 2) * (U / 10) + Fine_Adjustment) (Clamp 0-10)
+- Hybrid V0.9 Schema (Manual Batch Simple Format)
 """
 
 from typing import Optional, Union, Dict, List
+
+# Schema Constants
+SCHEMA_V1_0 = 'V1.0'
+SCHEMA_V0_9 = 'V0.9'
+SCHEMA_HYBRID = 'V0.9-Hybrid'
+SCHEMA_LEGACY = 'Legacy'
+
 
 def safe_float(value: Union[str, int, float, None], default: float = 0.0) -> float:
     """Safe float conversion."""
@@ -40,46 +36,48 @@ def detect_schema_version(data: dict) -> str:
     """
     Detect schema version from data structure.
     
+    Priority:
+    1. Specification_Version field (explicit version)
+    2. V1.0 keys: IS_Analysis, ZES_Raw_Metrics
+    3. Hyrbid V0.9 keys: impact_entity, impact_events inside raw_analysis
+    4. V0.9 keys: Impact_Analysis_IS, Evidence_Analysis_ZES
+    5. Legacy fallback
+    
     Returns:
-        'V1.0' for IS_Analysis / ZES_Raw_Metrics schema
-        'V0.9' for Impact_Analysis_IS / Evidence_Analysis_ZES schema
-        'Legacy' for older schemas
+        SCHEMA_V1_0, SCHEMA_HYBRID, SCHEMA_V0_9, or SCHEMA_LEGACY
     """
     if not data or not isinstance(data, dict):
-        return 'Legacy'
+        return SCHEMA_LEGACY
     
-    # Check for V1.0 signature keys
+    # Check raw_analysis wrapper first (unwrap if needed for detection context)
+    # But detection should run on the 'data' passed to it, which is the unwrapped content usually.
+    # Note: process_raw_analysis unwraps it before calling this.
+    
+    # Priority 1: Check Specification_Version field (V1.0.0+)
+    meta = data.get('Meta', {})
+    spec_version = meta.get('Specification_Version', '')
+    if spec_version and 'v 1.0' in spec_version.lower():
+        return SCHEMA_V1_0
+    
+    # Priority 2: Check for V1.0 signature keys
     if 'IS_Analysis' in data or 'ZES_Raw_Metrics' in data:
-        return 'V1.0'
+        return SCHEMA_V1_0
+
+    # Priority 3: Check for Hybrid V0.9 signature (Simple format)
+    # These keys exist directly in the raw_analysis struct
+    if 'impact_entity' in data or 'impact_events' in data:
+        return SCHEMA_HYBRID
     
-    # Check for V0.9 signature keys
+    # Priority 4: Check for V0.9 signature keys
     if 'Impact_Analysis_IS' in data or 'Evidence_Analysis_ZES' in data:
-        return 'V0.9'
+        return SCHEMA_V0_9
     
-    # Check for raw_analysis wrapper
-    raw = data.get('raw_analysis', {})
-    if 'IS_Analysis' in raw or 'ZES_Raw_Metrics' in raw:
-        return 'V1.0'
-    if 'Impact_Analysis_IS' in raw or 'Evidence_Analysis_ZES' in raw:
-        return 'V0.9'
-    
-    return 'Legacy'
+    return SCHEMA_LEGACY
 
 
 def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
     """
     Calculate Impact Score using V1.0 formula.
-    
-    Formula:
-        IW = Tier_Score + Gap_Score
-        IE = Scope_Total + Criticality_Total
-        IS = IW + IE
-    
-    Args:
-        is_analysis: IS_Analysis object from V1.0 schema
-        
-    Returns:
-        Tuple of (impact_score, breakdown_dict)
     """
     calculations = is_analysis.get('Calculations', {})
     iw_analysis = calculations.get('IW_Analysis', {})
@@ -101,7 +99,7 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
     impact_score = max(0.0, min(10.0, round(is_raw, 1)))
     
     breakdown = {
-        'schema': 'V1.0',
+        'schema': SCHEMA_V1_0,
         'IW_Analysis': {
             'Tier_Score': tier_score,
             'Gap_Score': gap_score,
@@ -123,18 +121,6 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
 def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     """
     Calculate ZeroEcho Score using V1.0 formula.
-    
-    Formula:
-        S = (T1 + T2 + T3) / 3
-        N = (P1 + P2 + P3) / 3
-        U = (V1 + V2 + V3) / 3
-        ZS = 10 - (((S + 10 - N) / 2) * (U / 10) + Fine_Adjustment)
-    
-    Args:
-        zes_raw_metrics: ZES_Raw_Metrics object from V1.0 schema
-        
-    Returns:
-        Tuple of (zero_echo_score, breakdown_dict)
     """
     # Extract Signal (T1, T2, T3)
     signal = zes_raw_metrics.get('Signal', {})
@@ -168,7 +154,7 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     zero_echo_score = max(0.0, min(10.0, round(zs_raw, 1)))
     
     breakdown = {
-        'schema': 'V1.0',
+        'schema': SCHEMA_V1_0,
         'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'S_Avg': round(s, 2), 'Rationale': signal.get('Rationale', '')},
         'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'N_Avg': round(n, 2), 'Rationale': noise.get('Rationale', '')},
         'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'U_Avg': round(u, 2), 'Rationale': utility.get('Rationale', '')},
@@ -181,37 +167,105 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     return zero_echo_score, breakdown
 
 
-def process_raw_analysis(raw: dict) -> dict:
+def calculate_hybrid_v09(data: dict) -> dict:
+    """
+    Calculate scores for Hybrid V0.9 Schema (Simple structure).
+    
+    IS = Entity + Events + Modifiers (Sum)
+    ZES = 5.0 + Penalties - Credits (Base 5)
+    """
+    print(f"🔍 [ScoreEngine] Processing Hybrid V0.9 Calculation")
+    
+    # Extract from simple structure
+    impact_entity = data.get('impact_entity', {})
+    impact_events = data.get('impact_events', [])
+    modifiers = data.get('modifiers', [])
+    
+    # IS Calculation
+    score_sum = 0.0
+    score_sum += safe_float(impact_entity.get('value'))
+    
+    if isinstance(impact_events, list):
+        for evt in impact_events:
+            score_sum += safe_float(evt.get('value'))
+            
+    if isinstance(modifiers, list):
+        for mod in modifiers:
+            score_sum += safe_float(mod.get('value'))
+            
+    impact_score = max(0.0, min(10.0, round(score_sum, 1)))
+    
+    # ZES Calculation
+    penalties = data.get('penalties', [])
+    credits = data.get('credits', [])
+    
+    zes_base = 5.0
+    p_sum = 0.0
+    c_sum = 0.0
+    
+    if isinstance(penalties, list):
+        for p in penalties:
+            p_sum += safe_float(p.get('value'))
+            
+    if isinstance(credits, list):
+        for c in credits:
+            c_sum += safe_float(c.get('value'))
+    
+    # ZES = 5 + Penalties(Noise) - Credits(Signal)
+    zero_echo_score = zes_base + p_sum - c_sum
+    zero_echo_score = max(0.0, min(10.0, round(zero_echo_score, 1)))
+    
+    print(f"✅ [ScoreEngine] Hybrid V0.9 Calculated: IS={impact_score}, ZES={zero_echo_score}")
+    
+    return {
+        'impact_score': impact_score,
+        'zero_echo_score': zero_echo_score,
+        'impact_evidence': {'entity': impact_entity, 'events': impact_events},
+        'evidence': {'penalties': penalties, 'credits': credits},
+        'schema_version': SCHEMA_HYBRID
+    }
+
+
+def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
     """
     Process raw_analysis data to generate final scores.
-    Supports V1.0, V0.9, and Legacy schemas.
+    Supports V1.0, V0.9, Hybrid V0.9, and Legacy schemas.
     
     Args:
-        raw: Dictionary containing analysis data
-             
-    Returns:
-        Flattened dict with:
-        - impact_score
-        - zero_echo_score
-        - impact_evidence (for UI/Storage)
-        - evidence (for UI/Storage)
-        - schema_version
+        raw: Analysis data dict
+        force_schema_version: Optional. Force a specific schema version 
+                            (SCHEMA_V1_0, SCHEMA_HYBRID, etc.)
     """
     if not raw or not isinstance(raw, dict):
         return {}
     
-    # Handle both wrapped (raw_analysis) and direct usage
+    # Unwrap 'raw_analysis' wrapper if present
     data = raw.get('raw_analysis', raw)
     
-    # Detect schema version
-    schema_version = detect_schema_version(data)
-    print(f"🔍 [ScoreEngine] Detected schema: {schema_version}")
+    # Handle V1.0.0 'articles' array wrapper
+    if 'articles' in data and isinstance(data['articles'], list) and len(data['articles']) > 0:
+        data = data['articles'][0]
+        print(f"📦 [ScoreEngine] Extracted article from 'articles' array: {data.get('Article_ID', 'unknown')}")
     
-    # ========== V1.0 Schema Processing ==========
-    if schema_version == 'V1.0':
-        result = {'schema_version': 'V1.0'}
+    # Detect schema version
+    if force_schema_version:
+        schema_version = force_schema_version
+        print(f"👉 [ScoreEngine] Forced schema version: {schema_version}")
+    else:
+        schema_version = detect_schema_version(data)
+        print(f"🔍 [ScoreEngine] Detected schema: {schema_version}")
+    
+    # Dispatch based on schema
+    if schema_version == SCHEMA_V1_0:
+        result = {'schema_version': SCHEMA_V1_0}
         
-        # Calculate IS
+        # Meta Fields
+        meta = data.get('Meta', {})
+        if meta.get('Headline'): result['title_ko'] = meta['Headline']
+        if meta.get('Summary'): result['summary'] = meta['Summary']
+        if data.get('Article_ID'): result['article_id'] = data['Article_ID']
+        
+        # IS
         is_analysis = data.get('IS_Analysis', {})
         if is_analysis:
             impact_score, is_breakdown = calculate_is_v1(is_analysis)
@@ -224,8 +278,8 @@ def process_raw_analysis(raw: dict) -> dict:
         else:
             result['impact_score'] = 0.0
             result['impact_evidence'] = {}
-        
-        # Calculate ZES
+            
+        # ZES
         zes_raw_metrics = data.get('ZES_Raw_Metrics', {})
         if zes_raw_metrics:
             zero_echo_score, zes_breakdown = calculate_zes_v1(zes_raw_metrics)
@@ -235,26 +289,17 @@ def process_raw_analysis(raw: dict) -> dict:
                 'raw_metrics': zes_raw_metrics
             }
         else:
-            result['zero_echo_score'] = 5.0  # Default
+            result['zero_echo_score'] = 5.0
             result['evidence'] = {}
-        
+            
         print(f"✅ [ScoreEngine] V1.0 Calculated: IS={result['impact_score']}, ZES={result['zero_echo_score']}")
         return result
-    
-    # ========== V0.9 Schema Processing (Legacy) ==========
-    elif schema_version == 'V0.9':
-        # --- Legacy (V6.2) Fallback Check ---
-        if 'Impact_Analysis_IS' not in data and ('impact_entity' in data or 'penalties' in data):
-            print("⚠️ [ScoreEngine] Detected Legacy (V6.2) Data format.")
-            return {
-                'impact_score': data.get('impact_score', 0.0),
-                'zero_echo_score': data.get('zero_echo_score', 5.0),
-                'evidence': {}, 
-                'impact_evidence': {},
-                'schema_version': 'Legacy'
-            }
+
+    elif schema_version == SCHEMA_HYBRID:
+        return calculate_hybrid_v09(data)
         
-        # --- V0.9 Impact Score Calculation ---
+    elif schema_version == SCHEMA_V0_9:
+        # V0.9 Logic
         is_data = data.get('Impact_Analysis_IS', {})
         scores = is_data.get('Scores', {})
         
@@ -268,11 +313,10 @@ def process_raw_analysis(raw: dict) -> dict:
         
         adjustment = safe_float(scores.get('Adjustment_Score'))
         
-        # IS Summation (V0.9 full formula)
         impact_score_calc = iw_score + gap_score + context_bonus + scope_total + criticality_total + adjustment
         impact_score = max(0.0, min(10.0, round(impact_score_calc, 1)))
         
-        # --- V0.9 ZES Calculation (Base 5.0) ---
+        # ZES (V0.9)
         zes_data = data.get('Evidence_Analysis_ZES', {})
         vector = zes_data.get('ZES_Score_Vector', {})
         
@@ -293,39 +337,32 @@ def process_raw_analysis(raw: dict) -> dict:
                 weight = safe_float(item.get('Weight'))
                 zes_sum += (raw_val * weight)
         
-        # ZES = 5 - (sum)
         zero_echo_score = 5.0 - zes_sum
         zero_echo_score = max(0.0, min(10.0, round(zero_echo_score, 1)))
         
         print(f"✅ [ScoreEngine] V0.9 Calculated: IS={impact_score}, ZES={zero_echo_score}")
         
-        impact_evidence = {
-            'scores': scores,
-            'analysis_log': is_data.get('Analysis_Log', {}),
-            'reasoning': is_data.get('Reasoning', {})
-        }
-        
-        evidence = {
-            'score_vector': vector,
-            'commentary': zes_data.get('Analysis_Commentary', {})
-        }
-        
         return {
             'impact_score': impact_score,
             'zero_echo_score': zero_echo_score,
-            'impact_evidence': impact_evidence,
-            'evidence': evidence,
-            'schema_version': 'V0.9'
+            'impact_evidence': {
+                'scores': scores,
+                'analysis_log': is_data.get('Analysis_Log', {}),
+                'reasoning': is_data.get('Reasoning', {})
+            },
+            'evidence': {
+                'score_vector': vector,
+                'commentary': zes_data.get('Analysis_Commentary', {})
+            },
+            'schema_version': SCHEMA_V0_9
         }
-    
-    # ========== Legacy Schema Fallback ==========
-    else:
+        
+    else: # SCHEMA_LEGACY
         print("⚠️ [ScoreEngine] Using Legacy schema fallback")
         return {
             'impact_score': safe_float(data.get('impact_score')),
             'zero_echo_score': safe_float(data.get('zero_echo_score', 5.0)),
             'evidence': data.get('evidence', {}),
             'impact_evidence': data.get('impact_evidence', {}),
-            'schema_version': 'Legacy'
+            'schema_version': SCHEMA_LEGACY
         }
-

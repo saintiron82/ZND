@@ -1,0 +1,228 @@
+{
+  "article_id": "fb235f",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-17T14:49:00.485814+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204870_206251_4517.png",
+  "modified_at": "2025-12-17T18:00:00+09:00",
+  "published_at": "2025-12-17T18:00:00+09:00",
+  "summary": "중국 정부가 창안자동차와 BAIC의 전기차 2종을 대상으로 레벨3(L3) 자율주행 양산을 공식 승인했습니다. 이는 국가 차원에서 시스템 주도의 조건부 자율주행을 공식 인정한 첫 사례입니다. 사고 시 책임 소재를 명확히 하는 규제를 동반하며 글로벌 자율주행 주도권 확보에 박차를 가하고 있습니다.",
+  "text": "레벨3 자율주행차 (사진=BAIC) 중국이 레벨3(L3) 자율주행차를 처음으로 정식 양산 대상에 포함하며, 자율주행 기술의 상업적 도입을 본격화했다. 로이터는 16일(현지시간) 중국 공업정보화부(MIIT)가 국영 완성차 업체인 창안자동차와 베이징자동차(BAIC)가 개발한 전기 세단 2종을 L3 자율주행 차량으로 승인했다고 보도했다. 국가 규제 당국이 L3 기능을 갖춘 차량을 공식 자동차 제품으로 인정한 것은 처음이다. 승인된 차량들은 엄격한 조건 아래에서 조건부 자율주행을 수행할 수 있다. 창안자동차의 모델은 충칭 일부 도심 구간에서 시속 50킬로미터(km) 이내로, BAIC의 전기차 브랜드 ‘아크폭스(Arcfox)’ 모델은 베이징의 고속도로나 주요 간선도로에서 최대 시속 80km까지 자율주행이 허용된다. 양사는 지정된 도로를 중심으로 승차 공유 형태의 시범 운행을 진행할 계획이다. 자율주행은 국제 기준에 따라 레벨1부터 레벨5까지 구분되며, L3는 특정 상황에서 운전자의 손과 시선을 도로에서 떼도 되는 ‘조건부 자율주행’ 단계다. 이는 운전자가 항상 조작을 책임지는 레벨2(L2)와 달리, 시스템이 일정 부분 주행 책임을 지는 것이 특징이다. 비상 상황에서는 운전자의 즉각적인 개입이 여전히 요구된다. 이번 결정은 자율주행 기술에서 주도권을 확보하려는 중국 정부의 방향성을 분명히 보여준다. 중국은 지난해 9개 완성차 업체를 선정해 자율주행 공개 테스트를 실시하는 등 단계적으로 제도와 인프라를 정비해 왔다. 올해 3월에는 샤오미 전기 세단 SU7이 보조주행 상태에서 사고를 내 탑승자 3명이 사망하는 사건이 발생하며, 관련 기술에 대한 규제와 안전 심사가 강화되기도 했다. 그럼에도 기술 고도화를 늦추지 않겠다는 입장이다. 특히 L3 자율주행 체제에서는 사고 발생 시 완성차 업체와 부품 공급업체의 책임을 명확히 하겠다는 방침을 세워, 기술 확산과 책임 규제를 동시에 추진하고 있다. 현재 중국 전역에서는 포니닷에이아이와 위라이드 등 자율주행 스타트업들이 지방정부의 허가를 받아 레벨4(L4) 차량을 시험 운행 중이다. 반면, 테슬라의 ‘풀 셀프 드라이빙(FSD)’은 올해 2월 중국에서 일부 기능만 승인받았으며, 여전히 L2 수준에 머물러 미국보다 제약이 크다. 박찬 기자 cpark@aitimes.com",
+  "title": "중국, 첫 레벨3 자율주행차 양산 승인",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204870",
+  "title_ko": "중국, 레벨3 자율주행차 첫 양산 승인",
+  "tags": [],
+  "impact_score": 5.5,
+  "IS_Analysis": {
+    "Score_Commentary": "중국 공업정보화부(T2-Nation_Body)가 공식 승인을 내린 규제/승인 건이므로 P5 적용. 직접 실행 주체인 완성차 업체들은 SE로 고려하나, 정부의 권한 행사가 핵심임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P5",
+          "Pe_Entity_Name": "China MIIT",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "Changan/BAIC",
+          "Se_Tier": 4
+        },
+        "Tier_Score": 2,
+        "Gap_Score": -0.5,
+        "IW_Score": 1.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 2,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 2,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 2,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 2.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 8,
+      "T3": 9,
+      "Rationale": "승인 기관명, 업체명, 운행 조건(시속 등), 규제 내용 포함"
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 2,
+      "P3": 2,
+      "Rationale": "테슬라와의 비교 등 다각적 분석 포함"
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 8,
+      "V3": 8,
+      "Rationale": "자율주행 상용화 단계의 법적/기술적 변곡점 제시"
+    },
+    "Fine_Adjustment": {
+      "Score": 0.3,
+      "Reason": "과거 사고 사례를 언급하며 균형 잡힌 시각 유지"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "fb235f",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "중국, 레벨3 자율주행차 첫 양산 승인",
+      "Summary": "중국 정부가 창안자동차와 BAIC의 전기차 2종을 대상으로 레벨3(L3) 자율주행 양산을 공식 승인했습니다. 이는 국가 차원에서 시스템 주도의 조건부 자율주행을 공식 인정한 첫 사례입니다. 사고 시 책임 소재를 명확히 하는 규제를 동반하며 글로벌 자율주행 주도권 확보에 박차를 가하고 있습니다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "중국 공업정보화부(T2-Nation_Body)가 공식 승인을 내린 규제/승인 건이므로 P5 적용. 직접 실행 주체인 완성차 업체들은 SE로 고려하나, 정부의 권한 행사가 핵심임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P5",
+            "Pe_Entity_Name": "China MIIT",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "Changan/BAIC",
+            "Se_Tier": 4
+          },
+          "Tier_Score": 2,
+          "Gap_Score": -0.5,
+          "IW_Score": 1.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 2,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 2,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 2,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 8,
+        "T3": 9,
+        "Rationale": "승인 기관명, 업체명, 운행 조건(시속 등), 규제 내용 포함"
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 2,
+        "Rationale": "테슬라와의 비교 등 다각적 분석 포함"
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 8,
+        "V3": 8,
+        "Rationale": "자율주행 상용화 단계의 법적/기술적 변곡점 제시"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.3,
+        "Reason": "과거 사고 사례를 언급하며 균형 잡힌 시각 유지"
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "중국, 첫 레벨3 자율주행차 양산 승인",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 9.0,
+        "T2": 8.0,
+        "T3": 9.0,
+        "S_Avg": 8.67,
+        "Rationale": "승인 기관명, 업체명, 운행 조건(시속 등), 규제 내용 포함"
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 2.0,
+        "P3": 2.0,
+        "N_Avg": 1.67,
+        "Rationale": "테슬라와의 비교 등 다각적 분석 포함"
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 8.0,
+        "V3": 8.0,
+        "U_Avg": 8.33,
+        "Rationale": "자율주행 상용화 단계의 법적/기술적 변곡점 제시"
+      },
+      "Fine_Adjustment": 0.3,
+      "Fine_Reason": "과거 사고 사례를 언급하며 균형 잡힌 시각 유지",
+      "ZS_Raw": 2.62,
+      "ZS_Final": 2.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 8,
+        "T3": 9,
+        "Rationale": "승인 기관명, 업체명, 운행 조건(시속 등), 규제 내용 포함"
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 2,
+        "Rationale": "테슬라와의 비교 등 다각적 분석 포함"
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 8,
+        "V3": 8,
+        "Rationale": "자율주행 상용화 단계의 법적/기술적 변곡점 제시"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.3,
+        "Reason": "과거 사고 사례를 언급하며 균형 잡힌 시각 유지"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": -0.5,
+        "IW_Total": 1.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.0,
+        "Criticality_Total": 2.0,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 5.5,
+      "IS_Final": 5.5,
+      "Score_Commentary": "중국 공업정보화부(T2-Nation_Body)가 공식 승인을 내린 규제/승인 건이므로 P5 적용. 직접 실행 주체인 완성차 업체들은 SE로 고려하나, 정부의 권한 행사가 핵심임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P5",
+      "Pe_Entity_Name": "China MIIT",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "Changan/BAIC",
+      "Se_Tier": 4
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 2,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 2,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 2,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "crawled_at": "2025-12-17T15:43:35.455298+00:00",
+  "edition": "251217_WED_1",
+  "saved": true,
+  "saved_at": "2025-12-17T15:43:35.460061+00:00",
+  "staged": true
+}

@@ -1,0 +1,225 @@
+{
+  "article_id": "946bcf",
+  "author": "Carl Franzen",
+  "cached_at": "2025-12-17T14:49:00.490928+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/5OKuwmihZkysC3G6qE6Lvr/ffb6afcf05b65493ada4348587cec2d4/yFbr_v7c7mxthUkaoWhwD.png?w=800&amp;q=75",
+  "modified_at": "2025-12-17T03:22:12.726Z",
+  "published_at": "2025-12-16T22:21-05:00",
+  "summary": "구글 DeepMind가 기존의 상태 비저장(Stateless) 방식에서 벗어나 서버 측 상태 관리를 기본으로 하는 Interactions API 베타 버전을 출시했습니다. 이를 통해 백그라운드 실행, 긴 호흡의 리서치 태스크(Gemini Deep Research), 그리고 MCP 지원이 가능해졌습니다.",
+  "text": "For the last two years, the fundamental unit of generative AI development has been the \"completion.\" You send a text prompt to a model, it sends text back, and the transaction ends. If you want to continue the conversation, you have to send the entire history back to the model again. This \"stateless\" architecture—embodied by Google's legacy generateContent endpoint—was perfect for simple chatbots. But as developers move toward autonomous agents that use tools, maintain complex states, and \"think\" over long horizons, that stateless model has become a distinct bottleneck. Last week, Google DeepMind finally addressed this infrastructure gap with the public beta launch of the Interactions API ( /interactions ). While OpenAI began this shift back in March 2025 with its Responses API, Google’s entry signals its own efforts to advance the state-of-the-art. The Interactions API is not just a state management tool; it is a unified interface designed to treat LLMs less like text generators and more like remote operating systems. The 'Remote Compute' Model The core innovation of the Interactions API is the introduction of server-side state as a default behavior. Previously, a developer building a complex agent had to manually manage a growing JSON list of every \"user\" and \"model\" turn, sending megabytes of history back and forth with every request. With the new API, developers simply pass a previous_interaction_id . Google’s infrastructure retains the conversation history, tool outputs, and \"thought\" processes on their end. \"Models are becoming systems and over time, might even become agents themselves,\" wrote DeepMind's Ali Çevik and Philipp Schmid, in an official company blog post on the new paradigm. \"Trying to force these capabilities into generateContent would have resulted in an overly complex and fragile API.\" This shift enables Background Execution, a critical feature for the agentic era. Complex workflows—like browsing the web for an hour to synthesize a report—often trigger HTTP timeouts in standard APIs. The Interactions API allows developers to trigger an agent with background=true, disconnect, and poll for the result later. It effectively turns the API into a job queue for intelligence. Native \"Deep Research\" and MCP Support Google is using this new infrastructure to deliver its first built-in agent: Gemini Deep Research. Accessible via the same /interactions endpoint, this agent is capable of executing \"long-horizon research tasks.\" Unlike a standard model that predicts the next token based on your prompt, the Deep Research agent executes a loop of searches, reading, and synthesis. Crucially, Google is also embracing the open ecosystem by adding native support for the Model Context Protocol (MCP). This allows Gemini models to directly call external tools hosted on remote servers—such as a weather service or a database—without the developer having to write custom glue code to parse the tool calls. The Landscape: Google Joins OpenAI in the 'Stateful' Era Google is arguably playing catch-up, but with a distinct philosophical twist. OpenAI moved away from statelessness nine months ago with the launch of the Responses API in March 2025. While both giants are solving the problem of context bloat, their solutions diverge on transparency: OpenAI (The Compression Approach): OpenAI's Responses API introduced Compaction—a feature that shrinks conversation history by replacing tool outputs and reasoning chains with opaque \"encrypted compaction items.\" This prioritizes token efficiency but creates a \"black box\" where the model's past reasoning is hidden from the developer. Google (The Hosted Approach): Google’s Interactions API keeps the full history available and composable. The data model allows developers to \"debug, manipulate, stream and reason over interleaved messages.\" It prioritizes inspectability over compression. Supported Models & Availability The Interactions API is currently in Public Beta (documentation here) and is available immediately via Google AI Studio. It supports the full spectrum of Google’s latest generation models, ensuring that developers can match the right model size to their specific agentic task: Gemini 3.0: Gemini 3 Pro Preview. Gemini 2.5: Flash, Flash-lite, and Pro. Agents: Deep Research Preview ( deep-research-pro-preview-12-2025 ). Commercially, the API integrates into Google’s existing pricing structure—you pay standard rates for input and output tokens based on the model you select. However, the value proposition changes with the new data retention policies. Because this API is stateful, Google must store your interaction history to enable features like implicit caching and context retrieval. Access to this storage is determined by your tier. Developers on the Free Tier are limited to a 1-day retention policy, suitable for ephemeral testing but insufficient for long-term agent memory. Developers on the Paid Tier unlock a 55-day retention policy. This extended retention is not just for auditing; it effectively lowers your total cost of ownership by maximizing cache hits. By keeping the history \"hot\" on the server for nearly two months, you avoid paying to re-process massive context windows for recurring users, making the Paid Tier significantly more efficient for production-grade agents. Note: As this is a Beta release, Google has advised that features and schemas are subject to breaking changes. 'You Are Interacting With a System' Sam Witteveen, a Google Developer Expert in Machine Learning and CEO of Red Dragon AI, sees this release as a necessary evolution of the developer stack. \"If we go back in history... the whole idea was simple text-in, text-out,\" Witteveen noted in a technical breakdown of the release on YouTube. \"But now... you are interacting with a system. A system that can use multiple models, do multiple loops of calls, use tools, and do code execution on the backend.\" Witteveen highlighted the immediate economic benefit of this architecture: Implicit Caching. Because the conversation history lives on Google’s servers, developers aren't charged for re-uploading the same context repeatedly. \"You don't have to pay as much for the tokens that you are calling,\" he explained. However, the release is not without friction. Witteveen critiqued the current implementation of the Deep Research agent's citation system. While the agent provides sources, the URLs returned are often wrapped in internal Google/Vertex AI redirection links rather than raw, usable URLs. \"My biggest gripe is that... these URLs, if I save them and try to use them in a different session, they're not going to work,\" Witteveen warned. \"If I want to make a report for someone with citations, I want them to be able to click on the URLs from a PDF file... Having something like medium.com as a citation [without the direct link] is not very good.\" What This Means for Your Team For Lead AI Engineers focused on rapid model deployment and fine-tuning, this release offers a direct architectural solution to the persistent \"timeout\" problem: Background Execution. Instead of building complex asynchronous handlers or managing separate job queues for long-running reasoning tasks, you can now offload this complexity directly to Google. However, this convenience introduces a strategic trade-off. While the new Deep Research agent allows for the rapid deployment of sophisticated research capabilities, it operates as a \"black box\" compared to custom-built LangChain or LangGraph flows. Engineers should prototype a \"slow thinking\" feature using the background=true parameter to evaluate if the speed of implementation outweighs the loss of fine-grained control over the research loop. Senior engineers managing AI orchestration and budget will find that the shift to server-side state via previous_interaction_id unlocks Implicit Caching, a major win for both cost and latency metrics. By referencing history stored on Google’s servers, you automatically avoid the token costs associated with re-uploading massive context windows, directly addressing budget constraints while maintaining high performance. The challenge here lies in the supply chain; incorporating Remote MCP (Model Context Protocol) means your agents are connecting directly to external tools, requiring you to rigorously validate that these remote services are secure and authenticated. It is time to audit your current token spend on re-sending conversation history—if it is high, prioritizing a migration to the stateful Interactions API could capture significant savings. For Senior Data Engineers, the Interactions API offers a more robust data model than raw text logs. The structured schema allows for complex histories to be debugged and reasoned over, improving overall Data Integrity across your pipelines. However, you must remain vigilant regarding Data Quality, specifically the issue raised by expert Sam Witteveen regarding citations. The Deep Research agent currently returns \"wrapped\" URLs that may expire or break, rather than raw source links. If your pipelines rely on scraping or archiving these sources, you may need to build a cleaning step to extract the usable URLs. You should also test the structured output capabilities ( response_format ) to see if they can replace fragile regex parsing in your current ETL pipelines. Finally, for Directors of IT Security, moving state to Google’s centralized servers offers a paradox. It can improve security by keeping API keys and conversation history off client devices, but it introduces a new data residency risk. The critical check here is Google's Data Retention Policies: while the Free Tier retains data for only one day, the Paid Tier retains interaction history for 55 days.",
+  "title": "Why Google&apos;s new Interactions API is such a big deal for AI developers",
+  "url": "https://venturebeat.com/infrastructure/why-googles-new-interactions-api-is-such-a-big-deal-for-ai-developers",
+  "title_ko": "구글, 에이전트 개발을 위한 'Interactions API' 출시",
+  "tags": [],
+  "impact_score": 9.0,
+  "IS_Analysis": {
+    "Score_Commentary": "PE(Google DeepMind)는 Tier 1의 핵심 기술 개발 주체이며, SE(OpenAI)와의 경쟁 구도 및 기술적 격차 보완이 명확하므로 T1-T1 Gap Score 적용.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google DeepMind",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "OpenAI",
+          "Se_Tier": 1
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 2,
+        "IW_Score": 5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 2.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 2.4,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 9,
+      "T3": 7,
+      "Rationale": "API 엔드포인트(/interactions), 보존 정책(1일 vs 55일), OpenAI 솔루션과의 기술적 비교가 매우 구체적임."
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "기술적 사양 위주의 보도로 과장된 표현이 거의 없음."
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 9,
+      "V3": 7,
+      "Rationale": "LLM 개발자들에게 즉시 적용 가능한 인프라 변화 정보를 제공하며 시장 지형 변화를 잘 설명함."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "단순 제품 출시를 넘어 에이전틱 컴퓨팅의 아키텍처 표준 변화를 심도 있게 다룸."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "946bcf",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "구글, 에이전트 개발을 위한 'Interactions API' 출시",
+      "Summary": "구글 DeepMind가 기존의 상태 비저장(Stateless) 방식에서 벗어나 서버 측 상태 관리를 기본으로 하는 Interactions API 베타 버전을 출시했습니다. 이를 통해 백그라운드 실행, 긴 호흡의 리서치 태스크(Gemini Deep Research), 그리고 MCP 지원이 가능해졌습니다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "PE(Google DeepMind)는 Tier 1의 핵심 기술 개발 주체이며, SE(OpenAI)와의 경쟁 구도 및 기술적 격차 보완이 명확하므로 T1-T1 Gap Score 적용.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google DeepMind",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "OpenAI",
+            "Se_Tier": 1
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 2,
+          "IW_Score": 5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 2.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 9,
+        "T3": 7,
+        "Rationale": "API 엔드포인트(/interactions), 보존 정책(1일 vs 55일), OpenAI 솔루션과의 기술적 비교가 매우 구체적임."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "기술적 사양 위주의 보도로 과장된 표현이 거의 없음."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 9,
+        "V3": 7,
+        "Rationale": "LLM 개발자들에게 즉시 적용 가능한 인프라 변화 정보를 제공하며 시장 지형 변화를 잘 설명함."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "단순 제품 출시를 넘어 에이전틱 컴퓨팅의 아키텍처 표준 변화를 심도 있게 다룸."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Why Google&apos;s new Interactions API is such a big deal for AI developers",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 9.0,
+        "T2": 9.0,
+        "T3": 7.0,
+        "S_Avg": 8.33,
+        "Rationale": "API 엔드포인트(/interactions), 보존 정책(1일 vs 55일), OpenAI 솔루션과의 기술적 비교가 매우 구체적임."
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.33,
+        "Rationale": "기술적 사양 위주의 보도로 과장된 표현이 거의 없음."
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 9.0,
+        "V3": 7.0,
+        "U_Avg": 8.33,
+        "Rationale": "LLM 개발자들에게 즉시 적용 가능한 인프라 변화 정보를 제공하며 시장 지형 변화를 잘 설명함."
+      },
+      "Fine_Adjustment": 0.5,
+      "Fine_Reason": "단순 제품 출시를 넘어 에이전틱 컴퓨팅의 아키텍처 표준 변화를 심도 있게 다룸.",
+      "ZS_Raw": 2.42,
+      "ZS_Final": 2.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 9,
+        "T3": 7,
+        "Rationale": "API 엔드포인트(/interactions), 보존 정책(1일 vs 55일), OpenAI 솔루션과의 기술적 비교가 매우 구체적임."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "기술적 사양 위주의 보도로 과장된 표현이 거의 없음."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 9,
+        "V3": 7,
+        "Rationale": "LLM 개발자들에게 즉시 적용 가능한 인프라 변화 정보를 제공하며 시장 지형 변화를 잘 설명함."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "단순 제품 출시를 넘어 에이전틱 컴퓨팅의 아키텍처 표준 변화를 심도 있게 다룸."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 2.0,
+        "IW_Total": 5.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 9.0,
+      "IS_Final": 9.0,
+      "Score_Commentary": "PE(Google DeepMind)는 Tier 1의 핵심 기술 개발 주체이며, SE(OpenAI)와의 경쟁 구도 및 기술적 격차 보완이 명확하므로 T1-T1 Gap Score 적용."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google DeepMind",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "OpenAI",
+      "Se_Tier": 1
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 2.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "crawled_at": "2025-12-17T15:44:48.196779+00:00",
+  "edition": "251217_WED_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.790958"
+}

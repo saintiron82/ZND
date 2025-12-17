@@ -23,7 +23,27 @@
     },
     "scoring": {
         "high_noise_threshold": 7.0,
-        "auto_reject_high_noise": true
+        "auto_reject_high_noise": true,
+        "latest_schema_version": "V1.0",
+        "default_schema_version": "V0.9-Hybrid",
+        "schema_registry": {
+            "V1.0": {
+                "type": "standard",
+                "description": "Standard MLL V1.0 Schema (IS_Analysis, ZES_Raw_Metrics)"
+            },
+            "V0.9-Hybrid": {
+                "type": "hybrid",
+                "description": "Manual Batch Simple Format (impact_entity, impact_events)"
+            },
+            "V0.9": {
+                "type": "legacy_std",
+                "description": "Legacy MLL V0.9 Schema (Impact_Analysis_IS)"
+            },
+            "Legacy": {
+                "type": "fallback",
+                "description": "Unstructured or unknown format"
+            }
+        }
     },
     "history": {
         "max_entries": 5000,

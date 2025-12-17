@@ -498,5 +498,145 @@
     "status": "ACCEPTED",
     "reason": null,
     "timestamp": "2025-12-16T09:56:28.473109+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204854": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T14:48:10.670860+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204858": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:33.849303+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204878": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.188817+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204865": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.455580+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204860": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.529041+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204882": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.787174+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204866": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.857091+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204883": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:35.118357+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204881": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:35.224601+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204870": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:35.459051+00:00"
+  },
+  "https://the-decoder.com/openais-gpt-5-router-rollback-shows-why-ai-requires-unlearning-old-habits/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:06.844971+00:00"
+  },
+  "https://the-decoder.com/google-launches-new-ai-agent-to-help-plan-your-day/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.176602+00:00"
+  },
+  "https://the-decoder.com/googles-updated-gemini-2-5-flash-native-audio-handles-complex-voice-tasks-better/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.442534+00:00"
+  },
+  "https://the-decoder.com/openais-new-chatgpt-image-model-matches-googles-nano-banana-pro-on-complex-prompts/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.503853+00:00"
+  },
+  "https://the-decoder.com/openai-releases-new-models-for-its-realtime-api/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.768019+00:00"
+  },
+  "https://the-decoder.com/nvidia-strengthens-open-source-strategy-with-schedmd-acquisition/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.847180+00:00"
+  },
+  "https://the-decoder.com/gemini-gets-direct-access-to-notebooklm-data/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:08.108791+00:00"
+  },
+  "https://the-decoder.com/nearly-half-of-us-workers-now-use-ai-on-the-job-but-most-arent-using-it-daily/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:08.183426+00:00"
+  },
+  "https://venturebeat.com/technology/ai-agents-fail-63-of-the-time-on-complex-tasks-patronus-ai-says-its-new": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:47.952573+00:00"
+  },
+  "https://venturebeat.com/infrastructure/why-googles-new-interactions-api-is-such-a-big-deal-for-ai-developers": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.200847+00:00"
+  },
+  "https://venturebeat.com/ai/zoom-says-it-aced-ais-hardest-exam-critics-say-it-copied-off-its-neighbors": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.292939+00:00"
+  },
+  "https://venturebeat.com/data/with-91-accuracy-open-source-hindsight-agentic-memory-provides-20-20-vision": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.537923+00:00"
+  },
+  "https://venturebeat.com/security/echo-raises-usd35m-to-secure-the-enterprise-clouds-base-layer-container": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.632320+00:00"
+  },
+  "https://venturebeat.com/ai/zencoder-drops-zenflow-a-free-ai-orchestration-tool-that-pits-claude-against": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.883407+00:00"
+  },
+  "https://venturebeat.com/infrastructure/ai2s-molmo-2-shows-open-source-models-can-rival-proprietary-giants-in-video": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.971856+00:00"
+  },
+  "https://venturebeat.com/technology/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:53:21.485481+00:00"
+  },
+  "https://venturebeat.com/ai/ai-is-moving-to-the-edge-and-network-security-needs-to-catch-up": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.2 >= 7.0)",
+    "timestamp": "2025-12-17T15:53:21.743023+00:00"
+  },
+  "https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T16:05:38.497944+00:00"
   }
 }

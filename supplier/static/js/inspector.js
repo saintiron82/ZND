@@ -17,6 +17,10 @@ window.onload = function () {
 
     // Load Cache
     loadContentCache();
+
+    // [NEW] Auto Load List on Start (Simulate 'List' button click)
+    // This will chain: Load List -> Restore Group -> Auto Fetch -> Auto Copy
+    loadTargetList();
 };
 
 // --- Step 1: Load List Only ---
@@ -51,6 +55,13 @@ async function loadTargetList() {
         document.getElementById('groupActionArea').style.display = 'block';
 
         log(`Loaded list: ${allLinks.length} items. Select targets and click Fetch.`, 'success');
+
+        // [NEW] Auto-select last group if exists
+        const lastGroup = localStorage.getItem('inspector_last_group');
+        if (lastGroup && sourceGroups[lastGroup]) {
+            log(`Restoring last session: ${lastGroup}`, 'info');
+            selectGroup(lastGroup);
+        }
 
     } catch (e) {
         log('Error loading list: ' + e, 'error');
@@ -102,22 +113,53 @@ function renderGroupList(showCheckboxes = true) {
 }
 
 function resetGroupStatus(sid) {
-    if (!confirm(`Reset all items in '${sid}' to NEW?`)) return;
+    // [MODIFIED] 문구 변경: Reset -> Set to NEW
+    if (!confirm(`'${sid}' 그룹의 모든 항목을 'NEW' 상태로 변경하시겠습니까?\n(기존에 긁어온 내용은 유지됩니다)`)) return;
 
     // 1. Reset Status
     sourceGroups[sid].forEach(i => i.status = 'NEW');
 
-    // 2. Clear Cache for these items so they re-fetch
-    sourceGroups[sid].forEach(i => {
-        delete loadedContent[i.url];
-    });
-    saveContentCache(); // Save the cleared state
+    // 2. [FIX] Do NOT Clear Cache! User wants to keep content.
+    // sourceGroups[sid].forEach(i => {
+    //     delete loadedContent[i.url];
+    // });
+
+    // Save state (saved flag might need update if we want to un-save? No, just status reset)
+    saveContentCache();
 
     renderGroupList();
     if (currentGroup === sid) selectGroup(sid); // Refresh prompt if active
+
+    log(`'${sid}' 그룹 상태가 NEW로 변경되었습니다. (내용 유지됨)`, 'info');
 }
 
 // --- Step 2: Fetch Content for Selected ---
+
+// [NEW] Fetch ALL NEW items from ALL groups
+async function fetchAllNewContent() {
+    const allNewItems = [];
+    Object.values(sourceGroups).forEach(items => {
+        allNewItems.push(...items.filter(i => i.status === 'NEW'));
+    });
+
+    if (allNewItems.length === 0) {
+        log("No NEW items found in any group.", 'info');
+        return;
+    }
+
+    if (!confirm(`전체 그룹의 ${allNewItems.length}개 기사 내용을 모두 긁어오시겠습니까?`)) return;
+
+    await fetchItems(allNewItems);
+
+    // Auto-select first group if none selected
+    if (!currentGroup) {
+        const firstGroup = Object.keys(sourceGroups).sort()[0];
+        if (firstGroup) selectGroup(firstGroup);
+    } else {
+        // Refresh current group prompt
+        generatePromptForGroup(currentGroup);
+    }
+}
 
 async function fetchSelectedContent() {
     const checkboxes = document.querySelectorAll('.group-chk:checked');
@@ -139,6 +181,16 @@ async function fetchSelectedContent() {
         return;
     }
 
+    await fetchItems(itemsToFetch);
+
+    // Automatically select the first checked group
+    if (selectedSids.length > 0) {
+        selectGroup(selectedSids[0]);
+    }
+}
+
+// [Helper] Generic Batch Fetcher
+async function fetchItems(itemsToFetch) {
     showLoading(`Extracting content for ${itemsToFetch.length} items... (This may take a while)`);
 
     try {
@@ -169,32 +221,72 @@ async function fetchSelectedContent() {
         // Save Cache
         saveContentCache();
 
-        // Automatically select the first checked group
-        if (selectedSids.length > 0) {
-            selectGroup(selectedSids[0]);
-        }
-
     } catch (e) {
         log('Error fetching content: ' + e, 'error');
+        throw e; // Propagate error
     } finally {
         hideLoading();
     }
 }
 
-function selectGroup(sid) {
+async function selectGroup(sid) {
     currentGroup = sid;
+    localStorage.setItem('inspector_last_group', sid); // Save state
 
     // Highlight UI
     document.querySelectorAll('.group-item').forEach(el => el.classList.remove('active'));
     const chk = document.getElementById(`chk-${sid}`);
     if (chk) {
         chk.closest('.group-item').classList.add('active');
+        // Ensure checkbox is checked when selected
+        chk.checked = true;
+    }
+
+    // [NEW] Auto-Fetch Content Logic
+    const items = sourceGroups[sid] || [];
+    const newItems = items.filter(i => i.status === 'NEW');
+
+    // Check if we need to fetch anything
+    const missingUrls = newItems
+        .map(i => i.url)
+        .filter(u => !loadedContent[u] || (!loadedContent[u].text && !loadedContent[u].summary));
+
+    if (missingUrls.length > 0) {
+        log(`자동 추출 시작: '${sid}' 그룹 ${missingUrls.length}개 항목...`, 'info');
+        showLoading(`'${sid}' 콘텐츠 자동 추출 중 (${missingUrls.length}개)...`);
+
+        try {
+            const chunkSize = 20;
+            for (let i = 0; i < missingUrls.length; i += chunkSize) {
+                const chunk = missingUrls.slice(i, i + chunkSize);
+                // Update loading text if multiple chunks
+                if (missingUrls.length > chunkSize) {
+                    document.getElementById('loadingText').innerText = `Extracting ${Math.min(i + chunkSize, missingUrls.length)} / ${missingUrls.length}...`;
+                }
+
+                const contentRes = await fetch('/api/extract_batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ urls: chunk })
+                });
+                const fetchedList = await contentRes.json();
+                fetchedList.forEach(item => {
+                    loadedContent[item.url] = item;
+                });
+            }
+            saveContentCache();
+            log(`✅ 자동 추출 완료: ${missingUrls.length}개`, 'success');
+        } catch (e) {
+            log(`⚠️ 자동 추출 실패: ${e}`, 'error');
+        } finally {
+            hideLoading();
+        }
     }
 
     // Clear Result
     document.getElementById('inputArea').value = '';
 
-    // Generate Prompt
+    // Generate Prompt (Now with loaded content)
     generatePromptForGroup(sid);
 }
 
@@ -258,55 +350,124 @@ async function generatePromptForGroup(sid) {
     } else {
         document.getElementById('promptStatus').textContent = `✅ 준비 완료 (${newItems.length}개)`;
     }
+
+    // [NEW] Auto-Copy Prompt
+    try {
+        await copyPrompt(true); // silent mode = true
+    } catch (e) {
+        console.warn("Auto-copy blocked by browser policy:", e);
+        // It's okay, user can click the button.
+    }
 }
 
-function copyPrompt() {
+// [NEW] Copy Function
+async function copyPrompt(silent = false) {
     const header = document.getElementById('promptHeader').value;
     const body = document.getElementById('promptArea').value;
-    if (!body) return;
 
-    const fullPrompt = header + "\n" + body;
+    if (!body) {
+        if (!silent) alert('복사할 내용이 없습니다.');
+        return;
+    }
 
-    navigator.clipboard.writeText(fullPrompt).then(() => {
+    const fullText = `${header}\n\n${body}`;
+
+    try {
+        await navigator.clipboard.writeText(fullText);
+        if (!silent) {
+            alert('📋 프롬프트가 복사되었습니다! Gemini에 붙여넣으세요.');
+        } else {
+            log('📋 프롬프트 자동 복사 완료!', 'success');
+        }
+
+        // Visual Feedback
         const btn = document.getElementById('btnCopy');
-        const orig = btn.innerText;
-        btn.innerText = "✅ Copied!";
-        setTimeout(() => btn.innerText = orig, 1500);
-        log('Prompt copied to clipboard', 'info');
-    }).catch(err => log('Failed to copy: ' + err, 'error'));
+        const originColor = btn.style.background;
+        btn.style.background = '#28a745';
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => {
+            btn.style.background = originColor; // Restore color
+            btn.textContent = '📋 Copy'; // Restore text
+        }, 2000);
+
+    } catch (err) {
+        if (!silent) alert('복사 실패: ' + err);
+        throw err;
+    }
 }
 
+
+
 // --- Step 4: Batch Processing ---
+
+// Helper: Normalize any input JSON structure to an Array of Articles (Legacy & V1.0 Support)
+function normalizeStructToBatch(jsonStr) {
+    let jsonData;
+    try {
+        if (typeof jsonStr === 'string') {
+            // Markdown code block removal
+            jsonStr = jsonStr.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
+            jsonData = JSON.parse(jsonStr);
+        } else {
+            jsonData = jsonStr;
+        }
+
+        console.log('[Inspector] Parsed Keys:', Object.keys(jsonData));
+
+        // 1. Priority: V1.0.0 Standard { articles: [...] }
+        if (jsonData.articles && Array.isArray(jsonData.articles)) {
+            console.log(`[Inspector] Detected V1.0 'articles' array (${jsonData.articles.length} items)`);
+            return jsonData.articles;
+        }
+        // 2. Legacy/Alternative { results: [...] }
+        else if (jsonData.results && Array.isArray(jsonData.results)) {
+            console.log(`[Inspector] Detected Legacy 'results' array (${jsonData.results.length} items)`);
+            return jsonData.results;
+        }
+        // 3. Direct Array [...]
+        else if (Array.isArray(jsonData)) {
+            console.log(`[Inspector] Detected Direct Array (${jsonData.length} items)`);
+            return jsonData;
+        }
+        // 4. Single Object -> Wrap in Array
+        else if (typeof jsonData === 'object' && jsonData !== null) {
+            // Check for valid single object
+            if (jsonData.Article_ID || jsonData.article_id || jsonData.title_ko || jsonData.Meta) {
+                console.log('[Inspector] Detected Single Object -> Wrapped in Array');
+                return [jsonData];
+            }
+        }
+
+        throw new Error(`Unknown structure. Keys: ${Object.keys(jsonData).join(', ')}`);
+
+    } catch (e) {
+        throw new Error('JSON Parse/Normalize Error: ' + e.message);
+    }
+}
 
 async function processBatch() {
     const rawInput = document.getElementById('inputArea').value;
     if (!rawInput.trim()) return alert('JSON 응답을 붙여넣으세요!');
 
-    let jsonStr = rawInput.trim();
-    // Remove markdown
-    jsonStr = jsonStr.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
+    alert('⚡ [Inspector] 처리 시작...'); // Debug Alert
 
     let results = [];
     try {
-        let parsed = JSON.parse(jsonStr);
-
-        // Auto-extract if LLM sent schema format
-        if (parsed.properties && parsed.type === 'object') {
-            parsed = parsed.properties;
-        }
-
-        if (Array.isArray(parsed)) results = parsed;
-        else if (parsed.results && Array.isArray(parsed.results)) results = parsed.results;
-        else if (parsed.Article_ID || parsed.article_id || parsed.title_ko) {
-            results = [parsed];
-        }
-        else throw new Error("JSON must be a list or {results: []}");
+        results = normalizeStructToBatch(rawInput.trim());
     } catch (e) {
         return alert('Invalid JSON: ' + e.message);
     }
 
     if (results.length === 0) return alert('No results found in JSON');
-    if (!currentGroup) return alert('No group selected');
+    if (results.length === 0) return alert('No results found in JSON');
+    if (!currentGroup) return alert('❌ 그룹(Target)이 선택되지 않았습니다. 왼쪽 목록에서 대상을 클릭해주세요.');
+
+    // Debug: Check ID Map
+    const mapSize = Object.keys(articleIdMap).length;
+    console.log(`[Inspector] Current Group: ${currentGroup}, ID Map Size: ${mapSize}`);
+    if (mapSize === 0) {
+        log('⚠️ 경고: 현재 그룹의 매칭 정보(Article_ID)가 비어있습니다. "📥 Fetch Content"를 먼저 실행했거나, 그룹을 다시 클릭해보세요.', 'error');
+    }
 
     // NEW 상태 기사 (순서 기반 매칭용)
     const newItems = sourceGroups[currentGroup].filter(i => i.status === 'NEW');
@@ -374,7 +535,8 @@ async function processBatch() {
             }
 
             if (!url) {
-                log(`⚠️ 알 수 없는 Article_ID: ${articleId}`, 'error');
+                log(`❌ 매칭 실패 (ID 미확인): ${articleId}`, 'error');
+                console.warn(`[Match Fail] ID: ${articleId} not found in map (Size: ${mapSize})`);
                 skippedCount++;
                 continue;
             }
@@ -402,7 +564,7 @@ async function processBatch() {
         }
 
         if (!itemLink) {
-            log(`⚠️ 결과 ${i + 1}에 일치하는 기사 없음`, 'error');
+            log(`❌ 매칭 실패 (링크 없음): 결과 #${i + 1}`, 'error');
             skippedCount++;
             continue;
         }
@@ -413,11 +575,23 @@ async function processBatch() {
 
             // ========== V1.0 Schema (IS_Analysis, ZES_Raw_Metrics) ==========
             if (resData.IS_Analysis || resData.ZES_Raw_Metrics) {
-                // V1.0 Meta
+                // V1.0 Meta Mapping (Stronger Fallback)
                 if (resData.Meta) {
-                    processedData.title_ko = resData.Meta.Headline || resData.Meta.title_ko;
-                    processedData.summary = resData.Meta.Summary || resData.Meta.summary;
+                    processedData.title_ko = resData.Meta.Headline || resData.Meta.title_ko || resData.Meta.Title_Ko || null;
+                    processedData.summary = resData.Meta.Summary || resData.Meta.summary || null;
                     processedData.tags = resData.Meta.Tag || resData.Meta.tags || [];
+                }
+
+                // [FIX] 필수 필드 누락 방지 (Title Fallback)
+                if (!processedData.title_ko) {
+                    // 1. Root level check
+                    processedData.title_ko = resData.Headline || resData.title_ko || resData.Title_Ko || resData.Title || null;
+                }
+                if (!processedData.title_ko && itemLink) {
+                    // 2. Cache/Original fallback
+                    const cached = loadedContent[itemLink.url] || {};
+                    processedData.title_ko = cached.title || cached.original_title || itemLink.url; // 최후의 수단: URL
+                    console.warn(`[Inspector] 'title_ko' missing for ${articleId}, using fallback: ${processedData.title_ko}`);
                 }
 
                 // V1.0 IS Calculation: IS = IW + IE
@@ -488,6 +662,12 @@ async function processBatch() {
                     processedData.title_ko = resData.Meta.Headline || resData.Meta.title_ko;
                     processedData.summary = resData.Meta.summary;
                     processedData.tags = resData.Meta.Tag || resData.Meta.tags || [];
+                }
+
+                // [FIX] V0.9 Title Fallback
+                if (!processedData.title_ko && itemLink) {
+                    const cached = loadedContent[itemLink.url] || {};
+                    processedData.title_ko = cached.title || cached.original_title || itemLink.url;
                 }
 
                 // Impact Score (IS) Calculation from Impact_Analysis_IS

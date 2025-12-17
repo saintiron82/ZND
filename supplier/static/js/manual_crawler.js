@@ -1,3 +1,6 @@
+// [JS] manual_crawler.js V3.1
+console.log('🚀 [JS] manual_crawler.js Loaded');
+
 // Global state
 let currentLinks = [];
 let currentLinkIndex = -1;
@@ -190,7 +193,29 @@ function verifyAndApply() {
 
 // Field name normalization helper
 function normalizeFieldNames(data) {
-    const normalized = { ...data };
+    let normalized = { ...data };
+
+    // --- V1.0.0 Schema: Extract from 'articles' array ---
+    if (normalized.articles && Array.isArray(normalized.articles) && normalized.articles.length > 0) {
+        const article = normalized.articles[0];
+        // Merge article fields into normalized (keeping original fields)
+        normalized = { ...normalized, ...article };
+        delete normalized.articles;
+        console.log(`[Normalize] V1.0.0: Extracted article from 'articles' array: ${article.Article_ID || 'unknown'}`);
+    }
+
+    // --- V1.0.0 Schema: Map Meta fields ---
+    if (normalized.Meta) {
+        const meta = normalized.Meta;
+        if (meta.Headline && !normalized.title_ko) {
+            normalized.title_ko = meta.Headline;
+            console.log(`[Normalize] V1.0.0: Mapped Meta.Headline -> title_ko`);
+        }
+        if (meta.Summary && !normalized.summary) {
+            normalized.summary = meta.Summary;
+            console.log(`[Normalize] V1.0.0: Mapped Meta.Summary -> summary`);
+        }
+    }
 
     // Find and normalize zero_echo_score variations (case-insensitive)
     const keys = Object.keys(normalized);
@@ -1047,10 +1072,24 @@ function saveArticle() {
     let jsonData = {};
 
     try {
-        jsonData = JSON.parse(jsonStr);
+        // [Unified Parsing] Use normalizeStructToBatch to handle Single/Batch/V1.0/Legacy formats
+        const batchData = normalizeStructToBatch(jsonStr);
+        if (batchData.length === 0) {
+            return alert('JSON에 기사 데이터가 없습니다.');
+        }
+        // For Single Save, we take the first item
+        jsonData = batchData[0];
+        console.log('[SaveArticle] Extracted first item from batch/input:', jsonData);
     } catch (e) {
         return alert('Invalid JSON: ' + e.message);
     }
+
+    // [IMPORTANT] Normalize V1.0.0 schema to standard format (Field Mapping)
+    // normalizeStructToBatch handles structure, normalizeFieldNames handles keys
+    console.log('[SaveArticle] Before normalize fields:', JSON.stringify(jsonData).substring(0, 200));
+    jsonData = normalizeFieldNames(jsonData);
+    console.log('[SaveArticle] After normalize fields - title_ko:', jsonData.title_ko);
+    console.log('[SaveArticle] After normalize fields - summary:', jsonData.summary?.substring(0, 50));
 
     // Get source_id from multiple sources with fallback
     const url = document.getElementById('url').value;
@@ -1069,7 +1108,11 @@ function saveArticle() {
         original_title: document.getElementById('originalTitle').value
     };
 
+    console.log('[SaveArticle] Final data - title_ko:', data.title_ko);
+    console.log('[SaveArticle] Final data - summary:', data.summary?.substring(0, 50));
+
     if (!data.title_ko || !data.summary) {
+        console.error('[SaveArticle] Missing required fields!', { title_ko: data.title_ko, summary: data.summary });
         return alert('JSON must contain title_ko and summary');
     }
 
@@ -1819,6 +1862,7 @@ async function runAuto(step) {
         }
     }
 
+
     // 버튼 비활성화
     const buttons = document.querySelectorAll('.target-select button');
     buttons.forEach(btn => btn.disabled = true);
@@ -1859,3 +1903,369 @@ function openStaging() {
     window.open('/staging', '_blank');
 }
 
+
+// ==============================================================================
+// ⚡ Hybrid Batch Processing Logic
+// ==============================================================================
+
+function openHybridBatchModal() {
+    document.getElementById('hybridBatchModal').style.display = 'flex';
+    fetchReadyBatches();
+}
+
+function closeHybridBatchModal() {
+    document.getElementById('hybridBatchModal').style.display = 'none';
+}
+
+// 1. Fetch & Render Batch List
+function fetchReadyBatches() {
+    const list = document.getElementById('batchList');
+    list.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;">로딩 중...</div>';
+
+    fetch('/api/batch/list_ready')
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) return list.innerHTML = `Error: ${data.error}`;
+
+            if (!data.batches || data.batches.length === 0) {
+                list.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;">준비된 번들이 없습니다.<br><small>scripts/prepare_daily_batch.py를 실행하세요.</small></div>';
+                return;
+            }
+
+            list.innerHTML = '';
+            data.batches.forEach(batch => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid #eee';
+                div.style.cursor = 'pointer';
+                div.style.background = '#fff';
+                div.style.marginBottom = '5px';
+                div.style.borderRadius = '4px';
+                div.style.transition = 'background 0.2s';
+
+                div.onmouseover = () => div.style.background = '#e3f2fd';
+                div.onmouseout = () => div.style.background = '#fff';
+                div.onclick = () => loadBatchContent(batch);
+
+                div.innerHTML = `
+                    <div style="font-weight: bold; color: #333;">${batch.date} | ${batch.target_id}</div>
+                    <div style="font-size: 0.8em; color: #666; margin-top: 3px;">
+                        📄 기사 ${batch.count || '?'}건 | 💾 ${(batch.size / 1024).toFixed(1)} KB
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        })
+        .catch(err => list.innerHTML = `Error: ${err}`);
+}
+
+// 2. Load Selected Batch Content (Export)
+let currentBatchFilename = null;
+
+function loadBatchContent(batch) {
+    currentBatchFilename = batch.filename;
+    document.getElementById('selectedBatchName').textContent = `${batch.date} - ${batch.target_id} (${batch.count}건)`;
+    document.getElementById('batchExportContent').value = 'Loading...';
+
+    fetch(`/api/batch/get_content?filename=${batch.filename}`)
+        .then(res => res.json())
+        .then(data => {
+            // We want to format this for the LLM Prompt.
+            // Ideally, we provide a structured format.
+            // The file saved by script is { target_id, date, articles: [...] }
+            // We should extract articles list and clean it up for prompt.
+
+            if (data.articles) {
+                // Simplified prompt format
+                const promptData = data.articles.map(a => ({
+                    id: a.article_id, // Use real ID to avoid ambiguity, or Use loop index 'id' if consistent
+                    // User requested "shortening manual work".
+                    // If we use article_id (6 chars) it is fine.
+                    // Let's use the one saved in file.
+                    article_id: a.article_id,
+                    content: a.content // Already capped at 3000 chars in script
+                }));
+
+                // Pretty print the articles list
+                document.getElementById('batchExportContent').value = JSON.stringify(promptData, null, 2);
+            } else {
+                document.getElementById('batchExportContent').value = JSON.stringify(data, null, 2);
+            }
+        })
+        .catch(err => {
+            document.getElementById('batchExportContent').value = 'Error: ' + err;
+        });
+}
+
+// 3. Copy to Clipboard
+function copyBatchExport() {
+    const textarea = document.getElementById('batchExportContent');
+    if (!textarea.value) return;
+
+    textarea.select();
+    document.execCommand('copy');
+
+    const btn = document.querySelector('button[onclick="copyBatchExport()"]');
+    const originalText = btn.textContent;
+    btn.textContent = '✅ 복사됨!';
+    setTimeout(() => btn.textContent = originalText, 2000);
+}
+
+// Helper: Normalize any input JSON structure to an Array of Articles
+function normalizeStructToBatch(jsonStr) {
+    let jsonData;
+    try {
+        // If already an object/array, use it. If string, parse it.
+        if (typeof jsonStr === 'string') {
+            jsonData = JSON.parse(jsonStr);
+        } else {
+            jsonData = jsonStr;
+        }
+
+        console.log('[NormalizeBatch] Parsed Keys:', Object.keys(jsonData));
+
+        // 1. Priority: V1.0.0 Standard { articles: [...] }
+        if (jsonData.articles && Array.isArray(jsonData.articles)) {
+            console.log(`[NormalizeBatch] Detected V1.0 'articles' array (${jsonData.articles.length} items)`);
+            return jsonData.articles;
+        }
+        // 2. Legacy/Alternative { results: [...] }
+        else if (jsonData.results && Array.isArray(jsonData.results)) {
+            console.log(`[NormalizeBatch] Detected Legacy 'results' array (${jsonData.results.length} items)`);
+            return jsonData.results;
+        }
+        // 3. Direct Array [...]
+        else if (Array.isArray(jsonData)) {
+            console.log(`[NormalizeBatch] Detected Direct Array (${jsonData.length} items)`);
+            return jsonData;
+        }
+        // 4. Single Object -> Wrap in Array
+        else if (typeof jsonData === 'object' && jsonData !== null) {
+            console.log('[NormalizeBatch] Detected Single Object -> Wrapped in Array');
+            return [jsonData];
+        }
+        else {
+            throw new Error(`Unknown structure. Keys: ${Object.keys(jsonData).join(', ')}`);
+        }
+    } catch (e) {
+        throw new Error('JSON Parse/Normalize Error: ' + e.message);
+    }
+}
+
+// 4. Process Injection
+function processBatchInjection() {
+
+    const input = document.getElementById('batchImportContent');
+    const status = document.getElementById('importStatus');
+    const jsonStr = input.value.trim();
+
+    if (!jsonStr) {
+        alert('LLM 결과를 붙여넣어주세요.');
+        return;
+    }
+
+    let batchData;
+    try {
+        batchData = normalizeStructToBatch(jsonStr);
+    } catch (e) {
+        console.error(e);
+        alert(e.message);
+        return;
+    }
+
+    status.textContent = `처리 중... (${batchData.length}건)`;
+
+    fetch('/api/batch/inject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(batchData)
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.error) {
+                status.textContent = '오류 발생.';
+                alert('오류: ' + res.error);
+            } else {
+                status.textContent = `완료! (성공: ${res.accepted}건)`;
+                alert(`✅ 배치 처리 완료!\n\n총 처리: ${res.processed}건\n승인(Saved): ${res.accepted}건\n오류: ${res.errors.length}건`);
+                if (res.errors.length > 0) {
+                    console.error('Batch Errors:', res.errors);
+                    alert('일부 항목 오류 발생 (콘솔 확인)');
+                }
+                closeHybridBatchModal();
+                loadArticlesByDate();
+            }
+        })
+        .catch(err => {
+            status.textContent = '통신 오류.';
+            alert('통신 오류: ' + err);
+        });
+}
+
+
+// ==============================================================================
+// 🏭 Batch Management (Typesetting)
+// ==============================================================================
+
+function createBatch() {
+    if (!confirm('현재 대기 중인(ACCEPTED) 모든 기사로 새로운 1판(Batch)을 조판하시겠습니까?')) {
+        return;
+    }
+
+    fetch('/api/batch/create', { method: 'POST' })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert(`✅ 조판 완료! Batch ID: ${res.batch_id}\n${res.message}`);
+                // Open manager to see the new batch
+                openBatchManager();
+            } else {
+                alert('❌ 조판 실패: ' + res.error);
+            }
+        })
+        .catch(err => alert('Error: ' + err));
+}
+
+function openBatchManager() {
+    // Reuse Hybrid Modal for now, but repurpose it
+    const modal = document.getElementById('hybridBatchModal');
+    modal.style.display = 'flex';
+
+    // Change Title
+    modal.querySelector('h3').textContent = '⚡ 조판 관리자 (Batch Manager)';
+
+    // Hide classic columns and show simple list for now?
+    // Or just put the manager in the 'Left Panel' and details in 'Center'?
+
+    // Let's use the layout: Left=List, Center=Details
+
+    const list = document.getElementById('batchList');
+    const exportArea = document.getElementById('batchExportContent');
+    const importArea = document.getElementById('batchImportContent');
+    const centerPanel = list.parentElement.nextElementSibling;
+
+    // Reset Views
+    list.innerHTML = '<div style="padding:20px; text-align:center;">Loading...</div>';
+    exportArea.value = ''; // We can use this to show Batch Details
+    exportArea.previousElementSibling.querySelector('span').textContent = '📄 배치 상세 (Batch Details)'; // Header
+
+    // Hide Import area for now (Typesetting manager doesn't import... yet)
+    // Or maybe we use it for Publish/Discard logs?
+    importArea.parentElement.style.display = 'none'; // Hide import box
+    // Show a new "Actions" box instead?
+
+    // Inject Batch List
+    fetch('/api/batch/list')
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) return list.innerHTML = 'Error: ' + data.error;
+
+            list.innerHTML = '';
+            data.batches.forEach(batch => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid #eee';
+                div.style.cursor = 'pointer';
+                div.style.position = 'relative';
+
+                // Status Badge
+                let statusColor = batch.status === 'PUBLISHED' ? '#28a745' : '#ffc107';
+                let statusText = batch.status === 'PUBLISHED' ? '발행됨' : '대기중';
+
+                div.innerHTML = `
+                    <div style="font-weight:bold;">${batch.batch_id}</div>
+                    <div style="font-size:0.8em; color:#555;">${batch.created_at.split('T')[0]} · ${batch.count} articles</div>
+                    <span style="position:absolute; top:10px; right:10px; background:${statusColor}; color:white; padding:2px 6px; border-radius:4px; font-size:0.7em;">${statusText}</span>
+                `;
+
+                div.onclick = () => showBatchDetails(batch);
+                list.appendChild(div);
+            });
+        })
+        .catch(err => list.innerHTML = 'Error: ' + err);
+}
+
+function showBatchDetails(batch) {
+    document.getElementById('selectedBatchName').textContent = `Batch: ${batch.batch_id}`;
+
+    // Reuse the Textarea to show readable list?
+    // Or just JSON for debugging?
+    // Let's fetch the actual file content to show title list
+    // We don't have an endpoint for 'get_batch_details' yet, but `batch.json` is simple.
+    // We can infer details from what we have or add an endpoint.
+    // For now, just show metadata.
+
+    const details = [
+        `Batch ID: ${batch.batch_id}`,
+        `Created: ${batch.created_at}`,
+        `Status: ${batch.status}`,
+        `Count: ${batch.count}`,
+        `Title: ${batch.title || 'N/A'}`
+    ].join('\n');
+
+    document.getElementById('batchExportContent').value = details;
+
+    // Add Action Buttons dynamically in the center panel
+    let actionContainer = document.getElementById('batchActions');
+    if (!actionContainer) {
+        actionContainer = document.createElement('div');
+        actionContainer.id = 'batchActions';
+        actionContainer.style.marginTop = '10px';
+        actionContainer.style.padding = '10px';
+        actionContainer.style.background = '#f8f9fa';
+        actionContainer.style.border = '1px solid #ddd';
+        // Insert after textarea
+        document.getElementById('batchExportContent').parentElement.appendChild(actionContainer);
+    }
+
+    actionContainer.innerHTML = '';
+
+    if (batch.status !== 'PUBLISHED') {
+        actionContainer.innerHTML = `
+            <button onclick="publishBatch('${batch.batch_id}')" style="background:#28a745; color:white; padding:8px 16px; border:none; border-radius:4px; margin-right:5px; cursor:pointer;">🚀 발행 (Publish)</button>
+            <button onclick="discardBatch('${batch.batch_id}')" style="background:#dc3545; color:white; padding:8px 16px; border:none; border-radius:4px; cursor:pointer;">🗑️ 폐기 (Discard)</button>
+        `;
+    } else {
+        actionContainer.innerHTML = `<span style="color:#28a745; font-weight:bold;">✅ 이 배치는 이미 발행되었습니다.</span>`;
+    }
+}
+
+function publishBatch(batchId) {
+    if (!confirm(`Batch ${batchId}를 발행하시겠습니까?\n(상태가 PUBLISHED로 변경됩니다)`)) return;
+
+    fetch('/api/batch/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ batch_id: batchId })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert('✅ 발행 완료!');
+                openBatchManager(); // Refresh
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('Error: ' + err));
+}
+
+function discardBatch(batchId) {
+    if (!confirm(`Batch ${batchId}를 폐기하시겠습니까?\n⚠️ 포함된 기사들은 다시 '대기(ACCEPTED)' 상태로 돌아갑니다.`)) return;
+
+    fetch('/api/batch/discard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ batch_id: batchId })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert('🗑️ 폐기 완료! 기사들이 복구되었습니다.');
+                openBatchManager(); // Refresh
+            } else {
+                alert('Error: ' + res.error);
+            }
+        })
+        .catch(err => alert('Error: ' + err));
+}

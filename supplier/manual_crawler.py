@@ -23,12 +23,23 @@ from src.core_logic import (
     HistoryStatus,
     get_data_filename,
 )
+from src.batch_logic import create_batch, get_batches, publish_batch, discard_batch
 
 app = Flask(__name__)
+
+# [Debugging] Force disable caching to ensure frontend updates
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
+
 db = DBClient()
 robots_checker = RobotsChecker()
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
+STAGING_DIR = os.path.join(CACHE_DIR, 'staging') # [Ad-hoc fix] Define staging dir
 
 # --- URL-based Text Caching ---
 # These functions now delegate to core_logic module for consistency
@@ -998,191 +1009,76 @@ def check_quality():
 def _calculate_scores(data):
     """
     Helper function to calculate ZeroEcho Score and Impact Score.
+    Delegates to score_engine.process_raw_analysis for Single Source of Truth.
+    
     Supports V1.0, V0.9, and Legacy schemas.
     """
+    from src.score_engine import process_raw_analysis
     
-    # --- V1.0 Schema Detection (IS_Analysis, ZES_Raw_Metrics) ---
-    if 'IS_Analysis' in data or 'ZES_Raw_Metrics' in data:
-        # V1.0 Impact Score: IS = IW + IE
-        # IW = Tier_Score + Gap_Score
-        # IE = Scope_Total + Criticality_Total
-        calculated_impact = 0.0
-        is_breakdown = {}
-        
-        if 'IS_Analysis' in data:
-            calculations = data['IS_Analysis'].get('Calculations', {})
-            iw_analysis = calculations.get('IW_Analysis', {})
-            ie_analysis = calculations.get('IE_Analysis', {})
-            
-            tier_score = float(iw_analysis.get('Tier_Score', 0))
-            gap_score = float(iw_analysis.get('Gap_Score', 0))
-            iw_total = tier_score + gap_score
-            
-            ie_inputs = ie_analysis.get('Inputs', {})
-            scope_total = float(ie_inputs.get('Scope_Matrix_Score', 0))
-            criticality_total = float(ie_inputs.get('Criticality_Total', 0))
-            ie_total = scope_total + criticality_total
-            
-            calculated_impact = iw_total + ie_total
-            
-            is_breakdown = {
-                'IW_Analysis': {'Tier_Score': tier_score, 'Gap_Score': gap_score, 'IW_Total': iw_total},
-                'IE_Analysis': {'Scope_Total': scope_total, 'Criticality_Total': criticality_total, 'IE_Total': ie_total},
-                'Score_Commentary': data['IS_Analysis'].get('Score_Commentary', '')
-            }
-        
-        calculated_impact = round(max(0.0, min(10.0, calculated_impact)), 1)
-        
-        # V1.0 ZES Calculation
-        # S = (T1 + T2 + T3) / 3
-        # N = (P1 + P2 + P3) / 3
-        # U = (V1 + V2 + V3) / 3
-        # ZS = 10 - (((S + 10 - N) / 2) * (U / 10) + Fine_Adjustment)
-        ZS_final = 5.0
-        zes_breakdown = {}
-        
-        if 'ZES_Raw_Metrics' in data:
-            metrics = data['ZES_Raw_Metrics']
-            
-            signal = metrics.get('Signal', {})
-            t1 = float(signal.get('T1', 0))
-            t2 = float(signal.get('T2', 0))
-            t3 = float(signal.get('T3', 0))
-            s = (t1 + t2 + t3) / 3.0
-            
-            noise = metrics.get('Noise', {})
-            p1 = float(noise.get('P1', 0))
-            p2 = float(noise.get('P2', 0))
-            p3 = float(noise.get('P3', 0))
-            n = (p1 + p2 + p3) / 3.0
-            
-            utility = metrics.get('Utility', {})
-            v1 = float(utility.get('V1', 0))
-            v2 = float(utility.get('V2', 0))
-            v3 = float(utility.get('V3', 0))
-            u = (v1 + v2 + v3) / 3.0
-            
-            fine_adj_obj = metrics.get('Fine_Adjustment', {})
-            fine_adjustment = float(fine_adj_obj.get('Score', 0))
-            
-            inner = (s + 10 - n) / 2.0
-            weighted = inner * (u / 10.0)
-            zs_raw = 10.0 - (weighted + fine_adjustment)
-            ZS_final = round(max(0.0, min(10.0, zs_raw)), 1)
-            
-            zes_breakdown = {
-                'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'S_Avg': round(s, 2)},
-                'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'N_Avg': round(n, 2)},
-                'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'U_Avg': round(u, 2)},
-                'Fine_Adjustment': fine_adjustment,
-                'ZS_Raw': round(zs_raw, 2)
-            }
-        
+    # Use score_engine as the single source of truth
+    result = process_raw_analysis(data)
+    
+    if not result:
+        # Fallback for completely empty/invalid data
         return {
-            'zs_final': ZS_final,
-            'zs_raw': ZS_final,
-            'impact_score': calculated_impact,
-            'breakdown': {
-                'schema': 'V1.0',
-                'is_components': is_breakdown,
-                'zes_metrics': zes_breakdown,
-                'zs_clamped': ZS_final,
-                'impact_calc': calculated_impact
-            }
+            'zs_final': 5.0,
+            'zs_raw': 5.0,
+            'impact_score': 0.0,
+            'breakdown': {'schema': 'Unknown', 'error': 'No valid data'}
         }
     
-    # --- V0.9 Schema Detection ---
-    if 'Impact_Analysis_IS' in data or 'Evidence_Analysis_ZES' in data:
-        # V0.9 Impact Score Calculation
-        calculated_impact = 0.0
-        is_breakdown = {}
-        if 'Impact_Analysis_IS' in data:
-            scores = data['Impact_Analysis_IS'].get('Scores', {})
-            is_breakdown = scores
-            calculated_impact += float(scores.get('IW_Score', 0))
-            calculated_impact += float(scores.get('Gap_Score', 0))
-            calculated_impact += float(scores.get('Context_Bonus', 0))
-            # Scope_Total and Criticality_Total are nested inside IE_Breakdown_Total
-            ie_breakdown = scores.get('IE_Breakdown_Total', {})
-            calculated_impact += float(ie_breakdown.get('Scope_Total', 0))
-            calculated_impact += float(ie_breakdown.get('Criticality_Total', 0))
-            calculated_impact += float(scores.get('Adjustment_Score', 0))
-        calculated_impact = round(max(0.0, min(10.0, calculated_impact)), 1)
-
-        # V0.9 ZES Calculation (Base 5.0)
-        ZS_final = 5.0
-        zes_sum = 0.0
-        zes_breakdown = {'base': 5.0, 'positive': [], 'negative': []}
-        if 'Evidence_Analysis_ZES' in data:
-            vector = data['Evidence_Analysis_ZES'].get('ZES_Score_Vector', {})
-            positive_scores = vector.get('Positive_Scores', [])
-            negative_scores = vector.get('Negative_Scores', [])
-            zes_breakdown['positive'] = positive_scores
-            zes_breakdown['negative'] = negative_scores
-            for p in positive_scores:
-                zes_sum += float(p.get('Raw_Score', 0)) * float(p.get('Weight', 1))
-            for n in negative_scores:
-                zes_sum += float(n.get('Raw_Score', 0)) * float(n.get('Weight', 1))
-        ZS_final = 5.0 - zes_sum
-        ZS_final = round(max(0.0, min(10.0, ZS_final)), 1)
-
-        return {
-            'zs_final': ZS_final,
-            'zs_raw': ZS_final,
-            'impact_score': calculated_impact,
-            'breakdown': {
-                'schema': 'V0.9',
-                'is_components': is_breakdown,
-                'zes_vector': zes_breakdown,
-                'zs_clamped': ZS_final,
-                'impact_calc': calculated_impact
-            }
+    # Map score_engine result to expected format for verify_score API
+    schema = result.get('schema_version', 'Unknown')
+    
+    # Build breakdown based on schema version
+    if schema == 'V1.0':
+        # V1.0 breakdown
+        impact_evidence = result.get('impact_evidence', {})
+        evidence = result.get('evidence', {})
+        
+        breakdown = {
+            'schema': 'V1.0',
+            'is_components': impact_evidence.get('calculations', {}),
+            'zes_metrics': evidence.get('breakdown', {}),
+            'zs_clamped': result.get('zero_echo_score', 5.0),
+            'impact_calc': result.get('impact_score', 0.0)
         }
-
-    # --- Legacy Schema Fallback ---
-    V = 5.0
-    evidence = data.get('evidence', {})
-    credits = evidence.get('credits', [])
-    credit_sum = sum(float(item.get('value', 0.0)) for item in credits)
-    V -= credit_sum
-    
-    penalties = evidence.get('penalties', [])
-    penalty_sum = sum(float(item.get('value', 0.0)) for item in penalties)
-    V += penalty_sum
-    
-    modifiers = evidence.get('modifiers', [])
-    modifier_sum = sum(float(item.get('effect', 0.0)) for item in modifiers)
-    V -= modifier_sum
-    
-    ZS = V
-    ZS_final = max(0.0, min(10.0, ZS))
-    
-    impact_evidence = data.get('impact_evidence', {})
-    entity = impact_evidence.get('entity', {})
-    entity_weight = float(entity.get('weight', 0.0))
-    events = impact_evidence.get('events', [])
-    event_weight_sum = sum(float(ev.get('weight', 0.0)) for ev in events)
-    calculated_impact = round(entity_weight + event_weight_sum, 2)
-    
-    return {
-        'zs_final': round(ZS_final, 2),
-        'zs_raw': ZS,
-        'impact_score': calculated_impact,
-        'breakdown': {
+    elif schema == 'V0.9':
+        # V0.9 breakdown
+        impact_evidence = result.get('impact_evidence', {})
+        evidence = result.get('evidence', {})
+        
+        breakdown = {
+            'schema': 'V0.9',
+            'is_components': impact_evidence.get('scores', {}),
+            'zes_vector': {
+                'base': 5.0,
+                'positive': evidence.get('score_vector', {}).get('Positive_Scores', []),
+                'negative': evidence.get('score_vector', {}).get('Negative_Scores', [])
+            },
+            'zs_clamped': result.get('zero_echo_score', 5.0),
+            'impact_calc': result.get('impact_score', 0.0)
+        }
+    else:
+        # Legacy breakdown
+        evidence = result.get('evidence', {})
+        impact_evidence = result.get('impact_evidence', {})
+        
+        breakdown = {
             'schema': 'Legacy',
             'base': 5.0,
-            'credits': credits,
-            'penalties': penalties,
-            'modifiers': modifiers,
-            'credits_sum': credit_sum,
-            'penalties_sum': penalty_sum,
-            'modifiers_sum': modifier_sum,
-            'zs_raw': ZS,
-            'zs_clamped': ZS_final,
-            'impact_entity': entity,
-            'impact_events': events,
-            'impact_calc': calculated_impact
+            'credits': evidence.get('credits', []),
+            'penalties': evidence.get('penalties', []),
+            'modifiers': evidence.get('modifiers', []),
+            'zs_clamped': result.get('zero_echo_score', 5.0),
+            'impact_calc': result.get('impact_score', 0.0)
         }
+    
+    return {
+        'zs_final': result.get('zero_echo_score', 5.0),
+        'zs_raw': result.get('zero_echo_score', 5.0),
+        'impact_score': result.get('impact_score', 0.0),
+        'breakdown': breakdown
     }
 
 @app.route('/api/verify_score', methods=['POST'])
@@ -1717,13 +1613,14 @@ def automation_stage():
     4️⃣ 조판 (Staging): 분석 완료된 캐시 → staging 폴더로 복사
     - 점수 재검증 포함
     - 마스터 검토용 미리보기
+    - 최근 3일치 캐시를 스캔하여 미처리된 항목 조판
     """
     try:
         from src.score_engine import process_raw_analysis
         from src.core_logic import get_config
+        from datetime import datetime, timedelta
         
         today_str = datetime.now().strftime('%Y-%m-%d')
-        cache_date_dir = os.path.join(CACHE_DIR, today_str)
         staging_date_dir = os.path.join(STAGING_DIR, today_str)
         
         # Staging 폴더 생성
@@ -1735,7 +1632,16 @@ def automation_stage():
         
         high_noise_threshold = get_config('scoring', 'high_noise_threshold', default=7.0)
         
-        if os.path.exists(cache_date_dir):
+        # [FIX] Scan last 3 days to handle midnight crossover
+        for i in range(3):
+            scan_date = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
+            cache_date_dir = os.path.join(CACHE_DIR, scan_date)
+            
+            if not os.path.exists(cache_date_dir):
+                continue
+
+            print(f"🕵️ [Stage] Scanning cache folder: {scan_date}")
+
             for filename in os.listdir(cache_date_dir):
                 if not filename.endswith('.json'):
                     continue
@@ -1745,21 +1651,35 @@ def automation_stage():
                     with open(filepath, 'r', encoding='utf-8') as f:
                         cache_data = json.load(f)
                     
+                    print(f"DEBUG: Processing {filename}")
+                    
                     # 분석 안 된 것은 스킵 (raw_analysis 있거나 saved면 분석 완료로 간주)
                     is_analyzed = (
                         cache_data.get('mll_status') == 'analyzed' or
                         cache_data.get('raw_analysis') is not None or
-                        cache_data.get('saved') is True
+                        cache_data.get('saved') is True or
+                        cache_data.get('zero_echo_score') is not None
                     )
                     if not is_analyzed:
+                        print(f"DEBUG: Skip {filename} - Not analyzed (status={cache_data.get('mll_status')})")
                         skipped_count += 1
                         continue
                     
-                    # 이미 staging 됨
-                    if cache_data.get('staged'):
+                    # 이미 staging 됨 (오늘 날짜 폴더에 이미 있는지 확인)
+                    # NOTE: cache_data['staged']가 True여도, 오늘자 Staging 풀에 없으면 다시 추가합니다.
+                    # (사용자가 파일을 복사해왔거나, 재작업을 원하는 경우 대응)
+                    staging_filepath = os.path.join(staging_date_dir, filename)
+                    if os.path.exists(staging_filepath):
+                        # print(f"DEBUG: Skip {filename} - Already staged in current batch")
                         skipped_count += 1
                         continue
                     
+                    # 이미 발행 완료된 건은 스킵
+                    if cache_data.get('published') or cache_data.get('status') == 'PUBLISHED':
+                         print(f"DEBUG: Skip {filename} - Already published")
+                         skipped_count += 1
+                         continue
+
                     # 점수 재검증 (raw_analysis 있으면)
                     if cache_data.get('raw_analysis'):
                         try:
@@ -1783,12 +1703,12 @@ def automation_stage():
                         'staged': True
                     }
                     
-                    # Staging 폴더에 저장
+                    # Staging 폴더에 저장 (항상 오늘 날짜 폴더로 모음)
                     staging_filepath = os.path.join(staging_date_dir, filename)
                     with open(staging_filepath, 'w', encoding='utf-8') as f:
                         json.dump(staging_data, f, ensure_ascii=False, indent=2)
                     
-                    # 원본 캐시에도 staged 표시
+                    # 원본 캐시에도 staged 표시 (경로 유지)
                     cache_data['staged'] = True
                     with open(filepath, 'w', encoding='utf-8') as f:
                         json.dump(cache_data, f, ensure_ascii=False, indent=2)
@@ -1805,7 +1725,7 @@ def automation_stage():
             'skipped': skipped_count,
             'rejected': rejected_count,
             'staging_dir': staging_date_dir,
-            'message': f'조판 {staged_count}개 완료 (거부 {rejected_count}개)'
+            'message': f'조판 {staged_count}개 완료 (거부 {rejected_count}개, 스킵 {skipped_count}개)'
         })
     except Exception as e:
         print(f"❌ [Stage] Error: {e}")
@@ -1941,10 +1861,15 @@ def staging_list():
     try:
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
         staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        print(f"🕵️ [Staging List] Request Date: {date_str}")
+        print(f"🕵️ [Staging List] Dir Path: {staging_date_dir}")
+        print(f"🕵️ [Staging List] Exists?: {os.path.exists(staging_date_dir)}")
         
         articles = []
         
         if os.path.exists(staging_date_dir):
+            from src.score_engine import detect_schema_version, SCHEMA_HYBRID, SCHEMA_V0_9, SCHEMA_V1_0, SCHEMA_LEGACY
+
             for filename in os.listdir(staging_date_dir):
                 if not filename.endswith('.json'):
                     continue
@@ -1954,6 +1879,31 @@ def staging_list():
                     with open(filepath, 'r', encoding='utf-8') as f:
                         data = json.load(f)
                     
+                    # [FIX] Auto-detect schema version for display if raw_analysis exists
+                    # This corrects old labels (e.g., V0.9 vs Hybrid mismatch)
+                    schema_ver = 'Unknown'
+                    version_updated = False
+                    
+                    if data.get('raw_analysis'):
+                         detected_ver = detect_schema_version(data['raw_analysis'])
+                         current_ver = data.get('impact_evidence', {}).get('schema_version')
+                         
+                         # If missing or different (and we trust detection more for now?), update it.
+                         # Actually, if it's missing, definitely save it.
+                         if not current_ver or current_ver == 'Unknown':
+                             if 'impact_evidence' not in data: data['impact_evidence'] = {}
+                             data['impact_evidence']['schema_version'] = detected_ver
+                             schema_ver = detected_ver
+                             version_updated = True
+                         else:
+                             schema_ver = current_ver
+                    
+                    # If we detected a new version for a versionless file, SAVE IT.
+                    if version_updated:
+                        print(f"💾 [Staging List] Saving detected schema {schema_ver} for {filename}")
+                        with open(filepath, 'w', encoding='utf-8') as f_out:
+                            json.dump(data, f_out, ensure_ascii=False, indent=2)
+
                     articles.append({
                         'filename': filename,
                         'filepath': filepath,
@@ -1969,20 +1919,64 @@ def staging_list():
                         'reject_reason': data.get('reject_reason', ''),
                         'published': data.get('published', False),
                         'staged_at': data.get('staged_at', ''),
+                        # [NEW] For sorting by original date (fallback to cached_at -> saved_at -> staged_at -> today)
+                        'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat(),
+                        'impact_evidence': data.get('impact_evidence', {'schema_version': schema_ver})
                     })
                 except Exception as e:
                     print(f"⚠️ [Staging List] Error reading {filename}: {e}")
         
         # 정렬: 발행됨 → 대기중 → 거부됨
         def sort_key(a):
-            if a['published']:
-                return (0, a.get('staged_at', ''))
-            elif a['rejected']:
-                return (2, a.get('staged_at', ''))
-            else:
-                return (1, a.get('staged_at', ''))
+            # 1. Published at bottom, Rejected at bottom (effectively hidden or low pro) - Wait, logic below was:
+            # Published -> 0 (Top?), Rejected -> 2 (Bottom?), Others -> 1 (Middle?)
+            # Let's keep status grouping, but sort by Date inside.
+            # Actually, User wants to see "Candidates" (Wait/Staged) most.
+            # Let's put Staged(1) first, then Published(2), then Rejected(3).
+            # And sort by crawled_at DESC.
+            
+            status_order = 1 # Default Staged
+            if a['published']: status_order = 2
+            if a['rejected']: status_order = 3
+            
+            return (status_order, a.get('crawled_at', ''))
         
-        articles.sort(key=sort_key, reverse=True)
+        # Sort: Status group ASC, then Date DESC (so we reverse the whole thing?)
+        # No, let's explicit sort.
+        articles.sort(key=lambda x: (
+            1 if not x['published'] and not x['rejected'] else (2 if x['published'] else 3), # Staged first
+            x.get('crawled_at', '') # then by date
+        ), reverse=True) # Reverse -> Status 3 first? No.
+        
+        # We want Staged First.
+        # Reverse=True means: Largest first.
+        # So Status 3 (Rejected) > 2 (Published) > 1 (Staged).
+        # Use Reverse=False to put Staged (1) at top.
+        # But we want Newest Date (Largest String) at top.
+        # So: Status ASC, Date DESC.
+        
+        articles.sort(key=lambda x: (
+            0 if not x['published'] and not x['rejected'] else (1 if x['published'] else 2),
+            -(datetime.fromisoformat(x.get('crawled_at').replace('Z','+00:00')).timestamp() if x.get('crawled_at') else 0)
+        ))
+        # Complexity with timestamp msg.
+        # Let's stick to string sort for date (ISO format works).
+        # We want DESC date.
+        
+        # Tuple sort: (StatusOrder, DateString)
+        # We want Status: Staged(0) < Published(1) < Rejected(2)
+        # We want Date: Newest("2025") < Oldest("2024") ?? No, we want Newest first.
+        # So Date should be DESC.
+        # Python sort is ASC.
+        # To get DESC date, we can't negate string.
+        # Let's use reverse=True.
+        # Status: Staged(2) > Published(1) > Rejected(0) -> Staged on Top.
+        # Date: "2025" > "2024" -> Newest on Top.
+        
+        articles.sort(key=lambda x: (
+            2 if not x['published'] and not x['rejected'] else (1 if x['published'] else 0),
+            x.get('crawled_at', '')
+        ), reverse=True)
         
         return jsonify({
             'date': date_str,
@@ -1992,6 +1986,112 @@ def staging_list():
     except Exception as e:
         print(f"❌ [Staging List] Error: {e}")
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/staging/recalculate', methods=['POST'])
+def automation_stage_recalc():
+    """
+    ⚡ Staging 폴더의 기사 점수 재계산 (전체 또는 선택)
+    """
+    try:
+        from src.score_engine import process_raw_analysis
+        
+        data = request.json or {}
+        date_str = data.get('date') or request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
+        target_filenames = data.get('filenames', []) # 선택된 파일만 처리 (없으면 전체)
+        schema_version_override = data.get('schema_version') # UI에서 선택한 스키마 버전
+
+        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        
+        if not os.path.exists(staging_date_dir):
+            return jsonify({'success': False, 'error': 'Staging folder not found'}), 404
+            
+        count = 0
+        errors = 0
+        
+        # 파일 목록 결정
+        if target_filenames:
+            files_to_process = target_filenames
+        else:
+            files_to_process = [f for f in os.listdir(staging_date_dir) if f.endswith('.json')]
+            
+        for filename in files_to_process:
+            filepath = os.path.join(staging_date_dir, filename)
+            
+            if not os.path.exists(filepath):
+                 continue
+
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    article_data = json.load(f)
+                
+                # raw_analysis가 있어야만 재계산 가능
+                if 'raw_analysis' in article_data and article_data['raw_analysis']:
+                    # force_schema_version 전달
+                    scores = process_raw_analysis(article_data['raw_analysis'], force_schema_version=schema_version_override)
+                    article_data['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
+                    article_data['impact_score'] = scores.get('impact_score', 0.0)
+                    
+                    # 계산에 사용된 스키마 버전 기록 (선택 사항)
+                    if 'impact_evidence' not in article_data: article_data['impact_evidence'] = {}
+                    if scores.get('schema_version'):
+                        article_data['impact_evidence']['schema_version'] = scores['schema_version']
+                    
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(article_data, f, ensure_ascii=False, indent=2)
+                    count += 1
+            except Exception as e:
+                print(f"⚠️ Recalc error {filename}: {e}")
+                errors += 1
+                
+        return jsonify({
+            'success': True, 
+            'message': f"{count}개 기사 점수 재계산 완료 (실패 {errors}건)"
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/staging/reject_selected', methods=['POST'])
+def automation_stage_reject_selected():
+    """
+    🗑️ 선택된 기사 일괄 거부 (Reject)
+    """
+    try:
+        data = request.json or {}
+        date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
+        filenames = data.get('filenames', [])
+        
+        if not filenames:
+            return jsonify({'success': False, 'error': 'No filenames provided'}), 400
+            
+        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        count = 0
+        
+        for filename in filenames:
+            filepath = os.path.join(staging_date_dir, filename)
+            if not os.path.exists(filepath):
+                continue
+                
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    article_data = json.load(f)
+                
+                article_data['rejected'] = True
+                article_data['reject_reason'] = 'manual_batch_reject'
+                
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(article_data, f, ensure_ascii=False, indent=2)
+                count += 1
+            except Exception as e:
+                print(f"⚠️ Reject error {filename}: {e}")
+                
+        return jsonify({
+            'success': True,
+            'message': f"{count}개 기사 거부 처리 완료"
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/staging/file')
@@ -2091,6 +2191,290 @@ def staging_publish_selected():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+
+# ==============================================================================
+# Hybrid Batch Processing API
+# ==============================================================================
+
+BATCH_DIR = os.path.join(CACHE_DIR, 'batches')
+
+@app.route('/api/batch/list_ready')
+def list_ready_batches():
+    """List all available batch files in cache/batches."""
+    try:
+        if not os.path.exists(BATCH_DIR):
+            return jsonify({'batches': []})
+            
+        batches = []
+        for filename in os.listdir(BATCH_DIR):
+            if not filename.endswith('.json'):
+                continue
+                
+            filepath = os.path.join(BATCH_DIR, filename)
+            try:
+                # Filename format: {date}_{target}_{id}.json
+                stat = os.stat(filepath)
+                
+                parts = filename.replace('.json', '').split('_')
+                date_str = parts[0] if len(parts) > 0 else 'Unknown'
+                target_id = parts[1] if len(parts) > 1 else 'Unknown'
+                
+                with open(filepath, 'r', encoding='utf-8') as f:
+                     # Peek at count purely from file load (safer than parsing filename if format varies)
+                     data_meta = json.load(f)
+                     count = data_meta.get('count', 0)
+                
+                batches.append({
+                    'filename': filename,
+                    'date': date_str,
+                    'target_id': target_id,
+                    'count': count,
+                    'size': stat.st_size,
+                    'modified': datetime.fromtimestamp(stat.st_mtime).isoformat()
+                })
+            except Exception as e:
+                pass
+                
+        # Sort by date descending
+        batches.sort(key=lambda x: x['filename'], reverse=True)
+        return jsonify({'batches': batches})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/batch/get_content')
+def get_batch_content():
+    """Get the content of a specific batch file."""
+    filename = request.args.get('filename')
+    if not filename:
+        return jsonify({'error': 'Filename required'}), 400
+        
+    filepath = os.path.join(BATCH_DIR, filename)
+    if not os.path.exists(filepath):
+        return jsonify({'error': 'File not found'}), 404
+        
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # We return the whole wrapper { articles: [...] }
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def _find_cache_by_article_id(article_id):
+    """
+    Search for cache file by article_id in recent cache folders (last 7 days).
+    Returns cached_data dict provided it contains the 'url', or None.
+    """
+    # Search today and past 7 days
+    from datetime import datetime, timedelta
+    
+    for i in range(8):
+        date_str = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
+        date_dir = os.path.join(CACHE_DIR, date_str)
+        
+        if not os.path.exists(date_dir):
+            continue
+            
+        # Iterate files
+        for filename in os.listdir(date_dir):
+            if not filename.endswith('.json'):
+                continue
+                
+            filepath = os.path.join(date_dir, filename)
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                # Check ID match
+                if str(data.get('article_id')) == str(article_id):
+                    return data
+            except:
+                continue
+    return None
+
+@app.route('/api/batch/inject', methods=['POST'])
+def inject_batch_results():
+    """
+    Inject analyzed results from external process.
+    Matches with cache via 'article_id', calculates scores, and saves to data/.
+    """
+    try:
+        results = request.json
+        print(f"📥 [Batch Inject] Received Payload Type: {type(results)}")
+        
+        if not isinstance(results, list):
+            print(f"❌ [Batch Inject] Error: Payload is not a list. Got {type(results)}")
+            return jsonify({'error': 'Input must be a JSON list'}), 400
+            
+        print(f"📥 [Batch Inject] Processing {len(results)} items...")
+            
+        processed_count = 0
+        accepted_count = 0
+        errors = []
+        
+        for item in results:
+            print(f"🔍 [Batch Inject] Processing Item: Keys={list(item.keys()) if isinstance(item, dict) else 'NotDict'}")
+            try:
+                article_id = item.get('article_id') or item.get('Article_ID')
+                
+                if not article_id:
+                    errors.append(f"Missing article_id in item: {str(item)[:50]}")
+                    continue
+                    
+                url = item.get('url')
+                
+                cached_data = None
+                if url:
+                    cached_data = _core_load_from_cache(url)
+                
+                # If URL not provided or cache miss, try searching by ID
+                if not cached_data:
+                    found = _find_cache_by_article_id(article_id)
+                    if found:
+                        cached_data = found
+                        # Ensure we have the URL now
+                        if not url: url = cached_data.get('url')
+                
+                if not cached_data:
+                    errors.append(f"Cache not found for {article_id}")
+                    continue
+                
+                # 2. Process & Calculate Scores via ScoreEngine (Single Source of Truth)
+                from src.score_engine import process_raw_analysis
+                
+                # The 'item' is the LLM output (raw_analysis or wrapper)
+                # This will handle V1.0 (articles array element) and V0.9 logic
+                engine_result = process_raw_analysis(item)
+                
+                # Merge Engine Results into Cache
+                if engine_result:
+                    # Basic Fields
+                    if 'title_ko' in engine_result: cached_data['title_ko'] = engine_result['title_ko']
+                    if 'summary' in engine_result: cached_data['summary'] = engine_result['summary']
+                    
+                    # Scores (ONLY from Engine)
+                    cached_data['zero_echo_score'] = engine_result.get('zero_echo_score', 0.0)
+                    cached_data['impact_score'] = engine_result.get('impact_score', 0.0)
+                    
+                    # Evidence (Important for UI)
+                    if 'evidence' in engine_result: cached_data['evidence'] = engine_result['evidence']
+                    if 'impact_evidence' in engine_result: cached_data['impact_evidence'] = engine_result['impact_evidence']
+                    
+                    # Store Raw Analysis for record
+                    cached_data['raw_analysis'] = item 
+                    
+                else:
+                    # If Engine fails, we treat it as failure.
+                    # DO NOT use LLM provided values directly.
+                    errors.append(f"ScoreEngine failed to process item: {article_id}")
+                    continue
+                    
+                # Normalize field names just in case
+                cached_data = _core_normalize_field_names(cached_data)
+                
+                # 3. Determine Status
+                score = cached_data.get('zero_echo_score', 0)
+                status = 'ACCEPTED' if score >= 4.0 else 'REJECTED'
+                
+                # 4. Save History
+                db.save_history(cached_data['url'], status, reason=f"Batch: {score}")
+                cached_data['status'] = status
+                
+                # 5. Save to Data (if ACCEPTED)
+                if status == 'ACCEPTED':
+                    date_folder = datetime.now().strftime('%Y-%m-%d')
+                    data_dir = os.path.join(DATA_DIR, date_folder)
+                    os.makedirs(data_dir, exist_ok=True)
+                    
+                    filename = get_data_filename(cached_data.get('source_id', 'batch'), cached_data['url'])
+                    filepath = os.path.join(data_dir, filename)
+                    
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(cached_data, f, ensure_ascii=False, indent=2)
+                        
+                    _core_update_manifest(date_folder)
+                    accepted_count += 1
+                
+                # Update Cache
+                _core_save_to_cache(cached_data['url'], cached_data)
+                
+                processed_count += 1
+                
+            except Exception as inner_e:
+                errors.append(f"Error processing item: {inner_e}")
+        
+        return jsonify({
+            'status': 'success',
+            'processed': processed_count,
+            'accepted': accepted_count,
+            'errors': errors
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+# ==============================================================================
+# Batch Management APIs (Typesetting)
+# ==============================================================================
+
+@app.route('/api/batch/create', methods=['POST'])
+def api_create_batch():
+    """Trigger creation of a new batch (Typesetting)."""
+    try:
+        batch_id, message = create_batch()
+        if not batch_id:
+            return jsonify({'error': message}), 400
+        return jsonify({'status': 'success', 'batch_id': batch_id, 'message': message})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/batch/list', methods=['GET'])
+def api_list_batches():
+    """List all batches."""
+    try:
+        batches = get_batches()
+        return jsonify({'batches': batches, 'count': len(batches)})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/batch/publish', methods=['POST'])
+def api_publish_batch():
+    """Publish a specific batch."""
+    data = request.json
+    batch_id = data.get('batch_id')
+    if not batch_id:
+        return jsonify({'error': 'batch_id is required'}), 400
+        
+    try:
+        success, message = publish_batch(batch_id)
+        if success:
+            return jsonify({'status': 'success', 'message': message})
+        else:
+            return jsonify({'error': message}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/batch/discard', methods=['POST'])
+def api_discard_batch():
+    """Discard a specific batch."""
+    data = request.json
+    batch_id = data.get('batch_id')
+    if not batch_id:
+        return jsonify({'error': 'batch_id is required'}), 400
+        
+    try:
+        success, message = discard_batch(batch_id)
+        if success:
+            return jsonify({'status': 'success', 'message': message})
+        else:
+            return jsonify({'error': message}), 400
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
+
     # Port 5500 as requested
     app.run(debug=True, port=5500)

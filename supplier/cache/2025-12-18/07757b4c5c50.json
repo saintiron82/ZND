@@ -1,0 +1,56 @@
+{
+  "title": "오픈AI, 영국 재무장관 출신 조지 오스본 영입…국가 협력 강화",
+  "summary": "오픈AI는 각국 정부와의 협력을 강화하기 위해 영국 재무장관 출신인 조지 오스본을 '국가를 위한 오픈AI' 이니셔티브의 총괄 책임자로 영입했습니다. 이 프로그램은 국가별 AI 인프라 구축, 현지화된 AI 제품 개발 지원, 데이터센터 및 컴퓨팅 역량 확대를 목표로 하며, 오스본은 런던을 거점으로 각국 정부와의 협력 사업을 이끌 예정입니다. 이는 국가 차원의 AI 인프라 구축 경쟁이 심화되는 가운데, 정치 및 정책 경험을 갖춘 인물을 통해 정부와의 관계를 강화하려는 오픈AI의 전략입니다.",
+  "published_at": "2025-12-17T12:30:31+09:00",
+  "modified_at": "2025-12-17T12:30:31+09:00",
+  "author": [
+    "박찬 기자"
+  ],
+  "image": "https://cdn.aitimes.com/news/photo/202512/204855_206231_3524.jpg",
+  "text": "영국 재무장관 재직 시 예산안이 든 가방을 선보이는 조지 오스번 (사진=셔터스톡) 오픈AI가 각국 정부와의 협력을 전담할 조직을 강화하기 위해 영국 재무장관 출신을 영입했다. 국가 차원의 AI 인프라 구축과 전략 수립을 둘러싼 경쟁이 격화되는 가운데, 정치와 정책 경험을 갖춘 인물을 전면에 내세운 것이다. 오픈AI는 10일(현지시간) 브래드 라이트캡 COO를 통해 조지 오즈번 전 장관이 ‘국가를 위한 오픈AI(OpenAI for Countries)’ 이니셔티브의 총괄 책임자로 합류한다고 밝혔다. 오즈번 책임자는 내년 1월부터 공식적으로 역할을 맡아, 런던을 거점으로 각국 정부와의 협력 사업을 이끌 예정이다. 국가를 위한 오픈AI는 올해 초 발표한 정부 협력 프로그램으로, 국가별 AI 인프라 확충과 현지화된 AI 제품 개발을 지원하는 것이 목표다. 오픈AI와 각국 정부가 공동으로 자금을 조달해 데이터센터와 컴퓨팅 역량을 확대하고, 국가별 언어와 사회적 필요에 맞춘 AI 도구를 구축한다는 구상이다. 국내에서도 지난 10월 정부와 삼성전자, 현대자동차 등과 데이터센터 프로젝트 추진을 발표한 바 있다. we increasingly hear from countries wanting to understand how AI fits into their economic strategy and ability to serve citizens in domains like healthcare, education, and more we are thrilled to welcome @George_Osborne as our Head of OpenAI for Countries to lead our work… https://t.co/2dhSCZ9JjV — Brad Lightcap (@bradlightcap) December 16, 2025 브래드 라이트캡 오픈AI 최고 운영책임자(COO)는 “각국 정부는 AI가 경제 전략과 보건·교육 같은 공공 서비스에 어떻게 적용될 수 있는지에 대한 실질적인 도움이 필요하다”라며, 그의 정책 경험이 중요한 역할을 할 것이라고 설명했다. 그는 2010년부터 2016년까지 영국 재무장관을 지냈으며, 현재는 팟캐스트 ‘폴리티컬 커런시(Political Currency)’ 공동 진행자이자 대영박물관 이사장을 맡고 있다. 오즈번 책임자는 샘 알트먼 오픈AI CEO와 라이트캡 COO 등 경영진과의 논의를 거쳐 합류를 결정했다며, 이번 이니셔티브가 “AI의 혜택을 사회 전반이 공유하도록 돕는 데 목적이 있다”라고 밝혔다. 다음 달 스위스 다보스에서 열리는 세계경제포럼(WEF) 행사에도 오픈AI 대표로 참석할 예정이다. 박찬 기자 cpark@aitimes.com",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204855",
+  "article_id": "LEGACY_CALL",
+  "cached_at": "2025-12-17T15:04:38.663940+00:00",
+  "profile_version": "AI_INDUSTRY_NEWS_V6.6.3",
+  "tags": [
+    "REGULATION",
+    "NATIONAL_STRATEGY",
+    "GEOPOLITICS"
+  ],
+  "raw_analysis": {
+    "impact_entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "value": "4.0",
+      "reasoning": "OpenAI는 AI 산업에서 TIER 1 기업으로 분류됩니다."
+    },
+    "impact_events": [
+      {
+        "id": "REGULATORY_IMPACT",
+        "value": "2.5",
+        "reasoning": "영국 재무장관 출신 인사를 영입하여 각국 정부와의 협력을 강화하는 것은 국가별 AI 정책 및 전략에 영향을 미칠 수 있는 'REGULATORY_IMPACT'에 해당합니다. 해당 인사는 영국 출신으로 GEO_TIER_2에 해당하며, 이는 'REGULATORY_IMPACT' 이벤트에 대한 점수 범위(2.5-3.0)에 부합합니다."
+      }
+    ],
+    "penalties": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "value": "2.0",
+        "reasoning": "조지 오스본은 영국 재무장관 출신으로, AI 산업 내에서 직접적인 기술 개발이나 제품 출시와는 거리가 멀기 때문에 'IRRELEVANT_ENTITY_NOISE' 페널티가 적용됩니다. 이는 TIER_Z에 해당하는 경우에 적용되는 페널티입니다."
+      }
+    ],
+    "credits": [
+      {
+        "id": "STRATEGIC_ROADMAP_CLARITY",
+        "value": "1.0",
+        "reasoning": "오픈AI가 국가별 AI 인프라 구축 및 현지화된 AI 제품 개발 지원을 목표로 하는 '국가를 위한 오픈AI' 이니셔티브를 발표한 것은 명확한 전략적 로드맵을 제시하는 것으로 볼 수 있습니다."
+      }
+    ]
+  },
+  "overall_review": "오픈AI의 국가 협력 강화 전략은 정부 관계 구축에 초점을 맞추고 있으며, 이는 규제 및 정책적 영향력을 고려한 움직임입니다.",
+  "impact_score": 0.0,
+  "zero_echo_score": 5.0,
+  "evidence": {},
+  "impact_evidence": {},
+  "mll_status": "analyzed",
+  "analyzed_at": "2025-12-17T15:45:12.707090+00:00",
+  "staged": true
+}

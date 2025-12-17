@@ -1,0 +1,674 @@
+{
+  "batch_id": "20251218-012718",
+  "created_at": "2025-12-18T01:27:18.723869",
+  "status": "PENDING",
+  "count": 111,
+  "articles": [
+    {
+      "article_id": null,
+      "title": "AI, 단순 시간 절약 넘어 혁신 가속: 글로벌 경영진 설문 보고서",
+      "url": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_040842_google_ai_blog_6819f76a.json"
+    },
+    {
+      "article_id": null,
+      "title": "구글, 2025년 검색 결산: 올해의 트렌드 분석",
+      "url": "https://blog.google/technology/ai/look-back-2025/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_040843_google_ai_blog_ca5ff5a7.json"
+    },
+    {
+      "article_id": null,
+      "title": "구글, AI 교육 혁신 가속: 'AI Quests' 확장 및 $500만 기금 지원",
+      "url": "https://blog.google/outreach-initiatives/education/next-gen-computer-science-innovators/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_040843_google_ai_blog_d5278124.json"
+    },
+    {
+      "article_id": null,
+      "title": "노르딕 교육 혁신: 스웨덴은 제미나이 도입, 노르웨이는 GDPR 준수 확보",
+      "url": "https://blog.google/around-the-globe/google-europe/transforming-nordic-classrooms-through-responsible-ai-partnerships/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_040843_google_ai_blog_d8d6c8ed.json"
+    },
+    {
+      "article_id": null,
+      "title": "6700만 SNS 빅데이터 기반, 뉴엔AI가 개발한 '소비자 인식 중심' 식자재 가격 예측 모델",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204637",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041202_aitimes_27611c3f.json"
+    },
+    {
+      "article_id": null,
+      "title": "코난테크놀로지, KAIST와 협력해 LLM 환각 제거 및 국방 AI에 '설명 가능한 AI(XAI)' 접목",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204655",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041202_aitimes_791fe6e0.json"
+    },
+    {
+      "article_id": null,
+      "title": "구글, 삼성 등과 협력해 '제미나이' 탑재 오디오·디스플레이 AI 스마트 안경 2026년 출시 공식화",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204630",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041203_aitimes_5acf4740.json"
+    },
+    {
+      "article_id": null,
+      "title": "오픈AI 조사 결과: AI 활용 근로자 하루 1시간 절약, 기업 고객 100만 돌파하며 생산성 ROI 입증",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204645",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041203_aitimes_63e2eb95.json"
+    },
+    {
+      "article_id": null,
+      "title": "제미나이 3 출시 후 모바일 앱 다운로드 소폭 증가, 그러나 챗GPT가 사용량 압도적 우위 유지",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204641",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041203_aitimes_7355ac48.json"
+    },
+    {
+      "article_id": null,
+      "title": "앤트로픽, 슬랙 대화 맥락 활용해 코드 작성·실행 가능한 '클로드 코드' 기능 통합",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204639",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041203_aitimes_f2a9881b.json"
+    },
+    {
+      "article_id": null,
+      "title": "트럼프, '국가 안보 수수료 25%' 조건으로 엔비디아 H200 칩의 중국 수출 조건부 허용",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204629",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041203_aitimes_f30f1ed6.json"
+    },
+    {
+      "article_id": null,
+      "title": "韓 방산, 캐나다 60조 잠수함 수주전 '파트너십' 아닌 '상품' 판매 전략 답습 경고",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204667",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041204_aitimes_1de79a8b.json"
+    },
+    {
+      "article_id": null,
+      "title": "기후에너지환경부, 제12차 전력수급기본계획 착수…'재생에너지 중심 전환 설계도' 마련",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204661",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041204_aitimes_43240f32.json"
+    },
+    {
+      "article_id": null,
+      "title": "AI 데이터센터 전력난 우려·한국 정책 기대감, 신재생에너지주 동반 반등 촉매",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204663",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041204_aitimes_67c28dbe.json"
+    },
+    {
+      "article_id": null,
+      "title": "미스트랄, 오픈 코딩 모델 '데브스트랄 2' 공개: 클로드 소네트 대비 7배 비용 효율성 주장",
+      "url": "https://the-decoder.com/mistrals-open-coding-model-devstral-2-claims-sevenfold-cost-advantage-over-claude-sonnet/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041509_the_decoder_9da04b2c.json"
+    },
+    {
+      "article_id": null,
+      "title": "주요 AI 기업들, 리눅스 재단 주도 'Agentic AI Foundation' 설립: 에이전트 표준화 추진",
+      "url": "https://the-decoder.com/big-ais-biggest-names-rally-around-the-agentic-ai-foundation-to-set-agent-standards/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041510_the_decoder_2a4938a9.json"
+    },
+    {
+      "article_id": null,
+      "title": "구글, 제미나이(Gemini)를 새로운 XR 생태계의 '접착제'로 포지셔닝",
+      "url": "https://the-decoder.com/google-positions-gemini-as-the-glue-for-its-new-xr-ecosystem/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041510_the_decoder_4234b27a.json"
+    },
+    {
+      "article_id": null,
+      "title": "트럼프, 엔비디아 H200 대중국 판매 조건부 승인: 25% 관세 요구",
+      "url": "https://the-decoder.com/trump-approves-nvidia-h200-sales-but-china-may-not-bite/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041511_the_decoder_36f4a8a7.json"
+    },
+    {
+      "article_id": null,
+      "title": "OpenAI 연구 결과: 생성형 AI, 지식 노동자의 업무 시간을 하루 40~80분 절약",
+      "url": "https://the-decoder.com/openai-claims-generative-ai-saves-knowledge-workers-40-to-80-minutes-a-day/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041512_the_decoder_2d58a70a.json"
+    },
+    {
+      "article_id": null,
+      "title": "구글, 웹 및 유튜브 콘텐츠 AI 학습 무단 사용 의혹으로 EU 반독점 조사 직면",
+      "url": "https://the-decoder.com/google-faces-an-antitrust-probe-for-using-web-and-youtube-content-in-ai-without-opt-out-or-fair-pay/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041512_the_decoder_df933434.json"
+    },
+    {
+      "article_id": null,
+      "title": "트랜스포머 공동 개발자 바스와니, 고성능 코딩 모델 'Rnj-1' 공개",
+      "url": "https://the-decoder.com/transformer-co-creator-vaswani-unveils-high-performance-rnj-1-coding-model/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041513_the_decoder_b678ed60.json"
+    },
+    {
+      "article_id": null,
+      "title": "보고서: 노후화된 전력망, OpenAI 및 Microsoft의 AI 성장 위협",
+      "url": "https://the-decoder.com/report-aging-power-grid-puts-openai-and-microsofts-growth-at-risk/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041513_the_decoder_fb676ebf.json"
+    },
+    {
+      "article_id": null,
+      "title": "중국 AI 기업들, 왓츠앱과 모바일 결제 이용해 케냐에서 '그림자 노동력' 구축",
+      "url": "https://the-decoder.com/chinese-ai-firms-build-shadow-workforce-in-kenya-using-whatsapp-and-mobile-payments/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041514_the_decoder_5ba3c935.json"
+    },
+    {
+      "article_id": null,
+      "title": "창작 전문가 70%, AI 사용에 대한 '낙인' 우려: Anthropic 연구 결과",
+      "url": "https://the-decoder.com/70-of-creative-professionals-hide-ai-use-from-colleagues-due-to-stigma-anthropic-study-finds/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041515_the_decoder_88704823.json"
+    },
+    {
+      "article_id": null,
+      "title": "AI 코파일럿 'Joule', 편견 극복 후 SAP 컨설팅 정확도 95% 입증: AI 회의론 극복 사례",
+      "url": "https://venturebeat.com/ai/the-ai-that-scored-95-until-consultants-learned-it-was-ai",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041556_venturebeat_5484cce1.json"
+    },
+    {
+      "article_id": null,
+      "title": "Mistral, 개발자 맞춤형 'Devstral 2' 및 터미널 에이전트 'Vibe CLI' 출시: 오픈 소스 라이선스 논란",
+      "url": "https://venturebeat.com/ai/mistral-launches-powerful-devstral-2-coding-model-including-open-source",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041556_venturebeat_f02a5fe1.json"
+    },
+    {
+      "article_id": null,
+      "title": "Databricks, 실제 기업 업무 반영한 AI 벤치마크 'OfficeQA' 공개: 기존 학술 평가지표의 한계 지적",
+      "url": "https://venturebeat.com/data-infrastructure/databricks-officeqa-uncovers-disconnect-ai-agents-ace-abstract-tests-but",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041557_venturebeat_0104c148.json"
+    },
+    {
+      "article_id": null,
+      "title": "AI 마케팅의 성패는 '브랜드 컨텍스트'에 달려: BlueOcean CEO가 말하는 수평적 인텔리전스의 중요성",
+      "url": "https://venturebeat.com/ai/brand-context-ai-the-missing-requirement-for-marketing-ai",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041558_venturebeat_40368568.json"
+    },
+    {
+      "article_id": null,
+      "title": "오클라호마주, Celonis PI 엔진 도입으로 1천만 달러 부적절 지출 적발: 공공 부문 AI 프로세스 혁신 사례",
+      "url": "https://venturebeat.com/ai/tracking-every-decision-dollar-and-delay-the-new-process-intelligence-engine",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041559_venturebeat_fb56de9a.json"
+    },
+    {
+      "article_id": null,
+      "title": "Zhipu AI, 도구 호출 기능 탑재한 오픈소스 멀티모달 비전 모델 'GLM-4.6V' 출시",
+      "url": "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041600_venturebeat_e994526d.json"
+    },
+    {
+      "article_id": null,
+      "title": "Anthropic 'Claude Code', Slack 통합으로 엔지니어링 워크플로우 깊숙이 침투: 6개월 만에 10억 달러 매출 달성",
+      "url": "https://venturebeat.com/ai/anthropics-claude-code-can-now-read-your-slack-messages-and-write-code-for",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_041601_venturebeat_09dcdcaa.json"
+    },
+    {
+      "article_id": null,
+      "title": "머스크, '그록 4.2' 3주 내 출시 예고… 그록 5는 수개월 뒤",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204679",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-10\\20251210_172919_aitimes_5fcf50d2.json"
+    },
+    {
+      "article_id": null,
+      "title": "나라지식정보, 고전 문헌 특화 AI OCR '주춧돌LM' 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204688",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_014945_aitimes_e1009947.json"
+    },
+    {
+      "article_id": null,
+      "title": "테슬라 옵티머스, 원격 조작 논란에 '휴머노이드 회의론' 확산",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204664",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_014945_aitimes_e2ef8448.json"
+    },
+    {
+      "article_id": null,
+      "title": "미스트랄, 코딩 특화 오픈소스 '데브스트랄 2' 공개... 123B 대형 모델",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204681",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_014946_aitimes_63cdde1e.json"
+    },
+    {
+      "article_id": null,
+      "title": "에센셜AI, 트랜스포머 저자의 8B 오픈소스 모델 'Rnj-1' 출시",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204692",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_014946_aitimes_f7295311.json"
+    },
+    {
+      "article_id": null,
+      "title": "오픈AI, 1월 출시 예정 신규 모델은 '사용자 선호' 최적화에 집중",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204669",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_015045_aitimes_6e86bce9.json"
+    },
+    {
+      "article_id": null,
+      "title": "트럼프의 H200 수출 승인과 중국의 '역(逆)제재' 딜레마: 자립을 위한 빗장 걸기",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204660",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_015544_aitimes_864b785b.json"
+    },
+    {
+      "article_id": "pxy3v7",
+      "title": "구글의 'FACTS' 벤치마크 공개: 업계 최고 모델도 70% 정확도 미만인 이유",
+      "url": "https://venturebeat.com/ai/the-70-factuality-ceiling-why-googles-new-facts-benchmark-is-a-wake-up-call",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_035656_venturebeat_0679e6cf.json"
+    },
+    {
+      "article_id": "fxrt7u",
+      "title": "Quilter의 AI, 843개 부품의 리눅스 컴퓨터를 첫 시도에 부팅 성공: 하드웨어 설계의 병목 해소 예고",
+      "url": "https://venturebeat.com/ai/quilters-ai-just-designed-an-843-part-linux-computer-that-booted-on-the",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_041922_venturebeat_2f32e860.json"
+    },
+    {
+      "article_id": "z4r4w1",
+      "title": "Enterprises finally get a heads-up on what AI-generated code actually does in production",
+      "url": "https://venturebeat.com/ai/how-huds-runtime-sensor-cut-triage-time-from-3-hours-to-10-minutes",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_042027_venturebeat_fde3e431.json"
+    },
+    {
+      "article_id": "1bimrb",
+      "title": "구글 TPUv7, 엔비디아 CUDA 장벽을 넘어 대규모 AI 경제를 재편하다",
+      "url": "https://venturebeat.com/ai/how-googles-tpus-are-reshaping-the-economics-of-large-scale-ai",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_042058_venturebeat_e209ee92.json"
+    },
+    {
+      "article_id": "qt1uwk",
+      "title": "OpenAI 보고서, AI 파워 유저와 일반 사용자 간 생산성 6배 격차 밝혀",
+      "url": "https://venturebeat.com/ai/openai-report-reveals-a-6x-productivity-gap-between-ai-power-users-and",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_042125_venturebeat_ee52472d.json"
+    },
+    {
+      "article_id": "7f651u",
+      "title": "딥시크, 차세대 모델 개발에 '블랙웰' 칩 사용...내년 2월 출시 목표",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204696",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_053056_aitimes_6833ab3f.json"
+    },
+    {
+      "article_id": "5r0t8k",
+      "title": "미소정보기술 “멀티모달 데이터 기술로 제조 분야 본격 확장”",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204711",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_062339_aitimes_ce15c856.json"
+    },
+    {
+      "article_id": "gesydk",
+      "title": "'인공태양 연구시설' 나주 확정…에너지·AI 융합 거점 도약",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204699",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_062432_aitimes_28f3a737.json"
+    },
+    {
+      "article_id": null,
+      "title": "메타, '개방형' 철학 버리나... 폐쇄형 모델 '아보카도'로 전략 급선회",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204672",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_062441_aitimes_1c5c7a28.json"
+    },
+    {
+      "article_id": "4dqlqv",
+      "title": "구글 딥마인드, 영국 AI 보안 연구소(AISI)와 AI 안전 연구 협력 확대 발표",
+      "url": "https://deepmind.google/blog/deepening-our-partnership-with-the-uk-ai-security-institute/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_062838_deepmind_e8fffd42.json"
+    },
+    {
+      "article_id": "j8ux5d",
+      "title": "Our partnership with the UK government",
+      "url": "https://deepmind.google/blog/strengthening-our-partnership-with-the-uk-government-to-support-prosperity-and-security-in-the-ai-era/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_062855_deepmind_2495d6b6.json"
+    },
+    {
+      "article_id": "x6xyza",
+      "title": "FACTS Benchmark Suite: LLM의 사실 정확성을 체계적으로 평가하는 새로운 방법",
+      "url": "https://deepmind.google/blog/facts-benchmark-suite-systematically-evaluating-the-factuality-of-large-language-models/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_062907_deepmind_1427b65d.json"
+    },
+    {
+      "article_id": "yo994k",
+      "title": "Google, AI 검색에서 웹사이트 가시성을 높이기 위한 새로운 기능 추가",
+      "url": "https://the-decoder.com/google-adds-new-features-to-boost-website-visibility-in-ai-search/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_063118_the_decoder_f8ae6b4e.json"
+    },
+    {
+      "article_id": "ayrc3k",
+      "title": "Meta is reportedly ditching open Llama models for Avocado, a closed model built for direct sales",
+      "url": "https://the-decoder.com/meta-is-reportedly-ditching-open-llama-models-for-avocado-a-closed-model-built-for-direct-sales/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_063152_the_decoder_75749baf.json"
+    },
+    {
+      "article_id": "h4ln97",
+      "title": "Deepseek, 수천 개의 밀수된 Nvidia 칩을 AI 훈련에 사용 중인 것으로 보도",
+      "url": "https://the-decoder.com/deepseek-reportedly-using-thousands-of-smuggled-nvidia-chips-for-ai-training/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_063205_the_decoder_98031e6c.json"
+    },
+    {
+      "article_id": "jm1q75",
+      "title": "Nvidia develops location tracking for AI chips",
+      "url": "https://the-decoder.com/nvidia-develops-location-tracking-for-ai-chips/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\20251211_063308_the_decoder_d912376d.json"
+    },
+    {
+      "article_id": "a4ad30",
+      "title": "오픈AI·앤트로픽·구글, 에이전트 표준 공동 협력체 출범",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204690",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-11\\aitimes_a4ad3049.json"
+    },
+    {
+      "article_id": "876da2",
+      "title": "카카오, 한국어 맥락 최적화 멀티모달 모델 카나나-o와 카나나-v-임베딩 개발 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204735",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-12\\aitimes_876da251.json"
+    },
+    {
+      "article_id": "cbf2ef",
+      "title": "(사진=오픈AI) 오픈AI가 월트디즈니컴퍼니와 전략적 파트너십을 체결하고, 미키 마우스와 마블, 스타워즈 등 디즈니의 대표 지식재산(IP)을 '소라'에서 공식 사용하도록 했다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204734",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-12\\aitimes_cbf2efdc.json"
+    },
+    {
+      "article_id": "db8b26",
+      "title": "모티프 12.7B가 AA 지능 인덱스에서 11위 기록",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204718",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-12\\aitimes_db8b2639.json"
+    },
+    {
+      "article_id": "28a8f1",
+      "title": "xAI 그록, 기업(B2B) 시장 진입 난항... '신뢰도 부족' 장벽",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204850",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_28a8f1e9.json"
+    },
+    {
+      "article_id": "43ccdb",
+      "title": "'엄청 똑똑한 공무원' 대통령이 픽한 에너지 정책가",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204845",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_43ccdb12.json"
+    },
+    {
+      "article_id": "4b8674",
+      "title": "Ai2, 토크나이저 없는 바이트 단위 LLM '볼모(Bolmo)' 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204839",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_4b86742f.json"
+    },
+    {
+      "article_id": "5b0120",
+      "title": "앤트로픽 '맞춤형 에이전트 구축 대신, 도메인 노하우 담긴 스킬 활용할 것'",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204810",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_5b01209e.json"
+    },
+    {
+      "article_id": "642ffd",
+      "title": "미국 정부, 딥시크 이어 '문샷 AI' 경계... 중국 오픈 모델 확산 우려",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204836",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_642ffd28.json"
+    },
+    {
+      "article_id": "6c622d",
+      "title": "오픈AI 'AI 개발의 병목 현상은 인간...상호작용 방식 바뀔 것'",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204804",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_6c622d00.json"
+    },
+    {
+      "article_id": "6e5f02",
+      "title": "SKT, AI 중심 전사 혁신 및 ROIC 지표 도입 선언",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204840",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_6e5f02d7.json"
+    },
+    {
+      "article_id": "b0bd09",
+      "title": "네이버, AI 검색 점유율 20% 돌파 및 품질 지표 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204851",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_b0bd09d2.json"
+    },
+    {
+      "article_id": "bfb20f",
+      "title": "Kakao Updates 'Kanana' AI App: Group Photos & Personalization",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204830",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_bfb20f16.json"
+    },
+    {
+      "article_id": "caf9e9",
+      "title": "엔비디아, HPC·AI 워크로드 관리의 핵심 '슬럼(Slurm)' 개발사 인수",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204832",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_caf9e91c.json"
+    },
+    {
+      "article_id": "ce0e14",
+      "title": "라이너, 글로벌 AI 학회 논문 한눈에 보는 ‘퀵 리뷰’ 페이지 오픈",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204848",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\aitimes_ce0e1484.json"
+    },
+    {
+      "article_id": "16c896",
+      "title": "iRobot 파산 신청 및 중국 공급업체에 매각",
+      "url": "https://the-decoder.com/irobot-files-for-bankruptcy-and-goes-to-chinese-supplier/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_16c896d9.json"
+    },
+    {
+      "article_id": "20569c",
+      "title": "어도비, 챗GPT 내 포토샵 및 아크로뱃 기능 통합",
+      "url": "https://the-decoder.com/adobe-brings-photoshop-acrobat-and-express-directly-to-chatgpt/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_20569cae.json"
+    },
+    {
+      "article_id": "4270b1",
+      "title": "OpenAI, 인재 유치 위해 주식 보상 대기 기간 폐지",
+      "url": "https://the-decoder.com/openai-drops-equity-waiting-period-to-encourage-risk-taking/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_4270b18f.json"
+    },
+    {
+      "article_id": "6656fe",
+      "title": "추론형 AI 모델, CFA 시험 3단계 모두 통과 및 최고 기록 경신",
+      "url": "https://the-decoder.com/reasoning-models-now-ace-all-three-cfa-exam-levels/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_6656fe60.json"
+    },
+    {
+      "article_id": "8796cd",
+      "title": "Meituan, 데이터 정제로 거대 모델 능가하는 6B 이미지 모델 공개",
+      "url": "https://the-decoder.com/longcat-image-proves-6b-parameters-can-beat-bigger-models-with-better-data-hygiene/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_8796cdc1.json"
+    },
+    {
+      "article_id": "8a19b2",
+      "title": "AGI 구축을 위한 토큰 예측 방식에 대한 르쿤과 브라운의 논쟁",
+      "url": "https://the-decoder.com/the-case-against-predicting-tokens-to-build-agi/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_8a19b234.json"
+    },
+    {
+      "article_id": "8df610",
+      "title": "딥마인드 셰인 레그, 2028년까지 '최소 AGI' 도달 확률 50% 예측",
+      "url": "https://the-decoder.com/deepmind-co-founder-shane-legg-sees-50-percent-chance-of-minimal-agi-by-2028/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_8df610e4.json"
+    },
+    {
+      "article_id": "a57142",
+      "title": "AI 모델의 정신과 테스트: 심각한 트라우마 및 병리적 증상 발견",
+      "url": "https://the-decoder.com/ai-models-score-off-the-charts-on-psychiatric-tests-when-researchers-treat-them-as-therapy-patients/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_a5714282.json"
+    },
+    {
+      "article_id": "db702b",
+      "title": "트럼프의 AI 규제 무력화 계획과 정치적 딜레마",
+      "url": "https://the-decoder.com/trumps-ai-plan-could-affect-his-own-voters/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_db702bad.json"
+    },
+    {
+      "article_id": "eaf7f7",
+      "title": "CHT, 트럼프의 AI 행정 명령 비판 및 책임 공백 경고",
+      "url": "https://the-decoder.com/cht-blasts-trumps-executive-order-for-creating-an-ai-accountability-vacuum/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\the_decoder_eaf7f74c.json"
+    },
+    {
+      "article_id": "0c5f7c",
+      "title": "엔터프라이즈 AI 코딩 파일럿이 실패하는 진짜 이유 (모델 문제가 아니다)",
+      "url": "https://venturebeat.com/ai/why-most-enterprise-ai-coding-pilots-underperform-hint-its-not-the-model",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\venturebeat_0c5f7c04.json"
+    },
+    {
+      "article_id": "2c0405",
+      "title": "한국 AI 스타트업 모티프(Motif), 엔터프라이즈 LLM 학습을 위한 4가지 핵심 교훈 공개",
+      "url": "https://venturebeat.com/ai/korean-ai-startup-motif-reveals-4-big-lessons-for-training-enterprise-llms",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\venturebeat_2c0405c9.json"
+    },
+    {
+      "article_id": "4021cb",
+      "title": "AI가 끝내버린 '구축(Build) vs 구매(Buy)'의 딜레마",
+      "url": "https://venturebeat.com/ai/build-vs-buy-is-dead-ai-just-killed-it",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\venturebeat_4021cbcd.json"
+    },
+    {
+      "article_id": "56bc16",
+      "title": "엔비디아(Nvidia), 하이브리드 MoE 및 맘바(Mamba) 아키텍처 기반 'Nemotron 3' 출시",
+      "url": "https://venturebeat.com/technology/nvidia-debuts-nemotron-3-with-hybrid-moe-and-mamba-transformer-to-drive",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\venturebeat_56bc163e.json"
+    },
+    {
+      "article_id": "b0328b",
+      "title": "Ai2, 품질 저하 없는 효율적인 바이트(Byte) 단위 언어 모델 'Bolmo' 아키텍처 공개",
+      "url": "https://venturebeat.com/ai/bolmos-architecture-unlocks-efficient-byte-level-lm-training-without",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-16\\venturebeat_b0328b9b.json"
+    },
+    {
+      "article_id": "0d2f8d",
+      "title": "오픈AI-아마존, 100억 달러 투자 및 AI 칩 협력 논의",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204878",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_0d2f8d7d.json"
+    },
+    {
+      "article_id": "3ae2ef",
+      "title": "KAIST, 고효율 강화학습 기술 'TVKD' 개발",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204860",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_3ae2ef02.json"
+    },
+    {
+      "article_id": "4ec5e5",
+      "title": "구글, AI '아침 브리핑' 메일 서비스 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204858",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_4ec5e558.json"
+    },
+    {
+      "article_id": "6f83e2",
+      "title": "오픈AI, 나노 바나나 제친 이미지 생성 모델 챗GPT 탑재",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204854",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_6f83e24e.json"
+    },
+    {
+      "article_id": "87973b",
+      "title": "퍼플렉시티, 연구 특화 아이패드 앱 출시",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204881",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_87973bb8.json"
+    },
+    {
+      "article_id": "caf42f",
+      "title": "모레, 전북에 206억 투자해 AI 데이터센터 구축",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204866",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_caf42fbb.json"
+    },
+    {
+      "article_id": "cf966b",
+      "title": "오픈AI-디즈니, 지분 옵션 기반 IP 라이선스 계약",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204883",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_cf966b71.json"
+    },
+    {
+      "article_id": "e8e13d",
+      "title": "센드버드, 초개인화 AI 에이전트 'delight.ai' 발표",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204882",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_e8e13d72.json"
+    },
+    {
+      "article_id": "f356f8",
+      "title": "어도비 파이어플라이, AI 비디오 편집 및 외부 모델 통합",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204865",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_f356f8fd.json"
+    },
+    {
+      "article_id": "fb235f",
+      "title": "중국, 레벨3 자율주행차 첫 양산 승인",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204870",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\aitimes_fb235feb.json"
+    },
+    {
+      "article_id": "f4e346",
+      "title": "Gemini 3 Flash: 속도와 효율을 갖춘 프런티어 모델 출시",
+      "url": "https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\deepmind_f4e346d4.json"
+    },
+    {
+      "article_id": "0b17fb",
+      "title": "미국 노동자 45% AI 사용, '그림자 AI' 확산",
+      "url": "https://the-decoder.com/nearly-half-of-us-workers-now-use-ai-on-the-job-but-most-arent-using-it-daily/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_0b17fbd5.json"
+    },
+    {
+      "article_id": "4b2811",
+      "title": "OpenAI, GPT-5 라우터 롤백 및 전략 수정",
+      "url": "https://the-decoder.com/openais-gpt-5-router-rollback-shows-why-ai-requires-unlearning-old-habits/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_4b2811ee.json"
+    },
+    {
+      "article_id": "666691",
+      "title": "구글, 개인 맞춤형 AI 에이전트 'CC' 출시",
+      "url": "https://the-decoder.com/google-launches-new-ai-agent-to-help-plan-your-day/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_666691c1.json"
+    },
+    {
+      "article_id": "6d01a3",
+      "title": "OpenAI, 실시간 API용 신규 오디오 모델 3종 출시",
+      "url": "https://the-decoder.com/openai-releases-new-models-for-its-realtime-api/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_6d01a346.json"
+    },
+    {
+      "article_id": "73ba04",
+      "title": "제미나이 2.5 플래시 오디오 업데이트, OpenAI 능가",
+      "url": "https://the-decoder.com/googles-updated-gemini-2-5-flash-native-audio-handles-complex-voice-tasks-better/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_73ba0461.json"
+    },
+    {
+      "article_id": "76336d",
+      "title": "엔비디아, HPC 관리 기업 SchedMD 인수",
+      "url": "https://the-decoder.com/nvidia-strengthens-open-source-strategy-with-schedmd-acquisition/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_76336da4.json"
+    },
+    {
+      "article_id": "77cb42",
+      "title": "구글 제미나이, NotebookLM 데이터 직접 연동",
+      "url": "https://the-decoder.com/gemini-gets-direct-access-to-notebooklm-data/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_77cb42cd.json"
+    },
+    {
+      "article_id": "e3df00",
+      "title": "OpenAI 신규 이미지 모델, 구글과 대등한 성능 확보",
+      "url": "https://the-decoder.com/openais-new-chatgpt-image-model-matches-googles-nano-banana-pro-on-complex-prompts/",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\the_decoder_e3df0060.json"
+    },
+    {
+      "article_id": "231ac0",
+      "title": "Zencoder, 코딩 오류 검증을 위한 무료 도구 'Zenflow' 출시",
+      "url": "https://venturebeat.com/ai/zencoder-drops-zenflow-a-free-ai-orchestration-tool-that-pits-claude-against",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_231ac019.json"
+    },
+    {
+      "article_id": "3af0fe",
+      "title": "Ai2, 구글에 맞서는 오픈소스 비디오 이해 모델 'Molmo 2' 발표",
+      "url": "https://venturebeat.com/infrastructure/ai2s-molmo-2-shows-open-source-models-can-rival-proprietary-giants-in-video",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_3af0feae.json"
+    },
+    {
+      "article_id": "43f09b",
+      "title": "Patronus AI, 복잡한 작업 해결을 위한 '생성형 시뮬레이터' 공개",
+      "url": "https://venturebeat.com/technology/ai-agents-fail-63-of-the-time-on-complex-tasks-patronus-ai-says-its-new",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_43f09bec.json"
+    },
+    {
+      "article_id": "4dc43c",
+      "title": "오픈소스 메모리 아키텍처 'Hindsight', RAG 한계 극복",
+      "url": "https://venturebeat.com/data/with-91-accuracy-open-source-hindsight-agentic-memory-provides-20-20-vision",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_4dc43cae.json"
+    },
+    {
+      "article_id": "6e87c9",
+      "title": "미스트랄, 기업용 문서 디지털화를 위한 OCR 3 출시",
+      "url": "https://venturebeat.com/technology/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_6e87c956.json"
+    },
+    {
+      "article_id": "946bcf",
+      "title": "구글, 에이전트 개발을 위한 'Interactions API' 출시",
+      "url": "https://venturebeat.com/infrastructure/why-googles-new-interactions-api-is-such-a-big-deal-for-ai-developers",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_946bcfde.json"
+    },
+    {
+      "article_id": "9485a7",
+      "title": "줌(Zoom), AI 벤치마크 HLE에서 구글 꺾고 세계 최고점 기록",
+      "url": "https://venturebeat.com/ai/zoom-says-it-aced-ais-hardest-exam-critics-say-it-copied-off-its-neighbors",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_9485a772.json"
+    },
+    {
+      "article_id": "a175e9",
+      "title": "보안 스타트업 Echo, 컨테이너 이미지 보호를 위해 $35M 투자 유치",
+      "url": "https://venturebeat.com/security/echo-raises-usd35m-to-secure-the-enterprise-clouds-base-layer-container",
+      "file_path": "C:\\Users\\saint\\ZND\\supplier\\data\\2025-12-17\\venturebeat_a175e924.json"
+    }
+  ]
+}

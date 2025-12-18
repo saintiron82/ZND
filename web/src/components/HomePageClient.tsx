@@ -9,9 +9,10 @@ import { useRouter } from 'next/navigation';
 
 interface HomePageClientProps {
     articles: any[];
+    isPreview?: boolean;
 }
 
-export default function HomePageClient({ articles }: HomePageClientProps) {
+export default function HomePageClient({ articles, isPreview = false }: HomePageClientProps) {
     const router = useRouter();
 
     // 날짜별 그룹핑 로직 (클라이언트에서 수행하여 구조 유연성 확보)
@@ -56,6 +57,16 @@ export default function HomePageClient({ articles }: HomePageClientProps) {
                         <RefreshCcw className="w-4 h-4 animate-spin-slow" />
                         <span>New Edition Available ({serverLatestDate})</span>
                         <ArrowRight className="w-4 h-4" />
+                    </div>
+                </div>
+            )}
+
+            {/* Preview 모드 배너 */}
+            {isPreview && (
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[100]">
+                    <div className="bg-amber-500 text-black px-6 py-2 rounded-full shadow-xl flex items-center gap-2 font-bold">
+                        <span>🔒 PREVIEW MODE</span>
+                        <span className="text-amber-900 text-sm">- 발행 전 미리보기</span>
                     </div>
                 </div>
             )}

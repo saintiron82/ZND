@@ -1,0 +1,171 @@
+{
+  "Article_ID": "6f83e2",
+  "Meta": {
+    "Specification_Version": "v 1.0.0",
+    "Headline": "오픈AI, 나노 바나나 제친 이미지 생성 모델 챗GPT 탑재",
+    "Summary": "오픈AI가 구글의 '나노 바나나'를 제치고 LM아레나 1위를 기록한 신규 이미지 모델 'GPT 이미지 1.5'를 공개했다. 정밀 편집 기능과 4배 빠른 속도, 강화된 텍스트 렌더링이 특징이며 챗GPT 내 전용 공간을 신설했다. 이는 구글과의 사용자 경험(UX) 경쟁인 '코드 레드' 대응의 일환으로 전 사용자에게 배포된다."
+  },
+  "IS_Analysis": {
+    "Score_Commentary": "OpenAI(PE)가 고성능 이미지 모델을 출시하며 Google(SE)과의 기술적 우위를 확보함. Software_LLM_Dev 도메인의 Tier 1 간 경쟁이며, 실질적 배포가 완료된 Paradigm적 변화로 판단함.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Google",
+          "Se_Tier": 1
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 2,
+        "IW_Score": 5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 4,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 7,
+      "T3": 6,
+      "Rationale": "LM아레나 점수(1264점) 및 속도(4배) 등 구체적 수치와 모델명, 배포 일정이 명확함."
+    },
+    "Noise": {
+      "P1": 4,
+      "P2": 3,
+      "P3": 2,
+      "Rationale": "'최강 성능', '누르고' 등 경쟁적 수식어가 포함되어 있으나 공식 발표와 벤치마크에 기반함."
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 10,
+      "V3": 7,
+      "Rationale": "글로벌 1위 모델의 즉시 배포로 시장 지형 변화 가능성이 매우 높으며 실사용 가치가 큼."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "벤치마크 1위 탈환이라는 명확한 팩트와 즉각적인 API/웹 배포로 정보의 실효성이 극대화됨."
+    }
+  },
+  "title_ko": "오픈AI, 나노 바나나 제친 이미지 생성 모델 챗GPT 탑재",
+  "summary": "오픈AI가 구글의 '나노 바나나'를 제치고 LM아레나 1위를 기록한 신규 이미지 모델 'GPT 이미지 1.5'를 공개했다. 정밀 편집 기능과 4배 빠른 속도, 강화된 텍스트 렌더링이 특징이며 챗GPT 내 전용 공간을 신설했다. 이는 구글과의 사용자 경험(UX) 경쟁인 '코드 레드' 대응의 일환으로 전 사용자에게 배포된다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204854",
+  "source_id": "aitimes",
+  "original_title": "오픈AI, '나노 바나나' 누른 이미지 생성 기능 챗GPT에 탑재",
+  "impact_score": 9.5,
+  "zero_echo_score": 3.4,
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 8.0,
+        "T2": 7.0,
+        "T3": 6.0,
+        "S_Avg": 7.0,
+        "Rationale": "LM아레나 점수(1264점) 및 속도(4배) 등 구체적 수치와 모델명, 배포 일정이 명확함."
+      },
+      "Noise": {
+        "P1": 4.0,
+        "P2": 3.0,
+        "P3": 2.0,
+        "N_Avg": 3.0,
+        "Rationale": "'최강 성능', '누르고' 등 경쟁적 수식어가 포함되어 있으나 공식 발표와 벤치마크에 기반함."
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 10.0,
+        "V3": 7.0,
+        "U_Avg": 8.67,
+        "Rationale": "글로벌 1위 모델의 즉시 배포로 시장 지형 변화 가능성이 매우 높으며 실사용 가치가 큼."
+      },
+      "Fine_Adjustment": 0.5,
+      "Fine_Reason": "벤치마크 1위 탈환이라는 명확한 팩트와 즉각적인 API/웹 배포로 정보의 실효성이 극대화됨.",
+      "ZS_Raw": 3.43,
+      "ZS_Final": 3.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "LM아레나 점수(1264점) 및 속도(4배) 등 구체적 수치와 모델명, 배포 일정이 명확함."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "'최강 성능', '누르고' 등 경쟁적 수식어가 포함되어 있으나 공식 발표와 벤치마크에 기반함."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 10,
+        "V3": 7,
+        "Rationale": "글로벌 1위 모델의 즉시 배포로 시장 지형 변화 가능성이 매우 높으며 실사용 가치가 큼."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "벤치마크 1위 탈환이라는 명확한 팩트와 즉각적인 API/웹 배포로 정보의 실효성이 극대화됨."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 2.0,
+        "IW_Total": 5.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 9.5,
+      "IS_Final": 9.5,
+      "Score_Commentary": "OpenAI(PE)가 고성능 이미지 모델을 출시하며 Google(SE)과의 기술적 우위를 확보함. Software_LLM_Dev 도메인의 Tier 1 간 경쟁이며, 실질적 배포가 완료된 Paradigm적 변화로 판단함."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Google",
+      "Se_Tier": 1
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 4,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "schema_version": "V1.0",
+  "article_id": "6f83e2",
+  "crawled_at": "2025-12-17T14:48:10.668806+00:00",
+  "edition": "251217_WED_1",
+  "saved": true,
+  "saved_at": "2025-12-17T14:48:10.684Z",
+  "cached_at": "2025-12-17T14:48:10.670860+00:00",
+  "data_file": {
+    "date": "2025-12-17",
+    "filename": "aitimes_6f83e2.json",
+    "path": "data/2025-12-17/aitimes_6f83e2.json"
+  },
+  "staged": true,
+  "category": "미분류",
+  "dedup_status": "duplicate"
+}

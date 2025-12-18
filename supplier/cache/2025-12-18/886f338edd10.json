@@ -223,5 +223,7 @@
   "reason": "high_noise (9.2 >= 7.0)",
   "rejected": true,
   "reject_reason": "high_noise (9.2)",
-  "staged": true
+  "staged": true,
+  "category": "미분류",
+  "dedup_status": "duplicate"
 }

@@ -45,6 +45,15 @@
             }
         }
     },
+    "dedup_categories": {
+        "_comment": "중복 제거 LLM에 전달할 분류 카테고리 목록",
+        "categories": [
+            "AI/ML",
+            "Engineering",
+            "Community",
+            "Business"
+        ]
+    },
     "history": {
         "max_entries": 5000,
         "valid_statuses": [

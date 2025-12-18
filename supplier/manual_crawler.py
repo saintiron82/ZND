@@ -87,6 +87,23 @@ def get_targets():
     targets = load_targets()
     return jsonify(targets)
 
+@app.route('/api/dedup_categories')
+def get_dedup_categories():
+    """중복 제거 LLM용 분류 카테고리 목록 반환 (매번 config 새로 읽음)"""
+    try:
+        from src.core_logic import load_automation_config
+        # 매번 새로 읽어서 config 변경사항 즉시 반영
+        config = load_automation_config(force_reload=True)
+        categories = config.get('dedup_categories', {}).get('categories', [
+            "AI/ML", "Cloud/Infra", "Security", "Business", 
+            "Hardware", "Software", "Research", "Policy", "Startup", "Other"
+        ])
+        return jsonify({'categories': categories})
+    except Exception as e:
+        print(f"❌ [Dedup Categories] Error: {e}")
+        return jsonify({'categories': [], 'error': str(e)}), 500
+
+
 @app.route('/api/dates')
 def get_dates():
     """Get list of available dates from data folder."""
@@ -1919,6 +1936,9 @@ def staging_list():
                         'reject_reason': data.get('reject_reason', ''),
                         'published': data.get('published', False),
                         'staged_at': data.get('staged_at', ''),
+                        # [NEW] 중복 제거 상태
+                        'dedup_status': data.get('dedup_status'),  # 'selected' or 'duplicate' or None
+                        'category': data.get('category'),  # LLM이 지정한 카테고리
                         # [NEW] For sorting by original date (fallback to cached_at -> saved_at -> staged_at -> today)
                         'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat(),
                         'impact_evidence': data.get('impact_evidence', {'schema_version': schema_ver})
@@ -2115,6 +2135,278 @@ def staging_file():
         return jsonify(data)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/staging/update_categories', methods=['POST'])
+def staging_update_categories():
+    """카테고리 정보를 staging 파일과 캐시에 저장 (보낸 기사만 대상)"""
+    try:
+        data = request.json or {}
+        date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
+        category_results = data.get('results', [])  # [{ category, article_ids }, ...]
+        sent_ids = set(data.get('sent_ids', []))  # LLM에 보낸 기사 ID 목록
+        
+        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        
+        if not os.path.exists(staging_date_dir):
+            return jsonify({'success': False, 'error': 'Staging folder not found'}), 404
+        
+        # article_id -> category 맵 구축
+        category_map = {}
+        for group in category_results:
+            category = group.get('category', '미분류')
+            for article_id in group.get('article_ids', []):
+                category_map[article_id] = category
+        
+        updated_count = 0
+        uncategorized_count = 0
+        
+        # 모든 staging 파일 순회
+        for filename in os.listdir(staging_date_dir):
+            if not filename.endswith('.json'):
+                continue
+            
+            filepath = os.path.join(staging_date_dir, filename)
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    article_data = json.load(f)
+                
+                # filename에서 article_id 추출
+                parts = filename.replace('.json', '').split('_')
+                article_id = parts[-1] if len(parts) > 1 else parts[0]
+                
+                # article.article_id도 확인 (우선순위)
+                stored_article_id = article_data.get('article_id') or article_id
+                
+                # 보낸 기사가 아니면 건너뜀 (sent_ids가 있는 경우에만)
+                if sent_ids and stored_article_id not in sent_ids and article_id not in sent_ids:
+                    continue
+                
+                # 카테고리 지정
+                if stored_article_id in category_map or article_id in category_map:
+                    cat = category_map.get(stored_article_id) or category_map.get(article_id, '미분류')
+                    article_data['category'] = cat
+                    article_data['dedup_status'] = 'selected'
+                else:
+                    # LLM에 보냈지만 결과에 없음 = 중복으로 제거됨
+                    article_data['dedup_status'] = 'duplicate'
+                    uncategorized_count += 1
+                
+                # staging 파일 저장
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(article_data, f, ensure_ascii=False, indent=2)
+                
+                # 캐시 파일에도 반영 (같은 URL의 캐시 찾기)
+                url = article_data.get('url')
+                if url:
+                    cached_data = load_from_cache(url)
+                    if cached_data:
+                        cached_data['category'] = article_data['category']
+                        cached_data['dedup_status'] = article_data['dedup_status']
+                        save_to_cache(url, cached_data)
+                
+                updated_count += 1
+                
+            except Exception as e:
+                print(f"⚠️ [Update Category] Error on {filename}: {e}")
+        
+        print(f"📂 [Update Category] 업데이트: {updated_count}개 (미분류/중복: {uncategorized_count}개)")
+        return jsonify({
+            'success': True,
+            'updated': updated_count,
+            'uncategorized': uncategorized_count,
+            'message': f'{updated_count}개 기사 카테고리 업데이트 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Update Category] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/staging/reset_dedup', methods=['POST'])
+def staging_reset_dedup():
+    """모든 staging 파일의 dedup_status와 category 초기화"""
+    try:
+        data = request.json or {}
+        date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
+        
+        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        
+        if not os.path.exists(staging_date_dir):
+            return jsonify({'success': False, 'error': 'Staging folder not found'}), 404
+        
+        reset_count = 0
+        
+        for filename in os.listdir(staging_date_dir):
+            if not filename.endswith('.json'):
+                continue
+            
+            filepath = os.path.join(staging_date_dir, filename)
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    article_data = json.load(f)
+                
+                # dedup_status와 category 초기화
+                if 'dedup_status' in article_data:
+                    del article_data['dedup_status']
+                if 'category' in article_data:
+                    del article_data['category']
+                
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(article_data, f, ensure_ascii=False, indent=2)
+                
+                reset_count += 1
+                
+            except Exception as e:
+                print(f"⚠️ [Reset Dedup] Error on {filename}: {e}")
+        
+        print(f"🔄 [Reset Dedup] {reset_count}개 파일 초기화 완료")
+        return jsonify({
+            'success': True,
+            'reset': reset_count,
+            'message': f'{reset_count}개 기사 중복 상태 초기화 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Reset Dedup] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/staging/delete_legacy', methods=['POST'])
+def staging_delete_legacy():
+    """LEGACY_CALL article_id를 가진 staging 파일 및 캐시 삭제"""
+    try:
+        deleted_staging = 0
+        deleted_cache = 0
+        
+        # Staging 폴더 순회
+        if os.path.exists(STAGING_DIR):
+            for date_folder in os.listdir(STAGING_DIR):
+                date_path = os.path.join(STAGING_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                        
+                        article_id = data.get('article_id', '')
+                        if article_id == 'LEGACY_CALL' or 'LEGACY' in article_id:
+                            os.remove(filepath)
+                            deleted_staging += 1
+                            print(f"🗑️ [Delete Legacy] Deleted staging: {filepath}")
+                    except Exception as e:
+                        print(f"⚠️ [Delete Legacy] Error on {filename}: {e}")
+        
+        # Cache 폴더 순회
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
+                if not os.path.isdir(date_path):
+                    continue
+                
+                for filename in os.listdir(date_path):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = os.path.join(date_path, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                        
+                        article_id = data.get('article_id', '')
+                        if article_id == 'LEGACY_CALL' or 'LEGACY' in article_id:
+                            os.remove(filepath)
+                            deleted_cache += 1
+                            print(f"🗑️ [Delete Legacy] Deleted cache: {filepath}")
+                    except Exception as e:
+                        print(f"⚠️ [Delete Legacy] Error on {filename}: {e}")
+        
+        total = deleted_staging + deleted_cache
+        print(f"🗑️ [Delete Legacy] 삭제 완료: staging {deleted_staging}개, cache {deleted_cache}개")
+        return jsonify({
+            'success': True,
+            'deleted_staging': deleted_staging,
+            'deleted_cache': deleted_cache,
+            'message': f'LEGACY_CALL 삭제 완료: staging {deleted_staging}개, cache {deleted_cache}개'
+        })
+    except Exception as e:
+        print(f"❌ [Delete Legacy] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/staging/delete_file', methods=['POST'])
+def staging_delete_file():
+    """staging 파일 완전 삭제"""
+    try:
+        data = request.json or {}
+        filename = data.get('filename')
+        date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
+        
+        if not filename:
+            return jsonify({'success': False, 'error': 'filename required'})
+        
+        deleted = False
+        
+        # Staging 폴더에서 삭제
+        staging_file = os.path.join(STAGING_DIR, date_str, filename)
+        if os.path.exists(staging_file):
+            os.remove(staging_file)
+            deleted = True
+            print(f"🗑️ [Delete File] Deleted staging: {staging_file}")
+        
+        # 다른 날짜에도 있을 수 있으므로 검색
+        if not deleted:
+            for date_folder in os.listdir(STAGING_DIR):
+                check_path = os.path.join(STAGING_DIR, date_folder, filename)
+                if os.path.exists(check_path):
+                    os.remove(check_path)
+                    deleted = True
+                    print(f"🗑️ [Delete File] Deleted staging: {check_path}")
+                    break
+        
+        if deleted:
+            return jsonify({'success': True, 'message': f'{filename} 삭제 완료'})
+        else:
+            return jsonify({'success': False, 'error': f'{filename} 파일을 찾을 수 없습니다'})
+    
+    except Exception as e:
+        print(f"❌ [Delete File] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/staging/clear_cache', methods=['POST'])
+def staging_clear_cache():
+    """날짜별 캐시 삭제"""
+    try:
+        data = request.json or {}
+        date_str = data.get('date')
+        
+        if not date_str:
+            return jsonify({'success': False, 'error': 'date required'})
+        
+        deleted_count = 0
+        
+        # Cache 폴더에서 해당 날짜 폴더 삭제
+        cache_date_path = os.path.join(CACHE_DIR, date_str)
+        if os.path.exists(cache_date_path) and os.path.isdir(cache_date_path):
+            import shutil
+            file_count = len([f for f in os.listdir(cache_date_path) if f.endswith('.json')])
+            shutil.rmtree(cache_date_path)
+            deleted_count = file_count
+            print(f"🧹 [Clear Cache] Deleted cache folder: {cache_date_path} ({file_count} files)")
+        
+        if deleted_count > 0:
+            return jsonify({'success': True, 'message': f'{date_str} 캐시 {deleted_count}개 파일 삭제 완료'})
+        else:
+            return jsonify({'success': True, 'message': f'{date_str} 캐시가 없거나 이미 삭제됨'})
+    
+    except Exception as e:
+        print(f"❌ [Clear Cache] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/staging/publish_selected', methods=['POST'])

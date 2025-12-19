@@ -637,12 +637,12 @@
   "https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-17T16:05:38.497944+00:00"
+    "timestamp": "2025-12-19T19:36:04.514812+00:00"
   },
   "https://the-decoder.com/ai-in-the-newsroom-openai-launches-training-program-for-media-companies/": {
-    "status": "WORTHLESS",
-    "reason": "high_noise (8.1 >= 7.0)",
-    "timestamp": "2025-12-18T16:57:38.563541+00:00"
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:00:31.983919+00:00"
   },
   "https://the-decoder.com/openai-launches-app-submissions-and-rolls-out-store-in-the-new-year/": {
     "status": "ACCEPTED",
@@ -704,21 +704,6 @@
     "reason": "high_noise (9.2 >= 7.0)",
     "timestamp": "2025-12-18T15:52:27.506239+00:00"
   },
-  "https://venturebeat.com/technology/gemini-3-flash-arrives-with-reduced-costs-and-latency-a-powerful-combo-for": {
-    "status": "ACCEPTED",
-    "reason": null,
-    "timestamp": "2025-12-18T15:53:40.880204+00:00"
-  },
-  "https://venturebeat.com/orchestration/jp-morgans-ai-adoption-hit-50-of-employees-the-secret-a-connectivity-first": {
-    "status": "ACCEPTED",
-    "reason": null,
-    "timestamp": "2025-12-18T16:57:06.330187+00:00"
-  },
-  "https://venturebeat.com/infrastructure/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate": {
-    "status": "ACCEPTED",
-    "reason": null,
-    "timestamp": "2025-12-18T16:57:06.123062+00:00"
-  },
   "https://venturebeat.com/infrastructure/ai-agents-fail-63-of-the-time-on-complex-tasks-patronus-ai-says-its-new": {
     "status": "ACCEPTED",
     "reason": null,
@@ -732,7 +717,7 @@
   "https://the-decoder.com/mistral-ocr-3-promises-better-cheaper-document-analysis/": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-18T15:55:09.106852+00:00"
+    "timestamp": "2025-12-19T20:00:31.421268+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204906": {
     "status": "WORTHLESS",
@@ -753,5 +738,110 @@
     "status": "WORTHLESS",
     "reason": "high_noise (9.0 >= 7.0)",
     "timestamp": "2025-12-18T15:56:39.609204+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204934": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:35.019076+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204943": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:35.284750+00:00"
+  },
+  "https://venturebeat.com/infrastructure/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:27:55.263493+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204941": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:33.639346+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204926": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:34.219482+00:00"
+  },
+  "https://the-decoder.com/meta-preps-mango-and-avocado-ai-models-for-2026/": {
+    "status": "WORTHLESS",
+    "reason": "text_too_short_manual_batch",
+    "timestamp": "2025-12-19T19:58:48.972895+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204919": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:05.538288+00:00"
+  },
+  "https://venturebeat.com/technology/gemini-3-flash-arrives-with-reduced-costs-and-latency-a-powerful-combo-for": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:05.910806+00:00"
+  },
+  "https://the-decoder.com/gpt-5-2-tops-openais-new-frontierscience-test-but-struggles-with-real-research-problems/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:06.272068+00:00"
+  },
+  "https://venturebeat.com/technology/google-releases-functiongemma-a-tiny-edge-model-that-can-control-mobile": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:06.652939+00:00"
+  },
+  "https://the-decoder.com/anthropics-ai-store-makes-money-while-debating-eternal-transcendence/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:07.036255+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204939": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:07.412679+00:00"
+  },
+  "https://the-decoder.com/openai-brings-cheaper-subscription-tier-to-more-markets/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:07.812193+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204930": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:08.184165+00:00"
+  },
+  "https://venturebeat.com/orchestration/jp-morgans-ai-adoption-hit-50-of-employees-the-secret-a-connectivity-first": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:08.568627+00:00"
+  },
+  "https://the-decoder.com/vibe-coding-app-lovable-heralds-the-age-of-the-builder-following-major-financing/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:08.937728+00:00"
+  },
+  "https://venturebeat.com/orchestration/palona-goes-vertical-launching-vision-workflow-features-4-key-lessons-for-ai": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:09.314795+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204935": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:09.679968+00:00"
+  },
+  "https://venturebeat.com/technology/openai-now-accepting-chatgpt-app-submissions-from-third-party-devs-launches": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:10.057837+00:00"
+  },
+  "https://venturebeat.com/technology/anthropic-launches-enterprise-agent-skills-and-opens-the-standard": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:10.430919+00:00"
+  },
+  "https://venturebeat.com/orchestration/even-google-and-replit-struggle-to-deploy-ai-agents-reliably-heres-why": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:10.796940+00:00"
   }
 }

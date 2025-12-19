@@ -402,35 +402,24 @@
                     3️⃣ 분석
                 </button>
             </div>
-            <!-- 조판/검토 (4) -->
-            <div style="display: flex; gap: 3px; margin-top: 3px;">
-                <button onclick="runAuto('stage')"
-                    style="flex:2; background:#dda0dd; color:white; font-size:0.75em; padding:6px;">
-                    4️⃣ 조판
-                </button>
-                <button onclick="openStaging()"
-                    style="flex:1; background:#6c757d; color:white; font-size:0.75em; padding:6px;">
-                    🔍 검토
-                </button>
-            </div>
+            <!-- 검토 버튼 (조판 제거됨) -->
+            <button onclick="openStaging()"
+                style="width:100%; margin-top:5px; background:#6c757d; color:white; font-size:0.85em; padding:8px;">
+                🔍 Staging 검토
+            </button>
             <!-- 발행 (5) - 분리 -->
             <button onclick="runAuto('publish')"
                 style="width:100%; margin-top:5px; background:#dc3545; color:white; font-weight:bold; font-size:0.85em; padding:8px;">
                 5️⃣ 발행 (Production)
             </button>
-            <!-- ALL -->
-            <button onclick="runAuto('all')"
-                style="width:100%; margin-top:3px; background:#6f42c1; color:white; font-size:0.85em; padding:6px;">
-                ⚡ ALL (1~4 연속)
-            </button>
         </div>
         <!-- 🚀 하이브리드 배치 (Hybrid Batch) -->
         <div class="target-select" style="border-top: 2px solid #6610f2; background: #e2d9f3;">
-            <label style="font-size: 0.8em; font-weight: bold; color: #6610f2;">🚀 하이브리드 배치</label>
+            <label style="font-size: 0.8em; font-weight: bold; color: #6610f2;">🚀 일괄 분석</label>
             <div style="display: flex; gap: 5px; margin-top: 5px;">
                 <button onclick="openHybridBatchModal()"
                     style="width: 100%; background: #6610f2; color: white; font-weight: bold; font-size: 0.9em; padding: 8px;">
-                    ⚡ 조판/배치 관리자 (Batch Manager)
+                    ⚡ 일괄 분석 (Batch Inject)
                 </button>
             </div>
         </div>

@@ -1,76 +1,16 @@
 {
   "date": "2025-12-18",
-  "updated_at": "2025-12-19T01:57:06.347419",
-  "count": 14,
+  "updated_at": "2025-12-20T05:00:31.986527",
+  "count": 2,
   "articles": [
     {
-      "article_id": "0cf64f",
-      "filename": "the_decoder_0cf64fd9.json",
-      "impact_score": 8.0
-    },
-    {
-      "article_id": "3fccbe",
-      "filename": "aitimes_3fccbe05.json",
-      "impact_score": 7.5
-    },
-    {
-      "article_id": "2dc062",
-      "filename": "venturebeat_2dc06295.json",
-      "impact_score": 7.5
-    },
-    {
-      "article_id": "186841",
-      "filename": "aitimes_186841a7.json",
-      "impact_score": 7.0
-    },
-    {
-      "article_id": "6082bd",
-      "filename": "the_decoder_6082bdee.json",
-      "impact_score": 7.0
-    },
-    {
-      "article_id": "e3418e",
-      "filename": "venturebeat_e3418e0e.json",
-      "impact_score": 6.5
-    },
-    {
-      "article_id": "c21603",
-      "filename": "aitimes_c21603cb.json",
+      "article_id": "ea9803",
+      "filename": "the_decoder_ea980382.json",
       "impact_score": 5.0
-    },
-    {
-      "article_id": "d0cdb6",
-      "filename": "aitimes_d0cdb6a2.json",
-      "impact_score": 5.0
-    },
-    {
-      "article_id": "68d2a1",
-      "filename": "the_decoder_68d2a1be.json",
-      "impact_score": 4.5
-    },
-    {
-      "article_id": "e94f80",
-      "filename": "venturebeat_e94f801f.json",
-      "impact_score": 4.5
-    },
-    {
-      "article_id": "b6616c",
-      "filename": "aitimes_b6616c29.json",
-      "impact_score": 4.0
-    },
-    {
-      "article_id": "90241c",
-      "filename": "venturebeat_90241c55.json",
-      "impact_score": 4.0
     },
     {
       "article_id": "b95145",
       "filename": "the_decoder_b951458b.json",
-      "impact_score": 2.5
-    },
-    {
-      "article_id": "3ef026",
-      "filename": "venturebeat_3ef02688.json",
       "impact_score": 2.0
     }
   ]

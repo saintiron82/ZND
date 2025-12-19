@@ -744,6 +744,11 @@
                                 style="flex: 1; background: #28a745; color: white; padding: 6px; font-size: 0.85em;"
                                 onclick="publishAll()">🚀 발행</button>
                         </div>
+                        <div style="display: flex; gap: 6px; margin-top: 6px;">
+                            <button class="btn"
+                                style="flex: 1; background: #fd7e14; color: white; padding: 6px; font-size: 0.85em;"
+                                onclick="unpublishSelected()">🔄 발행 취소</button>
+                        </div>
                         <button class="btn"
                             style="width: 100%; background: #17a2b8; color: white; padding: 8px; margin-top: 6px;"
                             onclick="window.open('http://localhost:8080/preview', '_blank')">👁️ 프리뷰 사이트 열기</button>
@@ -924,7 +929,7 @@
                     const grid = document.getElementById('articleGrid');
 
                     if (stagingData.length === 0) {
-                        grid.innerHTML = '<div class="empty-state">Staging 데이터가 없습니다.<br>먼저 조판을 실행해주세요.</div>';
+                        grid.innerHTML = '<div class="empty-state">Staging 데이터가 없습니다.<br>먼저 일괄 분석을 실행해주세요.</div>';
                         return;
                     }
 
@@ -1115,6 +1120,9 @@
                     });
 
                     grid.innerHTML = html;
+
+                    // 렌더링 후 커트라인 체크 및 점멸 효과 자동 적용
+                    updateCutline();
                 }
 
                 function updateStats() {
@@ -1377,6 +1385,56 @@
                             loadStaging();
                         } else {
                             alert(`❌ 발행 실패\n\n${result.error}`);
+                        }
+                    } catch (error) {
+                        alert(`❌ 오류: ${error.message}`);
+                    }
+                }
+
+                async function unpublishSelected() {
+                    // 발행된 기사의 체크박스는 disabled지만, 특별히 발행됨 상태 기사들을 찾음
+                    const publishedFiles = stagingData
+                        .filter(a => a.published)
+                        .map(a => a.filename);
+
+                    if (publishedFiles.length === 0) {
+                        alert('발행된 기사가 없습니다.');
+                        return;
+                    }
+
+                    const choice = confirm(
+                        `🔄 발행 취소\n\n` +
+                        `발행된 ${publishedFiles.length}개 기사를 발행 취소하시겠습니까?\n\n` +
+                        `- 데이터 파일이 삭제됩니다\n` +
+                        `- 캐시 상태가 리셋됩니다\n` +
+                        `- 재발행이 가능해집니다`
+                    );
+
+                    if (!choice) return;
+
+                    // Firestore 삭제 옵션
+                    const deleteFirestore = confirm(
+                        `🔥 Firestore에서도 삭제하시겠습니까?\n\n` +
+                        `- 예: DB에서도 삭제 (완전 취소)\n` +
+                        `- 아니오: 로컬 파일만 삭제`
+                    );
+
+                    try {
+                        const response = await fetch('/api/staging/unpublish_selected', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                filenames: publishedFiles,
+                                delete_firestore: deleteFirestore
+                            })
+                        });
+                        const result = await response.json();
+
+                        if (result.success) {
+                            alert(`✅ 발행 취소 완료!\n\n${result.message}`);
+                            loadStaging();
+                        } else {
+                            alert(`❌ 실패\n\n${result.error}`);
                         }
                     } catch (error) {
                         alert(`❌ 오류: ${error.message}`);

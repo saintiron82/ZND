@@ -94,13 +94,14 @@ def evaluate_article(data: dict) -> dict:
     }
 
 
-def save_article(data: dict, source_id: str = None) -> dict:
+def save_article(data: dict, source_id: str = None, skip_evaluation: bool = False) -> dict:
     """
     Save article to data folder (unified for auto/manual).
     
     Args:
         data: Article data to save
         source_id: Source identifier (optional, can be in data)
+        skip_evaluation: If True, skip noise filtering (for batch inject)
     
     Returns:
         Result dict with status and file info
@@ -110,11 +111,15 @@ def save_article(data: dict, source_id: str = None) -> dict:
     # Normalize field names
     data = normalize_field_names(data)
     
-    # Required fields check
-    required_fields = ['url', 'title_ko', 'summary', 'zero_echo_score', 'impact_score']
+    # Required fields check (title_ko 또는 title 중 하나 필요)
+    required_fields = ['url', 'summary', 'zero_echo_score', 'impact_score']
     for field in required_fields:
         if field not in data:
             return {'status': 'error', 'error': f'Missing field: {field}'}
+    
+    # title 필드 검증 (title_ko 또는 title 중 하나 필요)
+    if not data.get('title_ko') and not data.get('title'):
+        return {'status': 'error', 'error': 'Missing field: title_ko or title'}
     
     # Get or set source_id
     if source_id:
@@ -131,13 +136,14 @@ def save_article(data: dict, source_id: str = None) -> dict:
     if 'crawled_at' not in data:
         data['crawled_at'] = datetime.now(timezone.utc).isoformat()
     
-    # Evaluate scores
-    eval_result = evaluate_article(data)
-    if eval_result['status'] == 'worthless':
-        db.save_history(url, HistoryStatus.WORTHLESS, reason=eval_result['reason'])
-        # Update cache with worthless status
-        save_to_cache(url, {**data, 'status': 'worthless', 'reason': eval_result['reason']})
-        return {'status': 'worthless', 'reason': eval_result['reason']}
+    # Evaluate scores (skip if batch inject)
+    if not skip_evaluation:
+        eval_result = evaluate_article(data)
+        if eval_result['status'] == 'worthless':
+            db.save_history(url, HistoryStatus.WORTHLESS, reason=eval_result['reason'])
+            # Update cache with worthless status
+            save_to_cache(url, {**data, 'status': 'worthless', 'reason': eval_result['reason']})
+            return {'status': 'worthless', 'reason': eval_result['reason']}
     
     # Save to DB
     try:
@@ -329,10 +335,17 @@ async def process_article(
         'article_id': get_article_id(url),
         'crawled_at': datetime.now(timezone.utc).isoformat(),
         'original_title': content.get('title', content.get('original_title', '')),
+        'mll_status': 'analyzed',
     }
     
-    # 7. Save
-    return save_article(final_doc)
+    # 7. Save to cache (NOT data folder - data is created only on publish)
+    save_to_cache(url, final_doc)
+    
+    return {
+        'status': 'analyzed',
+        'article_id': get_article_id(url),
+        'message': 'Analysis complete. Use publish to create data file.'
+    }
 
 
 async def batch_process(

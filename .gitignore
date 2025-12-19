@@ -4,3 +4,8 @@
 !.agent/
 supplier/venv/
 *serviceAccountKey*.json
+supplier/data/
+supplier/cache/
+supplier/staging/
+supplier/*.json
+supplier/*.txt

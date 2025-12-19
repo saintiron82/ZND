@@ -435,6 +435,12 @@ def normalize_field_names(data: dict) -> dict:
         except:
             pass
 
+    # --- 4. Root-level Headline -> title_ko mapping (V1.1 Support) ---
+    # LLM 응답에서 Headline이 Meta 없이 루트에 올 경우 대응
+    if 'Headline' in normalized and 'title_ko' not in normalized:
+        normalized['title_ko'] = normalized['Headline']
+        print(f"[Normalize] Mapped root 'Headline' -> 'title_ko'")
+
     return normalized  # recalculate_scores 제거 - raw_analysis에서 직접 계산함
 
 

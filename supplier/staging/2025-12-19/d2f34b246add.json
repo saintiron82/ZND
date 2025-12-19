@@ -1,0 +1,229 @@
+{
+  "article_id": "d2f34b",
+  "author": [
+    "장세민 기자"
+  ],
+  "cached_at": "2025-12-16T07:59:28.290537+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204789_206153_3149.jpeg",
+  "modified_at": "2025-12-15T12:27:48+09:00",
+  "published_at": "2025-12-15T12:27:48+09:00",
+  "summary": "비전 AI 전문 슈퍼브에이아이가 140억 원 규모의 프리 IPO 투자를 유치, 누적 투자금 630억 달성. 2026년 상장 목표 및 글로벌 확장 계획 발표.",
+  "text": "(사진=슈퍼브에이아이) 비전 AI 전문 슈퍼브에이아이(대표 김현수)는 140억원 규모의 프리-IPO 투자 유치를 마무리했다고 15일 밝혔다. 이번 투자에는 한화자산운용의 벤처 펀드, 포스코기술투자 등이 참여했다. 이로써 슈퍼브에이아이의 누적 투자 유치 금액은 630억원 규모로, 2026년 증시 상장이 목표다. 슈퍼브에이아이는 과거 투자 라운드부터 두산, 현대자동차, 삼성전자, KT, 카카오, KT&G, HL그룹 등 국내 주요 대기업 계열사로부터 투자를 유치했다. 투자사들은 제조, 물류 등 산업 현장에서 슈퍼브에이아이 솔루션을 활용 중이다. 현대자동차와 두산과의 협력은 투자 이후 활발하게 진행, 실질적인 성과로 이어지고 있다고 전했다. 이번 투자 유치로 확보한 자금은 AI 기술 고도화와 우수 인재 확보에 집중 투입할 예정이다. 국내 대기업 및 계열사, 그리고 AI 도입이 필요한 국내 산업에 대해 공격적인 영업 확장도 추진할 계획이다. 또, 글로벌 시장 확장을 가속화해 성장 동력을 확보할 예정이다. 주요 투자사과도 협업해 기술 도입을 넘어 개발, 판매,유통 파트너십을 진행한다. 슈퍼브에이아이는 데이터 구축부터 AI 모델 학습까지 모두 자동화한 '슈퍼브 플랫폼(Superb Platform)’을 통해 기업 AI 개발을 지원하고 있다. 지난 6월에는 국내 최초 산업용 영상 파운데이션 모델인 '제로(ZERO)'를 출시해 글로벌 벤치마크와 각종 대회에서 수상했다. 김현수 슈퍼브에이아이 대표는 “파트너사들과의 협력을 통해 산업 전반의 AI 도입을 가속화하고, 내년 예정된 IPO를 통해 산업 AI 시장의 글로벌 리더로 도약할 것\"이라고 말했다. 장세민 기자 semim99@aitimes.com",
+  "title": "슈퍼브에이아이, 140억 규모 프리 IPO 투자 유치...&quot;내년 IPO 추진”",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204789",
+  "title_ko": "슈퍼브에이아이, 140억 규모 프리 IPO 투자 유치...'내년 IPO 추진'",
+  "tags": [
+    "Superb AI",
+    "Investment",
+    "Pre-IPO"
+  ],
+  "impact_score": 0.0,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Superb AI",
+      "WHO_Primary_Tier_Source": "General Definition (Tier 4 - Startup)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": null,
+      "Gap_Calculation_Log": "|4 (Entity) - 3 (Evidence)| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Niche Utility (Domestic First Trigger)"
+    },
+    "Scores": {
+      "IW_Score": 0.5,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 0,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 2,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "Investment news is fact-based, but 'Domestic First' claim limits innovation score. IPO prep shows Biz Impact."
+    }
+  },
+  "zero_echo_score": 5.0,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 1,
+      "Penalty_Clipping_Indicator": true
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 1,
+          "Weight": 1.4,
+          "Evidence": "Investment Amount (140M)"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": 0.75,
+          "Weight": "-3.5",
+          "Evidence": "Global Leader/Domestic First Claims"
+        },
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 0.75,
+          "Weight": "-2.5",
+          "Evidence": "IPO Hype"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "투자 유치 팩트는 명확하나, '국내 최초', '글로벌 리더' 등의 수식어에 대해 PR 스캐너 페널티 적용."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "d2f34b",
+    "Meta": {
+      "Headline": "슈퍼브에이아이, 140억 규모 프리 IPO 투자 유치...'내년 IPO 추진'",
+      "summary": "비전 AI 전문 슈퍼브에이아이가 140억 원 규모의 프리 IPO 투자를 유치, 누적 투자금 630억 달성. 2026년 상장 목표 및 글로벌 확장 계획 발표.",
+      "Tag": [
+        "Superb AI",
+        "Investment",
+        "Pre-IPO"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "국내 최초 (Domestic First)",
+        "글로벌 리더 (Global Leader)"
+      ],
+      "Marketing_Jargon_Count": 2,
+      "Qualifier_Check": "Found Domestic Qualifier",
+      "Sales_Intent": "High"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Superb AI",
+        "WHO_Primary_Tier_Source": "General Definition (Tier 4 - Startup)",
+        "WHO_Entity_Tier": 4,
+        "WHO_Secondary_Entity": "N/A",
+        "WHO_Secondary_Tier": null,
+        "Gap_Calculation_Log": "|4 (Entity) - 3 (Evidence)| = 1 -> Score 0.5",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 3,
+        "SOTA_Check_Result": "Niche Utility (Domestic First Trigger)"
+      },
+      "Scores": {
+        "IW_Score": 0.5,
+        "Gap_Score": 0.5,
+        "Context_Bonus": 0,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 2,
+          "Criticality_Total": 0.5
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "Investment news is fact-based, but 'Domestic First' claim limits innovation score. IPO prep shows Biz Impact."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 1,
+        "Penalty_Clipping_Indicator": true
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_5_Objective_Evidence",
+            "Raw_Score": 1,
+            "Weight": 1.4,
+            "Evidence": "Investment Amount (140M)"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_1_Ad_Exaggeration",
+            "Raw_Score": 0.75,
+            "Weight": "-3.5",
+            "Evidence": "Global Leader/Domestic First Claims"
+          },
+          {
+            "ID": "N_8_Promotional_Intent",
+            "Raw_Score": 0.75,
+            "Weight": "-2.5",
+            "Evidence": "IPO Hype"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "투자 유치 팩트는 명확하나, '국내 최초', '글로벌 리더' 등의 수식어에 대해 PR 스캐너 페널티 적용."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "슈퍼브에이아이, 140억 규모 프리 IPO 투자 유치...&quot;내년 IPO 추진”",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 1,
+          "Weight": 1.4,
+          "Evidence": "Investment Amount (140M)"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": 0.75,
+          "Weight": "-3.5",
+          "Evidence": "Global Leader/Domestic First Claims"
+        },
+        {
+          "ID": "N_8_Promotional_Intent",
+          "Raw_Score": 0.75,
+          "Weight": "-2.5",
+          "Evidence": "IPO Hype"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "투자 유치 팩트는 명확하나, '국내 최초', '글로벌 리더' 등의 수식어에 대해 PR 스캐너 페널티 적용."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 0.5,
+      "Gap_Score": 0.5,
+      "Context_Bonus": 0,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 2,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Superb AI",
+      "WHO_Primary_Tier_Source": "General Definition (Tier 4 - Startup)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": null,
+      "Gap_Calculation_Log": "|4 (Entity) - 3 (Evidence)| = 1 -> Score 0.5",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 3,
+      "SOTA_Check_Result": "Niche Utility (Domestic First Trigger)"
+    },
+    "reasoning": {
+      "Score_Justification": "Investment news is fact-based, but 'Domestic First' claim limits innovation score. IPO prep shows Biz Impact."
+    },
+    "schema_version": "Legacy"
+  },
+  "crawled_at": "2025-12-16T09:17:16.819219+00:00",
+  "status": "worthless",
+  "reason": "high_noise (8.1 >= 7.0)",
+  "rejected": true,
+  "reject_reason": "high_noise (8.1)",
+  "staged": true,
+  "category": "미분류",
+  "dedup_status": "duplicate",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.352985+00:00"
+}

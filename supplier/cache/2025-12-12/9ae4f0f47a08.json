@@ -8,5 +8,6 @@
   "published_at": "2025-12-12T12:31:02+09:00",
   "article_id": "9ae4f0",
   "cached_at": "2025-12-12T05:12:57.084802+00:00",
-  "mll_status": "error: HTTPConnectionPool(host='localhost', port=8000): R"
+  "mll_status": "error: HTTPConnectionPool(host='localhost', port=8000): R",
+  "version": "V1.0"
 }

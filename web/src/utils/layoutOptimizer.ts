@@ -291,11 +291,10 @@ export class LayoutOptimizer {
         // 1. Today's Headline: Best Combined Score (10 - ZS) + IS
         // 2. Zero Noise Award: Lowest ZS (tiebreaker: highest IS)
         // 3. Hot Topic: Highest IS
-        // NOTE: Only articles WITH tags can win awards
+        // NOTE: All articles are eligible for awards (tags are optional)
 
-        // Filter only articles with tags for award consideration
-        const withTags = articlesWithSize.filter(a => a.tags && Array.isArray(a.tags) && a.tags.length > 0);
-        const awardCandidates = withTags.length > 0 ? withTags : articlesWithSize; // Fallback if no tags at all
+        // 모든 기사가 어워드 후보 (태그 유무 관계없이)
+        const awardCandidates = articlesWithSize;
 
         // Find award winners (only from candidates with tags)
         const byCombo = [...awardCandidates].sort((a, b) => {

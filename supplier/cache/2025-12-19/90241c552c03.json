@@ -1,0 +1,228 @@
+{
+  "article_id": "90241c",
+  "author": "Taryn Plumb",
+  "cached_at": "2025-12-18T15:35:02.363605+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/2enHa97PVIbaLzukEpRUth/8362fe4758604496771a13727fada179/JPMorgan.png?w=800&amp;q=75",
+  "modified_at": "2025-12-17T18:13:39.620Z",
+  "published_at": "2025-12-17T12:00-07:00",
+  "text": "When Derek Waldron and his technical team at JPMorgan Chase first launched an LLM suite with personal assistants two-and-a-half years ago, they weren’t sure what to expect. That wasn’t long after the game-changing emergence of ChatGPT, but in enterprise, skepticism was still high. Surprisingly, employees opted into the internal platform organically — and quickly. Within months, usage jumped from zero to 250,000 employees. Now, more than 60% of employees across sales, finance, technology, operations, and other departments use the continually evolving, continually connected suite. “We were surprised by just how viral it was,” Waldron, JPMorgan’s chief analytics officer, explains in a new VB Beyond the Pilot podcast. Employees weren’t just designing prompts, they were building and customizing assistants with specific personas, instructions, and roles and were sharing their learnings on internal platforms. The financial giant has pulled off what most enterprises still struggle to achieve: large-scale, voluntary employee adoption of AI. It wasn’t the result of mandates; rather, early adopters shared tangible use cases, and workers began feeding off each other’s enthusiasm. This bottom-up usage has ultimately resulted in an innovation flywheel. “It’s this deep rooted innovative population,” Waldron says. “If we can continue to equip them with really easy to use, powerful capabilities, they can turbocharge the next evolution of this journey.” Ubiquitous connectivity plugged into highly sophisticated systems of record JPMorgan has taken a rare, forward-looking approach to its technical architecture. The company treats AI as a core infrastructure rather than a novelty, operating from the early contrarian stance that the models themselves would become a commodity. Instead, they identified the connectivity around the system as the real challenge and defensible moat. The financial giant invested early in multimodal retrieval-augmented generation (RAG), now in its fourth generation and incorporating multi-modality. Its AI suite is hosted at the center of an enterprise-wide platform equipped with connectors and tools that support analysis and preparation. Employees can plug into an expanding ecosystem of critical business data and interact with “very sophisticated” documents, knowledge and structured data stores, as well as CRM, HR, trading, finance and risk systems. Waldron says his team continues to add more connections by the month. “We built the platform around this type of ubiquitous connectivity,” he explains. Ultimately, AI is a great general-purpose technology that will only grow more powerful, but if people don’t have meaningful access and critical use cases, “you're squandering the opportunity.” As Waldron puts it, AI’s capabilities continue to grow impressively — but they simply remain shiny objects for show if they can’t prove real-world use. “Even if super intelligence were to show up tomorrow, there's no value that can be optimally extracted if that superintelligence can't connect into the systems, the data, the tools, the knowledge, the processes that exist within the enterprise,” he contends. Listen to the full episode to hear about: Waldron’s personal strategy of pausing before asking a human colleague and instead assessing how his AI assistant could answer that question and solve the problem. A \"one platform, many jobs\" approach: No two roles are the same way, so strategy should center on reusable building blocks (RAG, document intelligence, structured data querying) that employees can assemble into role-specific tools. Why RAG maturity matters: JPMorgan evolved through multiple generations of retrieval — from basic vector search to hierarchical, authoritative, multimodal knowledge pipelines. Subscribe to Beyond the Pilot on Apple Podcasts and Spotify.",
+  "title": "JP Morgan’s AI adoption hit 50% of employees. The secret? A connectivity-first architecture",
+  "url": "https://venturebeat.com/orchestration/jp-morgans-ai-adoption-hit-50-of-employees-the-secret-a-connectivity-first",
+  "title_ko": "JP Morgan 직원 50% AI 도입: 연결성 중심 아키텍처의 승리",
+  "summary": "JP Morgan 직원의 60% 이상이 자발적으로 사내 AI LLM 제품군을 채택했다. 이는 특정 모델에 의존하기보다 '연결성'을 핵심으로 한 아키텍처와 직원들의 바텀업(Bottom-up) 혁신 문화가 결합된 결과로, 엔터프라이즈 AI 도입의 성공 사례다.",
+  "tags": [],
+  "impact_score": 4.0,
+  "IS_Analysis": {
+    "Score_Commentary": "GIP 적용: JP Morgan은 Tier Map에 없으나, 금융 시장의 지배적 사업자(Market Dominance)로서 Global Corporate에 준하는 Tier 2로 유추 적용함. 단, 영향 범위가 내부 기업(Corporate)에 한정되어 Scope 점수는 낮음.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "JP Morgan Chase",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Rationale": "시스템을 구축하고 실행하는 주체(P4). GIP를 통해 금융권 Tier 1에 준하는 Tier 2(Samsung급 Global Corp)로 유추."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 6.1,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "T2": 7,
+      "T3": 5,
+      "Rationale": "직원 60%, 25만 명 등 수치가 있으나 기술적 상세 스펙보다는 전략적 서술 위주."
+    },
+    "Noise": {
+      "P1": 4,
+      "P2": 6,
+      "P3": 2,
+      "Rationale": "임원 인터뷰 인용 비중이 높고 자화자찬 성격의 서술이 일부 포함됨."
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 6,
+      "V3": 6,
+      "Rationale": "타 기업이 벤치마킹할 수 있는 전략적 인사이트를 제공하나 기술적 즉시 적용성은 낮음."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "금융권 AI 도입의 구체적 방법론(Connectivity)을 제시한 점을 높이 평가하여 가점."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "90241c",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "JP Morgan 직원 50% AI 도입: 연결성 중심 아키텍처의 승리",
+      "Summary": "JP Morgan 직원의 60% 이상이 자발적으로 사내 AI LLM 제품군을 채택했다. 이는 특정 모델에 의존하기보다 '연결성'을 핵심으로 한 아키텍처와 직원들의 바텀업(Bottom-up) 혁신 문화가 결합된 결과로, 엔터프라이즈 AI 도입의 성공 사례다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "GIP 적용: JP Morgan은 Tier Map에 없으나, 금융 시장의 지배적 사업자(Market Dominance)로서 Global Corporate에 준하는 Tier 2로 유추 적용함. 단, 영향 범위가 내부 기업(Corporate)에 한정되어 Scope 점수는 낮음.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "JP Morgan Chase",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Rationale": "시스템을 구축하고 실행하는 주체(P4). GIP를 통해 금융권 Tier 1에 준하는 Tier 2(Samsung급 Global Corp)로 유추."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "직원 60%, 25만 명 등 수치가 있으나 기술적 상세 스펙보다는 전략적 서술 위주."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 6,
+        "P3": 2,
+        "Rationale": "임원 인터뷰 인용 비중이 높고 자화자찬 성격의 서술이 일부 포함됨."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 6,
+        "V3": 6,
+        "Rationale": "타 기업이 벤치마킹할 수 있는 전략적 인사이트를 제공하나 기술적 즉시 적용성은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "금융권 AI 도입의 구체적 방법론(Connectivity)을 제시한 점을 높이 평가하여 가점."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "JP Morgan’s AI adoption hit 50% of employees. The secret? A connectivity-first architecture",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 7.0,
+        "T3": 5.0,
+        "S_Avg": 6.0
+      },
+      "Noise": {
+        "P1": 4.0,
+        "P2": 6.0,
+        "P3": 2.0,
+        "N_Avg": 4.0
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 6.0,
+        "V3": 6.0,
+        "U_Avg": 5.67
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 6.1,
+      "ZS_Final": 6.1
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "직원 60%, 25만 명 등 수치가 있으나 기술적 상세 스펙보다는 전략적 서술 위주."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 6,
+        "P3": 2,
+        "Rationale": "임원 인터뷰 인용 비중이 높고 자화자찬 성격의 서술이 일부 포함됨."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 6,
+        "V3": 6,
+        "Rationale": "타 기업이 벤치마킹할 수 있는 전략적 인사이트를 제공하나 기술적 즉시 적용성은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "금융권 AI 도입의 구체적 방법론(Connectivity)을 제시한 점을 높이 평가하여 가점."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 4.0,
+      "IS_Final": 4.0,
+      "Score_Commentary": "GIP 적용: JP Morgan은 Tier Map에 없으나, 금융 시장의 지배적 사업자(Market Dominance)로서 Global Corporate에 준하는 Tier 2로 유추 적용함. 단, 영향 범위가 내부 기업(Corporate)에 한정되어 Scope 점수는 낮음."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "JP Morgan Chase",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Rationale": "시스템을 구축하고 실행하는 주체(P4). GIP를 통해 금융권 Tier 1에 준하는 Tier 2(Samsung급 Global Corp)로 유추."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "crawled_at": "2025-12-18T15:53:41.221303+00:00",
+  "edition": "251218_THU_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-18T16:57:06.331193+00:00",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.183627+00:00",
+  "staged": true,
+  "category": "Engineering",
+  "dedup_status": "selected"
+}

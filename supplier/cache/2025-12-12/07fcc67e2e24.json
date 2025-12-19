@@ -11,5 +11,6 @@
   "url": "https://www.aitimes.com/news/articleView.html?idxno=204710",
   "article_id": "07fcc6",
   "cached_at": "2025-12-11T16:38:16.750652+00:00",
-  "mll_status": "error: API Error: [invoke_v2] LLM 호출 실패: Error code: 400 "
+  "mll_status": "error: API Error: [invoke_v2] LLM 호출 실패: Error code: 400 ",
+  "version": "V1.0"
 }

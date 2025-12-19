@@ -13,7 +13,7 @@
     "Psychology",
     "Research"
   ],
-  "impact_score": 6.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Univ of Luxembourg",
@@ -40,7 +40,7 @@
       "Score_Justification": "Tier 3 연구기관이 Tier 1 모델을 평가(Evaluation)하여 잠재적 위험성을 발견함. 사회적 중요도(Safety) 높음."
     }
   },
-  "zero_echo_score": 2.2,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -193,5 +193,6 @@
   "saved_at": "2025-12-16T09:52:39.803144+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

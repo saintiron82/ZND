@@ -17,7 +17,7 @@
     "Agentic AI",
     "Skills"
   ],
-  "impact_score": 5.2,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Anthropic",
@@ -44,7 +44,7 @@
       "Score_Justification": "Tier 2 Market Shaper proposing a new workflow standard. Major Update bonus applied."
     }
   },
-  "zero_echo_score": 3.4,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0.5,
@@ -221,5 +221,6 @@
   "saved_at": "2025-12-16T09:17:17.086001+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

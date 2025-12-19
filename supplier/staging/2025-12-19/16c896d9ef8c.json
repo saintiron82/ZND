@@ -1,0 +1,200 @@
+{
+  "article_id": "16c896",
+  "cached_at": "2025-12-16T08:04:09.911104+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/11/robot_character.png",
+  "published_at": "Mon, 15 Dec 2025 16:38:22 GMT",
+  "summary": "로봇 청소기 룸바 제조사 iRobot이 파산 보호를 신청하고 주요 공급업체인 Shenzhen PICEA Robotics에 경영권을 넘기기로 했다. 이는 아마존의 인수가 규제로 무산된 후 판매 부진과 경쟁 심화에 따른 결과다. 회사는 상장 폐지될 예정이지만 운영은 지속할 계획이다.",
+  "text": "Max is the managing editor of THE DECODER, bringing his background in philosophy to explore questions of consciousness and whether machines truly think or just pretend to. Robot vacuum pioneer iRobot has filed for bankruptcy and plans to hand control to its main Chinese supplier, Shenzhen PICEA Robotics. According to Bloomberg, shares of the Roomba maker will be wiped out under the bankruptcy plan. While the company will be delisted, it intends to continue operations as a going concern. Ad To set up the deal, Shenzhen PICEA acquired $191 million of iRobot's debt from the Carlyle Group. iRobot attributed the filing to a post-pandemic sales slump, supply chain issues, and stiffer competition from cheaper rivals. The move comes after a planned acquisition by Amazon fell apart in 2022 following opposition from EU regulators. The company listed assets and liabilities between $100 million and $500 million. In a statement, iRobot confirmed it would continue paying employees and suppliers throughout the court proceedings. Ad",
+  "title": "iRobot files for bankruptcy and goes to Chinese supplier",
+  "url": "https://the-decoder.com/irobot-files-for-bankruptcy-and-goes-to-chinese-supplier/",
+  "title_ko": "iRobot 파산 신청 및 중국 공급업체에 매각",
+  "tags": [
+    "Bankruptcy",
+    "M&A",
+    "Robotics"
+  ],
+  "impact_score": 0.0,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "iRobot",
+      "WHO_Primary_Tier_Source": "Fallback General (Tier 3 -> Tier 4 due to Bankruptcy)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "Shenzhen PICEA",
+      "WHO_Secondary_Tier": 5,
+      "Gap_Calculation_Log": "Secondary is Tier 5 -> Gap Score 0.0",
+      "WHAT_X_Magnitude": 4,
+      "WHAT_Y_Evidence": 4,
+      "SOTA_Check_Result": "Business Failure"
+    },
+    "Scores": {
+      "IW_Score": 1,
+      "Gap_Score": 0,
+      "Context_Bonus": 1,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 3,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "Reasoning": {
+      "Score_Justification": "주요 기업의 파산 및 M&A 이슈. 산업 구조조정 관점에서 중요하나 기술적 혁신은 없음."
+    }
+  },
+  "zero_echo_score": 5.0,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": 0,
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 1,
+          "Weight": 1.6,
+          "Evidence": "Financial filing/Bankruptcy data"
+        },
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 1,
+          "Weight": 1.4,
+          "Evidence": "Specific debt figures ($191M)"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "파산 신청서와 부채 규모 등 객관적이고 검증 가능한 비즈니스 팩트에 기반함."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "16c896",
+    "Meta": {
+      "Headline": "iRobot 파산 신청 및 중국 공급업체에 매각",
+      "summary": "로봇 청소기 룸바 제조사 iRobot이 파산 보호를 신청하고 주요 공급업체인 Shenzhen PICEA Robotics에 경영권을 넘기기로 했다. 이는 아마존의 인수가 규제로 무산된 후 판매 부진과 경쟁 심화에 따른 결과다. 회사는 상장 폐지될 예정이지만 운영은 지속할 계획이다.",
+      "Tag": [
+        "Bankruptcy",
+        "M&A",
+        "Robotics"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [],
+      "Marketing_Jargon_Count": 0,
+      "Qualifier_Check": "Clean",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "iRobot",
+        "WHO_Primary_Tier_Source": "Fallback General (Tier 3 -> Tier 4 due to Bankruptcy)",
+        "WHO_Entity_Tier": 4,
+        "WHO_Secondary_Entity": "Shenzhen PICEA",
+        "WHO_Secondary_Tier": 5,
+        "Gap_Calculation_Log": "Secondary is Tier 5 -> Gap Score 0.0",
+        "WHAT_X_Magnitude": 4,
+        "WHAT_Y_Evidence": 4,
+        "SOTA_Check_Result": "Business Failure"
+      },
+      "Scores": {
+        "IW_Score": 1,
+        "Gap_Score": 0,
+        "Context_Bonus": 1,
+        "IE_Breakdown_Total": {
+          "Scope_Total": 3,
+          "Criticality_Total": 0.5
+        },
+        "Adjustment_Score": 0
+      },
+      "Reasoning": {
+        "Score_Justification": "주요 기업의 파산 및 M&A 이슈. 산업 구조조정 관점에서 중요하나 기술적 혁신은 없음."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": 0,
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_4_Proven_Application",
+            "Raw_Score": 1,
+            "Weight": 1.6,
+            "Evidence": "Financial filing/Bankruptcy data"
+          },
+          {
+            "ID": "P_5_Objective_Evidence",
+            "Raw_Score": 1,
+            "Weight": 1.4,
+            "Evidence": "Specific debt figures ($191M)"
+          }
+        ],
+        "Negative_Scores": []
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "파산 신청서와 부채 규모 등 객관적이고 검증 가능한 비즈니스 팩트에 기반함."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "iRobot files for bankruptcy and goes to Chinese supplier",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_4_Proven_Application",
+          "Raw_Score": 1,
+          "Weight": 1.6,
+          "Evidence": "Financial filing/Bankruptcy data"
+        },
+        {
+          "ID": "P_5_Objective_Evidence",
+          "Raw_Score": 1,
+          "Weight": 1.4,
+          "Evidence": "Specific debt figures ($191M)"
+        }
+      ],
+      "Negative_Scores": []
+    },
+    "commentary": {
+      "ZES_Summary": "파산 신청서와 부채 규모 등 객관적이고 검증 가능한 비즈니스 팩트에 기반함."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": 1,
+      "Gap_Score": 0,
+      "Context_Bonus": 1,
+      "IE_Breakdown_Total": {
+        "Scope_Total": 3,
+        "Criticality_Total": 0.5
+      },
+      "Adjustment_Score": 0
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "iRobot",
+      "WHO_Primary_Tier_Source": "Fallback General (Tier 3 -> Tier 4 due to Bankruptcy)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "Shenzhen PICEA",
+      "WHO_Secondary_Tier": 5,
+      "Gap_Calculation_Log": "Secondary is Tier 5 -> Gap Score 0.0",
+      "WHAT_X_Magnitude": 4,
+      "WHAT_Y_Evidence": 4,
+      "SOTA_Check_Result": "Business Failure"
+    },
+    "reasoning": {
+      "Score_Justification": "주요 기업의 파산 및 M&A 이슈. 산업 구조조정 관점에서 중요하나 기술적 혁신은 없음."
+    },
+    "schema_version": "Legacy"
+  },
+  "crawled_at": "2025-12-16T09:52:39.475055+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:52:39.479640+00:00",
+  "staged": true,
+  "category": "미분류",
+  "dedup_status": "duplicate",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.220048+00:00"
+}

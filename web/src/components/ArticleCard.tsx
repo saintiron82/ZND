@@ -22,6 +22,7 @@ export interface Article {
     tags: string[];
     source_id: string;
     crawled_at: string | { seconds: number };
+    published_at?: string | { seconds: number };  // 발행일 추가
     awards?: string[]; // Award badges: "Today's Headline", "Zero Noise Award", "Hot Topic"
     cols?: number;
     rows?: number;
@@ -52,7 +53,7 @@ const getAwardStyle = (award: string) => {
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true }) => {
-    const { id, title_ko, summary, tags, url, crawled_at, source_id, impact_score, zero_echo_score, awards } = article;
+    const { id, title_ko, summary, tags, url, crawled_at, published_at, source_id, impact_score, zero_echo_score, awards } = article;
 
     // Use zero_echo_score for quality indication
     const zeScore = zero_echo_score ?? 0;
@@ -64,8 +65,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         return "text-red-600 dark:text-red-400";
     };
 
-    // ... (date format logic) ...
-    const formatDate = (date: string | { seconds: number }) => {
+    // ... (date format logic) - 발행일(published_at) 우선 사용 ...
+    const formatDate = (date: string | { seconds: number } | undefined) => {
+        if (!date) return '';
         if (typeof date === 'string') {
             return new Date(date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
         }
@@ -75,7 +77,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         return '';
     };
 
-    const dateStr = formatDate(crawled_at);
+    // 발행일(published_at) 우선, 없으면 crawled_at 사용
+    const dateStr = formatDate(published_at) || formatDate(crawled_at);
 
     // Dynamic Title Size based on Impact Score
     const getTitleSize = (s?: number) => {

@@ -15,7 +15,7 @@
     "Software Strategy",
     "No-code/Low-code"
   ],
-  "impact_score": 3.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Opinion / Contributor",
@@ -42,7 +42,7 @@
       "Score_Justification": "개인의 경험과 의견에 기반한 칼럼. 산업 전반에 대한 통찰력은 있으나, 구체적인 기업의 움직임이나 기술적 성과는 아님."
     }
   },
-  "zero_echo_score": 6.0,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": "0.5",
@@ -219,5 +219,6 @@
   "saved_at": "2025-12-16T09:52:29.263147+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

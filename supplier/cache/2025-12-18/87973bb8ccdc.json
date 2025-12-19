@@ -226,5 +226,6 @@
   "saved_at": "2025-12-17T15:43:35.226110+00:00",
   "staged": true,
   "category": "Community",
-  "dedup_status": "selected"
+  "dedup_status": "selected",
+  "version": "V1.0"
 }

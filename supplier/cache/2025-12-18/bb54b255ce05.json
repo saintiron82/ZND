@@ -15,7 +15,7 @@
     "CX",
     "Cloud Computing"
   ],
-  "impact_score": 5.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Twilio",
@@ -42,7 +42,7 @@
       "Score_Justification": "자사 리포트를 기반으로 한 인프라 홍보. 시장의 Pain Point를 잘 지적했으나 해결책은 자사 솔루션으로 귀결됨."
     }
   },
-  "zero_echo_score": 7.0,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 1.75,
@@ -239,5 +239,6 @@
   "reject_reason": "high_noise (7.0)",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

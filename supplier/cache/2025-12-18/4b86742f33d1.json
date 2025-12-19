@@ -17,7 +17,7 @@
     "Byte-Level",
     "Open_Source"
   ],
-  "impact_score": 6.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Allen Institute for AI (Ai2)",
@@ -44,7 +44,7 @@
       "Score_Justification": "연구소 레벨의 기술적 성취이나, '최초' 주장에 대한 검증이 필요. 상용화 파급력보다는 학술적/기술적 의미가 큼."
     }
   },
-  "zero_echo_score": 3.8,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0.75,
@@ -257,5 +257,6 @@
   "saved_at": "2025-12-16T09:56:28.209154+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

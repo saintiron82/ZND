@@ -1,0 +1,226 @@
+{
+  "article_id": "4021cb",
+  "author": "Siqi Chen, Runway",
+  "cached_at": "2025-12-16T08:04:13.349263+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/6kXpR2jU6eoKdeTMAngNL8/96b17bfd5d5ce4ea7285636538c2d054/DDM_build_versus_buy.png?w=800&amp;q=75",
+  "modified_at": "2025-12-15T17:18:11.203Z",
+  "published_at": "2025-12-14T12:00-07:00",
+  "text": "Picture this: You're sitting in a conference room, halfway through a vendor pitch. The demo looks solid, and pricing fits nicely under budget. The timeline seems reasonable too. Everyone’s nodding along. You’re literally minutes away from saying yes. Then someone from your finance team walks in. They see the deck and frown. A few minutes later, they shoot you a message on Slack: “Actually, I threw together a version of this last week. Took me 2 hours in Cursor. Wanna take a look?” Wait… what? This person doesn't code. You know for a fact they've never written a line of JavaScript in their entire life. But here they are, showing you a working prototype on their laptop that does... pretty much exactly what the vendor pitched. Sure, it's got some rough edges, but it works. And it didn’t cost six figures. Just two hours of their time. Suddenly, the assumptions you walked in with — about how software is developed, who makes it and how decisions are made around it — all start coming apart at the seams. The old framework For decades, every growing company asked the same question: Should we build this ourselves, or should we buy it? And, for decades, the answer was pretty straightforward: Build if it's core to your business; buy if it isn’t. The logic made sense, because building was expensive and meant borrowing time from overworked engineers, writing specs, planning sprints, managing infrastructure and bracing yourself for a long tail of maintenance. Buying was faster. Safer. You paid for the support and the peace of mind. But something fundamental has changed: AI has made building accessible to everyone. What used to take weeks now takes hours, and what used to require fluency in a programming language now requires fluency in plain English. When the cost and complexity of building collapse this dramatically, the old framework goes down with them. It’s not build versus buy anymore. It’s something stranger that we haven't quite found the right words for. When the market doesn’t know what you need (yet) My company never planned to build so many of the tools we use. We just had to build because the things we needed didn’t exist. And, through that process, we developed this visceral understanding of what we actually wanted, what was useful and what it could or couldn't do. Not what vendor decks told us we needed or what analyst reports said we should want, but what actually moved the needle in our business. We figured out which problems were worth solving, which ones weren’t, where AI created real leverage and where it was just noise. And only then, once we had that hard-earned clarity, did we start buying. By that point, we knew exactly what we were looking for and could tell the difference between substance and marketing in about five minutes. We asked questions that made vendors nervous because we'd already built some rudimentary version of what they were selling. When anyone can build in minutes Last week, someone on our CX team noticed some customer feedback about a bug in Slack. Just a minor customer complaint, nothing major. In another company, this would’ve kicked off a support ticket and they’d have waited for someone else to handle it, but that’s not what happened here. They opened Cursor, described the change and let AI write the fix. Then they submitted a pull request that engineering reviewed and merged. Just 15 minutes after that complaint popped up in Slack, the fix was live in production. The person who did this isn’t technical in the slightest. I doubt they could tell you the difference between Python and JavaScript, but they solved the problem anyway. And that’s the point. AI has gotten so good at cranking out relatively simple code that it handles 80% of the problems that used to require a sprint planning meeting and two weeks of engineering time. It’s erasing the boundary between technical and non-technical. Work that used to be bottlenecked by engineering is now being done by the people closest to the problem. This is happening right now in companies that are actually paying attention. The inversion that’s happening Here's where it gets fascinating for finance leaders, because AI has actually flipped the entire strategic logic of the build versus buy decision on its head. The old model went something like: Define the need. Decide whether to build or buy. But defining the need took forever and required deep technical expertise, or you'd burn through money through trial-and-error vendor implementations. You'd sit through countless demos, trying to picture whether this actually solved your problem. Then you’d negotiate, implement, move all your data and workflows to the new tool and six months and six figures later discover whether (or not) you were actually right. Now, the whole sequence gets turned around: Build something lightweight with AI. Use it to understand what you actually need. Then decide whether to buy (and you'll know exactly why). This approach lets you run controlled experiments. You figure out whether the problem even matters. You discover which features deliver value and which just look good in demos. Then you go shopping. Instead of letting some external vendor sell you on what the need is, you get to figure out whether you even have that need in the first place. Think about how many software purchases you've made that, in hindsight, solved problems you didn't actually have. How many times have you been three months into an implementation and thought, “Hang on, is this actually helping us, or are we just trying to justify what we spent?” Now, when you do buy, the question becomes “Does this solve the problem better than what we already proved we can build?” That one reframe changes the entire conversation. Now you show up to vendor calls informed. You ask sharper questions, and negotiate from a place of strength. Most importantly, you avoid the most expensive mistake in enterprise software, which is solving a problem you never really had. The trap you need to avoid As this new capability emerges, I’m watching companies sprint in the wrong direction. They know they need to be AI native, so they go on a shopping spree. They look for AI-powered tools, filling their stack with products that have GPT integrations, chatbot UIs or “AI” slapped onto the marketing site. They think they’re transforming, but they’re not. Remember what physicist Richard Feynman called cargo cult science? After World War II, islanders in the South Pacific built fake airstrips and control towers, mimicking what they'd seen during the war, hoping planes full of cargo would return. They had all the outward forms of an airport: Towers, headsets, even people miming flight controllers. But no planes landed, because the form wasn’t the function. That’s exactly what’s happening with AI transformation in boardrooms everywhere. Leaders are buying AI tools without asking if they meaningfully change how work gets done, who they empower or what processes they unlock. They’ve built the airstrip, but the planes aren’t showing up. And the whole market's basically set up to make you fall into this trap. Everything gets branded as AI now, but nobody seems to care what these products actually do. Every SaaS product has bolted on a chatbot or an auto-complete feature and slapped an AI label on it, and the label has lost all meaning. It’s just a checkbox vendors figure they need to tick, regardless of whether it creates actual value for customers. The finance team’s new superpower This is the part that gets me excited about what finance teams can do now. You don’t have to guess anymore. You don’t have to bet six figures on a sales deck. You can test things, and you can actually learn something before you spend. Here's what I mean: If you’re evaluating vendor management software, prototype the core workflow with AI tools. Figure out whether you’re solving a tooling problem or a process problem. Figure out whether you need software at all. This doesn’t mean you’ll build everything internally — of course not. Most of the time, you’ll still end up buying, and that's totally fine, because enterprise tools exist for good reasons (scale, support, security, and maintenance). But now you’ll buy with your eyes wide open. You’ll know what “good” looks like. You’ll show up to demos already understanding the edge cases, and know in about 5 minutes whether they actually get your specific problem. You’ll implement faster. You'll negotiate better because you're not completely dependent on the vendor's solution. And you’ll choose it because it's genuinely better than what you could build yourself. You'll have already mapped out the shape of what you need, and you'll just be looking for the best version of it. The new paradigm For years, the mantra was: Build or buy. Now, it’s more elegant and way smarter: Build to learn what to buy. And it's not some future state. This is already happening. Right now, somewhere, a customer rep is using AI to fix a product issue they spotted minutes ago. Somewhere else, a finance team is prototyping their own analytical tools because they've realized they can iterate faster than they can write up requirements for engineering. Somewhere, a team is realizing that the boundary between technical and non-technical was always more cultural than fundamental. The companies that embrace this shift will move faster and spend smarter. They’ll know their operations more deeply than any vendor ever could. They'll make fewer expensive mistakes, and buy better tools because they actually understand what makes tools good. The companies that stick to the old playbook will keep sitting through vendor pitches, nodding along at budget-friendly proposals. They’ll debate timelines, and keep mistaking professional decks for actual solutions. Until someone on their own team pops open their laptop, says, “I built a version of this last night. Want to check it out?,” and shows them something they built in two hours that does 80% of what they’re about to pay six figures for. And, just like that, the rules change for good. Siqi Chen is co-founder and CEO of Runway. Read more from our guest writers. Or, consider submitting a post of your own! See our guidelines here.",
+  "title": "Build vs buy is dead — AI just killed it",
+  "url": "https://venturebeat.com/ai/build-vs-buy-is-dead-ai-just-killed-it",
+  "title_ko": "AI가 끝내버린 '구축(Build) vs 구매(Buy)'의 딜레마",
+  "summary": "AI 코딩 도구의 발전으로 소프트웨어 개발의 '구축 대 구매'라는 전통적 의사결정 프레임워크가 붕괴되고 있다. 비개발자도 AI(Cursor 등)를 통해 몇 시간 만에 필요한 도구를 프로토타이핑할 수 있게 되었다. 이제 기업은 먼저 가볍게 구축하여 니즈를 파악한 후 구매를 결정하는 새로운 전략을 취해야 한다.",
+  "tags": [
+    "AI Coding",
+    "Software Strategy",
+    "No-code/Low-code"
+  ],
+  "impact_score": 0.0,
+  "Impact_Analysis_IS": {
+    "Analysis_Log": {
+      "WHO_Primary_Entity": "Opinion / Contributor",
+      "WHO_Primary_Tier_Source": "Tier 4 (Individual/General)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": 0,
+      "Gap_Calculation_Log": "Op-Ed Content -> Low Impact Score",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 1,
+      "SOTA_Check_Result": "N/A (Opinion)"
+    },
+    "Scores": {
+      "IW_Score": "1.0",
+      "Gap_Score": "0.0",
+      "Context_Bonus": "0.0",
+      "IE_Breakdown_Total": {
+        "Scope_Total": "1.5",
+        "Criticality_Total": "0.5"
+      },
+      "Adjustment_Score": "0.0"
+    },
+    "Reasoning": {
+      "Score_Justification": "개인의 경험과 의견에 기반한 칼럼. 산업 전반에 대한 통찰력은 있으나, 구체적인 기업의 움직임이나 기술적 성과는 아님."
+    }
+  },
+  "zero_echo_score": 5.0,
+  "Evidence_Analysis_ZES": {
+    "ZES_Penalty_Check": {
+      "Penalty_Focus_Raw_Sum": "0.5",
+      "Penalty_Clipping_Indicator": false
+    },
+    "ZES_Score_Vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": "0.75",
+          "Weight": "0.84",
+          "Evidence": "Ref: 현업에서의 실질적 변화(비개발자의 코딩)를 포착한 높은 통찰력"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_2_Unsubstantiated",
+          "Raw_Score": "0.5",
+          "Weight": "-1.5",
+          "Evidence": "Ref: 개인적 일화(Anecdote) 중심의 서술, 정량적 데이터 부재"
+        },
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": "0.25",
+          "Weight": "-3.5",
+          "Evidence": "Ref: 'Is dead', 'Killed' 등 클릭베이트성 제목"
+        }
+      ]
+    },
+    "Analysis_Commentary": {
+      "ZES_Summary": "흥미로운 관점을 제시하는 오피니언 기사이나, 일반화하기에는 정량적 근거가 부족함. 트렌드 파악용으로는 유효하나 팩트 체크 대상은 아님."
+    }
+  },
+  "raw_analysis": {
+    "Article_ID": "4021cb",
+    "Meta": {
+      "Headline": "AI가 끝내버린 '구축(Build) vs 구매(Buy)'의 딜레마",
+      "summary": "AI 코딩 도구의 발전으로 소프트웨어 개발의 '구축 대 구매'라는 전통적 의사결정 프레임워크가 붕괴되고 있다. 비개발자도 AI(Cursor 등)를 통해 몇 시간 만에 필요한 도구를 프로토타이핑할 수 있게 되었다. 이제 기업은 먼저 가볍게 구축하여 니즈를 파악한 후 구매를 결정하는 새로운 전략을 취해야 한다.",
+      "Tag": [
+        "AI Coding",
+        "Software Strategy",
+        "No-code/Low-code"
+      ]
+    },
+    "PR_Scanner_Log": {
+      "Detected_Triggers": [
+        "Build vs buy is dead (죽었다)",
+        "AI just killed it (AI가 죽였다)"
+      ],
+      "Marketing_Jargon_Count": 2,
+      "Qualifier_Check": "Clean (Opinion Piece)",
+      "Sales_Intent": "Low"
+    },
+    "Impact_Analysis_IS": {
+      "Analysis_Log": {
+        "WHO_Primary_Entity": "Opinion / Contributor",
+        "WHO_Primary_Tier_Source": "Tier 4 (Individual/General)",
+        "WHO_Entity_Tier": 4,
+        "WHO_Secondary_Entity": "N/A",
+        "WHO_Secondary_Tier": 0,
+        "Gap_Calculation_Log": "Op-Ed Content -> Low Impact Score",
+        "WHAT_X_Magnitude": 2,
+        "WHAT_Y_Evidence": 1,
+        "SOTA_Check_Result": "N/A (Opinion)"
+      },
+      "Scores": {
+        "IW_Score": "1.0",
+        "Gap_Score": "0.0",
+        "Context_Bonus": "0.0",
+        "IE_Breakdown_Total": {
+          "Scope_Total": "1.5",
+          "Criticality_Total": "0.5"
+        },
+        "Adjustment_Score": "0.0"
+      },
+      "Reasoning": {
+        "Score_Justification": "개인의 경험과 의견에 기반한 칼럼. 산업 전반에 대한 통찰력은 있으나, 구체적인 기업의 움직임이나 기술적 성과는 아님."
+      }
+    },
+    "Evidence_Analysis_ZES": {
+      "ZES_Penalty_Check": {
+        "Penalty_Focus_Raw_Sum": "0.5",
+        "Penalty_Clipping_Indicator": false
+      },
+      "ZES_Score_Vector": {
+        "Positive_Scores": [
+          {
+            "ID": "P_7_Signal_To_Noise",
+            "Raw_Score": "0.75",
+            "Weight": "0.84",
+            "Evidence": "Ref: 현업에서의 실질적 변화(비개발자의 코딩)를 포착한 높은 통찰력"
+          }
+        ],
+        "Negative_Scores": [
+          {
+            "ID": "N_2_Unsubstantiated",
+            "Raw_Score": "0.5",
+            "Weight": "-1.5",
+            "Evidence": "Ref: 개인적 일화(Anecdote) 중심의 서술, 정량적 데이터 부재"
+          },
+          {
+            "ID": "N_1_Ad_Exaggeration",
+            "Raw_Score": "0.25",
+            "Weight": "-3.5",
+            "Evidence": "Ref: 'Is dead', 'Killed' 등 클릭베이트성 제목"
+          }
+        ]
+      },
+      "Analysis_Commentary": {
+        "ZES_Summary": "흥미로운 관점을 제시하는 오피니언 기사이나, 일반화하기에는 정량적 근거가 부족함. 트렌드 파악용으로는 유효하나 팩트 체크 대상은 아님."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Build vs buy is dead — AI just killed it",
+  "evidence": {
+    "score_vector": {
+      "Positive_Scores": [
+        {
+          "ID": "P_7_Signal_To_Noise",
+          "Raw_Score": "0.75",
+          "Weight": "0.84",
+          "Evidence": "Ref: 현업에서의 실질적 변화(비개발자의 코딩)를 포착한 높은 통찰력"
+        }
+      ],
+      "Negative_Scores": [
+        {
+          "ID": "N_2_Unsubstantiated",
+          "Raw_Score": "0.5",
+          "Weight": "-1.5",
+          "Evidence": "Ref: 개인적 일화(Anecdote) 중심의 서술, 정량적 데이터 부재"
+        },
+        {
+          "ID": "N_1_Ad_Exaggeration",
+          "Raw_Score": "0.25",
+          "Weight": "-3.5",
+          "Evidence": "Ref: 'Is dead', 'Killed' 등 클릭베이트성 제목"
+        }
+      ]
+    },
+    "commentary": {
+      "ZES_Summary": "흥미로운 관점을 제시하는 오피니언 기사이나, 일반화하기에는 정량적 근거가 부족함. 트렌드 파악용으로는 유효하나 팩트 체크 대상은 아님."
+    }
+  },
+  "impact_evidence": {
+    "scores": {
+      "IW_Score": "1.0",
+      "Gap_Score": "0.0",
+      "Context_Bonus": "0.0",
+      "IE_Breakdown_Total": {
+        "Scope_Total": "1.5",
+        "Criticality_Total": "0.5"
+      },
+      "Adjustment_Score": "0.0"
+    },
+    "analysis_log": {
+      "WHO_Primary_Entity": "Opinion / Contributor",
+      "WHO_Primary_Tier_Source": "Tier 4 (Individual/General)",
+      "WHO_Entity_Tier": 4,
+      "WHO_Secondary_Entity": "N/A",
+      "WHO_Secondary_Tier": 0,
+      "Gap_Calculation_Log": "Op-Ed Content -> Low Impact Score",
+      "WHAT_X_Magnitude": 2,
+      "WHAT_Y_Evidence": 1,
+      "SOTA_Check_Result": "N/A (Opinion)"
+    },
+    "reasoning": {
+      "Score_Justification": "개인의 경험과 의견에 기반한 칼럼. 산업 전반에 대한 통찰력은 있으나, 구체적인 기업의 움직임이나 기술적 성과는 아님."
+    },
+    "schema_version": "Legacy"
+  },
+  "crawled_at": "2025-12-16T09:52:29.252063+00:00",
+  "edition": "251216_TUE_1",
+  "saved": true,
+  "saved_at": "2025-12-16T09:52:29.263147+00:00",
+  "staged": true,
+  "category": "미분류",
+  "dedup_status": "duplicate",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.240441+00:00"
+}

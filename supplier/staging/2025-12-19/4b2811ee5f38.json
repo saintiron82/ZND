@@ -1,0 +1,229 @@
+{
+  "article_id": "4b2811",
+  "cached_at": "2025-12-17T14:49:00.485814+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/person_pressing_enter.jpeg",
+  "published_at": "Wed, 17 Dec 2025 12:57:20 GMT",
+  "summary": "OpenAI가 무료 및 저가형 가입자를 대상으로 제공하던 자동 모델 라우터 기능을 제거하고 GPT-5.2 Instant를 기본값으로 설정했습니다. 이는 추론 모델의 느린 속도로 인한 사용자 이탈 방지 및 운영 비용 절감을 위한 조치로 풀이됩니다. 현재 유료 구독자에게만 라우터 기능이 유지됩니다.",
+  "text": "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. Content Summary People have been trained to expect that faster means better. With AI, the opposite is often true. OpenAI is now rolling back its GPT-5 router. But the company should be educating users instead. Ad OpenAI has quietly removed a core ChatGPT feature from hundreds of millions of users, according to WIRED. The model router, which automatically directed queries to the right AI model, is no longer available to free users or those on the $5 subscription. These users will now get responses from GPT-5.2 Instant by default—the fastest and cheapest model in the new series. The move exposes a fundamental tension in the AI industry: the most powerful reasoning models are slow, often taking several minutes before answering, and most users don't want to wait. That's likely why OpenAI already added an \"Answer now\" button that cuts off the model's thinking process for an immediate response. This only really makes sense for engagement metrics. Anyone who wants quality answers should skip that button entirely. Share Recommend our article Share Users choose speed over smarter answers OpenAI launched the model router just four months ago alongside GPT-5. The system analyzed incoming queries and automatically picked whether to use a fast, cheap model or a slower but more capable reasoning model. The router was supposed to replace the increasingly cluttered model selection menu and always serve users the best option. Ad Ad THE DECODER Newsletter The most important AI news straight to your inbox. ✓ Weekly ✓ Free ✓ Cancel at any time Please leave this field empty Most users don't even know that different AI models exist with different capabilities. And even those who do often can't tell which model fits which type of question. A router could cut through that complexity - something OpenAI had explicitly aimed for when designing GPT-5. But the experiment didn't pan out. According to a source familiar with the situation, the router hurt daily active user numbers because reasoning models can take minutes to work through complex questions. Daily active users is a key success metric for OpenAI. Routing to better models proved expensive There's another factor at play: routing more queries to expensive models costs OpenAI money, and the AI company is already burning through cash at a staggering rate. Shortly after launch, Altman said the router had boosted reasoning model usage among free users from under one percent to seven percent, and from seven percent to 24 percent for Plus subscribers. OpenAI told WIRED that user feedback showed free and Go subscribers prefer the standard chat experience. Reasoning models are still available but require manual selection. The router stays active for paying Plus and Pro subscribers. OpenAI says it may bring the feature back for free users once the technology improves. The rollback also removes a safety feature: the router had been forwarding signs of psychological distress to models designed to handle those situations. OpenAI says GPT-5.2 Instant now scores better on safety benchmarks, justifying the change. Ad",
+  "title": "OpenAI's GPT-5 router rollback shows why AI requires unlearning old habits",
+  "url": "https://the-decoder.com/openais-gpt-5-router-rollback-shows-why-ai-requires-unlearning-old-habits/",
+  "title_ko": "OpenAI, GPT-5 라우터 롤백 및 전략 수정",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "OpenAI(Tier 1)의 서비스 정책 변경으로, 제품의 실질적 가용성(Y4)과 기업 전략적 영향(X1)이 결합된 사례입니다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 5
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 4.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 7,
+      "T3": 6,
+      "Rationale": "라우터 작동 방식, 이용자 비율 변화 등 구체적 수치 포함"
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 3,
+      "P3": 1,
+      "Rationale": "WIRED 인용 및 소식통 기반으로 비교적 객관적 유지"
+    },
+    "Utility": {
+      "V1": 7,
+      "V2": 9,
+      "V3": 6,
+      "Rationale": "LLM 서비스 운영 전략의 현실적 난관을 잘 보여줌"
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "상업적 딜레마와 기술적 한계를 명확히 분석함"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "4b2811",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "OpenAI, GPT-5 라우터 롤백 및 전략 수정",
+      "Summary": "OpenAI가 무료 및 저가형 가입자를 대상으로 제공하던 자동 모델 라우터 기능을 제거하고 GPT-5.2 Instant를 기본값으로 설정했습니다. 이는 추론 모델의 느린 속도로 인한 사용자 이탈 방지 및 운영 비용 절감을 위한 조치로 풀이됩니다. 현재 유료 구독자에게만 라우터 기능이 유지됩니다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "OpenAI(Tier 1)의 서비스 정책 변경으로, 제품의 실질적 가용성(Y4)과 기업 전략적 영향(X1)이 결합된 사례입니다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 5
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "라우터 작동 방식, 이용자 비율 변화 등 구체적 수치 포함"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 1,
+        "Rationale": "WIRED 인용 및 소식통 기반으로 비교적 객관적 유지"
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 9,
+        "V3": 6,
+        "Rationale": "LLM 서비스 운영 전략의 현실적 난관을 잘 보여줌"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "상업적 딜레마와 기술적 한계를 명확히 분석함"
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "OpenAI's GPT-5 router rollback shows why AI requires unlearning old habits",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 8.0,
+        "T2": 7.0,
+        "T3": 6.0,
+        "S_Avg": 7.0,
+        "Rationale": "라우터 작동 방식, 이용자 비율 변화 등 구체적 수치 포함"
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 3.0,
+        "P3": 1.0,
+        "N_Avg": 2.0,
+        "Rationale": "WIRED 인용 및 소식통 기반으로 비교적 객관적 유지"
+      },
+      "Utility": {
+        "V1": 7.0,
+        "V2": 9.0,
+        "V3": 6.0,
+        "U_Avg": 7.33,
+        "Rationale": "LLM 서비스 운영 전략의 현실적 난관을 잘 보여줌"
+      },
+      "Fine_Adjustment": 0.5,
+      "Fine_Reason": "상업적 딜레마와 기술적 한계를 명확히 분석함",
+      "ZS_Raw": 4.0,
+      "ZS_Final": 4.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "라우터 작동 방식, 이용자 비율 변화 등 구체적 수치 포함"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 1,
+        "Rationale": "WIRED 인용 및 소식통 기반으로 비교적 객관적 유지"
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 9,
+        "V3": 6,
+        "Rationale": "LLM 서비스 운영 전략의 현실적 난관을 잘 보여줌"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "상업적 딜레마와 기술적 한계를 명확히 분석함"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "OpenAI(Tier 1)의 서비스 정책 변경으로, 제품의 실질적 가용성(Y4)과 기업 전략적 영향(X1)이 결합된 사례입니다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 5
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "Par"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-17T15:44:06.840314+00:00",
+  "edition": "251217_WED_1",
+  "saved": true,
+  "saved_at": "2025-12-17T15:44:06.846555+00:00",
+  "staged": true,
+  "category": "Business",
+  "dedup_status": "selected",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.249674+00:00"
+}

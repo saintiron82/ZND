@@ -240,5 +240,6 @@
   "staged": true,
   "staged_at": "2025-12-17T16:37:20.968832+00:00",
   "rejected": true,
-  "reject_reason": "manual_batch_reject"
+  "reject_reason": "manual_batch_reject",
+  "version": "V1.0"
 }

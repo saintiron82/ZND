@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-12T00:40:38.656Z",
+  "generated_at": "2025-12-19T12:15:07.815Z",
   "articles": [
     {
       "author": "Alexandra Ahtiainen",
@@ -79,6 +79,8 @@
       "original_title": "Transforming Nordic classrooms through responsible AI partnerships",
       "crawled_at": "2025-12-10T04:08:43.638184+00:00",
       "zero_echo_score": 0.75,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.724373",
       "id": "https://blog.google/around-the-globe/google-europe/transforming-nordic-classrooms-through-responsible-ai-partnerships/",
       "cols": 10,
       "rows": 14,
@@ -163,6 +165,8 @@
       "original_title": "트럼프 &quot;중국에 엔비디아 H200 칩 수출 허용&quot;",
       "crawled_at": "2025-12-10T04:12:03.897179+00:00",
       "zero_echo_score": 0.25,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.729060",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204629",
       "cols": 3,
       "rows": 20,
@@ -238,6 +242,8 @@
       "original_title": "오픈AI &quot;AI로 근로자 하루 평균 1시간 절약&quot;",
       "crawled_at": "2025-12-10T04:12:03.757057+00:00",
       "zero_echo_score": 2.88,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.727419",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204645",
       "cols": 3,
       "rows": 19,
@@ -288,6 +294,8 @@
       "original_title": "'1등 모델' 효과로 제미나이 모바일 다운로드 소폭 증가...챗GPT는 감소",
       "crawled_at": "2025-12-10T04:12:03.491163+00:00",
       "zero_echo_score": 1.25,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.727419",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204641",
       "cols": 3,
       "rows": 18,
@@ -360,6 +368,8 @@
       "original_title": "앤트로픽, 슬랙 사용 중 '클로드 코드' 작동 기능 추가",
       "crawled_at": "2025-12-10T04:12:03.104962+00:00",
       "zero_echo_score": 3.38,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.728552",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204639",
       "cols": 3,
       "rows": 18,
@@ -436,6 +446,8 @@
       "original_title": "구글, '제미나이' 탑재한 AI 안경 내년 출시 예정",
       "crawled_at": "2025-12-10T04:12:03.382543+00:00",
       "zero_echo_score": 3.75,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.726416",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204630",
       "cols": 3,
       "rows": 20,
@@ -511,6 +523,8 @@
       "original_title": "[양현상 칼럼] &quot;60조 캐나다 잠수함”, 우리는 또 '상품'만 팔고 있다",
       "crawled_at": "2025-12-10T04:12:04.162595+00:00",
       "zero_echo_score": 1,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.729060",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204667",
       "cols": 3,
       "rows": 21,
@@ -575,6 +589,8 @@
       "original_title": "How we’re supporting the next generation of innovators",
       "crawled_at": "2025-12-10T04:08:43.560019+00:00",
       "zero_echo_score": 4,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.724373",
       "id": "https://blog.google/outreach-initiatives/education/next-gen-computer-science-innovators/",
       "cols": 3,
       "rows": 20,
@@ -631,6 +647,8 @@
       "original_title": "Anthropic&apos;s Claude Code can now read your Slack messages and write code for you",
       "crawled_at": "2025-12-10T04:16:01.358057+00:00",
       "zero_echo_score": 3.75,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.740057",
       "id": "https://venturebeat.com/ai/anthropics-claude-code-can-now-read-your-slack-messages-and-write-code-for",
       "cols": 3,
       "rows": 21,
@@ -682,6 +700,8 @@
       "original_title": "Report: Aging power grid puts OpenAI and Microsoft's growth at risk",
       "crawled_at": "2025-12-10T04:15:13.561785+00:00",
       "zero_echo_score": 3.15,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.734189",
       "id": "https://the-decoder.com/report-aging-power-grid-puts-openai-and-microsofts-growth-at-risk/",
       "cols": 3,
       "rows": 20,
@@ -742,6 +762,8 @@
       "original_title": "Databricks releases enterprise-focused OfficeQA AI benchmark after finding academic tests miss real-world document tasks",
       "crawled_at": "2025-12-10T04:15:57.801889+00:00",
       "zero_echo_score": 1.75,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.738241",
       "id": "https://venturebeat.com/data-infrastructure/databricks-officeqa-uncovers-disconnect-ai-agents-ace-abstract-tests-but",
       "cols": 3,
       "rows": 21,
@@ -803,6 +825,8 @@
       "original_title": "정부, 전력수급기본계획 수립 본격화…&quot;에너지전환 설계도 마련&quot;",
       "crawled_at": "2025-12-10T04:12:04.610663+00:00",
       "zero_echo_score": 3.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.730568",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204661",
       "cols": 3,
       "rows": 20,
@@ -868,57 +892,13 @@
       "original_title": "Tracking every decision, dollar and delay: The new process intelligence engine driving public-sector progress",
       "crawled_at": "2025-12-10T04:15:59.457159+00:00",
       "zero_echo_score": 3.75,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.738752",
       "id": "https://venturebeat.com/ai/tracking-every-decision-dollar-and-delay-the-new-process-intelligence-engine",
       "cols": 3,
       "rows": 20,
       "zeroEchoScore": 3.75,
       "impactScore": 5.12
-    },
-    {
-      "title_ko": "메타, '개방형' 철학 버리나... 폐쇄형 모델 '아보카도'로 전략 급선회",
-      "summary": "메타가 차세대 AI 모델의 출시를 내년 1분기로 연기하고, 프로젝트명을 '아보카도'로 확정하며 기존 오픈소스 정책 대신 폐쇄형 모델로의 전환을 추진 중이다. 이는 경쟁사 딥시크의 기술 흡수 등 오픈소스의 한계를 느낀 전략적 수정으로 보이며, 이를 위해 보안이 강화된 'TBD 랩'을 신설하고 고강도 근무 체제에 돌입했다. 메타는 내부적으로 타 부서 인력을 감축하고 컴퓨팅 자원을 MSL에 집중시키는 등 앤트로픽, 오픈AI 등과 경쟁하기 위한 조직적 승부수를 띄웠다.",
-      "impact_score": 5.59,
-      "impact_evidence": {
-        "entity": {
-          "id": "TIER_1_ECOSYSTEM_RULERS",
-          "weight": 5,
-          "reasoning": "글로벌 AI 생태계의 핵심 축인 메타(Meta)가 기존의 오픈소스 전략을 수정하고 조직을 개편하는 중대한 움직임이므로 Tier 1으로 분류함."
-        },
-        "events": [
-          {
-            "id": "BIZ_STRATEGY_SHIFT",
-            "weight": 0.59,
-            "reasoning": "기존의 '라마' 오픈소스 정책을 폐기하고 첫 폐쇄형 모델 도입을 추진하며, 내부 조직(MSL/TBD)을 전면 개편하고 인력을 재배치한 명확한 전략 변경 사례임."
-          }
-        ]
-      },
-      "reasoning": "메타의 핵심 전략 변화(오픈소스→폐쇄형)와 내부 상황(고강도 근무, 해고, 보안 강화)을 구체적인 정황과 함께 전달하여 단순 루머 이상의 정보 가치를 제공하며, 기술적 트레이드오프를 솔직하게 드러내 품질 점수를 확보함.",
-      "tags": [
-        "LLM",
-        "BIZ_STRATEGY",
-        "GEN_AI"
-      ],
-      "evidence": {
-        "penalties": [],
-        "credits": [
-          {
-            "id": "SELF_CRITICISM_OR_TRADE_OFF",
-            "value": 0.75
-          }
-        ],
-        "modifiers": []
-      },
-      "zero_echo_score": 4.25,
-      "url": "https://www.aitimes.com/news/articleView.html?idxno=204672",
-      "source_id": "aitimes",
-      "original_title": "&quot;메타, 내년 1분기 폐쇄형 모델 '아보카도' 출시&quot;",
-      "crawled_at": "2025-12-10T17:17:23.051421+00:00",
-      "edition": "251210_WED_1",
-      "id": "https://www.aitimes.com/news/articleView.html?idxno=204672",
-      "cols": 3,
-      "rows": 18,
-      "zeroEchoScore": 4.25,
-      "impactScore": 5.59
     },
     {
       "image": "https://the-decoder.com/wp-content/uploads/2025/12/Android-XR.png",
@@ -963,6 +943,8 @@
       "original_title": "Google positions Gemini as the \"glue\" for its new XR ecosystem",
       "crawled_at": "2025-12-10T04:15:10.318338+00:00",
       "zero_echo_score": 4.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.732595",
       "id": "https://the-decoder.com/google-positions-gemini-as-the-glue-for-its-new-xr-ecosystem/",
       "cols": 3,
       "rows": 21,
@@ -1010,6 +992,8 @@
       "original_title": "OpenAI claims generative AI saves knowledge workers 40 to 80 minutes a day",
       "crawled_at": "2025-12-10T04:15:12.831129+00:00",
       "zero_echo_score": 4.25,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.734189",
       "id": "https://the-decoder.com/openai-claims-generative-ai-saves-knowledge-workers-40-to-80-minutes-a-day/",
       "cols": 3,
       "rows": 20,
@@ -1053,6 +1037,8 @@
       "original_title": "Big AI’s biggest names rally around the Agentic AI Foundation to set agent standards",
       "crawled_at": "2025-12-10T04:15:10.058193+00:00",
       "zero_echo_score": 4.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.732085",
       "id": "https://the-decoder.com/big-ais-biggest-names-rally-around-the-agentic-ai-foundation-to-set-agent-standards/",
       "cols": 3,
       "rows": 20,
@@ -1119,6 +1105,8 @@
       "original_title": "신재생에너지주, 국내외 변수에 동반 반등…전력난·정책 기대감이 촉매",
       "crawled_at": "2025-12-10T04:12:04.318539+00:00",
       "zero_echo_score": 3.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.730568",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204663",
       "cols": 3,
       "rows": 19,
@@ -1166,6 +1154,8 @@
       "original_title": "Google faces an antitrust probe for using web and YouTube content in AI without opt-out or fair pay",
       "crawled_at": "2025-12-10T04:15:12.490651+00:00",
       "zero_echo_score": 3.48,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.734189",
       "id": "https://the-decoder.com/google-faces-an-antitrust-probe-for-using-web-and-youtube-content-in-ai-without-opt-out-or-fair-pay/",
       "cols": 3,
       "rows": 20,
@@ -1217,6 +1207,8 @@
       "original_title": "The AI that scored 95% — until consultants learned it was AI",
       "crawled_at": "2025-12-10T04:15:56.129489+00:00",
       "zero_echo_score": 3.25,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.736709",
       "id": "https://venturebeat.com/ai/the-ai-that-scored-95-until-consultants-learned-it-was-ai",
       "cols": 3,
       "rows": 20,
@@ -1269,71 +1261,13 @@
       "original_title": "Trump approves Nvidia H200 sales, but China may not bite",
       "crawled_at": "2025-12-10T04:15:11.798232+00:00",
       "zero_echo_score": 3.69,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.733105",
       "id": "https://the-decoder.com/trump-approves-nvidia-h200-sales-but-china-may-not-bite/",
       "cols": 3,
       "rows": 18,
       "zeroEchoScore": 3.69,
       "impactScore": 3.5
-    },
-    {
-      "author": "Carl Franzen",
-      "image": "https://images.ctfassets.net/jdtwqhzvc2n1/c8LjxKPtjJumRUwmgig3W/3ceb88204d1ec334f3ce3719b80793eb/6Ud5A3f_99gyh14m2ffZr.jpg?w=800&amp;q=75",
-      "modified_at": "2025-12-09T01:24:17.800Z",
-      "published_at": "2025-12-08T20:03-05:00",
-      "text": "Chinese AI startup Zhipu AI aka Z.ai has released its GLM-4.6V series, a new generation of open-source vision-language models (VLMs) optimized for multimodal reasoning, frontend automation, and high-efficiency deployment. The release includes two models in \"large\" and \"small\" sizes: GLM-4.6V (106B), a larger 106-billion parameter model aimed at cloud-scale inference GLM-4.6V-Flash (9B), a smaller model of only 9 billion parameters designed for low-latency, local applications Recall that generally speaking, models with more parameters — or internal settings governing their behavior, i.e. weights and biases — are more powerful, performant, and capable of performing at a higher general level across more varied tasks. However, smaller models can offer better efficiency for edge or real-time applications where latency and resource constraints are critical. The defining innovation in this series is the introduction of native function calling in a vision-language model—enabling direct use of tools such as search, cropping, or chart recognition with visual inputs. With a 128,000 token context length (equivalent to a 300-page novel's worth of text exchanged in a single input/output interaction with the user) and state-of-the-art (SoTA) results across more than 20 benchmarks, the GLM-4.6V series positions itself as a highly competitive alternative to both closed and open-source VLMs. It's available in the following formats: Licensing and Enterprise Use GLM‑4.6V and GLM‑4.6V‑Flash are distributed under the MIT license, a permissive open-source license that allows free commercial and non-commercial use, modification, redistribution, and local deployment without obligation to open-source derivative works. This licensing model makes the series suitable for enterprise adoption, including scenarios that require full control over infrastructure, compliance with internal governance, or air-gapped environments. Model weights and documentation are publicly hosted on Hugging Face, with supporting code and tooling available on GitHub. The MIT license ensures maximum flexibility for integration into proprietary systems, including internal tools, production pipelines, and edge deployments. Architecture and Technical Capabilities The GLM-4.6V models follow a conventional encoder-decoder architecture with significant adaptations for multimodal input. Both models incorporate a Vision Transformer (ViT) encoder—based on AIMv2-Huge—and an MLP projector to align visual features with a large language model (LLM) decoder. Video inputs benefit from 3D convolutions and temporal compression, while spatial encoding is handled using 2D-RoPE and bicubic interpolation of absolute positional embeddings. A key technical feature is the system’s support for arbitrary image resolutions and aspect ratios, including wide panoramic inputs up to 200:1. In addition to static image and document parsing, GLM-4.6V can ingest temporal sequences of video frames with explicit timestamp tokens, enabling robust temporal reasoning. On the decoding side, the model supports token generation aligned with function-calling protocols, allowing for structured reasoning across text, image, and tool outputs. This is supported by extended tokenizer vocabulary and output formatting templates to ensure consistent API or agent compatibility. Native Multimodal Tool Use GLM-4.6V introduces native multimodal function calling, allowing visual assets—such as screenshots, images, and documents—to be passed directly as parameters to tools. This eliminates the need for intermediate text-only conversions, which have historically introduced information loss and complexity. The tool invocation mechanism works bi-directionally: Input tools can be passed images or videos directly (e.g., document pages to crop or analyze). Output tools such as chart renderers or web snapshot utilities return visual data, which GLM-4.6V integrates directly into the reasoning chain. In practice, this means GLM-4.6V can complete tasks such as: Generating structured reports from mixed-format documents Performing visual audit of candidate images Automatically cropping figures from papers during generation Conducting visual web search and answering multimodal queries High Performance Benchmarks Compared to Other Similar-Sized Models GLM-4.6V was evaluated across more than 20 public benchmarks covering general VQA, chart understanding, OCR, STEM reasoning, frontend replication, and multimodal agents. Z.ai GLM-4.6V benchmark comparison chart. Credit: Z.ai According to the benchmark chart released by Zhipu AI: GLM-4.6V (106B) achieves SoTA or near-SoTA scores among open-source models of comparable size (106B) on MMBench, MathVista, MMLongBench, ChartQAPro, RefCOCO, TreeBench, and more. GLM-4.6V-Flash (9B) outperforms other lightweight models (e.g., Qwen3-VL-8B, GLM-4.1V-9B) across almost all categories tested. The 106B model’s 128K-token window allows it to outperform larger models like Step-3 (321B) and Qwen3-VL-235B on long-context document tasks, video summarization, and structured multimodal reasoning. Example scores from the leaderboard include: MathVista: 88.2 (GLM-4.6V) vs. 84.6 (GLM-4.5V) vs. 81.4 (Qwen3-VL-8B) WebVoyager: 81.0 vs. 68.4 (Qwen3-VL-8B) Ref-L4-test: 88.9 vs. 89.5 (GLM-4.5V), but with better grounding fidelity at 87.7 (Flash) vs. 86.8 Both models were evaluated using the vLLM inference backend and support SGLang for video-based tasks. Frontend Automation and Long-Context Workflows Zhipu AI emphasized GLM-4.6V’s ability to support frontend development workflows. The model can: Replicate pixel-accurate HTML/CSS/JS from UI screenshots Accept natural language editing commands to modify layouts Identify and manipulate specific UI components visually This capability is integrated into an end-to-end visual programming interface, where the model iterates on layout, design intent, and output code using its native understanding of screen captures. In long-document scenarios, GLM-4.6V can process up to 128,000 tokens—enabling a single inference pass across: 150 pages of text (input) 200 slide decks 1-hour videos Zhipu AI reported successful use of the model in financial analysis across multi-document corpora and in summarizing full-length sports broadcasts with timestamped event detection. Training and Reinforcement Learning The model was trained using multi-stage pre-training followed by supervised fine-tuning (SFT) and reinforcement learning (RL). Key innovations include: Curriculum Sampling (RLCS): Dynamically adjusts the difficulty of training samples based on model progress Multi-domain reward systems: Task-specific verifiers for STEM, chart reasoning, GUI agents, video QA, and spatial grounding Function-aware training: Uses structured tags (e.g., <think>, <answer>, <|begin_of_box|>) to align reasoning and answer formatting The reinforcement learning pipeline emphasizes verifiable rewards (RLVR) over human feedback (RLHF) for scalability, and avoids KL/entropy losses to stabilize training across multimodal domains Pricing (API) Zhipu AI offers competitive pricing for the GLM-4.6V series, with both the flagship model and its lightweight variant positioned for high accessibility. GLM-4.6V: $0.30 (input) / $0.90 (output) per 1M tokens GLM-4.6V-Flash: Free Compared to major vision-capable and text-first LLMs, GLM-4.6V is among the most cost-efficient for multimodal reasoning at scale. Below is a comparative snapshot of pricing across providers: USD per 1M tokens — sorted lowest → highest total cost Previous Releases: GLM‑4.5 Series and Enterprise Applications Prior to GLM‑4.6V, Z.ai released the GLM‑4.5 family in mid-2025, establishing the company as a serious contender in open-source LLM development. The flagship GLM‑4.5 and its smaller sibling GLM‑4.5‑Air both support reasoning, tool use, coding, and agentic behaviors, while offering strong performance across standard benchmarks. The models introduced dual reasoning modes (“thinking” and “non-thinking”) and could automatically generate complete PowerPoint presentations from a single prompt — a feature positioned for use in enterprise reporting, education, and internal comms workflows. Z.ai also extended the GLM‑4.5 series with additional variants such as GLM‑4.5‑X, AirX, and Flash, targeting ultra-fast inference and low-cost scenarios. Together, these features position the GLM‑4.5 series as a cost-effective, open, and production-ready alternative for enterprises needing autonomy over model deployment, lifecycle management, and integration pipel Ecosystem Implications The GLM-4.6V release represents a notable advance in open-source multimodal AI. While large vision-language models have proliferated over the past year, few offer: Integrated visual tool usage Structured multimodal generation Agent-oriented memory and decision logic Zhipu AI’s emphasis on “closing the loop” from perception to action via native function calling marks a step toward agentic multimodal systems. The model’s architecture and training pipeline show a continued evolution of the GLM family, positioning it competitively alongside offerings like OpenAI’s GPT-4V and Google DeepMind’s Gemini-VL. Takeaway for Enterprise Leaders With GLM-4.6V, Zhipu AI introduces an open-source VLM capable of native visual tool use, long-context reasoning, and frontend automation. It sets new performance marks among models of similar size and provides a scalable platform for building agentic, multimodal AI systems .",
-      "title": "Z.ai debuts open source GLM-4.6V, a native tool-calling vision model",
-      "url": "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for",
-      "title_ko": "Zhipu AI, 도구 호출 기능 탑재한 오픈소스 멀티모달 비전 모델 'GLM-4.6V' 출시",
-      "summary": "중국 AI 스타트업 Zhipu AI(Z.ai)가 멀티모달 추론 및 프론트엔드 자동화에 최적화된 새로운 오픈소스 비전-언어 모델(VLM) 'GLM-4.6V' 시리즈(106B 및 9B)를 출시했습니다. 이 모델의 핵심 혁신은 VLM에 '네이티브 함수 호출(native function calling)' 기능을 도입하여, 시각적 입력(이미지, 영상)을 검색, 크롭, 차트 인식 등의 도구에 직접 파라미터로 전달할 수 있게 한 점입니다. GLM-4.6V는 128,000 토큰의 긴 컨텍스트 길이를 지원하며, 20개 이상의 벤치마크에서 SOTA 수준의 성능을 달성했으며, MIT 라이선스로 배포되어 기업의 상업적 이용에 높은 유연성을 제공합니다.",
-      "impact_score": 1.89,
-      "impact_evidence": {
-        "entity": {
-          "id": "TIER_Z_GENERAL_PARTICIPANT",
-          "weight": 1,
-          "reasoning": "Zhipu AI(Z.ai)는 OpenAI, Google DeepMind, Anthropic 등 생태계 지배자로 분류되는 TIER 1에 해당하지 않는, 영향력이 크지만 일반적 참여자로 분류되는 AI 스타트업이므로 TIER_Z_GENERAL_PARTICIPANT 가중치(1.0)를 적용합니다. (TIER 1 적용 규칙에 미달)."
-        },
-        "events": [
-          {
-            "id": "ACADEMIC_COMPETITION_WIN",
-            "weight": 0.74,
-            "reasoning": "TIER Z 주체인 Zhipu AI가 20개 이상의 벤치마크에서 SOTA 또는 근접한 성능을 달성한 비전-언어 모델을 출시하였으므로 ACADEMIC_COMPETITION_WIN 가중치(0.74)를 적용합니다. 이는 TIER Z 주체의 기술 성과 관련 Impact Event의 명시적 상한선입니다."
-          },
-          {
-            "id": "DAILY_UPDATE",
-            "weight": 0.15,
-            "reasoning": "VLM 모델의 새로운 버전 출시 및 기능 개선(네이티브 툴 호출 기능, 새로운 아키텍처)에 해당하므로 DAILY_UPDATE 가중치(0.15)를 적용합니다."
-          }
-        ]
-      },
-      "reasoning": "Zhipu AI의 새로운 VLM 모델 출시는 기술적 혁신(네이티브 함수 호출)을 구체적인 성능 지표(벤치마크 비교)와 함께 상세히 설명하여 품질 점수(V=5.5)를 높였습니다. 특히, 라이선스 정책 및 기술적 세부 사항에 대한 투명한 정보(SELF_CRITICISM_OR_TRADE_OFF)를 포함했습니다. TIER Z 주체의 성과 발표이므로 파급력 점수(IS=2.24)는 상대적으로 낮습니다.",
-      "tags": [
-        "LLM",
-        "OPEN_SOURCE",
-        "AGENTS"
-      ],
-      "evidence": {
-        "penalties": [],
-        "credits": [
-          {
-            "id": "COMPARATIVE_EVALUATION",
-            "value": 1.25
-          },
-          {
-            "id": "SELF_CRITICISM_OR_TRADE_OFF",
-            "value": 0.75
-          }
-        ],
-        "modifiers": []
-      },
-      "source_id": "venturebeat",
-      "original_title": "Z.ai debuts open source GLM-4.6V, a native tool-calling vision model",
-      "crawled_at": "2025-12-10T04:16:00.182157+00:00",
-      "zero_echo_score": 3,
-      "id": "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for",
-      "cols": 3,
-      "rows": 21,
-      "zeroEchoScore": 3,
-      "impactScore": 1.89
     },
     {
       "author": "Carl Franzen",
@@ -1389,7 +1323,71 @@
       "original_title": "Mistral launches powerful Devstral 2 coding model including open source, laptop-friendly version",
       "crawled_at": "2025-12-10T04:15:56.776297+00:00",
       "zero_echo_score": 3,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.737215",
       "id": "https://venturebeat.com/ai/mistral-launches-powerful-devstral-2-coding-model-including-open-source",
+      "cols": 3,
+      "rows": 21,
+      "zeroEchoScore": 3,
+      "impactScore": 1.89
+    },
+    {
+      "author": "Carl Franzen",
+      "image": "https://images.ctfassets.net/jdtwqhzvc2n1/c8LjxKPtjJumRUwmgig3W/3ceb88204d1ec334f3ce3719b80793eb/6Ud5A3f_99gyh14m2ffZr.jpg?w=800&amp;q=75",
+      "modified_at": "2025-12-09T01:24:17.800Z",
+      "published_at": "2025-12-08T20:03-05:00",
+      "text": "Chinese AI startup Zhipu AI aka Z.ai has released its GLM-4.6V series, a new generation of open-source vision-language models (VLMs) optimized for multimodal reasoning, frontend automation, and high-efficiency deployment. The release includes two models in \"large\" and \"small\" sizes: GLM-4.6V (106B), a larger 106-billion parameter model aimed at cloud-scale inference GLM-4.6V-Flash (9B), a smaller model of only 9 billion parameters designed for low-latency, local applications Recall that generally speaking, models with more parameters — or internal settings governing their behavior, i.e. weights and biases — are more powerful, performant, and capable of performing at a higher general level across more varied tasks. However, smaller models can offer better efficiency for edge or real-time applications where latency and resource constraints are critical. The defining innovation in this series is the introduction of native function calling in a vision-language model—enabling direct use of tools such as search, cropping, or chart recognition with visual inputs. With a 128,000 token context length (equivalent to a 300-page novel's worth of text exchanged in a single input/output interaction with the user) and state-of-the-art (SoTA) results across more than 20 benchmarks, the GLM-4.6V series positions itself as a highly competitive alternative to both closed and open-source VLMs. It's available in the following formats: Licensing and Enterprise Use GLM‑4.6V and GLM‑4.6V‑Flash are distributed under the MIT license, a permissive open-source license that allows free commercial and non-commercial use, modification, redistribution, and local deployment without obligation to open-source derivative works. This licensing model makes the series suitable for enterprise adoption, including scenarios that require full control over infrastructure, compliance with internal governance, or air-gapped environments. Model weights and documentation are publicly hosted on Hugging Face, with supporting code and tooling available on GitHub. The MIT license ensures maximum flexibility for integration into proprietary systems, including internal tools, production pipelines, and edge deployments. Architecture and Technical Capabilities The GLM-4.6V models follow a conventional encoder-decoder architecture with significant adaptations for multimodal input. Both models incorporate a Vision Transformer (ViT) encoder—based on AIMv2-Huge—and an MLP projector to align visual features with a large language model (LLM) decoder. Video inputs benefit from 3D convolutions and temporal compression, while spatial encoding is handled using 2D-RoPE and bicubic interpolation of absolute positional embeddings. A key technical feature is the system’s support for arbitrary image resolutions and aspect ratios, including wide panoramic inputs up to 200:1. In addition to static image and document parsing, GLM-4.6V can ingest temporal sequences of video frames with explicit timestamp tokens, enabling robust temporal reasoning. On the decoding side, the model supports token generation aligned with function-calling protocols, allowing for structured reasoning across text, image, and tool outputs. This is supported by extended tokenizer vocabulary and output formatting templates to ensure consistent API or agent compatibility. Native Multimodal Tool Use GLM-4.6V introduces native multimodal function calling, allowing visual assets—such as screenshots, images, and documents—to be passed directly as parameters to tools. This eliminates the need for intermediate text-only conversions, which have historically introduced information loss and complexity. The tool invocation mechanism works bi-directionally: Input tools can be passed images or videos directly (e.g., document pages to crop or analyze). Output tools such as chart renderers or web snapshot utilities return visual data, which GLM-4.6V integrates directly into the reasoning chain. In practice, this means GLM-4.6V can complete tasks such as: Generating structured reports from mixed-format documents Performing visual audit of candidate images Automatically cropping figures from papers during generation Conducting visual web search and answering multimodal queries High Performance Benchmarks Compared to Other Similar-Sized Models GLM-4.6V was evaluated across more than 20 public benchmarks covering general VQA, chart understanding, OCR, STEM reasoning, frontend replication, and multimodal agents. Z.ai GLM-4.6V benchmark comparison chart. Credit: Z.ai According to the benchmark chart released by Zhipu AI: GLM-4.6V (106B) achieves SoTA or near-SoTA scores among open-source models of comparable size (106B) on MMBench, MathVista, MMLongBench, ChartQAPro, RefCOCO, TreeBench, and more. GLM-4.6V-Flash (9B) outperforms other lightweight models (e.g., Qwen3-VL-8B, GLM-4.1V-9B) across almost all categories tested. The 106B model’s 128K-token window allows it to outperform larger models like Step-3 (321B) and Qwen3-VL-235B on long-context document tasks, video summarization, and structured multimodal reasoning. Example scores from the leaderboard include: MathVista: 88.2 (GLM-4.6V) vs. 84.6 (GLM-4.5V) vs. 81.4 (Qwen3-VL-8B) WebVoyager: 81.0 vs. 68.4 (Qwen3-VL-8B) Ref-L4-test: 88.9 vs. 89.5 (GLM-4.5V), but with better grounding fidelity at 87.7 (Flash) vs. 86.8 Both models were evaluated using the vLLM inference backend and support SGLang for video-based tasks. Frontend Automation and Long-Context Workflows Zhipu AI emphasized GLM-4.6V’s ability to support frontend development workflows. The model can: Replicate pixel-accurate HTML/CSS/JS from UI screenshots Accept natural language editing commands to modify layouts Identify and manipulate specific UI components visually This capability is integrated into an end-to-end visual programming interface, where the model iterates on layout, design intent, and output code using its native understanding of screen captures. In long-document scenarios, GLM-4.6V can process up to 128,000 tokens—enabling a single inference pass across: 150 pages of text (input) 200 slide decks 1-hour videos Zhipu AI reported successful use of the model in financial analysis across multi-document corpora and in summarizing full-length sports broadcasts with timestamped event detection. Training and Reinforcement Learning The model was trained using multi-stage pre-training followed by supervised fine-tuning (SFT) and reinforcement learning (RL). Key innovations include: Curriculum Sampling (RLCS): Dynamically adjusts the difficulty of training samples based on model progress Multi-domain reward systems: Task-specific verifiers for STEM, chart reasoning, GUI agents, video QA, and spatial grounding Function-aware training: Uses structured tags (e.g., <think>, <answer>, <|begin_of_box|>) to align reasoning and answer formatting The reinforcement learning pipeline emphasizes verifiable rewards (RLVR) over human feedback (RLHF) for scalability, and avoids KL/entropy losses to stabilize training across multimodal domains Pricing (API) Zhipu AI offers competitive pricing for the GLM-4.6V series, with both the flagship model and its lightweight variant positioned for high accessibility. GLM-4.6V: $0.30 (input) / $0.90 (output) per 1M tokens GLM-4.6V-Flash: Free Compared to major vision-capable and text-first LLMs, GLM-4.6V is among the most cost-efficient for multimodal reasoning at scale. Below is a comparative snapshot of pricing across providers: USD per 1M tokens — sorted lowest → highest total cost Previous Releases: GLM‑4.5 Series and Enterprise Applications Prior to GLM‑4.6V, Z.ai released the GLM‑4.5 family in mid-2025, establishing the company as a serious contender in open-source LLM development. The flagship GLM‑4.5 and its smaller sibling GLM‑4.5‑Air both support reasoning, tool use, coding, and agentic behaviors, while offering strong performance across standard benchmarks. The models introduced dual reasoning modes (“thinking” and “non-thinking”) and could automatically generate complete PowerPoint presentations from a single prompt — a feature positioned for use in enterprise reporting, education, and internal comms workflows. Z.ai also extended the GLM‑4.5 series with additional variants such as GLM‑4.5‑X, AirX, and Flash, targeting ultra-fast inference and low-cost scenarios. Together, these features position the GLM‑4.5 series as a cost-effective, open, and production-ready alternative for enterprises needing autonomy over model deployment, lifecycle management, and integration pipel Ecosystem Implications The GLM-4.6V release represents a notable advance in open-source multimodal AI. While large vision-language models have proliferated over the past year, few offer: Integrated visual tool usage Structured multimodal generation Agent-oriented memory and decision logic Zhipu AI’s emphasis on “closing the loop” from perception to action via native function calling marks a step toward agentic multimodal systems. The model’s architecture and training pipeline show a continued evolution of the GLM family, positioning it competitively alongside offerings like OpenAI’s GPT-4V and Google DeepMind’s Gemini-VL. Takeaway for Enterprise Leaders With GLM-4.6V, Zhipu AI introduces an open-source VLM capable of native visual tool use, long-context reasoning, and frontend automation. It sets new performance marks among models of similar size and provides a scalable platform for building agentic, multimodal AI systems .",
+      "title": "Z.ai debuts open source GLM-4.6V, a native tool-calling vision model",
+      "url": "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for",
+      "title_ko": "Zhipu AI, 도구 호출 기능 탑재한 오픈소스 멀티모달 비전 모델 'GLM-4.6V' 출시",
+      "summary": "중국 AI 스타트업 Zhipu AI(Z.ai)가 멀티모달 추론 및 프론트엔드 자동화에 최적화된 새로운 오픈소스 비전-언어 모델(VLM) 'GLM-4.6V' 시리즈(106B 및 9B)를 출시했습니다. 이 모델의 핵심 혁신은 VLM에 '네이티브 함수 호출(native function calling)' 기능을 도입하여, 시각적 입력(이미지, 영상)을 검색, 크롭, 차트 인식 등의 도구에 직접 파라미터로 전달할 수 있게 한 점입니다. GLM-4.6V는 128,000 토큰의 긴 컨텍스트 길이를 지원하며, 20개 이상의 벤치마크에서 SOTA 수준의 성능을 달성했으며, MIT 라이선스로 배포되어 기업의 상업적 이용에 높은 유연성을 제공합니다.",
+      "impact_score": 1.89,
+      "impact_evidence": {
+        "entity": {
+          "id": "TIER_Z_GENERAL_PARTICIPANT",
+          "weight": 1,
+          "reasoning": "Zhipu AI(Z.ai)는 OpenAI, Google DeepMind, Anthropic 등 생태계 지배자로 분류되는 TIER 1에 해당하지 않는, 영향력이 크지만 일반적 참여자로 분류되는 AI 스타트업이므로 TIER_Z_GENERAL_PARTICIPANT 가중치(1.0)를 적용합니다. (TIER 1 적용 규칙에 미달)."
+        },
+        "events": [
+          {
+            "id": "ACADEMIC_COMPETITION_WIN",
+            "weight": 0.74,
+            "reasoning": "TIER Z 주체인 Zhipu AI가 20개 이상의 벤치마크에서 SOTA 또는 근접한 성능을 달성한 비전-언어 모델을 출시하였으므로 ACADEMIC_COMPETITION_WIN 가중치(0.74)를 적용합니다. 이는 TIER Z 주체의 기술 성과 관련 Impact Event의 명시적 상한선입니다."
+          },
+          {
+            "id": "DAILY_UPDATE",
+            "weight": 0.15,
+            "reasoning": "VLM 모델의 새로운 버전 출시 및 기능 개선(네이티브 툴 호출 기능, 새로운 아키텍처)에 해당하므로 DAILY_UPDATE 가중치(0.15)를 적용합니다."
+          }
+        ]
+      },
+      "reasoning": "Zhipu AI의 새로운 VLM 모델 출시는 기술적 혁신(네이티브 함수 호출)을 구체적인 성능 지표(벤치마크 비교)와 함께 상세히 설명하여 품질 점수(V=5.5)를 높였습니다. 특히, 라이선스 정책 및 기술적 세부 사항에 대한 투명한 정보(SELF_CRITICISM_OR_TRADE_OFF)를 포함했습니다. TIER Z 주체의 성과 발표이므로 파급력 점수(IS=2.24)는 상대적으로 낮습니다.",
+      "tags": [
+        "LLM",
+        "OPEN_SOURCE",
+        "AGENTS"
+      ],
+      "evidence": {
+        "penalties": [],
+        "credits": [
+          {
+            "id": "COMPARATIVE_EVALUATION",
+            "value": 1.25
+          },
+          {
+            "id": "SELF_CRITICISM_OR_TRADE_OFF",
+            "value": 0.75
+          }
+        ],
+        "modifiers": []
+      },
+      "source_id": "venturebeat",
+      "original_title": "Z.ai debuts open source GLM-4.6V, a native tool-calling vision model",
+      "crawled_at": "2025-12-10T04:16:00.182157+00:00",
+      "zero_echo_score": 3,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.738752",
+      "id": "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for",
       "cols": 3,
       "rows": 21,
       "zeroEchoScore": 3,
@@ -1448,6 +1446,8 @@
       "original_title": "Brand-context AI: The missing requirement for marketing AI",
       "crawled_at": "2025-12-10T04:15:58.474802+00:00",
       "zero_echo_score": 3.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.738752",
       "id": "https://venturebeat.com/ai/brand-context-ai-the-missing-requirement-for-marketing-ai",
       "cols": 3,
       "rows": 22,
@@ -1500,6 +1500,8 @@
       "original_title": "Chinese AI firms build shadow workforce in Kenya using WhatsApp and mobile payments",
       "crawled_at": "2025-12-10T04:15:14.740109+00:00",
       "zero_echo_score": 2.94,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.735693",
       "id": "https://the-decoder.com/chinese-ai-firms-build-shadow-workforce-in-kenya-using-whatsapp-and-mobile-payments/",
       "cols": 3,
       "rows": 20,
@@ -1561,6 +1563,8 @@
       "original_title": "뉴엔AI, 6700만 SNS 빅데이터로 ‘식자재 가격 예측’ 모델 개발",
       "crawled_at": "2025-12-10T04:12:02.996140+00:00",
       "zero_echo_score": 3.88,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.725908",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204637",
       "cols": 3,
       "rows": 18,
@@ -1628,61 +1632,13 @@
       "original_title": "﻿코난, 설명 가능한 ‘XAI’ 도입 가속...&quot;신뢰성﻿·안전성 높인다&quot;",
       "crawled_at": "2025-12-10T04:12:02.747723+00:00",
       "zero_echo_score": 4.62,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.726416",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204655",
       "cols": 3,
       "rows": 18,
       "zeroEchoScore": 4.62,
       "impactScore": 2.33
-    },
-    {
-      "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/EOY_Collection_ss.max-1440x810.png",
-      "summary": "본 기사는 구글이 매년 발표하는 'Year in Search 2025'에 대한 간략한 소개를 담고 있다. 이는 한 해 동안 사람들이 무엇을, 그리고 어떻게 검색했는지에 대한 트렌드를 탐색하는 보고서이다. 기사의 내용은 검색어 결산 보고서에 대한 안내 외에 다른 구체적인 정보나 분석을 포함하고 있지 않다.",
-      "text": "Year in Search 2025: What and how we searched this year Learn more about Google’s Year in Search, which explores search trends from 2025.",
-      "title": "2025 at Google",
-      "url": "https://blog.google/technology/ai/look-back-2025/",
-      "title_ko": "구글 '2025년 검색어 결산': 올해의 검색 트렌드 분석",
-      "impact_score": 5.15,
-      "impact_evidence": {
-        "entity": {
-          "id": "TIER_1_ECOSYSTEM_RULERS",
-          "weight": 5,
-          "reasoning": "Google의 공식 연례 발표인 'Year in Search'에 대한 기사로, TIER 1 ECOSYSTEM RULERS의 '주도적인 공식 발표'로 간주되어 해당 가중치를 적용한다."
-        },
-        "events": [
-          {
-            "id": "DAILY_UPDATE",
-            "weight": 0.15,
-            "reasoning": "검색어 결산은 정례적인 연간 보고서 발표에 해당하므로 DAILY_UPDATE를 적용한다."
-          }
-        ]
-      },
-      "reasoning": "Google의 공식 발표(TIER 1)에 대한 기사로 영향력 점수는 높으나, 본문 내용이 보고서 제목 및 목적만 나열하고 그 이상의 실질적인 정보나 분석을 제공하지 않아(SHALLOW_REPORTING, FUTURE_PROMISE_ONLY) 품질 점수가 크게 하락하였다.",
-      "tags": [
-        "DAILY_UPDATE"
-      ],
-      "evidence": {
-        "penalties": [
-          {
-            "id": "FUTURE_PROMISE_ONLY",
-            "value": 1.5
-          },
-          {
-            "id": "SHALLOW_REPORTING",
-            "value": 1
-          }
-        ],
-        "credits": [],
-        "modifiers": []
-      },
-      "source_id": "google_ai_blog",
-      "original_title": "2025 at Google",
-      "crawled_at": "2025-12-10T02:55:18.345398+00:00",
-      "zero_echo_score": 7.5,
-      "id": "https://blog.google/technology/ai/look-back-2025/",
-      "cols": 3,
-      "rows": 15,
-      "zeroEchoScore": 7.5,
-      "impactScore": 5.15
     },
     {
       "image": "https://the-decoder.com/wp-content/uploads/2025/12/creatives_using_ai_unsure.jpeg",
@@ -1725,6 +1681,8 @@
       "original_title": "70% of creative professionals fear stigma over AI use, Anthropic study finds",
       "crawled_at": "2025-12-10T04:15:15.210278+00:00",
       "zero_echo_score": 3.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.736200",
       "id": "https://the-decoder.com/70-of-creative-professionals-hide-ai-use-from-colleagues-due-to-stigma-anthropic-study-finds/",
       "cols": 3,
       "rows": 20,
@@ -1784,6 +1742,8 @@
       "original_title": "Mistral's open coding model Devstral 2 claims sevenfold cost advantage over Claude Sonnet",
       "crawled_at": "2025-12-10T04:15:09.794748+00:00",
       "zero_echo_score": 5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.730568",
       "id": "https://the-decoder.com/mistrals-open-coding-model-devstral-2-claims-sevenfold-cost-advantage-over-claude-sonnet/",
       "cols": 3,
       "rows": 20,
@@ -1833,6 +1793,8 @@
       "original_title": "Transformer co-creator Vaswani unveils high-performance Rnj-1 coding model",
       "crawled_at": "2025-12-10T04:15:13.968133+00:00",
       "zero_echo_score": 4.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.734189",
       "id": "https://the-decoder.com/transformer-co-creator-vaswani-unveils-high-performance-rnj-1-coding-model/",
       "cols": 3,
       "rows": 20,
@@ -1893,6 +1855,8 @@
       "original_title": "머스크 &quot;3주 뒤 그록 4.2 출시...그록 5는 몇달 뒤&quot;",
       "crawled_at": "2025-12-10T17:29:19.173302+00:00",
       "edition": "251210_WED_1",
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.740567",
       "id": "https://www.aitimes.com/news/articleView.html?idxno=204679",
       "cols": 3,
       "rows": 16,
@@ -1900,53 +1864,133 @@
       "impactScore": 1.89
     },
     {
-      "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/airesearchsocial.max-1440x810.png",
-      "modified_at": "2025-12-09T17:25:41.311924+00:00",
-      "published_at": "2025-12-09T17:00:00+00:00",
-      "summary": "글로벌 경영진 및 지식 근로자 대상 설문조사에 따르면, AI 도입의 가장 큰 이점은 단순한 시간 절약이 아닌 잠재력 확대에 있다. AI를 통해 크게 변화한 조직들은 혁신 57% 증가, 작업 창의성 65% 향상 등의 실질적인 성과를 보고했다. 본 기사는 기업이 AI를 통해 시간 절약 단계를 넘어 혁신을 촉발하는 방법을 담은 연구 보고서의 주요 내용을 요약한다.",
-      "text": "A new global survey of executives, decision makers and knowledge workers reveals that organizations truly transforming with AI are seeing real results that move their businesses and allow employees to focus on meaningful work. The biggest gains from adopting AI aren’t about saving time — they’re about expanding potential. Highly transformed organizations surveyed report that AI: Increases innovation by 57% Decreases time spent on mundane tasks by 39% Improves work creativity by 65% Read the full research report, “Beyond AI Optimism: Five ways to move your business from saving time to sparking innovation,” or visit the Workspace blog for key takeaways.",
-      "title": "Learn more about AI in the workplace in our new research report.",
-      "url": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
-      "title_ko": "AI 도입, 시간 절약보다 혁신 잠재력 극대화: 글로벌 기업 임원 설문조사 결과",
-      "impact_score": 1.15,
+      "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/EOY_Collection_ss.max-1440x810.png",
+      "summary": "구글은 매년 검색 데이터를 분석하여 한 해의 트렌드를 요약하는 'Year in Search' 보고서를 발표합니다. 이 기사는 2025년의 검색어 트렌드와 검색 방식을 탐구한 구글의 연간 보고서에 대해 다루고 있습니다. 구체적인 검색 내용은 언급되지 않고, 단순한 보고서 발표 사실만을 전달하고 있습니다.",
+      "text": "Year in Search 2025: What and how we searched this year Learn more about Google’s Year in Search, which explores search trends from 2025.",
+      "title": "2025 at Google",
+      "url": "https://blog.google/technology/ai/look-back-2025/",
+      "title_ko": "구글, 2025년 검색 결산: 올해의 트렌드 분석",
+      "impact_score": 5.15,
       "impact_evidence": {
         "entity": {
-          "id": "TIER_Z_GENERAL_PARTICIPANT",
-          "weight": 1,
-          "reasoning": "특정 기업의 공식 발표가 아닌, '글로벌 설문조사' 및 '연구 보고서' 내용을 인용하는 기사로, 주체는 일반적인 '연구 기관/보고서'로 분류되어 TIER_Z_GENERAL_PARTICIPANT가 적용된다."
+          "id": "TIER_1_ECOSYSTEM_RULERS",
+          "weight": 5,
+          "reasoning": "주요 주체는 Google이며, 이는 Tier 1 Ecosystem Rulers에 해당한다."
         },
         "events": [
           {
             "id": "DAILY_UPDATE",
             "weight": 0.15,
-            "reasoning": "새로운 연구 보고서의 발표와 관련된 내용이지만, 광범위한 트렌드 보고 및 일반적 업데이트 성격에 가까워 DAILY_UPDATE를 적용한다."
+            "reasoning": "연례 보고서 발표는 일상적인 기업 업데이트/동향 보고로 분류된다."
           }
         ]
       },
-      "reasoning": "객관적인 설문조사 데이터를 인용하고 있지만, 원본 보고서의 깊이 있는 분석 없이 주요 통계 수치만 나열하는 얕은 보고(SHALLOW_REPORTING)로 판단되어 품질 점수가 하락했으며, 주체 및 사건의 영향력이 낮아(TIER_Z, DAILY_UPDATE) 영향력 점수가 낮게 산출되었다.",
+      "reasoning": "TIER 1 주체(Google)의 발표이므로 Impact Score(5.15)는 높게 책정되었으나, 기사 본문이 단순한 발표 사실을 넘어선 구체적 내용 없이 한 문장에 그쳐 Quality Score가 극도로 낮아져 ZeroNoise Score(8.5)가 매우 높게 산출되었다.",
       "tags": [
-        "WORK_IMPACT",
         "BIZ_STRATEGY"
       ],
       "evidence": {
         "penalties": [
           {
+            "id": "FUTURE_PROMISE_ONLY",
+            "value": 1.5
+          },
+          {
+            "id": "PRESS_RELEASE_TONE",
+            "value": 1.25
+          },
+          {
             "id": "SHALLOW_REPORTING",
             "value": 1
+          },
+          {
+            "id": "JARGON_OVERLOAD_OR_OBSCURITY",
+            "value": 0.75
           }
         ],
         "credits": [],
         "modifiers": []
       },
       "source_id": "google_ai_blog",
+      "original_title": "2025 at Google",
+      "crawled_at": "2025-12-10T04:08:43.296976+00:00",
+      "zero_echo_score": 9.5,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.724373",
+      "id": "https://blog.google/technology/ai/look-back-2025/",
+      "cols": 3,
+      "rows": 15,
+      "zeroEchoScore": 9.5,
+      "impactScore": 5.15
+    },
+    {
+      "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/airesearchsocial.max-1440x810.png",
+      "modified_at": "2025-12-09T17:25:41.311924+00:00",
+      "published_at": "2025-12-09T17:00:00+00:00",
+      "summary": "글로벌 경영진 및 지식 노동자를 대상으로 한 새로운 조사에 따르면, AI로 혁신하는 조직들은 단순한 시간 절약을 넘어선 실질적인 성과를 보고 있습니다. AI를 도입한 고도로 변화된 조직들은 혁신 57% 증가, 일상 업무 시간 39% 감소, 업무 창의성 65% 향상을 보고했습니다. 이는 AI 채택의 가장 큰 이점이 잠재력 확장임을 시사합니다.",
+      "text": "A new global survey of executives, decision makers and knowledge workers reveals that organizations truly transforming with AI are seeing real results that move their businesses and allow employees to focus on meaningful work. The biggest gains from adopting AI aren’t about saving time — they’re about expanding potential. Highly transformed organizations surveyed report that AI: Increases innovation by 57% Decreases time spent on mundane tasks by 39% Improves work creativity by 65% Read the full research report, “Beyond AI Optimism: Five ways to move your business from saving time to sparking innovation,” or visit the Workspace blog for key takeaways.",
+      "title": "Learn more about AI in the workplace in our new research report.",
+      "url": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
+      "title_ko": "AI, 단순 시간 절약 넘어 혁신 가속: 글로벌 경영진 설문 보고서",
+      "impact_score": 1.74,
+      "impact_evidence": {
+        "entity": {
+          "id": "TIER_Z_GENERAL_PARTICIPANT",
+          "weight": 1,
+          "reasoning": "기사에서 AI 도입의 효과를 보고하는 주체는 '경영진, 의사 결정권자, 지식 노동자'이며, 이는 특정 Tier 1~4 기업이 아닌 광범위한 일반 참가자로 분류된다."
+        },
+        "events": [
+          {
+            "id": "BIZ_STRATEGY_SHIFT",
+            "weight": 0.59,
+            "reasoning": "AI 도입으로 인한 업무 혁신 및 조직 변화에 대한 보고이므로, 비즈니스 전략 변화의 영향으로 볼 수 있다."
+          },
+          {
+            "id": "DAILY_UPDATE",
+            "weight": 0.15,
+            "reasoning": "새로운 리서치 보고서 발표라는 형식은 일상적인 업데이트 및 시장 동향 보고의 성격도 지닌다."
+          }
+        ]
+      },
+      "reasoning": "AI 도입의 긍정적 효과를 강조하는 조사 보고서이나, 구체적인 기술적 깊이나 정책 분석이 부재하고, 주체가 일반 참가자(TIER Z)에 해당하여 ZeroNoise Score(6.75)가 높고 Impact Score(1.74)는 낮게 산출되었다.",
+      "tags": [
+        "BIZ_STRATEGY",
+        "WORK_IMPACT"
+      ],
+      "evidence": {
+        "penalties": [
+          {
+            "id": "FUTURE_PROMISE_ONLY",
+            "value": 1.5
+          },
+          {
+            "id": "PRESS_RELEASE_TONE",
+            "value": 1.25
+          },
+          {
+            "id": "SHALLOW_REPORTING",
+            "value": 1
+          }
+        ],
+        "credits": [
+          {
+            "id": "ORIGINAL_DATA_SOURCE",
+            "value": 0.5
+          }
+        ],
+        "modifiers": []
+      },
+      "source_id": "google_ai_blog",
       "original_title": "Learn more about AI in the workplace in our new research report.",
-      "crawled_at": "2025-12-10T02:55:17.840830+00:00",
-      "zero_echo_score": 6,
+      "crawled_at": "2025-12-10T04:08:42.964848+00:00",
+      "zero_echo_score": 8.25,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.723869",
       "id": "https://blog.google/products/workspace/gemini-ai-workplace-research-report/",
       "cols": 3,
       "rows": 16,
-      "zeroEchoScore": 6,
-      "impactScore": 1.15
+      "zeroEchoScore": 8.25,
+      "impactScore": 1.74
     }
   ]
 }

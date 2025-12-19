@@ -1,0 +1,232 @@
+{
+  "article_id": "186841",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-18T15:33:45.741380+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204903_206298_628.jpg",
+  "modified_at": "2025-12-18T18:00:00+09:00",
+  "published_at": "2025-12-18T18:00:00+09:00",
+  "summary": "캘리포니아 행정법 판사는 Tesla의 '완전 자율 주행(FSD)' 명칭이 소비자를 기만한다고 판결했다. DMV는 60일 내 시정하지 않을 경우 30일간 판매 및 제조 허가를 정지하겠다고 경고했다. 이는 자율주행 용어 사용에 대한 법적 제동을 건 사례다.",
+  "text": "(사진=셔터스톡) 테슬라의 운전 보조 기능인 '완전 자율 주행(FSD)' 기능이 결국 허위 광고 판정을 받았다. 이에 따라 테슬라가 브랜드를 교체할지 관심이다. CNBC에 따르면, 미국 캘리포니아 행정법 판사는 테슬라의 '오토파일럿(Autopilot)'과 FSD 시스템 관련 마케팅이 기만적이었다고 판결, 캘리포니아주에서 자동차 판매와 제조 허가를 각각 30일간 정지할 것을 권고했다. 판사는 명령문에서 ”합리적인 소비자는 FSD 기능을 갖춘 차량이 운전자의 지속적이고 집중적인 주의 없이도 안전하게 주행할 수 있다고 믿을 가능성이 높다”라며 ″이는 기술적으로나 법적으로나 잘못된 것이며, 따라서 완전 자율 주행 기능이라는 명칭은 오해의 소지가 있다”라고 지적했다. 이에 따라 캘리포니아주 차량관리국(DMV)은 16일(현지시간) 판결을 채택, 테슬라가 과장 마케팅을 시정하지 않으면 일시적으로 영업이 금지될 수 있다고 경고했다. 60일 이내에 용어와 관련된 마케팅을 시정하지 않으면 판매 허가를 30일간 정지하겠다는 것이다. FSD(Full Self Driving)라는 브랜드는 이전부터 오해를 불러일으킬 소지가 크다는 지적을 받아왔다. 실제 기능은 운전자의 보조 정도에 머무는 레벨 2~3단계에 불과하다. 이에 따라 DMV는 2022년 8월 행정 판사에게 테슬라의 마케팅 관행을 검토하고 면허 정지가 정당한지 판단해 달라고 요청했다. DMV는 테슬라가 수년간 자율주행 시스템에 대해 허위적이고 오해의 소지가 있는 진술을 해왔으며, 차량이 완전히 자율 주행할 수 있는 것처럼 암시했지만 실제로는 자율 주행이 불가능했다고 주장했다. 테슬라는 고객을 오도했다는 주장을 부인하며, 운전자가 차량의 자율 주행 기능을 완전히 신뢰할 수 없다는 점을 항상 명확히 밝혔다고 반박했다. 이번 조치에 따라 테슬라는 운전자 보조 소프트웨어 브랜드를 변경해야 할 수도 있다. 이에 따라 테슬라의 홍보를 담당하는 FGS 글로벌은 성명을 통해 ″이번 조치는 ‘오토파일럿‘이라는 용어 사용과 관련된 소비자 보호 명령이었으며, 문제를 제기한 고객은 단 한명도 없었다. 캘리포니아에서의 판매는 중단 없이 계속될 것”이라고 밝혔다. 한편, 더 버지에 따르면 에드 마키 매사추세츠 상원의원은 17일 테슬라 FSD 등 2단계 이상의 자율주행 시스템 운행을 특정 도로로 제한하는 '스테이 인 유어 레인 법안(Stay in Your Lane Act)' 발의했다. 이에 따라 테슬라와 제너럴 모터스(GM), 포드 등 자율주행차를 개발 중인 업체들이 앞으로 특정 도로에서만 자율주행 기능을 사용할 수 있도록 제한될 지도 관심이다. 임대준 기자 ydj@aitimes.com",
+  "title": "테슬라, '완전 자율 주행' 기능 허위 마케팅 판정...&quot;명칭 안 바꾸면 판매 정지&quot;",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204903",
+  "title_ko": "Tesla 'FSD' 허위 광고 판정, 캘리포니아 판매 정지 경고",
+  "tags": [],
+  "impact_score": 7.0,
+  "IS_Analysis": {
+    "Score_Commentary": "[GIP 적용] Tesla는 Hardware Supply Tier Map에 명시되지 않았으나, AI/Robotics 분야의 Market Dominance를 고려하여 Tier 2(Big Tech급)로 유추 적용. SE는 국가 행정기관(CA DMV)으로 Nation Body(T1)의 집행 기구로 간주. ",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P1 (법적/윤리적 책임)",
+          "Pe_Entity_Name": "Tesla",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "California DMV",
+          "Se_Tier": 1,
+          "Selection_Reason": "사건의 핵심 쟁점이 '법적 제재 및 허위 광고'이며 Tesla가 피규제 대상임(P1)."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 1,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 2,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 2,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 2,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 4
+      }
+    },
+    "Final_IS_Score": 7
+  },
+  "zero_echo_score": 4.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 6,
+      "T3": 9,
+      "Rationale": "판결 내용, 구체적 제재 수위(30일 정지) 등 팩트 중심."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 3,
+      "P3": 2,
+      "Rationale": "양측의 주장이 대립하나 균형 있게 서술됨."
+    },
+    "Utility": {
+      "V1": 7,
+      "V2": 8,
+      "V3": 6,
+      "Rationale": "자율주행 규제 환경 변화를 예고하는 중요 정보."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": ""
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "186841",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "Tesla 'FSD' 허위 광고 판정, 캘리포니아 판매 정지 경고",
+      "Summary": "캘리포니아 행정법 판사는 Tesla의 '완전 자율 주행(FSD)' 명칭이 소비자를 기만한다고 판결했다. DMV는 60일 내 시정하지 않을 경우 30일간 판매 및 제조 허가를 정지하겠다고 경고했다. 이는 자율주행 용어 사용에 대한 법적 제동을 건 사례다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "[GIP 적용] Tesla는 Hardware Supply Tier Map에 명시되지 않았으나, AI/Robotics 분야의 Market Dominance를 고려하여 Tier 2(Big Tech급)로 유추 적용. SE는 국가 행정기관(CA DMV)으로 Nation Body(T1)의 집행 기구로 간주. ",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P1 (법적/윤리적 책임)",
+            "Pe_Entity_Name": "Tesla",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "California DMV",
+            "Se_Tier": 1,
+            "Selection_Reason": "사건의 핵심 쟁점이 '법적 제재 및 허위 광고'이며 Tesla가 피규제 대상임(P1)."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 1,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 2,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 2,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 2,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 4
+        }
+      },
+      "Final_IS_Score": 7
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 6,
+        "T3": 9,
+        "Rationale": "판결 내용, 구체적 제재 수위(30일 정지) 등 팩트 중심."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "양측의 주장이 대립하나 균형 있게 서술됨."
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 8,
+        "V3": 6,
+        "Rationale": "자율주행 규제 환경 변화를 예고하는 중요 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": ""
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "테슬라, '완전 자율 주행' 기능 허위 마케팅 판정...&quot;명칭 안 바꾸면 판매 정지&quot;",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 6.0,
+        "T3": 9.0,
+        "S_Avg": 7.67
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 3.0,
+        "P3": 2.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 7.0,
+        "V2": 8.0,
+        "V3": 6.0,
+        "U_Avg": 7.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 4.63,
+      "ZS_Final": 4.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 6,
+        "T3": 9,
+        "Rationale": "판결 내용, 구체적 제재 수위(30일 정지) 등 팩트 중심."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "양측의 주장이 대립하나 균형 있게 서술됨."
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 8,
+        "V3": 6,
+        "Rationale": "자율주행 규제 환경 변화를 예고하는 중요 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": ""
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 1.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.0,
+        "Criticality_Total": 2.0,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 7.0,
+      "IS_Final": 7.0,
+      "Score_Commentary": "[GIP 적용] Tesla는 Hardware Supply Tier Map에 명시되지 않았으나, AI/Robotics 분야의 Market Dominance를 고려하여 Tier 2(Big Tech급)로 유추 적용. SE는 국가 행정기관(CA DMV)으로 Nation Body(T1)의 집행 기구로 간주. "
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P1 (법적/윤리적 책임)",
+      "Pe_Entity_Name": "Tesla",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "California DMV",
+      "Se_Tier": 1,
+      "Selection_Reason": "사건의 핵심 쟁점이 '법적 제재 및 허위 광고'이며 Tesla가 피규제 대상임(P1)."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 2,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 2,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 2,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "crawled_at": "2025-12-18T15:52:26.859083+00:00",
+  "edition": "251218_THU_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-18T16:57:06.174511+00:00",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.149398+00:00",
+  "staged": true,
+  "category": "Business",
+  "dedup_status": "selected"
+}

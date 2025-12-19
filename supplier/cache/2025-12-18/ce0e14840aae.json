@@ -17,7 +17,7 @@
     "Academic Service",
     "Product Launch"
   ],
-  "impact_score": 3.8,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Liner",
@@ -44,7 +44,7 @@
       "Score_Justification": "Startup launching a utility tool. Useful but low global impact magnitude."
     }
   },
-  "zero_echo_score": 6.1,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0.75,
@@ -203,5 +203,6 @@
   "saved_at": "2025-12-16T09:17:16.501395+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

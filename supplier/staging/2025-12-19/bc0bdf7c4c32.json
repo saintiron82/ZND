@@ -1,0 +1,232 @@
+{
+  "article_id": "bc0bdf",
+  "cached_at": "2025-12-18T15:33:44.879108+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/openai-aws.png",
+  "published_at": "Wed, 17 Dec 2025 16:21:53 GMT",
+  "summary": "아마존이 OpenAI에 100억 달러 투자를 고려 중이며, 이는 OpenAI가 아마존의 AI 칩을 사용하는 조건부 거래가 될 전망이다. 양사 간 자본과 기술의 순환적 거래 구조 가능성이 제기된다.",
+  "text": "Max is the managing editor of THE DECODER, bringing his background in philosophy to explore questions of consciousness and whether machines truly think or just pretend to. Amazon is reportedly in talks to invest at least $10 billion in OpenAI. According to three people familiar with the discussions who spoke to The Information, the deal would push OpenAI's valuation past $500 billion. The influx of cash is intended to help OpenAI cover its massive server costs, including a recently agreed-upon $38 billion deal with Amazon Web Services (AWS). As part of the arrangement, OpenAI would commit to using Amazon's proprietary \"Trainium\" AI chips rather than relying solely on Nvidia hardware. Ad The companies are also discussing the possibility of turning ChatGPT into a shopping platform. However, Microsoft's exclusive rights to sell OpenAI models to cloud customers could limit Amazon's options here. Talks reportedly began in October following OpenAI's corporate restructuring but haven't concluded yet. OpenAI remains in urgent need of capital, as the company expects to burn through more than $100 billion over the next four years. Ad",
+  "title": "The $10 billion loop: Amazon could pay OpenAI so OpenAI can pay Amazon",
+  "url": "https://the-decoder.com/the-10-billion-loop-amazon-could-pay-openai-so-openai-can-pay-amazon/",
+  "title_ko": "아마존, OpenAI 칩 구매 조건으로 100억 달러 투자 논의",
+  "tags": [],
+  "impact_score": 6.0,
+  "IS_Analysis": {
+    "Score_Commentary": "GIP 적용: Amazon은 클라우드 시장 지배력을 근거로 Tier 1으로 간주. PE(Amazon)와 SE(OpenAI) 간의 Tier 1 대형 거래 가능성이지만, 아직 논의(Y1) 단계라 Scope 점수는 낮게 책정됨.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Amazon",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "OpenAI",
+          "Se_Tier": 1,
+          "PE/SE 선정이유": "PE: 자금 집행(투자)의 주체. SE: 투자의 수혜자이자 칩 사용 의무자(협력 관계)."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 2,
+        "IW_Score": 5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 0.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 7.5,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 4,
+      "T2": 2,
+      "T3": 4,
+      "Rationale": "익명 소스 기반 보도이나 구체적 거래 조건(칩 사용) 언급."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 1,
+      "P3": 0,
+      "Rationale": "추측성 어조('could', 'reportedly') 다수."
+    },
+    "Utility": {
+      "V1": 7,
+      "V2": 1,
+      "V3": 4,
+      "Rationale": "빅테크 간 역학 관계 변화를 시사하는 중요 정보이나 확정된 사실 아님."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "루머 단계의 기사로서 표준적인 품질."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "bc0bdf",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "아마존, OpenAI 칩 구매 조건으로 100억 달러 투자 논의",
+      "Summary": "아마존이 OpenAI에 100억 달러 투자를 고려 중이며, 이는 OpenAI가 아마존의 AI 칩을 사용하는 조건부 거래가 될 전망이다. 양사 간 자본과 기술의 순환적 거래 구조 가능성이 제기된다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "GIP 적용: Amazon은 클라우드 시장 지배력을 근거로 Tier 1으로 간주. PE(Amazon)와 SE(OpenAI) 간의 Tier 1 대형 거래 가능성이지만, 아직 논의(Y1) 단계라 Scope 점수는 낮게 책정됨.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Amazon",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "OpenAI",
+            "Se_Tier": 1,
+            "PE/SE 선정이유": "PE: 자금 집행(투자)의 주체. SE: 투자의 수혜자이자 칩 사용 의무자(협력 관계)."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 2,
+          "IW_Score": 5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 0.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 2,
+        "T3": 4,
+        "Rationale": "익명 소스 기반 보도이나 구체적 거래 조건(칩 사용) 언급."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 0,
+        "Rationale": "추측성 어조('could', 'reportedly') 다수."
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 1,
+        "V3": 4,
+        "Rationale": "빅테크 간 역학 관계 변화를 시사하는 중요 정보이나 확정된 사실 아님."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "루머 단계의 기사로서 표준적인 품질."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "The $10 billion loop: Amazon could pay OpenAI so OpenAI can pay Amazon",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 4.0,
+        "T2": 2.0,
+        "T3": 4.0,
+        "S_Avg": 3.33,
+        "Rationale": "익명 소스 기반 보도이나 구체적 거래 조건(칩 사용) 언급."
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 1.0,
+        "P3": 0.0,
+        "N_Avg": 1.0,
+        "Rationale": "추측성 어조('could', 'reportedly') 다수."
+      },
+      "Utility": {
+        "V1": 7.0,
+        "V2": 1.0,
+        "V3": 4.0,
+        "U_Avg": 4.0,
+        "Rationale": "빅테크 간 역학 관계 변화를 시사하는 중요 정보이나 확정된 사실 아님."
+      },
+      "Fine_Adjustment": 0.0,
+      "Fine_Reason": "루머 단계의 기사로서 표준적인 품질.",
+      "ZS_Raw": 7.53,
+      "ZS_Final": 7.5
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 2,
+        "T3": 4,
+        "Rationale": "익명 소스 기반 보도이나 구체적 거래 조건(칩 사용) 언급."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 0,
+        "Rationale": "추측성 어조('could', 'reportedly') 다수."
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 1,
+        "V3": 4,
+        "Rationale": "빅테크 간 역학 관계 변화를 시사하는 중요 정보이나 확정된 사실 아님."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "루머 단계의 기사로서 표준적인 품질."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 2.0,
+        "IW_Total": 5.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 0.5,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 6.0,
+      "IS_Final": 6.0,
+      "Score_Commentary": "GIP 적용: Amazon은 클라우드 시장 지배력을 근거로 Tier 1으로 간주. PE(Amazon)와 SE(OpenAI) 간의 Tier 1 대형 거래 가능성이지만, 아직 논의(Y1) 단계라 Scope 점수는 낮게 책정됨."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Amazon",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "OpenAI",
+      "Se_Tier": 1,
+      "PE/SE 선정이유": "PE: 자금 집행(투자)의 주체. SE: 투자의 수혜자이자 칩 사용 의무자(협력 관계)."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 0.5,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-18T15:41:11.909060+00:00",
+  "status": "worthless",
+  "reason": "high_noise (7.5 >= 7.0)",
+  "version": "V1.0",
+  "rejected": false,
+  "staged_at": "2025-12-18T16:28:02.195271+00:00",
+  "staged": true,
+  "category": "Business",
+  "dedup_status": "selected"
+}

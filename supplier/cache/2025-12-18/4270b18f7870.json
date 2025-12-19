@@ -13,7 +13,7 @@
     "Compensation",
     "Talent War"
   ],
-  "impact_score": 5.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "OpenAI",
@@ -40,7 +40,7 @@
       "Score_Justification": "Tier 1 기업의 내부 정책 변경이나, 업계 인재 전쟁(Biz Impact)에 미치는 영향을 고려함."
     }
   },
-  "zero_echo_score": 2.0,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -193,5 +193,6 @@
   "saved_at": "2025-12-16T09:52:40.779185+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

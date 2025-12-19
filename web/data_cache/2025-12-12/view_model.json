@@ -1,6 +1,124 @@
 {
-  "generated_at": "2025-12-12T01:22:54.410Z",
+  "generated_at": "2025-12-19T12:15:07.860Z",
   "articles": [
+    {
+      "title": "오픈AI, 디즈니와 '소라' 라이선스 계약·10억달러 투자 유치",
+      "summary": "오픈AI가 월트디즈니컴퍼니와 전략적 파트너십을 체결하고, 미키 마우스와 마블, 스타워즈 등 디즈니의 대표 지식재산(IP)을 '소라'에서 공식 사용하도록 했다. 오픈AI는 11일(현지시간) 디즈니가 대표 캐릭터들을 오픈AI의 AI 영상 플랫폼 ‘소라(Sora)’에서 활용할 수 있도록 라이선스를 제공하며, 동시에 10억달러(약 1조4000억원) 규모의 지분 투자 유치한다고 발표했다.이번 3년간의 라이선싱 계약에 따라 소라 사용자들은 2026년 초부터 미키 마우스, 신데렐라, 아이언맨, 다스베이더 등 디즈니·픽사·마블·스타워즈 프랜차이즈",
+      "published_at": "2025-12-12T13:15:31+09:00",
+      "modified_at": "2025-12-12T13:15:31+09:00",
+      "author": [
+        "박찬 기자"
+      ],
+      "image": "https://cdn.aitimes.com/news/photo/202512/204734_206071_115.png",
+      "text": "(사진=오픈AI) 오픈AI가 월트디즈니컴퍼니와 전략적 파트너십을 체결하고, 미키 마우스와 마블, 스타워즈 등 디즈니의 대표 지식재산(IP)을 '소라'에서 공식 사용하도록 했다. 오픈AI는 11일(현지시간) 디즈니가 대표 캐릭터들을 오픈AI의 AI 영상 플랫폼 ‘소라(Sora)’에서 활용할 수 있도록 라이선스를 제공하며, 동시에 10억달러(약 1조4000억원) 규모의 지분 투자 유치한다고 발표했다. 이번 3년간의 라이선싱 계약에 따라 소라 사용자들은 2026년 초부터 미키 마우스, 신데렐라, 아이언맨, 다스베이더 등 디즈니·픽사·마블·스타워즈 프랜차이즈의 200개 이상 캐릭터를 활용한 영상을 생성할 수 있게 된다. 다만, 배우의 얼굴이나 음성 등 ‘실제 인물의 초상권 및 음성’은 라이선스 범위에 포함되지 않는다. 예를 들어 소라 영상에 ‘토이 스토리’의 우디는 등장할 수 있지만, 톰 행크스의 실제 음성은 사용할 수 없다. 디즈니는 이번 협력과 함께 오픈AI의 주요 고객으로 자리잡게 됐다. 사내 워크플로우에 '챗GPT'를 도입하고 새로운 콘텐츠 제작 및 고객 경험 도구에 오픈AI 기술을 활용할 예정이다. 디즈니+에는 소라로 생성된 영상 중 선별된 콘텐츠가 큐레이션돼 공개된다. 또 디즈니는 오픈AI의 추가 지분을 매입할 수 있는 옵션도 확보했다. 밥 아이거 디즈니 CEO는 CNBC 와의 인터뷰에서 ”오픈AI 에 대한 10억달러 지분 투자는 AI 분야로 진출하는 통로가 될 것”이라고 말했다. 또 ”어떤 세대도 기술 발전을 막을 수 없었고, 우리도 그럴 생각은 없다”라며 ”현재의 사업 모델을 뒤흔드는 것을 포함해서라도 우리는 그 흐름에 동참해야 한다고 항상 생각해 왔다”라고 강조했다. 샘 알트먼 오픈AI CEO는 “디즈니 캐릭터에 대한 수요는 압도적으로 높다”라며 “이번 파트너십을 통해 소라와 챗GPT 이미지의 경험을 한 단계 끌어올릴 것”이라고 말했다. 그러나 디즈니는 이날 구글이 캐릭터와 콘텐츠를 무단으로 AI 모델 학습에 활용했다며 법적 효력이 있는 ‘중단 및 금지’(cease-and-desist) 서한을 보냈다. 또 \"구글은 마치 가상 자판기처럼 디즈니의 소중한 저작권 캐릭터 및 기타 저작물을 대량으로 복제, 렌더링 및 배포할 수 있다\"라며, 제미나이가 생성한 이미지가 저작권을 훼손한다고 경고했다. 앞서 디즈니는 유니버설과 함께 이미지 생성 AI 미드저니를 저작권 침해로 고소하기도 했으며, 캐릭터닷AI와 같은 스타트업에도 무단 사용 중단을 요구한 바 있다. 이처럼 오픈AI는 기존 뉴스 매체와의 파트너십을 넘어, 이제는 동영상이나 이미지 관련으로 저작권 해결을 확대하고 있다. 동영상이나 이미지 생성 도구가 큰 인기를 끌며, 이 분야에서도 본격적인 파트너십이 이뤄질 것으로 예측된다. 박찬 기자 cpark@aitimes.com",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204734",
+      "title_ko": "(사진=오픈AI) 오픈AI가 월트디즈니컴퍼니와 전략적 파트너십을 체결하고, 미키 마우스와 마블, 스타워즈 등 디즈니의 대표 지식재산(IP)을 '소라'에서 공식 사용하도록 했다.",
+      "article_id": "cbf2ef",
+      "summary_ko": "오픈AI가 월트디즈니와 3년 전략적 파트너십을 체결하고 디즈니의 200여 캐릭터를 AI 영상 플랫폼 '소라'에서 공식 활용하도록 라이선스를 부여했다. 오픈AI는 디즈니로부터 10억 달러 투자를 유치했으며 디즈니+에 소라 콘텐츠가 큐레이션된다. 디즈니는 별도로 구글에 저작권 중단 서한을 보냈다.",
+      "tags": [
+        "AGENTIC_AI",
+        "BIZ_IMPACT",
+        "MODEL_RELEASE"
+      ],
+      "Impact": {
+        "impact_score": 9,
+        "impact_evidence": {
+          "entity": {
+            "id": "TIER_1_ECOSYSTEM_RULERS",
+            "weight": 4
+          },
+          "events": [
+            {
+              "id": "STRATEGIC_ENTERPRISE_ADOPTION",
+              "weight": 3
+            },
+            {
+              "id": "MAJOR_PRODUCT_INTEGRATION",
+              "weight": 2
+            }
+          ]
+        },
+        "impact_review_ko": "높은 영향력(9.0): 오픈AI(티어1)와 디즈니의 파트너십으로 Sora의 대규모 상용화와 디즈니+ 배포가 예상되어 엔티티(4.0)+기업도입(3.0)+제품통합(2.0)을 반영.",
+        "impact_review_en": "High impact (9.0): Tier-1 OpenAI partnering with Disney enables broad Sora adoption and Disney+ distribution; scored as entity 4.0 + enterprise adoption 3.0 + product integration 2.0."
+      },
+      "ZeroEcho": {
+        "ZeroEchoScore": 8.5,
+        "credits": [],
+        "penalties": [
+          {
+            "id": "MARKETING_FLUFF",
+            "value": 1.5
+          },
+          {
+            "id": "EXAGGERATED_NARRATIVE",
+            "value": 1.2
+          },
+          {
+            "id": "NON_TECHNICAL_FOCUS",
+            "value": 0.8
+          }
+        ],
+        "modifiers": [],
+        "zeroechoscore_review_ko": "기술적 근거와 재현 가능한 자산 부재, 경영진 홍보성 발언과 비즈니스 중심 서술이 많아 신뢰도 낮음(점수 상승).",
+        "zeroechoscore_review_en": "High noise (8.5): lacks reproducible assets and technical transparency, leans on promotional quotes and business framing rather than verifiable technical evidence."
+      },
+      "impact_score": 9,
+      "impact_evidence": {
+        "entity": {
+          "id": "TIER_1_ECOSYSTEM_RULERS",
+          "weight": 4
+        },
+        "events": [
+          {
+            "id": "STRATEGIC_ENTERPRISE_ADOPTION",
+            "weight": 3
+          },
+          {
+            "id": "MAJOR_PRODUCT_INTEGRATION",
+            "weight": 2
+          }
+        ]
+      },
+      "impact_review_ko": "높은 영향력(9.0): 오픈AI(티어1)와 디즈니의 파트너십으로 Sora의 대규모 상용화와 디즈니+ 배포가 예상되어 엔티티(4.0)+기업도입(3.0)+제품통합(2.0)을 반영.",
+      "impact_review_en": "High impact (9.0): Tier-1 OpenAI partnering with Disney enables broad Sora adoption and Disney+ distribution; scored as entity 4.0 + enterprise adoption 3.0 + product integration 2.0.",
+      "zero_echo_score": 1.5,
+      "evidence": {
+        "penalties": [
+          {
+            "id": "MARKETING_FLUFF",
+            "value": 1.5
+          },
+          {
+            "id": "EXAGGERATED_NARRATIVE",
+            "value": 1.2
+          },
+          {
+            "id": "NON_TECHNICAL_FOCUS",
+            "value": 0.8
+          }
+        ],
+        "credits": [],
+        "modifiers": []
+      },
+      "zeroechoscore_review_ko": "기술적 근거와 재현 가능한 자산 부재, 경영진 홍보성 발언과 비즈니스 중심 서술이 많아 신뢰도 낮음(점수 상승).",
+      "zeroechoscore_review_en": "High noise (8.5): lacks reproducible assets and technical transparency, leans on promotional quotes and business framing rather than verifiable technical evidence.",
+      "score_corrected": true,
+      "source_id": "aitimes",
+      "crawled_at": "2025-12-12T05:45:43.124726+00:00",
+      "original_title": "오픈AI, 디즈니와 '소라' 라이선스 계약·10억달러 투자 유치",
+      "edition": "251212_FRI_1",
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.752019",
+      "id": "https://www.aitimes.com/news/articleView.html?idxno=204734",
+      "cols": 10,
+      "rows": 14,
+      "zeroEchoScore": 1.5,
+      "impactScore": 9,
+      "awards": [
+        "Today's Headline",
+        "Hot Topic"
+      ]
+    },
     {
       "title": "모티프, 글로벌 모델 성능 평가서 11위...”12.7B 규모로 이뤄낸 성과”",
       "summary": "모티프테크놀로지스의 자체 개발 대형언어모델 모티프 12.7B가 AA의 지능순위에서 11위를 차지했다. 400GPU·5.5T 토큰의 비교적 적은 자원으로도 높은 성능을 입증했고, 그룹 차등 어텐션과 뮤온 옵티마이저 등 독자 기술이 핵심 요인으로 꼽힌다. AA는 수학적 추론과 에이전트 기능에서 강점을 언급하며 올해 주목할 만한 모델로 소개했다.",
@@ -67,17 +185,130 @@
       "crawled_at": "2025-12-12T01:20:59.418668+00:00",
       "original_title": "모티프, 글로벌 모델 성능 평가서 11위...”12.7B 규모로 이뤄낸 성과”",
       "edition": "251212_FRI_1",
-      "id": "aitimes_db8b2639",
-      "score": 0,
-      "cols": 10,
-      "rows": 11,
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.752524",
+      "id": "https://www.aitimes.com/news/articleView.html?idxno=204718",
+      "cols": 3,
+      "rows": 16,
       "zeroEchoScore": 0,
       "impactScore": 5,
       "awards": [
-        "Today's Headline",
-        "Zero Noise Award",
-        "Hot Topic"
+        "Zero Noise Award"
       ]
+    },
+    {
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204735",
+      "source_id": "aitimes",
+      "title": "카카오, 멀티모달모델 개발 과정·성능 공개...”한국형 서비스에 특화”",
+      "text": "(사진=카카오) 카카오(대표 정신아)는 12일 공식 테크블로그를 통해 ▲한국적 맥락 이해에 최적화된 통합 멀티모달 언어모델 ‘카나나-o(Kanana-o)’ ▲멀티모달 임베딩 모델 ‘카나나-v-임베딩(Kanana-v-embedding)’의 개발 과정과 성능을 공개했다. 지난 5월 처음 공개한 카나나-o는 텍스트, 음성, 이미지를 동시 이해하고 실시간으로 답변하는 통합 멀티모달 언어모델이다. 글로벌 모델보다 한국어 맥락 이해에 뛰어난 성능을 보였으며, 사람처럼 자연스럽고 풍부한 표현력을 갖추고 있는 것을 특징으로 소개했다. 공개 이후 음성 인식과 음성 합성, 감정 인식에 대한 성능을 유지하며 멀티모달 지시 이행, 발화 표현력 등을 꾸준히 개선했다고 전했다. 이에 따라 사용자 의도를 정확하게 파악하는 것은 물론, 풍부한 표현이 가능해졌다는 설명이다. 자체 구축 데이터셋으로 학습을 진행한 것이 핵심이라고 전했다. 단순 질의응답을 넘어서 요약, 감정 및 의도 해석, 오류 수정, 형식 변환, 번역 등 과업을 수행할 수 있도록 성능을 끌어올렸다고 강조했다. 또, 고품질 음성 데이터와 직접 선호 최적화(DPO) 기술을 적용해 억양, 감정, 호흡 등을 정교하게 학습시켰다는 설명이다. 미세한 음색과 어조 변화 등에 따른 감정 표현 능력까지 향상하기 위해 호스트와 게스트가 대화를 주고받는 ‘팟캐스트’ 형태의 데이터셋을 구축했다. 그 결과, 끊김 없이 자연스럽게 이어지는 멀티 턴(Multi-turn) 대화도 가능해졌다고 전했다. 벤치마크 평가 결과, 카나나-o는 영어 음성 성능에서 'GPT-4o'나 '제미나이 2.5 프로' 등에 비하면 약간 부족한 성능을 보였지만, 한국어 음성 인식 및 합성, 감정 인식 능력에서는 월등히 높은 수준을 기록했다. 앞으로는 더 자연스러운 동시 대화(Full-duplex)와 상황에 맞는 사운드스케이프(Soundscape, 소리환경)를 실시간 생성할 수 있는 진화된 모델로 발전시킬 예정이다. (사진=카카오) 이번에 공개된 ‘카나나-v-임베딩’은 이미지 검색의 핵심 기술로, 텍스트와 이미지를 동시에 이해 및 처리할 수 있는 한국형 멀티모달 모델이다. 텍스트로 이미지를 검색하거나, 사용자가 선택한 이미지와 관련된 정보를 검색, 이미지가 포함된 문서 검색 등을 지원한다. 실제 서비스 적용을 목표로 개발된 만큼, 한국어와 한국 문화에 대한 이해도가 탁월하다는 설명이다. ‘경복궁’이나 ‘붕어빵’ 같은 고유명사는 물론, 오타가 포함된 단어도 문맥을 파악해 정확한 이미지를 찾아준다고 전했다. 또, '한복 입고 찍은 단체 사진'처럼 복합적인 조건도 정확히 이해, 조건 일부에만 해당하는 사진을 걸러낼 수 있는 변별력을 갖췄다고 전했다. 이를 위해 한국어 멀티모달 데이터셋 ‘KoEmbed’를 구축했다. 기존 공개 데이터셋들은 대부분 영어 중심이라 한국어 서비스 환경을 충분히 반영하지 못했다는 것이다. 이를 보온하기 위해 Sent, Word, Count, Place, Simlmg 등 5가지 세부 데이터셋을 구축했다. 이 모델은 현재 카카오 내부에서 광고 소재의 유사도를 분석하고 심사하는 시스템에 적용돼 있다. 이후 비디오나 음성으로 범위를 확대해 더 다양한 서비스에도 적용할 계획이다. (사진=카카오) 한편, 카카오는 고성능 고효율 모델인 ‘카나나-2’의 개발도 준비하고 있다. 온디바이스 구동 모델에 초점을 맞췄다. 김병학 카카오 카나나 성과 리더는 “자체 AI 모델 카나나는 단순 정보 나열 수준을 넘어, 사용자의 감정을 이해하며 친숙하고 자연스럽게 대화하는 AI가 될 수 있도록 한국적 맥락의 이해와 표현력을 높여가고자 한다”라며 “실제 서비스 환경을 통해 사용자들의 일상 속 AI 기술 경험을 만들어 나가고, 사람처럼 상호작용 할 수 있는 AI의 구현에 주력해 갈 것”이라고 말했다. 자세한 내용은 카카오 테크블로그에서 확인할 수 있다. 장세민 기자 semim99@aitimes.com",
+      "image": "https://cdn.aitimes.com/news/photo/202512/204735_206072_123.jpeg",
+      "summary": "카카오(대표 정신아)는 12일 공식 테크블로그를 통해 ▲한국적 맥락 이해에 최적화된 통합 멀티모달 언어모델 ‘카나나-o(Kanana-o)’ ▲멀티모달 임베딩 모델 ‘카나나-v-임베딩(Kanana-v-embedding)’의 개발 과정과 성능을 공개했다. 지난 5월 처음 공개한 카나나-o는 텍스트, 음성, 이미지를 동시 이해하고 실시간으로 답변하는 통합 멀티모달 언어모델이다. 글로벌 모델보다 한국어 맥락 이해에 뛰어난 성능을 보였으며, 사람처럼 자연스럽고 풍부한 표현력을 갖추고 있는 것을 특징으로 소개했다. 공개 이후 음성 인식과 음성",
+      "published_at": "2025-12-12T12:39:56+09:00",
+      "article_id": "876da2",
+      "cached_at": "2025-12-12T05:18:51.556687+00:00",
+      "title_ko": "카카오, 한국어 맥락 최적화 멀티모달 모델 카나나-o와 카나나-v-임베딩 개발 공개",
+      "summary_ko": "카카오는 한국어 맥락에 최적화된 멀티모달 모델 카나나-o와 멀티모달 임베딩 카나나-v-임베딩의 개발과 성능을 공개했다. 카나나-o는 한국어 음성 인식·합성·감정 인식에서 강점을 보이고 KoEmbed 기반으로 성능이 개선되며 카나나-2 온디바이스 구동도 예고했다. 벤치마크에서 영어 영역은 다소 뒤처지나 한국어 측면은 우수하다.",
+      "Impact": {
+        "impact_score": 5,
+        "impact_evidence": {
+          "entity": {
+            "id": "TIER_Z_GENERAL",
+            "weight": 1
+          },
+          "events": [
+            {
+              "id": "DATASET_RELEASE",
+              "weight": 2
+            },
+            {
+              "id": "MAJOR_PRODUCT_INTEGRATION",
+              "weight": 2
+            }
+          ]
+        },
+        "impact_review_ko": "한국어 멀티모달 강점과 KoEmbed 데이터 개선으로 국내 생태계에 실질적 영향. 다만 글로벌 영향은 중간 수준으로 판단.",
+        "impact_review_en": "Korean multimodal strengths and KoEmbed data boost domestic AI; global impact remains moderate."
+      },
+      "ZeroEcho": {
+        "ZeroEchoScore": 6.8,
+        "penalties": [
+          {
+            "id": "IRRELEVANT_ENTITY_NOISE",
+            "value": 3
+          }
+        ],
+        "credits": [
+          {
+            "id": "COMPARATIVE_BENCHMARK",
+            "value": 1.2
+          }
+        ],
+        "modifiers": [
+          {
+            "id": "IRRELEVANT_ENTITY_NOISE",
+            "applied": true
+          }
+        ],
+        "zeroechoscore_review_ko": "엔티티 제약으로 ZS가 중간값으로 나타났지만, 카나나의 한국어 멀티모달 성능은 의미 있는 진전이다.",
+        "zeroechoscore_review_en": "Entity noise pushes ZS mid-range, but KanaNa's Korean multimodal gains are meaningful."
+      },
+      "tags": [
+        "MODEL_RELEASE",
+        "BENCHMARK",
+        "ON_DEVICE"
+      ],
+      "impact_score": 5,
+      "impact_evidence": {
+        "entity": {
+          "id": "TIER_Z_GENERAL",
+          "weight": 1
+        },
+        "events": [
+          {
+            "id": "DATASET_RELEASE",
+            "weight": 2
+          },
+          {
+            "id": "MAJOR_PRODUCT_INTEGRATION",
+            "weight": 2
+          }
+        ]
+      },
+      "impact_review_ko": "한국어 멀티모달 강점과 KoEmbed 데이터 개선으로 국내 생태계에 실질적 영향. 다만 글로벌 영향은 중간 수준으로 판단.",
+      "impact_review_en": "Korean multimodal strengths and KoEmbed data boost domestic AI; global impact remains moderate.",
+      "zero_echo_score": 6.8,
+      "evidence": {
+        "penalties": [
+          {
+            "id": "IRRELEVANT_ENTITY_NOISE",
+            "value": 3
+          }
+        ],
+        "credits": [
+          {
+            "id": "COMPARATIVE_BENCHMARK",
+            "value": 1.2
+          }
+        ],
+        "modifiers": [
+          {
+            "id": "IRRELEVANT_ENTITY_NOISE",
+            "applied": true
+          }
+        ]
+      },
+      "zeroechoscore_review_ko": "엔티티 제약으로 ZS가 중간값으로 나타났지만, 카나나의 한국어 멀티모달 성능은 의미 있는 진전이다.",
+      "zeroechoscore_review_en": "Entity noise pushes ZS mid-range, but KanaNa's Korean multimodal gains are meaningful.",
+      "crawled_at": "2025-12-12T05:34:33.490469+00:00",
+      "original_title": "카카오, 멀티모달모델 개발 과정·성능 공개...”한국형 서비스에 특화”",
+      "edition": "251212_FRI_1",
+      "batch_id": "20251218-012718",
+      "typeset_at": "2025-12-18T01:27:18.751018",
+      "id": "https://www.aitimes.com/news/articleView.html?idxno=204735",
+      "cols": 3,
+      "rows": 19,
+      "zeroEchoScore": 6.8,
+      "impactScore": 5
     }
   ]
 }

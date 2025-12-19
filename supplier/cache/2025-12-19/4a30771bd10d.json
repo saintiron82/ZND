@@ -1,0 +1,229 @@
+{
+  "article_id": "4a3077",
+  "cached_at": "2025-12-18T15:33:44.876595+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/10/magic_prompt_sora_illustration-2.png",
+  "published_at": "Wed, 17 Dec 2025 20:08:30 GMT",
+  "summary": "저명한 수학자 테렌스 타오가 현재 AI 수준을 AGI가 아닌 '인공 일반 영리함(AGC)'으로 정의했다. 그는 AI가 진정한 지능보다는 훈련 데이터에 기반한 임기응변식 해결책을 제시한다고 주장했다.",
+  "text": "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. Renowned mathematician Terence Tao has proposed a new way to think about AI capabilities. On Mastodon, Tao questions whether true \"artificial general intelligence\" (AGI) is actually achievable with current AI tools. His alternative: \"artificial general cleverness\" (AGC). Ad According to Tao, \"general cleverness\" means the ability to solve complex problems using partly improvised methods. These solutions might be random, rely on raw computing power, or draw from training data. That makes them something other than true \"intelligence,\" but they can still succeed at many tasks, especially when strict testing procedures filter out incorrect results, he says. \"This results in the somewhat unintuitive combination of a technology that can be very useful and impressive, while simultaneously being fundamentally unsatisfying and disappointing.\" Terence Tao In humans, cleverness and intelligence are linked, but in AI they're decoupled, Tao argues. The mathematician has recently spoken positively about how AI has sped up his own work. Ad",
+  "title": "Terence Tao proposes \"artificial general cleverness\" as a more honest label for what AI actually does",
+  "url": "https://the-decoder.com/terence-tao-proposes-artificial-general-cleverness-as-a-more-honest-label-for-what-ai-actually-does/",
+  "title_ko": "테렌스 타오, AI의 현주소를 '인공 일반 영리함(AGC)'으로 제안",
+  "tags": [],
+  "impact_score": 3.5,
+  "IS_Analysis": {
+    "Score_Commentary": "GIP 적용: 테렌스 타오는 개인이나, 필즈상 수상자이자 학계 최상위 권위자로서 'Academic_Research'의 Top Tier(Tier 2)로 유추 적용함. 단순 의견 제시로 구조적 변화를 일으키진 않음.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Terence Tao",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE: 새로운 용어/개념을 제안한 주체. SE: 대립/협력 대상 없음."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 9.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 1,
+      "T2": 2,
+      "T3": 7,
+      "Rationale": "권위자의 발언 인용이 주된 내용이며 데이터는 없음."
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 4,
+      "P3": 0,
+      "Rationale": "주관적 견해 및 철학적 논의 중심."
+    },
+    "Utility": {
+      "V1": 1,
+      "V2": 1,
+      "V3": 3,
+      "Rationale": "통찰력은 제공하나 실질적 산업 적용점은 낮음."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "오피니언 기사로서의 품질은 무난함."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "4a3077",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "테렌스 타오, AI의 현주소를 '인공 일반 영리함(AGC)'으로 제안",
+      "Summary": "저명한 수학자 테렌스 타오가 현재 AI 수준을 AGI가 아닌 '인공 일반 영리함(AGC)'으로 정의했다. 그는 AI가 진정한 지능보다는 훈련 데이터에 기반한 임기응변식 해결책을 제시한다고 주장했다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "GIP 적용: 테렌스 타오는 개인이나, 필즈상 수상자이자 학계 최상위 권위자로서 'Academic_Research'의 Top Tier(Tier 2)로 유추 적용함. 단순 의견 제시로 구조적 변화를 일으키진 않음.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Terence Tao",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE: 새로운 용어/개념을 제안한 주체. SE: 대립/협력 대상 없음."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 1,
+        "T2": 2,
+        "T3": 7,
+        "Rationale": "권위자의 발언 인용이 주된 내용이며 데이터는 없음."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 4,
+        "P3": 0,
+        "Rationale": "주관적 견해 및 철학적 논의 중심."
+      },
+      "Utility": {
+        "V1": 1,
+        "V2": 1,
+        "V3": 3,
+        "Rationale": "통찰력은 제공하나 실질적 산업 적용점은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "오피니언 기사로서의 품질은 무난함."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "Terence Tao proposes \"artificial general cleverness\" as a more honest label for what AI actually does",
+  "evidence": {
+    "breakdown": {
+      "schema": "V1.0",
+      "Signal": {
+        "T1": 1.0,
+        "T2": 2.0,
+        "T3": 7.0,
+        "S_Avg": 3.33,
+        "Rationale": "권위자의 발언 인용이 주된 내용이며 데이터는 없음."
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 4.0,
+        "P3": 0.0,
+        "N_Avg": 1.67,
+        "Rationale": "주관적 견해 및 철학적 논의 중심."
+      },
+      "Utility": {
+        "V1": 1.0,
+        "V2": 1.0,
+        "V3": 3.0,
+        "U_Avg": 1.67,
+        "Rationale": "통찰력은 제공하나 실질적 산업 적용점은 낮음."
+      },
+      "Fine_Adjustment": 0.0,
+      "Fine_Reason": "오피니언 기사로서의 품질은 무난함.",
+      "ZS_Raw": 9.03,
+      "ZS_Final": 9.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 1,
+        "T2": 2,
+        "T3": 7,
+        "Rationale": "권위자의 발언 인용이 주된 내용이며 데이터는 없음."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 4,
+        "P3": 0,
+        "Rationale": "주관적 견해 및 철학적 논의 중심."
+      },
+      "Utility": {
+        "V1": 1,
+        "V2": 1,
+        "V3": 3,
+        "Rationale": "통찰력은 제공하나 실질적 산업 적용점은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "오피니언 기사로서의 품질은 무난함."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "schema": "V1.0",
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 3.5,
+      "IS_Final": 3.5,
+      "Score_Commentary": "GIP 적용: 테렌스 타오는 개인이나, 필즈상 수상자이자 학계 최상위 권위자로서 'Academic_Research'의 Top Tier(Tier 2)로 유추 적용함. 단순 의견 제시로 구조적 변화를 일으키진 않음."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Terence Tao",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE: 새로운 용어/개념을 제안한 주체. SE: 대립/협력 대상 없음."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "crawled_at": "2025-12-18T15:41:11.537522+00:00",
+  "status": "worthless",
+  "reason": "high_noise (9.0 >= 7.0)",
+  "version": "V1.0",
+  "rejected": true,
+  "reject_reason": "high_noise (9.0)",
+  "staged": true
+}

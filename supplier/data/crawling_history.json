@@ -638,5 +638,120 @@
     "status": "ACCEPTED",
     "reason": null,
     "timestamp": "2025-12-17T16:05:38.497944+00:00"
+  },
+  "https://the-decoder.com/ai-in-the-newsroom-openai-launches-training-program-for-media-companies/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (8.1 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.563541+00:00"
+  },
+  "https://the-decoder.com/openai-launches-app-submissions-and-rolls-out-store-in-the-new-year/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.223236+00:00"
+  },
+  "https://the-decoder.com/openai-reportedly-seeking-up-to-100-billion-in-new-funding-round/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.9 >= 7.0)",
+    "timestamp": "2025-12-18T15:41:11.261017+00:00"
+  },
+  "https://the-decoder.com/terence-tao-proposes-artificial-general-cleverness-as-a-more-honest-label-for-what-ai-actually-does/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.0 >= 7.0)",
+    "timestamp": "2025-12-18T15:41:11.538106+00:00"
+  },
+  "https://the-decoder.com/nvidias-nemotron-3-swaps-pure-transformers-for-a-mamba-hybrid-to-run-ai-agents-efficiently/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.059958+00:00"
+  },
+  "https://the-decoder.com/google-makes-gemini-3-flash-the-default-for-search-and-slashes-reasoning-costs/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.031500+00:00"
+  },
+  "https://the-decoder.com/the-10-billion-loop-amazon-could-pay-openai-so-openai-can-pay-amazon/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.5 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.552088+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204900": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.283158+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204903": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.173000+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204884": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T15:52:27.122918+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204892": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.200822+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204910": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.247558+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204904": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.2 >= 7.0)",
+    "timestamp": "2025-12-18T15:52:27.506239+00:00"
+  },
+  "https://venturebeat.com/technology/gemini-3-flash-arrives-with-reduced-costs-and-latency-a-powerful-combo-for": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T15:53:40.880204+00:00"
+  },
+  "https://venturebeat.com/orchestration/jp-morgans-ai-adoption-hit-50-of-employees-the-secret-a-connectivity-first": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.330187+00:00"
+  },
+  "https://venturebeat.com/infrastructure/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.123062+00:00"
+  },
+  "https://venturebeat.com/infrastructure/ai-agents-fail-63-of-the-time-on-complex-tasks-patronus-ai-says-its-new": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.149030+00:00"
+  },
+  "https://venturebeat.com/infrastructure/agentic-design-patterns-the-missing-link-between-ai-demos-and-enterprise": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.305397+00:00"
+  },
+  "https://the-decoder.com/mistral-ocr-3-promises-better-cheaper-document-analysis/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T15:55:09.106852+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204906": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (10.0 >= 7.0)",
+    "timestamp": "2025-12-18T15:56:38.972224+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204886": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (8.2 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.558942+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204907": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.8 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.555676+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204908": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.0 >= 7.0)",
+    "timestamp": "2025-12-18T15:56:39.609204+00:00"
   }
 }

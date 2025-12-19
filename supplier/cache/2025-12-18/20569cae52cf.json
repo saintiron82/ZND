@@ -13,7 +13,7 @@
     "GenAI",
     "Productivity"
   ],
-  "impact_score": 5.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Adobe",
@@ -40,7 +40,7 @@
       "Score_Justification": "Tier 2 기업의 주요 제품이 Tier 1 플랫폼과 결합(Strategic Alliance). 실질적인 기능 업데이트(Now)."
     }
   },
-  "zero_echo_score": 2.8,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -193,5 +193,6 @@
   "saved_at": "2025-12-16T09:52:40.455527+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

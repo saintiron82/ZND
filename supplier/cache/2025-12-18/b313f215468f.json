@@ -17,7 +17,7 @@
     "AI Semiconductor",
     "Strategy"
   ],
-  "impact_score": 3.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Rebellion",
@@ -44,7 +44,7 @@
       "Score_Justification": "Startup claiming to replace Tier 1 (Nvidia) hegemony. High Gap penalty (-0.5) due to low evidence (Plan/Speech)."
     }
   },
-  "zero_echo_score": 9.9,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 1,
@@ -223,5 +223,6 @@
   "reject_reason": "high_noise (9.9)",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

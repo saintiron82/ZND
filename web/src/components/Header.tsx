@@ -21,7 +21,12 @@ export default function Header({ currentDate }: { currentDate?: string | null })
 
                 <div className="flex flex-col items-center mt-2">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground font-sans">
-                        {currentDate ? new Date(currentDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Loading...'}
+                        {currentDate ? (() => {
+                            // YYYY-MM-DD를 로컬 시간으로 정확히 파싱
+                            const [year, month, day] = currentDate.split('-').map(Number);
+                            const localDate = new Date(year, month - 1, day);
+                            return localDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                        })() : 'Loading...'}
                     </p>
                     <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-widest font-sans">
                         Vol. 1 • Curated Global Insights

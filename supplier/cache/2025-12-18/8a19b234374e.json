@@ -13,7 +13,7 @@
     "LLM",
     "Scientific Debate"
   ],
-  "impact_score": 7.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Meta (Yann LeCun)",
@@ -40,7 +40,7 @@
       "Score_Justification": "Tier 2와 Tier 1 간의 기술 철학 논쟁으로 산업 방향성에 큰 영향을 미침. 평가(Evaluation) 보너스 적용."
     }
   },
-  "zero_echo_score": 1.2,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -193,5 +193,6 @@
   "saved_at": "2025-12-16T09:52:39.154809+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

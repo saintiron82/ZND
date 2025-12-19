@@ -15,7 +15,7 @@
     "Software Engineering",
     "DevOps"
   ],
-  "impact_score": 4.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "LinkedIn Guest Author",
@@ -42,7 +42,7 @@
       "Score_Justification": "단순한 툴 소개가 아닌, 실패 원인을 분석하고 '컨텍스트 엔지니어링'이라는 해결책을 제시함. McKinsey 보고서 등을 인용하여 논리를 보강함."
     }
   },
-  "zero_echo_score": 2.1,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": "0.0",
@@ -215,5 +215,6 @@
   "saved_at": "2025-12-16T09:52:29.334959+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

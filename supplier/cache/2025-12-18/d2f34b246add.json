@@ -17,7 +17,7 @@
     "Investment",
     "Pre-IPO"
   ],
-  "impact_score": 3.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Superb AI",
@@ -44,7 +44,7 @@
       "Score_Justification": "Investment news is fact-based, but 'Domestic First' claim limits innovation score. IPO prep shows Biz Impact."
     }
   },
-  "zero_echo_score": 8.1,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 1,
@@ -222,5 +222,6 @@
   "reject_reason": "high_noise (8.1)",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

@@ -13,7 +13,7 @@
     "M&A",
     "Robotics"
   ],
-  "impact_score": 5.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "iRobot",
@@ -40,7 +40,7 @@
       "Score_Justification": "주요 기업의 파산 및 M&A 이슈. 산업 구조조정 관점에서 중요하나 기술적 혁신은 없음."
     }
   },
-  "zero_echo_score": 2.0,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -193,5 +193,6 @@
   "saved_at": "2025-12-16T09:52:39.479640+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

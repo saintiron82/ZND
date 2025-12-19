@@ -325,5 +325,6 @@
   "saved": true,
   "saved_at": "2025-12-16T09:54:05.880177+00:00",
   "staged_at": "2025-12-16T10:01:04.418207+00:00",
-  "staged": true
+  "staged": true,
+  "version": "V1.0"
 }

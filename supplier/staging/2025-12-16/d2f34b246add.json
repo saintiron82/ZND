@@ -221,5 +221,6 @@
   "rejected": true,
   "reject_reason": "high_noise (8.1)",
   "staged_at": "2025-12-16T10:01:04.422478+00:00",
-  "staged": true
+  "staged": true,
+  "version": "V1.0"
 }

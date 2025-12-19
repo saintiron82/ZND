@@ -17,7 +17,7 @@
     "China_AI",
     "Regulation"
   ],
-  "impact_score": 9.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "US Dept of Commerce (CAISI)",
@@ -44,7 +44,7 @@
       "Score_Justification": "미국 정부의 공식 보고서 기반으로, AI 기술 패권 경쟁 및 안보 이슈를 다루어 중요도가 매우 높음(Tier 1)."
     }
   },
-  "zero_echo_score": 3.0,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -257,5 +257,6 @@
   "saved_at": "2025-12-16T09:56:28.474474+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

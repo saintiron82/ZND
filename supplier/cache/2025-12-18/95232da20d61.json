@@ -15,7 +15,7 @@
     "Tokenization",
     "FinTech"
   ],
-  "impact_score": 5.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Capital One Software",
@@ -42,7 +42,7 @@
       "Score_Justification": "자사 PR 기사로 신뢰성 갭은 없으나 객관적 검증이 부족함. 기술적 개선(Update) 수준의 임팩트."
     }
   },
-  "zero_echo_score": 8.6,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 1.75,
@@ -239,5 +239,6 @@
   "reject_reason": "high_noise (8.6)",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

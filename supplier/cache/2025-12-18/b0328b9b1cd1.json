@@ -15,7 +15,7 @@
     "Model Architecture",
     "NLP Research"
   ],
-  "impact_score": 7.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Allen Institute for AI (Ai2)",
@@ -42,7 +42,7 @@
       "Score_Justification": "Tier 2 연구소의 오픈소스 기여. 바이트 레벨 모델이라는 틈새 혁신(Niche Utility)을 입증된 방식(Olmo 기반)으로 구현하고 검증 가능성을 완벽히 제공함."
     }
   },
-  "zero_echo_score": 1.5,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": "0.5",
@@ -238,5 +238,6 @@
   "saved_at": "2025-12-16T09:52:28.687441+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

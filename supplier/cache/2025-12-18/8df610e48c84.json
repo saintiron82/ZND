@@ -13,7 +13,7 @@
     "Prediction",
     "DeepMind"
   ],
-  "impact_score": 4.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Shane Legg (DeepMind)",
@@ -40,7 +40,7 @@
       "Score_Justification": "Tier 1 인물의 발언이나 단순 예측(Future/Plan)이므로 증거 점수가 낮고 Provenness가 0임."
     }
   },
-  "zero_echo_score": 5.2,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -196,5 +196,6 @@
   "saved_at": "2025-12-16T09:52:40.393432+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

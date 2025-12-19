@@ -1,18 +1,15 @@
 """
-ZED Scoring Engine v8.0 (ZED V1.0.0 Schema Compatible)
+ZED Scoring Engine v9.0 (V1.0 Only)
 
 Supports:
 - V1.0.0 Schema (IS_Analysis, ZES_Raw_Metrics)
-- V0.9 Schema (Impact_Analysis_IS, Evidence_Analysis_ZES) [Legacy]
-- Hybrid V0.9 Schema (Manual Batch Simple Format)
+- Legacy fallback for backwards compatibility
 """
 
-from typing import Optional, Union, Dict, List
+from typing import Union
 
 # Schema Constants
 SCHEMA_V1_0 = 'V1.0'
-SCHEMA_V0_9 = 'V0.9'
-SCHEMA_HYBRID = 'V0.9-Hybrid'
 SCHEMA_LEGACY = 'Legacy'
 
 
@@ -34,44 +31,29 @@ def safe_float(value: Union[str, int, float, None], default: float = 0.0) -> flo
 
 def detect_schema_version(data: dict) -> str:
     """
-    Detect schema version from data structure.
-    
-    Priority:
-    1. Specification_Version field (explicit version)
-    2. V1.0 keys: IS_Analysis, ZES_Raw_Metrics
-    3. Hyrbid V0.9 keys: impact_entity, impact_events inside raw_analysis
-    4. V0.9 keys: Impact_Analysis_IS, Evidence_Analysis_ZES
-    5. Legacy fallback
+    Detect schema version from 'version' field.
     
     Returns:
-        SCHEMA_V1_0, SCHEMA_HYBRID, SCHEMA_V0_9, or SCHEMA_LEGACY
+        SCHEMA_V1_0 if version contains '1.0'
+        SCHEMA_LEGACY otherwise
     """
     if not data or not isinstance(data, dict):
         return SCHEMA_LEGACY
     
-    # Check raw_analysis wrapper first (unwrap if needed for detection context)
-    # But detection should run on the 'data' passed to it, which is the unwrapped content usually.
-    # Note: process_raw_analysis unwraps it before calling this.
-    
-    # Priority 1: Check Specification_Version field (V1.0.0+)
+    # Check version fields (multiple locations)
     meta = data.get('Meta', {})
-    spec_version = meta.get('Specification_Version', '')
-    if spec_version and 'v 1.0' in spec_version.lower():
+    version = (
+        data.get('version', '') or  # 캐시에 저장된 버전 필드 (우선)
+        meta.get('Specification_Version', '') or 
+        data.get('Specification_Version', '') or
+        data.get('schema_version', '')
+    )
+    
+    if version and '1.0' in str(version):
+        print(f"✅ [ScoreEngine] Detected V1.0: {version}")
         return SCHEMA_V1_0
     
-    # Priority 2: Check for V1.0 signature keys
-    if 'IS_Analysis' in data or 'ZES_Raw_Metrics' in data:
-        return SCHEMA_V1_0
-
-    # Priority 3: Check for Hybrid V0.9 signature (Simple format)
-    # These keys exist directly in the raw_analysis struct
-    if 'impact_entity' in data or 'impact_events' in data:
-        return SCHEMA_HYBRID
-    
-    # Priority 4: Check for V0.9 signature keys
-    if 'Impact_Analysis_IS' in data or 'Evidence_Analysis_ZES' in data:
-        return SCHEMA_V0_9
-    
+    print(f"⚠️ [ScoreEngine] Version not found: '{version}' → Legacy")
     return SCHEMA_LEGACY
 
 
@@ -99,7 +81,6 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
     impact_score = max(0.0, min(10.0, round(is_raw, 1)))
     
     breakdown = {
-        'schema': SCHEMA_V1_0,
         'IW_Analysis': {
             'Tier_Score': tier_score,
             'Gap_Score': gap_score,
@@ -154,12 +135,10 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     zero_echo_score = max(0.0, min(10.0, round(zs_raw, 1)))
     
     breakdown = {
-        'schema': SCHEMA_V1_0,
-        'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'S_Avg': round(s, 2), 'Rationale': signal.get('Rationale', '')},
-        'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'N_Avg': round(n, 2), 'Rationale': noise.get('Rationale', '')},
-        'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'U_Avg': round(u, 2), 'Rationale': utility.get('Rationale', '')},
+        'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'S_Avg': round(s, 2)},
+        'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'N_Avg': round(n, 2)},
+        'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'U_Avg': round(u, 2)},
         'Fine_Adjustment': fine_adjustment,
-        'Fine_Reason': fine_adj_obj.get('Reason', ''),
         'ZS_Raw': round(zs_raw, 2),
         'ZS_Final': zero_echo_score
     }
@@ -167,74 +146,14 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     return zero_echo_score, breakdown
 
 
-def calculate_hybrid_v09(data: dict) -> dict:
-    """
-    Calculate scores for Hybrid V0.9 Schema (Simple structure).
-    
-    IS = Entity + Events + Modifiers (Sum)
-    ZES = 5.0 + Penalties - Credits (Base 5)
-    """
-    print(f"🔍 [ScoreEngine] Processing Hybrid V0.9 Calculation")
-    
-    # Extract from simple structure
-    impact_entity = data.get('impact_entity', {})
-    impact_events = data.get('impact_events', [])
-    modifiers = data.get('modifiers', [])
-    
-    # IS Calculation
-    score_sum = 0.0
-    score_sum += safe_float(impact_entity.get('value'))
-    
-    if isinstance(impact_events, list):
-        for evt in impact_events:
-            score_sum += safe_float(evt.get('value'))
-            
-    if isinstance(modifiers, list):
-        for mod in modifiers:
-            score_sum += safe_float(mod.get('value'))
-            
-    impact_score = max(0.0, min(10.0, round(score_sum, 1)))
-    
-    # ZES Calculation
-    penalties = data.get('penalties', [])
-    credits = data.get('credits', [])
-    
-    zes_base = 5.0
-    p_sum = 0.0
-    c_sum = 0.0
-    
-    if isinstance(penalties, list):
-        for p in penalties:
-            p_sum += safe_float(p.get('value'))
-            
-    if isinstance(credits, list):
-        for c in credits:
-            c_sum += safe_float(c.get('value'))
-    
-    # ZES = 5 + Penalties(Noise) - Credits(Signal)
-    zero_echo_score = zes_base + p_sum - c_sum
-    zero_echo_score = max(0.0, min(10.0, round(zero_echo_score, 1)))
-    
-    print(f"✅ [ScoreEngine] Hybrid V0.9 Calculated: IS={impact_score}, ZES={zero_echo_score}")
-    
-    return {
-        'impact_score': impact_score,
-        'zero_echo_score': zero_echo_score,
-        'impact_evidence': {'entity': impact_entity, 'events': impact_events},
-        'evidence': {'penalties': penalties, 'credits': credits},
-        'schema_version': SCHEMA_HYBRID
-    }
-
-
 def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
     """
     Process raw_analysis data to generate final scores.
-    Supports V1.0, V0.9, Hybrid V0.9, and Legacy schemas.
+    Supports V1.0 and Legacy only.
     
     Args:
         raw: Analysis data dict
-        force_schema_version: Optional. Force a specific schema version 
-                            (SCHEMA_V1_0, SCHEMA_HYBRID, etc.)
+        force_schema_version: Optional. Force a specific schema version
     """
     if not raw or not isinstance(raw, dict):
         return {}
@@ -253,19 +172,29 @@ def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
         print(f"👉 [ScoreEngine] Forced schema version: {schema_version}")
     else:
         schema_version = detect_schema_version(data)
-        print(f"🔍 [ScoreEngine] Detected schema: {schema_version}")
     
-    # Dispatch based on schema
+    # V1.0 Schema
     if schema_version == SCHEMA_V1_0:
-        result = {'schema_version': SCHEMA_V1_0}
+        result = {'version': 'V1.0'}
         
         # Meta Fields
         meta = data.get('Meta', {})
-        if meta.get('Headline'): result['title_ko'] = meta['Headline']
-        if meta.get('Summary'): result['summary'] = meta['Summary']
-        if data.get('Article_ID'): result['article_id'] = data['Article_ID']
+        if meta.get('Headline'): 
+            result['title_ko'] = meta['Headline']
+        elif data.get('Headline'):
+            result['title_ko'] = data['Headline']
+        elif data.get('title_ko'):
+            result['title_ko'] = data['title_ko']
+            
+        if meta.get('Summary'): 
+            result['summary'] = meta['Summary']
+        elif data.get('summary'):
+            result['summary'] = data['summary']
+            
+        if data.get('Article_ID'): 
+            result['article_id'] = data['Article_ID']
         
-        # IS
+        # IS Calculation
         is_analysis = data.get('IS_Analysis', {})
         if is_analysis:
             impact_score, is_breakdown = calculate_is_v1(is_analysis)
@@ -279,7 +208,7 @@ def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
             result['impact_score'] = 0.0
             result['impact_evidence'] = {}
             
-        # ZES
+        # ZES Calculation
         zes_raw_metrics = data.get('ZES_Raw_Metrics', {})
         if zes_raw_metrics:
             zero_echo_score, zes_breakdown = calculate_zes_v1(zes_raw_metrics)
@@ -294,75 +223,30 @@ def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
             
         print(f"✅ [ScoreEngine] V1.0 Calculated: IS={result['impact_score']}, ZES={result['zero_echo_score']}")
         return result
-
-    elif schema_version == SCHEMA_HYBRID:
-        return calculate_hybrid_v09(data)
-        
-    elif schema_version == SCHEMA_V0_9:
-        # V0.9 Logic
-        is_data = data.get('Impact_Analysis_IS', {})
-        scores = is_data.get('Scores', {})
-        
-        iw_score = safe_float(scores.get('IW_Score'))
-        gap_score = safe_float(scores.get('Gap_Score'))
-        context_bonus = safe_float(scores.get('Context_Bonus'))
-        
-        ie_breakdown = scores.get('IE_Breakdown_Total', {})
-        scope_total = safe_float(ie_breakdown.get('Scope_Total'))
-        criticality_total = safe_float(ie_breakdown.get('Criticality_Total'))
-        
-        adjustment = safe_float(scores.get('Adjustment_Score'))
-        
-        impact_score_calc = iw_score + gap_score + context_bonus + scope_total + criticality_total + adjustment
-        impact_score = max(0.0, min(10.0, round(impact_score_calc, 1)))
-        
-        # ZES (V0.9)
-        zes_data = data.get('Evidence_Analysis_ZES', {})
-        vector = zes_data.get('ZES_Score_Vector', {})
-        
-        positive_scores = vector.get('Positive_Scores', [])
-        negative_scores = vector.get('Negative_Scores', [])
-        
-        zes_sum = 0.0
-        
-        if isinstance(positive_scores, list):
-            for item in positive_scores:
-                raw_val = safe_float(item.get('Raw_Score'))
-                weight = safe_float(item.get('Weight'))
-                zes_sum += (raw_val * weight)
-                
-        if isinstance(negative_scores, list):
-            for item in negative_scores:
-                raw_val = safe_float(item.get('Raw_Score'))
-                weight = safe_float(item.get('Weight'))
-                zes_sum += (raw_val * weight)
-        
-        zero_echo_score = 5.0 - zes_sum
-        zero_echo_score = max(0.0, min(10.0, round(zero_echo_score, 1)))
-        
-        print(f"✅ [ScoreEngine] V0.9 Calculated: IS={impact_score}, ZES={zero_echo_score}")
-        
-        return {
-            'impact_score': impact_score,
-            'zero_echo_score': zero_echo_score,
-            'impact_evidence': {
-                'scores': scores,
-                'analysis_log': is_data.get('Analysis_Log', {}),
-                'reasoning': is_data.get('Reasoning', {})
-            },
-            'evidence': {
-                'score_vector': vector,
-                'commentary': zes_data.get('Analysis_Commentary', {})
-            },
-            'schema_version': SCHEMA_V0_9
-        }
-        
-    else: # SCHEMA_LEGACY
-        print("⚠️ [ScoreEngine] Using Legacy schema fallback")
-        return {
+    
+    # Legacy Schema (fallback)
+    else:
+        print("⚠️ [ScoreEngine] Using Legacy fallback")
+        result = {
+            'version': 'Legacy',
             'impact_score': safe_float(data.get('impact_score')),
             'zero_echo_score': safe_float(data.get('zero_echo_score', 5.0)),
             'evidence': data.get('evidence', {}),
-            'impact_evidence': data.get('impact_evidence', {}),
-            'schema_version': SCHEMA_LEGACY
+            'impact_evidence': data.get('impact_evidence', {})
         }
+        
+        # Meta Fields (title_ko, summary)
+        meta = data.get('Meta', {})
+        if meta.get('Headline'):
+            result['title_ko'] = meta['Headline']
+        elif data.get('Headline'):
+            result['title_ko'] = data['Headline']
+        elif data.get('title_ko'):
+            result['title_ko'] = data['title_ko']
+            
+        if meta.get('Summary') or meta.get('summary'):
+            result['summary'] = meta.get('Summary') or meta.get('summary')
+        elif data.get('summary'):
+            result['summary'] = data['summary']
+        
+        return result

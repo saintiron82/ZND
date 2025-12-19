@@ -1,0 +1,80 @@
+[2025-12-18T16:57:46.050Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[Layout] Calculating for 2025-12-16...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-16\view_model.json
+[Layout] Calculating for 2025-12-18...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-18\view_model.json
+[2025-12-19T04:58:30.387Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:04:51.388Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:56:32.319Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:56:32.342Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:56:32.358Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:56:32.503Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:56:32.783Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T05:56:32.955Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:17:57.304Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:18:02.326Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:18:09.984Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:19:30.587Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:23:30.590Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:23:36.266Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:24:12.196Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:26:01.037Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:31:05.692Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:32:53.549Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:46:43.357Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T06:55:54.130Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T07:31:51.343Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T07:34:07.596Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T07:39:54.158Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T07:47:19.718Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:10:25.214Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:51.936Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:51.961Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:51.986Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:52.003Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:52.057Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:52.120Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:52.185Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T08:34:52.216Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:25:31.645Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[Layout] Calculating for 2025-12-10...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-10\view_model.json
+[Layout] Calculating for 2025-12-11...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-11\view_model.json
+[Layout] Calculating for 2025-12-12...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-12\view_model.json
+[Layout] Calculating for 2025-12-16...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-16\view_model.json
+[Layout] Calculating for 2025-12-17...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-17\view_model.json
+[Layout] Calculating for 2025-12-18...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-18\view_model.json
+[2025-12-19T11:25:38.795Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:15.513Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:15.538Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:15.554Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:16.205Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:16.488Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:16.814Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:17.103Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:17.371Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:37:17.657Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:41:11.877Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T11:49:56.189Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T12:15:07.740Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[Layout] Calculating for 2025-12-10...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-10\view_model.json
+[Layout] Calculating for 2025-12-11...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-11\view_model.json
+[Layout] Calculating for 2025-12-12...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-12\view_model.json
+[Layout] Calculating for 2025-12-16...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-16\view_model.json
+[Layout] Calculating for 2025-12-17...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-17\view_model.json
+[Layout] Calculating for 2025-12-18...
+[Layout] Saved view_model.json to C:\Users\saint\ZND\web\data_cache\2025-12-18\view_model.json
+[2025-12-19T12:35:30.703Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T12:44:28.886Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T12:45:22.346Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache
+[2025-12-19T12:55:06.760Z] getData called. CacheDir: C:\Users\saint\ZND\web\data_cache

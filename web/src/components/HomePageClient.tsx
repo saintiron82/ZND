@@ -1,8 +1,9 @@
 
 'use client';
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import ArticleDisplay from '@/components/ArticleDisplay';
+import PageFrame from '@/components/PageFrame';
 import { useDatePolling } from '@/hooks/useDatePolling';
 import { RefreshCcw, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -15,37 +16,154 @@ interface HomePageClientProps {
 export default function HomePageClient({ articles, isPreview = false }: HomePageClientProps) {
     const router = useRouter();
 
-    // 날짜별 그룹핑 로직 (클라이언트에서 수행하여 구조 유연성 확보)
-    const groupedArticles: { [key: string]: any[] } = {};
-    articles.forEach((article: any) => {
-        let dateStr = '';
-        if (typeof article.crawled_at === 'string') {
-            dateStr = new Date(article.crawled_at).toLocaleDateString();
-        } else if (article.crawled_at && typeof article.crawled_at === 'object' && 'seconds' in article.crawled_at) {
-            dateStr = new Date(article.crawled_at.seconds * 1000).toLocaleDateString();
-        }
+    // 날짜별 그룹핑 로직 (발행일 기준) + 그룹별 어워드 재계산
+    const { groupedArticles, sortedDates } = useMemo(() => {
+        const grouped: { [key: string]: any[] } = {};
+        articles.forEach((article: any) => {
+            let dateStr = '';
+            let dateObj: Date | null = null;
 
-        if (dateStr) {
-            if (!groupedArticles[dateStr]) {
-                groupedArticles[dateStr] = [];
+            // 발행일(published_at) 기준으로 그룹핑
+            if (typeof article.published_at === 'string') {
+                dateObj = new Date(article.published_at);
+            } else if (article.published_at && typeof article.published_at === 'object' && 'seconds' in article.published_at) {
+                dateObj = new Date(article.published_at.seconds * 1000);
             }
-            groupedArticles[dateStr].push(article);
-        }
-    });
+            // fallback: published_at이 없으면 crawled_at 사용
+            else if (typeof article.crawled_at === 'string') {
+                dateObj = new Date(article.crawled_at);
+            } else if (article.crawled_at && typeof article.crawled_at === 'object' && 'seconds' in article.crawled_at) {
+                dateObj = new Date(article.crawled_at.seconds * 1000);
+            }
 
-    const sortedDates = Object.keys(groupedArticles).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-    const latestDate = sortedDates.length > 0 ? sortedDates[0] : null;
+            if (dateObj && !isNaN(dateObj.getTime())) {
+                // 로컬 시간 기준으로 YYYY-MM-DD 형식 추출
+                const year = dateObj.getFullYear();
+                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                const day = dateObj.getDate().toString().padStart(2, '0');
+                dateStr = `${year}-${month}-${day}`;
+            }
+
+            if (dateStr) {
+                if (!grouped[dateStr]) {
+                    grouped[dateStr] = [];
+                }
+                grouped[dateStr].push(article);
+            }
+        });
+
+        // 각 그룹별로 어워드 재계산 (published_at 기준 그룹에서 어워드 결정)
+        Object.keys(grouped).forEach(dateKey => {
+            const groupArticles = grouped[dateKey];
+
+            // 기존 어워드 초기화
+            groupArticles.forEach(a => { a.awards = []; });
+
+            // Combined Score 기준 정렬 (Today's Headline)
+            const byCombo = [...groupArticles].sort((a, b) => {
+                const zeA = a.zero_echo_score ?? a.zeroEchoScore ?? 10;
+                const zeB = b.zero_echo_score ?? b.zeroEchoScore ?? 10;
+                const isA = a.impact_score ?? a.impactScore ?? 0;
+                const isB = b.impact_score ?? b.impactScore ?? 0;
+                const combinedA = (10 - zeA) + isA;
+                const combinedB = (10 - zeB) + isB;
+                return combinedB - combinedA;
+            });
+
+            // ZS 기준 정렬 (Zero Noise Award - 낮을수록 좋음)
+            const byZS = [...groupArticles].sort((a, b) => {
+                const zeA = a.zero_echo_score ?? a.zeroEchoScore ?? 10;
+                const zeB = b.zero_echo_score ?? b.zeroEchoScore ?? 10;
+                const isA = a.impact_score ?? a.impactScore ?? 0;
+                const isB = b.impact_score ?? b.impactScore ?? 0;
+                const zsDiff = zeA - zeB;
+                if (Math.abs(zsDiff) < 0.01) {
+                    return isB - isA; // Tiebreaker: higher IS
+                }
+                return zsDiff;
+            });
+
+            // Impact Score 기준 정렬 (Hot Topic)
+            const byIS = [...groupArticles].sort((a, b) => {
+                const isA = a.impact_score ?? a.impactScore ?? 0;
+                const isB = b.impact_score ?? b.impactScore ?? 0;
+                return isB - isA;
+            });
+
+            // 어워드 할당
+            if (byCombo.length > 0) {
+                if (!byCombo[0].awards) byCombo[0].awards = [];
+                byCombo[0].awards.push("Today's Headline");
+            }
+            if (byZS.length > 0) {
+                if (!byZS[0].awards) byZS[0].awards = [];
+                if (!byZS[0].awards.includes("Zero Noise Award")) {
+                    byZS[0].awards.push("Zero Noise Award");
+                }
+            }
+            if (byIS.length > 0) {
+                if (!byIS[0].awards) byIS[0].awards = [];
+                if (!byIS[0].awards.includes("Hot Topic")) {
+                    byIS[0].awards.push("Hot Topic");
+                }
+            }
+
+            // 어워드 순으로 정렬하여 그룹에 다시 할당
+            grouped[dateKey] = [...groupArticles].sort((a, b) => {
+                const aAwards = a.awards?.length ?? 0;
+                const bAwards = b.awards?.length ?? 0;
+                if (bAwards !== aAwards) return bAwards - aAwards;
+                // 어워드 개수가 같으면 Combined Score 순
+                const zeA = a.zero_echo_score ?? a.zeroEchoScore ?? 10;
+                const zeB = b.zero_echo_score ?? b.zeroEchoScore ?? 10;
+                const isA = a.impact_score ?? a.impactScore ?? 0;
+                const isB = b.impact_score ?? b.impactScore ?? 0;
+                const combinedA = (10 - zeA) + isA;
+                const combinedB = (10 - zeB) + isB;
+                return combinedB - combinedA;
+            });
+        });
+
+        const sorted = Object.keys(grouped).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+        return { groupedArticles: grouped, sortedDates: sorted };
+    }, [articles]);
+
+    // 현재 선택된 날짜 인덱스 (가장 최신 날짜가 기본)
+    const [currentDateIndex, setCurrentDateIndex] = useState(0);
+
+    // 현재 표시할 날짜 및 기사
+    const currentDate = sortedDates.length > 0 ? sortedDates[currentDateIndex] : null;
+    const currentArticles = currentDate ? groupedArticles[currentDate] : [];
+
+    // 이전/다음 날짜 계산
+    const prevDate = currentDateIndex < sortedDates.length - 1 ? sortedDates[currentDateIndex + 1] : null;
+    const nextDate = currentDateIndex > 0 ? sortedDates[currentDateIndex - 1] : null;
+
+    // 날짜 변경 핸들러
+    const handleDateChange = (targetDate: string) => {
+        const newIndex = sortedDates.indexOf(targetDate);
+        if (newIndex !== -1) {
+            setCurrentDateIndex(newIndex);
+        }
+    };
 
     // 1분(60초)마다 폴링하여 새 데이터 확인
+    const latestDate = sortedDates.length > 0 ? sortedDates[0] : null;
     const { hasNewDate, serverLatestDate } = useDatePolling(latestDate, 60000);
 
     const handleRefresh = () => {
-        router.refresh(); // 서버 컴포넌트 재실행 (데이터 갱신)
-        window.location.reload(); // 확실하게 새로고침 (캐시 이슈 방지)
+        router.refresh();
+        window.location.reload();
     };
 
     return (
-        <div className="min-h-screen bg-zinc-50 dark:bg-black p-8 relative">
+        <PageFrame
+            currentDate={currentDate}
+            prevDate={prevDate}
+            nextDate={nextDate}
+            onDateChange={handleDateChange}
+            articles={currentArticles}
+        >
 
             {/* 새 데이터 알림 배너 (Alert Banner) */}
             {hasNewDate && (
@@ -71,34 +189,14 @@ export default function HomePageClient({ articles, isPreview = false }: HomePage
                 </div>
             )}
 
-            <main className="max-w-7xl mx-auto">
-                <header className="mb-12 text-center">
-                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-white mb-4">
-                        Latest Tech News
-                    </h1>
-                    <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-                        Curated tech news and insights, powered by AI.
-                    </p>
-                </header>
-
-                <div className="flex flex-col gap-12">
-                    {sortedDates.map(date => {
-                        const dateArticles = groupedArticles[date];
-
-                        return (
-                            <section key={date} className="mb-0">
-                                <h2 className="text-xl font-bold text-foreground mb-6 flex items-baseline gap-4 border-b border-border pb-2">
-                                    <span className="font-serif italic text-3xl">{date.split('.')[2]}</span>
-                                    <span className="text-muted-foreground text-sm uppercase tracking-widest font-sans">
-                                        {new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long' })}
-                                    </span>
-                                </h2>
-                                <ArticleDisplay articles={dateArticles} loading={false} error={null} />
-                            </section>
-                        );
-                    })}
+            {/* 현재 날짜의 기사만 표시 (일간 신문 스타일) */}
+            {currentDate && currentArticles.length > 0 ? (
+                <ArticleDisplay articles={currentArticles} loading={false} error={null} />
+            ) : (
+                <div className="text-center py-20 text-muted-foreground">
+                    <p className="text-xl">표시할 기사가 없습니다.</p>
                 </div>
-            </main>
-        </div>
+            )}
+        </PageFrame>
     );
 }

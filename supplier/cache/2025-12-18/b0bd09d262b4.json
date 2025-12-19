@@ -17,7 +17,7 @@
     "Search AI",
     "Performance Metrics"
   ],
-  "impact_score": 3.5,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Naver",
@@ -44,7 +44,7 @@
       "Score_Justification": "구체적인 수치(20%, 8% 등)로 성과를 입증했으며, 국내 검색 시장(Tier 3 Macro)에 미치는 영향력이 확인됨."
     }
   },
-  "zero_echo_score": 0.9,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": 0,
@@ -236,5 +236,6 @@
   "saved_at": "2025-12-16T09:28:30.406645+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

@@ -744,6 +744,9 @@
                                 style="flex: 1; background: #28a745; color: white; padding: 6px; font-size: 0.85em;"
                                 onclick="publishAll()">🚀 발행</button>
                         </div>
+                        <button class="btn"
+                            style="width: 100%; background: #17a2b8; color: white; padding: 8px; margin-top: 6px;"
+                            onclick="window.open('http://localhost:8080/preview', '_blank')">👁️ 프리뷰 사이트 열기</button>
                     </div>
 
                     <!-- 위험 작업 -->
@@ -780,7 +783,10 @@
                     <div class="modal-header">
                         <h3>📄 <span id="modalTitle">파일 상세</span></h3>
                         <div style="display: flex; gap: 8px;">
-                            <button class="btn" style="background: #dc3545; color: white;"
+                            <button id="btnRestore" class="btn"
+                                style="background: #28a745; color: white; display: none;"
+                                onclick="restoreCurrentArticle()">♻️ 복구하기</button>
+                            <button id="btnReject" class="btn" style="background: #dc3545; color: white;"
                                 onclick="rejectCurrentArticle()">🗑️ 무시하기</button>
                             <button class="btn" style="background: #6c757d; color: white;"
                                 onclick="deleteCurrentArticle()">❌ 삭제하기</button>
@@ -802,6 +808,10 @@
                             <div class="subtitle" id="dedupDateLabel">날짜: -</div>
                         </div>
                         <div class="dedup-modal-actions" style="display: flex; gap: 8px; align-items: center;">
+                            <button class="btn"
+                                style="background: #4285f4; color: white; padding: 8px 16px; font-size: 14px;"
+                                onclick="window.open('https://gemini.google.com/gem/53a17c8f33da', '_blank')">🤖 LLM
+                                열기</button>
                             <button class="btn btn-copy" id="btnCopyDedup" onclick="copyDedupJson()"
                                 style="padding: 8px 16px; font-size: 14px;">📋 복사</button>
                             <button class="btn btn-apply" onclick="applyDedupResult()"
@@ -1447,6 +1457,8 @@
                     const modal = document.getElementById('detailModal');
                     const titleEl = document.getElementById('modalTitle');
                     const contentEl = document.getElementById('jsonContent');
+                    const btnRestore = document.getElementById('btnRestore');
+                    const btnReject = document.getElementById('btnReject');
 
                     currentDetailFilename = filename; // 현재 파일명 저장
                     titleEl.textContent = filename;
@@ -1465,6 +1477,15 @@
                             contentEl.textContent = `오류: ${data.error}`;
                         } else {
                             contentEl.textContent = JSON.stringify(data, null, 2);
+
+                            // 거부 상태에 따라 버튼 표시/숨김
+                            if (data.rejected) {
+                                btnRestore.style.display = 'inline-block';
+                                btnReject.style.display = 'none';
+                            } else {
+                                btnRestore.style.display = 'none';
+                                btnReject.style.display = 'inline-block';
+                            }
                         }
                     } catch (error) {
                         contentEl.textContent = `로드 실패: ${error.message}`;
@@ -1492,6 +1513,31 @@
 
                         if (result.success) {
                             alert(`✅ 무시 처리 완료!`);
+                            closeModal();
+                            loadStaging();
+                        } else {
+                            alert(`❌ 실패: ${result.error}`);
+                        }
+                    } catch (error) {
+                        alert(`❌ 오류: ${error.message}`);
+                    }
+                }
+
+                async function restoreCurrentArticle() {
+                    if (!currentDetailFilename) return;
+
+                    if (!confirm(`♻️ "${currentDetailFilename}"을(를) 복구하시겠습니까?`)) return;
+
+                    try {
+                        const response = await fetch('/api/staging/restore_selected', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ filenames: [currentDetailFilename], date: selectedDate })
+                        });
+                        const result = await response.json();
+
+                        if (result.success) {
+                            alert(`✅ 복구 완료!`);
                             closeModal();
                             loadStaging();
                         } else {

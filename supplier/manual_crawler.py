@@ -1885,7 +1885,7 @@ def staging_list():
         articles = []
         
         if os.path.exists(staging_date_dir):
-            from src.score_engine import detect_schema_version, SCHEMA_HYBRID, SCHEMA_V0_9, SCHEMA_V1_0, SCHEMA_LEGACY
+            from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
 
             for filename in os.listdir(staging_date_dir):
                 if not filename.endswith('.json'):
@@ -2109,6 +2109,59 @@ def automation_stage_reject_selected():
         return jsonify({
             'success': True,
             'message': f"{count}개 기사 거부 처리 완료"
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/staging/restore_selected', methods=['POST'])
+def automation_stage_restore_selected():
+    """
+    ♻️ 선택된 기사 복구 (Restore rejected articles)
+    """
+    try:
+        data = request.json or {}
+        date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
+        filenames = data.get('filenames', [])
+        
+        if not filenames:
+            return jsonify({'success': False, 'error': 'No filenames provided'}), 400
+            
+        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        count = 0
+        
+        for filename in filenames:
+            filepath = os.path.join(staging_date_dir, filename)
+            if not os.path.exists(filepath):
+                # 다른 날짜에도 있을 수 있으므로 검색
+                for date_folder in os.listdir(STAGING_DIR):
+                    check_path = os.path.join(STAGING_DIR, date_folder, filename)
+                    if os.path.exists(check_path):
+                        filepath = check_path
+                        break
+                        
+            if not os.path.exists(filepath):
+                continue
+                
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    article_data = json.load(f)
+                
+                # 거부 상태 해제
+                article_data['rejected'] = False
+                if 'reject_reason' in article_data:
+                    del article_data['reject_reason']
+                
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(article_data, f, ensure_ascii=False, indent=2)
+                count += 1
+                print(f"♻️ [Restore] 복구됨: {filename}")
+            except Exception as e:
+                print(f"⚠️ Restore error {filename}: {e}")
+                
+        return jsonify({
+            'success': True,
+            'message': f"{count}개 기사 복구 완료"
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
@@ -2665,33 +2718,28 @@ def inject_batch_results():
                 # Normalize field names just in case
                 cached_data = _core_normalize_field_names(cached_data)
                 
-                # 3. Determine Status
-                score = cached_data.get('zero_echo_score', 0)
-                status = 'ACCEPTED' if score >= 4.0 else 'REJECTED'
+                # 3. Save to Staging (노이즈 필터링 없음 - 모든 기사 저장)
+                date_folder = datetime.now().strftime('%Y-%m-%d')
+                staging_dir = os.path.join(STAGING_DIR, date_folder)
+                os.makedirs(staging_dir, exist_ok=True)
                 
-                # 4. Save History
-                db.save_history(cached_data['url'], status, reason=f"Batch: {score}")
-                cached_data['status'] = status
+                filename = get_data_filename(cached_data.get('source_id', 'batch'), cached_data['url'])
+                filepath = os.path.join(staging_dir, filename)
                 
-                # 5. Save to Data (if ACCEPTED)
-                if status == 'ACCEPTED':
-                    date_folder = datetime.now().strftime('%Y-%m-%d')
-                    data_dir = os.path.join(DATA_DIR, date_folder)
-                    os.makedirs(data_dir, exist_ok=True)
-                    
-                    filename = get_data_filename(cached_data.get('source_id', 'batch'), cached_data['url'])
-                    filepath = os.path.join(data_dir, filename)
-                    
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        json.dump(cached_data, f, ensure_ascii=False, indent=2)
-                        
-                    _core_update_manifest(date_folder)
-                    accepted_count += 1
+                # 분석 완료 표시
+                cached_data['mll_status'] = 'analyzed'
+                cached_data['analyzed_at'] = datetime.now(timezone.utc).isoformat()
+                cached_data['staged'] = True
+                cached_data['staged_at'] = datetime.now(timezone.utc).isoformat()
+                
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(cached_data, f, ensure_ascii=False, indent=2)
                 
                 # Update Cache
                 _core_save_to_cache(cached_data['url'], cached_data)
                 
                 processed_count += 1
+                accepted_count += 1  # 모든 기사가 staging에 저장됨
                 
             except Exception as inner_e:
                 errors.append(f"Error processing item: {inner_e}")

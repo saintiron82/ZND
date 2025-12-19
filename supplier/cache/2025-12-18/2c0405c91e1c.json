@@ -15,7 +15,7 @@
     "LLM Training",
     "Enterprise AI"
   ],
-  "impact_score": 7.0,
+  "impact_score": 0.0,
   "Impact_Analysis_IS": {
     "Analysis_Log": {
       "WHO_Primary_Entity": "Motif Technologies",
@@ -42,7 +42,7 @@
       "Score_Justification": "Tier 4 스타트업이나, 독립 벤치마크(Artificial Analysis)를 통해 Tier 1(OpenAI)을 능가했다는 구체적 증거와 기술 백서를 제시함."
     }
   },
-  "zero_echo_score": 5.2,
+  "zero_echo_score": 5.0,
   "Evidence_Analysis_ZES": {
     "ZES_Penalty_Check": {
       "Penalty_Focus_Raw_Sum": "1.75",
@@ -257,5 +257,6 @@
   "saved_at": "2025-12-16T09:52:28.375160+00:00",
   "staged": true,
   "category": "미분류",
-  "dedup_status": "duplicate"
+  "dedup_status": "duplicate",
+  "version": "V1.0"
 }

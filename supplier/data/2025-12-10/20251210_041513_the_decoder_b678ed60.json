@@ -1,0 +1,46 @@
+{
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/EssentialAI-title.png",
+  "published_at": "Mon, 08 Dec 2025 16:21:21 GMT",
+  "summary": "트랜스포머 아키텍처 공동 저자인 Essential AI의 Ashish Vaswani는 새로운 오픈소스 코딩 모델 Rnj-1을 발표했습니다. 이 모델은 단 80억 개의 매개변수를 가졌음에도 불구하고, SWE-bench Verified 테스트에서 20.8점을 기록하여 Qwen 3(8B)의 4.5점 등 더 큰 경쟁 모델들을 능가하는 성능을 보여줍니다. Rnj-1은 Gemma 3 아키텍처를 기반으로 하며, 강화 학습과 같은 후처리 대신 Muon 옵티마이저를 사용한 사전 학습(pre-training) 개선에 주로 초점을 맞춘 결과, 사전 학습 계산 비용이 낮아졌다고 Essential AI는 밝혔습니다.",
+  "text": "Max is the managing editor of THE DECODER, bringing his background in philosophy to explore questions of consciousness and whether machines truly think or just pretend to. Essential AI's new open-source model, Rnj-1, outperforms significantly larger competitors on the \"SWE-bench Verified\" test. This benchmark is considered particularly challenging because it evaluates an AI's ability to independently solve real-world programming problems. Despite being a compact model with just eight billion parameters, Rnj-1 scores 20.8 points. Ad Share Recommend our article Share By comparison, similarly sized models like Qwen 3 (without reasoning, 8B) only reach 4.5 points in Essential AI's testing. The system was introduced by Ashish Vaswani, co-founder of Essential AI and co-author of the famous \"Attention Is All You Need\" paper that launched the Transformer architecture. Rnj-1 is also Transformer-based, specifically utilizing the Gemma 3 architecture. According to the company, development focused primarily on better pre-training rather than post-training methods like reinforcement learning. These improvements also result in lower pre-training computational costs, thanks to the use of the Muon optimizer. Ad",
+  "title": "Transformer co-creator Vaswani unveils high-performance Rnj-1 coding model",
+  "url": "https://the-decoder.com/transformer-co-creator-vaswani-unveils-high-performance-rnj-1-coding-model/",
+  "title_ko": "트랜스포머 공동 개발자 바스와니, 고성능 코딩 모델 'Rnj-1' 공개",
+  "impact_score": 1.74,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL_PARTICIPANT",
+      "weight": 1,
+      "reasoning": "Ashish Vaswani는 저명한 인물이지만, 기사는 TIER 1에 속하지 않는 Essential AI의 모델 발표를 다루고 있으며, 핵심 인물의 '평가나 의견 제시'가 아닌 '연구팀'의 성과이므로 TIER Z로 분류한다."
+    },
+    "events": [
+      {
+        "id": "ACADEMIC_COMPETITION_WIN",
+        "weight": 0.74,
+        "reasoning": "SWE-bench Verified라는 권위 있는 벤치마크에서 기존 모델을 훨씬 상회하는 기술적 성과(SOTA)를 달성했으므로 TIER Z 주체가 받을 수 있는 최고 Impact Event인 Academic Competition Win을 적용한다."
+      }
+    ]
+  },
+  "reasoning": "TIER Z 주체의 혁신적인 기술 성과(ACADEMIC_COMPETITION_WIN)에 초점을 맞춘 기사로, 낮은 수준의 영향력(IS 1.74)을 가진다. 기사는 벤치마크 점수, 매개변수 수 등 구체적인 수치와 함께 기존 모델과의 성능 비교(COMPARATIVE_EVALUATION)를 제공하여 품질은 중립 수준(ZS 5.0)으로 평가된다.",
+  "tags": [
+    "LLM",
+    "OPEN_SOURCE",
+    "GEN_AI"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "COMPARATIVE_EVALUATION",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "source_id": "the_decoder",
+  "original_title": "Transformer co-creator Vaswani unveils high-performance Rnj-1 coding model",
+  "crawled_at": "2025-12-10T04:15:13.968133+00:00",
+  "zero_echo_score": 4.5,
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.734189"
+}

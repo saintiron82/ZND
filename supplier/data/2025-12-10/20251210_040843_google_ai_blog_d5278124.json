@@ -1,0 +1,61 @@
+{
+  "author": "Maggie Johnson",
+  "image": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/AIquests_Social.width-1300.png",
+  "modified_at": "2025-12-08T18:59:21.226370+00:00",
+  "published_at": "2025-12-08T18:00:00+00:00",
+  "summary": "구글은 Code.org 및 CSTA와 함께 CSEdWeek 기간 동안 'Hour of AI'에 참여하며 AI 교육을 지원하고 있습니다. 스탠퍼드 가속 학습과 공동 개발한 게임 기반 학습 시리즈 'AI Quests'에 안과 질환 탐지 퀘스트를 새로 출시했으며, 교실에 AI 리터러시를 확산하기 위해 Google.org를 통해 컴퓨터 과학 교육에 500만 달러 이상의 기금을 지원한다고 발표했습니다. 또한 Raspberry Pi Foundation 및 Google DeepMind와의 협력을 통해 Experience AI 프로그램을 수백만 명의 학생들에게 확장하고 있습니다.",
+  "text": "For decades, Google has supported Computer Science Education Week (CSEdWeek) to demystify coding and computational thinking. This year during CSEdWeek, we’re taking part in the global Hour of AI alongside our partners Code.org and the Computer Science Teachers Association (CSTA), to help educators and students better understand, use and create with AI. Towards this goal, we’re launching a new quest in our gamified experience, AI Quests, bringing AI literacy to classrooms with a hands-on approach, and we’re announcing over $5 million in Google.org funding for computer science teaching. Launching a new quest Hundreds of Googler volunteers around the world are visiting classrooms this week to lead AI Quests, our game-based learning series developed with the Stanford Accelerator for Learning. Today, we’re releasing a new quest where students step into the shoes of researchers and use an AI model to detect eye disease and prevent blindness. This quest is inspired by our real-world research on diabetic retinopathy. It can be accessed for free along with our existing flood forecasting quest and accompanying resources for teachers. We’re also working closely with partners to bring AI Quests to more classrooms in 2026. One collaboration is with the Raspberry Pi Foundation and Google DeepMind, which has expanded their Experience AI program — recognized by UNESCO for promoting responsible AI education — to millions of students with funding from Google.org and integrated AI Quests into their curriculum.",
+  "title": "How we’re supporting the next generation of innovators",
+  "url": "https://blog.google/outreach-initiatives/education/next-gen-computer-science-innovators/",
+  "title_ko": "구글, AI 교육 혁신 가속: 'AI Quests' 확장 및 $500만 기금 지원",
+  "impact_score": 6.47,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 5,
+      "reasoning": "주요 주체는 Google이며, Google DeepMind의 협력도 언급되어 Tier 1 Ecosystem Rulers에 해당한다."
+    },
+    "events": [
+      {
+        "id": "MAJOR_FUNDING_OR_ACQUISITION",
+        "weight": 0.88,
+        "reasoning": "Google.org를 통한 500만 달러 이상의 기금 지원은 대규모 자금 지원에 해당한다."
+      },
+      {
+        "id": "BIZ_STRATEGY_SHIFT",
+        "weight": 0.59,
+        "reasoning": "AI 교육 확산 및 새로운 학습 프로그램 출시는 AI 전략의 일부로 간주된다."
+      }
+    ]
+  },
+  "reasoning": "Tier 1 주체(Google, Google DeepMind)의 공식적인 AI 교육 전략 발표와 대규모 기금 지원이 포함되어 Impact Score(6.44)가 높게 산출되었다. 구체적인 프로그램 내용과 파트너십이 명시되어 ZeroNoise Score(3.75) 역시 낮은 수준으로 품질이 양호하다.",
+  "tags": [
+    "AI_ETHICS",
+    "BIZ_STRATEGY"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "PRESS_RELEASE_TONE",
+        "value": 1.25
+      }
+    ],
+    "credits": [
+      {
+        "id": "ETHICAL_FRAMEWORK_DEBATE",
+        "value": 1.75
+      },
+      {
+        "id": "ORIGINAL_DATA_SOURCE",
+        "value": 0.5
+      }
+    ],
+    "modifiers": []
+  },
+  "source_id": "google_ai_blog",
+  "original_title": "How we’re supporting the next generation of innovators",
+  "crawled_at": "2025-12-10T04:08:43.560019+00:00",
+  "zero_echo_score": 4.0,
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.724373"
+}

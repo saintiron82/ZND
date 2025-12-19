@@ -1,0 +1,65 @@
+{
+  "title_ko": "Enterprises finally get a heads-up on what AI-generated code actually does in production",
+  "article_id": "z4r4w1",
+  "summary": "AI 생성 코드를 프로덕션 환경에서 모니터링하고 디버깅하는 데 기존 APM 도구의 한계가 명확해지고 있다. 스타트업 Hud는 함수 레벨 데이터를 제공하고 AI 에이전트와 통합되는 런타임 코드 센서를 출시하여 이 문제를 해결한다. Drata와 Monday.com 등의 기업은 이 센서를 통해 MTTR을 70% 단축하는 등 코드 발견 및 수정 시간을 획기적으로 줄였다.",
+  "impact_score": 2.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL",
+      "weight": 1
+    },
+    "events": [
+      {
+        "id": "ANALYST_IMPACT_BOOST",
+        "weight": 1.5
+      }
+    ]
+  },
+  "tags": [
+    "ML_OPS",
+    "AGENTIC_AI",
+    "BIZ_IMPACT"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "LACK_OF_LIMITATION",
+        "value": 1
+      }
+    ],
+    "credits": [
+      {
+        "id": "USER_FEEDBACK_DATA",
+        "value": 1
+      },
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 1
+      },
+      {
+        "id": "COMPARATIVE_BENCHMARK",
+        "value": 1
+      },
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 1
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": true
+      }
+    ]
+  },
+  "Overall review": "ZS 0.0점, IS 2.5점. AI 개발 가속화 시대의 핵심 난제인 코드 모니터링에 대한 심층 분석과 정량적 비교 데이터(V=10.0)로 만점에 가까운 품질을 달성함. 주체가 스타트업이라 파급력(IS 2.5)은 높지 않지만, 기술적 통찰력이 탁월한 'Pure Signal' 기사임.",
+  "review_en": "ZS 0.0, IS 2.5. Achieved near-perfect quality (V=10.0) through in-depth analysis and quantitative comparison data on the critical challenge of code monitoring in the age of AI-accelerated development. Although the impact (IS 2.5) is moderate due to the startup entity, this is a 'Pure Signal' article with outstanding technical insight.",
+  "zero_echo_score": 2.0,
+  "url": "https://venturebeat.com/ai/how-huds-runtime-sensor-cut-triage-time-from-3-hours-to-10-minutes",
+  "source_id": "venturebeat",
+  "original_title": "Enterprises finally get a heads-up on what AI-generated code actually does in production",
+  "crawled_at": "2025-12-11T04:20:27.267482+00:00",
+  "edition": "251211_THU_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.744232"
+}

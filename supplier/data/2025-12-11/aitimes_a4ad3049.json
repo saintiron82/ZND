@@ -1,0 +1,48 @@
+{
+  "title_ko": "오픈AI·앤트로픽·구글, 에이전트 표준 공동 협력체 출범",
+  "article_id": "a4ad30",
+  "summary": "AAIF(Agentic AI Foundation) 출범이 발표되었으며, 리눅스 재단이 이를 주도하고 있다. MCP(Model Context Protocol), Agents.md, Goose라는 세 가지 오픈 소스 기술이 표준화의 핵심 축으로 제시되었다. 이 협력은 폐쇄형 생태계 방지와 개방 표준 확산을 목표로 다수의 대형 기업이 참여하는 생태계 구성에 초점을 둔다.",
+  "impact_score": 9.0,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_GRAND_ALLIANCE",
+      "weight": 5,
+      "reasoning": "AAIF 출범에 Anthropic, OpenAI, Google, Microsoft, Amazon 등 2개 이상의 Tier-1 기업이 공동 표준 제정을 발표했다는 사실에서 강력한 생태계 영향력을 확인"
+    },
+    "events": [
+      {
+        "id": "INDUSTRY_STANDARD_ESTABLISHMENT",
+        "weight": 4,
+        "reasoning": "공동 표준 제정 및 개방형 프로토콜 마련이라는 협력체의 핵심 목표로, 산업 전반의 규칙을 재정의할 가능성이 높은 이벤트"
+      }
+    ]
+  },
+  "reasoning": "다수의 Tier-1 기업이 참여한 AAIF 출범과 표준 제정 노력이 AI 에이전트 생태계의 핵심 구조를 바꿀 잠재력을 가진 것으로 평가되며, 이는 높은 영향력을 시사한다.",
+  "tags": [
+    "OPEN_SOURCE",
+    "STANDARDIZATION",
+    "AGENTIC_AI"
+  ],
+  "evidence": {
+    "penalties": [],
+    "credits": [
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 0.8
+      },
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 0.4
+      }
+    ],
+    "modifiers": []
+  },
+  "zero_echo_score": 3.8,
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204690",
+  "source_id": "aitimes",
+  "original_title": "오픈AI·앤트로픽·구글, 에이전트 표준 공동 협력체 출범",
+  "crawled_at": "2025-12-11T14:54:00.423714+00:00",
+  "edition": "251211_THU_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.751018"
+}

@@ -1,0 +1,61 @@
+{
+  "title_ko": "'인공태양 연구시설' 나주 확정…에너지·AI 융합 거점 도약",
+  "article_id": "gesydk",
+  "summary": "1조 2000억 원 규모의 인공태양 연구시설 신규 구축 대상지로 전남 나주시가 최종 확정되었으며, 이는 전남도가 추진해 온 '대한민국 에너지 수도' 전략에 탄력을 더하고 있습니다.\n해당 연구시설은 한국에너지공대(켄텍), 한전 등 기존 에너지 인프라와 시너지를 내며, 국내외 연구자 유입 및 글로벌 기업 투자 유치 등 지역 경제에 큰 파급효과를 가져올 것으로 기대됩니다.\n특히, AI 산업의 대규모 전력 수요를 충족시킬 에너지 기반을 확보함으로써, 나주가 '에너지-AI 융합도시'로 도약할 발판이 마련되었다는 전망이 나옵니다.",
+  "impact_score": 5.0,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_Z_GENERAL",
+      "weight": 1
+    },
+    "events": [
+      {
+        "id": "GOVERNMENT_PARTNERSHIP",
+        "weight": 2.5
+      },
+      {
+        "id": "ANALYST_IMPACT_BOOST",
+        "weight": 1.5
+      }
+    ]
+  },
+  "tags": [
+    "HARDWARE_ACCEL",
+    "BIZ_IMPACT",
+    "REGULATION"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "VAGUE_FUTURE_PROMISE",
+        "value": 1
+      },
+      {
+        "id": "NON_TECHNICAL_FOCUS",
+        "value": 1
+      }
+    ],
+    "credits": [
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 1
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": true
+      }
+    ]
+  },
+  "Overall review": "대규모 인공태양 연구시설 유치 확정이라는 국가적 인프라 소식이지만, AI 기술 자체보다는 경제적 파급효과 및 미래 계획에 초점을 맞추어 ZS 6.0으로 평가됩니다. 정부/지자체 주도의 대형 프로젝트인 점과 AI 융합 도시 도약 전망에 따라 IS 4.5로 영향력은 높게 산출되었습니다.",
+  "review_en": "The news of securing a large-scale artificial sun research facility, a national infrastructure project, is assessed with a ZS of 6.0 as it focuses more on economic spillovers and future plans rather than the AI technology itself. Due to it being a major government/local project and the prospect of an 'Energy-AI fusion city,' the Impact Score (IS) is calculated at 4.5.",
+  "zero_echo_score": 6.0,
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204699",
+  "source_id": "aitimes",
+  "original_title": "'인공태양 연구시설' 나주 확정…에너지·AI 융합 거점 도약",
+  "crawled_at": "2025-12-11T06:24:32.319041+00:00",
+  "edition": "251211_THU_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.746928"
+}

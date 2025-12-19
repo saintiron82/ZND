@@ -1,0 +1,61 @@
+{
+  "title_ko": "Deepseek, 수천 개의 밀수된 Nvidia 칩을 AI 훈련에 사용 중인 것으로 보도",
+  "article_id": "h4ln97",
+  "summary": "The Information에 따르면, Deepseek이 미국의 수출 규제 대상인 Nvidia의 최신 블랙웰(Blackwell) 프로세서 수천 개를 밀수하여 다음 주요 모델 훈련에 사용하고 있다고 합니다. 이 칩들은 동남아시아에서 합법적으로 설치된 후, 부품으로 해체되어 세관을 우회하여 중국 시설에서 재조립되는 방식으로 운송된 것으로 알려졌습니다. Nvidia는 밀수 증거를 발견하지 못했다고 밝혔으나, 로이터는 Nvidia가 블랙웰 칩의 위치를 추적하는 기능을 개발 중이라고 보도했습니다. 이 상황은 Deepseek이 여전히 고성능 Nvidia 하드웨어에 의존하고 있음을 시사하며, 미-중 기술 갈등에서 미국의 입지를 강화하고 있습니다.",
+  "impact_score": 8.0,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 4
+    },
+    "events": [
+      {
+        "id": "REGULATORY_ENFORCEMENT",
+        "weight": 2.5
+      },
+      {
+        "id": "ANALYST_IMPACT_BOOST",
+        "weight": 1.5
+      }
+    ]
+  },
+  "tags": [
+    "HARDWARE_ACCEL",
+    "REGULATION",
+    "BIZ_IMPACT"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "NON_TECHNICAL_FOCUS",
+        "value": 1
+      },
+      {
+        "id": "LACK_OF_LIMITATION",
+        "value": 0.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "ETHICAL_TRANSPARENCY",
+        "value": 0.8
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": false
+      }
+    ]
+  },
+  "Overall review": "NVIDIA와 Deepseek 관련 이슈는 미-중 기술 갈등의 핵심을 보여주는 중요한 사건으로, 높은 영향력(IS 5.0)을 가집니다. 하지만 보도 내용이 기술적 상세 분석보다는 지정학적 갈등과 스캔들에 초점을 맞추고 있어 품질 점수(ZS 7.0)는 상대적으로 높습니다.",
+  "review_en": "This issue regarding NVIDIA and Deepseek is a significant event highlighting the core of the US-China technology conflict, resulting in a high Impact Score (IS 5.0). However, the reporting focuses more on geopolitical tensions and scandal rather than detailed technical analysis, leading to a relatively high Zero Echo Score (ZS 7.0).",
+  "zero_echo_score": 5.7,
+  "url": "https://the-decoder.com/deepseek-reportedly-using-thousands-of-smuggled-nvidia-chips-for-ai-training/",
+  "source_id": "the_decoder",
+  "original_title": "Deepseek reportedly using thousands of smuggled Nvidia chips for AI training",
+  "crawled_at": "2025-12-11T06:32:05.835593+00:00",
+  "edition": "251211_THU_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.750002"
+}

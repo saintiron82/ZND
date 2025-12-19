@@ -1,0 +1,57 @@
+{
+  "title_ko": "Our partnership with the UK government",
+  "article_id": "j8ux5d",
+  "summary": "Google DeepMind는 영국 정부와 과학 및 교육 분야에서 프론티어 AI를 활용하는 협력을 심화한다고 발표했습니다. 이 파트너십을 통해 AlphaEvolve, AlphaGenome, WeatherNext 등 Gemini 기반의 'AI for Science' 모델에 대한 우선 접근권을 영국 과학자들에게 제공할 예정입니다. 또한, Google DeepMind의 첫 번째 자동화된 과학 연구소(재료 과학 연구 중심)를 2026년 영국에 설립하여, Gemini와 통합된 로봇 공학을 통해 신소재 발견 일정을 단축할 계획입니다.",
+  "impact_score": 6.5,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_ECOSYSTEM_RULERS",
+      "weight": 4
+    },
+    "events": [
+      {
+        "id": "GOVERNMENT_PARTNERSHIP",
+        "weight": 2.5
+      }
+    ]
+  },
+  "tags": [
+    "GEN_AI",
+    "RESEARCH_PAPER",
+    "BIZ_IMPACT"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "VAGUE_FUTURE_PROMISE",
+        "value": 0.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 0.5
+      },
+      {
+        "id": "ANALYST_INSIGHT_BONUS",
+        "value": 1
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": false
+      }
+    ]
+  },
+  "Overall review": "Google DeepMind의 선도적인 AI 모델과 기술을 활용한 영국 정부와의 구체적인 협력 발표는 파급력(IS 6.5)이 높습니다. 다만, 'AI for Science' 모델의 상세 구현 설명과 달리 자동화 연구소의 향후 계획은 일부 미래 추측성 언급이 있어 품질(ZS 3.0)이 소폭 낮아졌습니다.",
+  "review_en": "Google DeepMind's announcement of a concrete partnership with the UK government, leveraging their frontier AI models and technology, has a high impact (IS 6.5). However, the quality (ZS 3.0) is slightly reduced due to some future-speculative statements regarding the automated lab's plans, in contrast to the detailed explanation of the 'AI for Science' models.",
+  "zero_echo_score": 4.0,
+  "url": "https://deepmind.google/blog/strengthening-our-partnership-with-the-uk-government-to-support-prosperity-and-security-in-the-ai-era/",
+  "source_id": "deepmind",
+  "original_title": "Our partnership with the UK government",
+  "crawled_at": "2025-12-11T06:28:55.360725+00:00",
+  "edition": "251211_THU_1",
+  "batch_id": "20251218-012718",
+  "typeset_at": "2025-12-18T01:27:18.747502"
+}

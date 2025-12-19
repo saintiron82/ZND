@@ -1,0 +1,228 @@
+{
+  "article_id": "e94f80",
+  "author": "Ben Dickson",
+  "cached_at": "2025-12-18T15:35:02.366398+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/1yOe7kspaeOj7DzSNo65Xo/cef0e42d94b03ff85f2f99a2a9478c8e/Agentic_design_patterns.jpg?w=800&amp;q=75",
+  "modified_at": "2025-12-17T18:53:04.945Z",
+  "published_at": "2025-12-17T00:00+00:00",
+  "summary": "구글 엔지니어 Antonio Gulli가 AI 에이전트의 엔지니어링 표준을 정립한 책을 출간했다. 단순한 모델 성능보다 반사(Reflection), 라우팅, 메모리 등 아키텍처 패턴이 기업용 AI의 신뢰성을 확보하는 핵심임을 강조한다.",
+  "text": "The enterprise AI market is currently nursing a massive hangover. For the past two years, decision-makers have been inundated with demos of autonomous agents booking flights, writing code, and analyzing data. Yet, the reality on the ground is starkly different. While experimentation is at an all-time high, deployment of reliable, autonomous agents in production remains challenging. A recent study by MIT’s Project NANDA highlighted a sobering statistic: Roughly 95% of AI projects fail to deliver bottom-line value. They hit walls when moved from the sandbox to the real world, often breaking under the weight of edge cases, hallucinations, or integration failures. According to Antonio Gulli, a senior engineer at Google and the Director of the Engineering Office of the CTO, the industry is suffering from a fundamental misunderstanding of what agents actually are. We have treated them as magic boxes rather than complex software systems. \"AI engineering, especially with large models and agents, is really no different from any form of engineering, like software or civil engineering,\" Gulli said in an exclusive interview with VentureBeat. \"To build something lasting, you cannot just chase the latest model or framework.\" Gulli argues that the solution to the \"trough of disillusionment\" is not a smarter model, but better architecture. His recent book, \"Agentic Design Patterns,\" provides repeatable, rigorous architectural standards that turn \"toy\" agents into reliable enterprise tools. The book pays homage to the original \"Design Patterns\" (one of my favorite books on software engineering), which brought order to object-oriented programming in the 1990s. Gulli introduces 21 fundamental patterns that serve as the building blocks for reliable agentic systems. These are practical engineering structures that dictate how an agent thinks, remembers, and acts. \"Of course, it's important to have the state-of-the-art, but you need to step back and reflect on the fundamental principles driving AI systems,\" Gulli said. \"These patterns are the engineering foundation that improves the solution quality.\" The enterprise survival kit For enterprise leaders looking to stabilize their AI stack, Gulli identifies five \"low-hanging fruit\" patterns that offer the highest immediate impact: Reflection, Routing, Communication, Guardrails, and Memory. The most critical shift in agent design is the move from simple \"stimulus-response\" bots to systems capable of Reflection. A standard LLM tries to answer a query immediately, which often leads to hallucination. A reflective agent, however, mimics human reasoning by creating a plan, executing it, and then critiquing its own output before presenting it to the user. This internal feedback loop is often the difference between a wrong answer and a correct one. Reflection pattern Once an agent can think, it needs to be efficient. This is where Routing becomes essential for cost control. Instead of sending every query to a massive, expensive \"God model,\" a routing layer analyzes the complexity of the request. Simple tasks are directed to faster, cheaper models, while complex reasoning is reserved for the heavy hitters. This architecture allows enterprises to scale without blowing up their inference budgets. “A model can act as a router to other models, or even the same model with different system prompts and functions,” Gulli said. Routing pattern Connecting these agents to the outside world requires standardized Communication by giving models access to tools such as search, queries, and code execution. In the past, connecting an LLM to a database meant writing custom, brittle code. Gulli points to the rise of the Model Context Protocol (MCP) as a pivotal moment. MCP acts like a USB port for AI, providing a standardized way for agents to plug into data sources and tools. This standardization extends to \"Agent-to-Agent\" (A2A) communication, allowing specialized agents to collaborate on complex tasks without custom integration overhead. However, even a smart, efficient agent is useless if it cannot retain information. Memory patterns solve the \"goldfish\" problem, where agents forget instructions over long conversations. By structuring how an agent stores and retrieves past interactions and experiences, developers can create persistent, context-aware assistants. “The way you create memory is fundamental for the quality of the agents,” Gulli said. Memory pattern Finally, none of this matters if the agent is a liability. Guardrails provide the necessary constraints to ensure an agent operates within safety and compliance boundaries. This goes beyond a simple system prompt asking the model to \"be nice\"; it involves architectural checks and escalation policies that prevent data leakage or unauthorized actions. Gulli emphasizes that defining these \"hard\" boundaries is \"extremely important\" for security, ensuring that an agent trying to be helpful doesn't accidentally expose private data or execute irreversible commands outside its authorized scope. Fixing reliability with transactional safety For many CIOs, the hesitation to deploy agents stems from fear. An autonomous agent that can read emails or modify files poses a significant risk if it goes off the rails. Gulli addresses this by borrowing a concept from database management: transactional safety. \"If an agent takes an action, we must implement checkpoints and rollbacks, just as we do for transactional safety in databases,\" Gulli said. In this model, an agent’s actions are tentative until validated. If the system detects an anomaly or an error, it can \"rollback\" to a previous safe state, undoing the agent’s actions. This safety net allows enterprises to trust agents with write-access to systems, knowing there is an undo button. Testing these systems requires a new approach as well. Traditional unit tests check if a function returns the right value, but an agent might arrive at the right answer via a flawed, dangerous process. Gulli advocates for evaluating Agent Trajectories, metrics that evaluate how agents behave over time. Agent trajectory “[Agent Trajectories] involves analyzing the entire sequence of decisions and tools used to reach a conclusion, ensuring the full process is sound, not just the final answer,” he said. This is often augmented by the Critique pattern, where a separate, specialized agent is tasked with judging the performance of the primary agent. This mutual check is fundamental to preventing the propagation of errors, essentially creating an automated peer-review system for AI decisions. Future-proofing: From prompt engineering to context engineering Looking toward 2026, the era of the single, general-purpose model is likely ending. Gulli predicts a shift toward a landscape dominated by fleets of specialized agents. \"I strongly believe we will see a specialization of agents,\" he said. \"The model will still be the brain... but the agents will become truly multi-agent systems with specialized tasks—agents focusing on retrieval, image generation, video creation — communicating with each other.\" In this future, the primary skill for developers will not be to coax a model into working with clever phrasing and prompt engineering. Instead, they will need to focus on context engineering, the discipline that focuses on designing the information flow, managing the state, and curating the context that the model \"sees.\" It is a move from linguistic trickery to systems engineering. By adopting these patterns and focusing on the \"plumbing\" of AI rather than just the models, enterprises can finally bridge the gap between the hype and the bottom line. \"We should not use AI just for the sake of AI,\" Gulli warns. \"We must start with a clear definition of the business problem and how to best leverage the technology to solve it.\"",
+  "title": "Agentic design patterns: The missing link between AI demos and enterprise value",
+  "url": "https://venturebeat.com/infrastructure/agentic-design-patterns-the-missing-link-between-ai-demos-and-enterprise",
+  "title_ko": "에이전트 디자인 패턴: AI 데모와 기업 가치 연결",
+  "tags": [],
+  "impact_score": 4.5,
+  "IS_Analysis": {
+    "Score_Commentary": "구글(Tier 1) 소속 인물의 방법론 제시는 영향력이 있으나, 형태가 서적 출간 및 인터뷰로 'Corporate(X1)' 수준의 파급력을 가짐. Scope Matrix 상 Y4/X1은 0.5점으로 산정됨.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google (Antonio Gulli)",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Rationale": "저자가 구글의 디렉터로서 구글의 엔지니어링 표준을 대변(P4/P5). Tier 1 적용."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 5.4,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 4,
+      "T2": 8,
+      "T3": 5,
+      "Rationale": "구체적 수치보다는 5가지 디자인 패턴(Reflection 등)의 논리적 설명이 주를 이룸."
+    },
+    "Noise": {
+      "P1": 3,
+      "P2": 4,
+      "P3": 1,
+      "Rationale": "저자 인터뷰 중심이나 내용은 기술적이고 교육적임."
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 8,
+      "V3": 6,
+      "Rationale": "AI 엔지니어링 아키텍처를 고민하는 실무자에게 즉시 참고 가능한 가이드라인 제공."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "단순 뉴스를 넘어선 교육적 가치(Design Pattern 정립)를 인정하여 가점."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "e94f80",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "에이전트 디자인 패턴: AI 데모와 기업 가치 연결",
+      "Summary": "구글 엔지니어 Antonio Gulli가 AI 에이전트의 엔지니어링 표준을 정립한 책을 출간했다. 단순한 모델 성능보다 반사(Reflection), 라우팅, 메모리 등 아키텍처 패턴이 기업용 AI의 신뢰성을 확보하는 핵심임을 강조한다."
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "구글(Tier 1) 소속 인물의 방법론 제시는 영향력이 있으나, 형태가 서적 출간 및 인터뷰로 'Corporate(X1)' 수준의 파급력을 가짐. Scope Matrix 상 Y4/X1은 0.5점으로 산정됨.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google (Antonio Gulli)",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Rationale": "저자가 구글의 디렉터로서 구글의 엔지니어링 표준을 대변(P4/P5). Tier 1 적용."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 8,
+        "T3": 5,
+        "Rationale": "구체적 수치보다는 5가지 디자인 패턴(Reflection 등)의 논리적 설명이 주를 이룸."
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 4,
+        "P3": 1,
+        "Rationale": "저자 인터뷰 중심이나 내용은 기술적이고 교육적임."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 8,
+        "V3": 6,
+        "Rationale": "AI 엔지니어링 아키텍처를 고민하는 실무자에게 즉시 참고 가능한 가이드라인 제공."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "단순 뉴스를 넘어선 교육적 가치(Design Pattern 정립)를 인정하여 가점."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Agentic design patterns: The missing link between AI demos and enterprise value",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 4.0,
+        "T2": 8.0,
+        "T3": 5.0,
+        "S_Avg": 5.67
+      },
+      "Noise": {
+        "P1": 3.0,
+        "P2": 4.0,
+        "P3": 1.0,
+        "N_Avg": 2.67
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 8.0,
+        "V3": 6.0,
+        "U_Avg": 6.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 5.38,
+      "ZS_Final": 5.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 8,
+        "T3": 5,
+        "Rationale": "구체적 수치보다는 5가지 디자인 패턴(Reflection 등)의 논리적 설명이 주를 이룸."
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 4,
+        "P3": 1,
+        "Rationale": "저자 인터뷰 중심이나 내용은 기술적이고 교육적임."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 8,
+        "V3": 6,
+        "Rationale": "AI 엔지니어링 아키텍처를 고민하는 실무자에게 즉시 참고 가능한 가이드라인 제공."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "단순 뉴스를 넘어선 교육적 가치(Design Pattern 정립)를 인정하여 가점."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 4.5,
+      "IS_Final": 4.5,
+      "Score_Commentary": "구글(Tier 1) 소속 인물의 방법론 제시는 영향력이 있으나, 형태가 서적 출간 및 인터뷰로 'Corporate(X1)' 수준의 파급력을 가짐. Scope Matrix 상 Y4/X1은 0.5점으로 산정됨."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google (Antonio Gulli)",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Rationale": "저자가 구글의 디렉터로서 구글의 엔지니어링 표준을 대변(P4/P5). Tier 1 적용."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "crawled_at": "2025-12-18T15:53:41.787903+00:00",
+  "edition": "251218_THU_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-18T15:53:41.793077+00:00",
+  "version": "V1.0",
+  "staged_at": "2025-12-18T16:28:02.206685+00:00",
+  "staged": true,
+  "category": "Engineering",
+  "dedup_status": "selected"
+}

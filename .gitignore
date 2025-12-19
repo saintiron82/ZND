@@ -3,3 +3,4 @@
 
 !.agent/
 supplier/venv/
+*serviceAccountKey*.json

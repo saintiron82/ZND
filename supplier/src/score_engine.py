@@ -122,7 +122,7 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     v1 = safe_float(utility.get('V1'))
     v2 = safe_float(utility.get('V2'))
     v3 = safe_float(utility.get('V3'))
-    u = (v1 + v2 + v3) / 3.0
+    u = max(1.0, (v1 + v2 + v3) / 3.0)
     
     # Extract Fine Adjustment
     fine_adj_obj = zes_raw_metrics.get('Fine_Adjustment', {})

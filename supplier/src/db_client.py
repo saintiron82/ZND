@@ -4,12 +4,15 @@ from firebase_admin import credentials, firestore
 
 class DBClient:
     def __init__(self):
-        # self.db = self._initialize_firebase()
-        self.db = None # Disabled for now
+        self.db = self._initialize_firebase()
         self.history = self._load_history()
 
     def _initialize_firebase(self):
-        service_account_key = os.getenv('FIREBASE_SERVICE_ACCOUNT_KEY', 'serviceAccountKey.json')
+        # supplier/src/db_client.py -> supplier/ 폴더 기준 절대 경로 생성
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        key_filename = os.getenv('FIREBASE_SERVICE_ACCOUNT_KEY', 'serviceAccountKey.json')
+        service_account_key = os.path.join(base_dir, key_filename)
+        
         if not os.path.exists(service_account_key):
             print(f"⚠️ {service_account_key} not found. DB operations will be skipped.")
             return None
@@ -132,18 +135,28 @@ class DBClient:
         article_data['edition'] = edition
         print(f"DEBUG: Calculated Edition: {edition}")
 
-        # 1. Save to DB if available (DISABLED TEMPORARILY)
-        # if self.db:
-        #     try:
-        #         self.db.collection('articles').add(article_data)
-        #     except Exception as e:
-        #         print(f"❌ Save Failed (DB): {e}")
-
-        # 2. Save to individual file
-        # Ensure status is recorded in the file itself (crucial for batch logic)
+        # 1. Save to individual file AND get sanitized data
         article_data['status'] = 'ACCEPTED'
-        self._save_to_individual_file(article_data)
+        publish_data = self._save_to_individual_file(article_data)
         
+        # 2. Save to Firestore using result from step 1
+        doc_id = None
+        if self.db and publish_data:
+            try:
+                # Check for existing document by URL
+                existing_doc = self.get_article_by_url(publish_data.get('url'))
+                
+                if existing_doc:
+                    doc_id = existing_doc['id']
+                    print(f"🔄 [Firestore] URL exists ({doc_id}), updating sanitized data...")
+                    self.update_article(doc_id, publish_data)
+                else:
+                    doc_ref = self.db.collection('articles').add(publish_data)
+                    doc_id = doc_ref[1].id
+                    print(f"🔥 [Firestore] Saved new sanitized doc with doc_id: {doc_id}")
+            except Exception as e:
+                print(f"❌ [Firestore] Save Failed: {e}")
+
         # 3. Update history as ACCEPTED
         if 'url' in article_data:
             self.save_history(article_data['url'], 'ACCEPTED', reason='high_score')
@@ -186,12 +199,32 @@ class DBClient:
         if isinstance(article_data.get('crawled_at'), datetime):
             article_data['crawled_at'] = article_data['crawled_at'].isoformat()
             
+        # 발행용 필수 필드만 추출 (간결한 데이터 파일)
+        article_id = article_data.get('article_id', url_hash)
+        publish_fields = {
+            'id': article_id,  # WEB에서 id로 참조
+            'article_id': article_id,
+            'title_ko': article_data.get('title_ko') or article_data.get('title', ''),
+            'summary': article_data.get('summary', ''),
+            'url': article_data.get('url', ''),
+            'tags': article_data.get('tags', []),
+            'category': article_data.get('category', ''),
+            'zero_echo_score': article_data.get('zero_echo_score', 0),
+            'impact_score': article_data.get('impact_score', 0),
+            'published_at': article_data.get('published_at') or article_data.get('crawled_at', ''),
+            'source_id': source_id,
+            'edition': article_data.get('edition', ''),
+            'original_title': article_data.get('original_title', '')
+        }
+        
         try:
             with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(article_data, f, ensure_ascii=False, indent=2)
-            print(f"💾 Saved to {file_path}: {article_data.get('title_ko')}")
+                json.dump(publish_fields, f, ensure_ascii=False, indent=2)
+            print(f"💾 Saved to {file_path}: {publish_fields.get('title_ko')}")
+            return publish_fields
         except Exception as e:
             print(f"❌ Error saving file: {e}")
+            return None
 
     def _calculate_edition(self, date_str, date_obj):
         """
@@ -318,3 +351,160 @@ class DBClient:
         except Exception as e:
             return False, f"Backup/Write failed: {str(e)}"
 
+    # ============================================
+    # Firestore CRUD Operations
+    # ============================================
+    
+    def get_article(self, doc_id):
+        """
+        Firestore에서 특정 문서 조회
+        Returns: dict (article data) or None
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return None
+            
+        try:
+            doc = self.db.collection('articles').document(doc_id).get()
+            if doc.exists:
+                data = doc.to_dict()
+                data['id'] = doc.id  # 문서 ID 포함
+                return data
+            else:
+                print(f"⚠️ [Firestore] Document not found: {doc_id}")
+                return None
+        except Exception as e:
+            print(f"❌ [Firestore] Get Failed: {e}")
+            return None
+    
+    def get_article_by_url(self, url):
+        """
+        URL로 Firestore 문서 조회
+        Returns: dict (article data with id) or None
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return None
+            
+        try:
+            docs = self.db.collection('articles').where('url', '==', url).limit(1).stream()
+            for doc in docs:
+                data = doc.to_dict()
+                data['id'] = doc.id
+                return data
+            return None
+        except Exception as e:
+            print(f"❌ [Firestore] Query Failed: {e}")
+            return None
+    
+    def update_article(self, doc_id, update_data):
+        """
+        Firestore 문서 수정
+        Args:
+            doc_id: 문서 ID
+            update_data: 업데이트할 필드 딕셔너리
+        Returns: (bool success, str message)
+        """
+        if not self.db:
+            return False, "DB not connected"
+            
+        try:
+            from datetime import datetime, timezone
+            update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+            
+            self.db.collection('articles').document(doc_id).update(update_data)
+            print(f"✏️ [Firestore] Updated: {doc_id}")
+            return True, f"Updated document: {doc_id}"
+        except Exception as e:
+            print(f"❌ [Firestore] Update Failed: {e}")
+            return False, str(e)
+    
+    def delete_article(self, doc_id):
+        """
+        Firestore 문서 삭제
+        Args:
+            doc_id: 삭제할 문서 ID
+        Returns: (bool success, str message)
+        """
+        if not self.db:
+            return False, "DB not connected"
+            
+        try:
+            self.db.collection('articles').document(doc_id).delete()
+            print(f"🗑️ [Firestore] Deleted: {doc_id}")
+            return True, f"Deleted document: {doc_id}"
+        except Exception as e:
+            print(f"❌ [Firestore] Delete Failed: {e}")
+            return False, str(e)
+    
+    def list_articles(self, limit=50, order_by='crawled_at', descending=True):
+        """
+        Firestore에서 기사 목록 조회
+        Args:
+            limit: 최대 조회 개수
+            order_by: 정렬 기준 필드
+            descending: 내림차순 여부
+        Returns: list of dicts
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return []
+            
+        try:
+            from google.cloud.firestore_v1 import Query
+            
+            query = self.db.collection('articles')
+            
+            if descending:
+                query = query.order_by(order_by, direction=Query.DESCENDING)
+            else:
+                query = query.order_by(order_by)
+                
+            query = query.limit(limit)
+            
+            articles = []
+            for doc in query.stream():
+                data = doc.to_dict()
+                data['id'] = doc.id
+                articles.append(data)
+                
+            print(f"📋 [Firestore] Listed {len(articles)} articles")
+            return articles
+        except Exception as e:
+            print(f"❌ [Firestore] List Failed: {e}")
+            return []
+    
+    def list_articles_by_date(self, date_str):
+        """
+        특정 날짜의 기사 목록 조회
+        Args:
+            date_str: 'YYYY-MM-DD' 형식
+        Returns: list of dicts
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return []
+            
+        try:
+            # edition 필드가 'YYMMDD_'로 시작하는 것으로 필터링
+            yy = date_str[2:4]
+            mm = date_str[5:7]
+            dd = date_str[8:10]
+            edition_prefix = f"{yy}{mm}{dd}_"
+            
+            docs = self.db.collection('articles')\
+                .where('edition', '>=', edition_prefix)\
+                .where('edition', '<', edition_prefix + 'z')\
+                .stream()
+            
+            articles = []
+            for doc in docs:
+                data = doc.to_dict()
+                data['id'] = doc.id
+                articles.append(data)
+                
+            print(f"📅 [Firestore] Found {len(articles)} articles for {date_str}")
+            return articles
+        except Exception as e:
+            print(f"❌ [Firestore] Date Query Failed: {e}")
+            return []

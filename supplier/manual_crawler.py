@@ -39,9 +39,10 @@ db = DBClient()
 robots_checker = RobotsChecker()
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 CACHE_DIR = os.path.join(os.path.dirname(__file__), 'cache')
-STAGING_DIR = os.path.join(CACHE_DIR, 'staging') # [Ad-hoc fix] Define staging dir
+# [REMOVED] CACHE_DIR - 이제 cache가 조판 역할도 수행
 
 # --- URL-based Text Caching ---
+
 # These functions now delegate to core_logic module for consistency
 def get_url_hash(url):
     """Generate a short hash from URL for cache filename."""
@@ -351,41 +352,6 @@ def find_by_article_ids():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-def _normalize_url_for_dedupe(url):
-    """Normalize URL for deduplication check (ignore scheme, trailing slash)."""
-    if not url: return ""
-    try:
-        from urllib.parse import urlparse, urlunparse
-        parsed = urlparse(url)
-        # Normalize scheme to http (or empty) to ignore http/https diff
-        # Remove trailing slash from path
-        path = parsed.path.rstrip('/')
-        
-        # Reconstruct without scheme
-        # We prefer to keep netloc/path/query/params/fragment
-        # But to match http vs https, we can just strip the scheme part
-        # simplified: lower case, strip scheme, strip trailing slash
-        
-        # Simplified manual normalization:
-        # 1. Strip whitespace
-        norm = url.strip()
-        # 2. To lowercase (usually safe for domains, maybe not for complex query params but acceptable for dedupe)
-        # Actually query params are case sensitive commonly. Let's ONLY lower casing the scheme/netloc?
-        # Too complex. Let's just strip trailing slash and scheme.
-        
-        # Remove scheme
-        if norm.startswith('https://'):
-            norm = norm[8:]
-        elif norm.startswith('http://'):
-            norm = norm[7:]
-            
-        # Remove trailing slash
-        if norm.endswith('/'):
-            norm = norm[:-1]
-            
-        return norm
-    except:
-        return url
 
 def _get_duplicate_groups():
     """Helper to find duplicate cache files."""
@@ -407,7 +373,7 @@ def _get_duplicate_groups():
                         data = json.load(f)
                         url = data.get('url', '')
                         if url:
-                            norm_url = _normalize_url_for_dedupe(url)
+                            norm_url = normalize_url_for_dedupe(url)
                             if norm_url not in url_to_files:
                                 url_to_files[norm_url] = []
                             url_to_files[norm_url].append({
@@ -774,13 +740,34 @@ def extract():
              pass
         
     async def get_data():
-        # Use Playwright for best compatibility in manual mode too
-        crawler = AsyncCrawler(use_playwright=True) 
+        # 1. Try Playwright first (Best for JS, but risks being blocked)
+        print(f"🕷️ [Manual Extract] Attempting Playwright fetch: {url}")
+        crawler_pw = AsyncCrawler(use_playwright=True) 
+        data = None
         try:
-            await crawler.start()
-            return await crawler.process_url(url)
+            await crawler_pw.start()
+            data = await crawler_pw.process_url(url)
+        except Exception as e:
+             print(f"⚠️ [Manual Extract] Playwright error: {e}")
         finally:
-            await crawler.close()
+            await crawler_pw.close()
+            
+        # Check if Playwright succeeded
+        text_len = len(data.get('text', '')) if data else 0
+        if data and text_len >= 200:
+            print(f"✅ [Manual Extract] Playwright success (text_len={text_len}).")
+            return data
+            
+        print(f"⚠️ [Manual Extract] Playwright returned insufficient data (len={text_len}). Falling back to HTTP...")
+
+        # 2. Fallback to HTTP (requests) - Often works if Playwright is blocked
+        crawler_http = AsyncCrawler(use_playwright=False)
+        try:
+            # No start/close needed for HttpFetcher usually, but good practice if AsyncCrawler requires it
+            # AsyncCrawler code calls start/close on fetcher. HttpFetcher doesn't really need start but has close.
+            return await crawler_http.process_url(url)
+        finally:
+            await crawler_http.close()
 
     try:
         content = asyncio.run(get_data())
@@ -790,7 +777,7 @@ def extract():
     if not content:
         return jsonify({'error': 'Failed to extract content'}), 500
 
-    # [NEW] Check content length
+    # [NEW] Check content length (Final check)
     text_len = len(content.get('text', ''))
     if text_len < 200:
         db.save_history(url, 'WORTHLESS', reason='text_too_short_manual')
@@ -936,34 +923,44 @@ def extract_batch():
 @app.route('/api/save', methods=['POST'])
 def save():
     """
-    Save article - uses unified pipeline (same as auto crawler).
+    Save article to Staging (Cache) ONLY.
+    DOES NOT write to Firestore or create data file yet.
     """
-    from src.pipeline import save_article as pipeline_save
+    from src.core_logic import save_to_cache, get_article_id
+    from datetime import datetime, timezone
     
     data = normalize_field_names(request.json)
     
     # Validate required fields
-    required_fields = ['url', 'source_id', 'title_ko', 'summary', 'zero_echo_score', 'impact_score', 'original_title']
+    required_fields = ['url', 'summary', 'zero_echo_score', 'impact_score']
     for field in required_fields:
         if field not in data:
             return jsonify({'error': f'Missing field: {field}'}), 400
+            
+    # title validation
+    if not data.get('title_ko') and not data.get('title'):
+        return jsonify({'error': 'Missing field: title_ko or title'}), 400
     
-    # Use unified pipeline for saving
-    result = pipeline_save(data, source_id=data.get('source_id'))
-    
-    if result.get('status') == 'saved':
+    try:
+        url = data['url']
+        
+        # Mark as Reviewed/Staged
+        data['status'] = 'reviewed'
+        data['staged'] = True
+        data['staged_at'] = datetime.now(timezone.utc).isoformat()
+        
+        # Save to cache
+        save_to_cache(url, data)
+        
         return jsonify({
             'status': 'success',
-            'data_file': {
-                'filename': result.get('filename'),
-                'date': result.get('date'),
-                'path': f"data/{result.get('date')}/{result.get('filename')}"
-            }
+            'message': 'Article saved to staging (cache). Ready to publish.',
+            'article_id': get_article_id(url)
         })
-    elif result.get('status') == 'worthless':
-        return jsonify({'error': f"Article marked as worthless: {result.get('reason')}"}), 400
-    else:
-        return jsonify({'error': result.get('error', 'Unknown error')}), 500
+        
+    except Exception as e:
+        print(f"❌ [Save Staging] Error: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/skip', methods=['POST'])
 def skip():
@@ -1159,16 +1156,8 @@ def inject_correction():
         data['zero_echo_score'] = scores['zs_final']
         data['impact_score'] = scores['impact_score']
 
-        # Check Noise Score (threshold from config)
-        from src.core_logic import get_config
-        high_noise_threshold = get_config('scoring', 'high_noise_threshold', default=7.0)
-        if scores['zs_final'] >= high_noise_threshold:
-             print(f"⚠️ [Inject] ZS is high ({scores['zs_final']}), marking as WORTHLESS.")
-             db.save_history(url, 'WORTHLESS', reason='high_noise_manual_inject')
-             return jsonify({
-                 'status': 'error', 
-                 'error': f"Article has High Noise ({scores['zs_final']}). Marked as WORTHLESS and NOT saved."
-             }), 400
+        # [REMOVED] 노이즈 필터링 제거 - 모든 기사 저장 가능
+        # 점수와 무관하게 사용자가 직접 판단
 
         # [NEW] Force update date to NOW (execution time) so it saves in today's folder
         now_utc = datetime.now(timezone.utc)
@@ -1430,7 +1419,8 @@ def cleanup_duplicate_data():
 # 자동화 파이프라인 API (5단계 + ALL)
 # ==============================================================================
 
-STAGING_DIR = os.path.join(os.path.dirname(__file__), 'staging')
+# [REMOVED] CACHE_DIR = ... - 이제 cache가 조판 역할도 수행
+
 
 @app.route('/api/automation/collect', methods=['POST'])
 def automation_collect():
@@ -1627,29 +1617,18 @@ def automation_analyze():
 @app.route('/api/automation/stage', methods=['POST'])
 def automation_stage():
     """
-    4️⃣ 조판 (Staging): 분석 완료된 캐시 → staging 폴더로 복사
-    - 점수 재검증 포함
-    - 마스터 검토용 미리보기
-    - 최근 3일치 캐시를 스캔하여 미처리된 항목 조판
+    4️⃣ 조판 (Staging): 분석 완료된 캐시 점수 재검증 및 고노이즈 필터링
+    - 이제 cache가 조판 역할을 동시에 수행 (별도 staging 폴더 없음)
+    - 점수 재검증 + 고노이즈 자동 거부 처리
     """
     try:
         from src.score_engine import process_raw_analysis
-        from src.core_logic import get_config
         from datetime import datetime, timedelta
-        
-        today_str = datetime.now().strftime('%Y-%m-%d')
-        staging_date_dir = os.path.join(STAGING_DIR, today_str)
-        
-        # Staging 폴더 생성
-        os.makedirs(staging_date_dir, exist_ok=True)
         
         staged_count = 0
         skipped_count = 0
-        rejected_count = 0
         
-        high_noise_threshold = get_config('scoring', 'high_noise_threshold', default=7.0)
-        
-        # [FIX] Scan last 3 days to handle midnight crossover
+        # 최근 3일치 캐시 스캔
         for i in range(3):
             scan_date = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
             cache_date_dir = os.path.join(CACHE_DIR, scan_date)
@@ -1668,65 +1647,44 @@ def automation_stage():
                     with open(filepath, 'r', encoding='utf-8') as f:
                         cache_data = json.load(f)
                     
-                    print(f"DEBUG: Processing {filename}")
-                    
-                    # 분석 안 된 것은 스킵 (raw_analysis 있거나 saved면 분석 완료로 간주)
+                    # 분석 안 된 것은 스킵
                     is_analyzed = (
                         cache_data.get('mll_status') == 'analyzed' or
                         cache_data.get('raw_analysis') is not None or
-                        cache_data.get('saved') is True or
                         cache_data.get('zero_echo_score') is not None
                     )
                     if not is_analyzed:
-                        print(f"DEBUG: Skip {filename} - Not analyzed (status={cache_data.get('mll_status')})")
                         skipped_count += 1
                         continue
                     
-                    # 이미 staging 됨 (오늘 날짜 폴더에 이미 있는지 확인)
-                    # NOTE: cache_data['staged']가 True여도, 오늘자 Staging 풀에 없으면 다시 추가합니다.
-                    # (사용자가 파일을 복사해왔거나, 재작업을 원하는 경우 대응)
-                    staging_filepath = os.path.join(staging_date_dir, filename)
-                    if os.path.exists(staging_filepath):
-                        # print(f"DEBUG: Skip {filename} - Already staged in current batch")
+                    # 이미 processed (staged) 처리된 것은 스킵
+                    if cache_data.get('staged'):
                         skipped_count += 1
                         continue
                     
-                    # 이미 발행 완료된 건은 스킵
-                    if cache_data.get('published') or cache_data.get('status') == 'PUBLISHED':
-                         print(f"DEBUG: Skip {filename} - Already published")
-                         skipped_count += 1
-                         continue
+                    # 이미 발행된 것은 스킵
+                    if cache_data.get('published'):
+                        skipped_count += 1
+                        continue
 
                     # 점수 재검증 (raw_analysis 있으면)
+                    updated = False
                     if cache_data.get('raw_analysis'):
                         try:
                             scores = process_raw_analysis(cache_data['raw_analysis'])
                             cache_data['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
                             cache_data['impact_score'] = scores.get('impact_score', 0.0)
+                            updated = True
                         except Exception as e:
                             print(f"⚠️ [Stage] Score calc error: {e}")
                     
-                    # 고노이즈 필터링
-                    zs = float(cache_data.get('zero_echo_score', 5.0))
-                    if zs >= high_noise_threshold:
-                        cache_data['rejected'] = True
-                        cache_data['reject_reason'] = f'high_noise ({zs})'
-                        rejected_count += 1
+                    # [REMOVED] 고노이즈 자동 필터링 제거 - 모든 기사 staging에 유지
+                    # 사용자가 직접 판단하도록 변경
                     
-                    # Staging 데이터 준비
-                    staging_data = {
-                        **cache_data,
-                        'staged_at': datetime.now(timezone.utc).isoformat(),
-                        'staged': True
-                    }
-                    
-                    # Staging 폴더에 저장 (항상 오늘 날짜 폴더로 모음)
-                    staging_filepath = os.path.join(staging_date_dir, filename)
-                    with open(staging_filepath, 'w', encoding='utf-8') as f:
-                        json.dump(staging_data, f, ensure_ascii=False, indent=2)
-                    
-                    # 원본 캐시에도 staged 표시 (경로 유지)
+                    # staged 표시 및 저장
                     cache_data['staged'] = True
+                    cache_data['staged_at'] = datetime.now(timezone.utc).isoformat()
+                    
                     with open(filepath, 'w', encoding='utf-8') as f:
                         json.dump(cache_data, f, ensure_ascii=False, indent=2)
                     
@@ -1735,42 +1693,44 @@ def automation_stage():
                 except Exception as e:
                     print(f"⚠️ [Stage] Error on {filename}: {e}")
         
-        print(f"📋 [Stage] 조판: {staged_count}, 스킵: {skipped_count}, 거부: {rejected_count}")
+        print(f"📋 [Stage] 조판: {staged_count}, 스킵: {skipped_count}")
         return jsonify({
             'success': True,
             'staged': staged_count,
             'skipped': skipped_count,
-            'rejected': rejected_count,
-            'staging_dir': staging_date_dir,
-            'message': f'조판 {staged_count}개 완료 (거부 {rejected_count}개, 스킵 {skipped_count}개)'
+            'message': f'조판 {staged_count}개 완료 (스킵 {skipped_count}개)'
         })
     except Exception as e:
         print(f"❌ [Stage] Error: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+
+
 @app.route('/api/automation/publish', methods=['POST'])
 def automation_publish():
     """
-    5️⃣ 발행: staging → data 폴더 + 웹 동기화
+    5️⃣ 발행: cache → data 폴더 파일 생성
     - rejected 아닌 것만 발행
+    - 이 시점에 data/ 폴더에 최종 파일이 생성됨
     """
+
     try:
         from src.pipeline import save_article
         
         today_str = datetime.now().strftime('%Y-%m-%d')
-        staging_date_dir = os.path.join(STAGING_DIR, today_str)
+        cache_date_dir = os.path.join(CACHE_DIR, today_str)
         
         published_count = 0
         skipped_count = 0
         failed_count = 0
         
-        if os.path.exists(staging_date_dir):
-            for filename in os.listdir(staging_date_dir):
+        if os.path.exists(cache_date_dir):
+            for filename in os.listdir(cache_date_dir):
                 if not filename.endswith('.json'):
                     continue
                 
-                filepath = os.path.join(staging_date_dir, filename)
+                filepath = os.path.join(cache_date_dir, filename)
                 try:
                     with open(filepath, 'r', encoding='utf-8') as f:
                         staging_data = json.load(f)
@@ -1785,16 +1745,22 @@ def automation_publish():
                         skipped_count += 1
                         continue
                     
-                    # 필수 필드 체크
-                    required = ['url', 'title_ko', 'summary', 'zero_echo_score', 'impact_score']
+                    # 필수 필드 체크 (title_ko 또는 title 중 하나 필요)
+                    required = ['url', 'summary', 'zero_echo_score', 'impact_score']
                     missing = [f for f in required if f not in staging_data]
+                    
+                    # title 필드 검증 (title_ko 또는 title 중 하나 필요)
+                    has_title = staging_data.get('title_ko') or staging_data.get('title')
+                    if not has_title:
+                        missing.append('title_ko or title')
+                    
                     if missing:
                         print(f"⚠️ [Publish] Missing fields {missing}: {filename}")
                         skipped_count += 1
                         continue
                     
-                    # 발행
-                    result = save_article(staging_data, source_id=staging_data.get('source_id'))
+                    # 발행 (노이즈 필터링 건너뜀)
+                    result = save_article(staging_data, source_id=staging_data.get('source_id'), skip_evaluation=True)
                     
                     if result.get('status') == 'saved':
                         # 발행 완료 표시
@@ -1872,32 +1838,42 @@ def staging_preview():
     return render_template('staging.html')
 
 
+
+
 @app.route('/api/staging/list')
 def staging_list():
-    """Staging 폴더의 기사 목록 반환"""
+    """Cache 폴더의 기사 목록 반환 (조판 UI용) - 분석된 기사만 표시"""
     try:
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
-        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        cache_date_dir = os.path.join(CACHE_DIR, date_str)
         print(f"🕵️ [Staging List] Request Date: {date_str}")
-        print(f"🕵️ [Staging List] Dir Path: {staging_date_dir}")
-        print(f"🕵️ [Staging List] Exists?: {os.path.exists(staging_date_dir)}")
+        print(f"🕵️ [Staging List] Dir Path: {cache_date_dir}")
+        print(f"🕵️ [Staging List] Exists?: {os.path.exists(cache_date_dir)}")
         
         articles = []
         
-        if os.path.exists(staging_date_dir):
+        if os.path.exists(cache_date_dir):
             from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
 
-            for filename in os.listdir(staging_date_dir):
+            for filename in os.listdir(cache_date_dir):
                 if not filename.endswith('.json'):
                     continue
                 
-                filepath = os.path.join(staging_date_dir, filename)
+                filepath = os.path.join(cache_date_dir, filename)
                 try:
                     with open(filepath, 'r', encoding='utf-8') as f:
                         data = json.load(f)
                     
+                    # [NEW] 분석되지 않은 기사는 조판 목록에서 제외
+                    is_analyzed = (
+                        data.get('mll_status') == 'analyzed' or
+                        data.get('raw_analysis') is not None or
+                        data.get('zero_echo_score') is not None
+                    )
+                    if not is_analyzed:
+                        continue
+                    
                     # [FIX] Auto-detect schema version for display if raw_analysis exists
-                    # This corrects old labels (e.g., V0.9 vs Hybrid mismatch)
                     schema_ver = 'Unknown'
                     version_updated = False
                     
@@ -1905,8 +1881,6 @@ def staging_list():
                          detected_ver = detect_schema_version(data['raw_analysis'])
                          current_ver = data.get('impact_evidence', {}).get('schema_version')
                          
-                         # If missing or different (and we trust detection more for now?), update it.
-                         # Actually, if it's missing, definitely save it.
                          if not current_ver or current_ver == 'Unknown':
                              if 'impact_evidence' not in data: data['impact_evidence'] = {}
                              data['impact_evidence']['schema_version'] = detected_ver
@@ -1936,63 +1910,15 @@ def staging_list():
                         'reject_reason': data.get('reject_reason', ''),
                         'published': data.get('published', False),
                         'staged_at': data.get('staged_at', ''),
-                        # [NEW] 중복 제거 상태
-                        'dedup_status': data.get('dedup_status'),  # 'selected' or 'duplicate' or None
-                        'category': data.get('category'),  # LLM이 지정한 카테고리
-                        # [NEW] For sorting by original date (fallback to cached_at -> saved_at -> staged_at -> today)
+                        'dedup_status': data.get('dedup_status'),
+                        'category': data.get('category'),
                         'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat(),
                         'impact_evidence': data.get('impact_evidence', {'schema_version': schema_ver})
                     })
                 except Exception as e:
                     print(f"⚠️ [Staging List] Error reading {filename}: {e}")
         
-        # 정렬: 발행됨 → 대기중 → 거부됨
-        def sort_key(a):
-            # 1. Published at bottom, Rejected at bottom (effectively hidden or low pro) - Wait, logic below was:
-            # Published -> 0 (Top?), Rejected -> 2 (Bottom?), Others -> 1 (Middle?)
-            # Let's keep status grouping, but sort by Date inside.
-            # Actually, User wants to see "Candidates" (Wait/Staged) most.
-            # Let's put Staged(1) first, then Published(2), then Rejected(3).
-            # And sort by crawled_at DESC.
-            
-            status_order = 1 # Default Staged
-            if a['published']: status_order = 2
-            if a['rejected']: status_order = 3
-            
-            return (status_order, a.get('crawled_at', ''))
-        
-        # Sort: Status group ASC, then Date DESC (so we reverse the whole thing?)
-        # No, let's explicit sort.
-        articles.sort(key=lambda x: (
-            1 if not x['published'] and not x['rejected'] else (2 if x['published'] else 3), # Staged first
-            x.get('crawled_at', '') # then by date
-        ), reverse=True) # Reverse -> Status 3 first? No.
-        
-        # We want Staged First.
-        # Reverse=True means: Largest first.
-        # So Status 3 (Rejected) > 2 (Published) > 1 (Staged).
-        # Use Reverse=False to put Staged (1) at top.
-        # But we want Newest Date (Largest String) at top.
-        # So: Status ASC, Date DESC.
-        
-        articles.sort(key=lambda x: (
-            0 if not x['published'] and not x['rejected'] else (1 if x['published'] else 2),
-            -(datetime.fromisoformat(x.get('crawled_at').replace('Z','+00:00')).timestamp() if x.get('crawled_at') else 0)
-        ))
-        # Complexity with timestamp msg.
-        # Let's stick to string sort for date (ISO format works).
-        # We want DESC date.
-        
-        # Tuple sort: (StatusOrder, DateString)
-        # We want Status: Staged(0) < Published(1) < Rejected(2)
-        # We want Date: Newest("2025") < Oldest("2024") ?? No, we want Newest first.
-        # So Date should be DESC.
-        # Python sort is ASC.
-        # To get DESC date, we can't negate string.
-        # Let's use reverse=True.
-        # Status: Staged(2) > Published(1) > Rejected(0) -> Staged on Top.
-        # Date: "2025" > "2024" -> Newest on Top.
-        
+        # 정렬: 대기중 → 발행됨 → 거부됨, 날짜 내림차순
         articles.sort(key=lambda x: (
             2 if not x['published'] and not x['rejected'] else (1 if x['published'] else 0),
             x.get('crawled_at', '')
@@ -2008,10 +1934,12 @@ def staging_list():
         return jsonify({'error': str(e)}), 500
 
 
+
+
 @app.route('/api/staging/recalculate', methods=['POST'])
 def automation_stage_recalc():
     """
-    ⚡ Staging 폴더의 기사 점수 재계산 (전체 또는 선택)
+    ⚡ Cache 폴더의 기사 점수 재계산 (전체 또는 선택)
     """
     try:
         from src.score_engine import process_raw_analysis
@@ -2021,10 +1949,10 @@ def automation_stage_recalc():
         target_filenames = data.get('filenames', []) # 선택된 파일만 처리 (없으면 전체)
         schema_version_override = data.get('schema_version') # UI에서 선택한 스키마 버전
 
-        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        cache_date_dir = os.path.join(CACHE_DIR, date_str)
         
-        if not os.path.exists(staging_date_dir):
-            return jsonify({'success': False, 'error': 'Staging folder not found'}), 404
+        if not os.path.exists(cache_date_dir):
+            return jsonify({'success': False, 'error': 'Cache folder not found'}), 404
             
         count = 0
         errors = 0
@@ -2033,10 +1961,10 @@ def automation_stage_recalc():
         if target_filenames:
             files_to_process = target_filenames
         else:
-            files_to_process = [f for f in os.listdir(staging_date_dir) if f.endswith('.json')]
+            files_to_process = [f for f in os.listdir(cache_date_dir) if f.endswith('.json')]
             
         for filename in files_to_process:
-            filepath = os.path.join(staging_date_dir, filename)
+            filepath = os.path.join(cache_date_dir, filename)
             
             if not os.path.exists(filepath):
                  continue
@@ -2085,11 +2013,11 @@ def automation_stage_reject_selected():
         if not filenames:
             return jsonify({'success': False, 'error': 'No filenames provided'}), 400
             
-        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        cache_date_dir = os.path.join(CACHE_DIR, date_str)
         count = 0
         
         for filename in filenames:
-            filepath = os.path.join(staging_date_dir, filename)
+            filepath = os.path.join(cache_date_dir, filename)
             if not os.path.exists(filepath):
                 continue
                 
@@ -2127,15 +2055,15 @@ def automation_stage_restore_selected():
         if not filenames:
             return jsonify({'success': False, 'error': 'No filenames provided'}), 400
             
-        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        cache_date_dir = os.path.join(CACHE_DIR, date_str)
         count = 0
         
         for filename in filenames:
-            filepath = os.path.join(staging_date_dir, filename)
+            filepath = os.path.join(cache_date_dir, filename)
             if not os.path.exists(filepath):
                 # 다른 날짜에도 있을 수 있으므로 검색
-                for date_folder in os.listdir(STAGING_DIR):
-                    check_path = os.path.join(STAGING_DIR, date_folder, filename)
+                for date_folder in os.listdir(CACHE_DIR):
+                    check_path = os.path.join(CACHE_DIR, date_folder, filename)
                     if os.path.exists(check_path):
                         filepath = check_path
                         break
@@ -2177,7 +2105,7 @@ def staging_file():
         if not filename:
             return jsonify({'error': 'filename is required'}), 400
         
-        filepath = os.path.join(STAGING_DIR, date_str, filename)
+        filepath = os.path.join(CACHE_DIR, date_str, filename)
         
         if not os.path.exists(filepath):
             return jsonify({'error': 'File not found'}), 404
@@ -2192,17 +2120,11 @@ def staging_file():
 
 @app.route('/api/staging/update_categories', methods=['POST'])
 def staging_update_categories():
-    """카테고리 정보를 staging 파일과 캐시에 저장 (보낸 기사만 대상)"""
+    """카테고리 정보를 모든 날짜 폴더의 캐시에 저장 (보낸 기사만 대상, 크로스 날짜 지원)"""
     try:
         data = request.json or {}
-        date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
         category_results = data.get('results', [])  # [{ category, article_ids }, ...]
         sent_ids = set(data.get('sent_ids', []))  # LLM에 보낸 기사 ID 목록
-        
-        staging_date_dir = os.path.join(STAGING_DIR, date_str)
-        
-        if not os.path.exists(staging_date_dir):
-            return jsonify({'success': False, 'error': 'Staging folder not found'}), 404
         
         # article_id -> category 맵 구축
         category_map = {}
@@ -2214,54 +2136,59 @@ def staging_update_categories():
         updated_count = 0
         uncategorized_count = 0
         
-        # 모든 staging 파일 순회
-        for filename in os.listdir(staging_date_dir):
-            if not filename.endswith('.json'):
+        # 모든 날짜 폴더 순회 (크로스 날짜 지원)
+        if not os.path.exists(CACHE_DIR):
+            return jsonify({'success': False, 'error': 'Cache directory not found'}), 404
+        
+        for date_folder in os.listdir(CACHE_DIR):
+            cache_date_dir = os.path.join(CACHE_DIR, date_folder)
+            if not os.path.isdir(cache_date_dir):
                 continue
             
-            filepath = os.path.join(staging_date_dir, filename)
-            try:
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    article_data = json.load(f)
-                
-                # filename에서 article_id 추출
-                parts = filename.replace('.json', '').split('_')
-                article_id = parts[-1] if len(parts) > 1 else parts[0]
-                
-                # article.article_id도 확인 (우선순위)
-                stored_article_id = article_data.get('article_id') or article_id
-                
-                # 보낸 기사가 아니면 건너뜀 (sent_ids가 있는 경우에만)
-                if sent_ids and stored_article_id not in sent_ids and article_id not in sent_ids:
+            for filename in os.listdir(cache_date_dir):
+                if not filename.endswith('.json'):
                     continue
                 
-                # 카테고리 지정
-                if stored_article_id in category_map or article_id in category_map:
-                    cat = category_map.get(stored_article_id) or category_map.get(article_id, '미분류')
-                    article_data['category'] = cat
-                    article_data['dedup_status'] = 'selected'
-                else:
-                    # LLM에 보냈지만 결과에 없음 = 중복으로 제거됨
-                    article_data['dedup_status'] = 'duplicate'
-                    uncategorized_count += 1
-                
-                # staging 파일 저장
-                with open(filepath, 'w', encoding='utf-8') as f:
-                    json.dump(article_data, f, ensure_ascii=False, indent=2)
-                
-                # 캐시 파일에도 반영 (같은 URL의 캐시 찾기)
-                url = article_data.get('url')
-                if url:
-                    cached_data = load_from_cache(url)
-                    if cached_data:
-                        cached_data['category'] = article_data['category']
-                        cached_data['dedup_status'] = article_data['dedup_status']
-                        save_to_cache(url, cached_data)
-                
-                updated_count += 1
-                
-            except Exception as e:
-                print(f"⚠️ [Update Category] Error on {filename}: {e}")
+                filepath = os.path.join(cache_date_dir, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        article_data = json.load(f)
+                    
+                    # filename에서 article_id 추출
+                    parts = filename.replace('.json', '').split('_')
+                    article_id = parts[-1] if len(parts) > 1 else parts[0]
+                    
+                    # article.article_id도 확인 (우선순위)
+                    stored_article_id = article_data.get('article_id') or article_id
+                    
+                    # 보낸 기사가 아니면 건너뜀 (sent_ids가 있는 경우에만)
+                    # 수정: Positive(카테고리 있음)는 무조건 업데이트, Negative(중복)는 sent_ids에 있을 때만 처리
+                    is_in_result = stored_article_id in category_map or article_id in category_map
+                    is_in_scope = not sent_ids or (stored_article_id in sent_ids or article_id in sent_ids)
+                    
+                    if not is_in_result and not is_in_scope:
+                        continue
+                    
+                    # 카테고리 지정
+                    if is_in_result:
+
+                        cat = category_map.get(stored_article_id) or category_map.get(article_id, '미분류')
+                        article_data['category'] = cat
+                        article_data['dedup_status'] = 'selected'
+                    else:
+                        # LLM에 보냈지만 결과에 없음 = 중복으로 제거됨
+                        article_data['dedup_status'] = 'duplicate'
+                        uncategorized_count += 1
+                    
+                    # 캐시 파일 저장
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(article_data, f, ensure_ascii=False, indent=2)
+                    
+                    updated_count += 1
+                    print(f"✅ [Update Category] {filename}: {article_data.get('category')} ({date_folder})")
+                    
+                except Exception as e:
+                    print(f"⚠️ [Update Category] Error on {filename}: {e}")
         
         print(f"📂 [Update Category] 업데이트: {updated_count}개 (미분류/중복: {uncategorized_count}개)")
         return jsonify({
@@ -2282,18 +2209,18 @@ def staging_reset_dedup():
         data = request.json or {}
         date_str = data.get('date') or datetime.now().strftime('%Y-%m-%d')
         
-        staging_date_dir = os.path.join(STAGING_DIR, date_str)
+        cache_date_dir = os.path.join(CACHE_DIR, date_str)
         
-        if not os.path.exists(staging_date_dir):
+        if not os.path.exists(cache_date_dir):
             return jsonify({'success': False, 'error': 'Staging folder not found'}), 404
         
         reset_count = 0
         
-        for filename in os.listdir(staging_date_dir):
+        for filename in os.listdir(cache_date_dir):
             if not filename.endswith('.json'):
                 continue
             
-            filepath = os.path.join(staging_date_dir, filename)
+            filepath = os.path.join(cache_date_dir, filename)
             try:
                 with open(filepath, 'r', encoding='utf-8') as f:
                     article_data = json.load(f)
@@ -2331,9 +2258,9 @@ def staging_delete_legacy():
         deleted_cache = 0
         
         # Staging 폴더 순회
-        if os.path.exists(STAGING_DIR):
-            for date_folder in os.listdir(STAGING_DIR):
-                date_path = os.path.join(STAGING_DIR, date_folder)
+        if os.path.exists(CACHE_DIR):
+            for date_folder in os.listdir(CACHE_DIR):
+                date_path = os.path.join(CACHE_DIR, date_folder)
                 if not os.path.isdir(date_path):
                     continue
                 
@@ -2405,7 +2332,7 @@ def staging_delete_file():
         deleted = False
         
         # Staging 폴더에서 삭제
-        staging_file = os.path.join(STAGING_DIR, date_str, filename)
+        staging_file = os.path.join(CACHE_DIR, date_str, filename)
         if os.path.exists(staging_file):
             os.remove(staging_file)
             deleted = True
@@ -2413,8 +2340,8 @@ def staging_delete_file():
         
         # 다른 날짜에도 있을 수 있으므로 검색
         if not deleted:
-            for date_folder in os.listdir(STAGING_DIR):
-                check_path = os.path.join(STAGING_DIR, date_folder, filename)
+            for date_folder in os.listdir(CACHE_DIR):
+                check_path = os.path.join(CACHE_DIR, date_folder, filename)
                 if os.path.exists(check_path):
                     os.remove(check_path)
                     deleted = True
@@ -2475,13 +2402,13 @@ def staging_publish_selected():
             return jsonify({'success': False, 'error': '선택된 파일이 없습니다.'}), 400
         
         today_str = datetime.now().strftime('%Y-%m-%d')
-        staging_date_dir = os.path.join(STAGING_DIR, today_str)
+        cache_date_dir = os.path.join(CACHE_DIR, today_str)
         
         published_count = 0
         failed_count = 0
         
         for filename in filenames:
-            filepath = os.path.join(staging_date_dir, filename)
+            filepath = os.path.join(cache_date_dir, filename)
             
             if not os.path.exists(filepath):
                 print(f"⚠️ [Publish Selected] File not found: {filename}")
@@ -2496,16 +2423,27 @@ def staging_publish_selected():
                 if staging_data.get('published') or staging_data.get('rejected'):
                     continue
                 
-                # 필수 필드 체크
-                required = ['url', 'title_ko', 'summary', 'zero_echo_score', 'impact_score']
+                # 필수 필드 체크 (title_ko 또는 title 중 하나 필요)
+                required = ['url', 'summary', 'zero_echo_score', 'impact_score']
                 missing = [f for f in required if f not in staging_data]
+                
+                # title 필드 검증 (title_ko 또는 title 중 하나 필요)
+                has_title = staging_data.get('title_ko') or staging_data.get('title')
+                if not has_title:
+                    missing.append('title_ko or title')
+                
                 if missing:
                     print(f"⚠️ [Publish Selected] Missing fields {missing}: {filename}")
                     failed_count += 1
                     continue
                 
-                # 발행
-                result = save_article(staging_data, source_id=staging_data.get('source_id'))
+                # original_title 필드 보정 (누락 시 title 사용)
+                if 'original_title' not in staging_data:
+                    staging_data['original_title'] = staging_data.get('title') or staging_data.get('title_ko')
+                    
+                # 발행 (노이즈 필터링 건너뜀)
+
+                result = save_article(staging_data, source_id=staging_data.get('source_id'), skip_evaluation=True)
                 
                 if result.get('status') == 'saved':
                     staging_data['published'] = True
@@ -2535,6 +2473,105 @@ def staging_publish_selected():
         print(f"❌ [Publish Selected] Error: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
+
+@app.route('/api/staging/unpublish_selected', methods=['POST'])
+def staging_unpublish_selected():
+    """
+    🔄 발행 취소: 데이터 파일 삭제 + 캐시 상태 리셋
+    - data/ 폴더의 발행 파일 삭제
+    - cache 파일에서 published, data_file 상태 제거
+    - Firestore에서도 삭제 (선택적)
+    """
+    try:
+        data = request.json or {}
+        filenames = data.get('filenames', [])  # cache 파일명 목록
+        delete_firestore = data.get('delete_firestore', False)
+        
+        if not filenames:
+            return jsonify({'success': False, 'error': '선택된 파일이 없습니다.'}), 400
+        
+        unpublished_count = 0
+        failed_count = 0
+        
+        for filename in filenames:
+            try:
+                # 캐시 파일 찾기 (모든 날짜 폴더에서)
+                cache_filepath = None
+                cache_data = None
+                
+                for date_folder in os.listdir(CACHE_DIR):
+                    check_path = os.path.join(CACHE_DIR, date_folder, filename)
+                    if os.path.exists(check_path):
+                        cache_filepath = check_path
+                        break
+                
+                if not cache_filepath:
+                    print(f"⚠️ [Unpublish] Cache not found: {filename}")
+                    failed_count += 1
+                    continue
+                
+                # 캐시 파일 읽기
+                with open(cache_filepath, 'r', encoding='utf-8') as f:
+                    cache_data = json.load(f)
+                
+                # 발행되지 않은 파일은 스킵
+                if not cache_data.get('published'):
+                    continue
+                
+                # 1. 데이터 파일 삭제
+                data_file = cache_data.get('data_file')
+                if data_file:
+                    # 모든 날짜 폴더에서 데이터 파일 찾아 삭제
+                    for date_folder in os.listdir(DATA_DIR):
+                        data_path = os.path.join(DATA_DIR, date_folder, data_file)
+                        if os.path.exists(data_path):
+                            os.remove(data_path)
+                            print(f"🗑️ [Unpublish] Deleted data file: {data_path}")
+                            
+                            # manifest 업데이트
+                            update_manifest(date_folder)
+                            break
+                
+                # 2. Firestore 삭제 (선택적)
+                if delete_firestore and cache_data.get('url'):
+                    try:
+                        # URL로 Firestore 문서 찾아 삭제
+                        doc = db.get_article_by_url(cache_data['url'])
+                        if doc and doc.get('id'):
+                            db.delete_article(doc['id'])
+                            print(f"🔥 [Unpublish] Deleted from Firestore: {doc['id']}")
+                    except Exception as fs_err:
+                        print(f"⚠️ [Unpublish] Firestore delete failed: {fs_err}")
+                
+                # 3. 캐시 파일 상태 리셋
+                cache_data.pop('published', None)
+                cache_data.pop('data_file', None)
+                cache_data.pop('published_at', None)
+                
+                with open(cache_filepath, 'w', encoding='utf-8') as f:
+                    json.dump(cache_data, f, ensure_ascii=False, indent=2)
+                
+                # 4. History에서 상태 리셋 (재발행 가능하도록)
+                if cache_data.get('url'):
+                    db.remove_from_history(cache_data['url'])
+                
+                unpublished_count += 1
+                print(f"✅ [Unpublish] {filename} 발행 취소 완료")
+                
+            except Exception as e:
+                print(f"⚠️ [Unpublish] Error on {filename}: {e}")
+                failed_count += 1
+        
+        print(f"🔄 [Unpublish] 완료: {unpublished_count}개 취소, {failed_count}개 실패")
+        return jsonify({
+            'success': True,
+            'unpublished': unpublished_count,
+            'failed': failed_count,
+            'message': f'{unpublished_count}개 기사 발행 취소 완료'
+        })
+    except Exception as e:
+        print(f"❌ [Unpublish] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 # ==============================================================================
@@ -2720,7 +2757,7 @@ def inject_batch_results():
                 
                 # 3. Save to Staging (노이즈 필터링 없음 - 모든 기사 저장)
                 date_folder = datetime.now().strftime('%Y-%m-%d')
-                staging_dir = os.path.join(STAGING_DIR, date_folder)
+                staging_dir = os.path.join(CACHE_DIR, date_folder)
                 os.makedirs(staging_dir, exist_ok=True)
                 
                 filename = get_data_filename(cached_data.get('source_id', 'batch'), cached_data['url'])

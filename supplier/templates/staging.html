@@ -593,6 +593,132 @@
             color: white;
             margin-top: 10px;
         }
+
+        /* Issue Selector Styles */
+        .issue-selector-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-left: 20px;
+        }
+
+        .issue-selector-label {
+            font-size: 0.85em;
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .issue-selector {
+            background: #2a2a3e;
+            color: #fff;
+            border: 1px solid #4ecdc4;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            min-width: 180px;
+            cursor: pointer;
+        }
+
+        .issue-selector:focus {
+            outline: none;
+            border-color: #ffc107;
+        }
+
+        /* Publish Modal */
+        .publish-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1200;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .publish-modal-overlay.active {
+            display: flex;
+        }
+
+        .publish-modal-content {
+            background: #1e1e2e;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            border: 2px solid #28a745;
+        }
+
+        .publish-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .publish-modal-header h3 {
+            margin: 0;
+            color: #28a745;
+            font-size: 1.3em;
+        }
+
+        .publish-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #444;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .publish-option:hover {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.1);
+        }
+
+        .publish-option.selected {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.15);
+        }
+
+        .publish-option h4 {
+            margin: 0 0 5px 0;
+            color: #fff;
+        }
+
+        .publish-option p {
+            margin: 0;
+            font-size: 0.85em;
+            color: #aaa;
+        }
+
+        .publish-option select {
+            margin-top: 10px;
+            width: 100%;
+            padding: 8px;
+            background: #2a2a3e;
+            border: 1px solid #666;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .publish-modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .publish-modal-actions .btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 1em;
+        }
     </style>
 </head>
 
@@ -603,31 +729,19 @@
             <div style="font-size:0.8em; color:#aaa;">허용된 버전만 표시되며, 표시된 항목만 발행 가능합니다.</div>
         </div>
 
+        <!-- Issue Selector -->
+        <div class="issue-selector-container">
+            <span class="issue-selector-label">📰 보기:</span>
+            <select id="issueSelector" class="issue-selector" onchange="onIssueSelectorChange()">
+                <option value="staging">✨ 미발행 (Staging)</option>
+                <!-- Dynamic options will be added here -->
+            </select>
+            <button class="btn" style="background:#6c757d; color:white; padding:5px 10px; font-size:0.8em;"
+                onclick="refreshIssueList()">🔄</button>
+        </div>
+
         <div class="header-controls">
-            <!-- Schema Filter -->
-            <div class="filter-group">
-                <span style="font-size:0.8em; color:#ccc; font-weight:bold;">👁️ 표시 필터:</span>
-                <label><input type="checkbox" id="filter-v1" checked onchange="renderArticles()"> <span
-                        class="schema-badge schema-v1">V1.0</span></label>
-                <label><input type="checkbox" id="filter-hybrid" checked onchange="renderArticles()"> <span
-                        class="schema-badge schema-hybrid">V0.9 (Hybrid)</span></label>
-                <label><input type="checkbox" id="filter-v09" checked onchange="renderArticles()"> <span
-                        class="schema-badge schema-v09">V0.9 (Std)</span></label>
-                <label><input type="checkbox" id="filter-legacy" onchange="renderArticles()"> <span
-                        class="schema-badge schema-legacy">Legacy</span></label>
-            </div>
-
-            <!-- Timezone Toggle -->
-            <div class="filter-group">
-                <span style="font-size:0.8em; color:#ccc; font-weight:bold;">🕒 시간:</span>
-                <label><input type="radio" name="tz" value="local" checked onchange="toggleTimezone('local')">
-                    Local</label>
-                <label><input type="radio" name="tz" value="gmt" onchange="toggleTimezone('gmt')"> GMT</label>
-            </div>
-
             <div class="header-actions">
-                <button class="btn" style="background: #dc3545; color: white;" onclick="deleteLegacyCalls()">🗑️ LEGACY
-                    삭제</button>
                 <button class="btn btn-refresh" onclick="loadStaging()">🔄 새로고침</button>
             </div>
         </div>
@@ -657,6 +771,18 @@
                         <div id="publishedCount" style="font-size: 1.5em; font-weight: bold; color: #28a745;">-</div>
                         <div style="font-size: 0.75em; color: #aaa;">발행</div>
                     </div>
+                </div>
+            </div>
+
+            <!-- 발행 현황 -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="margin: 0; color: #28a745;">📰 발행 현황</h4>
+                    <button class="btn" style="background:#6c757d; color:white; padding:3px 8px; font-size:0.7em;"
+                        onclick="refreshIssueList()">🔄</button>
+                </div>
+                <div id="publicationsPanel" style="max-height: 200px; overflow-y: auto;">
+                    <div style="text-align: center; color: #666; padding: 10px; font-size: 0.85em;">로딩 중...</div>
                 </div>
             </div>
 
@@ -762,16 +888,10 @@
                                 onclick="rejectGroup(selectedDate)">🗑️ 날짜 전체 무시</button>
                             <button class="btn" style="width: 100%; background: #6c757d; color: white; padding: 8px;"
                                 onclick="clearCacheByDate(selectedDate)">🧹 날짜 캐시 삭제</button>
+                            <button class="btn" style="width: 100%; background: #8b0000; color: white; padding: 8px;"
+                                onclick="deleteFromDB()">🔥 선택 기사 DB 삭제</button>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- 날짜별 진행 상황 -->
-            <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: #ffc107;">📅 날짜별 현황</h4>
-                <div id="dateProgressList" style="display: flex; flex-direction: column; gap: 8px;">
-                    <div style="text-align: center; color: #666; padding: 20px;">로딩 중...</div>
                 </div>
             </div>
         </div>
@@ -847,11 +967,214 @@
                 </div>
             </div>
 
+            <!-- 발행 옵션 모달 -->
+            <div id="publishModal" class="publish-modal-overlay" onclick="closePublishModal(event)">
+                <div class="publish-modal-content" onclick="event.stopPropagation()">
+                    <div class="publish-modal-header">
+                        <h3>🚀 발행 옵션 선택</h3>
+                        <button class="btn modal-close" onclick="closePublishModal()"
+                            style="padding:6px 12px;">✕</button>
+                    </div>
+                    <div id="publishSelectedInfo"
+                        style="background:rgba(78,205,196,0.1); padding:10px; border-radius:8px; margin-bottom:15px; font-size:0.9em; color:#4ecdc4;">
+                        선택된 기사: <strong id="publishSelectedCount">0</strong>개
+                    </div>
+                    <div id="publishOptionNew" class="publish-option selected" onclick="selectPublishOption('new')">
+                        <h4>📑 신규 발행 (New Issue)</h4>
+                        <p>새로운 회차를 생성하여 선택된 기사를 발행합니다.</p>
+                    </div>
+                    <div id="publishOptionAppend" class="publish-option" onclick="selectPublishOption('append')">
+                        <h4>📌 기존 회차에 추가 (Append)</h4>
+                        <p>이미 발행된 회차에 기사를 추가합니다.</p>
+                        <select id="appendTargetSelect" style="display:none;" onclick="event.stopPropagation()">
+                            <option value="">-- 회차 선택 --</option>
+                        </select>
+                    </div>
+                    <div class="publish-modal-actions">
+                        <button class="btn" style="background:#6c757d; color:white;"
+                            onclick="closePublishModal()">취소</button>
+                        <button class="btn" style="background:#28a745; color:white;" onclick="executePublish()">🚀 발행
+                            실행</button>
+                    </div>
+                </div>
+            </div>
+
             <script>
                 let stagingData = [];
                 let curTimezone = 'local'; // 'local' or 'gmt'
                 let selectedDate = null; // 선택된 날짜 (null = 전체 표시)
                 let currentDetailFilename = null; // 현재 상세보기 중인 파일명
+
+                // === Issue / Publication State ===
+                let currentViewMode = 'staging'; // 'staging' or a publish_id
+                let availableIssues = []; // Cached list of issues
+                let selectedPublishMode = 'new'; // 'new' or 'append'
+                let pendingPublishFilenames = []; // Filenames to be published
+
+                // === Issue Selector Functions ===
+                async function refreshIssueList() {
+                    try {
+                        const resp = await fetch('/api/publications/list');
+                        const data = await resp.json();
+                        availableIssues = data.issues || [];
+
+                        const selector = document.getElementById('issueSelector');
+                        // Keep staging option, clear rest
+                        selector.innerHTML = '<option value="staging">✨ 미발행 (Staging)</option>';
+
+                        availableIssues.forEach(issue => {
+                            const opt = document.createElement('option');
+                            opt.value = issue.id;
+                            opt.textContent = `📰 ${issue.edition_name} (${issue.article_count || 0}건)`;
+                            selector.appendChild(opt);
+                        });
+
+                        // Populate publications panel
+                        const panel = document.getElementById('publicationsPanel');
+                        if (availableIssues.length === 0) {
+                            panel.innerHTML = '<div style="text-align: center; color: #666; padding: 10px; font-size: 0.85em;">발행된 회차가 없습니다</div>';
+                        } else {
+                            panel.innerHTML = availableIssues.map(issue => `
+                                <div class="issue-card" style="background: rgba(40,167,69,0.1); border: 1px solid #28a745; border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer;" onclick="viewIssue('${issue.id}')">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-weight: bold; color: #28a745;">${issue.edition_name}</span>
+                                        <span style="font-size: 0.8em; color: #888;">${issue.article_count || 0}건</span>
+                                    </div>
+                                    <div style="font-size: 0.75em; color: #aaa; margin-top: 4px;">
+                                        ${issue.published_at ? new Date(issue.published_at).toLocaleString('ko-KR') : '-'}
+                                    </div>
+                                </div>
+                            `).join('');
+                        }
+
+                        console.log('📰 Issue list refreshed:', availableIssues.length);
+                    } catch (e) {
+                        console.error('Issue list refresh failed:', e);
+                        const panel = document.getElementById('publicationsPanel');
+                        if (panel) panel.innerHTML = '<div style="text-align: center; color: #dc3545; font-size: 0.85em;">로드 실패</div>';
+                    }
+                }
+
+                function viewIssue(publishId) {
+                    // Update selector and load issue
+                    const selector = document.getElementById('issueSelector');
+                    selector.value = publishId;
+                    onIssueSelectorChange();
+                }
+
+                async function onIssueSelectorChange() {
+                    const selector = document.getElementById('issueSelector');
+                    currentViewMode = selector.value;
+
+                    if (currentViewMode === 'staging') {
+                        await loadStaging();
+                    } else {
+                        await loadPublishedIssue(currentViewMode);
+                    }
+                }
+
+                async function loadPublishedIssue(publishId) {
+                    const grid = document.getElementById('articleGrid');
+                    grid.innerHTML = '<div class="loading">로딩 중...</div>';
+
+                    try {
+                        const resp = await fetch(`/api/publications/view?publish_id=${publishId}`);
+                        const data = await resp.json();
+
+                        if (!data.success) {
+                            grid.innerHTML = `<div class="empty-state">오류: ${data.error}</div>`;
+                            return;
+                        }
+
+                        stagingData = data.articles || [];
+                        renderArticles();
+                        updateStats();
+                    } catch (e) {
+                        grid.innerHTML = `<div class="empty-state">로드 실패: ${e.message}</div>`;
+                    }
+                }
+
+                // === Publish Modal Functions ===
+                function openPublishModal() {
+                    // Get selected filenames
+                    const checkboxes = document.querySelectorAll('.article-checkbox:checked');
+                    pendingPublishFilenames = Array.from(checkboxes).map(cb => cb.dataset.filename);
+
+                    if (pendingPublishFilenames.length === 0) {
+                        alert('발행할 기사를 선택해주세요.');
+                        return;
+                    }
+
+                    document.getElementById('publishSelectedCount').textContent = pendingPublishFilenames.length;
+
+                    // Populate append target dropdown
+                    const appendSelect = document.getElementById('appendTargetSelect');
+                    appendSelect.innerHTML = '<option value="">-- 회차 선택 --</option>';
+                    availableIssues.forEach(issue => {
+                        const opt = document.createElement('option');
+                        opt.value = issue.id;
+                        opt.textContent = issue.edition_name;
+                        appendSelect.appendChild(opt);
+                    });
+
+                    // Reset to 'new' mode
+                    selectPublishOption('new');
+
+                    document.getElementById('publishModal').classList.add('active');
+                }
+
+                function closePublishModal(event) {
+                    if (event && event.target !== event.currentTarget) return;
+                    document.getElementById('publishModal').classList.remove('active');
+                }
+
+                function selectPublishOption(mode) {
+                    selectedPublishMode = mode;
+                    document.getElementById('publishOptionNew').classList.toggle('selected', mode === 'new');
+                    document.getElementById('publishOptionAppend').classList.toggle('selected', mode === 'append');
+                    document.getElementById('appendTargetSelect').style.display = mode === 'append' ? 'block' : 'none';
+                }
+
+                async function executePublish() {
+                    const payload = {
+                        filenames: pendingPublishFilenames,
+                        mode: selectedPublishMode
+                    };
+
+                    if (selectedPublishMode === 'append') {
+                        const targetId = document.getElementById('appendTargetSelect').value;
+                        if (!targetId) {
+                            alert('추가할 회차를 선택해주세요.');
+                            return;
+                        }
+                        payload.target_publish_id = targetId;
+                    }
+
+                    try {
+                        const resp = await fetch('/api/staging/publish_selected', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await resp.json();
+
+                        if (result.success) {
+                            alert(`✅ ${result.message}`);
+                            closePublishModal();
+                            await refreshIssueList();
+                            await loadStaging(); // Refresh staging view
+                        } else {
+                            alert(`❌ 발행 실패: ${result.error}`);
+                        }
+                    } catch (e) {
+                        alert(`❌ 오류: ${e.message}`);
+                    }
+                }
+
+                // Override publishAll to use new modal
+                function publishAll() {
+                    openPublishModal();
+                }
 
                 function toggleTimezone(tz) {
                     curTimezone = tz;
@@ -964,26 +1287,13 @@
                         sortedDates = [selectedDate];
                     }
 
-                    // Get Filter Status
-                    const showV1 = document.getElementById('filter-v1').checked;
-                    const showHybrid = document.getElementById('filter-hybrid').checked;
-                    const showV09 = document.getElementById('filter-v09').checked;
-                    const showLegacy = document.getElementById('filter-legacy').checked;
-
                     let html = '';
 
                     sortedDates.forEach(date => {
                         const allArticles = grouped[date];
 
-                        // Filter articles for this specific group
-                        const visibleArticles = allArticles.filter(article => {
-                            const schema = getArticleSchema(article);
-                            if (schema === 'V1.0' && !showV1) return false;
-                            if (schema === 'V0.9-Hybrid' && !showHybrid) return false;
-                            if (schema === 'V0.9' && !showV09) return false;
-                            if ((schema === 'Legacy' || schema === 'Unknown') && !showLegacy) return false;
-                            return true;
-                        });
+                        // Show all articles (no schema filter)
+                        const visibleArticles = allArticles.slice();
 
                         // 카테고리 순서: 미분류(null) → 각 카테고리 알파벳순 → 중복/거부됨/발행됨
                         // 같은 그룹 내에서는 Priority 내림차순
@@ -1506,6 +1816,44 @@
 
                         alert(`✅ 삭제 완료!\n\n삭제: ${deleted}개, 실패: ${failed}개`);
                         loadStaging();
+                    } catch (error) {
+                        alert(`❌ 오류: ${error.message}`);
+                    }
+                }
+
+                async function deleteFromDB() {
+                    const checkboxes = document.querySelectorAll('.article-checkbox:checked');
+                    const selectedArticles = Array.from(checkboxes).map(cb => {
+                        const filename = cb.dataset.filename;
+                        const article = stagingData.find(a => a.filename === filename);
+                        return article ? { filename, url: article.url, article_id: article.article_id } : null;
+                    }).filter(a => a);
+
+                    if (selectedArticles.length === 0) {
+                        alert('DB에서 삭제할 기사를 선택해주세요.');
+                        return;
+                    }
+
+                    const confirmMsg = `🔥 경고: Firestore DB에서 ${selectedArticles.length}개 기사를 완전히 삭제합니다!\n\n` +
+                        `이 작업은 되돌릴 수 없으며, 로컬 파일은 유지됩니다.\n\n` +
+                        `정말 삭제하시겠습니까?`;
+
+                    if (!confirm(confirmMsg)) return;
+
+                    try {
+                        const response = await fetch('/api/staging/delete_from_db', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ articles: selectedArticles })
+                        });
+                        const result = await response.json();
+
+                        if (result.success) {
+                            alert(`✅ DB 삭제 완료!\n\n삭제: ${result.deleted}개, 실패: ${result.failed}개`);
+                            loadStaging();
+                        } else {
+                            alert(`❌ 실패: ${result.error}`);
+                        }
                     } catch (error) {
                         alert(`❌ 오류: ${error.message}`);
                     }
@@ -2227,7 +2575,10 @@
                     updateSelectedCount();
                 }
 
-                document.addEventListener('DOMContentLoaded', loadStaging);
+                document.addEventListener('DOMContentLoaded', async () => {
+                    await refreshIssueList();
+                    await loadStaging();
+                });
             </script>
 </body>
 

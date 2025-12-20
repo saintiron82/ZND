@@ -1,60 +1,51 @@
-
 'use client';
 
 import React, { useState, useMemo } from 'react';
 import ArticleDisplay from '@/components/ArticleDisplay';
 import PageFrame from '@/components/PageFrame';
-import { useDatePolling } from '@/hooks/useDatePolling';
-import { RefreshCcw, ArrowRight } from 'lucide-react';
+import { RefreshCcw, ArrowRight, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+
+interface Issue {
+    id: string;
+    edition_code: string;
+    edition_name: string;
+    article_count: number;
+    published_at: string;
+    released_at?: string;
+    status: 'preview' | 'released';
+    date: string;
+}
 
 interface HomePageClientProps {
     articles: any[];
-    isPreview?: boolean;
+    issues?: Issue[];
 }
 
-export default function HomePageClient({ articles, isPreview = false }: HomePageClientProps) {
+export default function HomePageClient({ articles, issues = [] }: HomePageClientProps) {
     const router = useRouter();
 
-    // 날짜별 그룹핑 로직 (발행일 기준) + 그룹별 어워드 재계산
-    const { groupedArticles, sortedDates } = useMemo(() => {
-        const grouped: { [key: string]: any[] } = {};
+    // 회차별 그룹핑 로직 + 그룹별 어워드 재계산
+    const { groupedByIssue, sortedIssueIds } = useMemo(() => {
+        const grouped: { [key: string]: { issue: Issue | null; articles: any[] } } = {};
+
+        // 기사를 publish_id(회차)별로 그룹핑
         articles.forEach((article: any) => {
-            let dateStr = '';
-            let dateObj: Date | null = null;
+            const issueId = article.publish_id || 'unknown';
 
-            // 발행일(published_at) 기준으로 그룹핑
-            if (typeof article.published_at === 'string') {
-                dateObj = new Date(article.published_at);
-            } else if (article.published_at && typeof article.published_at === 'object' && 'seconds' in article.published_at) {
-                dateObj = new Date(article.published_at.seconds * 1000);
+            if (!grouped[issueId]) {
+                const matchingIssue = issues.find(i => i.id === issueId) || null;
+                grouped[issueId] = {
+                    issue: matchingIssue,
+                    articles: []
+                };
             }
-            // fallback: published_at이 없으면 crawled_at 사용
-            else if (typeof article.crawled_at === 'string') {
-                dateObj = new Date(article.crawled_at);
-            } else if (article.crawled_at && typeof article.crawled_at === 'object' && 'seconds' in article.crawled_at) {
-                dateObj = new Date(article.crawled_at.seconds * 1000);
-            }
-
-            if (dateObj && !isNaN(dateObj.getTime())) {
-                // 로컬 시간 기준으로 YYYY-MM-DD 형식 추출
-                const year = dateObj.getFullYear();
-                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-                const day = dateObj.getDate().toString().padStart(2, '0');
-                dateStr = `${year}-${month}-${day}`;
-            }
-
-            if (dateStr) {
-                if (!grouped[dateStr]) {
-                    grouped[dateStr] = [];
-                }
-                grouped[dateStr].push(article);
-            }
+            grouped[issueId].articles.push(article);
         });
 
-        // 각 그룹별로 어워드 재계산 (published_at 기준 그룹에서 어워드 결정)
-        Object.keys(grouped).forEach(dateKey => {
-            const groupArticles = grouped[dateKey];
+        // 각 그룹별로 어워드 재계산
+        Object.keys(grouped).forEach(issueId => {
+            const groupArticles = grouped[issueId].articles;
 
             // 기존 어워드 초기화
             groupArticles.forEach(a => { a.awards = []; });
@@ -108,12 +99,11 @@ export default function HomePageClient({ articles, isPreview = false }: HomePage
                 }
             }
 
-            // 어워드 순으로 정렬하여 그룹에 다시 할당
-            grouped[dateKey] = [...groupArticles].sort((a, b) => {
+            // 어워드 순으로 정렬
+            grouped[issueId].articles = [...groupArticles].sort((a, b) => {
                 const aAwards = a.awards?.length ?? 0;
                 const bAwards = b.awards?.length ?? 0;
                 if (bAwards !== aAwards) return bAwards - aAwards;
-                // 어워드 개수가 같으면 Combined Score 순
                 const zeA = a.zero_echo_score ?? a.zeroEchoScore ?? 10;
                 const zeB = b.zero_echo_score ?? b.zeroEchoScore ?? 10;
                 const isA = a.impact_score ?? a.impactScore ?? 0;
@@ -124,32 +114,50 @@ export default function HomePageClient({ articles, isPreview = false }: HomePage
             });
         });
 
-        const sorted = Object.keys(grouped).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-        return { groupedArticles: grouped, sortedDates: sorted };
-    }, [articles]);
+        // 회차를 released_at 또는 published_at 기준으로 정렬 (최신순)
+        const sorted = Object.keys(grouped).sort((a, b) => {
+            const issueA = grouped[a].issue;
+            const issueB = grouped[b].issue;
+            const dateA = issueA?.released_at || issueA?.published_at || '';
+            const dateB = issueB?.released_at || issueB?.published_at || '';
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+        });
 
-    // 현재 선택된 날짜 인덱스 (가장 최신 날짜가 기본)
-    const [currentDateIndex, setCurrentDateIndex] = useState(0);
+        return { groupedByIssue: grouped, sortedIssueIds: sorted };
+    }, [articles, issues]);
 
-    // 현재 표시할 날짜 및 기사
-    const currentDate = sortedDates.length > 0 ? sortedDates[currentDateIndex] : null;
-    const currentArticles = currentDate ? groupedArticles[currentDate] : [];
+    // 현재 선택된 회차 인덱스 (가장 최신 회차가 기본)
+    const [currentIssueIndex, setCurrentIssueIndex] = useState(0);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    // 이전/다음 날짜 계산
-    const prevDate = currentDateIndex < sortedDates.length - 1 ? sortedDates[currentDateIndex + 1] : null;
-    const nextDate = currentDateIndex > 0 ? sortedDates[currentDateIndex - 1] : null;
+    // 현재 표시할 회차 및 기사
+    const currentIssueId = sortedIssueIds.length > 0 ? sortedIssueIds[currentIssueIndex] : null;
+    const currentIssueData = currentIssueId ? groupedByIssue[currentIssueId] : null;
+    const currentArticles = currentIssueData?.articles || [];
+    const currentIssue = currentIssueData?.issue;
 
-    // 날짜 변경 핸들러
-    const handleDateChange = (targetDate: string) => {
-        const newIndex = sortedDates.indexOf(targetDate);
+    // 이전/다음 회차 계산 (PageFrame 호환용)
+    const prevIssueId = currentIssueIndex < sortedIssueIds.length - 1 ? sortedIssueIds[currentIssueIndex + 1] : null;
+    const nextIssueId = currentIssueIndex > 0 ? sortedIssueIds[currentIssueIndex - 1] : null;
+    const prevIssue = prevIssueId ? groupedByIssue[prevIssueId]?.issue : null;
+    const nextIssue = nextIssueId ? groupedByIssue[nextIssueId]?.issue : null;
+
+    // 회차 변경 핸들러
+    const handleIssueChange = (issueId: string) => {
+        const newIndex = sortedIssueIds.indexOf(issueId);
         if (newIndex !== -1) {
-            setCurrentDateIndex(newIndex);
+            setCurrentIssueIndex(newIndex);
+            setIsDropdownOpen(false);
         }
     };
 
-    // 1분(60초)마다 폴링하여 새 데이터 확인
-    const latestDate = sortedDates.length > 0 ? sortedDates[0] : null;
-    const { hasNewDate, serverLatestDate } = useDatePolling(latestDate, 60000);
+    // 날짜 기반 변경 (PageFrame 호환용)
+    const handleDateChange = (target: string) => {
+        // target이 issue id인지 확인하고 처리
+        if (groupedByIssue[target]) {
+            handleIssueChange(target);
+        }
+    };
 
     const handleRefresh = () => {
         router.refresh();
@@ -158,43 +166,69 @@ export default function HomePageClient({ articles, isPreview = false }: HomePage
 
     return (
         <PageFrame
-            currentDate={currentDate}
-            prevDate={prevDate}
-            nextDate={nextDate}
-            onDateChange={handleDateChange}
+            currentDate={currentIssue?.edition_name || currentIssue?.date || null}
+            prevDate={prevIssue?.edition_name || prevIssue?.id || null}
+            nextDate={nextIssue?.edition_name || nextIssue?.id || null}
+            onDateChange={(target) => {
+                // edition_name으로 매칭된 issue 찾기
+                const matchingId = sortedIssueIds.find(id => {
+                    const issue = groupedByIssue[id]?.issue;
+                    return issue?.edition_name === target || issue?.id === target;
+                });
+                if (matchingId) handleIssueChange(matchingId);
+            }}
             articles={currentArticles}
         >
+            {/* 회차 선택 드롭다운 */}
+            {sortedIssueIds.length > 1 && (
+                <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[90]">
+                    <div className="relative">
+                        <button
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                            className="bg-card/90 backdrop-blur-md text-foreground px-6 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-card transition-colors border border-border"
+                        >
+                            <span className="font-semibold">
+                                📰 {currentIssue?.edition_name || '회차 선택'}
+                            </span>
+                            <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                        </button>
 
-            {/* 새 데이터 알림 배너 (Alert Banner) */}
-            {hasNewDate && (
-                <div
-                    onClick={handleRefresh}
-                    className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[100] cursor-pointer animate-in fade-in slide-in-from-top-4 duration-500"
-                >
-                    <div className="bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-xl flex items-center gap-3 hover:scale-105 transition-transform font-bold border border-primary/20 backdrop-blur-md">
-                        <RefreshCcw className="w-4 h-4 animate-spin-slow" />
-                        <span>New Edition Available ({serverLatestDate})</span>
-                        <ArrowRight className="w-4 h-4" />
+                        {isDropdownOpen && (
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-card border border-border rounded-lg shadow-xl overflow-hidden min-w-[200px]">
+                                {sortedIssueIds.map((issueId, idx) => {
+                                    const issue = groupedByIssue[issueId]?.issue;
+                                    const articleCount = groupedByIssue[issueId]?.articles?.length || 0;
+                                    const isSelected = idx === currentIssueIndex;
+
+                                    return (
+                                        <button
+                                            key={issueId}
+                                            onClick={() => handleIssueChange(issueId)}
+                                            className={`w-full px-4 py-3 text-left hover:bg-muted/50 transition-colors flex items-center justify-between ${isSelected ? 'bg-primary/10 text-primary' : ''
+                                                }`}
+                                        >
+                                            <span className="font-medium">
+                                                {issue?.edition_name || `회차 ${idx + 1}`}
+                                            </span>
+                                            <span className="text-xs text-muted-foreground">
+                                                {articleCount}개
+                                            </span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
 
-            {/* Preview 모드 배너 */}
-            {isPreview && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[100]">
-                    <div className="bg-amber-500 text-black px-6 py-2 rounded-full shadow-xl flex items-center gap-2 font-bold">
-                        <span>🔒 PREVIEW MODE</span>
-                        <span className="text-amber-900 text-sm">- 발행 전 미리보기</span>
-                    </div>
-                </div>
-            )}
-
-            {/* 현재 날짜의 기사만 표시 (일간 신문 스타일) */}
-            {currentDate && currentArticles.length > 0 ? (
+            {/* 현재 회차의 기사 표시 */}
+            {currentIssueId && currentArticles.length > 0 ? (
                 <ArticleDisplay articles={currentArticles} loading={false} error={null} />
             ) : (
                 <div className="text-center py-20 text-muted-foreground">
                     <p className="text-xl">표시할 기사가 없습니다.</p>
+                    <p className="text-sm mt-2">발행된 회차가 아직 없습니다.</p>
                 </div>
             )}
         </PageFrame>

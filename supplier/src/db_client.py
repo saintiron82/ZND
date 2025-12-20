@@ -214,7 +214,9 @@ class DBClient:
             'published_at': article_data.get('published_at') or article_data.get('crawled_at', ''),
             'source_id': source_id,
             'edition': article_data.get('edition', ''),
-            'original_title': article_data.get('original_title', '')
+            'original_title': article_data.get('original_title', ''),
+            'publish_id': article_data.get('publish_id', ''),
+            'edition_name': article_data.get('edition_name', '')
         }
         
         try:
@@ -508,3 +510,153 @@ class DBClient:
         except Exception as e:
             print(f"❌ [Firestore] Date Query Failed: {e}")
             return []
+
+    
+    # ============================================
+    # Publication History Operations (New)
+    # ============================================
+
+    def create_publication_record(self, summary_data):
+        """
+        Create a new publication record in Firestore.
+        summary_data: {
+            'published_at': isoformat string,
+            'edition_code': '251220_1',
+            'edition_name': '12/20 1호',
+            'article_count': int,
+            'articles': [list of article_ids or metadata],
+            'mode': 'new' or 'append'
+        }
+        Returns: document ID (publish_id)
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return None
+
+        try:
+            # Create a new document in 'publications' collection
+            # We can use edition_code as ID or auto-generate.
+            # Use auto-generate for now to be safe, or edition_code if guaranteed unique.
+            # Using edition_code is cleaner if unique.
+            
+            # Ensure published_at is set
+            if 'published_at' not in summary_data:
+                from datetime import datetime, timezone
+                summary_data['published_at'] = datetime.now(timezone.utc).isoformat()
+            
+            doc_ref = self.db.collection('publications').add(summary_data)
+            doc_id = doc_ref[1].id
+            print(f"🎉 [Firestore] Created Publication Record: {doc_id} ({summary_data.get('edition_name')})")
+            return doc_id
+        except Exception as e:
+            print(f"❌ [Firestore] Publication Record Creation Failed: {e}")
+            return None
+
+    def update_publication_record(self, publish_id, update_data):
+        """
+        Update an existing publication record.
+        """
+        if not self.db:
+            return False
+            
+        try:
+            from datetime import datetime, timezone
+            update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+            
+            self.db.collection('publications').document(publish_id).update(update_data)
+            print(f"✏️ [Firestore] Updated Publication: {publish_id}")
+            return True
+        except Exception as e:
+            print(f"❌ [Firestore] Publication Update Failed: {e}")
+            return False
+
+    def get_issues_by_date(self, date_str=None):
+        """
+        Get publication records, optionally filtered by date.
+        date_str: 'YYYY-MM-DD' (assumes we store a 'date_str' field or filter by range)
+        For simplicity, we'll fetch recent ones if date_str is None.
+        If date_str provided, we filter by 'edition_code' prefix or a specific date field.
+        """
+        if not self.db:
+            return []
+            
+        try:
+            query = self.db.collection('publications')
+            
+            if date_str:
+                # Assuming edition_code starts with YYMMDD
+                # 2025-12-20 -> 251220
+                yy = date_str[2:4]
+                mm = date_str[5:7]
+                dd = date_str[8:10]
+                prefix = f"{yy}{mm}{dd}"
+                
+                # Filter by edition_code prefix
+                query = query.where('edition_code', '>=', prefix).where('edition_code', '<', prefix + 'z')
+            
+            # Order by published_at desc
+            query = query.order_by('published_at', direction=firestore.Query.DESCENDING)
+            
+            docs = query.stream()
+            issues = []
+            for doc in docs:
+                data = doc.to_dict()
+                data['id'] = doc.id
+                issues.append(data)
+            
+            return issues
+        except Exception as e:
+            print(f"❌ [Firestore] Get Issues Failed: {e}")
+            return []
+
+    def get_publication(self, publish_id):
+        """Get single publication record"""
+        if not self.db:
+            return None
+        try:
+            doc = self.db.collection('publications').document(publish_id).get()
+            if doc.exists:
+                data = doc.to_dict()
+                data['id'] = doc.id
+                return data
+            return None
+        except Exception as e:
+            return None
+
+    def save_issue_index_file(self, issue_data):
+        """
+        Save a standalone JSON index file for the publication.
+        issue_data: dict containing full publication info
+        Path: data/YYYY-MM-DD/issue_{edition_code}.json
+        """
+        import json
+        from datetime import datetime
+        
+        try:
+            published_at = issue_data.get('published_at')
+            if not published_at:
+                published_at = datetime.now().isoformat()
+                
+            # Extract date for folder
+            # If issue_data has 'date', use it. Else parse published_at
+            if 'date' in issue_data:
+                date_str = issue_data['date']
+            else:
+                date_str = published_at.split('T')[0]
+                
+            data_dir = self._get_data_dir()
+            dir_path = os.path.join(data_dir, date_str)
+            os.makedirs(dir_path, exist_ok=True)
+            
+            edition_code = issue_data.get('edition_code', 'unknown')
+            filename = f"issue_{edition_code}.json"
+            file_path = os.path.join(dir_path, filename)
+            
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(issue_data, f, ensure_ascii=False, indent=2)
+                
+            print(f"💾 [Issue Index] Saved to {file_path}")
+            return file_path
+        except Exception as e:
+            print(f"❌ [Issue Index] Save Failed: {e}")
+            return None

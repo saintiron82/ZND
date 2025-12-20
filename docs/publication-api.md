@@ -102,7 +102,7 @@ GET /api/publications/view?publish_id={publish_id}
 
 ### 🚀 기사 발행 (신규 회차 / 기존 회차 추가)
 ```
-POST /api/staging/publish_selected
+POST /api/desk/publish_selected
 Content-Type: application/json
 ```
 

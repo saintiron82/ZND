@@ -1,45 +1,42 @@
 ---
 description: 작업 완료 후 Git 커밋 및 푸시
 ---
+// turbo-all
 
 ## 사용법
 마스터가 "커밋해줘", "정리해줘", 또는 "/git-commit"이라고 하면 이 워크플로우를 실행합니다.
 
 ## 단계
 
-### 0. 브랜치 확인 (중요!)
+### 0. 브랜치 확인 및 생성
 ```powershell
 git branch --show-current
 ```
 
-**브랜치 규칙:**
-- 작업 브랜치는 반드시 `feature/YYYY_MM_DD` 형식 (예: `feature/2025_12_19`)
-- 오늘 날짜와 다르면 새 브랜치 생성 또는 마스터에게 확인
+**자동 브랜치 처리:**
+- 현재 날짜(YYYY_MM_DD)와 다르면 자동으로 새 브랜치 생성
+- 예: 오늘이 2025-12-21이면 `feature/2025_12_21` 브랜치로 전환
 
-**브랜치가 없거나 다른 경우:**
 ```powershell
-# 오늘 날짜 브랜치로 체크아웃/생성
-git checkout -b feature/2025_12_19
+# 오늘 날짜 브랜치로 체크아웃/생성 (날짜 형식: feature/YYYY_MM_DD)
+git checkout -b feature/2025_12_21
 ```
+
+> **주의**: 브랜치가 이미 존재하면 `git checkout feature/2025_12_21` 사용
 
 ---
 
-### 1. 현재 변경사항 확인
-```powershell
-git status
-```
-
-### 2. 모든 변경사항 스테이징
+### 1. 변경사항 스테이징
 ```powershell
 git add -A
 ```
 
-### 3. 변경된 파일 목록 확인
+### 2. 변경된 파일 목록 확인
 ```powershell
 git diff --cached --stat
 ```
 
-### 4. 의미 있는 커밋 메시지로 커밋 (변경 내용 요약)
+### 3. 커밋 (변경 내용 기반 자동 메시지 작성)
 ```powershell
 git commit -m "feat: [변경 내용 요약]"
 ```
@@ -52,12 +49,22 @@ git commit -m "feat: [변경 내용 요약]"
 - `docs:` 문서 수정
 - `chore:` 기타 작업
 
-### 5. (선택) 원격 저장소에 푸시
+### 4. 원격 저장소에 푸시
 ```powershell
-git push origin feature/2025_12_19
+git push origin feature/2025_12_21
 ```
 
+> 새 브랜치면 `git push -u origin feature/2025_12_21` 사용
+
+---
+
+## 완전 자동화 규칙
+
+1. **브랜치 날짜 체크**: 현재 날짜와 브랜치 날짜 비교 → 다르면 새 브랜치 생성
+2. **모든 단계 자동 실행**: `// turbo-all` 적용으로 모든 명령어 자동 실행
+3. **민감 정보 체크**: `.env`, `serviceAccountKey.json` 등이 포함되지 않았는지 확인 필수
+4. **푸시까지 완료**: 커밋 후 자동으로 원격 저장소에 푸시
+
 ## 주의사항
-- **브랜치 확인 필수!** main에 직접 커밋 금지
-- 커밋 전 변경사항을 마스터에게 요약 보고
-- 민감한 정보가 포함되지 않았는지 확인
+- main 브랜치에 직접 커밋 금지
+- 민감한 정보(.env, 키 파일 등) 커밋 금지 - .gitignore 확인

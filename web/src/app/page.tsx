@@ -5,7 +5,7 @@ import { optimizeArticleOrder } from '@/utils/layoutOptimizer';
 // Revalidate every 5 minutes for released publications
 export const revalidate = 300;
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8080';
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5500';
 
 interface Issue {
   id: string;

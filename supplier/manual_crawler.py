@@ -75,8 +75,8 @@ def update_manifest(date_str):
     """
     return _core_update_manifest(date_str)
 
-@app.route('/')
-def index():
+@app.route('/crawler')
+def crawler():
     return render_template('index.html')
 
 @app.route('/inspector')
@@ -1832,16 +1832,17 @@ def automation_all():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/staging')
-def staging_preview():
+@app.route('/desk')
+@app.route('/')
+def desk_view():
     """Staging 미리보기 페이지"""
-    return render_template('staging.html')
+    return render_template('desk.html')
 
 
 
 
-@app.route('/api/staging/list')
-def staging_list():
+@app.route('/api/desk/list')
+def desk_list():
     """Cache 폴더의 기사 목록 반환 (조판 UI용) - 분석된 기사만 표시"""
     try:
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
@@ -1919,7 +1920,7 @@ def staging_list():
 
 
 
-@app.route('/api/staging/recalculate', methods=['POST'])
+@app.route('/api/desk/recalculate', methods=['POST'])
 def automation_stage_recalc():
     """
     ⚡ Cache 폴더의 기사 점수 재계산 (전체 또는 선택)
@@ -1983,7 +1984,7 @@ def automation_stage_recalc():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/reject_selected', methods=['POST'])
+@app.route('/api/desk/reject_selected', methods=['POST'])
 def automation_stage_reject_selected():
     """
     🗑️ 선택된 기사 일괄 거부 (Reject)
@@ -2025,7 +2026,7 @@ def automation_stage_reject_selected():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/restore_selected', methods=['POST'])
+@app.route('/api/desk/restore_selected', methods=['POST'])
 def automation_stage_restore_selected():
     """
     ♻️ 선택된 기사 복구 (Restore rejected articles)
@@ -2078,8 +2079,8 @@ def automation_stage_restore_selected():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/file')
-def staging_file():
+@app.route('/api/desk/file')
+def desk_file():
     """특정 Staging 파일 상세 내용 반환"""
     try:
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
@@ -2101,8 +2102,8 @@ def staging_file():
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/staging/update_categories', methods=['POST'])
-def staging_update_categories():
+@app.route('/api/desk/update_categories', methods=['POST'])
+def desk_update_categories():
     """카테고리 정보를 모든 날짜 폴더의 캐시에 저장 (보낸 기사만 대상, 크로스 날짜 지원)"""
     try:
         data = request.json or {}
@@ -2185,8 +2186,8 @@ def staging_update_categories():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/reset_dedup', methods=['POST'])
-def staging_reset_dedup():
+@app.route('/api/desk/reset_dedup', methods=['POST'])
+def desk_reset_dedup():
     """모든 staging 파일의 dedup_status와 category 초기화"""
     try:
         data = request.json or {}
@@ -2233,8 +2234,8 @@ def staging_reset_dedup():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/delete_legacy', methods=['POST'])
-def staging_delete_legacy():
+@app.route('/api/desk/delete_legacy', methods=['POST'])
+def desk_delete_legacy():
     """LEGACY_CALL article_id를 가진 staging 파일 및 캐시 삭제"""
     try:
         deleted_staging = 0
@@ -2301,8 +2302,8 @@ def staging_delete_legacy():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/delete_file', methods=['POST'])
-def staging_delete_file():
+@app.route('/api/desk/delete_file', methods=['POST'])
+def desk_delete_file():
     """staging 파일 완전 삭제"""
     try:
         data = request.json or {}
@@ -2341,7 +2342,7 @@ def staging_delete_file():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/clear_cache', methods=['POST'])
+@app.route('/api/desk/clear_cache', methods=['POST'])
 def staging_clear_cache():
     """날짜별 캐시 삭제"""
     try:
@@ -2372,7 +2373,7 @@ def staging_clear_cache():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/publish_selected', methods=['POST'])
+@app.route('/api/desk/publish_selected', methods=['POST'])
 def staging_publish_selected():
     """선택된 Staging 파일만 발행 (New or Append to Issue)"""
     try:
@@ -2697,7 +2698,7 @@ def publications_move_articles():
     return jsonify({'success': False, 'error': 'Not implemented yet (Use Publish -> Append for Staging items)'}), 501
 
 
-@app.route('/api/staging/restore_selected', methods=['POST'])
+@app.route('/api/desk/restore_selected', methods=['POST'])
 def staging_restore_selected():
     """거부된 기사 복구 (rejected=false로 변경)"""
     try:
@@ -2754,7 +2755,7 @@ def staging_restore_selected():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/delete_from_db', methods=['POST'])
+@app.route('/api/desk/delete_from_db', methods=['POST'])
 def staging_delete_from_db():
     """🔥 Firestore DB에서 선택된 기사 삭제 (로컬 파일은 유지)"""
     try:
@@ -2809,7 +2810,7 @@ def staging_delete_from_db():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/api/staging/unpublish_selected', methods=['POST'])
+@app.route('/api/desk/unpublish_selected', methods=['POST'])
 def staging_unpublish_selected():
     """
     🔄 발행 취소: 데이터 파일 삭제 + 캐시 상태 리셋

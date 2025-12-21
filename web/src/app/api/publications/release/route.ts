@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5500';
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
 
 /**
  * POST /api/publications/release

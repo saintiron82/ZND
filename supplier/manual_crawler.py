@@ -44,4 +44,4 @@ app.register_blueprint(utility_bp)         # New: Utility routes
 
 if __name__ == '__main__':
     # Port 5500 as requested
-    app.run(debug=True, port=5500)
+    app.run(debug=True, port=8000)

@@ -2,36 +2,17 @@
  * 서버 사이드 공유 캐시
  * - 모든 사용자가 같은 캐시 공유
  * - 접속 시 최신 버전 확인 후 조건부 갱신
+ * - [Refactor] 2025-12: Backend API 의존성 제거 -> Firestore 직접 조회
  */
 
 import { optimizeArticleOrder } from '@/utils/layoutOptimizer';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5500';
-
-interface Issue {
-    id: string;
-    edition_code: string;
-    edition_name: string;
-    article_count: number;
-    published_at: string;
-    released_at?: string;
-    updated_at?: string;
-    status: 'preview' | 'released';
-    date: string;
-}
-
-interface Article {
-    article_id?: string;
-    id?: string;
-    title_ko?: string;
-    summary?: string;
-    url?: string;
-    impact_score?: number;
-    zero_echo_score?: number;
-    published_at?: string;
-    publish_id?: string;
-    [key: string]: any;
-}
+import {
+    fetchPublishedIssues,
+    fetchArticlesByIssueId,
+    checkLatestUpdate,
+    Issue,
+    Article
+} from './firestoreService';
 
 interface ServerCache {
     issues: Issue[];
@@ -43,33 +24,28 @@ interface ServerCache {
 let serverCache: ServerCache | null = null;
 
 /**
- * 백엔드에서 최신 버전 확인
+ * 백엔드(DB)에서 최신 버전 확인
  */
 async function checkForUpdates(): Promise<{ changed: boolean; latestUpdatedAt: string | null }> {
     try {
-        const since = serverCache?.lastUpdatedAt || '';
-        const res = await fetch(
-            `${BACKEND_URL}/api/publications/check?since=${encodeURIComponent(since)}&status=released`,
-            { cache: 'no-store' }
-        );
+        const currentVersion = serverCache?.lastUpdatedAt;
+        const latestVersion = await checkLatestUpdate();
 
-        if (!res.ok) {
-            console.error('[ServerCache] Check failed:', res.status);
-            return { changed: true, latestUpdatedAt: null };
+        // DB에 데이터가 없거나 에러면 변경 없는 것으로 처리 (안전장치)
+        if (!latestVersion) {
+            return { changed: false, latestUpdatedAt: currentVersion || null };
         }
 
-        const data = await res.json();
+        const changed = currentVersion !== latestVersion;
 
-        if (!data.success) {
-            return { changed: true, latestUpdatedAt: null };
+        if (changed) {
+            console.log(`[ServerCache] Detect Change: ${currentVersion} -> ${latestVersion}`);
+        } else {
+            console.log(`[ServerCache] No Change (Latest: ${latestVersion})`);
         }
 
-        console.log(`[ServerCache] Check: ${data.changed ? 'CHANGED' : 'NO CHANGE'}`);
+        return { changed, latestUpdatedAt: latestVersion };
 
-        return {
-            changed: data.changed,
-            latestUpdatedAt: data.latest_updated_at
-        };
     } catch (error) {
         console.error('[ServerCache] Check error:', error);
         return { changed: true, latestUpdatedAt: null };
@@ -77,52 +53,33 @@ async function checkForUpdates(): Promise<{ changed: boolean; latestUpdatedAt: s
 }
 
 /**
- * 전체 데이터 가져오기
+ * 전체 데이터 가져오기 (Firestore 직접 조회)
  */
 async function fetchAllData(): Promise<{ issues: Issue[]; articles: Article[]; latestUpdatedAt: string | null }> {
-    console.log('[ServerCache] Fetching fresh data from Firestore...');
+    console.log('[ServerCache] Fetching fresh data from Firestore (Direct)...');
 
     try {
         // 1. 회차 목록 조회
-        const listRes = await fetch(
-            `${BACKEND_URL}/api/publications/list?status=released`,
-            { cache: 'no-store' }
-        );
+        const { issues, latestUpdatedAt } = await fetchPublishedIssues();
 
-        if (!listRes.ok) {
-            throw new Error(`List fetch failed: ${listRes.status}`);
+        if (issues.length === 0) {
+            console.warn('[ServerCache] No issues found.');
+            return { issues: [], articles: [], latestUpdatedAt: null };
         }
-
-        const listData = await listRes.json();
-
-        if (!listData.success) {
-            throw new Error(listData.error || 'List fetch failed');
-        }
-
-        const issues: Issue[] = listData.issues || [];
-        const latestUpdatedAt = listData.latest_updated_at || null;
 
         // 2. 각 회차의 기사 조회 (병렬)
         const articlePromises = issues.map(async (issue) => {
             try {
-                const res = await fetch(
-                    `${BACKEND_URL}/api/publications/view?publish_id=${issue.id}`,
-                    { cache: 'no-store' }
-                );
-
-                if (!res.ok) return [];
-
-                const data = await res.json();
-                if (!data.success) return [];
-
-                const articles = data.articles || [];
+                const articles = await fetchArticlesByIssueId(issue.id);
+                // Layout Optimizer 적용 및 메타데이터 주입
                 return optimizeArticleOrder(articles).map((article: Article) => ({
                     ...article,
                     publish_id: issue.id,
                     edition_name: issue.edition_name,
                     edition_code: issue.edition_code,
                 }));
-            } catch {
+            } catch (err) {
+                console.error(`[ServerCache] Failed to fetch articles for issue ${issue.id}`, err);
                 return [];
             }
         });
@@ -141,8 +98,6 @@ async function fetchAllData(): Promise<{ issues: Issue[]; articles: Article[]; l
 
 /**
  * 캐시된 데이터 가져오기 (메인 함수)
- * - 캐시 없으면: 전체 fetch
- * - 캐시 있으면: 변경 체크 후 조건부 갱신
  */
 export async function getPublicationsWithServerCache(): Promise<{ issues: Issue[]; articles: Article[] }> {
     // 캐시가 없으면 전체 fetch
@@ -160,7 +115,7 @@ export async function getPublicationsWithServerCache(): Promise<{ issues: Issue[
     const { changed, latestUpdatedAt } = await checkForUpdates();
 
     if (!changed) {
-        console.log('[ServerCache] Using cached data ✅');
+        // console.log('[ServerCache] Using cached data ✅');
         return { issues: serverCache.issues, articles: serverCache.articles };
     }
 

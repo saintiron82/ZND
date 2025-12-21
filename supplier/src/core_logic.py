@@ -642,3 +642,128 @@ def get_data_filename(source_id: str, url: str) -> str:
     """
     url_hash = get_url_hash(url, length=8)
     return f"{source_id}_{url_hash}.json"
+
+
+# ==============================================================================
+# Utility & Logic Functions (Moved from manual_crawler.py)
+# ==============================================================================
+
+import aiohttp
+import asyncio
+
+async def check_url_quality(urls: list) -> list:
+    """
+    Check quality of multiple URLs asynchronously.
+    Checks reachability and minimum content length.
+    
+    Args:
+        urls: List of URL strings
+    
+    Returns:
+        List of dicts [{'url': url, 'status': 'valid'|'invalid'}]
+    """
+    results = []
+    if not urls:
+        return results
+        
+    async def _check(session, url):
+        try:
+            async with session.get(url, timeout=5, ssl=False) as response:
+                if response.status != 200:
+                    return {'url': url, 'status': 'invalid'}
+                
+                content = await response.content.read(10240)
+                text = content.decode('utf-8', errors='ignore')
+                
+                if len(text) < 500:
+                    return {'url': url, 'status': 'invalid'}
+                return {'url': url, 'status': 'valid'}
+        except Exception:
+            return {'url': url, 'status': 'invalid'}
+
+    async with aiohttp.ClientSession() as session:
+        tasks = [_check(session, url) for url in urls]
+        # Gather results (they come back in order if we use gather, but we don't strictly assume order)
+        results = await asyncio.gather(*tasks)
+    
+    return results
+
+
+def find_duplicate_files(data_dir: str = DATA_DIR) -> dict:
+    """
+    Find duplicate data files across all date folders based on URL.
+    
+    Args:
+        data_dir: Root data directory to search
+    
+    Returns:
+        Dict containing stats and duplicates list
+    """
+    url_to_files = {}
+    
+    if os.path.exists(data_dir):
+        for date_folder in os.listdir(data_dir):
+            date_path = os.path.join(data_dir, date_folder)
+            if not os.path.isdir(date_path):
+                continue
+            
+            for filename in os.listdir(date_path):
+                if not filename.endswith('.json') or filename in ['daily_summary.json', 'index.json']:
+                    continue
+                
+                filepath = os.path.join(date_path, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        url = data.get('url', '')
+                        if url:
+                            norm_url = normalize_url_for_dedupe(url)
+                            if norm_url not in url_to_files:
+                                url_to_files[norm_url] = []
+                            url_to_files[norm_url].append({
+                                'filename': filename,
+                                'date': date_folder,
+                                'path': filepath,
+                                'crawled_at': data.get('crawled_at', ''),
+                                'article_id': data.get('article_id', ''),
+                                'original_url': url
+                            })
+                except:
+                    pass
+    
+    duplicates = {k: v for k, v in url_to_files.items() if len(v) > 1}
+    
+    for _, files in duplicates.items():
+        files.sort(key=lambda x: x.get('crawled_at', ''), reverse=True)
+    
+    return {
+        'duplicates': duplicates,
+        'total_duplicate_urls': len(duplicates),
+        'total_duplicate_files': sum(len(f) - 1 for f in duplicates.values())
+    }
+
+
+def reset_article_cache(url: str, db_client=None) -> bool:
+    """
+    Reset cache fields and remove from history DB to allow re-crawling.
+    
+    Args:
+        url: Article URL
+        db_client: Optional DBClient instance. If None, safe to pass None but history won't remove if not provided outside.
+                  (Ideally passed in, or we assume caller handled db removal)
+                  Actually for this util we can handle db if we import it, but circular imports...
+                  Let's keep DB part outside or lazy import.
+    
+    Returns:
+        True if cache found and updated, False otherwise
+    """
+    # Note: DB removal handled by caller usually or lazy import here
+    cached = load_from_cache(url)
+    if cached:
+        # Clear analysis-related fields
+        for field in ['mll_status', 'raw_analysis', 'zero_echo_score', 'impact_score', 
+                     'staged', 'staged_at', 'published', 'published_at', 'rejected']:
+            cached.pop(field, None)
+        save_to_cache(url, cached)
+        return True
+    return False

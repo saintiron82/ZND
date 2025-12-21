@@ -12,7 +12,7 @@ export function useDatePolling(currentLatestDate: string | null, intervalMs: num
     const [serverLatestDate, setServerLatestDate] = useState<string | null>(null);
     const [hasNewDate, setHasNewDate] = useState(false);
 
-    // 초기 로딩 후 최초 실행 방지 및 비교 기준 저장
+    // 초기 로딩 후 최초 실행 방지 및 비교 기준 저장.
     const initialLatestRef = useRef(currentLatestDate);
 
     useEffect(() => {

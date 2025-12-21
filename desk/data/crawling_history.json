@@ -1,0 +1,962 @@
+{
+  "https://www.aitimes.com/news/articleView.html?idxno=204655": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:02.765825+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204637": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:03.037071+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204639": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:03.138599+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204630": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:03.412488+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204641": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:03.536437+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204645": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:03.804891+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204629": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:03.955320+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204632": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T02:48:33.823699+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204653": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T02:48:33.870159+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204647": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T02:48:34.130981+00:00"
+  },
+  "https://blog.google/products/workspace/gemini-ai-workplace-research-report/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction",
+    "timestamp": "2025-12-10T04:08:42.978079+00:00"
+  },
+  "https://blog.google/technology/ai/look-back-2025/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction",
+    "timestamp": "2025-12-10T04:08:43.311238+00:00"
+  },
+  "https://blog.google/outreach-initiatives/education/next-gen-computer-science-innovators/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction",
+    "timestamp": "2025-12-10T04:08:43.575710+00:00"
+  },
+  "https://blog.google/around-the-globe/google-europe/transforming-nordic-classrooms-through-responsible-ai-partnerships/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction",
+    "timestamp": "2025-12-10T04:08:43.717216+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204667": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:04.235161+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204663": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:04.399396+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204661": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:12:04.704560+00:00"
+  },
+  "https://the-decoder.com/mistrals-open-coding-model-devstral-2-claims-sevenfold-cost-advantage-over-claude-sonnet/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:09.901283+00:00"
+  },
+  "https://the-decoder.com/big-ais-biggest-names-rally-around-the-agentic-ai-foundation-to-set-agent-standards/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:10.164668+00:00"
+  },
+  "https://the-decoder.com/google-positions-gemini-as-the-glue-for-its-new-xr-ecosystem/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:10.448626+00:00"
+  },
+  "https://the-decoder.com/trump-approves-nvidia-h200-sales-but-china-may-not-bite/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:12.018183+00:00"
+  },
+  "https://the-decoder.com/google-faces-an-antitrust-probe-for-using-web-and-youtube-content-in-ai-without-opt-out-or-fair-pay/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:12.662846+00:00"
+  },
+  "https://the-decoder.com/openai-claims-generative-ai-saves-knowledge-workers-40-to-80-minutes-a-day/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:13.006232+00:00"
+  },
+  "https://the-decoder.com/report-aging-power-grid-puts-openai-and-microsofts-growth-at-risk/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:13.757065+00:00"
+  },
+  "https://the-decoder.com/transformer-co-creator-vaswani-unveils-high-performance-rnj-1-coding-model/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:14.179500+00:00"
+  },
+  "https://the-decoder.com/chinese-ai-firms-build-shadow-workforce-in-kenya-using-whatsapp-and-mobile-payments/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:14.967810+00:00"
+  },
+  "https://the-decoder.com/70-of-creative-professionals-hide-ai-use-from-colleagues-due-to-stigma-anthropic-study-finds/": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:15.621625+00:00"
+  },
+  "https://venturebeat.com/ai/the-ai-that-scored-95-until-consultants-learned-it-was-ai": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-11T04:18:01.836092+00:00"
+  },
+  "https://venturebeat.com/ai/mistral-launches-powerful-devstral-2-coding-model-including-open-source": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:57.148365+00:00"
+  },
+  "https://venturebeat.com/data-infrastructure/databricks-officeqa-uncovers-disconnect-ai-agents-ace-abstract-tests-but": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:58.133275+00:00"
+  },
+  "https://venturebeat.com/ai/brand-context-ai-the-missing-requirement-for-marketing-ai": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:58.791618+00:00"
+  },
+  "https://venturebeat.com/ai/tracking-every-decision-dollar-and-delay-the-new-process-intelligence-engine": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:15:59.824058+00:00"
+  },
+  "https://venturebeat.com/ai/z-ai-debuts-open-source-glm-4-6v-a-native-tool-calling-vision-model-for": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:16:00.556192+00:00"
+  },
+  "https://venturebeat.com/ai/anthropics-claude-code-can-now-read-your-slack-messages-and-write-code-for": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-10T04:16:01.732948+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204679": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-10T17:29:19.281087+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204678": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-10T17:30:39.270478+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204692": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-11T01:49:46.065985+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204669": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-11T01:50:45.489452+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204660": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T01:55:44.073593+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204684": {
+    "status": "WORTHLESS",
+    "reason": "high_noise_manual_inject",
+    "timestamp": "2025-12-11T01:50:45.808021+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204688": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-11T01:49:45.720310+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204664": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-11T01:49:45.764465+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204681": {
+    "status": "ACCEPTED",
+    "reason": "manual_correction_new",
+    "timestamp": "2025-12-11T01:49:46.079894+00:00"
+  },
+  "https://venturebeat.com/ai/the-70-factuality-ceiling-why-googles-new-facts-benchmark-is-a-wake-up-call": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T03:56:56.293102+00:00"
+  },
+  "https://venturebeat.com/ai/openai-report-reveals-a-6x-productivity-gap-between-ai-power-users-and": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T04:21:25.946869+00:00"
+  },
+  "https://venturebeat.com/ai/quilters-ai-just-designed-an-843-part-linux-computer-that-booted-on-the": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T04:19:22.903661+00:00"
+  },
+  "https://venturebeat.com/ai/how-huds-runtime-sensor-cut-triage-time-from-3-hours-to-10-minutes": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T04:20:27.294587+00:00"
+  },
+  "https://venturebeat.com/ai/how-googles-tpus-are-reshaping-the-economics-of-large-scale-ai": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T04:20:58.198283+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204696": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T05:30:56.245771+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204706": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-11T06:15:54.545737+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204708": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-11T06:16:57.124064+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204711": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:23:39.402995+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204709": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-11T06:24:09.172843+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204699": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:24:32.423916+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204672": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:24:41.782139+00:00"
+  },
+  "https://deepmind.google/blog/deepening-our-partnership-with-the-uk-ai-security-institute/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:28:38.230193+00:00"
+  },
+  "https://deepmind.google/blog/strengthening-our-partnership-with-the-uk-government-to-support-prosperity-and-security-in-the-ai-era/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:28:55.508365+00:00"
+  },
+  "https://deepmind.google/blog/facts-benchmark-suite-systematically-evaluating-the-factuality-of-large-language-models/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:29:07.941011+00:00"
+  },
+  "https://the-decoder.com/google-adds-new-features-to-boost-website-visibility-in-ai-search/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:31:18.291358+00:00"
+  },
+  "https://the-decoder.com/meta-is-reportedly-ditching-open-llama-models-for-avocado-a-closed-model-built-for-direct-sales/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:31:52.181921+00:00"
+  },
+  "https://the-decoder.com/deepseek-reportedly-using-thousands-of-smuggled-nvidia-chips-for-ai-training/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:32:06.043922+00:00"
+  },
+  "https://the-decoder.com/aviation-startup-boom-pivots-to-gas-turbines-to-feed-ais-power-hunger/": {
+    "status": "WORTHLESS",
+    "reason": "manual_worthless",
+    "timestamp": "2025-12-11T06:32:42.287067+00:00"
+  },
+  "https://the-decoder.com/nvidia-develops-location-tracking-for-ai-chips/": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T06:33:09.092197+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204690": {
+    "status": "ACCEPTED",
+    "reason": "high_score",
+    "timestamp": "2025-12-11T14:54:00.453360+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204718": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-12T01:20:59.421262+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204740": {
+    "status": "MLL_FAILED",
+    "reason": "error: HTTPConnectionPool(host='localhost', port=8000): R",
+    "timestamp": "2025-12-12T05:14:01.182786+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204735": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-12T05:34:33.492697+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204738": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (10.0 >= 7.0)",
+    "timestamp": "2025-12-12T05:36:55.565195+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204734": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-12T05:45:43.127366+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204710": {
+    "status": "MLL_FAILED",
+    "reason": "error: API Error: [invoke_v2] LLM 호출 실패: Error code: 400 ",
+    "timestamp": "2025-12-12T05:55:39.666330+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204851": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:28:30.405706+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204840": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:28:30.653066+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204830": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:13:45.158449+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204848": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:17:16.497763+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204804": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:17:16.761350+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204789": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (8.1 >= 7.0)",
+    "timestamp": "2025-12-16T09:17:16.819438+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204810": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:17:17.085118+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204846": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.9 >= 7.0)",
+    "timestamp": "2025-12-16T09:17:17.409047+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204845": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:17:17.442393+00:00"
+  },
+  "https://venturebeat.com/ai/korean-ai-startup-motif-reveals-4-big-lessons-for-training-enterprise-llms": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:28.373993+00:00"
+  },
+  "https://venturebeat.com/ai/tokenization-takes-the-lead-in-the-fight-for-data-security": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (8.6 >= 7.0)",
+    "timestamp": "2025-12-16T09:54:25.900819+00:00"
+  },
+  "https://venturebeat.com/ai/bolmos-architecture-unlocks-efficient-byte-level-lm-training-without": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:28.686440+00:00"
+  },
+  "https://venturebeat.com/ai/why-agentic-ai-needs-a-new-category-of-customer-data": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.0 >= 7.0)",
+    "timestamp": "2025-12-16T09:54:26.219310+00:00"
+  },
+  "https://venturebeat.com/technology/nvidia-debuts-nemotron-3-with-hybrid-moe-and-mamba-transformer-to-drive": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:29.007983+00:00"
+  },
+  "https://venturebeat.com/ai/build-vs-buy-is-dead-ai-just-killed-it": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:29.262189+00:00"
+  },
+  "https://venturebeat.com/ai/why-most-enterprise-ai-coding-pilots-underperform-hint-its-not-the-model": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:29.333504+00:00"
+  },
+  "https://the-decoder.com/the-case-against-predicting-tokens-to-build-agi/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:39.153807+00:00"
+  },
+  "https://the-decoder.com/irobot-files-for-bankruptcy-and-goes-to-chinese-supplier/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:39.478175+00:00"
+  },
+  "https://the-decoder.com/trumps-ai-plan-could-affect-his-own-voters/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:39.740351+00:00"
+  },
+  "https://the-decoder.com/ai-models-score-off-the-charts-on-psychiatric-tests-when-researchers-treat-them-as-therapy-patients/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:39.801985+00:00"
+  },
+  "https://the-decoder.com/reasoning-models-now-ace-all-three-cfa-exam-levels/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:40.067273+00:00"
+  },
+  "https://the-decoder.com/cht-blasts-trumps-executive-order-for-creating-an-ai-accountability-vacuum/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:40.128580+00:00"
+  },
+  "https://the-decoder.com/deepmind-co-founder-shane-legg-sees-50-percent-chance-of-minimal-agi-by-2028/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:40.392420+00:00"
+  },
+  "https://the-decoder.com/adobe-brings-photoshop-acrobat-and-express-directly-to-chatgpt/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:40.454480+00:00"
+  },
+  "https://the-decoder.com/longcat-image-proves-6b-parameters-can-beat-bigger-models-with-better-data-hygiene/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:40.716411+00:00"
+  },
+  "https://the-decoder.com/openai-drops-equity-waiting-period-to-encourage-risk-taking/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:52:40.778277+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204832": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:54:05.878835+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204850": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:56:27.881666+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204839": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:56:28.208126+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204836": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-16T09:56:28.473109+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204854": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T14:48:10.670860+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204858": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:33.849303+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204878": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.188817+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204865": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.455580+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204860": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.529041+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204882": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.787174+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204866": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:34.857091+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204883": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:35.118357+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204881": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:35.224601+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204870": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:43:35.459051+00:00"
+  },
+  "https://the-decoder.com/openais-gpt-5-router-rollback-shows-why-ai-requires-unlearning-old-habits/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:06.844971+00:00"
+  },
+  "https://the-decoder.com/google-launches-new-ai-agent-to-help-plan-your-day/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.176602+00:00"
+  },
+  "https://the-decoder.com/googles-updated-gemini-2-5-flash-native-audio-handles-complex-voice-tasks-better/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.442534+00:00"
+  },
+  "https://the-decoder.com/openais-new-chatgpt-image-model-matches-googles-nano-banana-pro-on-complex-prompts/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.503853+00:00"
+  },
+  "https://the-decoder.com/openai-releases-new-models-for-its-realtime-api/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.768019+00:00"
+  },
+  "https://the-decoder.com/nvidia-strengthens-open-source-strategy-with-schedmd-acquisition/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:07.847180+00:00"
+  },
+  "https://the-decoder.com/gemini-gets-direct-access-to-notebooklm-data/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:08.108791+00:00"
+  },
+  "https://the-decoder.com/nearly-half-of-us-workers-now-use-ai-on-the-job-but-most-arent-using-it-daily/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:08.183426+00:00"
+  },
+  "https://venturebeat.com/technology/ai-agents-fail-63-of-the-time-on-complex-tasks-patronus-ai-says-its-new": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:47.952573+00:00"
+  },
+  "https://venturebeat.com/infrastructure/why-googles-new-interactions-api-is-such-a-big-deal-for-ai-developers": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.200847+00:00"
+  },
+  "https://venturebeat.com/ai/zoom-says-it-aced-ais-hardest-exam-critics-say-it-copied-off-its-neighbors": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.292939+00:00"
+  },
+  "https://venturebeat.com/data/with-91-accuracy-open-source-hindsight-agentic-memory-provides-20-20-vision": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.537923+00:00"
+  },
+  "https://venturebeat.com/security/echo-raises-usd35m-to-secure-the-enterprise-clouds-base-layer-container": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.632320+00:00"
+  },
+  "https://venturebeat.com/ai/zencoder-drops-zenflow-a-free-ai-orchestration-tool-that-pits-claude-against": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.883407+00:00"
+  },
+  "https://venturebeat.com/infrastructure/ai2s-molmo-2-shows-open-source-models-can-rival-proprietary-giants-in-video": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:44:48.971856+00:00"
+  },
+  "https://venturebeat.com/technology/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-17T15:53:21.485481+00:00"
+  },
+  "https://venturebeat.com/ai/ai-is-moving-to-the-edge-and-network-security-needs-to-catch-up": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.2 >= 7.0)",
+    "timestamp": "2025-12-17T15:53:21.743023+00:00"
+  },
+  "https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:36:04.514812+00:00"
+  },
+  "https://the-decoder.com/ai-in-the-newsroom-openai-launches-training-program-for-media-companies/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:00:31.983919+00:00"
+  },
+  "https://the-decoder.com/openai-launches-app-submissions-and-rolls-out-store-in-the-new-year/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.223236+00:00"
+  },
+  "https://the-decoder.com/openai-reportedly-seeking-up-to-100-billion-in-new-funding-round/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.9 >= 7.0)",
+    "timestamp": "2025-12-18T15:41:11.261017+00:00"
+  },
+  "https://the-decoder.com/terence-tao-proposes-artificial-general-cleverness-as-a-more-honest-label-for-what-ai-actually-does/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.0 >= 7.0)",
+    "timestamp": "2025-12-18T15:41:11.538106+00:00"
+  },
+  "https://the-decoder.com/nvidias-nemotron-3-swaps-pure-transformers-for-a-mamba-hybrid-to-run-ai-agents-efficiently/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.059958+00:00"
+  },
+  "https://the-decoder.com/google-makes-gemini-3-flash-the-default-for-search-and-slashes-reasoning-costs/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.031500+00:00"
+  },
+  "https://the-decoder.com/the-10-billion-loop-amazon-could-pay-openai-so-openai-can-pay-amazon/": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.5 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.552088+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204900": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.283158+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204903": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.173000+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204884": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T15:52:27.122918+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204892": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.200822+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204910": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.247558+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204904": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.2 >= 7.0)",
+    "timestamp": "2025-12-18T15:52:27.506239+00:00"
+  },
+  "https://venturebeat.com/infrastructure/ai-agents-fail-63-of-the-time-on-complex-tasks-patronus-ai-says-its-new": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.149030+00:00"
+  },
+  "https://venturebeat.com/infrastructure/agentic-design-patterns-the-missing-link-between-ai-demos-and-enterprise": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-18T16:57:06.305397+00:00"
+  },
+  "https://the-decoder.com/mistral-ocr-3-promises-better-cheaper-document-analysis/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:00:31.421268+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204906": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (10.0 >= 7.0)",
+    "timestamp": "2025-12-18T15:56:38.972224+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204886": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (8.2 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.558942+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204907": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (7.8 >= 7.0)",
+    "timestamp": "2025-12-18T16:57:38.555676+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204908": {
+    "status": "WORTHLESS",
+    "reason": "high_noise (9.0 >= 7.0)",
+    "timestamp": "2025-12-18T15:56:39.609204+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204934": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:35.019076+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204943": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:35.284750+00:00"
+  },
+  "https://venturebeat.com/infrastructure/mistral-launches-ocr-3-to-digitize-enterprise-documents-touts-74-win-rate": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:27:55.263493+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204941": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:33.639346+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204926": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T19:44:34.219482+00:00"
+  },
+  "https://the-decoder.com/meta-preps-mango-and-avocado-ai-models-for-2026/": {
+    "status": "WORTHLESS",
+    "reason": "text_too_short_manual_batch",
+    "timestamp": "2025-12-19T19:58:48.972895+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204919": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:05.538288+00:00"
+  },
+  "https://venturebeat.com/technology/gemini-3-flash-arrives-with-reduced-costs-and-latency-a-powerful-combo-for": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:05.910806+00:00"
+  },
+  "https://the-decoder.com/gpt-5-2-tops-openais-new-frontierscience-test-but-struggles-with-real-research-problems/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:06.272068+00:00"
+  },
+  "https://venturebeat.com/technology/google-releases-functiongemma-a-tiny-edge-model-that-can-control-mobile": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:06.652939+00:00"
+  },
+  "https://the-decoder.com/anthropics-ai-store-makes-money-while-debating-eternal-transcendence/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:07.036255+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204939": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:07.412679+00:00"
+  },
+  "https://the-decoder.com/openai-brings-cheaper-subscription-tier-to-more-markets/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:07.812193+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204930": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:08.184165+00:00"
+  },
+  "https://venturebeat.com/orchestration/jp-morgans-ai-adoption-hit-50-of-employees-the-secret-a-connectivity-first": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:08.568627+00:00"
+  },
+  "https://the-decoder.com/vibe-coding-app-lovable-heralds-the-age-of-the-builder-following-major-financing/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:08.937728+00:00"
+  },
+  "https://venturebeat.com/orchestration/palona-goes-vertical-launching-vision-workflow-features-4-key-lessons-for-ai": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:09.314795+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204935": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:09.679968+00:00"
+  },
+  "https://venturebeat.com/technology/openai-now-accepting-chatgpt-app-submissions-from-third-party-devs-launches": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:10.057837+00:00"
+  },
+  "https://venturebeat.com/technology/anthropic-launches-enterprise-agent-skills-and-opens-the-standard": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:10.430919+00:00"
+  },
+  "https://venturebeat.com/orchestration/even-google-and-replit-struggle-to-deploy-ai-agents-reliably-heres-why": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-19T20:35:10.796940+00:00"
+  },
+  "https://the-decoder.com/anthropic-publishes-agent-skills-as-an-open-standard-for-ai-platforms/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T03:08:12.984026+00:00"
+  },
+  "https://the-decoder.com/openai-updates-codex-model-adds-trusted-access-program-for-cyber-defense/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T03:09:18.825149+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204950": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:37.181810+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204953": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:37.650090+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204954": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:38.127310+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204951": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:38.538881+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204952": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:38.958898+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204956": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:39.331867+00:00"
+  },
+  "https://the-decoder.com/telling-consumers-an-ad-is-ai-generated-cuts-clicks-by-31-percent-study-finds/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:39.723768+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204955": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:40.109467+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204957": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:40.542480+00:00"
+  },
+  "https://the-decoder.com/googles-open-standard-lets-ai-agents-build-user-interfaces-on-the-fly/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:40.931562+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204958": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:41.368793+00:00"
+  },
+  "https://the-decoder.com/china-wins-the-open-model-race-and-the-price-to-pay-goes-beyond-economics/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:06.467549+00:00"
+  },
+  "https://the-decoder.com/anthropics-claude-opus-4-5-can-tackle-some-tasks-lasting-nearly-five-hours/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:06.936196+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204961": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:07.340370+00:00"
+  },
+  "https://techneedle.com/archives/43019": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:07.735116+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204959": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:08.130672+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204960": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:08.521658+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204964": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:08.904154+00:00"
+  },
+  "https://the-decoder.com/some-notes-on-whats-new/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:09.314422+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204962": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:09.702207+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204963": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-21T16:11:10.101171+00:00"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "c6c278",
+  "article_id": "c6c278",
+  "title_ko": "Google releases tiny FunctionGemma edge model that can control mobile devices",
+  "summary": "구글이 모바일 기기 제어와 엣지 컴퓨팅에 특화된 2억 7천만 파라미터 규모의 경량화 AI 모델 'FunctionGemma'를 출시했다. 이 모델은 자연어 명령을 실행 가능한 코드로 변환하는 데 최적화되어 있으며, 미세 조정을 통해 기능 호출 정확도를 58%에서 85%로 끌어올렸다. 클라우드 의존 없이 온디바이스에서 작동하여 보안성과 응답 속도를 강화했으며, 거대 모델과 연동되는 '트래픽 컨트롤러'로서의 새로운 아키텍처를 제시한다.",
+  "url": "https://venturebeat.com/technology/google-releases-functiongemma-a-tiny-edge-model-that-can-control-mobile",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 3.1,
+  "impact_score": 5.0,
+  "published_at": "2025-12-19T20:02:16.022743+00:00",
+  "source_id": "venturebeat",
+  "edition": "251219_FRI_1",
+  "original_title": "Google releases tiny FunctionGemma edge model that can control mobile devices"
+}

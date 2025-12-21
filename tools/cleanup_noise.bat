@@ -20,7 +20,7 @@ echo ========================================
 
 set /p choice="선택하세요 (1-5, Q): "
 
-cd /d "%~dp0\supplier"
+cd /d "%~dp0\desk"
 
 if "%choice%"=="1" (
     echo.

@@ -1,0 +1,227 @@
+{
+  "article_id": "ff355a",
+  "author": "Emilia David",
+  "cached_at": "2025-12-19T18:10:43.805828+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/7jzIFPAOzCMxe5UXspPqbo/e8a182a2a498380565d69d52a0e7d648/crimedy7_illustration_of_a_robot_coding_--ar_169_--v_7_8de721da-8509-42c8-8732-9f1d70fb8b84_3.png?w=800&amp;q=75",
+  "modified_at": "2025-12-19T18:10:17.776Z",
+  "summary": "OpenAI가 에이전트 작업과 사이버 보안에 최적화된 'GPT-5.2-Codex'를 출시했다. 긴 호흡의 작업(Long-horizon work) 처리가 가능하며 CTF 등 보안 벤치마크에서 최고 성능을 기록했다. 기업은 이 모델을 통해 대규모 리팩토링 및 보안 취약점 점검을 수행할 수 있다.",
+  "text": "With the recent release of GPT 5.2 , OpenAI updated other related models, including its popular coding model Codex, bringing more agentic use cases to its fold. GPT-5.2-Codex, which OpenAI called in a blog post “the most advanced agentic coding model yet for complex, real-world software engineer,” has been optimized for long-horizon work with agents and will have stronger cybersecurity capabilities. The model is an offshoot of GPT-5.2, optimized for agentic building. “GPT‑5.2-Codex represents a step forward in how advanced AI can support real-world software engineering and specialized domains like cybersecurity—helping developers and defenders tackle complex, long-horizon work, and strengthening the tools available for responsible security research,” the company said in its blog post. Enterprises can access the new Codex model “in all Codex surfaces for paid ChatGPT users, and working towards safely enabling access to GPT‑5.2-Codex for API users in the coming weeks.” The company is also piloting a program with invite-only trusted users to access “more permissive models for vetted professionals and organizations” for defensive cybersecurity work to determine a balance between accessibility and safety. Advances in cybersecurity with models OpenAI calls GPT-5.2-Codex its strongest cybersecurity model yet. Still, as its capabilities grow, the company said it needs to design a deployment approach that accounts for future growth and supports defensive cybersecurity. “As our models continue to advance along the intelligence frontier, we’ve observed that these improvements also translate to capability jumps in specialized domains such as cybersecurity⁠,” the company said. OpenAI said in its system card that it tested the model on three benchmarks: Capture-the-Flag (CTF) evals, CVE-Bench and Cyber Range. GPT-5.2-Codex became the company’s strongest-performing model in CTF evals, which they attributed to compaction, or “the ability for the model to work coherently across multiple context windows.” Credit: OpenAI The model scored 87% in CVE-Bench, outperforming other models, with GPT-5.1-Codex-Max coming in a close second. This increase would be helpful for tasks involving running commands around vulnerability discovery and trying tools “with an almost brute-force approach.” In the long-form Cyber Range test, the model had a combined pass rate of 72.7%. GPT-5.1-Codex-Max scored 81.8%. Cybersecurity deployment project OpenAI said some users of its GPT-5.1-Codex-Max, which launched in November , uncovered a source code exposure vulnerability in React and subsequently reported it. According to OpenAI, Andrew MacPherson, a security researcher at Privy, used GPT-5.1-Codex-Max to assess how well the model could support real-world vulnerability research. The model instead surfaced unexpected behavior. With improvements in cybersecurity capabilities for GPT-5.2-Codex and potentially for models that come after it, OpenAI said it needs to balance the deployment of frontier models with the necessary tools for defensive cybersecurity. While GPT-5.2-Codex “does not reach a high level of cyber capability under our Preparedness Framework,” the company plans to bring selected users to test security capabilities. (OpenAI’s Preparedness Framework to measure and track potential harms from AI to humans) “Security teams can run into restrictions when attempting to emulate threat actors, analyze malware to support remediation, or stress test critical infrastructure. We are developing a trusted access pilot to remove that friction for qualifying users and organizations and enable trusted defenders to use frontier AI cyber capabilities to accelerate cyberdefense.” OpenAI said. Agentic frontiers GPT-5.2 already received praise from users for its use in business tasks and workflows. With the Codex version, some of those capabilities could transfer, especially as enterprises plan to use the model to code their agents. The company said the model improves long-horizon work through compaction, offering strong performance on extensive code changes. It also features improved performance on Windows. In benchmark testing, GPT-5.2-Codex performed the best on accuracy compared to its previous versions. Credit: OpenAI Credit: OpenAI \"With these improvements, Codex is more capable at working in large repositories over extended sessions with full context intact. It can more reliably complete complex tasks like large refactors, code migrations, and feature builds — continuing to iterate without losing track, even when plans change or attempts fail,\" OpenAI said.",
+  "title": "Enterprise AI coding grows teeth: GPT‑5.2‑Codex weaves security into large-scale software refactors",
+  "url": "https://venturebeat.com/technology/enterprise-ai-coding-grows-teeth-gpt-5-2-codex-weaves-security-into-large",
+  "title_ko": "기업용 AI 코딩의 진화: 보안이 강화된 GPT‑5.2‑Codex 출시",
+  "tags": [],
+  "impact_score": 7.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1의 핵심 모델 업데이트(X3)이자, 'GPT-5.2'라는 차세대 네이밍을 사용한 주요 릴리즈. 보안 및 코딩 분야에서 SOTA를 갱신(True)했을 가능성이 높으며, 기업의 핵심 워크플로우에 영향을 준다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Reason": "OpenAI(P4)의 제품 출시. 단독 실행."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 2.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 5.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 7,
+      "T3": 5,
+      "Rationale": "벤치마크 점수(CVE-Bench 87%) 등 구체적 성능 지표 제시."
+    },
+    "Noise": {
+      "P1": 4,
+      "P2": 3,
+      "P3": 2,
+      "Rationale": "자사 블로그 인용으로 '가장 진보된' 등의 수식어 존재."
+    },
+    "Utility": {
+      "V1": 8,
+      "V2": 8,
+      "V3": 6,
+      "Rationale": "보안 및 코딩 자동화에 즉시 투입 가능한 고성능 모델."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "SOTA 갱신 모델에 대한 정직한 평가."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "ff355a",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "기업용 AI 코딩의 진화: 보안이 강화된 GPT‑5.2‑Codex 출시",
+      "Summary": "OpenAI가 에이전트 작업과 사이버 보안에 최적화된 'GPT-5.2-Codex'를 출시했다. 긴 호흡의 작업(Long-horizon work) 처리가 가능하며 CTF 등 보안 벤치마크에서 최고 성능을 기록했다. 기업은 이 모델을 통해 대규모 리팩토링 및 보안 취약점 점검을 수행할 수 있다.",
+      "Tags": "Launch, Model, Security"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1의 핵심 모델 업데이트(X3)이자, 'GPT-5.2'라는 차세대 네이밍을 사용한 주요 릴리즈. 보안 및 코딩 분야에서 SOTA를 갱신(True)했을 가능성이 높으며, 기업의 핵심 워크플로우에 영향을 준다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Reason": "OpenAI(P4)의 제품 출시. 단독 실행."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 2.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "벤치마크 점수(CVE-Bench 87%) 등 구체적 성능 지표 제시."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "자사 블로그 인용으로 '가장 진보된' 등의 수식어 존재."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 8,
+        "V3": 6,
+        "Rationale": "보안 및 코딩 자동화에 즉시 투입 가능한 고성능 모델."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "SOTA 갱신 모델에 대한 정직한 평가."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Enterprise AI coding grows teeth: GPT‑5.2‑Codex weaves security into large-scale software refactors",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 7.0,
+        "T3": 5.0,
+        "S_Avg": 6.67
+      },
+      "Noise": {
+        "P1": 4.0,
+        "P2": 3.0,
+        "P3": 2.0,
+        "N_Avg": 3.0
+      },
+      "Utility": {
+        "V1": 8.0,
+        "V2": 8.0,
+        "V3": 6.0,
+        "U_Avg": 7.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 4.99,
+      "ZS_Final": 5.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "벤치마크 점수(CVE-Bench 87%) 등 구체적 성능 지표 제시."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "자사 블로그 인용으로 '가장 진보된' 등의 수식어 존재."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 8,
+        "V3": 6,
+        "Rationale": "보안 및 코딩 자동화에 즉시 투입 가능한 고성능 모델."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "SOTA 갱신 모델에 대한 정직한 평가."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 7.0,
+      "IS_Final": 7.0,
+      "Score_Commentary": "Tier 1의 핵심 모델 업데이트(X3)이자, 'GPT-5.2'라는 차세대 네이밍을 사용한 주요 릴리즈. 보안 및 코딩 분야에서 SOTA를 갱신(True)했을 가능성이 높으며, 기업의 핵심 워크플로우에 영향을 준다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Reason": "OpenAI(P4)의 제품 출시. 단독 실행."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 2.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-19T19:44:07.728284+00:00",
+  "edition": "251219_FRI_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-19T19:44:07.991786+00:00",
+  "dedup_status": "duplicate",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:11.748129+00:00"
+}

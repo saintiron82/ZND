@@ -33,12 +33,12 @@ git checkout release/data
 
 ### 4. 발행용 데이터 확인
 ```powershell
-Get-ChildItem supplier/data -Directory | Select-Object Name
+Get-ChildItem desk/data -Directory | Select-Object Name
 ```
 
 ### 5. 발행 커밋 (데이터 추가 시)
 ```powershell
-git add supplier/data/
+git add desk/data/
 git commit -m "data: $(Get-Date -Format 'yyyy-MM-dd') edition"
 git push origin release/data
 ```
@@ -55,4 +55,4 @@ git stash pop
 ## 브랜치 구조
 - `main` - 코드만 (발행용)
 - `feature/YYYY_MM_DD` - 개발 작업
-- `release/data` - 발행용 데이터 (supplier/data)
+- `release/data` - 발행용 데이터 (desk/data)

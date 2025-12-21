@@ -1,0 +1,15 @@
+{
+  "id": "188514",
+  "article_id": "188514",
+  "title_ko": "Google과 Replit, AI 에이전트의 신뢰성 있는 배포에 난항... 그 이유는?",
+  "summary": "Google Cloud와 Replit은 AI 에이전트 기술이 아직 기업 환경에 완전히 적용되기에 미성숙함을 인정했다. 레거시 워크플로우, 파편화된 데이터, 거버넌스 부재가 주요 원인이다. Replit CEO는 현재 대부분의 기업 에이전트가 '장난감 예제' 수준이라고 지적하며, 신뢰성과 통합이 지능보다 더 큰 장벽임을 강조했다. 보안 및 프로세스의 근본적 재설계가 필요하다.",
+  "url": "https://venturebeat.com/orchestration/even-google-and-replit-struggle-to-deploy-ai-agents-reliably-heres-why",
+  "tags": [],
+  "category": "Engineering",
+  "zero_echo_score": 5.7,
+  "impact_score": 6.0,
+  "published_at": "2025-12-19T19:44:04.271172+00:00",
+  "source_id": "venturebeat",
+  "edition": "251219_FRI_1",
+  "original_title": "Even Google and Replit struggle to deploy AI agents reliably — here&apos;s why"
+}

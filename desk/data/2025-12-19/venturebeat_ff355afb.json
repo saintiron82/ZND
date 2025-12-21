@@ -1,0 +1,13 @@
+{
+  "id": "ff355a",
+  "article_id": "ff355a",
+  "title_ko": "기업용 AI 코딩의 진화: 보안이 강화된 GPT‑5.2‑Codex 출시",
+  "summary": "OpenAI가 에이전트 작업과 사이버 보안에 최적화된 'GPT-5.2-Codex'를 출시했다. 긴 호흡의 작업(Long-horizon work) 처리가 가능하며 CTF 등 보안 벤치마크에서 최고 성능을 기록했다. 기업은 이 모델을 통해 대규모 리팩토링 및 보안 취약점 점검을 수행할 수 있다.",
+  "url": "https://venturebeat.com/technology/enterprise-ai-coding-grows-teeth-gpt-5-2-codex-weaves-security-into-large",
+  "tags": [],
+  "category": "",
+  "zero_echo_score": 5.0,
+  "impact_score": 7.0,
+  "published_at": "2025-12-18T00:00-05:00",
+  "source_id": "venturebeat"
+}

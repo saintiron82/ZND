@@ -65,7 +65,7 @@ cd ZND
 
 ### (2) 🐍 Python Backend (Crawler/Desk) 설정
 ```bash
-cd supplier
+cd desk
 
 # 가상환경 생성 및 활성화
 python3 -m venv venv
@@ -108,7 +108,7 @@ cd ..
 
 ```bash
 # 1. Python Flask Backend 실행 (포트 8000)
-pm2 start supplier/manual_crawler.py --name "znd-backend" --interpreter python3
+pm2 start desk/manual_crawler.py --name "znd-backend" --interpreter python3
 
 # 2. Next.js Web 실행 (포트 8080)
 pm2 start npm --name "znd-web" -- start --prefix ./web -- -p 8080

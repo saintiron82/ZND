@@ -1,0 +1,237 @@
+{
+  "article_id": "11daca",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-20T19:03:10.305385+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204950_206376_3559.png",
+  "modified_at": "2025-12-20T12:36:42+09:00",
+  "published_at": "2025-12-20T19:30:37.197002+00:00",
+  "summary": "오픈AI가 챗GPT에 답변의 톤(따뜻함, 열정 등)과 형식을 세밀하게 조정할 수 있는 기능을 업데이트했다. 이는 사용자 맞춤형 경험을 강화하기 위한 조치로, 즉시 배포된다.",
+  "text": "(사진=오픈AI) 사용자가 챗GPT의 개성과 출력 형식을 더 세밀하게 조정할 수 있는 업데이트가 이뤄졌다. 오픈AI는 20일 X를 통해 \"이제 챗GPT에서 친근함과 열정, 이모티콘 사용 빈도 등 특정을 조정할 수 있다\"라고 발표했다. 이에 따라 '개인 맞춤 설정'에 '따뜻함(Warmth)'과 '열정적(Enthusiasm)'이라는 항목이 추가됐다. 이는 각각 기본, 많이, 적게 등 3단계로 나뉜다. 챗봇의 출력 형식도 조절할 수 있다. '헤더 및 목록' 조정을 통해서는 챗GPT의 답변을 제목과 목록별로 명료하게 나눌지 말지를 조정한다. 답변에 이모지를 얼마나 많이 노출할지도 결정할 수 있다. 이는 사용자들에 자주 지적했던 점을 반영한 것이다. 챗GPT는 이전까지 모델 업데이트를 통해 답변의 톤을 조정했으나, 이제는 사용자에게 커스터마이징 옵션을 더 많이 부여하고 있다. 지난 9월에도 개인 맞춤 설정 페이지를 하나로 통합하고, ▲챗GPT 성격 설정(기본, 솔직함, 독특함, 효율적, 덕후) ▲맞춤형 지침(수다쟁이, 재간둥이, 반말하지 않음 등)을 확대 적용했다. 이어 이달 초에는 챗GPT 성격에서 전문적, 친근함, 냉소적 등 3종을 추가했다. 이번에는 챗봇의 어조와 답변의 형식까지 더 상세하게 조정하도록 한 것이다. 오픈AI는 이달 초 '코드 레드'를 발령하고 챗GPT의 사용자 경험 향상에 집중할 것을 요구했다. 이번 업데이트도 이에 따른 것이다. 한편 더 버지에 따르면, 별도의 업데이트를 통해 사용자는 챗GPT가 작성한 이메일 초안을 채팅 내에서 직접 편집하고 서식을 지정할 수 있다. 특히, 텍스트 일부만 강조 표시한 뒤 부분 수정이 가능해져 번거로움이 줄었다. 이번 업데이트는 이날부터 차례로 배포된다. 임대준 기자 ydj@aitimes.com",
+  "title": "챗GPT에 '따뜻함'·'열정' 등 감정 조절 기능 추가",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204950",
+  "title_ko": "챗GPT, '따뜻함·열정' 등 감정 및 스타일 조절 기능 추가",
+  "tags": [],
+  "impact_score": 4.5,
+  "IS_Analysis": {
+    "Score_Commentary": "Global Tier 1 기업의 제품 업데이트이나, 기능의 본질이 UX 개선 및 편의성 증대에 머무른다. 산업 구조를 바꾸는 거대한 변화보다는 단일 기업의 제품 경쟁력 강화 이벤트다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Reason": "업데이트의 실행 주체인 OpenAI를 PE로 선정. 경쟁사 언급은 배경 설명에 불과하여 SE 없음."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 6.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "T2": 5,
+      "T3": 7,
+      "Rationale": "구체적인 기능 항목(따뜻함, 열정)을 나열했으나 기술적 깊이는 낮음."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 1,
+      "P3": 1,
+      "Rationale": "단순 기능 소개로 노이즈 적음."
+    },
+    "Utility": {
+      "V1": 4,
+      "V2": 9,
+      "V3": 3,
+      "Rationale": "사용자에게는 즉시 유용하나 시장 파급력은 낮음."
+    },
+    "Fine_Adjustment": {
+      "Score": -0.5,
+      "Reason": "단순 기능 업데이트 뉴스이므로 정보의 희소성 측면에서 감점."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "11daca",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "챗GPT, '따뜻함·열정' 등 감정 및 스타일 조절 기능 추가",
+      "Summary": "오픈AI가 챗GPT에 답변의 톤(따뜻함, 열정 등)과 형식을 세밀하게 조정할 수 있는 기능을 업데이트했다. 이는 사용자 맞춤형 경험을 강화하기 위한 조치로, 즉시 배포된다.",
+      "Tags": [
+        "Update",
+        "ChatGPT",
+        "OpenAI"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Global Tier 1 기업의 제품 업데이트이나, 기능의 본질이 UX 개선 및 편의성 증대에 머무른다. 산업 구조를 바꾸는 거대한 변화보다는 단일 기업의 제품 경쟁력 강화 이벤트다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Reason": "업데이트의 실행 주체인 OpenAI를 PE로 선정. 경쟁사 언급은 배경 설명에 불과하여 SE 없음."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 5,
+        "T3": 7,
+        "Rationale": "구체적인 기능 항목(따뜻함, 열정)을 나열했으나 기술적 깊이는 낮음."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "단순 기능 소개로 노이즈 적음."
+      },
+      "Utility": {
+        "V1": 4,
+        "V2": 9,
+        "V3": 3,
+        "Rationale": "사용자에게는 즉시 유용하나 시장 파급력은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "단순 기능 업데이트 뉴스이므로 정보의 희소성 측면에서 감점."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "챗GPT에 '따뜻함'·'열정' 등 감정 조절 기능 추가",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 5.0,
+        "T3": 7.0,
+        "S_Avg": 6.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 1.0,
+        "P3": 1.0,
+        "N_Avg": 1.33
+      },
+      "Utility": {
+        "V1": 4.0,
+        "V2": 9.0,
+        "V3": 3.0,
+        "U_Avg": 5.33
+      },
+      "Fine_Adjustment": -0.5,
+      "ZS_Raw": 6.59,
+      "ZS_Final": 6.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 5,
+        "T3": 7,
+        "Rationale": "구체적인 기능 항목(따뜻함, 열정)을 나열했으나 기술적 깊이는 낮음."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "단순 기능 소개로 노이즈 적음."
+      },
+      "Utility": {
+        "V1": 4,
+        "V2": 9,
+        "V3": 3,
+        "Rationale": "사용자에게는 즉시 유용하나 시장 파급력은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "단순 기능 업데이트 뉴스이므로 정보의 희소성 측면에서 감점."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 4.5,
+      "IS_Final": 4.5,
+      "Score_Commentary": "Global Tier 1 기업의 제품 업데이트이나, 기능의 본질이 UX 개선 및 편의성 증대에 머무른다. 산업 구조를 바꾸는 거대한 변화보다는 단일 기업의 제품 경쟁력 강화 이벤트다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Reason": "업데이트의 실행 주체인 OpenAI를 PE로 선정. 경쟁사 언급은 배경 설명에 불과하여 SE 없음."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-20T19:06:38.802300+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "publish_id": "XJ1v2GUGr9DCQ6zyNs3m",
+  "edition_code": "251221_1",
+  "edition_name": "12/21 1차 발행",
+  "published": true,
+  "data_file": "aitimes_11daca.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:12.469474+00:00"
+}

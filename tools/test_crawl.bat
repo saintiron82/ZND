@@ -3,7 +3,7 @@
 echo Activating virtual environment...
 call .venv\Scripts\activate
 
-cd supplier
+cd desk
 
 echo.
 echo ========================================

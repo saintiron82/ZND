@@ -1,0 +1,235 @@
+{
+  "article_id": "52e9e8",
+  "author": "Jonathan Kemper",
+  "cached_at": "2025-12-21T15:07:22.290547+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/07/china_open_source_AI_influence.png",
+  "modified_at": "2025-12-21T15:02:23+01:00",
+  "published_at": "2025-12-21T16:11:06.472754+00:00",
+  "summary": "2025년 중국(Alibaba, Deepseek)이 허깅페이스 다운로드 점유율에서 미국을 추월하며 오픈소스 AI 주도권을 확보함. 미국 기업(Meta, Google)의 점유율 하락과 중국 모델의 투명성(학습 데이터 비공개) 저하가 주요 쟁점. 이는 중국의 가치관과 선전(Propaganda)이 AI 생태계 전반에 스며들 수 있다는 안보적·윤리적 우려를 낳음.",
+  "text": "Then Stable Diffusion changed everything. When the image generator dropped in late 2022, it opened the floodgates. Suddenly small teams and solo developers could build and tweak their own models. The US share started slipping as international groups and community projects picked up steam. The shift happened remarkably fast. By the end of 2022, Google, Meta, and OpenAI together controlled up to 60 percent of all downloads on Hugging Face, the go-to platform for open AI models. The US alone held over 60 percent market share. Models like BERT and CLIP defined the field—all homegrown American developments. The \"Economies of Open Intelligence\" report (preprint), which pulls data from the Hugging Face platform , shows that over 44 percent of downloads for popular new models now come from China. Alibaba's Qwen family and Deepseek are racking up massive numbers, leaving US competitors like Meta and Google behind. For the first time in 2025, Chinese developers are seeing higher download numbers for open AI models than US providers. That trend hit a turning point in 2025 when China passed the US for the first time. Deepseek and Qwen alone grabbed 14 percent of downloads during the period. Alibaba's Qwen models were downloaded over 750 million times last year. Compare that to Meta's Llama models, which dominated in 2024 but managed only 500 million downloads. Beyond the big names, an entirely new layer of developers has emerged. Groups like LM Studio, comfy, and mlx-community don't build AI models from scratch. Instead, they take existing models and make them work for non-developers. They compress massive files, tweak models for specific use cases, and wrap them in user-friendly software. These middlemen now account for more than 22 percent of downloads, outpacing some major companies. Models are getting bigger and smarter, but also more opaque The models themselves have come a long way. Parameter counts and file sizes have ballooned alongside capabilities, jumping from 827 million parameters in 2023 to 20 billion this year. Many models now handle images, video, and speech instead of just text. Video AIs like ByteDance's AnimateDiff-Lightning and tools from Stable Diffusion rank among the most popular downloads. But there's a flip side to all this progress: transparency is tanking. In 2022, nearly 80 percent of popular models disclosed their training data. By 2025, that number dropped to just 39 percent. More models than ever are free to download, but nobody knows what's actually in them. True open source—where training data is fully traceable—is becoming rare. Instead, more models ship with usage restrictions and license terms users have to accept upfront. Chinese dominance brings political baggage The rise of Chinese AI models also raises political red flags. A recent study by US media watchdog NewsGuard found that many Chinese LLMs repeat or fail to correct pro-Chinese false claims 60 percent of the time. Since these models generate content based on their training data, they inevitably spread whatever narratives and values are baked in. Anyone running Chinese models is automatically pulling Chinese propaganda into their own AI systems. The same goes for any imported media, of course. But generative AI is different. Traditional propaganda takes effort. Someone has to deliberately craft and place it, even when using AI tools. But AI models are more like sand. Once in the system, they get into everything. Developers building chatbots, writers drafting emails, and companies automating customer service—none of them intend to spread propaganda. When they build on these models, the embedded narratives seep into every crack of their work without anyone noticing.",
+  "title": "China wins the open model race and the price to pay goes beyond economics",
+  "url": "https://the-decoder.com/china-wins-the-open-model-race-and-the-price-to-pay-goes-beyond-economics/",
+  "title_ko": "중국, 오픈 모델 경쟁 승리... 경제를 넘어선 정치적 대가",
+  "tags": [],
+  "impact_score": 7.0,
+  "IS_Analysis": {
+    "Score_Commentary": "국가 단위의 산업 패러다임 변화를 다루는 기사로, 중국(Tier 2)이 미국(Tier 1)을 추월한 현상을 구조적으로 분석함. 데이터에 기반한 시장 지배력 전이(Market Dominance Shift)와 이에 따른 지정학적/윤리적 리스크를 구체적으로 제시하여 높은 중요도를 가짐.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "China",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "기사의 핵심 사건은 '중국(Nation Body)'이 주도하는 오픈 모델 시장 점유율 역전임. Alibaba/Deepseek가 실행 주체이나 기사는 이를 국가적 차원의 현상으로 프레이밍함. 미국은 단순 비교 대상(Benchmark)이므로 SE로 선정하지 않음(Rule 1)."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 2,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 5
+      }
+    }
+  },
+  "zero_echo_score": 2.4,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 7,
+      "T3": 9,
+      "Rationale": "Hugging Face 다운로드 수(7.5억 vs 5억), 점유율(44%), 모델 파라미터 변화 등 구체적 수치와 제3자(NewsGuard) 분석 인용."
+    },
+    "Noise": {
+      "P1": 3,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "'Floodgates', 'Tanking' 등 일부 극적 표현이 존재하나 전체적인 분석 톤은 객관적임."
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 8,
+      "V3": 9,
+      "Rationale": "AI 개발 생태계의 지정학적 리스크를 다룬 희소성 있는 분석으로, 전략적 의사결정에 중대한 영향을 미침."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "정량적 데이터와 정성적 리스크 분석이 균형을 이룬 고품질 기사로 가점 부여."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "52e9e8",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "중국, 오픈 모델 경쟁 승리... 경제를 넘어선 정치적 대가",
+      "Summary": "2025년 중국(Alibaba, Deepseek)이 허깅페이스 다운로드 점유율에서 미국을 추월하며 오픈소스 AI 주도권을 확보함. 미국 기업(Meta, Google)의 점유율 하락과 중국 모델의 투명성(학습 데이터 비공개) 저하가 주요 쟁점. 이는 중국의 가치관과 선전(Propaganda)이 AI 생태계 전반에 스며들 수 있다는 안보적·윤리적 우려를 낳음.",
+      "Tags": [
+        "Open Source",
+        "Market Share",
+        "Ethics"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "국가 단위의 산업 패러다임 변화를 다루는 기사로, 중국(Tier 2)이 미국(Tier 1)을 추월한 현상을 구조적으로 분석함. 데이터에 기반한 시장 지배력 전이(Market Dominance Shift)와 이에 따른 지정학적/윤리적 리스크를 구체적으로 제시하여 높은 중요도를 가짐.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "China",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "기사의 핵심 사건은 '중국(Nation Body)'이 주도하는 오픈 모델 시장 점유율 역전임. Alibaba/Deepseek가 실행 주체이나 기사는 이를 국가적 차원의 현상으로 프레이밍함. 미국은 단순 비교 대상(Benchmark)이므로 SE로 선정하지 않음(Rule 1)."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 2,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 7,
+        "T3": 9,
+        "Rationale": "Hugging Face 다운로드 수(7.5억 vs 5억), 점유율(44%), 모델 파라미터 변화 등 구체적 수치와 제3자(NewsGuard) 분석 인용."
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "'Floodgates', 'Tanking' 등 일부 극적 표현이 존재하나 전체적인 분석 톤은 객관적임."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 8,
+        "V3": 9,
+        "Rationale": "AI 개발 생태계의 지정학적 리스크를 다룬 희소성 있는 분석으로, 전략적 의사결정에 중대한 영향을 미침."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "정량적 데이터와 정성적 리스크 분석이 균형을 이룬 고품질 기사로 가점 부여."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "China wins the open model race and the price to pay goes beyond economics",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 7.0,
+        "T3": 9.0,
+        "S_Avg": 8.33
+      },
+      "Noise": {
+        "P1": 3.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 2.0
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 8.0,
+        "V3": 9.0,
+        "U_Avg": 8.67
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 2.42,
+      "ZS_Final": 2.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 7,
+        "T3": 9,
+        "Rationale": "Hugging Face 다운로드 수(7.5억 vs 5억), 점유율(44%), 모델 파라미터 변화 등 구체적 수치와 제3자(NewsGuard) 분석 인용."
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "'Floodgates', 'Tanking' 등 일부 극적 표현이 존재하나 전체적인 분석 톤은 객관적임."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 8,
+        "V3": 9,
+        "Rationale": "AI 개발 생태계의 지정학적 리스크를 다룬 희소성 있는 분석으로, 전략적 의사결정에 중대한 영향을 미침."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "정량적 데이터와 정성적 리스크 분석이 균형을 이룬 고품질 기사로 가점 부여."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 2.0,
+        "IE_Total": 5.0
+      },
+      "IS_Raw": 7.0,
+      "IS_Final": 7.0,
+      "Score_Commentary": "국가 단위의 산업 패러다임 변화를 다루는 기사로, 중국(Tier 2)이 미국(Tier 1)을 추월한 현상을 구조적으로 분석함. 데이터에 기반한 시장 지배력 전이(Market Dominance Shift)와 이에 따른 지정학적/윤리적 리스크를 구체적으로 제시하여 높은 중요도를 가짐."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "China",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "기사의 핵심 사건은 '중국(Nation Body)'이 주도하는 오픈 모델 시장 점유율 역전임. Alibaba/Deepseek가 실행 주체이나 기사는 이를 국가적 차원의 현상으로 프레이밍함. 미국은 단순 비교 대상(Benchmark)이므로 SE로 선정하지 않음(Rule 1)."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 2,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-21T15:19:10.806536+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "publish_id": "wLMMPPUsVyKwugxnyZxr",
+  "edition_code": "251222_4",
+  "edition_name": "4호",
+  "published": true,
+  "data_file": "the_decoder_52e9e8.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:17.651102+00:00"
+}

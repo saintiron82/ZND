@@ -1,0 +1,17 @@
+{
+  "id": "7JbgPGhDuZlBsBFAYzl2",
+  "edition_code": "251220_1",
+  "edition_name": "12/20 1차 발행",
+  "published_at": "2025-12-20T03:09:18.837371+00:00",
+  "date": "2025-12-20",
+  "article_count": 1,
+  "articles": [
+    {
+      "id": "828dd0",
+      "title": "OpenAI, 코딩 특화 모델 GPT-5.2-Codex 및 사이버 보안 전용 프로그램 공개",
+      "url": "https://the-decoder.com/openai-updates-codex-model-adds-trusted-access-program-for-cyber-defense/",
+      "filename": "the_decoder_828dd0.json",
+      "date": "2025-12-19"
+    }
+  ]
+}

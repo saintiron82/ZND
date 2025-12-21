@@ -5,7 +5,7 @@
 ## 📁 모듈 구조
 
 ```
-supplier/
+desk/
 ├── manual_crawler.py          # Flask 앱 엔트리 포인트 (~250줄)
 └── src/
     └── routes/                # Flask Blueprint 모듈

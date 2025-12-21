@@ -166,61 +166,23 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
 
     return (
         <PageFrame
-            currentDate={currentIssue?.edition_name || currentIssue?.date || null}
-            prevDate={prevIssue?.edition_name || prevIssue?.id || null}
-            nextDate={nextIssue?.edition_name || nextIssue?.id || null}
+            currentDate={currentIssue?.date || null}
+            editionName={currentIssue?.edition_name || null}
+            prevDate={prevIssue?.date || null}
+            prevEditionName={prevIssue?.edition_name || null}
+            nextDate={nextIssue?.date || null}
+            nextEditionName={nextIssue?.edition_name || null}
             onDateChange={(target) => {
-                // edition_name으로 매칭된 issue 찾기
+                // date로 매칭된 issue 찾기
                 const matchingId = sortedIssueIds.find(id => {
                     const issue = groupedByIssue[id]?.issue;
-                    return issue?.edition_name === target || issue?.id === target;
+                    return issue?.date === target;
                 });
                 if (matchingId) handleIssueChange(matchingId);
             }}
             articles={currentArticles}
         >
-            {/* 회차 선택 드롭다운 */}
-            {sortedIssueIds.length > 1 && (
-                <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[90]">
-                    <div className="relative">
-                        <button
-                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className="bg-card/90 backdrop-blur-md text-foreground px-6 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-card transition-colors border border-border"
-                        >
-                            <span className="font-semibold">
-                                📰 {currentIssue?.edition_name || '회차 선택'}
-                            </span>
-                            <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        {isDropdownOpen && (
-                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-card border border-border rounded-lg shadow-xl overflow-hidden min-w-[200px]">
-                                {sortedIssueIds.map((issueId, idx) => {
-                                    const issue = groupedByIssue[issueId]?.issue;
-                                    const articleCount = groupedByIssue[issueId]?.articles?.length || 0;
-                                    const isSelected = idx === currentIssueIndex;
-
-                                    return (
-                                        <button
-                                            key={issueId}
-                                            onClick={() => handleIssueChange(issueId)}
-                                            className={`w-full px-4 py-3 text-left hover:bg-muted/50 transition-colors flex items-center justify-between ${isSelected ? 'bg-primary/10 text-primary' : ''
-                                                }`}
-                                        >
-                                            <span className="font-medium">
-                                                {issue?.edition_name || `회차 ${idx + 1}`}
-                                            </span>
-                                            <span className="text-xs text-muted-foreground">
-                                                {articleCount}개
-                                            </span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
+            {/* 회차 선택은 사이드바로 이동됨 */}
 
             {/* 현재 회차의 기사 표시 */}
             {currentIssueId && currentArticles.length > 0 ? (

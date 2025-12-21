@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, query, where, getDocs, orderBy, limit, doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 // 타입 정의 (serverCache와 동일하게 유지)
 export interface Issue {
@@ -27,41 +27,52 @@ export interface Article {
     [key: string]: any;
 }
 
-const COLLECTION_ISSUES = 'issues';
+const COLLECTION_PUBLICATIONS = 'publications';
 const COLLECTION_ARTICLES = 'articles';
 
 /**
  * 공개된(released) 회차 목록 가져오기
+ * 복합 인덱스 불필요: 전체 가져온 후 클라이언트에서 필터링/정렬
  */
 export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
     try {
-        console.log('🔥 [Firestore] Fetching published issues...');
-        const q = query(
-            collection(db, COLLECTION_ISSUES),
-            where('status', '==', 'released'),
-            orderBy('published_at', 'desc')
-        );
+        console.log('🔥 [Firestore] Fetching all publications...');
 
-        const snapshot = await getDocs(q);
-        const issues: Issue[] = [];
+        // 단순 쿼리: 컬렉션 전체 조회 (인덱스 불필요)
+        const snapshot = await getDocs(collection(db, COLLECTION_PUBLICATIONS));
+
+        let allIssues: Issue[] = [];
         let latestUpdate: string | null = null;
 
         snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            issues.push({
+            allIssues.push({
                 id: docSnap.id,
                 ...data
             } as Issue);
-
-            // 최신 업데이트 시간 추적
-            if (data.updated_at) {
-                if (!latestUpdate || new Date(data.updated_at) > new Date(latestUpdate)) {
-                    latestUpdate = data.updated_at;
-                }
-            }
         });
 
-        return { issues, latestUpdatedAt: latestUpdate };
+        // 클라이언트에서 status 필터링
+        const releasedIssues = allIssues.filter(issue => issue.status === 'released');
+
+        // 클라이언트에서 published_at 내림차순 정렬
+        releasedIssues.sort((a, b) => {
+            const dateA = new Date(a.published_at || 0).getTime();
+            const dateB = new Date(b.published_at || 0).getTime();
+            return dateB - dateA;
+        });
+
+        // 최신 업데이트 시간 추적
+        for (const issue of releasedIssues) {
+            if (issue.updated_at) {
+                if (!latestUpdate || new Date(issue.updated_at) > new Date(latestUpdate)) {
+                    latestUpdate = issue.updated_at;
+                }
+            }
+        }
+
+        console.log(`✅ [Firestore] Found ${releasedIssues.length} released issues`);
+        return { issues: releasedIssues, latestUpdatedAt: latestUpdate };
     } catch (error) {
         console.error('❌ [Firestore] Failed to fetch issues:', error);
         return { issues: [], latestUpdatedAt: null };
@@ -98,23 +109,27 @@ export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]
 }
 
 /**
- * 최신 변경 사항 확인 (단순 구현: 가장 최근 issue의 update 시간 확인)
- * 비용 최적화를 위해 limit(1) 사용
+ * 최신 변경 사항 확인 
+ * 복합 인덱스 불필요: 전체 가져온 후 클라이언트에서 필터링
  */
 export async function checkLatestUpdate(): Promise<string | null> {
     try {
-        const q = query(
-            collection(db, COLLECTION_ISSUES),
-            where('status', '==', 'released'),
-            orderBy('updated_at', 'desc'),
-            limit(1)
-        );
+        // 단순 쿼리: 전체 조회
+        const snapshot = await getDocs(collection(db, COLLECTION_PUBLICATIONS));
 
-        const snapshot = await getDocs(q);
-        if (!snapshot.empty) {
-            return snapshot.docs[0].data().updated_at || null;
-        }
-        return null;
+        let latestUpdate: string | null = null;
+
+        snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            // released 상태만 체크
+            if (data.status === 'released' && data.updated_at) {
+                if (!latestUpdate || new Date(data.updated_at) > new Date(latestUpdate)) {
+                    latestUpdate = data.updated_at;
+                }
+            }
+        });
+
+        return latestUpdate;
     } catch (error) {
         return null;
     }

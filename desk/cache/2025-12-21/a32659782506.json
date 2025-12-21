@@ -1,0 +1,237 @@
+{
+  "article_id": "a32659",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-20T19:03:10.307978+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204954_206381_1124.jpg",
+  "modified_at": "2025-12-20T20:35:10+09:00",
+  "published_at": "2025-12-20T19:30:38.135400+00:00",
+  "summary": "루마 AI가 배우의 연기와 감정을 유지하며 외형과 배경만 수정할 수 있는 '레이3 모디파이'를 출시했다. 이는 기존 생성 AI의 제어 문제점을 해결하며 영상 제작 방식의 변화를 예고한다.",
+  "text": "루마 AI가 기존 영상을 AI로 정교하게 수정할 수 있는 신규 동영상 모델 ‘레이3 모디파이(Ray3 Modify)’를 공개했다. 실제 배우의 연기와 감정 표현은 그대로 유지하면서 외형, 배경, 장면 전환만 AI로 바꿀 수 있어, 영상 제작 방식에 큰 변화를 가져올 것으로 기대된다는 평이다. 루마는 19일(현지시간) ‘레이3 모디파이’를 출시하며, 기존 영상 생성 모델의 한계로 지적돼 온 ‘연기 보존 문제’를 해결했다고 밝혔다. 이 모델은 원본 영상의 동작, 타이밍, 시선 처리, 감정 전달 등 인간 연기의 핵심 요소를 유지한 채 장면을 변형하거나 시각 효과를 추가할 수 있다. 핵심 기능은 ‘캐릭터 레퍼런스’ 기반 변환이다. 사용자는 특정 캐릭터 이미지나 레퍼런스를 입력해, 기존 영상 속 배우의 외형을 해당 캐릭터로 바꿀 수 있다. 이 과정에서도 의상, 외모 특징, 정체성 등은 일관되게 유지돼 촬영 전반의 연속성이 확보된다. 실제 배우를 활용한 브랜드 영상이나 스토리 기반 콘텐츠 제작에 적합하다는 설명이다. 또 하나의 특징은 시작 프레임과 종료 프레임을 지정해 중간 장면을 생성하는 기능이다. 일반적인 AI 영상 모델은 '장면 전환'을 텍스트로 지시해도 미묘하고 예술적인 효과를 내기 어렵지만, 시작과 마지막 장면을 지정해줌으로서 장면 전환을 정밀하게 연출하는 제어 능력을 가지게 됐다는 것이다. 아밋 자인 루마 AI 공동창업자 겸 CEO는 “영상 생성 모델은 표현력은 뛰어나지만 제어가 어렵다는 문제가 있었다”라며 “레이3 모디파이는 실제 촬영된 연기와 AI의 표현력을 결합해, 크리에이티브 팀이 카메라로 연기를 담은 뒤 장소를 바꾸거나 의상을 변경하고, 심지어 물리적 재촬영 없이 AI로 장면을 다시 연출할 수 있게 해준다”라고 말했다. 이번 모델은 루마의 영상 생성 플랫폼 ‘드림 머신(Dream Machine)’을 통해 제공된다. 이처럼 최근에는 동영상 생성 AI도 '나노 바나나'처럼 수정에 초점을 맞춘 모델이 출시되는 트렌드다. 콰이쇼우는 ‘클링 O1(Kling O1)’을, 어도비는 '파이어플라이(Firefly)'를 통해 영상 편집 기능을 추가했다. Luma Ray3 Modify (v2v) Control, flexibility and a bit of everything. I've played around with Ray3 Modify in Dream Machine to get a better sense of whats possible ✌️ Let's dive in A thread pic.twitter.com/ieyH4BgUmM — Linus ✦ Ekenstam (@LinusEkenstam) December 18, 2025 한편, 루마는 최근 대규모 투자 유치에 성공하며 사업을 빠르게 확장 중이다. 지난달에는 사우디아라비아 국부펀드(PIF) 산하 AI 기업 휴메인 주도한 9억달러(약 1조3000억원) 규모의 신규 투자 라운드를 발표했다. 이어 최근에는 2027년 초까지 런던 사무소를 열고 직원 200명을 채용할 계획이라고 밝혔다. 이를 통해 사업을 유럽과 중동, 아프리카 등으로 확장하며, 특히 월드 모델 개발에도 집중할 뜻을 밝혔다. 박찬 기자 cpark@aitimes.com",
+  "title": "&quot;연기는 살리고 외형만 AI로 수정&quot;...루마 AI, 동영상 편집 모델 출시",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204954",
+  "title_ko": "루마 AI, 연기 보존 동영상 편집 모델 '레이3 모디파이' 출시",
+  "tags": [],
+  "impact_score": 2.0,
+  "IS_Analysis": {
+    "Score_Commentary": "기술적으로 흥미로운 제품 출시이나, PE인 Luma AI는 Tier 4(Startup)에 해당한다. Tier 4 기업의 단일 제품(Corporate Scope) 출시는 Hard Filter 규칙에 의해 Scope 점수가 0으로 처리된다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Luma AI",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Reason": "제품 출시 주체인 Luma AI 선정. Tier Map에 명시되지 않아 AI Startup(T4) 적용."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 5.9,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "T2": 7,
+      "T3": 6,
+      "Rationale": "기능적 특징(연기 보존, 프레임 제어)을 잘 설명함."
+    },
+    "Noise": {
+      "P1": 3,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "제품 홍보 성격이 있으나 과하지 않음."
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 7,
+      "V3": 5,
+      "Rationale": "크리에이터들에게 유용한 도구 정보."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "특이사항 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "a32659",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "루마 AI, 연기 보존 동영상 편집 모델 '레이3 모디파이' 출시",
+      "Summary": "루마 AI가 배우의 연기와 감정을 유지하며 외형과 배경만 수정할 수 있는 '레이3 모디파이'를 출시했다. 이는 기존 생성 AI의 제어 문제점을 해결하며 영상 제작 방식의 변화를 예고한다.",
+      "Tags": [
+        "Launch",
+        "Model",
+        "Startup"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "기술적으로 흥미로운 제품 출시이나, PE인 Luma AI는 Tier 4(Startup)에 해당한다. Tier 4 기업의 단일 제품(Corporate Scope) 출시는 Hard Filter 규칙에 의해 Scope 점수가 0으로 처리된다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Luma AI",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Reason": "제품 출시 주체인 Luma AI 선정. Tier Map에 명시되지 않아 AI Startup(T4) 적용."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "기능적 특징(연기 보존, 프레임 제어)을 잘 설명함."
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "제품 홍보 성격이 있으나 과하지 않음."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 7,
+        "V3": 5,
+        "Rationale": "크리에이터들에게 유용한 도구 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "특이사항 없음."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "&quot;연기는 살리고 외형만 AI로 수정&quot;...루마 AI, 동영상 편집 모델 출시",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 7.0,
+        "T3": 6.0,
+        "S_Avg": 6.33
+      },
+      "Noise": {
+        "P1": 3.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 2.0
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 7.0,
+        "V3": 5.0,
+        "U_Avg": 5.67
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.94,
+      "ZS_Final": 5.9
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 7,
+        "T3": 6,
+        "Rationale": "기능적 특징(연기 보존, 프레임 제어)을 잘 설명함."
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "제품 홍보 성격이 있으나 과하지 않음."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 7,
+        "V3": 5,
+        "Rationale": "크리에이터들에게 유용한 도구 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "특이사항 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 2.0,
+      "IS_Final": 2.0,
+      "Score_Commentary": "기술적으로 흥미로운 제품 출시이나, PE인 Luma AI는 Tier 4(Startup)에 해당한다. Tier 4 기업의 단일 제품(Corporate Scope) 출시는 Hard Filter 규칙에 의해 Scope 점수가 0으로 처리된다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Luma AI",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Reason": "제품 출시 주체인 Luma AI 선정. Tier Map에 명시되지 않아 AI Startup(T4) 적용."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-20T19:06:39.370923+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "publish_id": "XJ1v2GUGr9DCQ6zyNs3m",
+  "edition_code": "251221_1",
+  "edition_name": "12/21 1차 발행",
+  "published": true,
+  "data_file": "aitimes_a32659.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:15.819235+00:00"
+}

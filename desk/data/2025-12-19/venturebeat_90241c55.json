@@ -1,0 +1,15 @@
+{
+  "id": "90241c",
+  "article_id": "90241c",
+  "title_ko": "JP Morgan 직원 50%가 AI 도입... 비결은 '연결성 중심' 아키텍처",
+  "summary": "JP Morgan Chase는 직원 60%(약 25만 명)가 자발적으로 사내 AI 비서를 사용하는 등 대규모 AI 도입에 성공했다. 모델 자체보다 시스템 간 '연결성(Connectivity)'을 핵심 해자로 보고 RAG 및 멀티모달 기술을 고도화했다. 이는 바텀업 방식의 혁신과 맞물려 강력한 시너지를 내고 있다.",
+  "url": "https://venturebeat.com/orchestration/jp-morgans-ai-adoption-hit-50-of-employees-the-secret-a-connectivity-first",
+  "tags": [],
+  "category": "Business",
+  "zero_echo_score": 5.3,
+  "impact_score": 4.0,
+  "published_at": "2025-12-19T19:44:09.095669+00:00",
+  "source_id": "venturebeat",
+  "edition": "251219_FRI_1",
+  "original_title": "JP Morgan’s AI adoption hit 50% of employees. The secret? A connectivity-first architecture"
+}

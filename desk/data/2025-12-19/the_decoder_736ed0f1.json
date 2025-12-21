@@ -1,0 +1,17 @@
+{
+  "id": "736ed0",
+  "article_id": "736ed0",
+  "title_ko": "앤스로픽, AI 플랫폼 상호운용성을 위한 'Agent Skills' 오픈 표준 공개",
+  "summary": "앤스로픽이 서로 다른 AI 플랫폼 간 기능을 호환되게 하는 'Agent Skills'를 오픈 표준으로 공개했다. 이는 Claude에서 작동하는 기능을 다른 AI 시스템에서도 사용할 수 있게 하는 것을 목표로 하며, OpenAI 등 파트너들과 협력 중이다. 기업 관리자는 중앙에서 기술을 배포 및 관리할 수 있게 되었다.",
+  "url": "https://the-decoder.com/anthropic-publishes-agent-skills-as-an-open-standard-for-ai-platforms/",
+  "tags": [],
+  "category": "",
+  "zero_echo_score": 8.4,
+  "impact_score": 6.0,
+  "published_at": "2025-12-19T20:00:30.030321+00:00",
+  "source_id": "the_decoder",
+  "edition": "251219_FRI_1",
+  "original_title": "Anthropic publishes Agent Skills as an open standard for AI platforms",
+  "publish_id": "TTi4FQnMvT3yafdSpuhe",
+  "edition_name": "12/20 1차 발행"
+}

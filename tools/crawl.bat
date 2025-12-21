@@ -1,5 +1,5 @@
 @echo off
-cd supplier
+cd desk
 
 if not exist venv (
     echo Creating virtual environment...

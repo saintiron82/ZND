@@ -1,0 +1,237 @@
+{
+  "article_id": "8ae507",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-21T15:06:45.545789+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204960_206393_4917.jpg",
+  "modified_at": "2025-12-21T17:13:43+09:00",
+  "published_at": "2025-12-21T16:11:08.531705+00:00",
+  "summary": "패션 브랜드 자라가 모델의 디지털 트윈을 생성하여 의상 착용 이미지를 만드는 AI 기술을 도입했다. 모델에게 촬영 비용을 지급하며 반발을 최소화하는 전략을 취하고 있으나, 사진작가 등 관련 업계의 일자리 감소 우려는 지속되고 있다. H&M, 잘란도 등 경쟁사들도 유사한 방식을 도입 중이다.",
+  "text": "기사를 읽어드립니다. (사진=셔터스톡) 글로벌 패스트패션 브랜드 자라(Zara)도 화보 촬영에 AI를 활용하기 시작했다. 모델의 '디지털 트윈'을 구축하고, AI로 의상을 생성해 활용할 때마다 모델에게는 촬영 비용을 지급하는 식으로 반발을 최소화한다는 방안이다. 18일(현지시간) 로이터에 따르면, 자라를 운영하는 인디텍스는 최근 AI를 활용해 기존 모델 사진을 편집·확장하는 방식으로 콘텐츠를 제작하는 실험을 시작했다. 이는 지난 3월 모델 디지털 트윈을 구축한 경쟁사 H&M과 똑같은 방식이다. 즉, AI로 모든 것을 생성하는 것이 아니라, 실제 모델 사진에 의상만 입히는 방식이다. 유럽 온라인 패션 소매업체 잘란도(Zalando)도 지난 5월부터 비슷한 테스트를 시작했다. 이는 생성 AI로 모델까지 생성할 경우, 업계의 강한 반발이 일었던 것을 보완하려는 의도다. 실제로 패션업계가 최초로 생성 AI를 도입한 것은 지난 2023년으로, 당시 리바이스는 모델까지 AI로 생성했다가 일자리 문제로 거센 비난을 받았다. 인디텍스는 “AI는 기존 제작 과정을 보완하기 위한 수단일 뿐”이라며 “모델들과 모든 사항을 상호 합의로 진행하고 있으며, 업계 기준에 맞춰 정당한 보상을 지급하고 있다”라고 강조했다. 자라는 모델들에게 AI를 활용한 이미지 편집에 대한 사전 동의를 구했으며, 추가 촬영을 위해 이동했을 때와 동일한 수준의 보상을 지급하는 것으로 알려졌다. 이처럼 인디텍스와 H&M, 잘란도 등은 모두 AI가 크리에이티브 팀의 프로세스를 보완하고 효율성을 높이는 데 도움이 될 뿐, 인력을 대체하는 것은 아니라고 강조하고 있다. 그러나, H&M의 발표 당시와 마찬가지로 사진작가와 관련 스태프들의 일자리 문제가 지적됐다. 이사벨 도런 영국 사진가협회 CEO는 “AI 활용이 늘어나면 사진작가와 모델, 제작팀의 의뢰 횟수가 줄어들 수 있다”라며 “이는 이미 업계에 자리 잡은 전문가뿐 아니라 진입 단계에 있는 신진 패션 사진가들에게도 타격이 될 수 있다”라고 지적했다. 한편, 인디텍스 회장이자 창업주 아만시오 오르테가의 딸인 마르타 오르테가는 패션 사진에 대한 각별한 애정을 공개적으로 밝혀왔다. 2021년 설립한 재단의 갤러리는 애니 레보비츠, 스티븐 마이젤, 헬무트 뉴턴 등 세계적인 사진작가들의 작품을 전시해 왔다. 오르테가는 매장 수를 줄이고 대형 플래그십 스토어 중심으로 전환하는 등 자라의 고급화 전략도 주도하고 있다. 박찬 기자 cpark@aitimes.com",
+  "title": "자라, AI로 의상 생성하는 패션 모델 '디지털 트윈' 구축",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204960",
+  "title_ko": "자라(Zara), AI 디지털 트윈 모델 도입 확대",
+  "tags": [],
+  "impact_score": 1.0,
+  "IS_Analysis": {
+    "Score_Commentary": "AI의 산업 적용(패션) 사례이나, PE(Inditex)가 Tech 기업이 아닌 Tier 5(Other)이며 Hard Filter(PE T5 & Corp Scope) 적용으로 Scope Score가 0 처리됨. 노동 시장 이슈로는 유의미함.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Zara (Inditex)",
+          "Pe_Tier": 5,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE_SE_Reason": "기술 도입 및 실행 주체인 자라(P4, Tier 5). 내부 도입이므로 별도 SE 없음."
+        },
+        "Tier_Score": 0,
+        "Gap_Score": 0,
+        "IW_Score": 0
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 7.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 5,
+      "T2": 4,
+      "T3": 6,
+      "Rationale": "기술적 내용보다는 노동 시장 영향과 기업 정책 위주의 서술."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 4,
+      "P3": 3,
+      "Rationale": "우려의 목소리와 기업의 방어적 입장이 혼재."
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 6,
+      "V3": 4,
+      "Rationale": "생성형 AI의 실물 산업 적용 트렌드 파악 용도."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "보정 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "8ae507",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "자라(Zara), AI 디지털 트윈 모델 도입 확대",
+      "Summary": "패션 브랜드 자라가 모델의 디지털 트윈을 생성하여 의상 착용 이미지를 만드는 AI 기술을 도입했다. 모델에게 촬영 비용을 지급하며 반발을 최소화하는 전략을 취하고 있으나, 사진작가 등 관련 업계의 일자리 감소 우려는 지속되고 있다. H&M, 잘란도 등 경쟁사들도 유사한 방식을 도입 중이다.",
+      "Tags": [
+        "Ethics",
+        "Job Market",
+        "App"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "AI의 산업 적용(패션) 사례이나, PE(Inditex)가 Tech 기업이 아닌 Tier 5(Other)이며 Hard Filter(PE T5 & Corp Scope) 적용으로 Scope Score가 0 처리됨. 노동 시장 이슈로는 유의미함.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Zara (Inditex)",
+            "Pe_Tier": 5,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE_SE_Reason": "기술 도입 및 실행 주체인 자라(P4, Tier 5). 내부 도입이므로 별도 SE 없음."
+          },
+          "Tier_Score": 0,
+          "Gap_Score": 0,
+          "IW_Score": 0
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 4,
+        "T3": 6,
+        "Rationale": "기술적 내용보다는 노동 시장 영향과 기업 정책 위주의 서술."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 4,
+        "P3": 3,
+        "Rationale": "우려의 목소리와 기업의 방어적 입장이 혼재."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 6,
+        "V3": 4,
+        "Rationale": "생성형 AI의 실물 산업 적용 트렌드 파악 용도."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "자라, AI로 의상 생성하는 패션 모델 '디지털 트윈' 구축",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 5.0,
+        "T2": 4.0,
+        "T3": 6.0,
+        "S_Avg": 5.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 4.0,
+        "P3": 3.0,
+        "N_Avg": 3.0
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 6.0,
+        "V3": 4.0,
+        "U_Avg": 5.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 7.0,
+      "ZS_Final": 7.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 4,
+        "T3": 6,
+        "Rationale": "기술적 내용보다는 노동 시장 영향과 기업 정책 위주의 서술."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 4,
+        "P3": 3,
+        "Rationale": "우려의 목소리와 기업의 방어적 입장이 혼재."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 6,
+        "V3": 4,
+        "Rationale": "생성형 AI의 실물 산업 적용 트렌드 파악 용도."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 1.0,
+      "IS_Final": 1.0,
+      "Score_Commentary": "AI의 산업 적용(패션) 사례이나, PE(Inditex)가 Tech 기업이 아닌 Tier 5(Other)이며 Hard Filter(PE T5 & Corp Scope) 적용으로 Scope Score가 0 처리됨. 노동 시장 이슈로는 유의미함."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Zara (Inditex)",
+      "Pe_Tier": 5,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE_SE_Reason": "기술 도입 및 실행 주체인 자라(P4, Tier 5). 내부 도입이므로 별도 SE 없음."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-21T15:18:53.485660+00:00",
+  "category": "Business",
+  "dedup_status": "selected",
+  "publish_id": "wLMMPPUsVyKwugxnyZxr",
+  "edition_code": "251222_4",
+  "edition_name": "4호",
+  "published": true,
+  "data_file": "aitimes_8ae507.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:19.108584+00:00"
+}

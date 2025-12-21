@@ -1,0 +1,80 @@
+{
+  "id": "wLMMPPUsVyKwugxnyZxr",
+  "edition_code": "251222_4",
+  "edition_name": "4호",
+  "published_at": "2025-12-21T16:11:10.130953+00:00",
+  "date": "2025-12-22",
+  "article_count": 10,
+  "articles": [
+    {
+      "id": "52e9e8",
+      "title": "중국, 오픈 모델 경쟁 승리... 경제를 넘어선 정치적 대가",
+      "url": "https://the-decoder.com/china-wins-the-open-model-race-and-the-price-to-pay-goes-beyond-economics/",
+      "filename": "the_decoder_52e9e8.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "61171a",
+      "title": "앤스로픽 Claude Opus 4.5, 5시간 분량의 작업 처리 가능",
+      "url": "https://the-decoder.com/anthropics-claude-opus-4-5-can-tackle-some-tasks-lasting-nearly-five-hours/",
+      "filename": "the_decoder_61171a.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "c34a5d",
+      "title": "美 에너지부, 빅테크 총출동 '제네시스 미션' 착수",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204961",
+      "filename": "aitimes_c34a5d.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "db76c8",
+      "title": "ChatGPT에서 미키 마우스 만난다…디즈니, 오픈AI에 1.5조원 투자",
+      "url": "https://techneedle.com/archives/43019",
+      "filename": "techneedle_db76c8.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "4270fd",
+      "title": "에디슨 사이언티픽, 1000억 투자 유치하며 'AI 과학자' 가속화",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204959",
+      "filename": "aitimes_4270fd.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "8ae507",
+      "title": "자라(Zara), AI 디지털 트윈 모델 도입 확대",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204960",
+      "filename": "aitimes_8ae507.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "5a06cf",
+      "title": "오픈AI, 미성년자 보호 위한 강력한 '안전 지침' 시행",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204964",
+      "filename": "aitimes_5a06cf.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "d4afec",
+      "title": "웹사이트 개편 및 RAG 기반 검색 기능 도입 공지",
+      "url": "https://the-decoder.com/some-notes-on-whats-new/",
+      "filename": "the_decoder_d4afec.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "f2706e",
+      "title": "구글, 행동하는 온디바이스 AI '펑션젬마' 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204962",
+      "filename": "aitimes_f2706e.json",
+      "date": "2025-12-21"
+    },
+    {
+      "id": "a7c902",
+      "title": "싱킹머신즈랩, 기업용 미세조정 API '팅커' 정식 출시",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204963",
+      "filename": "aitimes_a7c902.json",
+      "date": "2025-12-21"
+    }
+  ]
+}

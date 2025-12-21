@@ -1,0 +1,13 @@
+{
+  "id": "fdf704",
+  "article_id": "fdf704",
+  "title_ko": "구글, 스마트폰용 AI 명령 수행 모델 'FunctionGemma' 출시",
+  "summary": "구글이 스마트폰 등 온디바이스 환경에서 구동 가능한 경량 언어 모델 'FunctionGemma'를 출시했다. 이 모델은 텍스트 생성을 넘어 달력 일정 생성이나 게임 요소 제어와 같은 구체적인 '기능 호출(Function Calling)'에 특화되어 있다. 기존 대비 신뢰도를 85%까지 높일 수 있으며, 프라이버시 보호와 지연 시간 단축이 강점이다.",
+  "url": "https://the-decoder.com/google-releases-functiongemma-to-bring-ai-commands-to-smartphones/",
+  "tags": [],
+  "category": "",
+  "zero_echo_score": 8.0,
+  "impact_score": 5.0,
+  "published_at": "Fri, 19 Dec 2025 17:36:37 GMT",
+  "source_id": "the_decoder"
+}

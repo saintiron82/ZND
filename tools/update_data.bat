@@ -21,8 +21,8 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo.
-echo [3/3] supplier/data 폴더 업데이트...
-git checkout origin/release/data -- supplier/data/
+echo [3/3] desk/data 폴더 업데이트...
+git checkout origin/release/data -- desk/data/
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] 데이터 업데이트 실패
     pause
@@ -34,7 +34,7 @@ echo ========================================
 echo   데이터 업데이트 완료!
 echo ========================================
 echo   현재 브랜치: %CURRENT_BRANCH% (유지됨)
-echo   업데이트된 폴더: supplier/data/
+echo   업데이트된 폴더: desk/data/
 echo ========================================
 echo.
 pause

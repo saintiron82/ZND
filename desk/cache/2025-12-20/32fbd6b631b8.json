@@ -1,0 +1,196 @@
+{
+  "IS_Analysis": {
+    "Score_Commentary": "제품 출시 계획(X1)에 불과하며, 실제 사용 가능한 상태가 아님(Y1). 메타(Tier 2)의 발표이나 실체적 증거 부족으로 영향력 제한적.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Meta",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "개발 및 출시 예고의 주체."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 0.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 0.5
+      }
+    }
+  },
+  "article_id": "32fbd6",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-19T18:04:18.295362+00:00",
+  "crawled_at": "2025-12-19T18:10:00.377633+00:00",
+  "edition": "251219_FRI_1",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 2.0,
+        "T2": 0.0,
+        "T3": 0.0,
+        "S_Avg": 0.67
+      },
+      "Noise": {
+        "P1": 5.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 1.67
+      },
+      "Utility": {
+        "V1": 0.0,
+        "V2": 0.0,
+        "V3": 0.0,
+        "U_Avg": 0.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 10.0,
+      "ZS_Final": 10.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 2,
+        "Rationale": "구체적 스펙 없이 코드명과 출시 시기만 언급."
+      },
+      "Noise": {
+        "P1": 5,
+        "Rationale": "실체 없이 '슈퍼인텔리전스', '대단한 기대' 등 수식어 다수."
+      }
+    }
+  },
+  "image": "https://cdn.aitimes.com/news/photo/202512/204939_206350_82.png",
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 0.5,
+        "IE_Total": 0.5
+      },
+      "IS_Raw": 2.5,
+      "IS_Final": 2.5,
+      "Score_Commentary": "제품 출시 계획(X1)에 불과하며, 실제 사용 가능한 상태가 아님(Y1). 메타(Tier 2)의 발표이나 실체적 증거 부족으로 영향력 제한적."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Meta",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "개발 및 출시 예고의 주체."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 0.5,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "impact_score": 2.5,
+  "modified_at": "2025-12-19T18:10:20+09:00",
+  "original_title": "메타, 내년 상반기 동영상 생성 모델 '망고' 출시...&quot;월드 모델도 초기 단계&quot;",
+  "raw_analysis": {
+    "Article_ID": "32fbd6",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "메타, 동영상 생성 모델 '망고' 내년 상반기 출시",
+      "Summary": "메타가 동영상 생성 모델 '망고'와 차세대 LLM '아보카도'를 내년 상반기 출시할 예정이다. 이는 월드 모델 구축을 위한 초기 단계로, 경쟁사 대비 늦은 행보이나 자사 플랫폼 통합을 예고했다.",
+      "Tags": [
+        "Meta",
+        "Model",
+        "Rumor"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "제품 출시 계획(X1)에 불과하며, 실제 사용 가능한 상태가 아님(Y1). 메타(Tier 2)의 발표이나 실체적 증거 부족으로 영향력 제한적.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Meta",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "개발 및 출시 예고의 주체."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 0.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 0.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 2,
+        "Rationale": "구체적 스펙 없이 코드명과 출시 시기만 언급."
+      },
+      "Noise": {
+        "P1": 5,
+        "Rationale": "실체 없이 '슈퍼인텔리전스', '대단한 기대' 등 수식어 다수."
+      }
+    }
+  },
+  "saved": true,
+  "saved_at": "2025-12-19T19:44:32.851681+00:00",
+  "schema_version": "V1.0",
+  "source_id": "venturebeat",
+  "status": "ACCEPTED",
+  "summary": "메타가 동영상 생성 모델 '망고'와 차세대 LLM '아보카도'를 내년 상반기 출시할 예정이다. 이는 월드 모델 구축을 위한 초기 단계로, 경쟁사 대비 늦은 행보이나 자사 플랫폼 통합을 예고했다.",
+  "tags": [],
+  "text": "(사진=셔터스톡) 메타의 슈퍼인텔리전스 랩(MSL)이 차세대 첨단 모델과 동시에 고성능 이미지 및 동영상 생성 모델도 개발 중인 것으로 알려졌다. 이를 통해 월드 모델 구축으로 확장하겠다는 의도로 해석된다. 월스트리트저널은 18일(현지시간) 정통한 소식통을 인용, 메타가 '망고(Mango)'라는 코드명의 이미지 및 동영상 모델을 개발 중이라고 보도했다. 이에 따르면, 알렉산드르 왕 메타 최고 AI책임자(CAIO)와 크리스 콕스 최고 제품책임자(CPO)는 이날 사내 질의응답 시간을 통해 제품 개발 로드맵을 공개했다. 여기에는 차세대 플래그십 대현언어모델(LLM)인 모델인 '아보카도(avocado)'도 포함됐다. 망고와 아보카도는 MSL 설립을 통해 AI 인재를 끌어모은 뒤 처음으로 선보이는 결과물이다. 두 모델은 내년 상반기 출시될 예정이다. 이 자리에서 왕 CAIO는 아보카도가 경쟁사에 비해 약점이었던 고급 코딩 기능에 집중할 것이라고 강조한 것으로 알려졌다. 또 이 모델의 오픈 소스 출시는 아직 논의 중이며, 모델의 성능 수준에 따라 결정될 것으로 알려졌다. 즉, 최고 성능에 도달할 때는 비공개 출시 가능성을 검토하겠다는 것이다. 그는 월드 모델 개발 초기 단계에 있다고도 말했다. 자세한 설명은 없다. 하지만, 현실 세계와 같은 시물레이션 환경을 갖춘 월드 모델을 구축하기 위해서는 동영상 생성 모델은 필수다. 망고는 이를 위한 초기 단계일 수 있다. 특히, 이제까지 메타에서 월드 모델 개발을 주도하던 얀 르쿤 수석 과학자가 퇴사를 예고한 뒤 언급된 내용이라 눈길을 끈다. 또 동영상이나 이미지 생성 모델은 소비자 서비스 확대를 위해 필수로 꼽힌다. 오픈AI는 이미지 생성 기능과 '소라' 앱으로, 구글은 '나노 바나나'와 '비오 3'로 저변을 확대한 바 있다. 메타도 망고와 아보카도가 페이스북과 인스타그램, 왓츠앱과 같은 메타의 핵심 소비자 제품에 통합될 것이라고 예고했다. MSL은 이미 지난 9월 '바이브'라는 동영상 생성 및 공유 앱을 출시한 바 있다. 이는 11월9일 기준 일일 활성 사용자(DAU) 200만명을 돌파하는 등 인기를 얻고 있다. 이처럼 메타는 내년 초 두 모델을 중심으로 대대적인 반격에 나설 예정이다. MSL은 마크 저커버그 CEO가 직접 거금을 제시하며 영입한 인재들로 구성, 대단한 기대를 모으고 있다. 이에 따라 왕 CAIO 등 MSL 멤버들의 부담이 상당한 것으로 알려졌다. 또 이들로 인해 기존 연구원들과의 갈등도 부각됐다. 특히 내년 초에는 프론티어 모델 경쟁이 다시 불붙을 것으로 예측된다. 오픈AI는 1월 중 차세대 모델을 출시할 예정이며, 일론 머스크 CEO도 내년 상반기 중 '그록 5'를 출시한다고 예고했다. 임대준 기자 ydj@aitimes.com",
+  "title": "메타, 내년 상반기 동영상 생성 모델 '망고' 출시...&quot;월드 모델도 초기 단계&quot;",
+  "title_ko": "메타, 동영상 생성 모델 '망고' 내년 상반기 출시",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204939",
+  "zero_echo_score": 9.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 2,
+      "Rationale": "구체적 스펙 없이 코드명과 출시 시기만 언급."
+    },
+    "Noise": {
+      "P1": 5,
+      "Rationale": "실체 없이 '슈퍼인텔리전스', '대단한 기대' 등 수식어 다수."
+    }
+  },
+  "rejected": false,
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "published": true,
+  "published_at": "2025-12-19T20:35:07.425364+00:00",
+  "data_file": "venturebeat_32fbd6.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:04.592524+00:00"
+}

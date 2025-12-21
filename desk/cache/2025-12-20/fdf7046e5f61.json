@@ -1,0 +1,190 @@
+{
+  "article_id": "fdf704",
+  "cached_at": "2025-12-19T18:10:27.143380+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/08/gemma_3_270m.png",
+  "summary": "구글이 스마트폰 등 온디바이스 환경에서 구동 가능한 경량 언어 모델 'FunctionGemma'를 출시했다. 이 모델은 텍스트 생성을 넘어 달력 일정 생성이나 게임 요소 제어와 같은 구체적인 '기능 호출(Function Calling)'에 특화되어 있다. 기존 대비 신뢰도를 85%까지 높일 수 있으며, 프라이버시 보호와 지연 시간 단축이 강점이다.",
+  "text": "Ad Google has released FunctionGemma, a specialized version of the compact Gemma 3 270M language model. Built on the base model introduced in August, this version is specifically tuned for \"function calling.\" This lets the AI do more than just generate text - it can pass specific commands to software, executing tasks like creating calendar entries or controlling game elements. Android users can test these capabilities with a farming mini-game in the AI Edge Gallery, where prompts like \"Plant the sunflower seed in plot 8\" direct the gameplay. A demo with physics puzzles is also available, allowing users to solve problems directly in their browser using natural language. External media content (www.youtube.com) has been blocked here. When loading or playing, connections are established to the servers of the respective providers. Personal data may be communicated to the providers in the process. You can find more information in our privacy policy. Allow external media content Thanks to its compact size, the model runs locally on devices like smartphones, boosting data privacy and reducing lag. Google claims that further training can increase the system's reliability from 58 to 85 percent. FunctionGemma acts as a bridge between natural language and software, and can even serve as a \"traffic controller\" that routes complex queries to larger models. The model is available now on platforms like Hugging Face and Kaggle. Ad",
+  "title": "Google releases FunctionGemma to bring AI commands to smartphones",
+  "url": "https://the-decoder.com/google-releases-functiongemma-to-bring-ai-commands-to-smartphones/",
+  "title_ko": "구글, 스마트폰용 AI 명령 수행 모델 'FunctionGemma' 출시",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1 기업의 신규 모델 출시이나, 패러다임 변화보다는 특정 기능(Function Calling)에 특화된 Corporate 수준의 업데이트임. 시장 즉시 가용 상태이나 산업 전반의 구조적 변화를 야기하기에는 Scope가 제한적임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "구글이 제품을 직접 출시하고 배포하는 주체이므로 P4 적용. 비교 대상 없음."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 8.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 8,
+      "Rationale": "모델 파라미터(270M), 신뢰도 향상 수치(58%->85%) 등 구체적 스펙 제공"
+    },
+    "Utility": {
+      "V2": 8,
+      "Rationale": "Hugging Face 등에서 즉시 사용 가능"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "fdf704",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "구글, 스마트폰용 AI 명령 수행 모델 'FunctionGemma' 출시",
+      "Summary": "구글이 스마트폰 등 온디바이스 환경에서 구동 가능한 경량 언어 모델 'FunctionGemma'를 출시했다. 이 모델은 텍스트 생성을 넘어 달력 일정 생성이나 게임 요소 제어와 같은 구체적인 '기능 호출(Function Calling)'에 특화되어 있다. 기존 대비 신뢰도를 85%까지 높일 수 있으며, 프라이버시 보호와 지연 시간 단축이 강점이다.",
+      "Tags": [
+        "Google",
+        "Model",
+        "On-Device"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1 기업의 신규 모델 출시이나, 패러다임 변화보다는 특정 기능(Function Calling)에 특화된 Corporate 수준의 업데이트임. 시장 즉시 가용 상태이나 산업 전반의 구조적 변화를 야기하기에는 Scope가 제한적임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "구글이 제품을 직접 출시하고 배포하는 주체이므로 P4 적용. 비교 대상 없음."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 8,
+        "Rationale": "모델 파라미터(270M), 신뢰도 향상 수치(58%->85%) 등 구체적 스펙 제공"
+      },
+      "Utility": {
+        "V2": 8,
+        "Rationale": "Hugging Face 등에서 즉시 사용 가능"
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "Google releases FunctionGemma to bring AI commands to smartphones",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 7.0,
+        "T2": 8.0,
+        "T3": 0.0,
+        "S_Avg": 5.0
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 0.0,
+        "V2": 8.0,
+        "V3": 0.0,
+        "U_Avg": 2.67
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.0,
+      "ZS_Final": 8.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 8,
+        "Rationale": "모델 파라미터(270M), 신뢰도 향상 수치(58%->85%) 등 구체적 스펙 제공"
+      },
+      "Utility": {
+        "V2": 8,
+        "Rationale": "Hugging Face 등에서 즉시 사용 가능"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "Tier 1 기업의 신규 모델 출시이나, 패러다임 변화보다는 특정 기능(Function Calling)에 특화된 Corporate 수준의 업데이트임. 시장 즉시 가용 상태이나 산업 전반의 구조적 변화를 야기하기에는 Scope가 제한적임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "구글이 제품을 직접 출시하고 배포하는 주체이므로 P4 적용. 비교 대상 없음."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-19T20:00:27.746994+00:00",
+  "edition": "251219_FRI_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-19T20:00:28.580350+00:00",
+  "dedup_status": "duplicate",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:11.385363+00:00"
+}

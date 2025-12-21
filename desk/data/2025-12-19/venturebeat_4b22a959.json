@@ -1,0 +1,15 @@
+{
+  "id": "4b22a9",
+  "article_id": "4b22a9",
+  "title_ko": "OpenAI, 서드파티 개발자 대상 ChatGPT 앱 제출 접수 시작 및 'App Directory' 런칭",
+  "summary": "OpenAI가 ChatGPT 내에서 구동되는 서드파티 앱 제출을 받기 시작했으며 'App Directory'를 런칭했다. 2026년 초부터 사용자에게 배포될 예정이며, 개발자는 MCP 기반의 SDK를 통해 상호작용 가능한 앱을 구축할 수 있다. 이는 단순 텍스트 GPT를 넘어선 플랫폼 확장을 의미한다.",
+  "url": "https://venturebeat.com/technology/openai-now-accepting-chatgpt-app-submissions-from-third-party-devs-launches",
+  "tags": [],
+  "category": "Engineering",
+  "zero_echo_score": 4.6,
+  "impact_score": 7.0,
+  "published_at": "2025-12-19T19:44:06.798809+00:00",
+  "source_id": "venturebeat",
+  "edition": "251219_FRI_1",
+  "original_title": "OpenAI now accepting ChatGPT app submissions from third-party devs, launches App Directory"
+}

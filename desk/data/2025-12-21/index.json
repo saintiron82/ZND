@@ -1,0 +1,62 @@
+{
+  "date": "2025-12-21",
+  "updated_at": "2025-12-22T01:11:10.129444",
+  "count": 11,
+  "articles": [
+    {
+      "article_id": "db76c8",
+      "filename": "techneedle_db76c847.json",
+      "impact_score": 9.5
+    },
+    {
+      "article_id": "c34a5d",
+      "filename": "aitimes_c34a5df5.json",
+      "impact_score": 8.5
+    },
+    {
+      "article_id": "5a06cf",
+      "filename": "aitimes_5a06cf11.json",
+      "impact_score": 7.5
+    },
+    {
+      "article_id": "52e9e8",
+      "filename": "the_decoder_52e9e8cf.json",
+      "impact_score": 7.0
+    },
+    {
+      "article_id": "f2706e",
+      "filename": "aitimes_f2706e52.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "61171a",
+      "filename": "the_decoder_61171a5b.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "4270fd",
+      "filename": "aitimes_4270fdd8.json",
+      "impact_score": 3.0
+    },
+    {
+      "article_id": "a7c902",
+      "filename": "aitimes_a7c90294.json",
+      "impact_score": 2.5
+    },
+    {
+      "article_id": "d4afec",
+      "filename": "the_decoder_d4afecd8.json",
+      "impact_score": 1.5
+    },
+    {
+      "article_id": "8ae507",
+      "filename": "aitimes_8ae5073a.json",
+      "impact_score": 1.0
+    },
+    {
+      "article_id": "1",
+      "filename": "issue_251221_1.json",
+      "impact_score": 0
+    }
+  ]
+}

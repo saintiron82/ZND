@@ -1,0 +1,139 @@
+{
+  "article_id": "5cac07",
+  "author": [
+    "장세민 기자"
+  ],
+  "cached_at": "2025-12-19T18:04:18.297431+00:00",
+  "crawled_at": "2025-12-19T19:35:58.945586+00:00",
+  "edition": "251219_FRI_1",
+  "evidence": {},
+  "image": "https://cdn.aitimes.com/news/photo/202512/204937_206347_432.png",
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 1.5,
+      "IS_Final": 1.5,
+      "Score_Commentary": "국내 중소기업(T4/T5)들의 개별 인증/수상 소식. Hard Filter 적용되어 점수 없음."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P6",
+      "Pe_Entity_Name": "Muhayu",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "기사 내 첫 번째 소식의 주체(대표성)."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "impact_score": 1.5,
+  "modified_at": "2025-12-19T17:50:00+09:00",
+  "original_title": "[게시판] 무하유, 주요 AI 서비스 3종 정보보호 관리체계 인증 획득 등 단신",
+  "raw_analysis": {
+    "Article_ID": "5cac07",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "무하유·AI스페라 등 국내 AI 기업 6개사 수상 및 인증 소식",
+      "Summary": "무하유가 ISMS 인증을 획득했고, AI스페라, 인텔리빅스, 딥노이드 등이 과기부 장관상을 수상했다. 국내 중소 AI 기업들의 단신 모음이다.",
+      "Tags": [
+        "Safety",
+        "Startup",
+        "Event"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "국내 중소기업(T4/T5)들의 개별 인증/수상 소식. Hard Filter 적용되어 점수 없음.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P6",
+            "Pe_Entity_Name": "Muhayu",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "기사 내 첫 번째 소식의 주체(대표성)."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {}
+  },
+  "saved": true,
+  "saved_at": "2025-12-19T19:44:35.566673+00:00",
+  "schema_version": "V1.0",
+  "source_id": "venturebeat",
+  "status": "ACCEPTED",
+  "summary": "무하유가 ISMS 인증을 획득했고, AI스페라, 인텔리빅스, 딥노이드 등이 과기부 장관상을 수상했다. 국내 중소 AI 기업들의 단신 모음이다.",
+  "text": "(사진=무하유) ■ 무하유(대표 신동호)는 한국인터넷진흥원(KISA) 주관 정보보호 관리체계(이하 ISMS) 인증을 획득했다고 밝혔다. ISMS는 기업 정보보호 관리 수준을 평가하는 국내 최고 수준 보안 인증이다. 이를 통해 AI 서비스 전반에 걸쳐 보안 관리 체계의 적합성을 공식 인정받았다는 설명이다. ■ 사이버보안 전문 AI스페라(대표 강병탁)는 지역 정보보호 산업 발전 및 중소기업 보안 역량 강화에 기여한 공로를 인정 받아 과학기술정보통신부 장관상을 수상했다고 밝혔다. AI스페라는 올해 과기부, 한국인터넷진흥원(KISA)이 공동 추진한 지역 정보보호 지우너사업에 참여해, 보안 인프라가 취약한 중소기업을 대상으로 보안 점검 및 사전적 위협 진단을 지원해 왔다. ■ 영상분석 AI 전문 인텔리빅스(대표 최은수, 장정훈)는 지난 18일 열린 ‘제3회 아시아AI대상(Asia AI Awards 2025)’에서 중소벤처기업부 장관상을 수상했다고 밝혔다. 인텔리빅스는 독자 개발한 생성 AI 관제 플랫폼 ‘젠(Gen) AMS’의 개발 및 사업화를 통해 기존 영상 관제 시스템에 혁신적인 기술을 적용한 공로를 인정 받았다. ■ AI 영어 전문 스픽이지랩스코리아(대표 코너 니콜라이 즈윅)는 배우 김우빈과 2026년 1분기 브랜드 캠페인을 선보인다고 밝혔다. 이번 광고는 영어를 마주하는 순간, 유독 말수가 줄어들고 배운 표현 안에서만 반응하게 되는 우리의 일상적인 모습을 담았다. “배운대로만 말하지 말고, 말하고 싶은대로 배우자”라는 메시지를 이번 캠페인에 담았다. ■ AI 전문 딥노이드(대표 최우식)는 대전 KW컨벤션에서 진행된 ‘2025년 부처협업 기반 AI 확산 사업 성과보고회’에서 ‘과학기술정보통신부 장관 표창’을 받았다고 밝혔다. 이는 특정 분야에서 국가와 사회발전, 공익제고 등에 기여도가 큰 기관·단체에 수여되는 상이다. 딥노이드는 AI 전문인력 양성 및 산업 발전에 기여한 공로를 인정 받았다. ■ AX 전문 아크릴(대표 박외진)은 과학기술정보통신부가 주최한 ‘2025년 디지털헬스케어 유공표창 및 성과보고회’에서 ‘닥터앤서’ 등 의료AI생태계 조성과 AI 기술의 산업적 확산에 기여한 공로를 인정 받아 과기부총리상을 수상했다고 밝혔다. ■ AI 경량화 전문 노타(대표 채명수)는 AI 에듀테크 전문 유탑소프트(대표 김성범)와 온디바이스 AI 튜터 개발에 나선다고 밝혔다. 외부 서버를 거치지 않고 태블릿 기기 자체에서 AI 튜터가 구동되는 방식을 기본으로 하며, 추론의 결과가 많이 필요한 경우에 한해 외부 서버와 연동하는 하이브리드 방식의 적용을 검토 중이다. 장세민 기자 semim99@aitimes.com",
+  "title": "[게시판] 무하유, 주요 AI 서비스 3종 정보보호 관리체계 인증 획득 등 단신",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204937",
+  "zero_echo_score": 5.0,
+  "title_ko": "무하유·AI스페라 등 국내 AI 기업 6개사 수상 및 인증 소식",
+  "tags": [],
+  "IS_Analysis": {
+    "Score_Commentary": "국내 중소기업(T4/T5)들의 개별 인증/수상 소식. Hard Filter 적용되어 점수 없음.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P6",
+          "Pe_Entity_Name": "Muhayu",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "기사 내 첫 번째 소식의 주체(대표성)."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "ZES_Raw_Metrics": {},
+  "dedup_status": "duplicate",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:06.020526+00:00"
+}

@@ -67,8 +67,21 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
         return calculateTagFrequencies(articles).slice(0, maxItems);
     }, [articles, maxItems]);
 
+    // 태그가 없어도 컨테이너는 표시
     if (trendingTags.length === 0) {
-        return null;
+        return (
+            <div className="bg-card rounded-xl border border-border p-4">
+                <div className="flex items-center gap-2 mb-4">
+                    <TrendingUp className="w-4 h-4 text-primary" />
+                    <h3 className="font-bold text-sm uppercase tracking-wider text-foreground">
+                        오늘의 트렌드
+                    </h3>
+                </div>
+                <p className="text-xs text-muted-foreground text-center py-4">
+                    태그 데이터 준비 중...
+                </p>
+            </div>
+        );
     }
 
     return (

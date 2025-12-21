@@ -1,0 +1,237 @@
+{
+  "article_id": "cf3b58",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-20T19:03:10.307978+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204953_206379_20.jpg",
+  "modified_at": "2025-12-20T20:08:41+09:00",
+  "published_at": "2025-12-20T19:30:37.658276+00:00",
+  "summary": "미스트랄 AI가 정확도를 높이고 비용을 낮춘 기업용 OCR 모델 '미스트랄 OCR 3'를 공개했다. 복잡한 문서 처리 능력이 강화되었으며, 경쟁사 대비 높은 벤치마크 성능을 강조했다.",
+  "text": "미스트랄 AI가 기업의 방대한 문서를 데이터로 전환하기 위한 새로운 광학문자인식(OCR) 모델을 선보였다. 뛰어난 정확도와 파격적인 가격 정책을 결합, 기업용 AI 시장을 겨냥했다. 미스트랄은 17일(현지시간) 차세대 OCR 모델 ‘미스트랄 OCR 3’를 공개했다. OCR 3는 필기체와 인쇄물이 혼합된 문서, 인쇄 양식 위에 덧쓴 손글씨, 압축·왜곡·저해상도 등 실제 스캔 문서에서 흔히 발생하는 노이즈에 대한 처리 성능을 크게 개선했다. 특히 복잡한 표 구조를 헤더, 병합 셀, 다중 행 블록까지 복원해 HTML 형태로 출력함으로써, 이후 분석·검색·에이전트 워크플로에 바로 활용할 수 있도록 설계됐다. 단순한 텍스트 추출을 넘어, 동일한 API 엔드포인트에서 두가지 핵심 기능과 통합 제공된다. 하나는 ‘구조화 주석’으로, 개발자가 사전에 정의한 스키마에 따라 문서의 특정 영역에 라벨을 부착하고 정형 데이터로 추출할 수 있다. 다른 하나는 ‘바운딩 박스 추출(BBox Extraction)’ 기능으로, 텍스트나 이미지, 표 요소의 위치 좌표를 함께 반환해 후속 시스템에서 정확한 매핑과 시각화가 가능하도록 한다. 이러한 기능 조합은 OCR 결과를 단순히 읽는 데서 그치지 않고, ERP·CRM·검색 시스템·에이전트 워크플로·UI 오버레이 등 하위 시스템으로 직접 연결할 수 있도록 설계됐다. 예를 들어 청구서, 계약서, 기술 문서에서 추출한 필드를 자동으로 데이터베이스에 적재하거나, 화면상에서 원문 위치를 강조 표시하는 데 활용할 수 있다. 이번 모델은 미스트랄의 기업용 플랫폼 ‘미스트랄 AI 스튜디오(Mistral AI Studio)’ 내 문서 AI(Document AI) 스택의 핵심 구성 요소로 제공된다. 사용자는 별도의 코드 작성 없이 PDF나 이미지를 업로드해 정제된 텍스트나 구조화된 JSON 데이터를 얻을 수 있으며, 동일한 파이프라인을 API를 통해 곧바로 운영 환경에 적용할 수 있다. 핵심 경쟁력은 정확도다. 양식, 스캔 문서, 복잡한 표, 필기 문서 등 기업 환경에서 가장 까다로운 문서 유형을 대상으로 이전 세대 OCR 2 대비 74%의 승률을 기록했다. OCR 3 대 OCR 2 승률 (사진=미스트랄) 또 AWS의 '텍스트랙트(Textract)', 마이크로소프트의 '애저 OCR(Azure OCR)', 구글의 '독AI(DocAI)', '딥시크 OCR' 등 경쟁 제품과의 다양한 벤치마크에서 압도적인 1위를 기록했다. 타 모델 벤치마크 결과 (사진=미스트랄) 가격도 기존 기업용 문서 인식·추출 솔루션 대비 크게 낮은 수준이다. 1000페이지당 2달러로 책정됐으며, 구조화 주석(Structured Annotations)을 활용해 문서 내 정보를 필드 단위로 추출할 때 1000페이지당 3달러가 적용된다. 특히 대량 문서 처리를 겨냥한 배치 추론(Batch Inference) API를 활용하면 50% 할인을 적용해, 실질적인 OCR 비용이 1000페이지당 1달러까지 낮아진다. 이는 대규모 문서 아카이브를 보유한 금융, 보험, 공공기관, 제조 기업에 매력적인 조건으로 평가된다. 이와 관련, 팀 로우 IDC AI 책임자는 \"OCR은 생성 AI와 에이전트형 AI를 구현하는 데 있어 여전히 핵심적인 기술\"이라며 \"효율적이고 비용 효율적으로 고품질의 텍스트와 내장 이미지를 추출할 수 있는 기업은 데이터에서 가치를 창출하고 더 풍부한 맥락을 제공함으로써 경쟁 우위를 확보할 수 있을 것\"이라고 말했다. 박찬 기자 cpark@aitimes.com",
+  "title": "미스트랄 AI, 기업 시장 겨냥 고성능·저비용 OCR 모델 출시",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204953",
+  "title_ko": "미스트랄 AI, 기업용 고성능·저비용 OCR 모델 출시",
+  "tags": [],
+  "impact_score": 2.0,
+  "IS_Analysis": {
+    "Score_Commentary": "미스트랄의 기업용 시장 공략 제품이다. PE는 'AI Startup' 분류에 따라 Tier 4로 판정된다(Tier Map 미등재). 따라서 Tier 4 Hard Filter(Corporate Scope = 0)가 적용되어 IE 점수가 제한된다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Mistral AI",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Reason": "제품 출시 주체. Tier Map의 T1/T2/T3 리스트에 명시되지 않았으므로 'AI 스타트업(T4)' 적용."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 4.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 8,
+      "T3": 7,
+      "Rationale": "구체적 가격($1), 성능 수치(74%), 기능적 특징이 매우 상세함."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 2,
+      "P3": 3,
+      "Rationale": "자사 벤치마크 승률 강조가 포함됨."
+    },
+    "Utility": {
+      "V1": 6,
+      "V2": 9,
+      "V3": 6,
+      "Rationale": "기업 실무자에게 즉시 비용 절감 효과를 줄 수 있는 정보."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "B2B 관점에서 효용성(가격/성능)이 매우 구체적으로 명시됨."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "cf3b58",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "미스트랄 AI, 기업용 고성능·저비용 OCR 모델 출시",
+      "Summary": "미스트랄 AI가 정확도를 높이고 비용을 낮춘 기업용 OCR 모델 '미스트랄 OCR 3'를 공개했다. 복잡한 문서 처리 능력이 강화되었으며, 경쟁사 대비 높은 벤치마크 성능을 강조했다.",
+      "Tags": [
+        "Launch",
+        "Mistral",
+        "Model"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "미스트랄의 기업용 시장 공략 제품이다. PE는 'AI Startup' 분류에 따라 Tier 4로 판정된다(Tier Map 미등재). 따라서 Tier 4 Hard Filter(Corporate Scope = 0)가 적용되어 IE 점수가 제한된다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Mistral AI",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Reason": "제품 출시 주체. Tier Map의 T1/T2/T3 리스트에 명시되지 않았으므로 'AI 스타트업(T4)' 적용."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 8,
+        "T3": 7,
+        "Rationale": "구체적 가격($1), 성능 수치(74%), 기능적 특징이 매우 상세함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 3,
+        "Rationale": "자사 벤치마크 승률 강조가 포함됨."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 9,
+        "V3": 6,
+        "Rationale": "기업 실무자에게 즉시 비용 절감 효과를 줄 수 있는 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "B2B 관점에서 효용성(가격/성능)이 매우 구체적으로 명시됨."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "미스트랄 AI, 기업 시장 겨냥 고성능·저비용 OCR 모델 출시",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 8.0,
+        "T3": 7.0,
+        "S_Avg": 8.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 2.0,
+        "P3": 3.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 9.0,
+        "V3": 6.0,
+        "U_Avg": 7.0
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 4.02,
+      "ZS_Final": 4.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 8,
+        "T3": 7,
+        "Rationale": "구체적 가격($1), 성능 수치(74%), 기능적 특징이 매우 상세함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 3,
+        "Rationale": "자사 벤치마크 승률 강조가 포함됨."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 9,
+        "V3": 6,
+        "Rationale": "기업 실무자에게 즉시 비용 절감 효과를 줄 수 있는 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "B2B 관점에서 효용성(가격/성능)이 매우 구체적으로 명시됨."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 2.0,
+      "IS_Final": 2.0,
+      "Score_Commentary": "미스트랄의 기업용 시장 공략 제품이다. PE는 'AI Startup' 분류에 따라 Tier 4로 판정된다(Tier Map 미등재). 따라서 Tier 4 Hard Filter(Corporate Scope = 0)가 적용되어 IE 점수가 제한된다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Mistral AI",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Reason": "제품 출시 주체. Tier Map의 T1/T2/T3 리스트에 명시되지 않았으므로 'AI 스타트업(T4)' 적용."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-20T19:06:39.418187+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "publish_id": "XJ1v2GUGr9DCQ6zyNs3m",
+  "edition_code": "251221_1",
+  "edition_name": "12/21 1차 발행",
+  "published": true,
+  "data_file": "aitimes_cf3b58.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:16.946993+00:00"
+}

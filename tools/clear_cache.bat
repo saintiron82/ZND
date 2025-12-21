@@ -8,7 +8,7 @@ echo   ZeroEcho Daily - Cache Clear Tool
 echo ========================================
 echo.
 
-set "DATA_DIR=%~dp0supplier\data"
+set "DATA_DIR=%~dp0desk\data"
 
 if "%1"=="" (
     echo 사용법:

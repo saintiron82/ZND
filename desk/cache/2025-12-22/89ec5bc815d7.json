@@ -1,0 +1,228 @@
+{
+  "article_id": "89ec5b",
+  "author": "Tony Stoyanov, EliseAI",
+  "cached_at": "2025-12-21T15:07:34.395655+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/7GXeJplC5s3umRvVp4Qg64/1fb79aaaed1a6e90e507e6f945119954/Specialist_versus_generalist.png?w=800&amp;q=75",
+  "modified_at": "2025-12-20T22:00:11.043Z",
+  "published_at": "2025-12-20T12:00-07:00",
+  "text": "Tony Stoyanov is CTO and co-founder of EliseAI In the 2010s, tech companies chased staff-level specialists: Backend engineers, data scientists, system architects. That model worked when technology evolved slowly. Specialists knew their craft, could deliver quickly and built careers on predictable foundations like cloud infrastructure or the latest JS framework Then AI went mainstream. The pace of change has exploded. New technologies appear and mature in less than a year. You can’t hire someone who has been building AI agents for five years, as the technology hasn’t existed for that long. The people thriving today aren’t those with the longest résumés; they’re the ones who learn fast, adapt fast and act without waiting for direction. Nowhere is this transformation more evident than in software engineering, which has likely experienced the most dramatic shift of all, evolving faster than almost any other field of work. How AI Is rewriting the rules AI has lowered the barrier to doing complex technical work, technical skills and it's also raised expectations for what counts as real expertise. McKinsey estimates that by 2030, up to 30% of U.S. work hours could be automated and 12 million workers may need to shift roles entirely. Technical depth still matters, but AI favors people who can figure things out as they go. At my company, I see this every day. Engineers who never touched front-end code are now building UIs, while front-end developers are moving into back-end work. The technology keeps getting easier to use but the problems are harder because they span more disciplines. In that kind of environment, being great at one thing isn’t enough. What matters is the ability to bridge engineering, product and operations to make good decisions quickly, even with imperfect information. Despite all the excitement, only 1% of companies consider themselves truly mature in how they use AI. Many still rely on structures built for a slower era — layers of approval, rigid roles and an overreliance on specialists who can’t move outside their lane. The traits of a strong generalist A strong generalist has breadth without losing depth. They go deep in one or two domains but stay fluent across many. As David Epstein puts it in Range, “You have people walking around with all the knowledge of humanity on their phone, but they have no idea how to integrate it. We don’t train people in thinking or reasoning.” True expertise comes from connecting the dots, not just collecting information. The best generalists share these traits: Ownership: End-to-end accountability for outcomes, not just tasks. First-principles thinking: Question assumptions, focus on the goal, and rebuild when needed. Adaptability: Learn new domains quickly and move between them smoothly. Agency: Act without waiting for approval and adjust as new information comes in. Soft skills: Communicate clearly, align teams and keep customers’ needs in focus. Range: Solve different kinds of problems and draw lessons across contexts. I try to make accountability a priority for my teams. Everyone knows what they own, what success looks like and how it connects to the mission. Perfection isn’t the goal, forward movement is. Embracing the shift Focusing on adaptable builders changed everything. These are the people with the range and curiosity to use AI tools to learn quickly and execute confidently. If you’re a builder who thrives in ambiguity, this is your time. The AI era rewards curiosity and initiative more than credentials. If you’re hiring, look ahead. The people who’ll move your company forward might not be the ones with the perfect résumé for the job. They’re the ones who can grow into what the company will need as it evolves. The future belongs to generalists and to the companies that trust them. Read more from our guest writers. Or, consider submitting a post of your own! See our guidelines here. Welcome to the VentureBeat community! Our guest posting program is where technical experts share insights and provide neutral, non-vested deep dives on AI, data infrastructure, cybersecurity and other cutting-edge technologies shaping the future of enterprise. Read more from our guest post program — and check out our guidelines if you’re interested in contributing an article of your own!",
+  "title": "Hiring specialists made sense before AI — now generalists win",
+  "url": "https://venturebeat.com/ai/hiring-specialists-made-sense-before-ai-now-generalists-win",
+  "title_ko": "AI 이전에는 전문가 채용이 합리적이었으나, 이제는 제너럴리스트가 승리한다",
+  "summary": "EliseAI의 CTO Tony Stoyanov는 기고문을 통해 AI 기술의 급격한 발전으로 인해 과거의 깊이 있는 전문가(Specialist) 중심 채용에서, 빠른 적응력과 다양한 도메인을 연결할 수 있는 제너럴리스트(Generalist)로 인재상이 변화하고 있다고 주장했다. 그는 McKinsey의 자동화 전망과 자사의 사례를 들며, 불확실성 속에서 주도적으로 문제를 해결하는 능력이 기술적 깊이보다 중요해지고 있음을 강조했다.",
+  "tags": [],
+  "impact_score": 1.0,
+  "IS_Analysis": {
+    "Score_Commentary": "해당 기사는 특정 기업(EliseAI)의 경영진이 작성한 오피니언(Opinion)으로, 산업 전반에 대한 제언을 담고 있으나 구체적인 사건이나 제품 출시가 동반되지 않은 '주장'에 해당한다. PE는 Tier 4 스타트업으로 분류되며, 명확한 대립/협력 관계의 SE가 부재하다. 실체적 사건성이 낮아 IE 점수는 최소한으로 산정되었다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "EliseAI",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE는 기사의 주체이자 채용 철학을 실행/주장하는 EliseAI를 선정(P4). SE는 McKinsey 등이 언급되었으나 단순 인용 및 데이터 출처에 불과하여 선정 기준 1항(단순 비교/벤치마크)에 의거하여 None 처리함."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 0.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 0.5
+      }
+    }
+  },
+  "zero_echo_score": 9.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 3,
+      "T2": 5,
+      "T3": 2,
+      "Rationale": "McKinsey 통계를 인용했으나 구체적인 데이터보다는 저자의 경험과 주장에 의존함. 외부 검증 없는 기고문."
+    },
+    "Noise": {
+      "P1": 4,
+      "P2": 7,
+      "P3": 5,
+      "Rationale": "'Exploded', 'Dramatic shift' 등 다소 과장된 표현과 자사(EliseAI)의 사례를 일반화하는 경향이 있음."
+    },
+    "Utility": {
+      "V1": 2,
+      "V2": 3,
+      "V3": 2,
+      "Rationale": "채용 시장의 트렌드를 언급하나 일반적인 'Specialist vs Generalist' 담론 수준을 크게 벗어나지 않으며 즉각적인 효용성은 낮음."
+    },
+    "Fine_Adjustment": {
+      "Score": -0.5,
+      "Reason": "객관적 사실 전달보다는 특정 기업의 홍보성 성격이 짙은 오피니언이므로 품질 점수 소폭 하향 조정."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "89ec5b",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "AI 이전에는 전문가 채용이 합리적이었으나, 이제는 제너럴리스트가 승리한다",
+      "Summary": "EliseAI의 CTO Tony Stoyanov는 기고문을 통해 AI 기술의 급격한 발전으로 인해 과거의 깊이 있는 전문가(Specialist) 중심 채용에서, 빠른 적응력과 다양한 도메인을 연결할 수 있는 제너럴리스트(Generalist)로 인재상이 변화하고 있다고 주장했다. 그는 McKinsey의 자동화 전망과 자사의 사례를 들며, 불확실성 속에서 주도적으로 문제를 해결하는 능력이 기술적 깊이보다 중요해지고 있음을 강조했다.",
+      "Tags": [
+        "Job Market",
+        "Opinion",
+        "Startup"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "해당 기사는 특정 기업(EliseAI)의 경영진이 작성한 오피니언(Opinion)으로, 산업 전반에 대한 제언을 담고 있으나 구체적인 사건이나 제품 출시가 동반되지 않은 '주장'에 해당한다. PE는 Tier 4 스타트업으로 분류되며, 명확한 대립/협력 관계의 SE가 부재하다. 실체적 사건성이 낮아 IE 점수는 최소한으로 산정되었다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "EliseAI",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE는 기사의 주체이자 채용 철학을 실행/주장하는 EliseAI를 선정(P4). SE는 McKinsey 등이 언급되었으나 단순 인용 및 데이터 출처에 불과하여 선정 기준 1항(단순 비교/벤치마크)에 의거하여 None 처리함."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 0.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 0.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 3,
+        "T2": 5,
+        "T3": 2,
+        "Rationale": "McKinsey 통계를 인용했으나 구체적인 데이터보다는 저자의 경험과 주장에 의존함. 외부 검증 없는 기고문."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 7,
+        "P3": 5,
+        "Rationale": "'Exploded', 'Dramatic shift' 등 다소 과장된 표현과 자사(EliseAI)의 사례를 일반화하는 경향이 있음."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 3,
+        "V3": 2,
+        "Rationale": "채용 시장의 트렌드를 언급하나 일반적인 'Specialist vs Generalist' 담론 수준을 크게 벗어나지 않으며 즉각적인 효용성은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "객관적 사실 전달보다는 특정 기업의 홍보성 성격이 짙은 오피니언이므로 품질 점수 소폭 하향 조정."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Hiring specialists made sense before AI — now generalists win",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 3.0,
+        "T2": 5.0,
+        "T3": 2.0,
+        "S_Avg": 3.33
+      },
+      "Noise": {
+        "P1": 4.0,
+        "P2": 7.0,
+        "P3": 5.0,
+        "N_Avg": 5.33
+      },
+      "Utility": {
+        "V1": 2.0,
+        "V2": 3.0,
+        "V3": 2.0,
+        "U_Avg": 2.33
+      },
+      "Fine_Adjustment": -0.5,
+      "ZS_Raw": 9.57,
+      "ZS_Final": 9.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 3,
+        "T2": 5,
+        "T3": 2,
+        "Rationale": "McKinsey 통계를 인용했으나 구체적인 데이터보다는 저자의 경험과 주장에 의존함. 외부 검증 없는 기고문."
+      },
+      "Noise": {
+        "P1": 4,
+        "P2": 7,
+        "P3": 5,
+        "Rationale": "'Exploded', 'Dramatic shift' 등 다소 과장된 표현과 자사(EliseAI)의 사례를 일반화하는 경향이 있음."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 3,
+        "V3": 2,
+        "Rationale": "채용 시장의 트렌드를 언급하나 일반적인 'Specialist vs Generalist' 담론 수준을 크게 벗어나지 않으며 즉각적인 효용성은 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "객관적 사실 전달보다는 특정 기업의 홍보성 성격이 짙은 오피니언이므로 품질 점수 소폭 하향 조정."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 0.5,
+        "IE_Total": 0.5
+      },
+      "IS_Raw": 1.0,
+      "IS_Final": 1.0,
+      "Score_Commentary": "해당 기사는 특정 기업(EliseAI)의 경영진이 작성한 오피니언(Opinion)으로, 산업 전반에 대한 제언을 담고 있으나 구체적인 사건이나 제품 출시가 동반되지 않은 '주장'에 해당한다. PE는 Tier 4 스타트업으로 분류되며, 명확한 대립/협력 관계의 SE가 부재하다. 실체적 사건성이 낮아 IE 점수는 최소한으로 산정되었다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "EliseAI",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE는 기사의 주체이자 채용 철학을 실행/주장하는 EliseAI를 선정(P4). SE는 McKinsey 등이 언급되었으나 단순 인용 및 데이터 출처에 불과하여 선정 기준 1항(단순 비교/벤치마크)에 의거하여 None 처리함."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 0.5,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-21T15:19:18.193484+00:00",
+  "rejected": true,
+  "reject_reason": "manual_batch_reject"
+}

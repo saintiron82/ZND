@@ -1,0 +1,191 @@
+{
+  "article_id": "a4f0ea",
+  "cached_at": "2025-12-19T18:10:27.143885+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/11/openai_logo_wall-3.png",
+  "summary": "OpenAI가 월 8유로 수준의 보급형 구독제 'ChatGPT Go'를 유럽, 남미 등 70개국 이상으로 확대 출시했다. 해당 요금제는 이미지 생성 및 파일 분석 기능을 제공하지만, Sora나 최신 API 접근은 제한된다. 동시에 무료 및 Go 등급 사용자에게 자동 모델 라우터를 제거하고 더 빠른 모델(GPT-5.2 Instant)을 기본값으로 설정하는 비용 절감 조치를 단행했다.",
+  "text": "OpenAI is significantly expanding the availability of ChatGPT Go, its budget-friendly subscription tier. Following a launch in India in August, the plan is now available in over 70 additional countries—including markets across Europe and South America—according to an updated support page. In Germany, the service costs 8 euros per month. Beyond extended access to the flagship model, the subscription adds capabilities for image generation, file analysis, and data evaluation, along with a larger context window for handling longer conversations. Users can also organize projects and build their own custom GPTs. However, the plan excludes access to Sora, the API, and older models like GPT-4o. Ad Share Recommend our article Share The broader rollout comes alongside a cost-saving adjustment to how the system handles queries. OpenAI recently removed the automatic model router for users on the free tier and the Go subscription. By default, the system now answers requests using the faster GPT-5.2 Instant. Users must manually switch to more powerful reasoning models when needed, as the automatic routing feature is now exclusive to the higher-priced plans. Ad",
+  "title": "OpenAI brings cheaper subscription tier \"Go\" to more markets",
+  "url": "https://the-decoder.com/openai-brings-cheaper-subscription-tier-to-more-markets/",
+  "title_ko": "OpenAI, 저가형 구독 요금제 'ChatGPT Go' 출시 국가 대폭 확대",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1 기업의 글로벌 서비스 확장이므로 영향력은 있으나, 기술적 혁신보다는 기존 서비스의 Pricing/Market 전략 변경(Corporate Scope)에 해당함. 70개국 확대라는 구체적 실현(Realization) 단계임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "서비스 확장 및 정책 변경의 실행 주체."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 8.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "Rationale": "가격(8유로), 대상 국가 수(70개국) 등 수치 제시"
+    },
+    "Utility": {
+      "V1": 6,
+      "Rationale": "AI 접근성 확대 측면에서 시장 영향력 존재"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "a4f0ea",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "OpenAI, 저가형 구독 요금제 'ChatGPT Go' 출시 국가 대폭 확대",
+      "Summary": "OpenAI가 월 8유로 수준의 보급형 구독제 'ChatGPT Go'를 유럽, 남미 등 70개국 이상으로 확대 출시했다. 해당 요금제는 이미지 생성 및 파일 분석 기능을 제공하지만, Sora나 최신 API 접근은 제한된다. 동시에 무료 및 Go 등급 사용자에게 자동 모델 라우터를 제거하고 더 빠른 모델(GPT-5.2 Instant)을 기본값으로 설정하는 비용 절감 조치를 단행했다.",
+      "Tags": [
+        "OpenAI",
+        "Pricing",
+        "GPT"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1 기업의 글로벌 서비스 확장이므로 영향력은 있으나, 기술적 혁신보다는 기존 서비스의 Pricing/Market 전략 변경(Corporate Scope)에 해당함. 70개국 확대라는 구체적 실현(Realization) 단계임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "서비스 확장 및 정책 변경의 실행 주체."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "Rationale": "가격(8유로), 대상 국가 수(70개국) 등 수치 제시"
+      },
+      "Utility": {
+        "V1": 6,
+        "Rationale": "AI 접근성 확대 측면에서 시장 영향력 존재"
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "OpenAI brings cheaper subscription tier \"Go\" to more markets",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 0.0,
+        "T3": 0.0,
+        "S_Avg": 2.0
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 0.0,
+        "V3": 0.0,
+        "U_Avg": 2.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.8,
+      "ZS_Final": 8.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "Rationale": "가격(8유로), 대상 국가 수(70개국) 등 수치 제시"
+      },
+      "Utility": {
+        "V1": 6,
+        "Rationale": "AI 접근성 확대 측면에서 시장 영향력 존재"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "Tier 1 기업의 글로벌 서비스 확장이므로 영향력은 있으나, 기술적 혁신보다는 기존 서비스의 Pricing/Market 전략 변경(Corporate Scope)에 해당함. 70개국 확대라는 구체적 실현(Realization) 단계임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "서비스 확장 및 정책 변경의 실행 주체."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-19T20:00:28.587528+00:00",
+  "edition": "251219_FRI_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-19T20:00:28.852270+00:00",
+  "category": "Business",
+  "dedup_status": "selected",
+  "published": true,
+  "published_at": "2025-12-19T20:35:07.823956+00:00",
+  "data_file": "the_decoder_a4f0ea.json",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:08.162941+00:00"
+}

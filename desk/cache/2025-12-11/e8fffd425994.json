@@ -1,0 +1,66 @@
+{
+  "title": "Deepening AI Safety Research with UK AI Security Institute (AISI)",
+  "summary": "구글 딥마인드(Google DeepMind)가 영국 AI 보안 연구소(AISI)와 AI 안전 및 보안 연구를 위한 새로운 MOU를 체결하고 파트너십을 확대했습니다. 이 협력은 기존 모델 테스트를 넘어 AI 시스템의 '사고 과정(Chain-of-Thought)' 모니터링, 사회 및 감정적 영향 이해, 경제 시스템 영향 평가 등 광범위한 기초 연구를 포함합니다. 양측은 독점 모델, 데이터 및 연구 결과를 공유하고 공동 보고서를 발행하여 AI 안전 분야의 발전을 가속화하는 것을 목표로 합니다.",
+  "image": "https://lh3.googleusercontent.com/YXgJ_O9k-ZBnsZSuLTv1a4YRWyP2C5kuSRJcyq3F25spV0pLs3tqXGX7Pe2aP6bLjVYM6cwzMfxID3-J4W5HrvP_teJB2bBe4PJcTAgBd8J99p4GPBQ=w1600-h900-n-nu",
+  "text": "Today, we're announcing an expanded partnership with the UK AI Security Institute (AISI) through a new Memorandum of Understanding focused on foundational security and safety research, to help ensure artificial intelligence is developed safely and benefits everyone. The research partnership with AISI is an important part of our broader collaboration with the UK government on accelerating safe and beneficial AI progress. Building on a foundation of collaboration AI holds immense potential to benefit humanity by helping treat disease, accelerate scientific discovery, create economic prosperity and tackle climate change. For these benefits to be realised, we must put safety and responsibility at the heart of development. Evaluating our models against a broad spectrum of potential risks remains a critical part of our safety strategy, and external partnerships are an important element of this work. This is why we have partnered with the UK AISI since its inception in November 2023 to test our most capable models. We are deeply committed to the UK AISI’s goal to equip governments, industry and wider society with a scientific understanding of the potential risks posed by advanced AI as well as potential solutions and mitigations. We are actively working with AISI to build more robust evaluations for AI models, and our teams have collaborated on safety research to move the field forward, including recent work on Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety. Building on this success, today we are broadening our partnership from testing to include wider, more foundational, research in a variety of areas. What the partnership involves Under this new research partnership, we're broadening our collaboration to include: Sharing access to our proprietary models, data and ideas to accelerate research progress Joint reports and publications sharing findings with the research community More collaborative security and safety research combining our teams' expertise Technical discussions to tackle complex safety challenges Key research areas Our joint research with AISI focuses on critical areas where Google DeepMind's expertise, interdisciplinary teams, and years of pioneering responsible research can help make AI systems more safe and secure: Monitoring AI reasoning processes We will work on techniques to monitor an AI system’s “thinking”, also commonly referred to as its chain-of-thought (CoT). This work builds on previous Google DeepMind research as well, and our recent collaboration on this topic with AISI, OpenAI, Anthropic and other partners. CoT monitoring helps us understand how an AI system produces its answers, complementing interpretability research. Understanding social and emotional impacts We will work together to investigate the ethical implications of socioaffective misalignment; that is, the potential for AI models to behave in ways which do not align with human wellbeing, even when they’re technically following instructions correctly. This research will build on existing Google DeepMind work that has helped define this critical area of AI safety. Evaluating economic systems We will explore the potential impact of AI on economic systems by simulating real-world tasks across different environments. Experts will score and validate these tasks, after which they will be categorised along dimensions like complexity or representativeness, to help predict factors like long-term labour market impact. Working together to realise the benefits of AI Our partnership with AISI is one element of how we aim to realise the benefits of AI for humanity while mitigating potential risks. Our wider strategy includes foresight research, extensive safety training that goes hand-in-hand with capability development, rigorous testing of our models, and the development of better tools and frameworks to understand and mitigate risk. Strong internal governance processes are also essential for safe and responsible AI development, as is collaborating with independent external experts who bring fresh perspectives and diverse expertise to our work. Google DeepMind’s Responsibility and Safety Council works across teams to monitor emerging risk, review ethics and safety assessments and implement relevant technical and policy mitigations. We also partner with other external experts like Apollo Research, Vaultis, Dreadnode and more, to conduct extensive testing and evaluation of our models, including Gemini 3, our most intelligent and secure model to date. Additionally, Google DeepMind is a proud founding member of the Frontier Model Forum, as well as the Partnership on AI, where we focus on ensuring safe and responsible development of frontier AI models and increasing collaboration on important safety issues. We hope our expanded partnership with AISI will allow us to build more robust approaches to AI safety for the benefit not just of our own organisations, but also the wider industry and everyone who interacts with AI systems.",
+  "url": "https://deepmind.google/blog/deepening-our-partnership-with-the-uk-ai-security-institute/",
+  "article_id": "4dqlqv",
+  "cached_at": "2025-12-11T06:28:02.473024+00:00",
+  "title_ko": "구글 딥마인드, 영국 AI 보안 연구소(AISI)와 AI 안전 연구 협력 확대 발표",
+  "impact_score": 10,
+  "impact_evidence": {
+    "entity": {
+      "id": "TIER_1_GRAND_ALLIANCE",
+      "weight": 5
+    },
+    "events": [
+      {
+        "id": "INDUSTRY_STANDARD_ESTABLISHMENT",
+        "weight": 4
+      },
+      {
+        "id": "ANALYST_IMPACT_BOOST",
+        "weight": 1.5
+      }
+    ]
+  },
+  "tags": [
+    "AI_ETHICS",
+    "REGULATION",
+    "RESEARCH_PAPER"
+  ],
+  "evidence": {
+    "penalties": [
+      {
+        "id": "VAGUE_FUTURE_PROMISE",
+        "value": 0.5
+      }
+    ],
+    "credits": [
+      {
+        "id": "ETHICAL_TRANSPARENCY",
+        "value": 1
+      },
+      {
+        "id": "ARCHITECTURAL_DEEP_DIVE",
+        "value": 0.5
+      }
+    ],
+    "modifiers": [
+      {
+        "id": "IRRELEVANT_ENTITY_NOISE",
+        "applied": false
+      }
+    ]
+  },
+  "Overall review": "TIER 1 기업과 정부 산하 기관의 AI 안전 연구 협력은 산업 표준 구축에 기여하여 높은 파급력(IS: 8.0)을 가집니다. 윤리적 투명성과 'Chain-of-Thought' 모니터링 등 구체적 연구 주제를 제시해 품질(ZS: 3.0)이 우수하지만, 향후 계획에 대한 '기대감' 표현으로 미세한 감점(VAGUE_FUTURE_PROMISE)이 있습니다.",
+  "review_en": "The collaboration between a TIER 1 company (Google DeepMind) and a government institute (AISI) on AI safety research contributes to industry standard setting, resulting in a high impact score (IS: 8.0). The article's quality (ZS: 3.0) is excellent due to its ethical transparency and detailed research areas like 'Chain-of-Thought' monitoring, though a minor deduction was applied for vague future-oriented language (VAGUE_FUTURE_PROMISE).",
+  "zero_echo_score": 4,
+  "source_id": "deepmind",
+  "original_title": "Deepening AI Safety Research with UK AI Security Institute (AISI)",
+  "saved": true,
+  "saved_at": "2025-12-11T06:28:38.343Z",
+  "version": "V1.0",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:01.185311+00:00"
+}

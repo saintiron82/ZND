@@ -1,0 +1,17 @@
+{
+  "id": "828dd0",
+  "article_id": "828dd0",
+  "title_ko": "OpenAI, 코딩 특화 모델 GPT-5.2-Codex 및 사이버 보안 전용 프로그램 공개",
+  "summary": "OpenAI가 자율 소프트웨어 에이전트 기능을 강화한 'GPT-5.2-Codex'를 출시했다. 긴 문맥 처리를 위한 압축 기술이 적용되었으며, 사이버 보안 전문가를 위한 제한 해제 버전도 제공된다. 벤치마크 상 성능 향상은 미미하나, 취약점 분석 등 보안 분야에서의 'Dual-use' 위험성과 효용성이 동시에 강조되었다.",
+  "url": "https://the-decoder.com/openai-updates-codex-model-adds-trusted-access-program-for-cyber-defense/",
+  "tags": [],
+  "category": "",
+  "zero_echo_score": 8.2,
+  "impact_score": 7.0,
+  "published_at": "2025-12-19T20:00:29.440573+00:00",
+  "source_id": "the_decoder",
+  "edition": "251219_FRI_1",
+  "original_title": "OpenAI updates Codex model, adds trusted access program for cyber defense",
+  "publish_id": "7JbgPGhDuZlBsBFAYzl2",
+  "edition_name": "12/20 1차 발행"
+}

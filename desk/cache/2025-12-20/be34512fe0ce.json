@@ -1,0 +1,140 @@
+{
+  "article_id": "be3451",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-19T18:04:18.295868+00:00",
+  "crawled_at": "2025-12-19T19:35:56.969622+00:00",
+  "edition": "251219_FRI_1",
+  "evidence": {},
+  "image": "https://cdn.aitimes.com/news/photo/202512/204926_206331_5211.png",
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 0.0,
+        "IE_Total": 0.0
+      },
+      "IS_Raw": 0.5,
+      "IS_Final": 0.5,
+      "Score_Commentary": "Tier 4(스타트업)의 설립 및 계획 단계(X1, Y1). Hard Filter 적용 대상."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "AMI Labs",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "GIP: 신설 스타트업(Software_LLM_Dev T4)."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 0,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "impact_score": 0.5,
+  "modified_at": "2025-12-19T14:53:25+09:00",
+  "original_title": "르쿤, '월드 모델' 스타트업 5.2조 기업 가치로 초기 투자 협상 중",
+  "published_at": "2025-12-19T14:53:25+09:00",
+  "raw_analysis": {
+    "Article_ID": "be3451",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "얀 르쿤, 월드 모델 스타트업 'AMI 랩스' 설립 추진",
+      "Summary": "메타의 얀 르쿤이 파리를 거점으로 하는 AI 스타트업 AMI 랩스를 설립하고 5억 유로 규모의 시드 투자를 유치 중이다. 월드 모델 개발에 집중할 예정이다.",
+      "Tags": [
+        "Startup",
+        "Yann LeCun",
+        "Investment"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 4(스타트업)의 설립 및 계획 단계(X1, Y1). Hard Filter 적용 대상.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "AMI Labs",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "GIP: 신설 스타트업(Software_LLM_Dev T4)."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 0,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 0
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {}
+  },
+  "saved": true,
+  "saved_at": "2025-12-19T19:44:34.220496+00:00",
+  "schema_version": "V1.0",
+  "source_id": "venturebeat",
+  "status": "ACCEPTED",
+  "summary": "메타의 얀 르쿤이 파리를 거점으로 하는 AI 스타트업 AMI 랩스를 설립하고 5억 유로 규모의 시드 투자를 유치 중이다. 월드 모델 개발에 집중할 예정이다.",
+  "text": "(사진=메타) 얀 르쿤 메타 최고 AI 과학자의 새로운 월드 모델 스타트업이 30억유로(약 5조1900억원)의 기업 가치로 유치에 나선 것으로 알려졌다. 18일(현지시간) 파이낸셜 타임스에 따르면, 르쿤 수석은 1월에 출범할 '어드밴스드 머신 인텔리전스 랩스(AMI 랩스)'를 위해 5억유로(약 8664억8원)의 시드 투자 협상을 진행 중이다. 투자자들에 대해서는 알려지지 않았다. 르쿤 수석은 지난 4일 파리에서 열린 'AI-펄스' 행사에서 메타는 투자자가 아니라고 밝혔다. 또 프랑스 헬스케어 스타트업 나블라의 알렉상드르 르브룬 창립자를 AMI 랩스 CEO로 영입했다. 르쿤 수석은 회장직을 맡을 예정이다. 델핀 그롤 나블라 공동 창립자도 성명을 통해 \"르브룬은 이사회의 승인을 통해 AMI 랩스의 CEO로 자리를 옮길 예정\"이라고 밝혔다. 동시에 AMI 랩스와 나블라는 전략적 연구 파트너십을 체결했다고 덧붙였다. AMI 랩스는 프랑스 파리에 본사를 차리게 된다. 그는 \"실리콘 밸리는 생성 모델에 완전히 빠져 있다\"라며, 파리를 거점으로 삼겠다는 뜻을 밝힌 바 있다. 그는 올해 말까지 메타에 재직한 뒤 내년 1월부터 본격적으로 AMI 랩스 활동을 시작한다. 알려진 대로 월드 모델 개발에 집중할 계획이다. 이번 투자 논의는 르쿤 수석이 12년간 몸담았던 메타를 떠난다고 발표한 지 한달 만에 이뤄진 것이다. 또 최근 가장 주목받는 AI 스타트업 시드 투자로 꼽힌다. 지난 4월에는 일리야 수츠케버 전 오픈AI 수석 과학자의 SSI가 20억달러(약 2조9570억원)를 투자 유치를 통해 320억달러(약 47조 3120억원)의 기업 가치를 인정받았다. 또 미라 무라티 전 오픈AI CTO의 싱킹 머신 랩(TML)은 120억달러의 가치로 20억달러의 시드 펀딩에 성공한 것으로 알려졌다. 르쿤 수석과 함께 초기 AI 발전을 이끈 'AI 대모' 페이페이 리 스탠포드대학교 교수도 지난해 월드 모델 스타트업 월드 랩스를 설립했다. 두차례의 시드 라운드를 통해 2억3000만달러(약 3400억달러)를 유치했으며, 당시 10억달러(약 1조4785억원) 규모의 가치를 평가받은 것으로 알려졌다. 월드 랩스는 지난달 첫 상용 월드 모델인 ‘마블(Marble)’을 공식 출시했다. 임대준 기자 ydj@aitimes.com",
+  "title": "르쿤, '월드 모델' 스타트업 5.2조 기업 가치로 초기 투자 협상 중",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204926",
+  "zero_echo_score": 5.0,
+  "title_ko": "얀 르쿤, 월드 모델 스타트업 'AMI 랩스' 설립 추진",
+  "tags": [],
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 4(스타트업)의 설립 및 계획 단계(X1, Y1). Hard Filter 적용 대상.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "AMI Labs",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "GIP: 신설 스타트업(Software_LLM_Dev T4)."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 0,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 0
+      }
+    }
+  },
+  "ZES_Raw_Metrics": {},
+  "rejected": false,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-21T16:12:09.223158+00:00"
+}

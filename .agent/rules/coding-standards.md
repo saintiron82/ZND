@@ -1,4 +1,8 @@
-﻿# Coding & Execution Rules
+﻿---
+trigger: always_on
+---
+
+# Coding & Execution Rules
 
 ## Type Safety
 *   **No Any**: any 타입 사용을 지양합니다.
@@ -13,3 +17,6 @@
 
 ## Styling
 *   **Stack**: Tailwind CSS v4와 다크 모드 지원을 기본으로 합니다.
+
+## 인코딩 
+  무조건 UTF-8로 해야 한다.

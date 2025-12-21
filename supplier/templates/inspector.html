@@ -210,11 +210,22 @@
                     Click '🔄 List' to load targets.
                 </div>
             </div>
+            <!-- 전체 합계 표시 영역 -->
+            <div id="summaryArea" style="padding:10px; border-top:1px solid #ddd; background:#f0f0f0; display:none;">
+                <div
+                    style="font-size:0.85em; color:#333; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+                    <span>📊 전체: <strong id="totalCount">0</strong></span>
+                    <span style="color:#dc3545;">NEW: <strong id="totalNew">0</strong></span>
+                    <span style="color:#17a2b8;">📦: <strong id="totalCached">0</strong></span>
+                    <span style="color:#28a745;">✅: <strong id="totalAccepted">0</strong></span>
+                    <span style="color:#888;">⏭️: <strong id="totalSkipped">0</strong></span>
+                </div>
+            </div>
             <!-- Step 3 Action Button Area -->
             <div id="groupActionArea" style="padding:10px; border-top:1px solid #ddd; background:#eee; display:none;">
                 <button class="action-btn" style="font-size:0.9em; padding:10px; background:#17a2b8;"
                     onclick="fetchSelectedContent()">
-                    📥 Fetch Content & Prompt
+                    📥 Fetch Content &amp; Prompt
                 </button>
             </div>
         </div>
@@ -272,7 +283,7 @@
         <h2 id="loadingText">Processing...</h2>
     </div>
 
-    <script src="/static/js/inspector.js?v=2.7"></script>
+    <script src="/static/js/inspector.js?v=3.0"></script>
 
 </body>
 

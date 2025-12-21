@@ -878,7 +878,7 @@
                         </div>
                         <button class="btn"
                             style="width: 100%; background: #17a2b8; color: white; padding: 8px; margin-top: 6px;"
-                            onclick="window.open('http://localhost:8080/preview', '_blank')">👁️ 프리뷰 사이트 열기</button>
+                            onclick="window.open('http://localhost:3000/preview', '_blank')">👁️ 프리뷰 사이트 열기</button>
                     </div>
 
                     <!-- 위험 작업 -->
@@ -1035,17 +1035,35 @@
                         if (availableIssues.length === 0) {
                             panel.innerHTML = '<div style="text-align: center; color: #666; padding: 10px; font-size: 0.85em;">발행된 회차가 없습니다</div>';
                         } else {
-                            panel.innerHTML = availableIssues.map(issue => `
-                                <div class="issue-card" style="background: rgba(40,167,69,0.1); border: 1px solid #28a745; border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer;" onclick="viewIssue('${issue.id}')">
+                            panel.innerHTML = availableIssues.map(issue => {
+                                const isPreview = issue.status === 'preview';
+                                const isReleased = issue.status === 'released';
+                                const borderColor = isReleased ? '#28a745' : '#ffc107';
+                                const bgColor = isReleased ? 'rgba(40,167,69,0.1)' : 'rgba(255,193,7,0.1)';
+                                const statusBadge = isPreview
+                                    ? '<span style="background:#ffc107;color:#333;padding:2px 6px;border-radius:4px;font-size:0.7em;font-weight:bold;">Preview</span>'
+                                    : '<span style="background:#28a745;color:white;padding:2px 6px;border-radius:4px;font-size:0.7em;font-weight:bold;">Released</span>';
+                                const releaseBtn = isPreview
+                                    ? `<button onclick="event.stopPropagation(); releaseIssue('${issue.id}', '${issue.edition_name}')" style="background:#28a745;color:white;border:none;padding:4px 8px;border-radius:4px;font-size:0.75em;cursor:pointer;margin-left:6px;">🚀 Release</button>`
+                                    : '';
+                                return `
+                                <div class="issue-card" style="background: ${bgColor}; border: 1px solid ${borderColor}; border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer;" onclick="viewIssue('${issue.id}')">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span style="font-weight: bold; color: #28a745;">${issue.edition_name}</span>
-                                        <span style="font-size: 0.8em; color: #888;">${issue.article_count || 0}건</span>
+                                        <div style="display:flex; align-items:center; gap:6px;">
+                                            <span style="font-weight: bold; color: ${borderColor};">${issue.edition_name}</span>
+                                            ${statusBadge}
+                                        </div>
+                                        <div style="display:flex; align-items:center;">
+                                            <span style="font-size: 0.8em; color: #888;">${issue.article_count || 0}건</span>
+                                            ${releaseBtn}
+                                        </div>
                                     </div>
                                     <div style="font-size: 0.75em; color: #aaa; margin-top: 4px;">
                                         ${issue.published_at ? new Date(issue.published_at).toLocaleString('ko-KR') : '-'}
                                     </div>
                                 </div>
-                            `).join('');
+                            `;
+                            }).join('');
                         }
 
                         console.log('📰 Issue list refreshed:', availableIssues.length);
@@ -1061,6 +1079,31 @@
                     const selector = document.getElementById('issueSelector');
                     selector.value = publishId;
                     onIssueSelectorChange();
+                }
+
+                // Release a preview issue to production
+                async function releaseIssue(publishId, editionName) {
+                    if (!confirm(`🚀 "${editionName}" 회차를 정식 발행(Release)하시겠습니까?\n\n이 작업 후 웹사이트에 즉시 표시됩니다.`)) {
+                        return;
+                    }
+
+                    try {
+                        const resp = await fetch('/api/publications/release', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ publish_id: publishId })
+                        });
+                        const result = await resp.json();
+
+                        if (result.success) {
+                            alert(`✅ ${result.message || '릴리즈 완료!'}`);
+                            await refreshIssueList();
+                        } else {
+                            alert(`❌ 릴리즈 실패: ${result.error}`);
+                        }
+                    } catch (e) {
+                        alert(`❌ 오류: ${e.message}`);
+                    }
                 }
 
                 async function onIssueSelectorChange() {

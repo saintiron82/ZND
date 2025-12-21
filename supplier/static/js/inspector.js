@@ -79,6 +79,11 @@ function renderGroupList(showCheckboxes = true) {
     sortedKeys.forEach(sid => {
         const items = sourceGroups[sid];
         const newCount = items.filter(i => i.status === 'NEW').length;
+        const acceptedCount = items.filter(i => i.status === 'ACCEPTED').length;
+        const cachedCount = items.filter(i => loadedContent[i.url] && (loadedContent[i.url].text || loadedContent[i.url].summary)).length;
+        // 중복/스킵된 항목 (SKIPPED, REJECTED, WORTHLESS, MLL_FAILED 등)
+        const skippedStatuses = ['SKIPPED', 'REJECTED', 'WORTHLESS', 'MLL_FAILED', 'INVALID'];
+        const skippedCount = items.filter(i => skippedStatuses.includes(i.status)).length;
 
         const div = document.createElement('div');
         div.className = 'group-item';
@@ -94,6 +99,15 @@ function renderGroupList(showCheckboxes = true) {
         };
 
         const chkId = `chk-${sid}`;
+        // 상태별 개수 표시
+        let statusParts = [];
+        if (newCount > 0) statusParts.push(`<span style="color:#dc3545; font-weight:bold;">NEW ${newCount}</span>`);
+        if (cachedCount > 0) statusParts.push(`<span style="color:#17a2b8;">📦${cachedCount}</span>`);
+        if (acceptedCount > 0) statusParts.push(`<span style="color:#28a745;">✅${acceptedCount}</span>`);
+        if (skippedCount > 0) statusParts.push(`<span style="color:#888; text-decoration:line-through;">⏭️${skippedCount}</span>`);
+
+        const statusDisplay = statusParts.length > 0 ? statusParts.join(' · ') : '<span style="color:#888;">-</span>';
+
         div.innerHTML = `
             <div style="display:flex; align-items:center;">
                 <input type="checkbox" id="${chkId}" class="group-chk" value="${sid}" checked style="margin-right:10px; transform:scale(1.2);">
@@ -102,14 +116,48 @@ function renderGroupList(showCheckboxes = true) {
                         <span style="font-weight:bold; font-size:1.1em;">${sid}</span>
                         <button onclick="resetGroupStatus('${sid}')" title="Reset all to NEW" style="font-size:0.8em; padding:2px 6px; cursor:pointer;">↺</button>
                     </div>
-                    <div class="group-stat">
-                        Total: ${items.length} | <span style="color:${newCount > 0 ? 'red' : 'green'}">New: ${newCount}</span>
+                    <div class="group-stat" style="margin-top:3px;">
+                        <span style="color:#666;">전체 ${items.length}</span> | ${statusDisplay}
                     </div>
                 </div>
             </div>
         `;
         container.appendChild(div);
     });
+
+    // 전체 합계 업데이트
+    updateSummary();
+}
+
+// 전체 합계 표시 업데이트
+function updateSummary() {
+    const skippedStatuses = ['SKIPPED', 'REJECTED', 'WORTHLESS', 'MLL_FAILED', 'INVALID'];
+
+    let total = 0, newCount = 0, cachedCount = 0, acceptedCount = 0, skippedCount = 0;
+
+    Object.values(sourceGroups).forEach(items => {
+        items.forEach(item => {
+            total++;
+            if (item.status === 'NEW') newCount++;
+            else if (item.status === 'ACCEPTED') acceptedCount++;
+            else if (skippedStatuses.includes(item.status)) skippedCount++;
+
+            if (loadedContent[item.url] && (loadedContent[item.url].text || loadedContent[item.url].summary)) {
+                cachedCount++;
+            }
+        });
+    });
+
+    // DOM 업데이트
+    const summaryArea = document.getElementById('summaryArea');
+    if (summaryArea && total > 0) {
+        summaryArea.style.display = 'block';
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('totalNew').textContent = newCount;
+        document.getElementById('totalCached').textContent = cachedCount;
+        document.getElementById('totalAccepted').textContent = acceptedCount;
+        document.getElementById('totalSkipped').textContent = skippedCount;
+    }
 }
 
 function resetGroupStatus(sid) {

@@ -767,7 +767,7 @@
   "https://the-decoder.com/meta-preps-mango-and-avocado-ai-models-for-2026/": {
     "status": "WORTHLESS",
     "reason": "text_too_short_manual_batch",
-    "timestamp": "2025-12-20T19:03:54.498056+00:00"
+    "timestamp": "2025-12-19T19:58:48.972895+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204919": {
     "status": "ACCEPTED",
@@ -854,9 +854,59 @@
     "reason": null,
     "timestamp": "2025-12-20T03:09:18.825149+00:00"
   },
-  "https://www.aitimes.com/news/articleView.html?idxno=204948": {
-    "status": "WORTHLESS",
-    "reason": "text_too_short_manual_batch",
-    "timestamp": "2025-12-20T19:03:41.984414+00:00"
+  "https://www.aitimes.com/news/articleView.html?idxno=204950": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:37.181810+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204953": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:37.650090+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204954": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:38.127310+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204951": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:38.538881+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204952": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:38.958898+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204956": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:39.331867+00:00"
+  },
+  "https://the-decoder.com/telling-consumers-an-ad-is-ai-generated-cuts-clicks-by-31-percent-study-finds/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:39.723768+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204955": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:40.109467+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204957": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:40.542480+00:00"
+  },
+  "https://the-decoder.com/googles-open-standard-lets-ai-agents-build-user-interfaces-on-the-fly/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:40.931562+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204958": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-20T19:30:41.368793+00:00"
   }
 }

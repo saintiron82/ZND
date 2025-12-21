@@ -623,6 +623,32 @@ class DBClient:
         except Exception as e:
             return None
 
+    def get_articles_by_publish_id(self, publish_id):
+        """
+        Firestore에서 publish_id로 기사 목록 조회
+        Args:
+            publish_id: 발행 회차 ID
+        Returns: list of article dicts
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return []
+            
+        try:
+            docs = self.db.collection('articles').where('publish_id', '==', publish_id).stream()
+            
+            articles = []
+            for doc in docs:
+                data = doc.to_dict()
+                data['id'] = doc.id
+                articles.append(data)
+                
+            print(f"📰 [Firestore] Found {len(articles)} articles for publish_id: {publish_id}")
+            return articles
+        except Exception as e:
+            print(f"❌ [Firestore] Get Articles by Publish ID Failed: {e}")
+            return []
+
     def save_issue_index_file(self, issue_data):
         """
         Save a standalone JSON index file for the publication.

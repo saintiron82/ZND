@@ -78,7 +78,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
     };
 
     // 발행일(published_at) 우선, 없으면 crawled_at 사용
-    const dateStr = formatDate(published_at) || formatDate(crawled_at);
+    // [Yena] currentDate(회차 날짜)가 있으면 우선 사용하여 달력과 일치시킴
+    const dateStr = currentDate ? formatDate(currentDate) : (formatDate(published_at) || formatDate(crawled_at));
 
     // Dynamic Title Size based on Impact Score
     const getTitleSize = (s?: number) => {

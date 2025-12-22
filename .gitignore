@@ -9,3 +9,5 @@ supplier/cache/
 supplier/staging/
 supplier/*.json
 supplier/*.txt
+desk/.env
+*.pyc

@@ -50,7 +50,7 @@ export default function PageFrame({
             <Header currentDate={currentDate} editionName={editionName} />
 
             {/* 3단 레이아웃: 좌측 네비 | 본문 | 우측 네비 */}
-            <div className="grid grid-cols-1 lg:grid-cols-[120px_1fr_200px] min-h-[calc(100vh-200px)]">
+            <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_200px] min-h-[calc(100vh-200px)]">
 
                 {/* 좌측 열: PREV 버튼 */}
                 <div className="hidden lg:flex flex-col items-center pt-8 px-2">

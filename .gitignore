@@ -11,3 +11,5 @@ supplier/*.json
 supplier/*.txt
 desk/.env
 *.pyc
+desk/venv/Lib/
+desk/venv

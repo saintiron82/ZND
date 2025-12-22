@@ -69,12 +69,28 @@ def desk_list():
         include_published = request.args.get('include_published', 'false').lower() == 'true'
         include_trash = request.args.get('include_trash', 'false').lower() == 'true'
         
-        cache_date_dir = os.path.join(CACHE_DIR, date_str)
+        # [MODIFIED] Support 'all' date for Global Staging View
+        is_all_dates = (date_str == 'all')
+        
+        target_dirs = []
+        if is_all_dates:
+            if os.path.exists(CACHE_DIR):
+                # Scan all date folders
+                target_dirs = [os.path.join(CACHE_DIR, d) for d in os.listdir(CACHE_DIR) if os.path.isdir(os.path.join(CACHE_DIR, d))]
+        else:
+            cache_date_dir = os.path.join(CACHE_DIR, date_str)
+            if os.path.exists(cache_date_dir):
+                target_dirs = [cache_date_dir]
+        
         articles = []
         
-        if os.path.exists(cache_date_dir):
-            from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
-
+        from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
+        
+        for cache_date_dir in target_dirs:
+            # Skip if not directory (double check)
+            if not os.path.isdir(cache_date_dir):
+                continue
+                
             for filename in os.listdir(cache_date_dir):
                 if not filename.endswith('.json'):
                     continue
@@ -93,18 +109,27 @@ def desk_list():
                     if not is_analyzed:
                         continue
                     
-                    # 기발행 필터링 (기본적으로 제외)
-                    if not include_published and data.get('published'):
-                        continue
-
-                    # 휴지통(Rejected/Skipped/Worthless) 필터링
-                    # include_trash=True -> Show everything (including rejected)
-                    # include_trash=False -> Hide rejected
-                    is_rejected = data.get('rejected', False)  # DB status checks might be needed if not in file, but usually synced
+                    # [CRITICAL FILTER]
+                    # If date='all' (Global Staging), strictly hide Published & Rejected
+                    # We only want "Work in Progress" items.
+                    is_published = data.get('published', False)
+                    is_rejected = data.get('rejected', False)
                     
+                    # 1. Trash Filter
                     if not include_trash and is_rejected:
                         continue
+                        
+                    # 2. Published Filter
+                    # If include_published is True, we show them. But for Global Staging default should be strict?
+                    # User request: "미발행된 모든 기사가 대상이다" -> Published items technically aren't "un-published".
+                    # But if user un-published them (published=False), they should show.
+                    if not include_published and is_published:
+                        continue
 
+                    # If date='all', usually we want ONLY unpublished.
+                    # But allow include_published to override if user assumes they want to see EVERYTHING.
+                    # (Current usage: desk/list defaults include_published=False)
+                    
                     articles.append({
                         'filename': filename,
                         'filepath': filepath,
@@ -118,16 +143,19 @@ def desk_list():
                         'source_id': data.get('source_id', ''),
                         'rejected': is_rejected,
                         'reject_reason': data.get('reject_reason', ''),
-                        'published': data.get('published', False),
+                        'published': is_published,
                         'publish_id': data.get('publish_id', ''),
                         'edition_name': data.get('edition_name', ''),
                         'staged_at': data.get('staged_at', ''),
                         'dedup_status': data.get('dedup_status'),
                         'category': data.get('category'),
+                        'date_folder': os.path.basename(cache_date_dir), # [NEW] Explicit folder name
                         'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat()
                     })
                 except Exception as e:
-                    print(f"⚠️ [Staging List] Error reading {filename}: {e}")
+                    # Don't spam logs for every file error in 'all' mode
+                    if not is_all_dates: 
+                        print(f"⚠️ [Staging List] Error reading {filename}: {e}")
         
         # 정렬: 대기중 → 발행됨 → 거부됨, 날짜 내림차순
         articles.sort(key=lambda x: (
@@ -161,8 +189,22 @@ def desk_reject_selected():
         
         for filename in filenames:
             filepath = os.path.join(cache_date_dir, filename)
+            
+            # [MODIFIED] If not found in target dir (or date='all'), search all folders
             if not os.path.exists(filepath):
-                continue
+                found_path = None
+                if os.path.exists(CACHE_DIR):
+                    for d in os.listdir(CACHE_DIR):
+                        possible_path = os.path.join(CACHE_DIR, d, filename)
+                        if os.path.exists(possible_path):
+                            found_path = possible_path
+                            break
+                
+                if found_path:
+                    filepath = found_path
+                else:
+                    print(f"⚠️ Reject skip: {filename} not found")
+                    continue
                 
             try:
                 with open(filepath, 'r', encoding='utf-8') as f:
@@ -246,13 +288,29 @@ def desk_file():
         if not filename:
             return jsonify({'error': 'filename is required'}), 400
         
+        # 1. Try specified date first
         filepath = os.path.join(CACHE_DIR, date_str, filename)
         
-        if not os.path.exists(filepath):
-            return jsonify({'error': 'File not found'}), 404
+        # 2. If 'all' or not found, search in all date folders
+        if date_str == 'all' or not os.path.exists(filepath):
+            found_path = None
+            if os.path.exists(CACHE_DIR):
+                for d in os.listdir(CACHE_DIR):
+                    possible_path = os.path.join(CACHE_DIR, d, filename)
+                    if os.path.exists(possible_path):
+                        found_path = possible_path
+                        break
+            
+            if found_path:
+                filepath = found_path
+            else:
+                return jsonify({'error': 'File not found'}), 404
         
         with open(filepath, 'r', encoding='utf-8') as f:
             data = json.load(f)
+            
+            # [Add] Inject current folder date if needed for UI context
+            # data['_folder_date'] = os.path.basename(os.path.dirname(filepath))
         
         return jsonify(data)
     except Exception as e:
@@ -376,44 +434,6 @@ def desk_reset_dedup():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@desk_bp.route('/api/desk/delete_legacy', methods=['POST'])
-def desk_delete_legacy():
-    """LEGACY_CALL article_id를 가진 staging 파일 및 캐시 삭제"""
-    try:
-        deleted_count = 0
-        
-        if os.path.exists(CACHE_DIR):
-            for date_folder in os.listdir(CACHE_DIR):
-                date_path = os.path.join(CACHE_DIR, date_folder)
-                if not os.path.isdir(date_path):
-                    continue
-                
-                for filename in os.listdir(date_path):
-                    if not filename.endswith('.json'):
-                        continue
-                    
-                    filepath = os.path.join(date_path, filename)
-                    try:
-                        with open(filepath, 'r', encoding='utf-8') as f:
-                            data = json.load(f)
-                        
-                        article_id = data.get('article_id', '')
-                        if article_id == 'LEGACY_CALL' or 'LEGACY' in article_id:
-                            os.remove(filepath)
-                            deleted_count += 1
-                            print(f"🗑️ [Delete Legacy] Deleted: {filepath}")
-                    except Exception as e:
-                        print(f"⚠️ [Delete Legacy] Error on {filename}: {e}")
-        
-        return jsonify({
-            'success': True,
-            'deleted': deleted_count,
-            'message': f'LEGACY_CALL 삭제 완료: {deleted_count}개'
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
 @desk_bp.route('/api/desk/delete_permanent', methods=['POST'])
 def desk_delete_permanent():
     """🗑️ 선택된 기사 영구 삭제 (DB Reject + File Delete)"""
@@ -440,9 +460,6 @@ def desk_delete_permanent():
                     url = file_data.get('url')
             except Exception as e:
                 print(f"⚠️ Failed to read file for URL extraction: {e}")
-        
-        # If file is missing but we want to delete, we might need URL from frontend?
-        # But let's assume file exists. If not, we can't get URL to reject.
         
         if not url:
              return jsonify({'success': False, 'error': 'Cannot find file or URL to reject'})
@@ -518,544 +535,11 @@ def desk_clear_cache():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@desk_bp.route('/api/desk/publish_selected', methods=['POST'])
-def desk_publish_selected():
-    """선택된 Staging 파일만 발행 (New or Append to Issue)"""
-    try:
-        from src.pipeline import save_article, get_db
-        db = get_db()
-        
-        data = request.json or {}
-        filenames = data.get('filenames', [])
-        mode = data.get('mode', 'new')
-        target_publish_id = data.get('target_publish_id')
-        
-        if not filenames:
-            return jsonify({'success': False, 'error': '선택된 파일이 없습니다.'}), 400
-        
-        today_str = datetime.now().strftime('%Y-%m-%d')
-        cache_date_dir = os.path.join(CACHE_DIR, today_str)
-        
-        # 1. Edition Info
-        edition_code = ""
-        edition_name = ""
-        publish_id = ""
-        
-        if mode == 'new':
-            # publication_config.json에서 다음 호수 읽기
-            config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'publication_config.json')
-            try:
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    config = json.load(f)
-                next_idx = config.get('next_issue_number', 1)
-            except:
-                next_idx = 1
-                
-            yy = today_str[2:4]
-            mm = today_str[5:7]
-            dd = today_str[8:10]
-            edition_code = f"{yy}{mm}{dd}_{next_idx}"
-            edition_name = f"{next_idx}호"
-            
-            # 설정 파일 업데이트 (다음 호수 증가)
-            try:
-                config['next_issue_number'] = next_idx + 1
-                config['last_updated'] = datetime.now(timezone.utc).isoformat()
-                with open(config_path, 'w', encoding='utf-8') as f:
-                    json.dump(config, f, ensure_ascii=False, indent=2)
-            except Exception as e:
-                print(f"⚠️ Config update failed: {e}")
-            
-            pub_data = {
-                'edition_code': edition_code,
-                'edition_name': edition_name,
-                'article_count': 0,
-                'article_ids': [],  # ID만 저장 (중복 제거)
-                'published_at': datetime.now(timezone.utc).isoformat(),
-                'date': today_str,
-                'status': 'preview'
-            }
-            publish_id = db.create_publication_record(pub_data)
-            if not publish_id:
-                return jsonify({'success': False, 'error': 'Failed to create publication record'}), 500
-        
-        elif mode == 'append':
-            if not target_publish_id:
-                return jsonify({'success': False, 'error': 'Target publish ID required for append mode'}), 400
-            
-            publish_id = target_publish_id
-            pub_record = db.get_publication(publish_id)
-            if not pub_record:
-                return jsonify({'success': False, 'error': 'Target publication not found'}), 404
-            
-            edition_code = pub_record.get('edition_code')
-            edition_name = pub_record.get('edition_name')
-        
-        # 2. Process Articles
-        published_count = 0
-        failed_count = 0
-        published_article_ids = []       # DB용: ID만 저장
-        published_articles_detail = []   # 로컬 인덱스용: 상세 정보
-        
-        for filename in filenames:
-            filepath = os.path.join(cache_date_dir, filename)
-            if not os.path.exists(filepath):
-                for d in os.listdir(CACHE_DIR):
-                    check_path = os.path.join(CACHE_DIR, d, filename)
-                    if os.path.exists(check_path):
-                        filepath = check_path
-                        break
-                else:
-                    failed_count += 1
-                    continue
-            
-            try:
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    staging_data = json.load(f)
-                
-                staging_data['publish_id'] = publish_id
-                staging_data['edition_code'] = edition_code
-                staging_data['edition_name'] = edition_name
-                
-                result = save_article(staging_data, source_id=staging_data.get('source_id'), skip_evaluation=True)
-                
-                if result.get('status') == 'saved':
-                    staging_data['published'] = True
-                    staging_data['status'] = 'PUBLISHED'  # [MODIFIED] 발행 완료 상태 명시
-                    staging_data['published_at'] = datetime.now(timezone.utc).isoformat()
-                    staging_data['data_file'] = result.get('filename')
-                    
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        json.dump(staging_data, f, ensure_ascii=False, indent=2)
-                    
-                    published_count += 1
-                    
-                    article_id = result.get('article_id', staging_data.get('article_id'))
-                    published_article_ids.append(article_id)
-                    
-                    # 로컬 인덱스 파일용 상세 정보
-                    published_articles_detail.append({
-                        'id': article_id,
-                        'title': staging_data.get('title_ko') or staging_data.get('title'),
-                        'url': staging_data.get('url'),
-                        'filename': result.get('filename'),
-                        'date': result.get('date')
-                    })
-                else:
-                    failed_count += 1
-                    
-            except Exception as e:
-                print(f"⚠️ [Publish] Error on {filename}: {e}")
-                failed_count += 1
-        
-        # 3. Update Index
-        # DB용: ID 리스트
-        final_article_ids = published_article_ids
-        # 로컬용: 상세 정보 리스트
-        final_article_detail = published_articles_detail
-        
-        if mode == 'append':
-            current_record = db.get_publication(publish_id)
-            existing_ids = current_record.get('article_ids', [])
-            # 기존 articles 배열에서 ID 추출 (하위 호환)
-            if not existing_ids:
-                existing_ids = [a.get('id') for a in current_record.get('articles', []) if a.get('id')]
-            final_article_ids = existing_ids + published_article_ids
-            
-            # 로컬 인덱스용 상세 정보도 합치기
-            existing_detail = current_record.get('articles', [])
-            final_article_detail = existing_detail + published_articles_detail
-        
-        # 로컬 issue 인덱스 파일 (상세 정보 포함 - WEB 호환)
-        index_data = {
-            'id': publish_id,
-            'edition_code': edition_code,
-            'edition_name': edition_name,
-            'published_at': datetime.now(timezone.utc).isoformat(),
-            'date': today_str,
-            'article_count': len(final_article_ids),
-            'articles': final_article_detail  # 로컬에는 상세 정보 유지
-        }
-        db.save_issue_index_file(index_data)
-        
-        # Firestore DB (ID만 저장 - 중복 제거)
-        db.update_publication_record(publish_id, {
-            'article_count': len(final_article_ids),
-            'article_ids': final_article_ids,  # ID만 저장!
-            'updated_at': datetime.now(timezone.utc).isoformat()
-        })
-        
-        return jsonify({
-            'success': True,
-            'published': published_count,
-            'failed': failed_count,
-            'publish_id': publish_id,
-            'edition_name': edition_name,
-            'message': f'{published_count}개 기사 발행 완료 ({edition_name})'
-        })
-    except Exception as e:
-        print(f"❌ [Publish] Error: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@desk_bp.route('/api/cache/sync', methods=['POST'])
-def cache_sync():
-    """
-    ☁️ 로컬 캐시를 Firebase에 동기화
-    - 분석된 기사만 대상
-    - URL 기준 중복 방지 (upsert)
-    """
-    try:
-        from src.pipeline import get_db
-        from src.core_logic import get_article_id
-        db = get_db()
-        
-        data = request.json or {}
-        date_str = data.get('date')  # None이면 전체 날짜
-        
-        synced_count = 0
-        skipped_count = 0
-        failed_count = 0
-        
-        # 동기화 대상 폴더 결정
-        if date_str:
-            date_folders = [date_str] if os.path.exists(os.path.join(CACHE_DIR, date_str)) else []
-        else:
-            date_folders = [d for d in os.listdir(CACHE_DIR) if os.path.isdir(os.path.join(CACHE_DIR, d))]
-        
-        for date_folder in date_folders:
-            cache_date_dir = os.path.join(CACHE_DIR, date_folder)
-            
-            for filename in os.listdir(cache_date_dir):
-                if not filename.endswith('.json'):
-                    continue
-                
-                filepath = os.path.join(cache_date_dir, filename)
-                try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        cache_data = json.load(f)
-                    
-                    # 분석된 기사만 대상
-                    is_analyzed = (
-                        cache_data.get('mll_status') == 'analyzed' or
-                        cache_data.get('raw_analysis') is not None or
-                        cache_data.get('zero_echo_score') is not None
-                    )
-                    if not is_analyzed:
-                        skipped_count += 1
-                        continue
-                    
-                    # 거부된 기사 제외
-                    if cache_data.get('rejected'):
-                        skipped_count += 1
-                        continue
-                    
-                    url = cache_data.get('url')
-                    if not url:
-                        skipped_count += 1
-                        continue
-                    
-                    # URL 기준 중복 체크
-                    existing = db.get_article_by_url(url)
-                    
-                    # 동기화할 데이터 준비 (발행용 필드만)
-                    article_id = cache_data.get('article_id') or get_article_id(url)
-                    sync_data = {
-                        'article_id': article_id,
-                        'title_ko': cache_data.get('title_ko') or cache_data.get('title', ''),
-                        'summary': cache_data.get('summary', ''),
-                        'url': url,
-                        'tags': cache_data.get('tags', []),
-                        'category': cache_data.get('category', ''),
-                        'zero_echo_score': cache_data.get('zero_echo_score', 0),
-                        'impact_score': cache_data.get('impact_score', 0),
-                        'source_id': cache_data.get('source_id', ''),
-                        'cached_at': cache_data.get('cached_at') or cache_data.get('crawled_at', ''),
-                        'synced_at': datetime.now(timezone.utc).isoformat(),
-                        'sync_source': 'cache_sync'
-                    }
-                    
-                    if existing:
-                        # 업데이트
-                        db.update_article(existing['id'], sync_data)
-                        print(f"🔄 [Sync] Updated: {url[:50]}...")
-                    else:
-                        # 새로 생성
-                        db.db.collection('articles').document(article_id).set(sync_data)
-                        print(f"☁️ [Sync] Created: {url[:50]}...")
-                    
-                    # 캐시 파일에 동기화 상태 기록
-                    cache_data['synced_to_firebase'] = True
-                    cache_data['synced_at'] = sync_data['synced_at']
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        json.dump(cache_data, f, ensure_ascii=False, indent=2)
-                    
-                    synced_count += 1
-                    
-                except Exception as e:
-                    print(f"⚠️ [Sync] Error on {filename}: {e}")
-                    failed_count += 1
-        
-        return jsonify({
-            'success': True,
-            'synced': synced_count,
-            'skipped': skipped_count,
-            'failed': failed_count,
-            'message': f'☁️ Firebase 동기화 완료: {synced_count}개 동기화, {skipped_count}개 건너뜀'
-        })
-        
-    except Exception as e:
-        print(f"❌ [Cache Sync] Error: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@desk_bp.route('/api/publication/config', methods=['GET', 'POST'])
-def publication_config():
-    """
-    📋 발행 설정 조회 및 수정
-    GET: 현재 설정 조회
-    POST: 다음 호수 수동 설정 { "next_issue_number": N }
-    """
-    config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'publication_config.json')
-    
-    if request.method == 'GET':
-        try:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                config = json.load(f)
-            return jsonify({'success': True, 'config': config})
-        except Exception as e:
-            return jsonify({'success': False, 'error': str(e)}), 500
-    
-    elif request.method == 'POST':
-        try:
-            data = request.json or {}
-            
-            # 기존 설정 읽기
-            try:
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    config = json.load(f)
-            except:
-                config = {}
-            
-            # 업데이트
-            if 'next_issue_number' in data:
-                config['next_issue_number'] = int(data['next_issue_number'])
-            
-            config['last_updated'] = datetime.now(timezone.utc).isoformat()
-            
-            # 저장
-            with open(config_path, 'w', encoding='utf-8') as f:
-                json.dump(config, f, ensure_ascii=False, indent=2)
-            
-            return jsonify({
-                'success': True,
-                'config': config,
-                'message': f"다음 발행 호수가 {config.get('next_issue_number')}호로 설정되었습니다."
-            })
-        except Exception as e:
-            return jsonify({'success': False, 'error': str(e)}), 500
-
-
 @desk_bp.route('/api/desk/settings', methods=['GET'])
 def desk_settings():
-    """
-    📋 Desk 환경 설정 조회 (커트라인 기본값 등)
-    """
+    """📋 Desk 환경 설정 조회 (커트라인 기본값 등)"""
     return jsonify({
         'success': True,
         'cutline_is_default': float(os.getenv('CUTLINE_IS_DEFAULT', 6.5)),
         'cutline_zs_default': float(os.getenv('CUTLINE_ZS_DEFAULT', 3.0))
     })
-
-
-# ============================================
-# 자동 크롤링 스케줄 관리 API
-# ============================================
-
-SCHEDULE_CONFIG_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'config', 'auto_crawl_schedule.json')
-
-
-def load_schedule_config():
-    """스케줄 설정 파일 로드"""
-    try:
-        with open(SCHEDULE_CONFIG_PATH, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except:
-        return {'schedules': [], 'crawl_settings': {}}
-
-
-def save_schedule_config(config):
-    """스케줄 설정 파일 저장"""
-    os.makedirs(os.path.dirname(SCHEDULE_CONFIG_PATH), exist_ok=True)
-    with open(SCHEDULE_CONFIG_PATH, 'w', encoding='utf-8') as f:
-        json.dump(config, f, ensure_ascii=False, indent=4)
-
-
-@desk_bp.route('/api/schedule', methods=['GET'])
-def get_schedules():
-    """📅 스케줄 목록 조회"""
-    config = load_schedule_config()
-    return jsonify({
-        'success': True,
-        'schedules': config.get('schedules', []),
-        'crawl_settings': config.get('crawl_settings', {})
-    })
-
-
-@desk_bp.route('/api/schedule', methods=['POST'])
-def add_schedule():
-    """➕ 새 스케줄 추가"""
-    try:
-        data = request.json or {}
-        
-        schedule_id = data.get('id')
-        name = data.get('name', '새 스케줄')
-        cron = data.get('cron', '0 8 * * *')
-        enabled = data.get('enabled', True)
-        description = data.get('description', '')
-        
-        if not schedule_id:
-            # 자동 ID 생성
-            import uuid
-            schedule_id = str(uuid.uuid4())[:8]
-        
-        config = load_schedule_config()
-        schedules = config.get('schedules', [])
-        
-        # 중복 ID 체크
-        if any(s['id'] == schedule_id for s in schedules):
-            return jsonify({'success': False, 'error': f'ID {schedule_id} 이미 존재함'}), 400
-        
-        schedules.append({
-            'id': schedule_id,
-            'name': name,
-            'cron': cron,
-            'enabled': enabled,
-            'description': description
-        })
-        
-        config['schedules'] = schedules
-        save_schedule_config(config)
-        
-        return jsonify({
-            'success': True,
-            'message': f'스케줄 "{name}" 추가됨',
-            'schedule': schedules[-1]
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@desk_bp.route('/api/schedule/<schedule_id>', methods=['PUT'])
-def update_schedule(schedule_id):
-    """✏️ 스케줄 수정"""
-    try:
-        data = request.json or {}
-        config = load_schedule_config()
-        schedules = config.get('schedules', [])
-        
-        for i, s in enumerate(schedules):
-            if s['id'] == schedule_id:
-                if 'name' in data:
-                    schedules[i]['name'] = data['name']
-                if 'cron' in data:
-                    schedules[i]['cron'] = data['cron']
-                if 'enabled' in data:
-                    schedules[i]['enabled'] = data['enabled']
-                if 'description' in data:
-                    schedules[i]['description'] = data['description']
-                
-                config['schedules'] = schedules
-                save_schedule_config(config)
-                
-                return jsonify({
-                    'success': True,
-                    'message': f'스케줄 "{schedules[i]["name"]}" 수정됨',
-                    'schedule': schedules[i]
-                })
-        
-        return jsonify({'success': False, 'error': f'스케줄 {schedule_id} 없음'}), 404
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@desk_bp.route('/api/schedule/<schedule_id>', methods=['DELETE'])
-def delete_schedule(schedule_id):
-    """🗑️ 스케줄 삭제"""
-    try:
-        config = load_schedule_config()
-        schedules = config.get('schedules', [])
-        
-        original_len = len(schedules)
-        schedules = [s for s in schedules if s['id'] != schedule_id]
-        
-        if len(schedules) == original_len:
-            return jsonify({'success': False, 'error': f'스케줄 {schedule_id} 없음'}), 404
-        
-        config['schedules'] = schedules
-        save_schedule_config(config)
-        
-        return jsonify({
-            'success': True,
-            'message': f'스케줄 삭제됨'
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@desk_bp.route('/api/schedule/<schedule_id>/toggle', methods=['POST'])
-def toggle_schedule(schedule_id):
-    """🔘 스케줄 On/Off 토글"""
-    try:
-        config = load_schedule_config()
-        schedules = config.get('schedules', [])
-        
-        for i, s in enumerate(schedules):
-            if s['id'] == schedule_id:
-                schedules[i]['enabled'] = not schedules[i].get('enabled', True)
-                config['schedules'] = schedules
-                save_schedule_config(config)
-                
-                status = "활성화" if schedules[i]['enabled'] else "비활성화"
-                return jsonify({
-                    'success': True,
-                    'message': f'스케줄 "{schedules[i]["name"]}" {status}됨',
-                    'enabled': schedules[i]['enabled']
-                })
-        
-        return jsonify({'success': False, 'error': f'스케줄 {schedule_id} 없음'}), 404
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@desk_bp.route('/api/schedule/run_now', methods=['POST'])
-def run_crawl_now():
-    """▶️ 지금 바로 크롤링 실행"""
-    try:
-        import subprocess
-        import sys
-        
-        desk_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        script_path = os.path.join(desk_dir, 'auto_crawl.py')
-        
-        # 백그라운드에서 실행
-        if sys.platform == 'win32':
-            subprocess.Popen(
-                ['python', script_path],
-                cwd=desk_dir,
-                creationflags=subprocess.CREATE_NO_WINDOW
-            )
-        else:
-            subprocess.Popen(
-                ['python3', script_path],
-                cwd=desk_dir,
-                start_new_session=True
-            )
-        
-        return jsonify({
-            'success': True,
-            'message': '자동 크롤링이 백그라운드에서 시작되었습니다'
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-

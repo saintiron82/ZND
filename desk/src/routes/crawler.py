@@ -4,6 +4,7 @@ Crawler API - 페이지 뷰, 링크 수집, 콘텐츠 추출, 저장
 """
 import os
 import json
+import glob
 import asyncio
 from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify, render_template
@@ -213,17 +214,40 @@ def force_extract():
 @crawler_bp.route('/api/extract_batch', methods=['POST'])
 def extract_batch():
     data = request.json
-    urls = data.get('urls', [])
     
-    if not urls:
+    # [MODIFIED] Support both 'urls' (list of strings) and 'items' (list of objects with source_id)
+    raw_urls = data.get('urls', [])
+    raw_items = data.get('items', [])
+    
+    # Normalize to items map: url -> source_id
+    url_source_map = {}
+    
+    # 1. Process 'items' (Preferred)
+    for item in raw_items:
+        if isinstance(item, dict) and item.get('url'):
+            url_source_map[item['url']] = item.get('source_id', 'unknown')
+            
+    # 2. Process 'urls' (Legacy/Fallback)
+    for u in raw_urls:
+         if u not in url_source_map:
+             url_source_map[u] = 'unknown'
+
+    all_target_urls = list(url_source_map.keys())
+
+    if not all_target_urls:
         return jsonify([])
 
     cached_results = []
     urls_to_fetch = []
     
-    for url in urls:
+    for url in all_target_urls:
         cached = load_from_cache(url)
         if cached:
+            # [FIX] Ensure source_id is preserved if cached item lacks it but we know it
+            if url_source_map[url] != 'unknown' and cached.get('source_id', 'unknown') == 'unknown':
+                 cached['source_id'] = url_source_map[url]
+                 save_to_cache(url, cached) # Update cache with missing source_id
+            
             cached_results.append(cached)
         else:
             urls_to_fetch.append(url)
@@ -243,7 +267,11 @@ def extract_batch():
             
             for res in fetched_results:
                 if res.get('url'):
-                    res['status'] = 'RAW' # [MODIFIED] 배치 수집도 RAW 상태
+                    res['status'] = 'RAW'
+                    # [FIX] Inject source_id from request
+                    if res['url'] in url_source_map:
+                        res['source_id'] = url_source_map[res['url']]
+                    
                     save_to_cache(res['url'], res)
         
         all_results = cached_results + fetched_results
@@ -280,6 +308,7 @@ def save():
         url = data['url']
         data['status'] = 'reviewed'
         data['staged'] = True
+        data['saved'] = True  # [FIX] Inspector에서 'New' 목록에서 제외하기 위해 추가
         data['staged_at'] = datetime.now(timezone.utc).isoformat()
         
         save_to_cache(url, data)
@@ -345,10 +374,10 @@ def get_unprocessed_items():
     unprocessed = []
     seen_urls = set()
     
-    # [NEW] Check for Trash Mode
-    include_trash = request.args.get('include_trash') == 'true'
-    
-    # cache 디렉토리 하위의 모든 json 파일 검색 (재귀적)
+    # [NEW] Check for Mode
+    mode = request.args.get('mode', 'normal')
+    include_trash = (request.args.get('include_trash') == 'true') or (mode == 'trash') or (mode == 'all')
+    show_all = (mode == 'all')
     
     # cache 디렉토리 하위의 모든 json 파일 검색 (재귀적)
     # 구조: desk/cache/YYYY-MM-DD/*.json
@@ -358,14 +387,16 @@ def get_unprocessed_items():
     # recursive=True를 위해 ** 사용
     files = glob.glob(search_pattern, recursive=True)
     
-    # [MODIFIED] 오래된 순 정렬 (Oldest First)
-    # 이유: 원본(가장 먼저 수집된 것)을 기준으로 중복을 체크하기 위함.
-    # 만약 과거에 이미 수집되고 처리된(Saved) 파일이 있다면, seen_urls에 먼저 등록되고
-    # 이후에 수집된(Newest) 중복 파일은 seen_urls 체크에서 걸러지게 됨.
-    files.sort() 
+    # [MODIFIED] Sort Strategy
+    if show_all:
+         # Newest First for All View (Snapshot)
+         files.sort(key=os.path.getmtime, reverse=True)
+    else:
+         # Oldest First for Processing (Deduplication)
+         files.sort() 
     
     count = 0
-    limit = 500 # 너무 많으면 UI 터지니까 안전장치 (필요시 조정)
+    limit = 2000 if show_all else 500 # "All" 모드에서는 더 많이
     
     for filepath in files:
         if count >= limit: break
@@ -374,19 +405,36 @@ def get_unprocessed_items():
             filename = os.path.basename(filepath)
             if not filename.endswith('.json'): continue
             
-            # 파일 읽기
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = json.load(f)
-            
+            content = {}
+            is_corrupted = False
+
+            try:
+                # 파일 읽기
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    content = json.load(f)
+            except Exception as e:
+                 if show_all:
+                     is_corrupted = True
+                     content = {
+                        'url': f"corrupted://{filename}",
+                        'title': f"❌ Corrupted: {filename}",
+                        'source_id': 'unknown',
+                        'status': 'CORRUPTED',
+                        'error': str(e),
+                        'filepath': filepath
+                     }
+                 else:
+                     raise e
+
             url = content.get('url')
-            if not url: continue
+            if not url and not is_corrupted: continue
             
             # [NEW] Check for duplicates
             if url in seen_urls: continue
-            seen_urls.add(url)
+            if url: seen_urls.add(url)
             
             # 1. 캐시 파일 내 'saved' 플래그 확인 (이미 발행된 것 제외)
-            if content.get('saved'): continue
+            if not show_all and content.get('saved'): continue
             
             # 2. DB History Status 확인 (더 확실한 검증)
             status = db.get_history_status(url)
@@ -415,14 +463,40 @@ def get_unprocessed_items():
             # 여기까지 오면 포함 대상
             # status가 None이면 NEW, 아니면(MLL_FAILED 등) 그대로 사용
             final_status = status if status else 'NEW'
-                
-            # 여기까지 오면 '미발행(Unprocessed)' 상태임
-            # status가 None이면 NEW, 아니면(MLL_FAILED 등) 그대로 사용
-            final_status = status if status else 'NEW'
+
+            # [FIX] Recover source_id if unknown (heuristic)
+            src_id = content.get('source_id', 'unknown')
+            if src_id == 'unknown':
+                try:
+                    if 'cached_targets' not in locals():
+                        from crawler import load_targets
+                        cached_targets = load_targets()
+                    
+                    from urllib.parse import urlparse
+                    
+                    # Target URL Domain
+                    article_domain = urlparse(url).netloc.replace('www.', '')
+                    
+                    for t in cached_targets:
+                        # Feed URLs might be rss.server.com, main site might be www.server.com
+                        # We compare the 'root' part of domain if possible, or just containment
+                        t_domain = urlparse(t.get('url', '')).netloc.replace('www.', '')
+                        
+                        # Match if target domain is inside article domain or vice versa
+                        # (Simple containment covers subdomains)
+                        if t_domain and article_domain and (t_domain in article_domain or article_domain in t_domain):
+                             src_id = t['id']
+                             break
+                except Exception:
+                    pass
             
+            # [FIX] Inject recovered source_id into content object
+            if src_id != 'unknown':
+                content['source_id'] = src_id
+
             unprocessed.append({
                 'url': url,
-                'source_id': content.get('source_id', 'unknown'),
+                'source_id': src_id,
                 'title': content.get('title') or content.get('title_ko'),
                 'status': final_status,
                 'cached': True,
@@ -434,9 +508,91 @@ def get_unprocessed_items():
             # 개별 파일 에러는 무시하고 진행
             print(f"Error reading cache {filepath}: {e}")
             continue
-
     return jsonify({'links': unprocessed, 'total': len(unprocessed)})
 
+
+# [NEW] Kanban Board APIs
+@crawler_bp.route('/api/cache/dates')
+def get_cache_dates():
+    """desk/cache 하위의 날짜 폴더 목록 반환 (최신순)"""
+    try:
+        dirs = [d for d in os.listdir(CACHE_DIR) if os.path.isdir(os.path.join(CACHE_DIR, d)) and d != 'batches']
+        dirs.sort(reverse=True)
+        return jsonify({'success': True, 'dates': dirs})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@crawler_bp.route('/api/cache/list_by_date')
+def get_cache_by_date():
+    """특정 날짜의 캐시 파일들을 상태별로 분류하여 반환 for Kanban"""
+    target_date = request.args.get('date')
+    if not target_date:
+        return jsonify({'success': False, 'error': 'Date required'}), 400
+    
+    target_dir = os.path.join(CACHE_DIR, target_date)
+    if not os.path.exists(target_dir):
+         return jsonify({'success': False, 'error': 'Date not found'}), 404
+         
+    files = glob.glob(os.path.join(target_dir, "*.json"))
+    files.sort(key=os.path.getmtime, reverse=True)
+    
+    kanban_data = {
+        'inbox': [],    # NEW, RAW
+        'analyzed': [], # ANALYZED (but not saved)
+        'staged': [],   # Saved (but not published)
+        'published': [], # Published (ACCEPTED)
+        'trash': []     # REJECTED, WORTHLESS, SKIPPED, CORRUPTED
+    }
+    
+    for filepath in files:
+        filename = os.path.basename(filepath)
+        content = {}
+        status = 'NEW'
+        is_corrupted = False
+        
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = json.load(f)
+        except Exception as e:
+            is_corrupted = True
+            content = {
+                'url': f"corrupted://{filename}",
+                'title': f"❌ Corrupted: {filename}",
+                'status': 'CORRUPTED',
+                'error': str(e)
+            }
+            
+        url = content.get('url')
+        
+        # Determine Status
+        if is_corrupted:
+            kanban_data['trash'].append(content)
+            continue
+            
+        if not url: continue
+        
+        # DB Status Check
+        db_status = db.get_history_status(url)
+        content['db_status'] = db_status
+        
+        # Classification Logic
+        # 1. Trash
+        if db_status in ['REJECTED', 'WORTHLESS', 'SKIPPED'] or content.get('status') in ['MLL_FAILED', 'INVALID']:
+            kanban_data['trash'].append(content)
+        # 2. Published
+        elif content.get('published') or db_status == 'ACCEPTED':
+             kanban_data['published'].append(content)
+        # 3. Staged (Saved but not published)
+        elif content.get('saved'):
+             kanban_data['staged'].append(content)
+        # 4. Analyzed (Has score but not saved)
+        elif content.get('status') == 'ANALYZED' or content.get('impact_score'):
+             kanban_data['analyzed'].append(content)
+        # 5. Inbox (Others)
+        else:
+             kanban_data['inbox'].append(content)
+             
+    return jsonify({'success': True, 'data': kanban_data})
 
 @crawler_bp.route('/api/delete_items', methods=['POST'])
 def delete_items():
@@ -454,5 +610,82 @@ def delete_items():
         result = trash_manager.dispose_items(urls)
         
         return jsonify(result)
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@crawler_bp.route('/api/cache/update_status', methods=['POST'])
+def update_cache_status():
+    """
+    Update status of cached items (Move between Kanban columns).
+    """
+    try:
+        data = request.json or {}
+        urls = data.get('urls', [])
+        target_status = data.get('target_status')
+        
+        if not urls or not target_status:
+            return jsonify({'success': False, 'error': 'Missing urls or target_status'}), 400
+            
+        updated_count = 0
+        from src.core_logic import get_url_hash, CACHE_DIR
+        
+        for url in urls:
+            # Locate file matches
+            url_hash = get_url_hash(url)
+            search_pattern = os.path.join(CACHE_DIR, '*', f'{url_hash}.json')
+            found_paths = glob.glob(search_pattern)
+            
+            if not found_paths:
+                print(f"⚠️ Cache not found for {url}")
+                continue
+                
+            # Usually there's only one, but take the latest if multiple
+            found_paths.sort(key=os.path.getmtime, reverse=True)
+            cache_path = found_paths[0]
+            
+            try:
+                with open(cache_path, 'r', encoding='utf-8') as f:
+                    content = json.load(f)
+                
+                # Apply Status Logic
+                if target_status == 'inbox':
+                    content['saved'] = False
+                    content['published'] = False
+                    content['status'] = 'RAW'
+                    
+                elif target_status == 'analyzed':
+                    content['saved'] = False
+                    content['published'] = False
+                    content['status'] = 'ANALYZED'
+                    
+                elif target_status == 'staged':
+                    content['saved'] = True
+                    content['published'] = False
+                    content.pop('publish_id', None)
+                    content.pop('edition_name', None)
+                    content.pop('published_at', None)
+                    
+                elif target_status == 'published':
+                    content['saved'] = True
+                    content['published'] = True
+                    if 'published_at' not in content:
+                        content['published_at'] = datetime.now(timezone.utc).isoformat()
+                        
+                elif target_status == 'trash':
+                    content['status'] = 'TRASH'
+                    content['saved'] = False
+                    content['published'] = False
+
+                # Save In-Place
+                with open(cache_path, 'w', encoding='utf-8') as f:
+                    json.dump(content, f, ensure_ascii=False, indent=2)
+                    
+                updated_count += 1
+                
+            except Exception as e:
+                print(f"❌ Error updating {cache_path}: {e}")
+                
+        return jsonify({'success': True, 'count': updated_count})
+        
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500

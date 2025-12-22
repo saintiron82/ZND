@@ -201,6 +201,9 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
     """
     Save content to cache for URL.
     Auto-generates article_id and cached_at if not present.
+    [MODIFIED] If date_str is None, it tries to find an existing file across ALL date folders first.
+               If found, it overwrites that file (preserving original date).
+               If not found, it defaults to Today's folder.
     
     Args:
         url: The URL to cache
@@ -210,7 +213,25 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
     Returns:
         Path to saved cache file
     """
-    cache_path = get_cache_path(url, date_str)
+    url_hash = get_url_hash(url)
+    cache_path = None
+    
+    # 1. If date is NOT specified, try to find existing file to update in-place
+    if date_str is None:
+        # Search all folders
+        search_pattern = os.path.join(CACHE_DIR, '*', f'{url_hash}.json')
+        found_paths = glob.glob(search_pattern)
+        
+        if found_paths:
+            # Sort by modification time (latest first) to pick the most active one if duplicates exist
+            found_paths.sort(key=os.path.getmtime, reverse=True)
+            cache_path = found_paths[0]
+            # print(f"♻️ [Cache] Found existing file, updating in-place: {cache_path}")
+    
+    # 2. If not found or date explicit, calculate target path
+    if not cache_path:
+        cache_path = get_cache_path(url, date_str)
+        
     cache_dir = os.path.dirname(cache_path)
     
     # Auto-generate article_id if not present (using 6-char convention)
@@ -225,7 +246,7 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
         os.makedirs(cache_dir, exist_ok=True)
         with open(cache_path, 'w', encoding='utf-8') as f:
             json.dump(content, f, ensure_ascii=False, indent=2)
-        print(f"💾 [Cache] Saved to cache: {url[:50]}...")
+        print(f"💾 [Cache] Saved to {'existing' if date_str is None and glob.glob(os.path.join(CACHE_DIR, '*', f'{url_hash}.json')) else 'new'} path: {cache_path}")
         return cache_path
     except Exception as e:
         print(f"⚠️ [Cache] Error saving cache: {e}")

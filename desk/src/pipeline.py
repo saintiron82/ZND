@@ -24,6 +24,7 @@ from src.core_logic import (
 )
 from src.db_client import DBClient
 from src.crawler.core import AsyncCrawler
+from src.score_engine import process_raw_analysis
 
 
 # Shared DB client instance
@@ -78,12 +79,15 @@ def evaluate_article(data: dict) -> dict:
     data = normalize_field_names(data)
     
     zero_echo_score = float(data.get('zero_echo_score', 0))
-    high_noise_threshold = get_config('scoring', 'high_noise_threshold', default=7.0)
+    # [MODIFIED] Correct Logic: High Score is GOOD (Not Noise).
+    # ZS >= 7.0 is High Value (Low Noise).
+    # ZS < 4.0 is worthless (High Noise).
+    min_score_threshold = 4.0
     
-    if zero_echo_score >= high_noise_threshold:
+    if zero_echo_score < min_score_threshold:
         return {
             'status': 'worthless',
-            'reason': f'high_noise ({zero_echo_score} >= {high_noise_threshold})',
+            'reason': f'low_score ({zero_echo_score} < {min_score_threshold})',
             'data': data
         }
     
@@ -136,14 +140,19 @@ def save_article(data: dict, source_id: str = None, skip_evaluation: bool = Fals
     if 'crawled_at' not in data:
         data['crawled_at'] = datetime.now(timezone.utc).isoformat()
     
-    # Evaluate scores (skip if batch inject)
-    if not skip_evaluation:
-        eval_result = evaluate_article(data)
-        if eval_result['status'] == 'worthless':
-            db.save_history(url, HistoryStatus.WORTHLESS, reason=eval_result['reason'])
-            # Update cache with worthless status
-            save_to_cache(url, {**data, 'status': 'worthless', 'reason': eval_result['reason']})
-            return {'status': 'worthless', 'reason': eval_result['reason']}
+    # Recalculate scores if raw_analysis is present (ensure freshness)
+    if data.get('raw_analysis'):
+        try:
+            scores = process_raw_analysis(data['raw_analysis'])
+            data['zero_echo_score'] = scores.get('zero_echo_score', data.get('zero_echo_score', 0))
+            data['impact_score'] = scores.get('impact_score', data.get('impact_score', 0))
+            print(f"🔄 [Save] Recalculated scores: ZES={data['zero_echo_score']}, IS={data['impact_score']}")
+        except Exception as e:
+            print(f"⚠️ [Save] Score recalculation failed: {e}")
+
+    # [REMOVED] Value Judgment / Filtering Logic
+    # check_logic is removed per user request. 
+    # We save unconditionally. Filtering happens at the Desk UI.
     
     # Save to DB
     try:

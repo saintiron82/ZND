@@ -482,12 +482,71 @@ def publications_delete():
         reset_count = 0
         for article_id in article_ids:
             try:
-                db.update_article(article_id, {
-                    'publish_id': '',
-                    'edition_code': '',
-                    'edition_name': '',
-                    'published': False
-                })
+                # [FIX] Update DB + Local Cache
+                article_doc = db.get_article(article_id)
+                if article_doc:
+                    # 1. DB Update
+                    db.update_article(article_id, {
+                        'publish_id': '',
+                        'edition_code': '',
+                        'edition_name': '',
+                        'published': False
+                    })
+                    
+                    
+                    # 2. Local Cache Update (In-Place)
+                    url = article_doc.get('url')
+                    if url:
+                        # Find cache file manually to update IN-PLACE
+                        from src.core_logic import get_url_hash, CACHE_DIR
+                        import glob
+                        
+                        url_hash = get_url_hash(url)
+                        # Search in all date folders
+                        found = False
+                        search_pattern = os.path.join(CACHE_DIR, '*', f'{url_hash}.json')
+                        for cache_path in glob.glob(search_pattern):
+                            try:
+                                with open(cache_path, 'r', encoding='utf-8') as f:
+                                    cached_data = json.load(f)
+                                
+                                # Remove published flags
+                                keys_to_remove = ['published', 'publish_id', 'edition_code', 'edition_name', 'published_at', 'data_file', 'saved']
+                                # Note: removing 'saved' might move it back to 'Analyzed' or 'Inbox', user said "revert to unpublished".
+                                # If 'saved' is removed, it goes to Inbox/Analyzed. 
+                                # If we want it in 'Staged', we keep 'saved'.
+                                # User said "reset published status". Usually that means back to Staged (Saved=True).
+                                # Let's keep 'saved' if it was there? No, usually staged items have 'saved'=True.
+                                # The previous code removed 'saved'? No, it removed 'published'.
+                                # Let's check keys_to_remove again.
+                                
+                                keys_to_reset = ['published', 'publish_id', 'edition_code', 'edition_name', 'published_at', 'data_file']
+                                changed = False
+                                for k in keys_to_reset:
+                                    if k in cached_data:
+                                        cached_data.pop(k)
+                                        changed = True
+                                
+                                # Ensure saved is True so it stays in Staged?
+                                # Or if user wants to completely un-stage? 
+                                # "발행 취소 단계로 바뀌어야 하는데" -> "Change to publication cancel stage"
+                                # Usually means "Staged" (Ready to publish).
+                                # So 'saved' should be True.
+                                if not cached_data.get('saved'):
+                                    cached_data['saved'] = True
+                                    changed = True
+                                
+                                if changed:
+                                    with open(cache_path, 'w', encoding='utf-8') as f:
+                                        json.dump(cached_data, f, ensure_ascii=False, indent=2)
+                                    print(f"🔄 [Cache] Reset published status (In-Place) for: {cache_path}")
+                                found = True
+                            except Exception as e:
+                                print(f"⚠️ Failed to update cache file {cache_path}: {e}")
+                        
+                        if not found:
+                            print(f"⚠️ Cache file not found for url: {url}")
+
                 reset_count += 1
             except Exception as e:
                 print(f"⚠️ Article reset failed: {article_id} - {e}")

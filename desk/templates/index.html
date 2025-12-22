@@ -3,608 +3,454 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Crawler Processor</title>
+    <title>ZND Cache Manager (Kanban)</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
+            font-family: 'Segoe UI', sans-serif;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #e9ecef;
             overflow: hidden;
         }
 
-        /* 사이드바 */
-        #sidebar {
-            width: 280px;
-            background: #f4f4f4;
-            border-right: 1px solid #ddd;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            padding: 15px;
-            background: #333;
+        /* Header */
+        header {
+            background: #343a40;
             color: white;
-        }
-
-        .header h3 {
-            margin: 0;
-        }
-
-        .target-select {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .target-select select {
-            width: 100%;
-            padding: 5px;
-        }
-
-        .target-select button {
-            width: 100%;
-            margin-top: 5px;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        #link-list {
-            flex: 1;
-            overflow-y: auto;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #link-list li {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            font-size: 0.85em;
-        }
-
-        #link-list li:hover {
-            background: #e9e9e9;
-        }
-
-        #link-list li.active {
-            background: #d0e8ff;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.7em;
-            font-weight: bold;
-            margin-right: 8px;
-            color: white;
-        }
-
-        .badge-saved {
-            background-color: #28a745;
-        }
-
-        .badge-skipped {
-            background-color: #6c757d;
-        }
-
-        .badge-invalid {
-            background-color: #dc3545;
-        }
-
-        .badge-worthless {
-            background-color: #343a40;
-        }
-
-        .status-saved {
-            border-left: 4px solid #28a745;
-        }
-
-        .status-skipped {
-            border-left: 4px solid #6c757d;
-            color: #999;
-        }
-
-        .status-invalid {
-            border-left: 4px solid #dc3545;
-            background-color: #fff5f5;
-        }
-
-        .status-worthless {
-            border-left: 4px solid #343a40;
-            color: #999;
-            background-color: #f7f7f7;
-            text-decoration: line-through;
-        }
-
-        /* 센터 영역: 상하 2분할 */
-        #center {
-            flex: 1;
+            padding: 10px 20px;
             display: flex;
-            flex-direction: column;
-            padding: 10px;
+            align-items: center;
+            justify-content: space-between;
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
             gap: 10px;
-            overflow: hidden;
         }
 
-        .center-top,
-        .center-bottom {
+        select {
+            padding: 5px;
+            border-radius: 4px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Kanban Board */
+        #board {
+            flex: 1;
+            display: flex;
+            overflow-x: auto;
+            padding: 20px;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .column {
+            background: #f8f9fa;
+            border-radius: 8px;
+            width: 320px;
+            min-width: 320px;
             display: flex;
             flex-direction: column;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: #fff;
-            overflow: hidden;
+            max-height: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .center-top {
-            flex: 0 0 45%;
-        }
-
-        .center-bottom {
-            flex: 1;
-        }
-
-        .section-header {
+        .col-header {
+            padding: 12px 15px;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #ddd;
-            font-weight: bold;
-            font-size: 0.85em;
+            background: #fff;
+            border-radius: 8px 8px 0 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        .preview-content {
+        .col-body {
             flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .preview-content h2 {
-            margin: 0 0 10px 0;
-            font-size: 1.2em;
-        }
-
-        .preview-content pre {
-            margin: 0;
-            white-space: pre-wrap;
-            font-family: inherit;
-            line-height: 1.5;
-            font-size: 0.9em;
-        }
-
-        .center-bottom textarea {
-            flex: 1;
-            border: none;
-            border-top: 1px solid #eee;
             padding: 10px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.85em;
-            resize: none;
-        }
-
-        /* 우측 영역 */
-        #right-panel {
-            width: 380px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            padding: 10px 10px 10px 0;
             gap: 10px;
-            overflow: hidden;
         }
 
-        .right-top,
-        .right-bottom {
+        /* Cards */
+        .card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            border-left: 4px solid transparent;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .card.selected {
+            border: 2px solid #007bff;
+            background: #e7f1ff;
+        }
+
+        .card-meta {
             display: flex;
-            flex-direction: column;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: #fff;
-            overflow: hidden;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 6px;
         }
 
-        .right-top {
-            flex: 0 0 40%;
-        }
-
-        .right-bottom {
-            flex: 1;
-        }
-
-        .right-summary {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: #fff;
-            margin-bottom: 10px;
-            max-height: 120px;
-        }
-
-        .summary-content {
-            padding: 10px;
-            overflow-y: auto;
-            font-size: 0.9em;
+        .card-title {
+            font-weight: 600;
             line-height: 1.4;
             color: #333;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .verify-content {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
+        .card-score {
             font-size: 0.85em;
-        }
-
-        .json-preview {
-            flex: 1;
-            overflow: auto;
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 10px;
-            margin: 0;
-            font-size: 0.8em;
-            white-space: pre-wrap;
-        }
-
-        /* 버튼 영역 */
-        .action-bar {
-            display: flex;
-            gap: 6px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            flex-wrap: wrap;
-        }
-
-        .action-bar button {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
             font-weight: bold;
-            font-size: 0.85em;
-            min-width: 60px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #eee;
+            display: inline-block;
         }
 
-        .btn-save {
+        /* Column Colors */
+        .col-inbox {
+            border-top: 4px solid #6c757d;
+        }
+
+        .col-analyzed {
+            border-top: 4px solid #fd7e14;
+        }
+
+        .col-staged {
+            border-top: 4px solid #28a745;
+        }
+
+        .col-published {
+            border-top: 4px solid #007bff;
+        }
+
+        .col-trash {
+            border-top: 4px solid #dc3545;
+        }
+
+        /* Status Badges */
+        .badge-s {
             background: #28a745;
             color: white;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 0.7em;
         }
 
-        .btn-skip {
-            background: #dc3545;
+        .badge-p {
+            background: #007bff;
             color: white;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 0.7em;
         }
 
-        .btn-worthless {
+        /* Utils */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loading */
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Modal */
+        #detailModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            height: 90%;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+        }
+
+        .modal-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fdfdfd;
+            display: flex;
+            gap: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: #fff;
+        }
+
+        /* Modal Split View */
+        .modal-left {
+            flex: 1;
+            overflow-y: auto;
+            border-right: 1px solid #eee;
+            padding-right: 15px;
+        }
+
+        .modal-right {
+            flex: 1;
+            overflow-y: auto;
+            padding-left: 15px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: monospace;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Actions Bar (Bottom) */
+        #actionBar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             background: #343a40;
-            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 900;
+            align-items: center;
+            gap: 15px;
         }
 
-        .btn-info {
-            background: #17a2b8;
+        #actionBar button {
+            background: #007bff;
             color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            white-space: nowrap;
         }
 
-        .btn-gray {
-            background: #6c757d;
-            color: white;
+        #actionBar button:hover {
+            background: #0056b3;
         }
 
-        .loading {
-            opacity: 0.5;
-            pointer-events: none;
+        #actionBar button.danger {
+            background: #dc3545;
+        }
+
+        #actionBar button.danger:hover {
+            background: #c82333;
+        }
+
+        #actionBar button.success {
+            background: #28a745;
+        }
+
+        #actionBar button.success:hover {
+            background: #218838;
         }
     </style>
 </head>
 
 <body>
-    <!-- 사이드바 -->
-    <div id="sidebar">
-        <div class="header">
-            <h3>매뉴얼 크롤러</h3>
-        </div>
-        <div class="target-select">
-            <select id="targetSelect">
-                <option value="">타겟 선택...</option>
+
+    <header>
+        <div class="header-left">
+            <h1>🗂️ Cache Manager <small style="font-size:0.6em; opacity:0.7; margin-left:10px;">(Manual
+                    Crawler)</small></h1>
+            <select id="dateSelect" onchange="loadDate(this.value)">
+                <option value="">Loading dates...</option>
             </select>
-            <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="fetchLinks()" style="flex: 2;">링크 가져오기</button>
-            </div>
-            <div style="display: flex; gap: 5px; margin-top: 5px; align-items: center;">
-                <input type="number" id="batchLoadCount" value="10" min="1" max="50"
-                    style="width: 60px; padding: 4px; text-align: center;" title="로드할 링크 수">
-                <button onclick="batchLoadExplicit()"
-                    style="background: #fd7e14; color: white; font-size: 0.85em; flex: 1;">📦 일괄 로드</button>
-            </div>
-            <div style="margin-top: 5px;">
-                <button onclick="showBatchModal()"
-                    style="width: 100%; background: #28a745; color: white; font-size: 0.85em;">⚡ 일괄 적용</button>
-            </div>
-            <div style="margin-top: 5px;">
-                <button onclick="showInspector()"
-                    style="width: 100%; background: #17a2b8; color: white; font-size: 0.85em;">📦 일괄 로드
-                    (Inspector)</button>
-            </div>
+            <button onclick="loadDate(currentDate)"
+                style="background:transparent; border:1px solid #aaa; color:white; cursor:pointer; padding:4px 8px; border-radius:4px;">🔄</button>
         </div>
-        <!-- 날짜별 기사 조회 -->
-        <div class="target-select" style="border-top: 2px solid #007bff; background: #e7f1ff;">
-            <label style="font-size: 0.8em; font-weight: bold; color: #007bff;">📅 날짜별 기사 조회</label>
-            <input type="date" id="dateSelect" style="width: 100%; padding: 5px; margin-top: 5px;">
-            <button onclick="loadArticlesByDate()"
-                style="width: 100%; margin-top: 5px; background: #007bff; color: white; font-weight: bold;">
-                📂 날짜별 조회
-            </button>
+        <div class="header-right" style="display:flex; gap:10px;">
+            <button onclick="window.open('/inspector', '_blank')"
+                style="background:#17a2b8; border:none; color:white; padding:8px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">📦
+                Batch Loader</button>
+            <button onclick="runCrawlNow()"
+                style="background:#28a745; border:none; color:white; padding:8px 15px; border-radius:4px; font-weight:bold; cursor:pointer;">▶️
+                Auto-Collect</button>
         </div>
-        <!-- URL로 캐시 준비 -->
-        <div class="target-select" style="border-top: 2px solid #20c997; background: #d4edda;">
-            <label style="font-size: 0.8em; font-weight: bold; color: #20c997;">➕ URL로 캐시 준비</label>
-            <input type="text" id="prepareUrlInput" placeholder="URL 입력..."
-                style="width: 100%; padding: 5px; margin-top: 5px;" onkeypress="if(event.key==='Enter') prepareCache()">
-            <button onclick="prepareCache()"
-                style="width: 100%; margin-top: 5px; background: #20c997; color: white; font-weight: bold;">
-                📥 캐시 준비
-            </button>
-        </div>
-        <!-- 캐시 검색 -->
-        <div class="target-select" style="border-top: 2px solid #e83e8c; background: #fce4ec;">
-            <label style="font-size: 0.8em; font-weight: bold; color: #e83e8c;">🔍 캐시 검색</label>
-            <input type="text" id="cacheSearchInput" placeholder="파일명 검색..."
-                style="width: 100%; padding: 5px; margin-top: 5px;" onkeypress="if(event.key==='Enter') searchCache()">
-            <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="searchCache()" style="flex: 2; background: #e83e8c; color: white; font-weight: bold;">
-                    🔎 검색
-                </button>
-                <button onclick="findDuplicateCaches()"
-                    style="flex: 1; background: #6c757d; color: white; font-size: 0.8em;" title="중복 캐시 찾기">
-                    🔄 중복캐시
-                </button>
-                <button onclick="findDuplicateData()"
-                    style="flex: 1; background: #17a2b8; color: white; font-size: 0.8em;" title="중복 데이터 찾기">
-                    📄 중복데이터
-                </button>
+    </header>
+
+    <div id="board">
+        <!-- 1. Inbox -->
+        <div class="column col-inbox">
+            <div class="col-header">
+                <span>🆕 Inbox <small>(Raw)</small></span>
+                <span class="count-badge" id="count-inbox">0</span>
             </div>
-            <div style="margin-top: 5px;">
-                <button onclick="findOrphanDataFiles()"
-                    style="width: 100%; background: #dc3545; color: white; font-size: 0.85em; font-weight: bold;"
-                    title="캐시에서 참조되지 않는 DATA 파일 찾기 및 삭제">
-                    🧹 데이터 정리
-                </button>
-            </div>
+            <div class="col-body" id="list-inbox"></div>
         </div>
-        <!-- 🤖 자동화 파이프라인 -->
-        <div class="target-select"
-            style="border-top: 2px solid #ff6b6b; background: linear-gradient(135deg, #ffe8e8, #fff5f5);">
-            <label style="font-size: 0.8em; font-weight: bold; color: #ff6b6b;">🤖 자동화 파이프라인</label>
-            <!-- 수집 단계 (1~3) -->
-            <div style="display: flex; gap: 3px; margin-top: 5px;">
-                <button onclick="runAuto('collect')"
-                    style="flex:1; background:#4ecdc4; color:white; font-size:0.75em; padding:6px;">
-                    1️⃣ 수집
-                </button>
-                <button onclick="runAuto('extract')"
-                    style="flex:1; background:#45b7d1; color:white; font-size:0.75em; padding:6px;">
-                    2️⃣ 추출
-                </button>
-                <button onclick="runAuto('analyze')"
-                    style="flex:1; background:#96ceb4; color:white; font-size:0.75em; padding:6px;">
-                    3️⃣ 분석
-                </button>
+
+        <!-- 2. Analyzed -->
+        <div class="column col-analyzed">
+            <div class="col-header">
+                <span>📝 Analyzed <small>(Ready)</small></span>
+                <span class="count-badge" id="count-analyzed">0</span>
             </div>
-            <!-- 검토 버튼 (조판 제거됨) -->
-            <button onclick="openStaging()"
-                style="width:100%; margin-top:5px; background:#6c757d; color:white; font-size:0.85em; padding:8px;">
-                🔍 Staging 검토
-            </button>
-            <!-- 발행 (5) - 분리 -->
-            <button onclick="runAuto('publish')"
-                style="width:100%; margin-top:5px; background:#dc3545; color:white; font-weight:bold; font-size:0.85em; padding:8px;">
-                5️⃣ 발행 (Production)
-            </button>
+            <div class="col-body" id="list-analyzed"></div>
         </div>
-        <!-- 🚀 하이브리드 배치 (Hybrid Batch) -->
-        <div class="target-select" style="border-top: 2px solid #6610f2; background: #e2d9f3;">
-            <label style="font-size: 0.8em; font-weight: bold; color: #6610f2;">🚀 일괄 분석</label>
-            <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="openHybridBatchModal()"
-                    style="width: 100%; background: #6610f2; color: white; font-weight: bold; font-size: 0.9em; padding: 8px;">
-                    ⚡ 일괄 분석 (Batch Inject)
-                </button>
+
+        <!-- 3. Staged -->
+        <div class="column col-staged">
+            <div class="col-header">
+                <span>✅ Staged <small>(Saved)</small></span>
+                <span class="count-badge" id="count-staged">0</span>
             </div>
+            <div class="col-body" id="list-staged"></div>
         </div>
-        <ul id="link-list">
-            <!-- Links will be populated here -->
-        </ul>
+
+        <!-- 4. Published -->
+        <div class="column col-published">
+            <div class="col-header">
+                <span>🚀 Published <small>(Live)</small></span>
+                <span class="count-badge" id="count-published">0</span>
+            </div>
+            <div class="col-body" id="list-published"></div>
+        </div>
+
+        <!-- 5. Trash -->
+        <div class="column col-trash">
+            <div class="col-header">
+                <span>🗑️ Trash</span>
+                <span class="count-badge" id="count-trash">0</span>
+            </div>
+            <div class="col-body" id="list-trash"></div>
+        </div>
     </div>
 
-    <!-- 센터 영역: 상하 2분할 -->
-    <div id="center">
-        <!-- 상: 원문 미리보기 -->
-        <div class="center-top">
-            <div class="section-header">
-                <span>📄 원문 (Original)</span>
-                <div>
-                    <button onclick="copyContent()"
-                        style="padding: 4px 8px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; margin-right: 5px; font-size: 0.8em;">📋
-                        Copy</button>
-                    <a id="originalLink" href="#" target="_blank"
-                        style="text-decoration: none; color: #007bff; font-weight: bold; border: 1px solid #007bff; padding: 3px 8px; border-radius: 4px; font-size: 0.8em;">🔗
-                        원본</a>
+    <!-- Action Floating Bar -->
+    <div id="actionBar">
+        <span style="color:white; font-weight:bold;" id="selectedCount">0 Selected</span>
+        <div style="height:20px; width:1px; background:#555;"></div>
+        <button class="success" onclick="batchAnalyze()">⚡ Extract & Analyze</button>
+        <!-- Future: Add 'Publish' or 'Move to Staging' buttons -->
+        <button class="danger" onclick="batchDelete()">🗑️ Delete</button>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+        <div style="font-size: 2em; margin-bottom: 20px;">⏳</div>
+        <h2 id="loadingText">Processing...</h2>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"
+                    style="margin:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:80%;">
+                    Article Details</h3>
+                <div style="display:flex; gap:10px;">
+                    <a id="modalLink" href="#" target="_blank"
+                        style="color:#007bff; text-decoration:none; font-weight:bold;">🔗 Open Original</a>
+                    <button onclick="closeModal()"
+                        style="border:none; background:none; font-size:1.5em; cursor:pointer;">&times;</button>
                 </div>
             </div>
-            <div id="previewPane" class="preview-content">
-                <div style="color: #888; text-align: center; margin-top: 50px;">
-                    미리볼 링크를 선택하세요
+            <div class="modal-body">
+                <!-- Left: Readable Content -->
+                <div class="modal-left" id="modalReadable">
+                    <!-- Title, Summary, etc. -->
+                </div>
+                <!-- Right: Raw JSON -->
+                <div class="modal-right">
+                    <pre id="modalJson"></pre>
                 </div>
             </div>
-        </div>
-
-        <!-- 하: 평가 JSON 입력 -->
-        <div class="center-bottom">
-            <div class="section-header">
-                <span>📝 평가 JSON</span>
-                <input type="text" id="url" readonly
-                    style="flex: 1; margin-left: 10px; background: #eee; font-size: 0.7em; padding: 3px 6px; border: 1px solid #ccc; border-radius: 3px;">
-            </div>
-            <textarea id="jsonInput" placeholder="LLM이 생성한 평가 JSON을 여기에 붙여넣으세요..."
-                oninput="updateFinalCardPreview()"></textarea>
-            <input type="hidden" id="originalTitle">
-        </div>
-    </div>
-
-    <!-- 우측 영역: JSON 써머리 + 점수 검증 + 최종 JSON -->
-    <div id="right-panel">
-        <!-- JSON 써머리 -->
-        <div class="right-summary">
-            <div class="section-header">
-                <span>📋 JSON 써머리</span>
-            </div>
-            <div id="jsonSummary" class="summary-content">
-                평가 JSON을 붙여넣으면 요약이 표시됩니다.
-            </div>
-        </div>
-
-        <!-- 점수 검증 결과 -->
-        <div class="right-top">
-            <div class="section-header">
-                <span>📊 점수 검증</span>
-            </div>
-            <div id="verifyResult" class="verify-content">
-                점수 검증 버튼을 누르면 결과가 표시됩니다.
-            </div>
-        </div>
-
-        <!-- 최종 저장될 JSON -->
-        <div class="right-bottom">
-            <div class="section-header">
-                <span>📦 최종 기사카드</span>
-                <span id="cardStatus" style="font-size: 0.75em; color: #888;"></span>
-            </div>
-            <pre id="finalCardPreview" class="json-preview">평가 JSON을 입력하면 최종 저장될 형태가 여기에 표시됩니다.</pre>
-        </div>
-
-        <!-- 버튼 영역 -->
-        <div class="action-bar">
-            <button onclick="refreshArticle()" class="btn-gray" title="리프레시">🔄</button>
-            <button onclick="markWorthless()" class="btn-worthless">무가치</button>
-            <button onclick="skipArticle()" class="btn-skip">스킵</button>
-            <button onclick="verifyAndApply()" class="btn-info">✓ 검증</button>
-            <button onclick="saveArticle()" class="btn-save">💾 저장</button>
-        </div>
-    </div>
-
-    <!-- Hybrid Batch Processing Modal -->
-    <div id="hybridBatchModal"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;">
-        <div
-            style="background: white; width: 90%; max-width: 1200px; height: 90%; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-
-            <!-- Modal Header -->
-            <div
-                style="padding: 15px; background: #333; color: white; display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0;">⚡ 하이브리드 배치 처리 (Hybrid Batch Processing)</h3>
-                <button onclick="closeHybridBatchModal()"
-                    style="background: none; border: none; color: white; font-size: 1.5em; cursor: pointer;">&times;</button>
-            </div>
-
-            <!-- Modal Body -->
-            <div style="flex: 1; display: flex; overflow: hidden;">
-
-                <!-- Left Panel: Ready Bundles -->
-                <div
-                    style="width: 300px; background: #f8f9fa; border-right: 1px solid #ddd; display: flex; flex-direction: column;">
-                    <div style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold; background: #e9ecef;">
-                        📂 준비된 번들 (Ready Bundles)
-                        <button onclick="fetchReadyBatches()"
-                            style="float: right; font-size: 0.8em; cursor: pointer;">🔄</button>
-                    </div>
-                    <div id="batchList" style="flex: 1; overflow-y: auto; padding: 5px;">
-                        <!-- Batch Items will be populated here -->
-                        <div style="text-align: center; padding: 20px; color: #888;">로딩 중...</div>
-                    </div>
-                </div>
-
-                <!-- Center Panel: Workflow -->
-                <div
-                    style="flex: 1; display: flex; flex-direction: column; padding: 15px; gap: 15px; background: #fff;">
-
-                    <!-- Step 1: Export -->
-                    <div
-                        style="flex: 1; display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
-                        <div
-                            style="padding: 8px 12px; background: #e3f2fd; border-bottom: 1px solid #bbdefb; font-weight: bold; color: #1565c0; display: flex; justify-content: space-between; align-items: center;">
-                            <span>1️⃣ 내보내기 (Export Prompt)</span>
-                            <span id="selectedBatchName"
-                                style="font-size: 0.8em; font-weight: normal; color: #555;">(번들을 선택하세요)</span>
-                        </div>
-                        <textarea id="batchExportContent" readonly
-                            style="flex: 1; border: none; padding: 10px; font-family: monospace; font-size: 0.85em; resize: none; background: #fafafa;"
-                            placeholder="좌측 목록에서 번들을 선택하면 프롬프트용 데이터가 여기에 표시됩니다."></textarea>
-                        <div style="padding: 8px; border-top: 1px solid #eee; text-align: right; background: #fafafa;">
-                            <button onclick="copyBatchExport()"
-                                style="background: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                                📋 클립보드 복사
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Import -->
-                    <div
-                        style="flex: 1; display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 5px; overflow: hidden;">
-                        <div
-                            style="padding: 8px 12px; background: #e8f5e9; border-bottom: 1px solid #c8e6c9; font-weight: bold; color: #2e7d32;">
-                            2️⃣ 주입하기 (Import Results)
-                        </div>
-                        <textarea id="batchImportContent"
-                            style="flex: 1; border: none; padding: 10px; font-family: monospace; font-size: 0.85em; resize: none;"
-                            placeholder="LLM에서 처리된 JSON 결과를 여기에 붙여넣으세요. ([...])"></textarea>
-                        <div
-                            style="padding: 8px; border-top: 1px solid #eee; text-align: right; background: #fafafa; display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
-                            <span id="importStatus" style="font-size: 0.85em; color: #666;"></span>
-                            <button onclick="processBatchInjection()"
-                                style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                                ⚡ 결과 주입 및 처리
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
+            <div class="modal-footer">
+                <button onclick="deleteCurrentItem()"
+                    style="background:#dc3545; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">🗑️
+                    Delete</button>
+                <div style="flex:1;"></div>
+                <button onclick="closeModal()" style="padding:8px 15px; cursor:pointer;">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- Source ID Selection Modal -->
-    <div id="sourceModal"
-        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; justify-content: center; align-items: center;">
-        <div style="background: white; padding: 20px; border-radius: 8px; width: 300px; text-align: center;">
-            <h3 style="margin-top: 0; color: #e83e8c;">⚠️ Source ID 필요</h3>
-            <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">소스를 선택해주세요:</p>
-            <select id="sourceSelect"
-                style="width: 100%; padding: 10px; font-size: 1em; margin-bottom: 15px; border: 2px solid #e83e8c; border-radius: 4px;">
-            </select>
-            <div style="display: flex; gap: 10px; justify-content: center;">
-                <button onclick="closeSourceModal()"
-                    style="padding: 10px 20px; cursor: pointer; background: #6c757d; color: white; border: none; border-radius: 4px;">취소</button>
-                <button onclick="confirmSourceSelection()"
-                    style="padding: 10px 20px; cursor: pointer; background: #20c997; color: white; border: none; border-radius: 4px; font-weight: bold;">확인</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="/static/js/manual_crawler.js?v=3.0"></script>
+    <script src="/static/js/manual_crawler.js?v=4.0"></script>
 </body>
 
 </html>

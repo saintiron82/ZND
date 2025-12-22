@@ -38,14 +38,14 @@ export default function Sidebar() {
             {/* Sidebar Container */}
             <aside
                 className={cn(
-                    "fixed inset-y-0 left-0 z-40 flex flex-col bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 transition-all duration-300 ease-in-out",
+                    "fixed inset-y-0 left-0 z-40 flex flex-col bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl border-r border-zinc-200/50 dark:border-zinc-800/50 transition-all duration-300 ease-in-out",
                     isCollapsed ? "-translate-x-full md:translate-x-0 md:w-20" : "translate-x-0 w-64"
                 )}
             >
                 {/* Logo Area */}
-                <div className="h-20 flex items-center justify-center border-b border-zinc-100 dark:border-zinc-900">
+                <div className="h-20 flex items-center justify-center border-b border-zinc-100/50 dark:border-zinc-900/50">
                     <div className={cn("font-serif font-black text-2xl tracking-tighter transition-opacity", isCollapsed ? "md:opacity-0 md:hidden" : "opacity-100")}>
-                        ZE<span className="text-indigo-600">.</span>D
+                        ZE<span className="text-teal-500">.</span>D
                     </div>
                     <div className={cn("font-serif font-black text-xl tracking-tighter absolute transition-opacity", isCollapsed ? "md:opacity-100" : "opacity-0 hidden")}>
                         Z
@@ -64,7 +64,7 @@ export default function Sidebar() {
                                 className={cn(
                                     "flex items-center gap-4 p-3 rounded-xl transition-all duration-200 group",
                                     isActive
-                                        ? "bg-zinc-100 dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400"
+                                        ? "bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400"
                                         : "text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 hover:text-zinc-900 dark:hover:text-zinc-100",
                                     isCollapsed ? "md:justify-center" : ""
                                 )}

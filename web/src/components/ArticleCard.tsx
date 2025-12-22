@@ -23,7 +23,7 @@ export interface Article {
     source_id: string;
     crawled_at: string | { seconds: number };
     published_at?: string | { seconds: number };  // 발행일 추가
-    awards?: string[]; // Award badges: "Today's Headline", "Zero Noise Award", "Hot Topic"
+    awards?: string[]; // Award badges: "Today's Headline", "Zero Echo Award", "Hot Topic"
     cols?: number;
     rows?: number;
 }
@@ -43,12 +43,12 @@ const getAwardStyle = (award: string) => {
     switch (award) {
         case "Today's Headline":
             return "bg-gradient-to-r from-amber-400 to-orange-500 text-white";
-        case "Zero Noise Award":
+        case "Zero Echo Award":
             return "bg-gradient-to-r from-emerald-400 to-teal-500 text-white";
         case "Hot Topic":
             return "bg-gradient-to-r from-rose-400 to-pink-500 text-white";
         default:
-            return "bg-primary text-primary-foreground";
+            return "bg-teal-500 text-white";
     }
 };
 
@@ -113,7 +113,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-                "group flex flex-col h-full p-5 transition-all duration-300 rounded-xl bg-card hover:bg-card/80 border border-border/50 hover:border-primary/20 hover:shadow-md",
+                "group flex flex-col h-full p-5 transition-all duration-300 rounded-xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-800/50 hover:border-teal-400/40 hover:shadow-lg hover:shadow-teal-500/5",
                 className
             )}
         >
@@ -143,7 +143,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 </div>
 
                 <h3 className={cn(
-                    "font-black font-sans leading-[1.1] group-hover:text-primary transition-colors tracking-tight shrink-0",
+                    "font-black font-sans leading-[1.1] group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors tracking-tight shrink-0",
                     getTitleSize(impact_score)
                 )}>
                     {title_ko}
@@ -166,7 +166,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
 
             <div className="mt-4 pt-3 border-t border-border/40 flex items-center justify-between shrink-0">
                 <div className="flex gap-1.5 items-center overflow-hidden">
-                    <span className="text-[10px] font-bold text-primary/80 whitespace-nowrap font-sans">{source_id}</span>
+                    <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 whitespace-nowrap font-sans">{source_id}</span>
                     {tags && tags.length > 0 && <span className="text-muted-foreground/50">·</span>}
                     {tags?.slice(0, 2).map(tag => (
                         <span key={tag} className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded-sm whitespace-nowrap font-sans">

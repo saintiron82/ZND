@@ -80,7 +80,7 @@ export default function LegalModal({ isOpen, onClose, initialDocument }: LegalMo
                         onClick={() => setSelectedDocument(type)}
                         className="w-full flex items-center gap-4 p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all text-left group"
                     >
-                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <div className="w-10 h-10 rounded-lg bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center text-teal-600 dark:text-teal-400 group-hover:bg-teal-500 group-hover:text-white transition-colors">
                             <Icon className="w-5 h-5" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -121,7 +121,7 @@ export default function LegalModal({ isOpen, onClose, initialDocument }: LegalMo
                     {currentDoc.sections.map((section, idx) => (
                         <div key={idx} className="space-y-2">
                             {section.number && section.title && (
-                                <h4 className="font-bold text-sm text-primary">
+                                <h4 className="font-bold text-sm text-teal-600 dark:text-teal-400">
                                     {section.number}. {section.title}
                                 </h4>
                             )}
@@ -159,7 +159,7 @@ export default function LegalModal({ isOpen, onClose, initialDocument }: LegalMo
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-background border border-border rounded-xl shadow-xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-border">
                     <h3 className="font-bold text-lg font-serif">

@@ -83,7 +83,7 @@ export default function IssueSelector({ issues, currentIssueId, onIssueSelect }:
         return (
             <div className="bg-card rounded-xl border border-border p-4">
                 <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-primary" />
+                    <Calendar className="w-4 h-4 text-teal-500" />
                     <span className="text-sm font-bold text-foreground">회차 선택</span>
                 </div>
                 <p className="text-xs text-muted-foreground text-center py-2 mt-2">
@@ -101,7 +101,7 @@ export default function IssueSelector({ issues, currentIssueId, onIssueSelect }:
                 className="w-full flex items-center justify-between gap-2 hover:bg-secondary/50 rounded-lg p-2 -m-2 transition-colors"
             >
                 <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-primary" />
+                    <Calendar className="w-4 h-4 text-teal-500" />
                     <div className="flex flex-col items-start">
                         <span className="text-sm font-bold text-foreground">
                             {currentIssue ? formatDateKo(currentIssue.date) : '회차 선택'}
@@ -126,6 +126,29 @@ export default function IssueSelector({ issues, currentIssueId, onIssueSelect }:
                     onScroll={handleScroll}
                     className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto"
                 >
+                    {/* 최신호 바로가기 */}
+                    {issues.length > 0 && issues[0].id !== currentIssueId && (
+                        <button
+                            onClick={() => {
+                                onIssueSelect(issues[0].id);
+                                setIsOpen(false);
+                            }}
+                            className="w-full flex items-center justify-between py-2.5 px-3 transition-colors text-left rounded-t-lg bg-gradient-to-r from-teal-50 to-transparent dark:from-teal-950/50 dark:to-transparent hover:from-teal-100 dark:hover:from-teal-950/70 border-b border-border/50"
+                        >
+                            <div className="flex items-center gap-2">
+                                <span className="text-base">⚡</span>
+                                <div className="flex flex-col">
+                                    <span className="text-sm font-bold text-teal-600 dark:text-teal-400">
+                                        최신호로 이동
+                                    </span>
+                                    <span className="text-[10px] text-muted-foreground">
+                                        {formatDateKo(issues[0].date)} • {issues[0].edition_name}
+                                    </span>
+                                </div>
+                            </div>
+                        </button>
+                    )}
+
                     {displayIssues.map((issue) => {
                         const isActive = issue.id === currentIssueId;
                         return (
@@ -140,7 +163,7 @@ export default function IssueSelector({ issues, currentIssueId, onIssueSelect }:
                                     "first:rounded-t-lg",
                                     !hasMore && "last:rounded-b-lg",
                                     isActive
-                                        ? "bg-primary/10 text-primary"
+                                        ? "bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400"
                                         : "hover:bg-secondary/50 text-foreground"
                                 )}
                             >

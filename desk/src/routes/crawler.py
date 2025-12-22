@@ -19,12 +19,14 @@ from src.core_logic import (
     get_article_id,
     load_automation_config
 )
+from src.trash_manager import TrashManager # [NEW]
 
 crawler_bp = Blueprint('crawler', __name__)
 
 db = DBClient()
 robots_checker = RobotsChecker()
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
+trash_manager = TrashManager(CACHE_DIR) # [NEW]
 
 
 def load_from_cache(url):
@@ -175,7 +177,9 @@ def extract():
         db.save_history(url, 'WORTHLESS', reason='text_too_short')
         return jsonify({'error': f"Content too short ({text_len} chars)"}), 400
     
-    save_to_cache(url, content)
+    save_to_cache(url, content) # cache에 저장 (status 없이 저장됨 -> 아래에서 추가될 수 있지만 여기선 RAW 명시 하는게 좋음)
+    content['status'] = 'RAW' # [MODIFIED] 명시
+    save_to_cache(url, content) # 다시 저장 (효율은 떨어지지만 확실하게)
     return jsonify(content)
 
 
@@ -239,6 +243,7 @@ def extract_batch():
             
             for res in fetched_results:
                 if res.get('url'):
+                    res['status'] = 'RAW' # [MODIFIED] 배치 수집도 RAW 상태
                     save_to_cache(res['url'], res)
         
         all_results = cached_results + fetched_results
@@ -318,10 +323,136 @@ def update_cache():
             
         existing = load_from_cache(url) or {}
         merged = {**existing, **normalize_field_names(mll_result)}
-        merged['mll_status'] = 'analyzed'
+        merged['status'] = 'ANALYZED'  # [MODIFIED] 분석 완료 상태
         merged['analyzed_at'] = datetime.now(timezone.utc).isoformat()
         
         save_to_cache(url, merged)
         return jsonify({'status': 'success', 'message': 'Cache updated'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@crawler_bp.route('/api/unprocessed_items')
+def get_unprocessed_items():
+    """
+    모든 캐시 파일 중 아직 발행되지 않은(미처리) 항목만 반환
+    - 날짜 제한 없음 (desk/cache 하위 전체 검색)
+    - 필터 조건: content.get('saved') is not True AND DB status is not ACCEPTED/WORTHLESS
+    """
+    import glob
+    
+    # 1. DB History (이미 처리된 URL 확인용)
+    unprocessed = []
+    seen_urls = set()
+    
+    # [NEW] Check for Trash Mode
+    include_trash = request.args.get('include_trash') == 'true'
+    
+    # cache 디렉토리 하위의 모든 json 파일 검색 (재귀적)
+    
+    # cache 디렉토리 하위의 모든 json 파일 검색 (재귀적)
+    # 구조: desk/cache/YYYY-MM-DD/*.json
+    search_pattern = os.path.join(CACHE_DIR, '**', '*.json')
+    
+    # glob은 iterator를 반환하므로 메모리 효율적
+    # recursive=True를 위해 ** 사용
+    files = glob.glob(search_pattern, recursive=True)
+    
+    # [MODIFIED] 오래된 순 정렬 (Oldest First)
+    # 이유: 원본(가장 먼저 수집된 것)을 기준으로 중복을 체크하기 위함.
+    # 만약 과거에 이미 수집되고 처리된(Saved) 파일이 있다면, seen_urls에 먼저 등록되고
+    # 이후에 수집된(Newest) 중복 파일은 seen_urls 체크에서 걸러지게 됨.
+    files.sort() 
+    
+    count = 0
+    limit = 500 # 너무 많으면 UI 터지니까 안전장치 (필요시 조정)
+    
+    for filepath in files:
+        if count >= limit: break
+        
+        try:
+            filename = os.path.basename(filepath)
+            if not filename.endswith('.json'): continue
+            
+            # 파일 읽기
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = json.load(f)
+            
+            url = content.get('url')
+            if not url: continue
+            
+            # [NEW] Check for duplicates
+            if url in seen_urls: continue
+            seen_urls.add(url)
+            
+            # 1. 캐시 파일 내 'saved' 플래그 확인 (이미 발행된 것 제외)
+            if content.get('saved'): continue
+            
+            # 2. DB History Status 확인 (더 확실한 검증)
+            status = db.get_history_status(url)
+            
+            is_trash_status = status in ['ACCEPTED', 'WORTHLESS', 'SKIPPED', 'REJECTED']
+            
+            # [MODIFIED] Trash filtering logic
+            if not include_trash:
+                # Normal mode: Hide processed/trash items
+                if is_trash_status: continue
+            
+            # (If include_trash is True, we include everything, including ACCEPTED/REJECTED)
+            # But maybe we still want to filter 'ACCEPTED' (Published)?
+            # Usually Trash View is for 'Rejected/Skipped'. 'Accepted' is Published.
+            # Let's include everything if trash mode is ON, or refine?
+            # User request: "거부되어서 발행이 취소된 리스트" -> REJECTED/SKIPPED/WORTHLESS.
+            # ACCEPTED는 '발행됨'이므로 휴지통이 아님. 하지만 목록에 보여도 됨.
+            
+            # For now, simplistic approach:
+            # If include_trash is False, hide all status items.
+            # If include_trash is True, show everything.
+            
+            # 3. 추가 필터: 만약 Trash Mode인데 Status가 없는(NEW) 항목은? -> 보여줌.
+            # 결과적으로 include_trash=True면 '모든 캐시 파일'을 보여줌.
+                
+            # 여기까지 오면 포함 대상
+            # status가 None이면 NEW, 아니면(MLL_FAILED 등) 그대로 사용
+            final_status = status if status else 'NEW'
+                
+            # 여기까지 오면 '미발행(Unprocessed)' 상태임
+            # status가 None이면 NEW, 아니면(MLL_FAILED 등) 그대로 사용
+            final_status = status if status else 'NEW'
+            
+            unprocessed.append({
+                'url': url,
+                'source_id': content.get('source_id', 'unknown'),
+                'title': content.get('title') or content.get('title_ko'),
+                'status': final_status,
+                'cached': True,
+                'content': content
+            })
+            count += 1
+            
+        except Exception as e:
+            # 개별 파일 에러는 무시하고 진행
+            print(f"Error reading cache {filepath}: {e}")
+            continue
+
+    return jsonify({'links': unprocessed, 'total': len(unprocessed)})
+
+
+@crawler_bp.route('/api/delete_items', methods=['POST'])
+def delete_items():
+    """
+    [NEW] 선택 항목 영구 삭제 (Status=REJECTED, File=Delete)
+    Body: { "urls": ["url1", "..."] }
+    """
+    try:
+        data = request.get_json()
+        urls = data.get('urls', [])
+        
+        if not urls:
+            return jsonify({'success': False, 'error': 'No URLs provided'}), 400
+            
+        result = trash_manager.dispose_items(urls)
+        
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500

@@ -70,9 +70,9 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
     // 태그가 없어도 컨테이너는 표시
     if (trendingTags.length === 0) {
         return (
-            <div className="bg-card rounded-xl border border-border p-4">
+            <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-xl border border-zinc-200/50 dark:border-zinc-800/50 p-4">
                 <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className="w-4 h-4 text-primary" />
+                    <TrendingUp className="w-4 h-4 text-teal-500" />
                     <h3 className="font-bold text-sm uppercase tracking-wider text-foreground">
                         오늘의 트렌드
                     </h3>
@@ -85,9 +85,9 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
     }
 
     return (
-        <div className="bg-card rounded-xl border border-border p-4">
+        <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-xl border border-zinc-200/50 dark:border-zinc-800/50 p-4">
             <div className="flex items-center gap-2 mb-4">
-                <TrendingUp className="w-4 h-4 text-primary" />
+                <TrendingUp className="w-4 h-4 text-teal-500" />
                 <h3 className="font-bold text-sm uppercase tracking-wider text-foreground">
                     오늘의 트렌드
                 </h3>
@@ -97,7 +97,7 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
                 {trendingTags.map((item, index) => (
                     <div
                         key={item.tag}
-                        className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-secondary/50 transition-colors cursor-default"
+                        className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-colors cursor-default"
                     >
                         <div className="flex items-center gap-2">
                             <span className={cn("text-sm w-5", getRankStyle(index + 1))}>

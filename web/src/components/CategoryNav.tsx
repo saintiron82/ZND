@@ -16,7 +16,7 @@ export default function CategoryNav() {
                         <li key={category.id} className="shrink-0">
                             <Link
                                 href={category.href}
-                                className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors font-sans"
+                                className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors font-sans"
                             >
                                 {category.label}
                             </Link>

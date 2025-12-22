@@ -741,8 +741,19 @@
         </div>
 
         <div class="header-controls">
+            <div class="filter-group"
+                style="background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); padding: 5px 12px; border-radius: 20px; margin-right: 15px;">
+                <label
+                    style="color: #ff8787; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 0.9em;">
+                    <input type="checkbox" id="chkTrashView" onchange="toggleTrashView()"
+                        style="accent-color: #dc3545;">
+                    🗑️ 휴지통 (Trash)
+                </label>
+            </div>
             <div class="header-actions">
                 <a href="/crawler" class="btn" style="background:#667eea; color:white; text-decoration:none;">🔧 크롤러</a>
+                <button class="btn" style="background:#20c997; color:white;" onclick="openSchedulePanel()">🕐 자동
+                    크롤링</button>
                 <button class="btn btn-refresh" onclick="loadDesk()">🔄 새로고침</button>
             </div>
         </div>
@@ -1060,11 +1071,99 @@
                 </div>
             </div>
 
+            <!-- 🕐 스케줄 관리 모달 -->
+            <div id="scheduleModal" class="modal-overlay">
+                <div class="modal-content" style="max-width: 500px; border: 2px solid #20c997;">
+                    <div class="modal-header" style="background: linear-gradient(135deg, #20c997, #1ea87f);">
+                        <h3 style="color: white; margin: 0;">🕐 자동 크롤링 스케줄 관리</h3>
+                        <button class="modal-close" onclick="closeScheduleModal()">✕</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="margin-bottom: 15px;">
+                            <button class="btn" style="background:#28a745; color:white; width:100%; padding: 12px;"
+                                onclick="runCrawlNow()">▶️ 지금 바로 크롤링 실행</button>
+                        </div>
+
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="margin: 0; color: #20c997;">📅 스케줄 목록</h4>
+                            <button class="btn"
+                                style="background:#6c757d; color:white; padding:4px 10px; font-size:0.8em;"
+                                onclick="loadSchedules()">🔄 새로고침</button>
+                        </div>
+
+                        <div id="scheduleList"
+                            style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 10px;">
+                            <div style="text-align: center; color: #666; padding: 20px; font-size: 0.9em;">로딩 중...</div>
+                        </div>
+
+                        <button class="btn" style="background:#667eea; color:white; width:100%; padding: 10px;"
+                            onclick="openAddScheduleDialog()">➕ 새 스케줄 추가</button>
+                    </div>
+                </div>
+            </div>
+
             <script>
                 let deskData = [];
                 let curTimezone = 'local'; // 'local' or 'gmt'
                 let selectedDate = null; // 선택된 날짜 (null = 전체 표시)
                 let currentDetailFilename = null; // 현재 상세보기 중인 파일명
+                let isTrashMode = false; // 휴지통 모드 상태
+
+                // === Trash Management Functions ===
+                function toggleTrashView() {
+                    const chk = document.getElementById('chkTrashView');
+                    isTrashMode = chk.checked;
+
+                    // Update UI colors to indicate mode (Optional)
+                    const header = document.querySelector('.header');
+                    if (isTrashMode) {
+                        header.style.background = 'linear-gradient(135deg, #2c0b0e, #1a1a2e)'; // Reddish hint
+                    } else {
+                        header.style.background = '';
+                    }
+
+                    loadDesk();
+                }
+
+                async function deletePermanent(filename, date) {
+                    if (!confirm('🔥 정말로 영구 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.\nDB에서도 "거부(Rejected)" 처리되어 다시 크롤링되지 않습니다.')) return;
+
+                    try {
+                        const res = await fetch('/api/desk/delete_permanent', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ filename, date })
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            // alert('✅ 영구 삭제되었습니다.'); // Too noisy? Maybe just refresh
+                            loadDesk();
+                        } else {
+                            alert('❌ 삭제 실패: ' + data.error);
+                        }
+                    } catch (e) {
+                        alert('❌ 오류: ' + e.message);
+                    }
+                }
+
+                async function restoreArticle(filename) {
+                    try {
+                        const res = await fetch('/api/desk/restore_selected', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ filenames: [filename] })
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            loadDesk();
+                        } else {
+                            alert('❌ 복구 실패: ' + data.error);
+                        }
+                    } catch (e) {
+                        alert('❌ 오류: ' + e.message);
+                    }
+                }
 
                 // === Issue / Publication State ===
                 let currentViewMode = 'desk'; // 'desk' or a publish_id
@@ -1538,7 +1637,7 @@
                         const today = now.getFullYear() + '-' +
                             String(now.getMonth() + 1).padStart(2, '0') + '-' +
                             String(now.getDate()).padStart(2, '0');
-                        const response = await fetch(`/api/desk/list?date=${today}`);
+                        const response = await fetch(`/api/desk/list?date=${today}&include_trash=${isTrashMode}`);
                         const data = await response.json();
 
                         if (data.error) {
@@ -1651,6 +1750,22 @@
                             return bPriority - aPriority;
                         });
 
+                        // [TRASH MODE Logic]
+                        // Normal Mode: Hide rejected/duplicate (Unless specific logic requires showing, but standard view hides them)
+                        // Trash Mode: Show ONLY rejected (or everything? Usually Trash Mode focuses on Trash)
+                        // User request: "Trash View" -> Show rejected items.
+                        // Filter visibleArticles based on mode
+                        if (isTrashMode) {
+                            // In trash mode, show REJECTED items.
+                            // Maybe show everything but emphasize rejected?
+                            // Usually "Trash View" means "Show me what I threw away".
+                            visibleArticles = visibleArticles.filter(a => a.rejected);
+                        } else {
+                            // In normal mode, HIDE REJECTED items.
+                            // (API already filters rejected if include_trash=false, but double check)
+                            visibleArticles = visibleArticles.filter(a => !a.rejected);
+                        }
+
                         const hiddenCount = allArticles.length - visibleArticles.length;
 
                         // Render Header ALWAYS (User Requirement)
@@ -1753,6 +1868,12 @@
                                     <span class="score-badge score-zs" data-article-id="${article.article_id || article.filename?.replace('.json', '') || ''}">ZS: ${article.zero_echo_score?.toFixed(1) || '-'}</span>
                                     <span class="status-badge status-${statusClass}">${statusText}</span>
                                 </div>
+                                ${article.rejected ? `
+                                <div class="card-actions" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; display: flex; justify-content: flex-end; gap: 5px;">
+                                    <button onclick="event.stopPropagation(); restoreArticle('${article.filename}')" class="btn" style="background: #28a745; color: white; padding: 4px 8px; font-size: 0.8em;" title="기사를 복구하여 다시 검토합니다">♻️ 복구</button>
+                                    <button onclick="event.stopPropagation(); deletePermanent('${article.filename}', '${date}')" class="btn" style="background: #c92a2a; color: white; padding: 4px 8px; font-size: 0.8em;" title="영구 삭제합니다 (재수집 방지)">🔥 영구 삭제</button>
+                                </div>
+                                ` : ''}
                             </div>
                         `;
                             }).join('');
@@ -2921,6 +3042,168 @@
                         }
                     } catch (e) {
                         console.warn('Config load failed:', e);
+                    }
+                }
+
+                // ============================================
+                // 🕐 자동 크롤링 스케줄 관리
+                // ============================================
+
+                async function loadSchedules() {
+                    try {
+                        const resp = await fetch('/api/schedule');
+                        const result = await resp.json();
+
+                        const container = document.getElementById('scheduleList');
+                        if (!result.success || !result.schedules || result.schedules.length === 0) {
+                            container.innerHTML = '<div style="text-align: center; color: #666; padding: 10px; font-size: 0.85em;">스케줄 없음</div>';
+                            return;
+                        }
+
+                        container.innerHTML = result.schedules.map(s => {
+                            // cron에서 시간 추출 (분 시 * * *)
+                            const parts = s.cron.split(' ');
+                            const minute = parts[0] || '0';
+                            const hour = parts[1] || '0';
+                            const timeStr = `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
+
+                            return `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 8px; 
+                                        background: ${s.enabled ? 'rgba(32,201,151,0.15)' : 'rgba(108,117,125,0.15)'}; 
+                                        border-radius: 8px; border-left: 4px solid ${s.enabled ? '#20c997' : '#6c757d'};">
+                                <div style="flex: 1;">
+                                    <div style="font-size: 0.9em; font-weight: bold; color: ${s.enabled ? '#fff' : '#888'};">${s.name}</div>
+                                    <div style="font-size: 1.1em; font-weight: bold; color: ${s.enabled ? '#20c997' : '#666'};">⏰ ${timeStr}</div>
+                                </div>
+                                <div style="display: flex; gap: 5px;">
+                                    <button onclick="toggleSchedule('${s.id}')" 
+                                            style="padding: 5px 10px; font-size: 0.8em; border: none; border-radius: 4px; cursor: pointer;
+                                                   background: ${s.enabled ? '#28a745' : '#6c757d'}; color: white;">
+                                        ${s.enabled ? 'ON' : 'OFF'}
+                                    </button>
+                                    <button onclick="editSchedule('${s.id}', '${s.name}', '${hour}', '${minute}')" 
+                                            style="padding: 5px 10px; font-size: 0.8em; border: none; border-radius: 4px; cursor: pointer; background: #ffc107; color: #333;">✏️</button>
+                                    <button onclick="deleteSchedule('${s.id}')" 
+                                            style="padding: 5px 10px; font-size: 0.8em; border: none; border-radius: 4px; cursor: pointer; background: #dc3545; color: white;">🗑️</button>
+                                </div>
+                            </div>
+                        `}).join('');
+                    } catch (e) {
+                        console.error('Schedule load failed:', e);
+                    }
+                }
+
+                async function toggleSchedule(scheduleId) {
+                    try {
+                        const resp = await fetch(`/api/schedule/${scheduleId}/toggle`, { method: 'POST' });
+                        const result = await resp.json();
+                        if (result.success) {
+                            loadSchedules();
+                        } else {
+                            alert('토글 실패: ' + result.error);
+                        }
+                    } catch (e) {
+                        alert('오류: ' + e.message);
+                    }
+                }
+
+                async function deleteSchedule(scheduleId) {
+                    if (!confirm('이 스케줄을 삭제하시겠습니까?')) return;
+                    try {
+                        const resp = await fetch(`/api/schedule/${scheduleId}`, { method: 'DELETE' });
+                        const result = await resp.json();
+                        if (result.success) {
+                            loadSchedules();
+                        } else {
+                            alert('삭제 실패: ' + result.error);
+                        }
+                    } catch (e) {
+                        alert('오류: ' + e.message);
+                    }
+                }
+
+                // 스케줄 관리 모달 열기/닫기
+                function openSchedulePanel() {
+                    document.getElementById('scheduleModal').classList.add('active');
+                    loadSchedules();
+                }
+
+                function closeScheduleModal() {
+                    document.getElementById('scheduleModal').classList.remove('active');
+                }
+
+                function openAddScheduleDialog() {
+                    const name = prompt('스케줄 이름:', '새 스케줄');
+                    if (!name) return;
+                    const hour = prompt('시 (0-23):', '8');
+                    if (hour === null) return;
+                    const minute = prompt('분 (0-59):', '30');
+                    if (minute === null) return;
+
+                    const cron = `${minute} ${hour} * * *`;
+                    addSchedule(name, cron);
+                }
+
+                async function addSchedule(name, cron) {
+                    try {
+                        const resp = await fetch('/api/schedule', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ name, cron, enabled: true })
+                        });
+                        const result = await resp.json();
+                        if (result.success) {
+                            loadSchedules();
+                        } else {
+                            alert('추가 실패: ' + result.error);
+                        }
+                    } catch (e) {
+                        alert('오류: ' + e.message);
+                    }
+                }
+
+                function editSchedule(scheduleId, currentName, currentHour, currentMinute) {
+                    const name = prompt('스케줄 이름:', currentName);
+                    if (!name) return;
+                    const hour = prompt('시 (0-23):', currentHour);
+                    if (hour === null) return;
+                    const minute = prompt('분 (0-59):', currentMinute);
+                    if (minute === null) return;
+
+                    const cron = `${minute} ${hour} * * *`;
+                    updateSchedule(scheduleId, name, cron);
+                }
+
+                async function updateSchedule(scheduleId, name, cron) {
+                    try {
+                        const resp = await fetch(`/api/schedule/${scheduleId}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ name, cron })
+                        });
+                        const result = await resp.json();
+                        if (result.success) {
+                            loadSchedules();
+                        } else {
+                            alert('수정 실패: ' + result.error);
+                        }
+                    } catch (e) {
+                        alert('오류: ' + e.message);
+                    }
+                }
+
+                async function runCrawlNow() {
+                    if (!confirm('지금 바로 자동 크롤링을 실행하시겠습니까?')) return;
+                    try {
+                        const resp = await fetch('/api/schedule/run_now', { method: 'POST' });
+                        const result = await resp.json();
+                        if (result.success) {
+                            alert('✅ ' + result.message);
+                        } else {
+                            alert('실행 실패: ' + result.error);
+                        }
+                    } catch (e) {
+                        alert('오류: ' + e.message);
                     }
                 }
 

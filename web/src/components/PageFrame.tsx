@@ -96,18 +96,18 @@ export default function PageFrame({
                         <button
                             onClick={() => prevDate && onDateChange(prevDate)}
                             disabled={!prevDate}
-                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-primary disabled:opacity-30"
+                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30"
                         >
                             <ChevronLeft className="w-4 h-4" />
                             {prevDate ? formatDateKo(prevDate) : '이전'}
                         </button>
-                        <span className="text-xs font-bold text-primary">
+                        <span className="text-xs font-bold text-teal-600 dark:text-teal-400">
                             {currentDate ? formatEditionLabel(currentDate, editionName) : ''}
                         </span>
                         <button
                             onClick={() => nextDate && onDateChange(nextDate)}
                             disabled={!nextDate}
-                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-primary disabled:opacity-30"
+                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30"
                         >
                             {nextDate ? formatDateKo(nextDate) : '다음'}
                             <ChevronRight className="w-4 h-4" />

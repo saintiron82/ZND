@@ -14,7 +14,7 @@ export interface ArticleWithSize {
     zeroEchoScore: number;
     impactScore: number;
     summary: string;
-    awards?: string[]; // Award badges: "Today's Headline", "Zero Noise Award", "Hot Topic"
+    awards?: string[]; // Award badges: "Today's Headline", "Zero Echo Award", "Hot Topic"
     [key: string]: any; // Allow additional properties
 }
 
@@ -289,7 +289,7 @@ export class LayoutOptimizer {
 
         // ===== AWARD SYSTEM =====
         // 1. Today's Headline: Best Combined Score (10 - ZS) + IS
-        // 2. Zero Noise Award: Lowest ZS (tiebreaker: highest IS)
+        // 2. Zero Echo Award: Lowest ZS (tiebreaker: highest IS)
         // 3. Hot Topic: Highest IS
         // NOTE: All articles are eligible for awards (tags are optional)
 
@@ -325,7 +325,7 @@ export class LayoutOptimizer {
 
         // Assign primary awards
         if (byCombo.length > 0) addAward(byCombo[0].id, "Today's Headline");
-        if (byZS.length > 0) addAward(byZS[0].id, "Zero Noise Award");
+        if (byZS.length > 0) addAward(byZS[0].id, "Zero Echo Award");
         if (byIS.length > 0) addAward(byIS[0].id, "Hot Topic");
 
         // Build Top 3 list (unique articles with actual awards ONLY - no runner-ups)
@@ -334,7 +334,7 @@ export class LayoutOptimizer {
 
         // Get actual award winners (1st place only)
         const headlineWinnerId = byCombo.length > 0 ? byCombo[0].id : null;
-        const zeroNoiseWinnerId = byZS.length > 0 ? byZS[0].id : null;
+        const zeroEchoWinnerId = byZS.length > 0 ? byZS[0].id : null;
         const hotTopicWinnerId = byIS.length > 0 ? byIS[0].id : null;
 
         // Slot 1: Today's Headline (always first)
@@ -343,10 +343,10 @@ export class LayoutOptimizer {
             usedForTop3.add(headlineWinnerId);
         }
 
-        // Slot 2: Zero Noise Award (only if different from Headline)
-        if (zeroNoiseWinnerId && !usedForTop3.has(zeroNoiseWinnerId)) {
-            top3Ids.push(zeroNoiseWinnerId);
-            usedForTop3.add(zeroNoiseWinnerId);
+        // Slot 2: Zero Echo Award (only if different from Headline)
+        if (zeroEchoWinnerId && !usedForTop3.has(zeroEchoWinnerId)) {
+            top3Ids.push(zeroEchoWinnerId);
+            usedForTop3.add(zeroEchoWinnerId);
         }
 
         // Slot 3: Hot Topic (only if different from above)
@@ -357,11 +357,11 @@ export class LayoutOptimizer {
 
         // Get article objects for logging
         const headlineWinner = headlineWinnerId ? articlesWithSize.find(a => a.id === headlineWinnerId) : null;
-        const zeroNoiseWinner = zeroNoiseWinnerId ? articlesWithSize.find(a => a.id === zeroNoiseWinnerId) : null;
+        const zeroEchoWinner = zeroEchoWinnerId ? articlesWithSize.find(a => a.id === zeroEchoWinnerId) : null;
         const hotTopicWinner = hotTopicWinnerId ? articlesWithSize.find(a => a.id === hotTopicWinnerId) : null;
 
         console.log(`[Awards] Today's Headline: ${headlineWinner?.id?.substring(0, 30)}`);
-        console.log(`[Awards] Zero Noise Award: ${zeroNoiseWinner?.id?.substring(0, 30)}`);
+        console.log(`[Awards] Zero Echo Award: ${zeroEchoWinner?.id?.substring(0, 30)}`);
         console.log(`[Awards] Hot Topic: ${hotTopicWinner?.id?.substring(0, 30)}`);
 
         // Phase 0: Place Top 3 Award Winners

@@ -840,6 +840,12 @@ function fetchLinks() {
                 }
             });
 
+            // 수집된 링크 수를 batchLoadCount에 설정
+            const countInput = document.getElementById('batchLoadCount');
+            if (countInput) {
+                countInput.value = currentLinks.length;
+            }
+
             renderLinks();
             btn.textContent = '링크 가져오기';
             btn.classList.remove('loading');
@@ -1733,18 +1739,27 @@ function showIndependentInspector() {
         });
 }
 
-// 일괄 로드만 (프롬프트 복사 없이)
-function batchLoadOnly() {
+// 일괄 로드 (명시적 수량 입력, 캐시된 데이터도 포함)
+function batchLoadExplicit() {
     if (currentLinks.length === 0) return alert('링크를 먼저 가져오세요.');
 
-    const uncached = currentLinks.filter(item => !item.cached && !loadedContents[item.url]);
-    if (uncached.length === 0) {
-        return alert('모든 링크가 이미 캐시되어 있습니다.');
+    // 수량 입력값 가져오기
+    const countInput = document.getElementById('batchLoadCount');
+    const loadCount = parseInt(countInput?.value || '10', 10);
+
+    if (isNaN(loadCount) || loadCount < 1) {
+        return alert('올바른 로드 수량을 입력하세요.');
     }
 
-    if (!confirm(`${uncached.length}개 링크를 일괄 로드하시겠습니까?`)) return;
+    // 지정된 수량만큼만 로드 (캐시 여부 상관없이)
+    const linksToLoad = currentLinks.slice(0, loadCount);
+    const urls = linksToLoad.map(item => item.url);
 
-    const urls = uncached.map(item => item.url);
+    if (urls.length === 0) {
+        return alert('로드할 링크가 없습니다.');
+    }
+
+    if (!confirm(`${urls.length}개 링크를 일괄 로드하시겠습니까?`)) return;
 
     fetch('/api/extract_batch', {
         method: 'POST',
@@ -1771,6 +1786,11 @@ function batchLoadOnly() {
             alert(`✅ ${results.length}개 링크 일괄 로드 완료!`);
         })
         .catch(err => alert('Error: ' + err));
+}
+
+// 기존 batchLoadOnly 함수 (하위 호환)
+function batchLoadOnly() {
+    batchLoadExplicit();
 }
 
 // 로드 & 프롬프트 복사

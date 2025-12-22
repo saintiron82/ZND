@@ -323,10 +323,10 @@
             <div style="display: flex; gap: 5px; margin-top: 5px;">
                 <button onclick="fetchLinks()" style="flex: 2;">링크 가져오기</button>
             </div>
-            <div style="display: flex; gap: 5px; margin-top: 5px;">
-                <button onclick="loadAndCopy()"
-                    style="background: #6610f2; color: white; font-size: 0.85em; flex: 1;">📥 로드 & 복사</button>
-                <button onclick="batchLoadOnly()"
+            <div style="display: flex; gap: 5px; margin-top: 5px; align-items: center;">
+                <input type="number" id="batchLoadCount" value="10" min="1" max="50"
+                    style="width: 60px; padding: 4px; text-align: center;" title="로드할 링크 수">
+                <button onclick="batchLoadExplicit()"
                     style="background: #fd7e14; color: white; font-size: 0.85em; flex: 1;">📦 일괄 로드</button>
             </div>
             <div style="margin-top: 5px;">
@@ -335,7 +335,8 @@
             </div>
             <div style="margin-top: 5px;">
                 <button onclick="showInspector()"
-                    style="width: 100%; background: #17a2b8; color: white; font-size: 0.85em;">📦 일괄 로드</button>
+                    style="width: 100%; background: #17a2b8; color: white; font-size: 0.85em;">📦 일괄 로드
+                    (Inspector)</button>
             </div>
         </div>
         <!-- 날짜별 기사 조회 -->

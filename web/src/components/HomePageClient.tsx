@@ -61,7 +61,7 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
                 return combinedB - combinedA;
             });
 
-            // ZS 기준 정렬 (Zero Noise Award - 낮을수록 좋음)
+            // ZS 기준 정렬 (Zero Echo Award - 낮을수록 좋음)
             const byZS = [...groupArticles].sort((a, b) => {
                 const zeA = a.zero_echo_score ?? a.zeroEchoScore ?? 10;
                 const zeB = b.zero_echo_score ?? b.zeroEchoScore ?? 10;
@@ -88,8 +88,8 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
             }
             if (byZS.length > 0) {
                 if (!byZS[0].awards) byZS[0].awards = [];
-                if (!byZS[0].awards.includes("Zero Noise Award")) {
-                    byZS[0].awards.push("Zero Noise Award");
+                if (!byZS[0].awards.includes("Zero Echo Award")) {
+                    byZS[0].awards.push("Zero Echo Award");
                 }
             }
             if (byIS.length > 0) {

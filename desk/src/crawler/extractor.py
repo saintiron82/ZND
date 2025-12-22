@@ -50,26 +50,14 @@ class JsonLdExtractor(BaseExtractor):
     def _parse_schema(self, item):
         return {
             'title': item.get('headline') or item.get('name'),
-            'summary': item.get('description'),
+            'description': item.get('description'), # [MODIFIED] summary -> description
             'published_at': item.get('datePublished'),
             'modified_at': item.get('dateModified'),
             'author': self._parse_author(item.get('author')),
             'image': self._parse_image(item.get('image'))
         }
 
-    def _parse_author(self, author):
-        if isinstance(author, list):
-            return [a.get('name') for a in author if isinstance(a, dict)]
-        if isinstance(author, dict):
-            return author.get('name')
-        return author
-
-    def _parse_image(self, image):
-        if isinstance(image, dict):
-            return image.get('url')
-        if isinstance(image, list):
-            return image[0] if image else None
-        return image
+    # ... (중략) ...
 
 class OpenGraphExtractor(BaseExtractor):
     def extract(self, html: str, url: str) -> dict:
@@ -80,7 +68,7 @@ class OpenGraphExtractor(BaseExtractor):
         if og_title: data['title'] = og_title.get('content')
         
         og_desc = soup.find('meta', property='og:description')
-        if og_desc: data['summary'] = og_desc.get('content')
+        if og_desc: data['description'] = og_desc.get('content') # [MODIFIED] summary -> description
         
         og_image = soup.find('meta', property='og:image')
         if og_image: data['image'] = og_image.get('content')

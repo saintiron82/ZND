@@ -49,10 +49,10 @@ export default function Footer() {
                         {/* Brand & Description */}
                         <div className="flex flex-col gap-4">
                             <div className="font-black text-2xl tracking-tighter font-serif">
-                                ZeroEcho<span className="text-primary">.</span>Daily
+                                ZeroEcho<span className="text-teal-500">.</span>Daily
                             </div>
                             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs font-sans">
-                                Curated high-importance news from around the world, delivered without the noise.
+                                Curated high-importance news from around the world, delivered without the echo.
                             </p>
                         </div>
 
@@ -61,7 +61,7 @@ export default function Footer() {
                             <h4 className="font-bold uppercase tracking-widest text-sm font-sans">Connect</h4>
                             <button
                                 onClick={() => setIsContactModalOpen(true)}
-                                className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-bold rounded-full hover:bg-primary/90 transition-all shadow-sm hover:shadow-md flex items-center gap-2"
+                                className="px-5 py-2.5 bg-teal-500 hover:bg-teal-600 text-white text-sm font-bold rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-2"
                             >
                                 <Mail className="w-4 h-4" /> Send us a message
                             </button>
@@ -73,19 +73,19 @@ export default function Footer() {
                             <div className="flex flex-col gap-2 md:items-end">
                                 <button
                                     onClick={() => openLegalModal('disclaimer')}
-                                    className="text-muted-foreground hover:text-primary transition-colors text-sm text-left md:text-right"
+                                    className="text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm text-left md:text-right"
                                 >
                                     Legal Notice
                                 </button>
                                 <button
                                     onClick={() => openLegalModal('privacy')}
-                                    className="text-muted-foreground hover:text-primary transition-colors text-sm text-left md:text-right"
+                                    className="text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm text-left md:text-right"
                                 >
                                     Privacy Policy
                                 </button>
                                 <button
                                     onClick={() => openLegalModal('terms')}
-                                    className="text-muted-foreground hover:text-primary transition-colors text-sm text-left md:text-right"
+                                    className="text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm text-left md:text-right"
                                 >
                                     Terms of Service
                                 </button>

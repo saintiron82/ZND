@@ -181,6 +181,17 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
                 if (matchingId) handleIssueChange(matchingId);
             }}
             articles={currentArticles}
+            issues={sortedIssueIds.map(id => {
+                const issue = groupedByIssue[id]?.issue;
+                return issue ? {
+                    id: issue.id,
+                    date: issue.date,
+                    edition_name: issue.edition_name,
+                    article_count: issue.article_count
+                } : null;
+            }).filter((issue): issue is { id: string; date: string; edition_name: string; article_count: number } => issue !== null)}
+            currentIssueId={currentIssueId}
+            onIssueSelect={handleIssueChange}
         >
             {/* 회차 선택은 사이드바로 이동됨 */}
 

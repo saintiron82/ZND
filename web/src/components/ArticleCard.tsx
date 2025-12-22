@@ -137,9 +137,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
 
                 <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground font-sans shrink-0">
                     <span className={cn("flex items-center gap-1", getScoreColor(zeScore))}>
-                        ZE {zeScore.toFixed(1)}
+                        ZS {zeScore.toFixed(1)}
                     </span>
-                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {dateStr}</span>
+                    {/* 날짜 표시 제거 (회차 날짜와 중복됨) */}
                 </div>
 
                 <h3 className={cn(

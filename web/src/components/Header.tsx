@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ThemeToggle from './ThemeToggle';
+import CategoryNav from './CategoryNav';
 
 interface HeaderProps {
     currentDate?: string | null;
@@ -37,8 +38,9 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
             </div>
 
             <div className="flex flex-col items-center max-w-7xl mx-auto">
-                <h1 className="font-black tracking-tighter text-foreground font-sans leading-none flex items-baseline gap-2 md:gap-4 justify-center text-4xl md:text-6xl">
-                    ZeroEcho<span className="text-primary">.</span>
+                <h1 className="font-black tracking-tighter text-foreground font-sans leading-none flex items-center gap-1 md:gap-2 justify-center text-4xl md:text-6xl">
+                    ZeroEcho
+                    <span className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-blue-500 inline-flex self-end mb-1 md:mb-2"></span>
                     <span className="font-light italic text-muted-foreground tracking-normal font-serif text-2xl md:text-4xl">Daily</span>
                 </h1>
 
@@ -48,9 +50,23 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                         {editionName && currentDate && <span className="mx-2">•</span>}
                         {currentDate ? formatDate(currentDate) : 'Loading...'}
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-widest font-sans">
-                        Curated Global AI Insights • Published Daily
+                    <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-widest font-sans relative group/slogan cursor-help inline-flex items-center gap-1">
+                        Pure Signal, Zero Echo
+                        <span className="text-primary/60 hover:text-primary transition-colors">?</span>
+                        {/* What ZS? 통합 설명 툴팁 */}
+                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-4 py-3 bg-white/95 dark:bg-zinc-900/95 text-foreground text-[11px] font-normal normal-case tracking-normal rounded-xl shadow-2xl border border-border w-64 opacity-0 invisible group-hover/slogan:opacity-100 group-hover/slogan:visible transition-all duration-200 z-[100] text-center leading-relaxed">
+                            <span className="font-bold text-primary block mb-1">What&apos;s ZS (Zero Score)?</span>
+                            기사의 노이즈 억제 점수입니다.<br />
+                            <span className="text-emerald-500 font-semibold">낮을수록</span> 기존 미디어에서 반복되지 않은<br />
+                            <span className="text-primary font-semibold">신선하고 독창적인 정보</span>예요 ✨
+                            <span className="absolute left-1/2 -translate-x-1/2 bottom-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-white dark:border-b-zinc-900"></span>
+                        </span>
                     </p>
+                </div>
+
+                {/* Category Navigation inside Header Frame */}
+                <div className="mt-3 pt-2 border-t border-border/40">
+                    <CategoryNav />
                 </div>
             </div>
         </header>

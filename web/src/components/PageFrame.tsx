@@ -1,8 +1,9 @@
 import React from 'react';
 import Header from './Header';
-import CategoryNav from './CategoryNav';
+
 import Footer from './Footer';
 import TrendingKeywords from './TrendingKeywords';
+import IssueSelector, { IssueItem } from './IssueSelector';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PageFrameProps {
@@ -15,6 +16,10 @@ interface PageFrameProps {
     nextEditionName?: string | null;
     onDateChange: (date: string) => void;
     articles?: Array<{ tags?: string[] }>; // For trending keywords
+    // Issue selector props
+    issues?: IssueItem[];
+    currentIssueId?: string | null;
+    onIssueSelect?: (issueId: string) => void;
 }
 
 export default function PageFrame({
@@ -26,7 +31,10 @@ export default function PageFrame({
     nextDate,
     nextEditionName,
     onDateChange,
-    articles = []
+    articles = [],
+    issues = [],
+    currentIssueId = null,
+    onIssueSelect
 }: PageFrameProps) {
 
     // 날짜 포맷 유틸리티 ("12월 21일" 형식)
@@ -52,9 +60,10 @@ export default function PageFrame({
             {/* 3단 레이아웃: 좌측 네비 | 본문 | 우측 네비 */}
             <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_200px] min-h-[calc(100vh-200px)]">
 
-                {/* 좌측 열: PREV 버튼 */}
-                <div className="hidden lg:flex flex-col items-center pt-8 px-2">
-                    {prevDate && (
+                {/* 좌측 열: PREV 버튼 + 회차 선택 */}
+                <div className="hidden lg:flex flex-col items-center pt-8 px-2 sticky top-[220px] self-start h-fit">
+                    {/* PREV 버튼 (없으면 플레이스홀더) */}
+                    {prevDate ? (
                         <button
                             onClick={() => onDateChange(prevDate)}
                             className="flex flex-col items-center gap-2 p-4 text-foreground transition-all rounded-lg group opacity-40 hover:opacity-100 hover:bg-card hover:shadow-lg"
@@ -64,6 +73,19 @@ export default function PageFrame({
                                 {formatEditionLabel(prevDate, prevEditionName)}
                             </span>
                         </button>
+                    ) : (
+                        <div className="h-[72px]" /> /* 플레이스홀더 - 버튼 높이 유지 */
+                    )}
+
+                    {/* Issue Selector - lg 이상에서 표시 */}
+                    {issues.length > 0 && onIssueSelect && (
+                        <div className="w-full px-2 mt-8">
+                            <IssueSelector
+                                issues={issues}
+                                currentIssueId={currentIssueId}
+                                onIssueSelect={onIssueSelect}
+                            />
+                        </div>
                     )}
                 </div>
 
@@ -92,8 +114,6 @@ export default function PageFrame({
                         </button>
                     </div>
 
-                    {/* 카테고리 네비게이션 */}
-                    <CategoryNav />
 
                     {/* 기사 콘텐츠 영역 */}
                     <main className="flex-1 py-6">
@@ -102,9 +122,9 @@ export default function PageFrame({
                 </div>
 
                 {/* 우측 열: NEXT 버튼 + Trending Keywords */}
-                <div className="hidden lg:flex flex-col items-center pt-8 px-2">
-                    {/* NEXT 버튼 */}
-                    {nextDate && (
+                <div className="hidden lg:flex flex-col items-center pt-8 px-2 sticky top-[220px] self-start h-fit">
+                    {/* NEXT 버튼 (없으면 플레이스홀더) */}
+                    {nextDate ? (
                         <button
                             onClick={() => onDateChange(nextDate)}
                             className="flex flex-col items-center gap-2 p-4 text-foreground transition-all rounded-lg group opacity-40 hover:opacity-100 hover:bg-card hover:shadow-lg"
@@ -114,6 +134,8 @@ export default function PageFrame({
                                 {formatEditionLabel(nextDate, nextEditionName)}
                             </span>
                         </button>
+                    ) : (
+                        <div className="h-[72px]" /> /* 플레이스홀더 - 버튼 높이 유지 */
                     )}
 
                     {/* Trending Keywords - lg 이상에서 표시 */}

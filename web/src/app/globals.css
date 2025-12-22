@@ -1,8 +1,47 @@
 @import "tailwindcss";
 
+/* ========================================
+   ZeroEcho.Daily - Design System
+   ======================================== */
+
 :root {
+  /* === Base Colors === */
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* === ZeroEcho Award Palette === */
+  /* Today's Headline: Warm Gold */
+  --ze-headline-from: #fbbf24;  /* amber-400 */
+  --ze-headline-to: #f97316;    /* orange-500 */
+  
+  /* Zero Noise Award: Fresh Teal */
+  --ze-quality-from: #34d399;   /* emerald-400 */
+  --ze-quality-to: #14b8a6;     /* teal-500 */
+  
+  /* Hot Topic: Vibrant Rose */
+  --ze-trending-from: #fb7185;  /* rose-400 */
+  --ze-trending-to: #ec4899;    /* pink-500 */
+  
+  /* === ZS Score Colors === */
+  --ze-score-good: #10b981;     /* emerald-500 (ZS < 3.0) */
+  --ze-score-mid: #f59e0b;      /* amber-500 (ZS 3.0~6.0) */
+  --ze-score-warn: #ef4444;     /* red-500 (ZS > 6.0) */
+  
+  /* === Glassmorphism === */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-blur: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    
+    /* Dark mode glass */
+    --glass-bg: rgba(24, 24, 27, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
 }
 
 @theme inline {
@@ -12,15 +51,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* === Glassmorphism Utility Class === */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+

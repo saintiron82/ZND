@@ -1,0 +1,17 @@
+{
+  "id": "61171a",
+  "article_id": "61171a",
+  "title_ko": "앤스로픽 Claude Opus 4.5, 5시간 분량의 작업 처리 가능",
+  "summary": "앤스로픽의 신규 모델 Claude Opus 4.5가 METR 벤치마크에서 역대 최고 점수를 기록함. 50% 성공률 기준 약 4시간 49분의 '타임 호라이즌'을 달성하여, 기존 모델 대비 장기 작업(Long-context) 처리 능력이 대폭 향상됨을 입증.",
+  "url": "https://the-decoder.com/anthropics-claude-opus-4-5-can-tackle-some-tasks-lasting-nearly-five-hours/",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 5.1,
+  "impact_score": 4.0,
+  "published_at": "2025-12-22T16:32:06.095248+00:00",
+  "source_id": "the_decoder",
+  "original_title": "Anthropic's Claude Opus 4.5 can tackle some tasks lasting nearly five hours",
+  "publish_id": "VgJuf51wCPxwDe4yuSVi",
+  "edition_code": "251223_3",
+  "edition_name": "3호"
+}

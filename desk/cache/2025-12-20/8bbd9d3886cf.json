@@ -1,0 +1,227 @@
+{
+  "article_id": "8bbd9d",
+  "cached_at": "2025-12-20T19:03:28.008352+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/Google-A2UI-Teaser.jpg",
+  "summary": "구글은 AI 에이전트가 상황에 맞는 UI(폼, 버튼 등)를 생성할 수 있는 오픈소스 표준 'A2UI'를 공개했다. 이는 실행 코드를 보내는 기존 방식(샌드박스) 대신 JSON 데이터를 전송하여 호스트 앱이 네이티브로 렌더링하는 방식이다. 구글은 이를 통해 보안성과 UI 일관성을 확보하고, Anthropic의 MCP와 같은 경쟁 표준과 차별화된 생태계를 구축하려 한다.",
+  "text": "Ask about this article… Search Google's new A2UI standard gives AI agents the ability to create graphical interfaces on the fly. Instead of just sending text, AIs can now generate forms, buttons, and other UI elements that blend right into any app. The open-source project A2UI (Agent-to-User Interface) wants to standardize how AI agents create visual responses. Released under the Apache 2.0 license, the standard bridges the gap between generative AI and graphical user interfaces. The thinking behind A2UI is simple: plain text or code output often doesn't cut it for complex tasks. Google points to restaurant reservations as an example; a text-only conversation can get tedious fast. Ad With A2UI, an agent can spin up a complete form with date pickers and available time slots right away. The goal is a \"context-aware interface\" that adapts as the conversation unfolds. Ad DEC_D_Incontent-1 A2UI ditches iframes and executable code A2UI breaks with the common practice of having agents generate HTML or JavaScript that runs in sandboxes or iframes. According to the research team, this approach poses security risks and often looks janky since the design rarely matches the host app. A2UI takes a different route: it sends data, not code. The agent doesn't push executable logic - it sends a JSON structure describing the interface it wants. Ad The receiving app interprets this data and renders it with its own native UI components. This security model limits agents to a predefined set of components like buttons and text fields. The approach cuts down on code injection risks. And since the agent only specifies structure, not pixel-perfect design, the client app keeps full control over how things look. Ad DEC_D_Incontent-2 How A2UI stacks up against Anthropic's MCP and OpenAI's ChatKit Google is carving out space in an increasingly crowded market for agentic UI. The team draws clear lines between A2UI and other standards. According to Google, Anthropic's Model Context Protocol (MCP) treats UI as a resource—typically prefab HTML loaded in a sandbox. A2UI goes native-first, aiming for deeper integration with host apps. Ad Google also sets A2UI apart from OpenAI's ChatKit. ChatKit works best inside OpenAI's ecosystem, while A2UI is built to be platform-agnostic. It's designed for complex multi-agent setups where one agent orchestrates others and securely displays UI suggestions from remote sub-agents. Just weeks ago, Google showed off how AI models can create interactive tools and simulations in real time with the introduction of \"Generative UI\" in the Gemini app and search. Called \"Dynamic View,\" the feature generates tailored graphical interfaces to make complex topics easier to grasp. The standard sits at version 0.8 and is already in production, according to Google. The GenUI SDK for Flutter uses A2UI to handle communication between server-side agents and mobile apps. Google's internal mini-app platform Opal and Gemini Enterprise run on the protocol too. Google has lined up partnerships with external frameworks. The teams behind AG UI and CopilotKit supported the protocol from day one. The project ships client libraries for Flutter, Web Components, and Angular, and the team is inviting developers to contribute more renderers and integrations. Given how fast standards like MCP have spread, A2UI looks well-positioned for broad adoption.",
+  "title": "Google's open standard lets AI agents build user interfaces on the fly",
+  "url": "https://the-decoder.com/googles-open-standard-lets-ai-agents-build-user-interfaces-on-the-fly/",
+  "title_ko": "구글의 개방형 표준, AI 에이전트가 즉석에서 사용자 인터페이스 구축 가능하게 해",
+  "tags": [],
+  "impact_score": 8.5,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1 구글이 AI 에이전트 시장의 기술 표준(A2UI)을 제시하며 생태계 주도권을 확보하려는 시도. 경쟁사(Anthropic)의 기술 방식과 명확한 대립각을 세우며, 개발자 생태계 전반에 영향을 미치는 구조적 변화를 예고함.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Anthropic",
+          "Se_Tier": 2,
+          "PE/SE 선정이유": "기술 발표 및 표준 제정 주체인 Google이 PE. 기사에서 Anthropic의 MCP 방식을 기술적으로 비판하고 대체재로 포지셔닝했으므로 직접적 경쟁 관계인 Anthropic을 SE로 선정."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 1,
+        "IW_Score": 4
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "zero_echo_score": 3.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 9,
+      "T3": 8,
+      "Rationale": "JSON 전송 방식, Apache 2.0 라이선스, Flutter 지원 등 기술적 구동 원리와 배포 현황이 상세함."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 3,
+      "P3": 2,
+      "Rationale": "자사 표준의 우수성을 강조하며 경쟁 기술(MCP)의 단점을 부각하는 마케팅적 요소 존재."
+    },
+    "Utility": {
+      "V1": 8,
+      "V2": 7,
+      "V3": 7,
+      "Rationale": "개발자들에게 새로운 UI 구축 옵션을 제공하며, 에이전트 생태계의 표준화 경쟁에 중요한 정보를 제공."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "AI 에이전트의 상호작용 방식을 재정의하려는 시도로 기술적 중요도가 높음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "8bbd9d",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "구글의 개방형 표준, AI 에이전트가 즉석에서 사용자 인터페이스 구축 가능하게 해",
+      "Summary": "구글은 AI 에이전트가 상황에 맞는 UI(폼, 버튼 등)를 생성할 수 있는 오픈소스 표준 'A2UI'를 공개했다. 이는 실행 코드를 보내는 기존 방식(샌드박스) 대신 JSON 데이터를 전송하여 호스트 앱이 네이티브로 렌더링하는 방식이다. 구글은 이를 통해 보안성과 UI 일관성을 확보하고, Anthropic의 MCP와 같은 경쟁 표준과 차별화된 생태계를 구축하려 한다.",
+      "Tags": [
+        "Google",
+        "Agent",
+        "Open Source"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1 구글이 AI 에이전트 시장의 기술 표준(A2UI)을 제시하며 생태계 주도권을 확보하려는 시도. 경쟁사(Anthropic)의 기술 방식과 명확한 대립각을 세우며, 개발자 생태계 전반에 영향을 미치는 구조적 변화를 예고함.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Anthropic",
+            "Se_Tier": 2,
+            "PE/SE 선정이유": "기술 발표 및 표준 제정 주체인 Google이 PE. 기사에서 Anthropic의 MCP 방식을 기술적으로 비판하고 대체재로 포지셔닝했으므로 직접적 경쟁 관계인 Anthropic을 SE로 선정."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 1,
+          "IW_Score": 4
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 9,
+        "T3": 8,
+        "Rationale": "JSON 전송 방식, Apache 2.0 라이선스, Flutter 지원 등 기술적 구동 원리와 배포 현황이 상세함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "자사 표준의 우수성을 강조하며 경쟁 기술(MCP)의 단점을 부각하는 마케팅적 요소 존재."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 7,
+        "V3": 7,
+        "Rationale": "개발자들에게 새로운 UI 구축 옵션을 제공하며, 에이전트 생태계의 표준화 경쟁에 중요한 정보를 제공."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "AI 에이전트의 상호작용 방식을 재정의하려는 시도로 기술적 중요도가 높음."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "Google's open standard lets AI agents build user interfaces on the fly",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 9.0,
+        "T3": 8.0,
+        "S_Avg": 8.33
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 3.0,
+        "P3": 2.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 8.0,
+        "V2": 7.0,
+        "V3": 7.0,
+        "U_Avg": 7.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 3.63,
+      "ZS_Final": 3.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 9,
+        "T3": 8,
+        "Rationale": "JSON 전송 방식, Apache 2.0 라이선스, Flutter 지원 등 기술적 구동 원리와 배포 현황이 상세함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "자사 표준의 우수성을 강조하며 경쟁 기술(MCP)의 단점을 부각하는 마케팅적 요소 존재."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 7,
+        "V3": 7,
+        "Rationale": "개발자들에게 새로운 UI 구축 옵션을 제공하며, 에이전트 생태계의 표준화 경쟁에 중요한 정보를 제공."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "AI 에이전트의 상호작용 방식을 재정의하려는 시도로 기술적 중요도가 높음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 1.0,
+        "IW_Total": 4.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 8.5,
+      "IS_Final": 8.5,
+      "Score_Commentary": "Tier 1 구글이 AI 에이전트 시장의 기술 표준(A2UI)을 제시하며 생태계 주도권을 확보하려는 시도. 경쟁사(Anthropic)의 기술 방식과 명확한 대립각을 세우며, 개발자 생태계 전반에 영향을 미치는 구조적 변화를 예고함."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Anthropic",
+      "Se_Tier": 2,
+      "PE/SE 선정이유": "기술 발표 및 표준 제정 주체인 Google이 PE. 기사에서 Anthropic의 MCP 방식을 기술적으로 비판하고 대체재로 포지셔닝했으므로 직접적 경쟁 관계인 Anthropic을 SE로 선정."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-20T19:07:49.667243+00:00",
+  "category": "Engineering",
+  "dedup_status": "selected",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:02.799074+00:00"
+}

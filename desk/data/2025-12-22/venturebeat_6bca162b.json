@@ -1,0 +1,17 @@
+{
+  "id": "6bca16",
+  "article_id": "6bca16",
+  "title_ko": "가드레일 없는 AI 에이전트 자율성은 SRE의 악몽",
+  "summary": "PagerDuty의 AI 부문 VP가 AI 에이전트 도입의 가속화 속에서 발생하는 Shadow AI, 책임 소재 불분명, 설명 가능성 부족 등의 리스크를 분석함. 이에 대한 해결책으로 인간 감독의 기본화, 보안 내재화(SOC2 등), 권한 범위 제한 등 3가지 가이드라인을 제시함.",
+  "url": "https://venturebeat.com/infrastructure/agent-autonomy-without-guardrails-is-an-sre-nightmare",
+  "tags": [],
+  "category": "Engineering",
+  "zero_echo_score": 7.7,
+  "impact_score": 0.5,
+  "published_at": "2025-12-21T12:00:00-07:00",
+  "source_id": "venturebeat",
+  "original_title": "Agent autonomy without guardrails is an SRE nightmare",
+  "publish_id": "BHSPykWEmK76DBE43tIG",
+  "edition_code": "251222_5",
+  "edition_name": "5호"
+}

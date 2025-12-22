@@ -1,0 +1,199 @@
+{
+  "article_id": "8bc5ed",
+  "cached_at": "2025-12-22T13:27:16.596599+00:00",
+  "description": "AI 플랫폼 전문 프렌들리 AI(대표 전병곤)는 엔비디아 공식 론칭 파트너로 참여, 최신 AI 모델인 ‘네모트론 3(Nemotron 3)’을 자체 플랫폼을 통해",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204985_206434_3244.png",
+  "source_id": "aitimes",
+  "status": "PUBLISHED",
+  "text": "(사진=엔비디아) AI 플랫폼 전문 프렌들리 AI(대표 전병곤)는 엔비디아 공식 론칭 파트너로 참여, 최신 AI 모델인 ‘네모트론 3(Nemotron 3)’을 자체 플랫폼을 통해 제공한다고 22일 밝혔다. 네모트론 3는 복잡한 추론과 논리적 판단이 필요한 작업에 특화된 AI 모델로, 하이브리드 맘바-트랜스포머(Mamba-Transformer) 바탕의 MoE(전문가 혼합 모델) 아키텍처가 특징이다. 그중, 나노 모델은 100만 토큰 컨텍스트를 지원해 소프트웨어 개발, 금융, 유통, 사이버 보안 등 산업 분야에 활용할 수 있도록 설계됐다. 특히, 계산 자원을 효율적으로 사용하는 구조를 적용해, 성능을 유지하면서도 운영 비용을 줄일 수 있도록 한 것이 특징이다. 기업과 개발자는 별도 복잡한 인프라 구축 없이 프렌들리AI 플랫폼에서 ‘네모트론 3 나노’ 모델을 손쉽게 배포하고 운영할 수 있게 됐다고 전했다. 프렌들리AI는 빠른 응답 속도와 비용 효율성을 바탕으로, 실제 서비스 환경에 적합한 AI 운영 환경을 제공하는 것이 강점이다. 프렌들리AI 의 고성능 추론 환경에서 네모트론 3 모델을 사용해 AI 에이전트를 안정적으로 운영할 수 있다는 설명이다. 프렌들리 AI 플랫폼에서 네모트론 3 나노 모델을 실행하면 최적화된 GPU 활용과 MoE 서빙 최적화 기술, 자동 확장 기능(Autoscaling)을 통해 안정적인 성능을 제공 받을 수 있다고 전했다. 전용 환경(Dedicated Endpoints)을 사용할 경우, 기존 방식 대비 GPU 비용을 50% 이상 절감할 수 있다. 또, 오픈AI와 호환되는 API를 지원해 기존 AI 서비스와의 연동도 용이하다고 덧붙였다. 한편, 프렌들리AI 는 전용 AI 추론, 서버리스 API, 컨테이너 솔루션을 통해 48만개 이상 AI 모델을 지원하고 있으며, 스타트업부터 대기업 등 맞춤 프로덕션 환경에서 AI 추론 서비스 운영을 지원하고 있다. 전병곤 프렌들리 AI 대표는 “네모트론 3와 프렌들리AI 플랫폼의 결합은 AI가 스스로 판단하고 작업을 수행하는 ‘에이전틱 AI’를 보다 현실적인 비용과 성능으로 구현할 수 있게 하는 중요한 계기”라며 “기업들이 대규모 AI 서비스를 운영하는 데 필요한 성능과 효율성을 동시에 제공하는 것이 목표”라고 말했다. 장세민 기자 semim99@aitimes.com",
+  "title": "프렌들리AI, 엔비디아 공식 파트너 참여...자체 플랫폼으로 ‘네모트론 3’ 제공 - AI타임스",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204985",
+  "title_ko": "프렌들리AI, 엔비디아 파트너 합류... '네모트론 3' 서비스 개시",
+  "summary": "프렌들리AI가 엔비디아 공식 론칭 파트너로 참여해 자사 플랫폼에서 '네모트론 3' 모델을 제공한다. 효율적인 추론 환경과 비용 절감 기술을 통해 기업용 AI 에이전트 시장을 공략하며, 엔비디아의 최신 모델을 즉시 활용할 수 있게 지원한다.",
+  "tags": [],
+  "impact_score": 2.0,
+  "IS_Analysis": {
+    "Score_Commentary": "국내 스타트업(Tier 4)이 Global Tier 1(Nvidia)의 공식 파트너로 선정되어 최신 모델을 서빙한다는 점은 기술적 인정을 의미한다. 다만, 기술 자체의 개발보다는 플랫폼 연동 및 서비스 제공(Corporate Scope)에 해당한다. Tier 1과의 협력(Gap Score 0.0)이 긍정적 요소다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "프렌들리AI",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "Nvidia",
+          "Se_Tier": 1,
+          "PE/SE 선정이유": "PE: 서비스 제공 및 보도자료의 주체인 프렌들리AI(Tier 4 Startup). SE: 파트너십 대상이자 기술 원천인 Nvidia(Tier 1 Hardware/Solution). (P3 협력 관계 적용)"
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 8.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "Rationale": "비용 절감율(50%), 지원 모델 수 등 구체적 수치 제시."
+    },
+    "Utility": {
+      "V1": 6,
+      "Rationale": "기업용 LLM 도입 시 실질적인 옵션 제공."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "없음"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "8bc5ed",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "프렌들리AI, 엔비디아 파트너 합류... '네모트론 3' 서비스 개시",
+      "Summary": "프렌들리AI가 엔비디아 공식 론칭 파트너로 참여해 자사 플랫폼에서 '네모트론 3' 모델을 제공한다. 효율적인 추론 환경과 비용 절감 기술을 통해 기업용 AI 에이전트 시장을 공략하며, 엔비디아의 최신 모델을 즉시 활용할 수 있게 지원한다.",
+      "Tags": [
+        "Partnership",
+        "Nvidia",
+        "Startup"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "국내 스타트업(Tier 4)이 Global Tier 1(Nvidia)의 공식 파트너로 선정되어 최신 모델을 서빙한다는 점은 기술적 인정을 의미한다. 다만, 기술 자체의 개발보다는 플랫폼 연동 및 서비스 제공(Corporate Scope)에 해당한다. Tier 1과의 협력(Gap Score 0.0)이 긍정적 요소다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "프렌들리AI",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "Nvidia",
+            "Se_Tier": 1,
+            "PE/SE 선정이유": "PE: 서비스 제공 및 보도자료의 주체인 프렌들리AI(Tier 4 Startup). SE: 파트너십 대상이자 기술 원천인 Nvidia(Tier 1 Hardware/Solution). (P3 협력 관계 적용)"
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "Rationale": "비용 절감율(50%), 지원 모델 수 등 구체적 수치 제시."
+      },
+      "Utility": {
+        "V1": 6,
+        "Rationale": "기업용 LLM 도입 시 실질적인 옵션 제공."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "original_title": "프렌들리AI, 엔비디아 공식 파트너 참여...자체 플랫폼으로 ‘네모트론 3’ 제공 - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 0.0,
+        "T3": 0.0,
+        "S_Avg": 2.0
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 0.0,
+        "V3": 0.0,
+        "U_Avg": 2.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.8,
+      "ZS_Final": 8.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "Rationale": "비용 절감율(50%), 지원 모델 수 등 구체적 수치 제시."
+      },
+      "Utility": {
+        "V1": 6,
+        "Rationale": "기업용 LLM 도입 시 실질적인 옵션 제공."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 2.0,
+      "IS_Final": 2.0,
+      "Score_Commentary": "국내 스타트업(Tier 4)이 Global Tier 1(Nvidia)의 공식 파트너로 선정되어 최신 모델을 서빙한다는 점은 기술적 인정을 의미한다. 다만, 기술 자체의 개발보다는 플랫폼 연동 및 서비스 제공(Corporate Scope)에 해당한다. Tier 1과의 협력(Gap Score 0.0)이 긍정적 요소다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "프렌들리AI",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "Nvidia",
+      "Se_Tier": 1,
+      "PE/SE 선정이유": "PE: 서비스 제공 및 보도자료의 주체인 프렌들리AI(Tier 4 Startup). SE: 파트너십 대상이자 기술 원천인 Nvidia(Tier 1 Hardware/Solution). (P3 협력 관계 적용)"
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "staged": true,
+  "staged_at": "2025-12-22T13:33:35.767168+00:00",
+  "category": "Business",
+  "dedup_status": "selected",
+  "saved": true,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:09.747748+00:00"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "ef764f",
+  "article_id": "ef764f",
+  "title_ko": "알리바바 Qwen, 포토샵처럼 이미지 레이어 분리하는 AI 모델 공개",
+  "summary": "알리바바의 AI 조직 Qwen이 이미지를 투명 배경의 개별 레이어로 분리하여 편집을 용이하게 하는 'Qwen-Image-Layered' 모델을 공개했다. 사용자는 특정 객체나 배경을 독립적으로 수정할 수 있으며, 관련 코드와 모델은 깃허브와 허깅페이스를 통해 공개되었다.",
+  "url": "https://the-decoder.com/alibabas-qwen-releases-ai-model-that-splits-images-into-editable-layers-like-photoshop/",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 5.9,
+  "impact_score": 4.0,
+  "published_at": "2025-12-22T16:32:07.214667+00:00",
+  "source_id": "the_decoder",
+  "original_title": "Alibaba's Qwen releases AI model that splits images into editable layers like Photoshop",
+  "publish_id": "VgJuf51wCPxwDe4yuSVi",
+  "edition_code": "251223_3",
+  "edition_name": "3호"
+}

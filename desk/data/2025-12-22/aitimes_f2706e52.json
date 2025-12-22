@@ -1,0 +1,17 @@
+{
+  "id": "f2706e",
+  "article_id": "f2706e",
+  "title_ko": "구글, 행동하는 온디바이스 AI '펑션젬마' 공개",
+  "summary": "구글이 자연어 명령을 실행 가능한 코드(API 액션)로 변환하는 소형 언어모델(sLM) '펑션젬마'를 출시했다. 2.7B 매개변수 규모로 젯슨 나노 등 엣지 디바이스 구동이 가능하며, 미세조정을 통해 함수 호출 정확도를 85%까지 끌어올렸다. 이는 단순 대화를 넘어 외부 시스템을 제어하는 에이전트 기능을 오프라인 환경에서도 구현함을 목표로 한다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204962",
+  "tags": [],
+  "category": "Engineering",
+  "zero_echo_score": 3.0,
+  "impact_score": 5.0,
+  "published_at": "2025-12-22T16:32:13.375782+00:00",
+  "source_id": "aitimes",
+  "original_title": "구글, 명령을 '코드'로 변환하는 온디바이스 모델 '펑션젬마' 출시",
+  "publish_id": "VgJuf51wCPxwDe4yuSVi",
+  "edition_code": "251223_3",
+  "edition_name": "3호"
+}

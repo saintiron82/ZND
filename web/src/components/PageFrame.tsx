@@ -12,8 +12,10 @@ interface PageFrameProps {
     editionName?: string | null;  // 회차명 (예: "1호", "2호")
     prevDate: string | null;
     prevEditionName?: string | null;
+    prevIssueId?: string | null;  // 이전 회차 ID
     nextDate: string | null;
     nextEditionName?: string | null;
+    nextIssueId?: string | null;  // 다음 회차 ID
     onDateChange: (date: string) => void;
     articles?: Array<{ tags?: string[] }>; // For trending keywords
     // Issue selector props
@@ -28,8 +30,10 @@ export default function PageFrame({
     editionName,
     prevDate,
     prevEditionName,
+    prevIssueId,
     nextDate,
     nextEditionName,
+    nextIssueId,
     onDateChange,
     articles = [],
     issues = [],
@@ -126,7 +130,7 @@ export default function PageFrame({
                     {/* NEXT 버튼 (없으면 플레이스홀더) */}
                     {nextDate ? (
                         <button
-                            onClick={() => onDateChange(nextDate)}
+                            onClick={() => onDateChange(nextIssueId || nextDate)}
                             className="flex flex-col items-center gap-2 p-4 text-foreground transition-all rounded-lg group opacity-40 hover:opacity-100 hover:bg-card hover:shadow-lg"
                         >
                             <ChevronRight className="w-10 h-10" />
@@ -138,7 +142,7 @@ export default function PageFrame({
                         <div className="h-[72px]" /> /* 플레이스홀더 - 버튼 높이 유지 */
                     )}
 
-                    {/* Trending Keywords - lg 이상에서 표시 */}
+                    {/* Trending Keywords - 좌측 Issue Selector와 동일 높이 */}
                     {articles.length > 0 && (
                         <div className="w-full px-2 mt-8">
                             <TrendingKeywords articles={articles} maxItems={8} />

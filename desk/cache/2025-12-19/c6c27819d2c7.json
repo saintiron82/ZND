@@ -1,0 +1,235 @@
+﻿{
+    "article_id":  "c6c278",
+    "author":  "Carl Franzen",
+    "cached_at":  "2025-12-19T20:01:04.618390+00:00",
+    "image":  "https://images.ctfassets.net/jdtwqhzvc2n1/2XEjS59BROJJN9v7M6KGEF/c613f60acd2a05e6b2fc651d9e68bcbf/eA8c3JDg_uS7Ym6VLzwXy_9b0394587b1a4c69b37f8ace2e491396.png?w=800\u0026amp;q=75",
+    "modified_at":  "2025-12-19T19:58:00.172Z",
+    "summary":  "援ш???紐⑤컮??湲곌린 ?쒖뼱? ?ｌ? 而댄벂?낆뿉 ?뱁솕??2??7泥쒕쭔 ?뚮씪誘명꽣 洹쒕え??寃쎈웾??AI 紐⑤뜽 \u0027FunctionGemma\u0027瑜?異쒖떆?덈떎. ??紐⑤뜽? ?먯뿰??紐낅졊???ㅽ뻾 媛?ν븳 肄붾뱶濡?蹂?섑븯????理쒖쟻?붾릺???덉쑝硫? 誘몄꽭 議곗젙???듯빐 湲곕뒫 ?몄텧 ?뺥솗?꾨? 58%?먯꽌 85%濡??뚯뼱?щ졇?? ?대씪?곕뱶 ?섏〈 ?놁씠 ?⑤뵒諛붿씠?ㅼ뿉???묐룞?섏뿬 蹂댁븞?깃낵 ?묐떟 ?띾룄瑜?媛뺥솕?덉쑝硫? 嫄곕? 紐⑤뜽怨??곕룞?섎뒗 \u0027?몃옒??而⑦듃濡ㅻ윭\u0027濡쒖꽌???덈줈???꾪궎?띿쿂瑜??쒖떆?쒕떎.",
+    "text":  "While Gemini 3 is still making waves, Google\u0027s not taking the foot off the gas in terms of releasing new models. Yesterday, the company released FunctionGemma, a specialized 270-million parameter AI model designed to solve one of the most persistent bottlenecks in modern application development: reliability at the edge. Unlike general-purpose chatbots, FunctionGemma is engineered for a single, critical utility?봳ranslating natural language user commands into structured code that apps and devices can actually execute, all without connecting to the cloud. The release marks a significant strategic pivot for Google DeepMind and the Google AI Developers team. While the industry continues to chase trillion-parameter scale in the cloud, FunctionGemma is a bet on \"Small Language Models\" (SLMs) running locally on phones, browsers, and IoT devices. For AI engineers and enterprise builders, this model offers a new architectural primitive: a privacy-first \"router\" that can handle complex logic on-device with negligible latency. FunctionGemma is available immediately for download on Hugging Face and Kaggle. You can also see the model in action by downloading the Google AI Edge Gallery app on the Google Play Store. The Performance Leap At its core, FunctionGemma addresses the \"execution gap\" in generative AI. Standard large language models (LLMs) are excellent at conversation but often struggle to reliably trigger software actions?봢specially on resource-constrained devices. According to Google?셲 internal \"Mobile Actions\" evaluation, a generic small model struggles with reliability, achieving only a 58% baseline accuracy for function calling tasks. However, once fine-tuned for this specific purpose, FunctionGemma?셲 accuracy jumped to 85%, creating a specialized model that can exhibit the same success rate as models many times its size. Chart showing FunctionGemma performance before and after fine tuning. Credit: Google It allows the model to handle more than just simple on/off switches; it can parse complex arguments, such as identifying specific grid coordinates to drive game mechanics or detailed logic. The release includes more than just the model weights. Google is providing a full \"recipe\" for developers, including: The Model: A 270M parameter transformer trained on 6 trillion tokens. Training Data: A \"Mobile Actions\" dataset to help developers train their own agents. Ecosystem Support: Compatibility with Hugging Face Transformers, Keras, Unsloth, and NVIDIA NeMo libraries. Omar Sanseviero, Developer Experience Lead at Hugging Face, highlighted the versatility of the release on X (formerly Twitter), noting the model is \"designed to be specialized for your own tasks\" and can run in \"your phone, browser or other devices.\" This local-first approach offers three distinct advantages: Privacy: Personal data (like calendar entries or contacts) never leaves the device. Latency: Actions happen instantly without waiting for a server round-trip. The small size means the speed at which it processes input is significant, particularly with access to accelerators such as GPUs and NPUs. Cost: Developers don\u0027t pay per-token API fees for simple interactions. For AI Builders: A New Pattern for Production Workflows For enterprise developers and system architects, FunctionGemma suggests a move away from monolithic AI systems toward compound systems. Instead of routing every minor user request to a massive, expensive cloud model like GPT-4 or Gemini 1.5 Pro, builders can now deploy FunctionGemma as an intelligent \"traffic controller\" at the edge. Here is how AI builders should conceptualize using FunctionGemma in production: 1. The \"Traffic Controller\" Architecture: In a production environment, FunctionGemma can act as the first line of defense. It sits on the user\u0027s device, instantly handling common, high-frequency commands (navigation, media control, basic data entry). If a request requires deep reasoning or world knowledge, the model can identify that need and route the request to a larger cloud model. This hybrid approach drastically reduces cloud inference costs and latency. This enables use cases such as routing queries to the appropriate sub-agent. 2. Deterministic Reliability over Creative Chaos: Enterprises rarely need their banking or calendar apps to be \"creative.\" They need them to be accurate. The jump to 85% accuracy confirms that specialization beats size. Fine-tuning this small model on domain-specific data (e.g., proprietary enterprise APIs) creates a highly reliable tool that behaves predictably?봞 requirement for production deployment. 3. Privacy-First Compliance: For sectors like healthcare, finance, or secure enterprise ops, sending data to the cloud is often a compliance risk. Because FunctionGemma is efficient enough to run on-device (compatible with NVIDIA Jetson, mobile CPUs, and browser-based Transformers.js), sensitive data like PII or proprietary commands never has to leave the local network. Licensing: Open-ish With Guardrails FunctionGemma is released under Google\u0027s custom Gemma Terms of Use. For enterprise and commercial developers, this is a critical distinction from standard open-source licenses like MIT or Apache 2.0. While Google describes Gemma as an \"open model,\" it is not strictly \"Open Source\" by the Open Source Initiative (OSI) definition. The license allows for free commercial use, redistribution, and modification, but it includes specific Usage Restrictions. Developers are prohibited from using the model for restricted activities (such as generating hate speech or malware), and Google reserves the right to update these terms. For the vast majority of startups and developers, the license is permissive enough to build commercial products. However, teams building dual-use technologies or those requiring strict copyleft freedom should review the specific clauses regarding \"Harmful Use\" and attribution.",
+    "title":  "Google releases tiny FunctionGemma edge model that can control mobile devices",
+    "url":  "https://venturebeat.com/technology/google-releases-functiongemma-a-tiny-edge-model-that-can-control-mobile",
+    "title_ko":  "Google releases tiny FunctionGemma edge model that can control mobile devices",
+    "tags":  [
+
+             ],
+    "impact_score":  5.0,
+    "IS_Analysis":  {
+                        "Score_Commentary":  "援ш?(Tier 1)??二쇰룄???쒗뭹 異쒖떆濡??ㅽ뻾 二쇱껜媛 紐낇솗?섎ŉ, 蹂꾨룄???꾨왂???뚰듃?덉떗(Joint Venture)?대굹 ?由?愿怨꾧? ?놁뼱 SE???좎젙?섏? ?딆쓬. 2.7B 洹쒕え??SLM 異쒖떆???⑥씪 湲곗뾽???쒗뭹 ?쇱씤???뺤옣(Corporate)???대떦?섎ŉ, 利됱떆 諛고룷(Realization)???곹깭?? ?쒖옣???⑤윭?ㅼ엫??利됯컖?곸쑝濡?諛붽씀湲곕낫???뱀젙 湲곗닠??蹂묐ぉ(?ｌ? 援щ룞)???닿껐?섎뒗 ?꾨왂???꾧뎄濡쒖꽌???깃꺽??媛뺥븿.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "Google",
+                                                                                "Pe_Tier":  1,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "PE: ?ш굔???ㅽ뻾(異쒖떆), 湲곗닠 媛쒕컻 諛??먯썝???ъ엯??二쇱껜??Google??P4 洹쒖튃???섍굅 ?좎젙. SE: Hugging Face ?깆씠 ?멸툒?섎굹 ?⑥닚 諛고룷 ?뚮옯??諛??쇱씠釉뚮윭由??명솚???멸툒??遺덇낵?섏뿬 \u0027?쇰갑??踰ㅼ튂留덊겕/?⑥닚 ?묐젰 ?멸툒\u0027?쇰줈 ?먮떒, None 泥섎━."
+                                                                            },
+                                                                 "Tier_Score":  3,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  3
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  1,
+                                                                                "Y_Evidence_Code":  4,
+                                                                                "Scope_Matrix_Score":  0.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "False"
+                                                                            },
+                                                                 "IE_Score":  2
+                                                             }
+                                         }
+                    },
+    "zero_echo_score":  3.1,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  9,
+                                           "T2":  8,
+                                           "T3":  7,
+                                           "Rationale":  "2??7泥쒕쭔 ?뚮씪誘명꽣, 6議??좏겙 ?숈뒿, ?뺥솗??58%-\u003e85% ??援ъ껜???섏튂? 湲곗닠???ъ뼇(?곗씠?곗뀑, ?꾪궎?띿쿂)??留ㅼ슦 ?곸꽭?섍쾶 湲곗닠??"
+                                       },
+                            "Noise":  {
+                                          "P1":  3,
+                                          "P2":  2,
+                                          "P3":  1,
+                                          "Rationale":  "\u0027Making waves\u0027, \u0027Drastically reduces\u0027 ???쇰? ?섏떇?닿? 議댁옱?섎굹, ?꾨컲?곸쑝濡?湲곗닠???ъ떎 ?꾨떖??吏묒쨷?섏뿬 ?≪쓬???곸쓬."
+                                      },
+                            "Utility":  {
+                                            "V1":  7,
+                                            "V2":  9,
+                                            "V3":  8,
+                                            "Rationale":  "利됱떆 ?ㅼ슫濡쒕뱶 諛??쒖슜 媛?ν븳 \u0027?덉떆??瑜??쒓났?섏뿬 ?ㅽ뻾 媛?μ꽦??留ㅼ슦 ?믪쑝硫? ?⑤뵒諛붿씠??AI 媛쒕컻?먯뿉寃??ㅼ쭏???⑥슜???쒓났??"
+                                        },
+                            "Fine_Adjustment":  {
+                                                    "Score":  0.5,
+                                                    "Reason":  "媛쒕컻?먮? ?꾪븳 援ъ껜?곸씤 湲곗닠 ?ㅽ럺怨??쒖슜 ?쒕굹由ъ삤(?몃옒??而⑦듃濡ㅻ윭)瑜?紐낇솗???쒖떆?섏뿬 ?뺣낫???ㅼ슜??媛移섍? ?믪쓬."
+                                                }
+                        },
+    "schema_version":  "V1.0",
+    "raw_analysis":  {
+                         "Article_ID":  "c6c278",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "Google releases tiny FunctionGemma edge model that can control mobile devices",
+                                      "Summary":  "援ш???紐⑤컮??湲곌린 ?쒖뼱? ?ｌ? 而댄벂?낆뿉 ?뱁솕??2??7泥쒕쭔 ?뚮씪誘명꽣 洹쒕え??寃쎈웾??AI 紐⑤뜽 \u0027FunctionGemma\u0027瑜?異쒖떆?덈떎. ??紐⑤뜽? ?먯뿰??紐낅졊???ㅽ뻾 媛?ν븳 肄붾뱶濡?蹂?섑븯????理쒖쟻?붾릺???덉쑝硫? 誘몄꽭 議곗젙???듯빐 湲곕뒫 ?몄텧 ?뺥솗?꾨? 58%?먯꽌 85%濡??뚯뼱?щ졇?? ?대씪?곕뱶 ?섏〈 ?놁씠 ?⑤뵒諛붿씠?ㅼ뿉???묐룞?섏뿬 蹂댁븞?깃낵 ?묐떟 ?띾룄瑜?媛뺥솕?덉쑝硫? 嫄곕? 紐⑤뜽怨??곕룞?섎뒗 \u0027?몃옒??而⑦듃濡ㅻ윭\u0027濡쒖꽌???덈줈???꾪궎?띿쿂瑜??쒖떆?쒕떎.",
+                                      "Tags":  [
+                                                   "Launch",
+                                                   "Model",
+                                                   "On-Device"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "援ш?(Tier 1)??二쇰룄???쒗뭹 異쒖떆濡??ㅽ뻾 二쇱껜媛 紐낇솗?섎ŉ, 蹂꾨룄???꾨왂???뚰듃?덉떗(Joint Venture)?대굹 ?由?愿怨꾧? ?놁뼱 SE???좎젙?섏? ?딆쓬. 2.7B 洹쒕え??SLM 異쒖떆???⑥씪 湲곗뾽???쒗뭹 ?쇱씤???뺤옣(Corporate)???대떦?섎ŉ, 利됱떆 諛고룷(Realization)???곹깭?? ?쒖옣???⑤윭?ㅼ엫??利됯컖?곸쑝濡?諛붽씀湲곕낫???뱀젙 湲곗닠??蹂묐ぉ(?ｌ? 援щ룞)???닿껐?섎뒗 ?꾨왂???꾧뎄濡쒖꽌???깃꺽??媛뺥븿.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "Google",
+                                                                                                     "Pe_Tier":  1,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "PE: ?ш굔???ㅽ뻾(異쒖떆), 湲곗닠 媛쒕컻 諛??먯썝???ъ엯??二쇱껜??Google??P4 洹쒖튃???섍굅 ?좎젙. SE: Hugging Face ?깆씠 ?멸툒?섎굹 ?⑥닚 諛고룷 ?뚮옯??諛??쇱씠釉뚮윭由??명솚???멸툒??遺덇낵?섏뿬 \u0027?쇰갑??踰ㅼ튂留덊겕/?⑥닚 ?묐젰 ?멸툒\u0027?쇰줈 ?먮떒, None 泥섎━."
+                                                                                                 },
+                                                                                      "Tier_Score":  3,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  3
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  1,
+                                                                                                     "Y_Evidence_Code":  4,
+                                                                                                     "Scope_Matrix_Score":  0.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "False"
+                                                                                                 },
+                                                                                      "IE_Score":  2
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  9,
+                                                                "T2":  8,
+                                                                "T3":  7,
+                                                                "Rationale":  "2??7泥쒕쭔 ?뚮씪誘명꽣, 6議??좏겙 ?숈뒿, ?뺥솗??58%-\u003e85% ??援ъ껜???섏튂? 湲곗닠???ъ뼇(?곗씠?곗뀑, ?꾪궎?띿쿂)??留ㅼ슦 ?곸꽭?섍쾶 湲곗닠??"
+                                                            },
+                                                 "Noise":  {
+                                                               "P1":  3,
+                                                               "P2":  2,
+                                                               "P3":  1,
+                                                               "Rationale":  "\u0027Making waves\u0027, \u0027Drastically reduces\u0027 ???쇰? ?섏떇?닿? 議댁옱?섎굹, ?꾨컲?곸쑝濡?湲곗닠???ъ떎 ?꾨떖??吏묒쨷?섏뿬 ?≪쓬???곸쓬."
+                                                           },
+                                                 "Utility":  {
+                                                                 "V1":  7,
+                                                                 "V2":  9,
+                                                                 "V3":  8,
+                                                                 "Rationale":  "利됱떆 ?ㅼ슫濡쒕뱶 諛??쒖슜 媛?ν븳 \u0027?덉떆??瑜??쒓났?섏뿬 ?ㅽ뻾 媛?μ꽦??留ㅼ슦 ?믪쑝硫? ?⑤뵒諛붿씠??AI 媛쒕컻?먯뿉寃??ㅼ쭏???⑥슜???쒓났??"
+                                                             },
+                                                 "Fine_Adjustment":  {
+                                                                         "Score":  0.5,
+                                                                         "Reason":  "媛쒕컻?먮? ?꾪븳 援ъ껜?곸씤 湲곗닠 ?ㅽ럺怨??쒖슜 ?쒕굹由ъ삤(?몃옒??而⑦듃濡ㅻ윭)瑜?紐낇솗???쒖떆?섏뿬 ?뺣낫???ㅼ슜??媛移섍? ?믪쓬."
+                                                                     }
+                                             }
+                     },
+    "source_id":  "venturebeat",
+    "original_title":  "Google releases tiny FunctionGemma edge model that can control mobile devices",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  9.0,
+                                                      "T2":  8.0,
+                                                      "T3":  7.0,
+                                                      "S_Avg":  8.0
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  3.0,
+                                                     "P2":  2.0,
+                                                     "P3":  1.0,
+                                                     "N_Avg":  2.0
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  7.0,
+                                                       "V2":  9.0,
+                                                       "V3":  8.0,
+                                                       "U_Avg":  8.0
+                                                   },
+                                       "Fine_Adjustment":  0.5,
+                                       "ZS_Raw":  3.1,
+                                       "ZS_Final":  3.1
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  9,
+                                                        "T2":  8,
+                                                        "T3":  7,
+                                                        "Rationale":  "2??7泥쒕쭔 ?뚮씪誘명꽣, 6議??좏겙 ?숈뒿, ?뺥솗??58%-\u003e85% ??援ъ껜???섏튂? 湲곗닠???ъ뼇(?곗씠?곗뀑, ?꾪궎?띿쿂)??留ㅼ슦 ?곸꽭?섍쾶 湲곗닠??"
+                                                    },
+                                         "Noise":  {
+                                                       "P1":  3,
+                                                       "P2":  2,
+                                                       "P3":  1,
+                                                       "Rationale":  "\u0027Making waves\u0027, \u0027Drastically reduces\u0027 ???쇰? ?섏떇?닿? 議댁옱?섎굹, ?꾨컲?곸쑝濡?湲곗닠???ъ떎 ?꾨떖??吏묒쨷?섏뿬 ?≪쓬???곸쓬."
+                                                   },
+                                         "Utility":  {
+                                                         "V1":  7,
+                                                         "V2":  9,
+                                                         "V3":  8,
+                                                         "Rationale":  "利됱떆 ?ㅼ슫濡쒕뱶 諛??쒖슜 媛?ν븳 \u0027?덉떆??瑜??쒓났?섏뿬 ?ㅽ뻾 媛?μ꽦??留ㅼ슦 ?믪쑝硫? ?⑤뵒諛붿씠??AI 媛쒕컻?먯뿉寃??ㅼ쭏???⑥슜???쒓났??"
+                                                     },
+                                         "Fine_Adjustment":  {
+                                                                 "Score":  0.5,
+                                                                 "Reason":  "媛쒕컻?먮? ?꾪븳 援ъ껜?곸씤 湲곗닠 ?ㅽ럺怨??쒖슜 ?쒕굹由ъ삤(?몃옒??而⑦듃濡ㅻ윭)瑜?紐낇솗???쒖떆?섏뿬 ?뺣낫???ㅼ슜??媛移섍? ?믪쓬."
+                                                             }
+                                     }
+                 },
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  3.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  3.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  0.5,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  2.0
+                                                                 },
+                                                 "IS_Raw":  5.0,
+                                                 "IS_Final":  5.0,
+                                                 "Score_Commentary":  "援ш?(Tier 1)??二쇰룄???쒗뭹 異쒖떆濡??ㅽ뻾 二쇱껜媛 紐낇솗?섎ŉ, 蹂꾨룄???꾨왂???뚰듃?덉떗(Joint Venture)?대굹 ?由?愿怨꾧? ?놁뼱 SE???좎젙?섏? ?딆쓬. 2.7B 洹쒕え??SLM 異쒖떆???⑥씪 湲곗뾽???쒗뭹 ?쇱씤???뺤옣(Corporate)???대떦?섎ŉ, 利됱떆 諛고룷(Realization)???곹깭?? ?쒖옣???⑤윭?ㅼ엫??利됯컖?곸쑝濡?諛붽씀湲곕낫???뱀젙 湲곗닠??蹂묐ぉ(?ｌ? 援щ룞)???닿껐?섎뒗 ?꾨왂???꾧뎄濡쒖꽌???깃꺽??媛뺥븿."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "Google",
+                                               "Pe_Tier":  1,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "PE: ?ш굔???ㅽ뻾(異쒖떆), 湲곗닠 媛쒕컻 諛??먯썝???ъ엯??二쇱껜??Google??P4 洹쒖튃???섍굅 ?좎젙. SE: Hugging Face ?깆씠 ?멸툒?섎굹 ?⑥닚 諛고룷 ?뚮옯??諛??쇱씠釉뚮윭由??명솚???멸툒??遺덇낵?섏뿬 \u0027?쇰갑??踰ㅼ튂留덊겕/?⑥닚 ?묐젰 ?멸툒\u0027?쇰줈 ?먮떒, None 泥섎━."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  1,
+                                                  "Y_Evidence_Code":  4,
+                                                  "Scope_Matrix_Score":  0.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "False"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "crawled_at":  "2025-12-19T20:02:16.022743+00:00",
+    "edition":  "251219_FRI_1",
+    "status":  "ACCEPTED",
+    "saved":  true,
+    "saved_at":  "2025-12-19T20:02:16.731946+00:00",
+    "category":  "AI/ML",
+    "dedup_status":  "selected",
+    "data_file":  "venturebeat_c6c278.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:57.617806+00:00"
+}

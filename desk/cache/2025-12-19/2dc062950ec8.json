@@ -1,0 +1,231 @@
+﻿{
+    "article_id":  "2dc062",
+    "author":  "Emilia David",
+    "cached_at":  "2025-12-18T15:35:02.362096+00:00",
+    "image":  "https://images.ctfassets.net/jdtwqhzvc2n1/49s3tZpzGRgAER8EKNnJ9f/9b37d007e7f3651a4046466d1159496a/crimedy7_illustration_of_a_robot_running_very_quickly_--ar_16_8c0c48f5-0305-43bc-b49d-4c06e63e9545_0.png?w=800\u0026amp;q=75",
+    "modified_at":  "2025-12-17T19:27:53.339Z",
+    "summary":  "Google??Gemini 3 Pro湲?吏?μ쓣 媛뽰톬?쇰굹 ?띾룄???⑥뵮 鍮좊Ⅴ怨?鍮꾩슜? ??댄븳 \u0027Gemini 3 Flash\u0027瑜?異쒖떆?덈떎. 寃쎌웳 紐⑤뜽 ?鍮??믪? 吏???뺥솗?꾩? ??? 鍮꾩슜??媛뺤젏?쇰줈 ?댁꽭?곕ŉ, 踰뺣쪧 諛??щ젋?????꾨Ц 遺꾩빞?먯꽌???⑥슜?깆쓣 ?낆쬆?덈떎. \u0027Thinking Level\u0027 議곗젅 湲곕뒫???쒓났?쒕떎.",
+    "text":  "Enterprises can now harness the power of a large language model that\u0027s near that of the state-of-the-art Google?셲 Gemini 3 Pro, but at a fraction of the cost and with increased speed, thanks to the newly released Gemini 3 Flash. The model joins the flagship Gemini 3 Pro, Gemini 3 Deep Think, and Gemini Agent, all of which were announced and released last month. Gemini 3 Flash, now available on Gemini Enterprise, Google Antigravity, Gemini CLI, AI Studio, and on preview in Vertex AI, processes information in near real-time and helps build quick, responsive agentic applications. The company said in a blog post that Gemini 3 Flash ?쐀uilds on the model series that developers and enterprises already love, optimized for high-frequency workflows that demand speed, without sacrificing quality. The model is also the default for AI Mode on Google Search and the Gemini application. Tulsee Doshi, senior director, product management on the Gemini team, said in a separate blog post that the model ?쐂emonstrates that speed and scale don?셳 have to come at the cost of intelligence.???쏥emini 3 Flash is made for iterative development, offering Gemini 3?셲 Pro-grade coding performance with low latency ??it?셲 able to reason and solve tasks quickly in high-frequency workflows,??Doshi said. ?쏧t strikes an ideal balance for agentic coding, production-ready systems and responsive interactive applications.??Early adoption by specialized firms proves the model\u0027s reliability in high-stakes fields. Harvey, an AI platform for law firms, reported a 7% jump in reasoning on their internal \u0027BigLaw Bench,\u0027 while Resemble AI discovered that Gemini 3 Flash could process complex forensic data for deepfake detection 4x faster than Gemini 2.5 Pro. These aren\u0027t just speed gains; they are enabling \u0027near real-time\u0027 workflows that were previously impossible. More efficient at a lower cost Enterprise AI builders have become more aware of the cost of running AI models, especially as they try to convince stakeholders to put more budget into agentic workflows that run on expensive models. Organizations have turned to smaller or distilled models, focusing on open models or other research and prompting techniques to help manage bloated AI costs. For enterprises, the biggest value proposition for Gemini 3 Flash is that it offers the same level of advanced multimodal capabilities, such as complex video analysis and data extraction, as its larger Gemini counterparts, but is far faster and cheaper. While Google?셲 internal materials highlight a 3x speed increase over the 2.5 Pro series, data from independent benchmarking firm Artificial Analysis adds a layer of crucial nuance. In the latter organization\u0027s pre-release testing, Gemini 3 Flash Preview recorded a raw throughput of 218 output tokens per second. This makes it 22% slower than the previous \u0027non-reasoning\u0027 Gemini 2.5 Flash, but it is still significantly faster than rivals including OpenAI\u0027s GPT-5.1 high (125 t/s) and DeepSeek V3.2 reasoning (30 t/s). Most notably, Artificial Analysis crowned Gemini 3 Flash as the new leader in their AA-Omniscience knowledge benchmark, where it achieved the highest knowledge accuracy of any model tested to date. However, this intelligence comes with a \u0027reasoning tax\u0027: the model more than doubles its token usage compared to the 2.5 Flash series when tackling complex indexes. This high token density is offset by Google\u0027s aggressive pricing: when accessing through the Gemini API, Gemini 3 Flash costs $0.50 per 1 million input tokens, compared to $1.25/1M input tokens for Gemini 2.5 Pro, and $3/1M output tokens, compared to $ 10/1 M output tokens for Gemini 2.5 Pro. This allows Gemini 3 Flash to claim the title of the most cost-efficient model for its intelligence tier, despite being one of the most \u0027talkative\u0027 models in terms of raw token volume. Here\u0027s how it stacks up to rival LLM offerings: More ways to save But enterprise developers and users can cut costs further by eliminating the lag most larger models often have, which racks up token usage. Google said the model ?쐇s able to modulate how much it thinks,??so that it uses more thinking and therefore more tokens for more complex tasks than for quick prompts. The company noted Gemini 3 Flash uses 30% fewer tokens than Gemini 2.5 Pro. To balance this new reasoning power with strict corporate latency requirements, Google has introduced a \u0027Thinking Level\u0027 parameter. Developers can toggle between \u0027Low\u0027?봳o minimize cost and latency for simple chat tasks?봞nd \u0027High\u0027?봳o maximize reasoning depth for complex data extraction. This granular control allows teams to build \u0027variable-speed\u0027 applications that only consume expensive \u0027thinking tokens\u0027 when a problem actually demands PhD-level lo The economic story extends beyond simple token prices. With the standard inclusion of Context Caching, enterprises processing massive, static datasets?봲uch as entire legal libraries or codebase repositories?봠an see a 90% reduction in costs for repeated queries. When combined with the Batch API?셲 50% discount, the total cost of ownership for a Gemini-powered agent drops significantly below the threshold of competing frontier models ?쏥emini 3 Flash delivers exceptional performance on coding and agentic tasks combined with a lower price point, allowing teams to deploy sophisticated reasoning costs across high-volume processes without hitting barriers,??Google said. By offering a model that delivers strong multimodal performance at a more affordable price, Google is making the case that enterprises concerned with controlling their AI spend should choose its models, especially Gemini 3 Flash. Strong benchmark performance But how does Gemini 3 Flash stack up against other models in terms of its performance? Doshi said the model achieved a score of 78% on the SWE-Bench Verified benchmark testing for coding agents, outperforming both the preceding Gemini 2.5 family and the newer Gemini 3 Pro itself! Credit: Google For enterprises, this means high-volume software maintenance and bug-fixing tasks can now be offloaded to a model that is both faster and cheaper than previous flagship models, without a degradation in code quality. The model also performed strongly on other benchmarks, scoring 81.2% on the MMMU Pro benchmark, comparable to Gemini 3 Pro. While most Flash type models are explicitly optimized for short, quick tasks like generating code, Google claims Gemini 3 Flash?셲 performance ?쐇n reasoning, tool use and multimodal capabilities is ideal for developers looking to do more complex video analysis, data extraction and visual Q\u0026A, which means it can enable more intelligent applications ??like in-game assistants or A/B test experiments ??that demand both quick answers and deep reasoning.??First impressions from early users So far, early users have been largely impressed with the model, particularly its benchmark performance. What It Means for Enterprise AI Usage With Gemini 3 Flash now serving as the default engine across Google Search and the Gemini app, we are witnessing the \"Flash-ification\" of frontier intelligence. By making Pro-level reasoning the new baseline, Google is setting a trap for slower incumbents. The integration into platforms like Google Antigravity suggests that Google isn\u0027t just selling a model; it\u0027s selling the infrastructure for the autonomous enterprise. As developers hit the ground running with 3x faster speeds and a 90% discount on context caching, the \"Gemini-first\" strategy becomes a compelling financial argument. In the high-velocity race for AI dominance, Gemini 3 Flash may be the model that finally turns \"vibe coding\" from an experimental hobby into a production-ready reality.",
+    "title":  "Gemini 3 Flash arrives with reduced costs and latency ??a powerful combo for enterprises",
+    "url":  "https://venturebeat.com/technology/gemini-3-flash-arrives-with-reduced-costs-and-latency-a-powerful-combo-for",
+    "title_ko":  "Gemini 3 Flash 異쒖떆: 湲곗뾽???꾪븳 ?鍮꾩슜쨌珥덉?吏??AI 紐⑤뜽",
+    "tags":  [
+
+             ],
+    "impact_score":  7.0,
+    "IS_Analysis":  {
+                        "Score_Commentary":  "Tier 1 Google??二쇰젰 寃쎈웾??紐⑤뜽 異쒖떆. 媛寃??띾룄 ?곸떊???듯빐 AI ?꾩엯 ?λ꼍????텛???곗뾽???곹뼢(X3)???덈떎. 寃쎌웳???鍮??뺣룄?곸씤 鍮꾩슜 ?⑥쑉?깆쓣 ?쒖떆?섏뿬 ?쒖옣 ?먮룄瑜??붾뱾 ?좎옱?μ씠 ?덈떎.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "Google",
+                                                                                "Pe_Tier":  1,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE_Reason":  "Google(P4)???쒗뭹 異쒖떆. Harvey ?깆쓽 怨좉컼?щ뒗 SE 湲곗?(?묐젰/遺꾩웳)蹂대떎???⑥닚 ?ъ슜 ?щ????대떦."
+                                                                            },
+                                                                 "Tier_Score":  3,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  3
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  3,
+                                                                                "Y_Evidence_Code":  3,
+                                                                                "Scope_Matrix_Score":  2.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "Par"
+                                                                            },
+                                                                 "IE_Score":  4
+                                                             }
+                                         }
+                    },
+    "zero_echo_score":  3.9,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  9,
+                                           "T2":  7,
+                                           "T3":  7,
+                                           "Rationale":  "?좏겙??媛寃?$0.50), ?띾룄 鍮꾧탳, 踰ㅼ튂留덊겕 寃곌낵 ???곗씠?곌? 留ㅼ슦 ?띾???"
+                                       },
+                            "Noise":  {
+                                          "P1":  3,
+                                          "P2":  3,
+                                          "P3":  3,
+                                          "Rationale":  "?먯궗 ?좊━??鍮꾧탳 ?곗씠?곌? ?ы븿?섏뿀?쇰굹 ????Artificial Analysis) ?곗씠?곕룄 ?몄슜."
+                                      },
+                            "Utility":  {
+                                            "V1":  8,
+                                            "V2":  9,
+                                            "V3":  6,
+                                            "Rationale":  "鍮꾩슜 ?덇컧???먰븯??湲곗뾽?먭쾶 利됯컖?곸씤 ?⑥슜 ?쒓났."
+                                        },
+                            "Fine_Adjustment":  {
+                                                    "Score":  0.5,
+                                                    "Reason":  "寃쎌젣??Cost-efficiency) 痢〓㈃?먯꽌???곸떊???몄젙."
+                                                }
+                        },
+    "schema_version":  "V1.0",
+    "raw_analysis":  {
+                         "Article_ID":  "2dc062",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "Gemini 3 Flash 異쒖떆: 湲곗뾽???꾪븳 ?鍮꾩슜쨌珥덉?吏??AI 紐⑤뜽",
+                                      "Summary":  "Google??Gemini 3 Pro湲?吏?μ쓣 媛뽰톬?쇰굹 ?띾룄???⑥뵮 鍮좊Ⅴ怨?鍮꾩슜? ??댄븳 \u0027Gemini 3 Flash\u0027瑜?異쒖떆?덈떎. 寃쎌웳 紐⑤뜽 ?鍮??믪? 吏???뺥솗?꾩? ??? 鍮꾩슜??媛뺤젏?쇰줈 ?댁꽭?곕ŉ, 踰뺣쪧 諛??щ젋?????꾨Ц 遺꾩빞?먯꽌???⑥슜?깆쓣 ?낆쬆?덈떎. \u0027Thinking Level\u0027 議곗젅 湲곕뒫???쒓났?쒕떎.",
+                                      "Tags":  "Launch, Model, Gemini"
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "Tier 1 Google??二쇰젰 寃쎈웾??紐⑤뜽 異쒖떆. 媛寃??띾룄 ?곸떊???듯빐 AI ?꾩엯 ?λ꼍????텛???곗뾽???곹뼢(X3)???덈떎. 寃쎌웳???鍮??뺣룄?곸씤 鍮꾩슜 ?⑥쑉?깆쓣 ?쒖떆?섏뿬 ?쒖옣 ?먮룄瑜??붾뱾 ?좎옱?μ씠 ?덈떎.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "Google",
+                                                                                                     "Pe_Tier":  1,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE_Reason":  "Google(P4)???쒗뭹 異쒖떆. Harvey ?깆쓽 怨좉컼?щ뒗 SE 湲곗?(?묐젰/遺꾩웳)蹂대떎???⑥닚 ?ъ슜 ?щ????대떦."
+                                                                                                 },
+                                                                                      "Tier_Score":  3,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  3
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  3,
+                                                                                                     "Y_Evidence_Code":  3,
+                                                                                                     "Scope_Matrix_Score":  2.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "Par"
+                                                                                                 },
+                                                                                      "IE_Score":  4
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  9,
+                                                                "T2":  7,
+                                                                "T3":  7,
+                                                                "Rationale":  "?좏겙??媛寃?$0.50), ?띾룄 鍮꾧탳, 踰ㅼ튂留덊겕 寃곌낵 ???곗씠?곌? 留ㅼ슦 ?띾???"
+                                                            },
+                                                 "Noise":  {
+                                                               "P1":  3,
+                                                               "P2":  3,
+                                                               "P3":  3,
+                                                               "Rationale":  "?먯궗 ?좊━??鍮꾧탳 ?곗씠?곌? ?ы븿?섏뿀?쇰굹 ????Artificial Analysis) ?곗씠?곕룄 ?몄슜."
+                                                           },
+                                                 "Utility":  {
+                                                                 "V1":  8,
+                                                                 "V2":  9,
+                                                                 "V3":  6,
+                                                                 "Rationale":  "鍮꾩슜 ?덇컧???먰븯??湲곗뾽?먭쾶 利됯컖?곸씤 ?⑥슜 ?쒓났."
+                                                             },
+                                                 "Fine_Adjustment":  {
+                                                                         "Score":  0.5,
+                                                                         "Reason":  "寃쎌젣??Cost-efficiency) 痢〓㈃?먯꽌???곸떊???몄젙."
+                                                                     }
+                                             }
+                     },
+    "source_id":  "venturebeat",
+    "original_title":  "Gemini 3 Flash arrives with reduced costs and latency ??a powerful combo for enterprises",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  9.0,
+                                                      "T2":  7.0,
+                                                      "T3":  7.0,
+                                                      "S_Avg":  7.67
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  3.0,
+                                                     "P2":  3.0,
+                                                     "P3":  3.0,
+                                                     "N_Avg":  3.0
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  8.0,
+                                                       "V2":  9.0,
+                                                       "V3":  6.0,
+                                                       "U_Avg":  7.67
+                                                   },
+                                       "Fine_Adjustment":  0.5,
+                                       "ZS_Raw":  3.88,
+                                       "ZS_Final":  3.9
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  9,
+                                                        "T2":  7,
+                                                        "T3":  7,
+                                                        "Rationale":  "?좏겙??媛寃?$0.50), ?띾룄 鍮꾧탳, 踰ㅼ튂留덊겕 寃곌낵 ???곗씠?곌? 留ㅼ슦 ?띾???"
+                                                    },
+                                         "Noise":  {
+                                                       "P1":  3,
+                                                       "P2":  3,
+                                                       "P3":  3,
+                                                       "Rationale":  "?먯궗 ?좊━??鍮꾧탳 ?곗씠?곌? ?ы븿?섏뿀?쇰굹 ????Artificial Analysis) ?곗씠?곕룄 ?몄슜."
+                                                   },
+                                         "Utility":  {
+                                                         "V1":  8,
+                                                         "V2":  9,
+                                                         "V3":  6,
+                                                         "Rationale":  "鍮꾩슜 ?덇컧???먰븯??湲곗뾽?먭쾶 利됯컖?곸씤 ?⑥슜 ?쒓났."
+                                                     },
+                                         "Fine_Adjustment":  {
+                                                                 "Score":  0.5,
+                                                                 "Reason":  "寃쎌젣??Cost-efficiency) 痢〓㈃?먯꽌???곸떊???몄젙."
+                                                             }
+                                     }
+                 },
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  3.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  3.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  2.5,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  4.0
+                                                                 },
+                                                 "IS_Raw":  7.0,
+                                                 "IS_Final":  7.0,
+                                                 "Score_Commentary":  "Tier 1 Google??二쇰젰 寃쎈웾??紐⑤뜽 異쒖떆. 媛寃??띾룄 ?곸떊???듯빐 AI ?꾩엯 ?λ꼍????텛???곗뾽???곹뼢(X3)???덈떎. 寃쎌웳???鍮??뺣룄?곸씤 鍮꾩슜 ?⑥쑉?깆쓣 ?쒖떆?섏뿬 ?쒖옣 ?먮룄瑜??붾뱾 ?좎옱?μ씠 ?덈떎."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "Google",
+                                               "Pe_Tier":  1,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE_Reason":  "Google(P4)???쒗뭹 異쒖떆. Harvey ?깆쓽 怨좉컼?щ뒗 SE 湲곗?(?묐젰/遺꾩웳)蹂대떎???⑥닚 ?ъ슜 ?щ????대떦."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  3,
+                                                  "Y_Evidence_Code":  3,
+                                                  "Scope_Matrix_Score":  2.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "Par"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "crawled_at":  "2025-12-19T19:44:08.002913+00:00",
+    "edition":  "251219_FRI_1",
+    "status":  "ACCEPTED",
+    "saved":  true,
+    "saved_at":  "2025-12-19T19:44:08.776893+00:00",
+    "category":  "AI/ML",
+    "dedup_status":  "selected",
+    "data_file":  "venturebeat_2dc062.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:53.037285+00:00"
+}

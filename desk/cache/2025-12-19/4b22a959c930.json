@@ -1,0 +1,231 @@
+﻿{
+    "article_id":  "4b22a9",
+    "author":  "Carl Franzen",
+    "cached_at":  "2025-12-19T18:10:43.805828+00:00",
+    "image":  "https://images.ctfassets.net/jdtwqhzvc2n1/3onQY5stiekduudLOI0ylh/dea41236733f17f5976aea556e34b532/Screenshot_2025-12-18_at_10.37.28창__AM.png?w=800\u0026amp;q=75",
+    "modified_at":  "2025-12-19T13:42:43.464Z",
+    "summary":  "OpenAI媛 ChatGPT ?댁뿉??援щ룞?섎뒗 ?쒕뱶?뚰떚 ???쒖텧??諛쏄린 ?쒖옉?덉쑝硫?\u0027App Directory\u0027瑜??곗묶?덈떎. 2026??珥덈????ъ슜?먯뿉寃?諛고룷???덉젙?대ŉ, 媛쒕컻?먮뒗 MCP 湲곕컲??SDK瑜??듯빐 ?곹샇?묒슜 媛?ν븳 ?깆쓣 援ъ텞?????덈떎. ?대뒗 ?⑥닚 ?띿뒪??GPT瑜??섏뼱???뚮옯???뺤옣???섎??쒕떎.",
+    "text":  "OpenAI has begun accepting submissions from third-party developers for their apps to be accessible directly in ChatGPT, and has launched a new App Directory (don\u0027t call it a \"store\"!) that can be opened from the ChatGPT sidebar and at the URL chatgpt.com/apps. This means the 800 million+ users of OpenAI\u0027s hit chatbot can search for, discover and begin using newly approved third-party apps immediately. Once installed, apps can be triggered during conversations by mentioning them by name (using @) or selecting them from the tools menu. The third-party app submission process officially went live last night, December 17, as OpenAI announced in a blog post and on its developer account on X, though the company notes it will be reviewing all new third-party app submissions before approving them for listing in the App Directory, and making them available to ChatGPT users, to ensure they comply with the company\u0027s public guidelines. Apps that pass OpenAI?셲 review process will begin rolling out to users starting early 2026. For those enterprises who want to get in on the action with their own ChatGPT apps, OpenAI said it will host a public webinar ?쏝uild Hour??event for third-party developers on January 21, where OpenAI engineers will walk through how to build, submit, and design apps for ChatGPT, using real-world examples and taking questions. App Directory vs. GPT Store This whole effort marks the start of a broader developer ecosystem beyond the small set of curated partners OpenAI launched its Apps standard development kit (SDK) earlier this fall, and seems to be fulfilling some of the hype that ensued back when OpenAI debuted its \"GPT Store\" back in early 2024, nearly two years ago. However, despite the pledge of revenue sharing that OpenAI made back then, it hasn\u0027t since provided many updates on the GPT Store, nor have we heard much from GPT builders about making substantive revenue from it. But while those custom, user-generated GPTs were limited primarily to text-based experiences, the new ChatGPT App Directory and SDK features allow for a far more interactive experience including user accessible buttons, maps, multi-views, sliders, shaders, and other interaction modalities. The GPT Store also still remains available now. Monetization, restrictions, and review process In this early phase, ChatGPT apps may link out to external websites to complete purchases for physical goods only. Selling digital goods, subscriptions, or in?멲pp services isn\u0027t yet allowed, though OpenAI says it is exploring additional monetization options over time. All apps must: Comply with OpenAI?셲 usage policies Be suitable for general audiences, including teens Include a clear privacy policy and support contact Avoid advertising, deceptive behavior, or prohibited commerce categories Developers submit apps through the OpenAI Developer Platform, where they can track review status. Only one version of an app can be under review at a time. What this means for developers and users OpenAI first introduced the Apps SDK at its DevDay conference in October, positioning it as a way to build ?쏿pps inside of ChatGPT.??CEO Sam Altman described the vision as enabling ?쏿 new generation of apps that are interactive, adaptive, and personalized.??Built on the open Model Context Protocol (MCP) developed by rival Anthropic, the Apps SDK lets developers connect external services, fetch real-time context, trigger actions, and render UI directly inside ChatGPT. Until now, ChatGPT apps were limited to a list of seven pilot partners including: Booking.com Canva Coursera Expedia Figma Spotify Zillow That list has since expanded to dozens of new apps, including popular software like Adobe PhotoShop (and Acrobat and Express), Github, Replit, Gmail and Google Drive, Microsoft Teams, Mailchimp, Stripe, and many more. And with general submissions now open, any verified developer?봣rom solo builders to large enterprises?봠an build and submit apps for ChatGPT, provided they meet OpenAI?셲 quality, safety, and privacy standards. For users, the change means ChatGPT can now act as a hub for specialized tools and workflows. Apps can extend conversations by pulling in live data, rendering interactive interfaces, or taking actions on a user?셲 behalf?봪ike designing a presentation, searching for housing, or interacting with an external service?봶ithout leaving the chat. Apps can appear in several formats, including: Inline cards or carousels inside the conversation Fullscreen views for immersive tasks like maps or slide decks Picture?멼n?몆icture modes for video, tutorials, or live sessions The goal, OpenAI says, is to keep everything feeling conversational while adding real utility. How ChatGPT is handling Apps data One of the biggest open questions around ChatGPT apps is how user data is handled when third?몆arty apps are involved. Based on OpenAI?셲 documentation and guidelines, here?셲 what is clear?봞nd what remains unanswered. What OpenAI has stated clearly: When a user connects to an app, ChatGPT discloses what types of data may be shared with the third party and surfaces the app?셲 privacy policy before connection. Third?몆arty developers are responsible for how their apps handle data once received. Apps must minimize data collection, requesting only what is necessary to perform a specific task. Apps are prohibited from requesting full chat transcripts, broad contextual data ?쐉ust in case,??or sensitive personal data. Any action that sends data outside ChatGPT or modifies external systems must be clearly labeled and require user confirmation. Apps must not reconstruct or infer a user?셲 full chat history and must avoid undisclosed tracking or profiling. What OpenAI has not clarified publicly: Whether OpenAI itself retains or logs the data passed between ChatGPT and third?몆arty apps. Whether data exchanged with apps can be used for model training or internal analytics. How long, if at all, OpenAI stores metadata or interaction traces related to app usage. As a result, while OpenAI emphasizes strong guardrails for developers and transparency for users, it has not explicitly detailed OpenAI?셲 own role as a data processor in app interactions. That ambiguity has already drawn scrutiny and remains an open issue as the app ecosystem expands. The bigger picture With app submissions now open and an App Directory live, ChatGPT is no longer just a conversational AI?봧t?셲 becoming a distribution platform for AI?몁ative software. Developers get access to a massive built?멼n audience, while users gain tools that can be discovered and used at the moment they?셱e needed, directly inside a conversation. OpenAI describes this as ?쐉ust the beginning.??But with the infrastructure now in place, the shift from chatbot to app ecosystem is officially underway.",
+    "title":  "OpenAI now accepting ChatGPT app submissions from third-party devs, launches App Directory",
+    "url":  "https://venturebeat.com/technology/openai-now-accepting-chatgpt-app-submissions-from-third-party-devs-launches",
+    "title_ko":  "OpenAI, ?쒕뱶?뚰떚 媛쒕컻?????ChatGPT ???쒖텧 ?묒닔 ?쒖옉 諛?\u0027App Directory\u0027 ?곗묶",
+    "tags":  [
+
+             ],
+    "impact_score":  7.0,
+    "IS_Analysis":  {
+                        "Score_Commentary":  "Tier 1 湲곗뾽???앺깭怨??뺤옣(X3) 諛쒗몴. 8??紐??댁긽???ъ슜??湲곕컲??媛吏??뚮옯?쇱쓽 蹂?붾뒗 ?곗뾽 ?쒖???以?섎뒗 ?곹뼢?μ쓣 媛吏꾨떎. App Directory 異쒖떆???쒖옣 援ъ“ 蹂?붾? ?덇퀬?쒕떎.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "OpenAI",
+                                                                                "Pe_Tier":  1,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE_Reason":  "OpenAI(P4)???⑤룆 ?뚮옯???뺤옣 諛쒗몴. ?뱀젙 ?뚰듃?덇? ?멸툒?섏뿀?쇰굹 二쇰룄沅뚯? ?꾩쟻?쇰줈 OpenAI???덉쓬."
+                                                                            },
+                                                                 "Tier_Score":  3,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  3
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  3,
+                                                                                "Y_Evidence_Code":  3,
+                                                                                "Scope_Matrix_Score":  2.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "True"
+                                                                            },
+                                                                 "IE_Score":  4
+                                                             }
+                                         }
+                    },
+    "zero_echo_score":  4.6,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  8,
+                                           "T2":  7,
+                                           "T3":  6,
+                                           "Rationale":  "?쇱젙, ?뺤콉, SDK 湲곗닠 湲곕컲(MCP) ???뺣낫媛 援ъ껜?곸엫."
+                                       },
+                            "Noise":  {
+                                          "P1":  2,
+                                          "P2":  2,
+                                          "P3":  1,
+                                          "Rationale":  "?ъ떎 ?꾨떖 ?꾩＜???쒕씪?댄븳 ??"
+                                      },
+                            "Utility":  {
+                                            "V1":  9,
+                                            "V2":  5,
+                                            "V3":  7,
+                                            "Rationale":  "媛쒕컻???앺깭怨꾩뿉 誘몄튌 ?곹뼢??留ㅼ슦 ?щ굹, ?ㅼ젣 諛고룷??2026??"
+                                        },
+                            "Fine_Adjustment":  {
+                                                    "Score":  0,
+                                                    "Reason":  "蹂댁젙 ?놁쓬."
+                                                }
+                        },
+    "schema_version":  "V1.0",
+    "raw_analysis":  {
+                         "Article_ID":  "4b22a9",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "OpenAI, ?쒕뱶?뚰떚 媛쒕컻?????ChatGPT ???쒖텧 ?묒닔 ?쒖옉 諛?\u0027App Directory\u0027 ?곗묶",
+                                      "Summary":  "OpenAI媛 ChatGPT ?댁뿉??援щ룞?섎뒗 ?쒕뱶?뚰떚 ???쒖텧??諛쏄린 ?쒖옉?덉쑝硫?\u0027App Directory\u0027瑜??곗묶?덈떎. 2026??珥덈????ъ슜?먯뿉寃?諛고룷???덉젙?대ŉ, 媛쒕컻?먮뒗 MCP 湲곕컲??SDK瑜??듯빐 ?곹샇?묒슜 媛?ν븳 ?깆쓣 援ъ텞?????덈떎. ?대뒗 ?⑥닚 ?띿뒪??GPT瑜??섏뼱???뚮옯???뺤옣???섎??쒕떎.",
+                                      "Tags":  "Launch, OpenAI, App"
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "Tier 1 湲곗뾽???앺깭怨??뺤옣(X3) 諛쒗몴. 8??紐??댁긽???ъ슜??湲곕컲??媛吏??뚮옯?쇱쓽 蹂?붾뒗 ?곗뾽 ?쒖???以?섎뒗 ?곹뼢?μ쓣 媛吏꾨떎. App Directory 異쒖떆???쒖옣 援ъ“ 蹂?붾? ?덇퀬?쒕떎.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "OpenAI",
+                                                                                                     "Pe_Tier":  1,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE_Reason":  "OpenAI(P4)???⑤룆 ?뚮옯???뺤옣 諛쒗몴. ?뱀젙 ?뚰듃?덇? ?멸툒?섏뿀?쇰굹 二쇰룄沅뚯? ?꾩쟻?쇰줈 OpenAI???덉쓬."
+                                                                                                 },
+                                                                                      "Tier_Score":  3,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  3
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  3,
+                                                                                                     "Y_Evidence_Code":  3,
+                                                                                                     "Scope_Matrix_Score":  2.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "True"
+                                                                                                 },
+                                                                                      "IE_Score":  4
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  8,
+                                                                "T2":  7,
+                                                                "T3":  6,
+                                                                "Rationale":  "?쇱젙, ?뺤콉, SDK 湲곗닠 湲곕컲(MCP) ???뺣낫媛 援ъ껜?곸엫."
+                                                            },
+                                                 "Noise":  {
+                                                               "P1":  2,
+                                                               "P2":  2,
+                                                               "P3":  1,
+                                                               "Rationale":  "?ъ떎 ?꾨떖 ?꾩＜???쒕씪?댄븳 ??"
+                                                           },
+                                                 "Utility":  {
+                                                                 "V1":  9,
+                                                                 "V2":  5,
+                                                                 "V3":  7,
+                                                                 "Rationale":  "媛쒕컻???앺깭怨꾩뿉 誘몄튌 ?곹뼢??留ㅼ슦 ?щ굹, ?ㅼ젣 諛고룷??2026??"
+                                                             },
+                                                 "Fine_Adjustment":  {
+                                                                         "Score":  0,
+                                                                         "Reason":  "蹂댁젙 ?놁쓬."
+                                                                     }
+                                             }
+                     },
+    "source_id":  "venturebeat",
+    "original_title":  "OpenAI now accepting ChatGPT app submissions from third-party devs, launches App Directory",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  8.0,
+                                                      "T2":  7.0,
+                                                      "T3":  6.0,
+                                                      "S_Avg":  7.0
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  2.0,
+                                                     "P2":  2.0,
+                                                     "P3":  1.0,
+                                                     "N_Avg":  1.67
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  9.0,
+                                                       "V2":  5.0,
+                                                       "V3":  7.0,
+                                                       "U_Avg":  7.0
+                                                   },
+                                       "Fine_Adjustment":  0.0,
+                                       "ZS_Raw":  4.63,
+                                       "ZS_Final":  4.6
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  8,
+                                                        "T2":  7,
+                                                        "T3":  6,
+                                                        "Rationale":  "?쇱젙, ?뺤콉, SDK 湲곗닠 湲곕컲(MCP) ???뺣낫媛 援ъ껜?곸엫."
+                                                    },
+                                         "Noise":  {
+                                                       "P1":  2,
+                                                       "P2":  2,
+                                                       "P3":  1,
+                                                       "Rationale":  "?ъ떎 ?꾨떖 ?꾩＜???쒕씪?댄븳 ??"
+                                                   },
+                                         "Utility":  {
+                                                         "V1":  9,
+                                                         "V2":  5,
+                                                         "V3":  7,
+                                                         "Rationale":  "媛쒕컻???앺깭怨꾩뿉 誘몄튌 ?곹뼢??留ㅼ슦 ?щ굹, ?ㅼ젣 諛고룷??2026??"
+                                                     },
+                                         "Fine_Adjustment":  {
+                                                                 "Score":  0,
+                                                                 "Reason":  "蹂댁젙 ?놁쓬."
+                                                             }
+                                     }
+                 },
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  3.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  3.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  2.5,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  4.0
+                                                                 },
+                                                 "IS_Raw":  7.0,
+                                                 "IS_Final":  7.0,
+                                                 "Score_Commentary":  "Tier 1 湲곗뾽???앺깭怨??뺤옣(X3) 諛쒗몴. 8??紐??댁긽???ъ슜??湲곕컲??媛吏??뚮옯?쇱쓽 蹂?붾뒗 ?곗뾽 ?쒖???以?섎뒗 ?곹뼢?μ쓣 媛吏꾨떎. App Directory 異쒖떆???쒖옣 援ъ“ 蹂?붾? ?덇퀬?쒕떎."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "OpenAI",
+                                               "Pe_Tier":  1,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE_Reason":  "OpenAI(P4)???⑤룆 ?뚮옯???뺤옣 諛쒗몴. ?뱀젙 ?뚰듃?덇? ?멸툒?섏뿀?쇰굹 二쇰룄沅뚯? ?꾩쟻?쇰줈 OpenAI???덉쓬."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  3,
+                                                  "Y_Evidence_Code":  3,
+                                                  "Scope_Matrix_Score":  2.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "True"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "crawled_at":  "2025-12-19T19:44:06.798809+00:00",
+    "edition":  "251219_FRI_1",
+    "status":  "ACCEPTED",
+    "saved":  true,
+    "saved_at":  "2025-12-19T19:44:07.402722+00:00",
+    "category":  "Engineering",
+    "dedup_status":  "selected",
+    "data_file":  "venturebeat_4b22a9.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:53.871852+00:00"
+}

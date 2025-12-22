@@ -1,0 +1,205 @@
+{
+  "article_id": "c9da6e",
+  "cached_at": "2025-12-22T13:27:14.583715+00:00",
+  "description": "엔비디아가 게임 화면을 인식해 인간처럼 조작을 수행하는 범용 게임 AI를 오픈 소스로 공개했다. 방대한 게임 플레이 경험을 학습한 이 모델은 처음 접하는 상황에서",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204986_206436_4230.png",
+  "source_id": "aitimes",
+  "status": "PUBLISHED",
+  "text": "(사진=엔비디아) 엔비디아가 게임 화면을 인식해 인간처럼 조작을 수행하는 범용 게임 AI를 오픈 소스로 공개했다. 방대한 게임 플레이 경험을 학습한 이 모델은 처음 접하는 상황에서도 스스로 판단해 움직일 수 있으며, 앞으로 로봇이나 실제 환경으로 응용될 가능성을 높였다는 평을 받았다. 엔비디아와 스탠포드대학교, 칼텍 공동 연구진은 19일(현지시간) 범용 게임 에이전트를 위한 비전-행동 파운데이션 모델 ‘ 나이트로젠(NitroGen) ’을 출시했다. 연구진에는 엔비디아의 연구 선임 디렉터로도 활동 중인 최예진 스탠포드대 교수도 포함됐다. 나이트로젠은 1000개가 넘는 게임에서 모은 4만시간 분량의 게임 영상을 학습해, 게임 화면만 보고도 사람처럼 게임을 조작할 수 있는 AI다. 기반은 엔비디아가 로봇 공학을 위해 설계한 모델 'GR00T N1.5' 아키텍처다. 지금까지 AI는 글을 이해하고 이미지를 인식하는 데서는 큰 발전을 이뤘지만, 실제로 몸을 움직이듯 행동하는 AI, 즉 ‘체화(embodied) AI’ 분야는 상대적으로 발전이 더뎠다. AI가 배울 수 있는 방대한 행동 데이터가 부족했기 때문이다. 연구진은 이 문제를 해결하기 위해 비디오 게임에 주목했다. 게임은 화면 정보가 풍부하고, 상황도 끊임없이 변한다. 또 조작 방식도 다양해 AI가 행동을 배우기에 좋은 환경이다. 연구진은 트위치 같은 플랫폼에 공개된 게임 영상 중, 플레이어의 게임패드 입력이 화면에 함께 표시된 ‘입력 오버레이(input overlay)’ 영상을 대규모로 수집했다. 이 영상들을 분석해 AI가 실제로 어떤 버튼을 누르고 조이스틱을 어떻게 움직였는지를 복원했다. 그 결과, 조이스틱 움직임은 평균 84%, 버튼 입력은 96%의 높은 정확도로 재현하는 데 성공했다. 이렇게 모은 데이터는 1000개 이상의 게임을 대상으로 총 4만시간에 달하며, 액션과 RPG, 어드벤처 등 다양한 장르가 고르게 포함됐다. 나이트로젠 개요 (사진=엔비디아) 나이트로젠은 세가지 핵심 요소로 구성된다. ▲여러 게임을 바로 플레이할 수 있는 '멀티게임 파운데이션 에이전트' ▲상용 게임을 공통 방식으로 제어할 수 있게 해 주는 '범용 시뮬레이터' ▲인터넷에서 수집한 대규모 '비디오-행동 데이터셋'이다. 이 덕분에 특정 게임 하나에만 특화되지 않은, 범용적인 행동 학습이 가능해졌다. 실험 결과도 인상적이다. 나이트로젠은 RPG, 플랫폼, 배틀로얄, 레이싱 등 2D와 3D를 가리지 않고 다양한 게임에서 작동했다. 특히 한번도 본 적 없는 게임에서도, 약간의 추가 학습만 거치면 처음부터 학습한 AI보다 최대 52% 더 높은 성공률을 보였다. 기존 강화 학습(RL)을 거친 AI는 '스타크래프트 2'나 '도타 2'처럼 특정 게임에서는 뛰어났지만, 다른 환경에는 적용하기 어려웠다. 나이트로젠은 공개된 인터넷 영상만으로 학습해 이런 한계를 크게 낮췄다는 점에서 의미가 크다. 연구진은 나이트로젠의 데이터, 코드, 모델을 허깅페이스 와 깃허브 에 모두 오픈소스로 공개했다. 연구진은 “게임에서 배운 범용 행동 능력이 앞으로 로봇이나 현실 세계의 복잡한 환경에서도 활용될 수 있다”라고 밝혔다. 특히, 이는 월드 모델과 결합해 LLM의 출력을 검증하는 에이전트 역할로 발전할 수 있다. 구글에서는 이와 비슷한 범용 AI 에이전트 ‘시마 2(SIMA 2)’를 지난달 공개했다. 박찬 기자 cpark@aitimes.com",
+  "title": "엔비디아, 범용 게임 에이전트 ‘나이트로젠’ 공개...\"로봇 공학 분야에 큰 영향\" - AI타임스",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204986",
+  "title_ko": "엔비디아, 범용 게임 AI 에이전트 '나이트로젠' 오픈 소스 공개",
+  "summary": "엔비디아가 1000개 이상의 게임을 학습해 처음 보는 게임도 조작 가능한 범용 AI '나이트로젠'을 공개했다. 이는 로봇 공학 및 체화 AI(Embodied AI) 발전에 기여할 것으로 보이며, 데이터와 모델 전체가 오픈 소스로 제공된다.",
+  "tags": [],
+  "impact_score": 7.5,
+  "IS_Analysis": {
+    "Score_Commentary": "Global Tier 1(Nvidia)이 주도한 연구 결과물로, 단순 게임 AI를 넘어 로봇 공학(Embodied AI)의 기반 기술(Foundation Agent)로서 산업적 함의(Scope 3)가 크다. 오픈 소스로 전체를 공개(Realization)하여 기술 확산 속도가 빠를 것으로 예상된다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Nvidia",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE: 연구 및 공개의 주체인 Nvidia(Hardware Tier 1). SE: None."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "zero_echo_score": 5.3,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 9,
+      "Rationale": "학습 데이터 규모(4만 시간), 성능 수치, 아키텍처 구성요소 등 기술적 정보가 매우 풍부함."
+    },
+    "Utility": {
+      "V2": 9,
+      "V3": 9,
+      "Rationale": "오픈 소스 공개 및 범용 에이전트 기술의 실체 제공으로 효용성 최상."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "없음"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "c9da6e",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "엔비디아, 범용 게임 AI 에이전트 '나이트로젠' 오픈 소스 공개",
+      "Summary": "엔비디아가 1000개 이상의 게임을 학습해 처음 보는 게임도 조작 가능한 범용 AI '나이트로젠'을 공개했다. 이는 로봇 공학 및 체화 AI(Embodied AI) 발전에 기여할 것으로 보이며, 데이터와 모델 전체가 오픈 소스로 제공된다.",
+      "Tags": [
+        "Open Source",
+        "Nvidia",
+        "Agent"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Global Tier 1(Nvidia)이 주도한 연구 결과물로, 단순 게임 AI를 넘어 로봇 공학(Embodied AI)의 기반 기술(Foundation Agent)로서 산업적 함의(Scope 3)가 크다. 오픈 소스로 전체를 공개(Realization)하여 기술 확산 속도가 빠를 것으로 예상된다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Nvidia",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE: 연구 및 공개의 주체인 Nvidia(Hardware Tier 1). SE: None."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 9,
+        "Rationale": "학습 데이터 규모(4만 시간), 성능 수치, 아키텍처 구성요소 등 기술적 정보가 매우 풍부함."
+      },
+      "Utility": {
+        "V2": 9,
+        "V3": 9,
+        "Rationale": "오픈 소스 공개 및 범용 에이전트 기술의 실체 제공으로 효용성 최상."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "original_title": "엔비디아, 범용 게임 에이전트 ‘나이트로젠’ 공개...\"로봇 공학 분야에 큰 영향\" - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 9.0,
+        "T3": 0.0,
+        "S_Avg": 5.67
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 0.0,
+        "V2": 9.0,
+        "V3": 9.0,
+        "U_Avg": 6.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.3,
+      "ZS_Final": 5.3
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 9,
+        "Rationale": "학습 데이터 규모(4만 시간), 성능 수치, 아키텍처 구성요소 등 기술적 정보가 매우 풍부함."
+      },
+      "Utility": {
+        "V2": 9,
+        "V3": 9,
+        "Rationale": "오픈 소스 공개 및 범용 에이전트 기술의 실체 제공으로 효용성 최상."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 7.5,
+      "IS_Final": 7.5,
+      "Score_Commentary": "Global Tier 1(Nvidia)이 주도한 연구 결과물로, 단순 게임 AI를 넘어 로봇 공학(Embodied AI)의 기반 기술(Foundation Agent)로서 산업적 함의(Scope 3)가 크다. 오픈 소스로 전체를 공개(Realization)하여 기술 확산 속도가 빠를 것으로 예상된다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Nvidia",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE: 연구 및 공개의 주체인 Nvidia(Hardware Tier 1). SE: None."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "staged": true,
+  "staged_at": "2025-12-22T13:33:36.382584+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "saved": true,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:11.881397+00:00"
+}

@@ -1,8 +1,13 @@
-﻿# Architecture & Design Philosophy Rules
+﻿---
+trigger: always_on
+---
+
+# Architecture & Design Philosophy Rules
 
 ## Mission
 "Signal Only." (오직 신호만 남긴다.)
 
+파워쉘 환경이기에 && 사용안되는 경우가 많다
 ## Core Principles
 1.  **Separation of Concerns**: 모든 작업은 관심사 분리 원칙을 엄격하게 적용해야 합니다.
 2.  **Stability First**: ZND의 구조적 안정성을 최우선으로 확보합니다.

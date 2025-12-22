@@ -1,0 +1,17 @@
+{
+  "id": "a7c902",
+  "article_id": "a7c902",
+  "title_ko": "싱킹머신즈랩, 기업용 미세조정 API '팅커' 정식 출시",
+  "summary": "미라 무라티의 싱킹머신즈랩(TML)이 기업용 미세조정 API '팅커'를 정식 출시했다. 파이썬 기반의 직관적 인터페이스와 멀티모달(비전-언어) 지원을 강화했으며, 오픈AI 호환성을 제공해 기존 인프라와의 연동성을 높였다. 1조 파라미터 규모의 MoE 모델까지 미세조정 지원 범위를 확대했다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204963",
+  "tags": [],
+  "category": "Engineering",
+  "zero_echo_score": 4.9,
+  "impact_score": 2.5,
+  "published_at": "2025-12-22T16:32:14.122090+00:00",
+  "source_id": "aitimes",
+  "original_title": "싱킹머신즈랩, 기업용 미세조정 API ‘팅커’ 정식 출시",
+  "publish_id": "VgJuf51wCPxwDe4yuSVi",
+  "edition_code": "251223_3",
+  "edition_name": "3호"
+}

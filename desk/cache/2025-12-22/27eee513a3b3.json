@@ -1,0 +1,229 @@
+{
+  "article_id": "27eee5",
+  "cached_at": "2025-12-22T13:27:28.869207+00:00",
+  "description": "OpenAI has reportedly made major strides in improving the profitability of its AI services.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/10/OpenAI-Financial-Model.webp",
+  "source_id": "the_decoder",
+  "status": "PUBLISHED",
+  "text": "OpenAI has reportedly made major strides in improving the profitability of its AI services. The company's compute margin—the share of revenue left after paying for server costs from paying users—jumped from around 35 percent in January 2024 to roughly 70 percent by October 2025, according to internal financial data obtained by The Information. For comparison, Anthropic is expected to reach 53 percent by year's end. OpenAI achieved these gains by cutting rental costs for computing power, optimizing its models, and launching a pricier subscription tier. Still, the company has a long road ahead before reaching profitability. CEO Sam Altman continues to plan major investments in additional computing power while pursuing further circular business arrangements. OpenAI is reportedly working on a funding round of up to 100 billion dollars. Ad DEC_D_Incontent-1",
+  "title": "OpenAI reportedly dramatically improved its compute profit margins",
+  "url": "https://the-decoder.com/openai-reportedly-dramatically-improved-its-compute-profit-margins/",
+  "title_ko": "OpenAI, 컴퓨팅 수익 마진 70%로 대폭 개선... 흑자 전환 청신호",
+  "summary": "OpenAI의 컴퓨팅 마진이 2024년 1월 35%에서 2025년 10월 약 70%로 급등했다는 내부 데이터가 보도됨. 이는 비용 절감, 모델 최적화, 고가 구독 모델 출시에 기인하며, 경쟁사 Anthropic의 예상치(53%)를 상회함. CEO 샘 알트먼은 추가적인 대규모 투자를 계획 중이며 1,000억 달러 규모의 펀딩을 추진하고 있음.",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "PE는 OpenAI(Tier 1)로, 기업의 핵심 수익성 지표 개선이라는 '실행/자금 투입(P4)' 주체임. 경쟁사 Anthropic은 단순 벤치마크 대상이므로 SE 규정에 따라 None 처리함. 단일 기업의 성과(Corporate)지만 이미 실현된(Realization) 데이터에 기반하므로 신뢰도가 높으며, AI 산업의 수익성을 증명하는 전략적 중요성을 가짐.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE는 수익성 개선 및 펀딩의 주체인 OpenAI 선정. SE인 Anthropic은 'For comparison'으로 명시된 단순 비교 대상이므로 규정에 의거 None 처리."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 2.4,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 6,
+      "T3": 8,
+      "Rationale": "구체적인 마진율(35%->70%), 시점(Oct 2025), 경쟁사 수치 등 데이터가 매우 풍부함. 비용 절감 외 기술적 최적화 상세는 다소 부족."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 1,
+      "P3": 1,
+      "Rationale": "'Dramatically' 등의 표현이 있으나 수치적 근거가 확실하여 오염도가 낮음. 비교 구도 또한 객관적임."
+    },
+    "Utility": {
+      "V1": 8,
+      "V2": 9,
+      "V3": 9,
+      "Rationale": "AI 비즈니스 모델의 지속 가능성을 증명하는 중요한 내부 정보(Rare)이며 시장 영향력이 큼."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "확보하기 어려운 내부 재무 데이터를 구체적으로 제시하여 정보 가치가 매우 높음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "27eee5",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "OpenAI, 컴퓨팅 수익 마진 70%로 대폭 개선... 흑자 전환 청신호",
+      "Summary": "OpenAI의 컴퓨팅 마진이 2024년 1월 35%에서 2025년 10월 약 70%로 급등했다는 내부 데이터가 보도됨. 이는 비용 절감, 모델 최적화, 고가 구독 모델 출시에 기인하며, 경쟁사 Anthropic의 예상치(53%)를 상회함. CEO 샘 알트먼은 추가적인 대규모 투자를 계획 중이며 1,000억 달러 규모의 펀딩을 추진하고 있음.",
+      "Tags": [
+        "OpenAI",
+        "Earnings",
+        "News"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "PE는 OpenAI(Tier 1)로, 기업의 핵심 수익성 지표 개선이라는 '실행/자금 투입(P4)' 주체임. 경쟁사 Anthropic은 단순 벤치마크 대상이므로 SE 규정에 따라 None 처리함. 단일 기업의 성과(Corporate)지만 이미 실현된(Realization) 데이터에 기반하므로 신뢰도가 높으며, AI 산업의 수익성을 증명하는 전략적 중요성을 가짐.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE는 수익성 개선 및 펀딩의 주체인 OpenAI 선정. SE인 Anthropic은 'For comparison'으로 명시된 단순 비교 대상이므로 규정에 의거 None 처리."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "구체적인 마진율(35%->70%), 시점(Oct 2025), 경쟁사 수치 등 데이터가 매우 풍부함. 비용 절감 외 기술적 최적화 상세는 다소 부족."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "'Dramatically' 등의 표현이 있으나 수치적 근거가 확실하여 오염도가 낮음. 비교 구도 또한 객관적임."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 9,
+        "V3": 9,
+        "Rationale": "AI 비즈니스 모델의 지속 가능성을 증명하는 중요한 내부 정보(Rare)이며 시장 영향력이 큼."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "확보하기 어려운 내부 재무 데이터를 구체적으로 제시하여 정보 가치가 매우 높음."
+      }
+    }
+  },
+  "original_title": "OpenAI reportedly dramatically improved its compute profit margins",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 6.0,
+        "T3": 8.0,
+        "S_Avg": 7.67
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 1.0,
+        "P3": 1.0,
+        "N_Avg": 1.33
+      },
+      "Utility": {
+        "V1": 8.0,
+        "V2": 9.0,
+        "V3": 9.0,
+        "U_Avg": 8.67
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 2.42,
+      "ZS_Final": 2.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "구체적인 마진율(35%->70%), 시점(Oct 2025), 경쟁사 수치 등 데이터가 매우 풍부함. 비용 절감 외 기술적 최적화 상세는 다소 부족."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "'Dramatically' 등의 표현이 있으나 수치적 근거가 확실하여 오염도가 낮음. 비교 구도 또한 객관적임."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 9,
+        "V3": 9,
+        "Rationale": "AI 비즈니스 모델의 지속 가능성을 증명하는 중요한 내부 정보(Rare)이며 시장 영향력이 큼."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "확보하기 어려운 내부 재무 데이터를 구체적으로 제시하여 정보 가치가 매우 높음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "PE는 OpenAI(Tier 1)로, 기업의 핵심 수익성 지표 개선이라는 '실행/자금 투입(P4)' 주체임. 경쟁사 Anthropic은 단순 벤치마크 대상이므로 SE 규정에 따라 None 처리함. 단일 기업의 성과(Corporate)지만 이미 실현된(Realization) 데이터에 기반하므로 신뢰도가 높으며, AI 산업의 수익성을 증명하는 전략적 중요성을 가짐."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE는 수익성 개선 및 펀딩의 주체인 OpenAI 선정. SE인 Anthropic은 'For comparison'으로 명시된 단순 비교 대상이므로 규정에 의거 None 처리."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "staged": true,
+  "staged_at": "2025-12-22T13:32:33.136010+00:00",
+  "category": "Business",
+  "dedup_status": "selected",
+  "saved": true,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:08.232377+00:00"
+}

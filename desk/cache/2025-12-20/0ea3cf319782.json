@@ -1,0 +1,231 @@
+{
+  "article_id": "0ea3cf",
+  "author": [
+    "임대준 기자"
+  ],
+  "cached_at": "2025-12-20T19:03:10.308558+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204957_206389_1225.png",
+  "modified_at": "2025-12-20T21:15:03+09:00",
+  "summary": "오픈AI와 오라클이 추진 중인 미시간주 데이터센터 전력 공급 계획이 주 당국의 승인을 받았다. 주민들은 환경 오염과 전력난을 우려하며 강하게 반발하고 있다.",
+  "text": "미시간주 샐라인 타운십에 들어설 데이터센터 조감도 (사진=Related Digital) 오픈AI가 오라클과 건설을 계획 중인 미국 미시간주의 '스타게이트' 데이터센터가 주 당국으로부터 승인 신청을 받았다. 이 과정에서 지역 주민들의 반발이 심했던 것으로 알려졌다. 블룸버그에 따르면, 미시간주 공공서비스 위원회는 18일(현지시간) 청문회를 거쳐 오라클과 오픈AI가 계획 중인 대규모 데이터센터 개발에 전력을 공급하겠다는 DTE 에너지의 요청을 만장일치로 승인했다. 청문회에서는 일부 시민들이 반대 의견을 표명했다. DTE는 샐라인 타운십에 건설될 수십억달러 규모의 1.4기가와트(GW)급 발전소에 전력을 공급하는 계획의 승인을 요청했다. 규제 당국은 이번 계획이 전력망과 일반 시민을 보호한다고 밝혔다. 미국에서는 데이터센터가 급속도로 확장되며 전기요금 상승과 환경 파괴 등의 문제가 부각되고 있다. 이번 청문회가 대표적인 사례로 꼽혔다. 이날에는 여러 반대자가 연단에 올라 우려를 표명했다. 개발 용지 인근에 거주하는 한 주민은 대기와 하천 오염을 지적했다. 한 지역 농부는 위원회를 향해 \"당신들의 업적은 주민들을 희생시키면서 정치적 압력에 굴복한 것\"이라며 \"나는 매일 그 공사 현장을 지나가는데, 종말의 현장처럼 보인다\"라고 비난했다. BMO 캐피털 마켓츠의 분석가들은 '미시간주에서 데이터센터에 대한 감시 강화'라는 보고서를 통해 앞으로는 대중의 반대가 더 증가할 것으로 예측했다. 오픈AI는 미국 내 데이터센터 건설이 일자리 창출과 물 사용량을 줄이는 폐쇄형 냉각 시스템 도입, 에너지 요금 인상을 막기 위한 전력망 사용료 지급 등의 이점을 가져올 것이라고 밝혔다. \"우리는 이 프로젝트가 모두에게 이익이 되는 AI를 구축하기 위해 주 정부와 지역 사회와 협력하는 방법에 대한 좋은 선례가 될 것으로 생각한다\"라는 성명을 발표했다. 오라클도 데이터 센터가 미시간주 학교와 지역 사회에 경제적 이익과 세수 증대를 가져다줄 것이라고 밝혔다. 또, 규제 당국의 승인을 통해 미시간주 주민들이 요금 인상으로부터 보호받을 수 있게 됐다고 덧붙였다. 임대준 기자 ydj@aitimes.com",
+  "title": "오픈AI '스타게이트' 데이터센터 건설에 지역 주민 강하게 반발",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204957",
+  "title_ko": "오픈AI-오라클 미시간 데이터센터, 주민 반발 속 승인 신청",
+  "tags": [],
+  "impact_score": 6.0,
+  "IS_Analysis": {
+    "Score_Commentary": "초거대 인프라(1.4GW) 구축 과정에서의 사회적 갈등과 규제 승인을 다룬다. PE(OpenAI T1)와 SE(Oracle T3-GIP유추)의 협력이며, 지역 인프라(X2)에 실질적 영향(Y2/C1)을 미치는 사안이다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Oracle",
+          "Se_Tier": 3,
+          "PE/SE_Reason": "프로젝트의 핵심 주체인 OpenAI(PE). 공동 실행 및 인프라 파트너인 Oracle을 SE 선정. Oracle은 Tier Map 미등재이나 Dell/Intel과 유사한 Legacy Tech Giant로 판단하여 T3 적용."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 2,
+          "Y_Evidence_Code": 2,
+          "Scope_Matrix_Score": 1,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 2,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 3
+      }
+    }
+  },
+  "zero_echo_score": 6.3,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 4,
+      "T3": 8,
+      "Rationale": "발전 용량(1.4GW), 승인 주체, 주민 반응 등 팩트 위주."
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 4,
+      "P3": 2,
+      "Rationale": "주민의 감정적 반발 멘트가 인용됨."
+    },
+    "Utility": {
+      "V1": 6,
+      "V2": 3,
+      "V3": 7,
+      "Rationale": "AI 산업의 물리적 제약(전력/주민수용성)을 보여주는 중요 사례."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "특이사항 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "0ea3cf",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "오픈AI-오라클 미시간 데이터센터, 주민 반발 속 승인 신청",
+      "Summary": "오픈AI와 오라클이 추진 중인 미시간주 데이터센터 전력 공급 계획이 주 당국의 승인을 받았다. 주민들은 환경 오염과 전력난을 우려하며 강하게 반발하고 있다.",
+      "Tags": [
+        "Cloud",
+        "Regulation",
+        "OpenAI"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "초거대 인프라(1.4GW) 구축 과정에서의 사회적 갈등과 규제 승인을 다룬다. PE(OpenAI T1)와 SE(Oracle T3-GIP유추)의 협력이며, 지역 인프라(X2)에 실질적 영향(Y2/C1)을 미치는 사안이다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Oracle",
+            "Se_Tier": 3,
+            "PE/SE_Reason": "프로젝트의 핵심 주체인 OpenAI(PE). 공동 실행 및 인프라 파트너인 Oracle을 SE 선정. Oracle은 Tier Map 미등재이나 Dell/Intel과 유사한 Legacy Tech Giant로 판단하여 T3 적용."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 2,
+            "Y_Evidence_Code": 2,
+            "Scope_Matrix_Score": 1,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 2,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 3
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 4,
+        "T3": 8,
+        "Rationale": "발전 용량(1.4GW), 승인 주체, 주민 반응 등 팩트 위주."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 4,
+        "P3": 2,
+        "Rationale": "주민의 감정적 반발 멘트가 인용됨."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 3,
+        "V3": 7,
+        "Rationale": "AI 산업의 물리적 제약(전력/주민수용성)을 보여주는 중요 사례."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "특이사항 없음."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "오픈AI '스타게이트' 데이터센터 건설에 지역 주민 강하게 반발",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 7.0,
+        "T2": 4.0,
+        "T3": 8.0,
+        "S_Avg": 6.33
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 4.0,
+        "P3": 2.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 3.0,
+        "V3": 7.0,
+        "U_Avg": 5.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 6.27,
+      "ZS_Final": 6.3
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 4,
+        "T3": 8,
+        "Rationale": "발전 용량(1.4GW), 승인 주체, 주민 반응 등 팩트 위주."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 4,
+        "P3": 2,
+        "Rationale": "주민의 감정적 반발 멘트가 인용됨."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 3,
+        "V3": 7,
+        "Rationale": "AI 산업의 물리적 제약(전력/주민수용성)을 보여주는 중요 사례."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "특이사항 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 1.0,
+        "Criticality_Total": 2.0,
+        "IE_Total": 3.0
+      },
+      "IS_Raw": 6.0,
+      "IS_Final": 6.0,
+      "Score_Commentary": "초거대 인프라(1.4GW) 구축 과정에서의 사회적 갈등과 규제 승인을 다룬다. PE(OpenAI T1)와 SE(Oracle T3-GIP유추)의 협력이며, 지역 인프라(X2)에 실질적 영향(Y2/C1)을 미치는 사안이다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Oracle",
+      "Se_Tier": 3,
+      "PE/SE_Reason": "프로젝트의 핵심 주체인 OpenAI(PE). 공동 실행 및 인프라 파트너인 Oracle을 SE 선정. Oracle은 Tier Map 미등재이나 Dell/Intel과 유사한 Legacy Tech Giant로 판단하여 T3 적용."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 2,
+      "Y_Evidence_Code": 2,
+      "Scope_Matrix_Score": 1,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 2,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-20T19:06:39.682642+00:00",
+  "category": "Community",
+  "dedup_status": "selected",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:00.190233+00:00"
+}

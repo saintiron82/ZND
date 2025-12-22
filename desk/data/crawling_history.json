@@ -912,51 +912,141 @@
   "https://the-decoder.com/china-wins-the-open-model-race-and-the-price-to-pay-goes-beyond-economics/": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:06.467549+00:00"
+    "timestamp": "2025-12-22T16:32:04.128268+00:00"
   },
   "https://the-decoder.com/anthropics-claude-opus-4-5-can-tackle-some-tasks-lasting-nearly-five-hours/": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:06.936196+00:00"
+    "timestamp": "2025-12-22T16:32:06.802511+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204961": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:07.340370+00:00"
+    "timestamp": "2025-12-22T16:32:08.360417+00:00"
   },
   "https://techneedle.com/archives/43019": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:07.735116+00:00"
+    "timestamp": "2025-12-22T16:32:08.768563+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204959": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:08.130672+00:00"
+    "timestamp": "2025-12-22T16:32:09.921565+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204960": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:08.521658+00:00"
+    "timestamp": "2025-12-22T16:32:11.075547+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204964": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:08.904154+00:00"
+    "timestamp": "2025-12-22T16:32:11.452557+00:00"
   },
   "https://the-decoder.com/some-notes-on-whats-new/": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:09.314422+00:00"
+    "timestamp": "2025-12-22T16:32:13.362895+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204962": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:09.702207+00:00"
+    "timestamp": "2025-12-22T16:32:13.731376+00:00"
   },
   "https://www.aitimes.com/news/articleView.html?idxno=204963": {
     "status": "ACCEPTED",
     "reason": null,
-    "timestamp": "2025-12-21T16:11:10.101171+00:00"
+    "timestamp": "2025-12-22T16:32:14.494331+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204986": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:05.123582+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204998": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:06.090699+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204980": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:07.211129+00:00"
+  },
+  "https://the-decoder.com/alibabas-qwen-releases-ai-model-that-splits-images-into-editable-layers-like-photoshop/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:07.582445+00:00"
+  },
+  "https://the-decoder.com/kling-2-6-adds-voice-control-and-motion-upgrades-as-ai-video-tools-race-toward-realism/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:07.969502+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204979": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T14:23:42.952467+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204975": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:09.160192+00:00"
+  },
+  "https://the-decoder.com/openai-reportedly-dramatically-improved-its-compute-profit-margins/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:09.542449+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204973": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:10.315731+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204985": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:10.698085+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204976": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T14:23:44.942570+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204972": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:11.842238+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205007": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:12.211177+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204989": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:12.579972+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204999": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:12.961266+00:00"
+  },
+  "https://venturebeat.com/technology/hiring-specialists-made-sense-before-ai-now-generalists-win": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T14:23:46.892114+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=204974": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T16:32:14.110735+00:00"
+  },
+  "https://venturebeat.com/infrastructure/agent-autonomy-without-guardrails-is-an-sre-nightmare": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-22T14:23:47.679931+00:00"
   }
 }

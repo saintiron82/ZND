@@ -1,0 +1,232 @@
+{
+  "article_id": "f2706e",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-21T15:06:45.541711+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204962_206395_2927.jpg",
+  "modified_at": "2025-12-21T19:13:47+09:00",
+  "summary": "구글이 자연어 명령을 실행 가능한 코드(API 액션)로 변환하는 소형 언어모델(sLM) '펑션젬마'를 출시했다. 2.7B 매개변수 규모로 젯슨 나노 등 엣지 디바이스 구동이 가능하며, 미세조정을 통해 함수 호출 정확도를 85%까지 끌어올렸다. 이는 단순 대화를 넘어 외부 시스템을 제어하는 에이전트 기능을 오프라인 환경에서도 구현함을 목표로 한다.",
+  "text": "구글은 18일(현지시간) 클라우드 연결 없이도 기기에서 자연어 명령을 실행 가능한 코드로 바로 변환하는 소형 언어모델(sLM) ‘펑션젬마(FunctionGemma)’를 선보였다. 구글은 “AI가 단순히 말하는 도구를 넘어 실제로 행동해야 하는 단계로 접어들고 있다”라며, 스마트폰과 브라우저, IoT 기기 등 엣지 환경에서 작동하는 에이전트의 중요성이 커지고 있다고 설명했다. 이를 위해서는 모델이 가볍고 로컬 실행이 가능하면서도, 특정 작업에 대해 높은 신뢰성을 갖춰야 한다는 판단이다. 펑션젬마는 2억7000만 매개변수의 '젬마 3'를 네이티브 함수 호출(function calling)에 최적화한 버전이다. 단순히 대화를 생성하는 데 그치지 않고, 자연어 명령을 실행 가능한 API 액션으로 변환해 실제 작업을 수행하는 것이 핵심 목적이다. 예를 들어, '내일 오후 3시에 회의 일정 잡아 줘'라는 명령을 실행 가능한 API 코드(함수 호출)로 변환한다. 이를 통해 AI가 단순히 응답하는 것을 넘어 실제로 외부 시스템과 상호작용하며 작업을 완료할 수 있다는 것이다. 이는 오프라인에서도 독립적으로 동작하는 개인 비서형 에이전트로 활용하거나, 대형 모델과 결합된 시스템에서 엣지 ‘트래픽 컨트롤러’ 역할을 수행할 수 있다는 설명이다. 또, 간단한 명령은 기기에서 즉시 처리하고 복잡한 요청만 '젬마 3 27B' 같은 대형 모델로 넘기는 방식이다. 펑션젬마는 컴퓨터와 사람 모두와 소통할 수 있도록 설계돼, 구조화된 함수 호출을 생성한 뒤 결과를 다시 자연어로 요약해 전달한다. 차별점으로 ▲행동과 대화를 동시에 처리하는 구조 ▲미세조정을 통한 높은 신뢰성 ▲엣지 환경에 최적화된 설계 ▲폭넓은 개발 생태계 지원을 꼽았다. 실제 내부 ‘모바일 액션’ 평가에서 범용 소형 모델의 함수 호출 정확도는 58%에 그쳤지만, 펑션젬마는 미세조정을 통해 85%까지 정확도가 상승했다. 이는 모델 크기보다 목적에 맞춘 전문화가 실사용 환경에서 더 효과적이라는 점을 보여준다. 펑션젬마의 미세조정 전후 성능 비교 (사진=구글) 엔비디아 젯슨 나노, 모바일 기기 등 제한된 자원 환경에서도 구동 가능하며, 25만6000 토큰 컨텍스트를 활용해 JSON과 다국어 입력을 효율적으로 처리한다. 허깅페이스 트랜스포머, 케라스, 언슬로스, 엔비디아 네모 등으로 학습할 수 있고, LiteRT-LM, vLLM, Llama.cpp, Ollama, 버텍스 AI 등 다양한 배포 환경을 지원한다. 구글은 구글 AI 엣지 갤러리(Google AI Edge Gallery) 앱을 통해 펑션젬마의 활용 사례도 공개했다. 일정 추가, 연락처 등록, 손전등 켜기 같은 명령을 서버 연결 없이 처리하는 오프라인 비서 데모와, 음성 명령으로 게임 속 작물을 심고 물을 주는 인터랙티브 미니게임이 대표적이다. 이들 사례는 2억7000만 매개변수 규모의 모델이 모바일 기기에서 다단계 로직을 처리할 수 있다는 것을 보여준다. 자연어를 분석해 명령을 실행하는 데 필요한 운영 체제 도구를 식별하는 장면 (사진=구글) 허깅페이스 와 캐글 에서 다운로드할 수 있다. 다만 라이선스는 MIT·아파치 같은 전통적인 오픈 소스와는 다르다. 상업적 사용과 수정, 재배포는 허용되지만, 혐오 표현이나 악성코드 생성 등 제한된 용도는 금지된다. 구글이 약관을 업데이트할 권한을 가진다. 대부분 스타트업과 개발자에게는 충분히 개방적이지만, 완전한 활용이 필요한 경우에는 주의가 필요하다. 박찬 기자 cpark@aitimes.com",
+  "title": "구글, 명령을 '코드'로 변환하는 온디바이스 모델 '펑션젬마' 출시",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204962",
+  "title_ko": "구글, 행동하는 온디바이스 AI '펑션젬마' 공개",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Global Tier 1인 구글의 신규 모델 출시로 기본 영향력은 확보되나, 단일 제품(Corporate Scope) 레벨의 이벤트임. 다만 '온디바이스 에이전트'라는 기술적 트렌드를 구체화한 점(Signal)에서 의미가 있음.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE_SE_Reason": "구글이 직접 기술을 개발하고 출시하는 주체(P4)임. 엔비디아 등이 언급되나 단순 호환성 언급으로 SE 성립 불가(Unilateral)."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 3.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 8,
+      "T3": 10,
+      "Rationale": "매개변수(2.7B), 정확도(85%), 구동 환경 등 구체적 스펙과 작동 원리가 명확히 기술됨."
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "제조사 발표 인용 위주이나 과장된 수식어가 적고 팩트 위주 서술."
+    },
+    "Utility": {
+      "V1": 6,
+      "V2": 9,
+      "V3": 7,
+      "Rationale": "즉시 다운로드 및 사용 가능한 모델(Availability)로 개발자 효용성이 매우 높음."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "구체적인 활용 데모와 호환 프레임워크 정보가 충실하여 실용성 측면 가점."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "f2706e",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "구글, 행동하는 온디바이스 AI '펑션젬마' 공개",
+      "Summary": "구글이 자연어 명령을 실행 가능한 코드(API 액션)로 변환하는 소형 언어모델(sLM) '펑션젬마'를 출시했다. 2.7B 매개변수 규모로 젯슨 나노 등 엣지 디바이스 구동이 가능하며, 미세조정을 통해 함수 호출 정확도를 85%까지 끌어올렸다. 이는 단순 대화를 넘어 외부 시스템을 제어하는 에이전트 기능을 오프라인 환경에서도 구현함을 목표로 한다.",
+      "Tags": [
+        "Launch",
+        "On-Device",
+        "Google"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Global Tier 1인 구글의 신규 모델 출시로 기본 영향력은 확보되나, 단일 제품(Corporate Scope) 레벨의 이벤트임. 다만 '온디바이스 에이전트'라는 기술적 트렌드를 구체화한 점(Signal)에서 의미가 있음.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE_SE_Reason": "구글이 직접 기술을 개발하고 출시하는 주체(P4)임. 엔비디아 등이 언급되나 단순 호환성 언급으로 SE 성립 불가(Unilateral)."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 8,
+        "T3": 10,
+        "Rationale": "매개변수(2.7B), 정확도(85%), 구동 환경 등 구체적 스펙과 작동 원리가 명확히 기술됨."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "제조사 발표 인용 위주이나 과장된 수식어가 적고 팩트 위주 서술."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 9,
+        "V3": 7,
+        "Rationale": "즉시 다운로드 및 사용 가능한 모델(Availability)로 개발자 효용성이 매우 높음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "구체적인 활용 데모와 호환 프레임워크 정보가 충실하여 실용성 측면 가점."
+      }
+    }
+  },
+  "source_id": "aitimes",
+  "original_title": "구글, 명령을 '코드'로 변환하는 온디바이스 모델 '펑션젬마' 출시",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 8.0,
+        "T3": 10.0,
+        "S_Avg": 9.0
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.33
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 9.0,
+        "V3": 7.0,
+        "U_Avg": 7.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 3.02,
+      "ZS_Final": 3.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 8,
+        "T3": 10,
+        "Rationale": "매개변수(2.7B), 정확도(85%), 구동 환경 등 구체적 스펙과 작동 원리가 명확히 기술됨."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "제조사 발표 인용 위주이나 과장된 수식어가 적고 팩트 위주 서술."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 9,
+        "V3": 7,
+        "Rationale": "즉시 다운로드 및 사용 가능한 모델(Availability)로 개발자 효용성이 매우 높음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "구체적인 활용 데모와 호환 프레임워크 정보가 충실하여 실용성 측면 가점."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "Global Tier 1인 구글의 신규 모델 출시로 기본 영향력은 확보되나, 단일 제품(Corporate Scope) 레벨의 이벤트임. 다만 '온디바이스 에이전트'라는 기술적 트렌드를 구체화한 점(Signal)에서 의미가 있음."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE_SE_Reason": "구글이 직접 기술을 개발하고 출시하는 주체(P4)임. 엔비디아 등이 언급되나 단순 호환성 언급으로 SE 성립 불가(Unilateral)."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "status": "PUBLISHED",
+  "staged": true,
+  "staged_at": "2025-12-21T15:18:52.553737+00:00",
+  "category": "Engineering",
+  "dedup_status": "selected",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:07.861040+00:00",
+  "saved": true
+}

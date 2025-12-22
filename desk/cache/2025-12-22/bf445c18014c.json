@@ -1,0 +1,202 @@
+{
+  "article_id": "bf445c",
+  "cached_at": "2025-12-22T13:27:07.097646+00:00",
+  "description": "과학기술정보통신부(장관 배경훈)는 산학연의 AI 연구 및 개발, 혁신 서비스 창출을 지원하기 위해 첨단 GPU 4000여장을 지원한다고 22일 밝혔다. 과기부의",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204989_206440_145.jpeg",
+  "source_id": "aitimes",
+  "status": "PUBLISHED",
+  "text": "(사진=과기부) 과학기술정보통신부(장관 배경훈)는 산학연의 AI 연구 및 개발, 혁신 서비스 창출을 지원하기 위해 첨단 GPU 4000여장을 지원한다고 22일 밝혔다. 과기부의 산학연 과제 공모는 오는 1월28일까지 진행된다. 'H200' 2296장과 'B200' 2040장을 활용해 과제를 진행하는 것이 목표다. 국가 주력산업 혁신, 미래유망 산업 등에서 혁신적 AI 서비스 및 모델을 창출하기 위한 과제들을 선정할 예정이다. 과제당 H200은 서버 2대(16장)~32대(256장)가 배정되며, B200은 서버 2대(16장)~16대(128장)로 최대 12개월까지 지원한다. 과제는 기술, 사회적 파급효과와 AI 생태계 기여도, 수요자의 역량 및 준비도, 실현 가능성 등을 기준으로 전문가 심사를 통해 선정된다. 지역소재 기업은 가산점이 부여되며, 대형 과제(H200 64장 이상)나 B200 32장 이상 과제의 경우, 적격성 인터뷰를 추가 진행해야 한다. 학계과 연구계는 무상으로 제공하며, 중소기업과 스타트업에는 시장가의 약 5~10% 수준의 비용만을 부과한다. 청년기업은 추가 50% 할인을 제공 받을 수 있다. 기타 상세 지원 요건은 온라인 플랫폼 을 통해 확인할 수 있다. 과기부는 이후 정부 GPU 구매사업 진행 경과 및 공모 내용 설명을 위해, 오는 1월9일 코엑스에서 현장 설명회도 진행할 계획이다. 또, 사전에 이용자 불편 사항 등을 적극 개선하기 위해 B200 512장(서버 64대)에 대한 사전 베타테스트도 무상 제공한다. 사전 베타테스트 이용자 공모도 온라인 플랫폼을 통해 이날부터 진행 중이다. 김경만 과학기술정보통신부 인공지능정책실장은 “이번 공모를 통해 산학연에 첨단 GPU 자원을 공급해 혁신 AI 연구 및 서비스 개발을 지원, 국가 AI 경쟁력 강화 및 혁신 생태계 조성에 기여할 것”이라고 말했다. 장세민 기자 semim99@aitimes.com",
+  "title": "과기부, 첨단 GPU 4000장 지원 위한 과제 공모 시작 - AI타임스",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204989",
+  "title_ko": "과기부, AI 연구용 첨단 GPU 4000장 지원 공모",
+  "summary": "과학기술정보통신부가 산학연 AI 연구 지원을 위해 H200, B200 등 첨단 GPU 4000여 장을 지원한다. 학계에는 무상, 중소기업에는 저렴하게 제공하며, 국가 AI 경쟁력 강화를 위한 인프라 지원책이다.",
+  "tags": [],
+  "impact_score": 3.0,
+  "IS_Analysis": {
+    "Score_Commentary": "국가(Tier 2) 차원의 필수 인프라(Essential/Safety) 지원 정책이다. H200, B200 등 최신 H/W 자원을 대규모로 공급하는 것은 AI 연구 생태계(National Scope)에 직접적인 활력을 줄 수 있다. 단순 계획(Promise)이지만 자원 규모가 구체적이다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "과학기술정보통신부",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE: 지원 사업의 주체인 과기부(Tier 2). SE: 불특정 다수의 산학연 연구자이므로 None 처리."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 2,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 6.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "Rationale": "GPU 모델명(H200, B200), 수량(4000장), 지원 조건 등 데이터 매우 구체적."
+    },
+    "Utility": {
+      "V1": 8,
+      "V2": 7,
+      "Rationale": "연구자 및 기업에게 실질적 도움이 되는 인프라 지원 정보."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "없음"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "bf445c",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "과기부, AI 연구용 첨단 GPU 4000장 지원 공모",
+      "Summary": "과학기술정보통신부가 산학연 AI 연구 지원을 위해 H200, B200 등 첨단 GPU 4000여 장을 지원한다. 학계에는 무상, 중소기업에는 저렴하게 제공하며, 국가 AI 경쟁력 강화를 위한 인프라 지원책이다.",
+      "Tags": [
+        "Investment",
+        "Hardware",
+        "Government"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "국가(Tier 2) 차원의 필수 인프라(Essential/Safety) 지원 정책이다. H200, B200 등 최신 H/W 자원을 대규모로 공급하는 것은 AI 연구 생태계(National Scope)에 직접적인 활력을 줄 수 있다. 단순 계획(Promise)이지만 자원 규모가 구체적이다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "과학기술정보통신부",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE: 지원 사업의 주체인 과기부(Tier 2). SE: 불특정 다수의 산학연 연구자이므로 None 처리."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 2,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "Rationale": "GPU 모델명(H200, B200), 수량(4000장), 지원 조건 등 데이터 매우 구체적."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 7,
+        "Rationale": "연구자 및 기업에게 실질적 도움이 되는 인프라 지원 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "original_title": "과기부, 첨단 GPU 4000장 지원 위한 과제 공모 시작 - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 0.0,
+        "T3": 0.0,
+        "S_Avg": 2.67
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 8.0,
+        "V2": 7.0,
+        "V3": 0.0,
+        "U_Avg": 5.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 6.83,
+      "ZS_Final": 6.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "Rationale": "GPU 모델명(H200, B200), 수량(4000장), 지원 조건 등 데이터 매우 구체적."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 7,
+        "Rationale": "연구자 및 기업에게 실질적 도움이 되는 인프라 지원 정보."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 3.0,
+      "IS_Final": 3.0,
+      "Score_Commentary": "국가(Tier 2) 차원의 필수 인프라(Essential/Safety) 지원 정책이다. H200, B200 등 최신 H/W 자원을 대규모로 공급하는 것은 AI 연구 생태계(National Scope)에 직접적인 활력을 줄 수 있다. 단순 계획(Promise)이지만 자원 규모가 구체적이다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "과학기술정보통신부",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE: 지원 사업의 주체인 과기부(Tier 2). SE: 불특정 다수의 산학연 연구자이므로 None 처리."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 2,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "staged": true,
+  "staged_at": "2025-12-22T13:33:36.074188+00:00",
+  "category": "Community",
+  "dedup_status": "selected",
+  "saved": true,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:10.460936+00:00"
+}

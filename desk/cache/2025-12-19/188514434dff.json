@@ -1,0 +1,228 @@
+{
+  "article_id": "188514",
+  "author": "Taryn Plumb",
+  "cached_at": "2025-12-19T18:40:07.154148+00:00",
+  "image": "https://images.ctfassets.net/jdtwqhzvc2n1/2XEEKrDQzD8nYfOVb79IrU/9a063848dbdb6c4051c49a9d46e3796e/Agent_building.png?w=800&amp;q=75",
+  "modified_at": "2025-12-19T18:11:16.785Z",
+  "summary": "Google Cloud와 Replit은 AI 에이전트 기술이 아직 기업 환경에 완전히 적용되기에 미성숙함을 인정했다. 레거시 워크플로우, 파편화된 데이터, 거버넌스 부재가 주요 원인이다. Replit CEO는 현재 대부분의 기업 에이전트가 '장난감 예제' 수준이라고 지적하며, 신뢰성과 통합이 지능보다 더 큰 장벽임을 강조했다. 보안 및 프로세스의 근본적 재설계가 필요하다.",
+  "text": "2025 was supposed to be the year of the AI agent, right? Not quite, acknowledge Google Cloud and Replit — two big players in the AI agent space and partners in the \" vibe coding \" movement — at a recent VB Impact Series event. Even as they build out agentic tools themselves, leaders from the two companies say the capabilities aren’t quite there yet. This constrained reality comes down to struggles with legacy workflows, fragmented data, and immature governance models. Also, enterprises fundamentally misunderstand that agents aren’t like other technologies: They require a fundamental rethink and reworking of workflows and processes. When enterprises are building agents to automate work, “most of them are toy examples,” Amjad Masad, CEO and founder of Replit, said during the event. “They get excited, but when they start rolling it out, it's not really working very well.” Building agents based on Replit’s own mistakes Reliability and integration, rather than intelligence itself, are two primary barriers to AI agent success, Masad noted. Agents frequently fail when run for extended periods, accumulate errors, or lack access to clean, well-structured data. The problem with enterprise data is it’s messy — it’s structured, unstructured, and stored all over the place — and crawling it is a challenge. Added to that, there are many unwritten things that people do that are difficult to encode in agents, Masad said. “The idea that companies are just going to turn on agents and agents will replace workers or do workflow automations automatically, it's just not the case today,” he said. “The tooling is not there.” Going beyond agents are computer use tools, which can take over a user’s workspace for basic tasks like web browsing. But these are still in their infancy and can be buggy, unreliable, and even dangerous, despite the accelerated hype. “The problem is computer use models are really bad right now,” Masad said. “They're expensive, they're slow, they're making progress, but they're only about a year old.” Replit is learning from its own blunder earlier this year, when its AI coder wiped a company's entire code base in a test run. Masad conceded: “The tools were not mature enough,” noting that the company has since isolated development from production. Techniques such as testing-in-the-loop, verifiable execution, and development isolation are essential, he noted, even as they can be highly resource-intensive. Replit incorporated in-the-loop capabilities into version 3 of its agent, and Masad said that its next-gen agent can work autonomously for 200 minutes; some have run it for 20 hours. Still, he acknowledged that users have expressed frustration around lag times. When they put in a “hefty prompt,” they may have to wait 20 minutes or longer. Ideally, they’ve expressed that they want to be involved in more of a creative loop where they can enter numerous prompts, work on multiple tasks at once, and adjust the design as the agent is working. “The way to solve that is parallelism, to create multiple agent loops and have them work on these independent features while allowing you to do the creative work at the same time,” he said. Agents require a cultural shift Beyond the technical perspective, there’s a cultural hurdle: Agents operate probabilistically, but traditional enterprises are structured around deterministic processes, noted Mike Clark, director of product development at Google Cloud. This creates a cultural and operational mismatch as LLMs steam in with all-new tools, orchestration frameworks and processes. “We don't know how to think about agents,” Clark said. “We don't know how to solve for what agents can do.” The companies doing it right are being driven by bottoms-up processes, he noted: no-code and low-code software and tool creation in the trenches funneling up to larger agents. As of yet, the deployments that are successful are narrow, carefully scoped and heavily supervised. “If I look at 2025 and this promise of it being the year of agents, it was the year a lot of folks spent building prototypes,” Clark said. “Now we’re in the middle of this huge scale phase.” How do you secure a pasture-less world? Another struggle is AI agent security, which also requires a rethink of traditional processes, Clark noted. Security perimeters have been drawn around everything — but that doesn’t work when agents need to be able to access many different resources to make the best decisions, said Clark. “It's really changing our security models, changing our base level,” he said. “What does least privilege mean in a pasture-less defenseless world?” Ultimately, there must be a governance rethink on the part of the whole industry, and enterprises must align on a threat model around agents. Clark pointed out the disparity: “If you look at some of your governance processes, you'll be very surprised that the origin of those processes was somebody on an IBM electric typewriter typing in triplicate and handing that to three people. That is not the world we live in today.”",
+  "title": "Even Google and Replit struggle to deploy AI agents reliably — here&apos;s why",
+  "url": "https://venturebeat.com/orchestration/even-google-and-replit-struggle-to-deploy-ai-agents-reliably-heres-why",
+  "title_ko": "Google과 Replit, AI 에이전트의 신뢰성 있는 배포에 난항... 그 이유는?",
+  "tags": [],
+  "impact_score": 6.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1(Google)과 Tier 4(Replit)가 공동으로 에이전트 시장의 기술적/문화적 한계를 지적하며 과도한 기대감(Hype)을 조정하는 기사다. 산업 전반의 패러다임(X3)에 대한 진단이나, 실질적인 솔루션보다는 현황 파악(Y3)에 그쳐 폭발적인 점수는 아니다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google Cloud",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Replit",
+          "Se_Tier": 4,
+          "PE/SE_Reason": "사건(컨퍼런스 발언)의 공동 주체이나, Tier Map상 최상위 포식자인 Google을 PE로, 파트너인 스타트업 Replit을 SE로 선정함."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": -1,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 2.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 5.7,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 8,
+      "T3": 8,
+      "Rationale": "업계 리더들의 구체적인 한계 지적과 '200분 자율 작동' 등 수치 언급."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 3,
+      "P3": 2,
+      "Rationale": "비교적 객관적인 현황 진단으로 노이즈가 적음."
+    },
+    "Utility": {
+      "V1": 6,
+      "V2": 4,
+      "V3": 7,
+      "Rationale": "즉시 적용 가능한 기술보다는 전략적 방향성 제시에 가까움."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "균형 잡힌 인사이트 기사로 보정 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "188514",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "Google과 Replit, AI 에이전트의 신뢰성 있는 배포에 난항... 그 이유는?",
+      "Summary": "Google Cloud와 Replit은 AI 에이전트 기술이 아직 기업 환경에 완전히 적용되기에 미성숙함을 인정했다. 레거시 워크플로우, 파편화된 데이터, 거버넌스 부재가 주요 원인이다. Replit CEO는 현재 대부분의 기업 에이전트가 '장난감 예제' 수준이라고 지적하며, 신뢰성과 통합이 지능보다 더 큰 장벽임을 강조했다. 보안 및 프로세스의 근본적 재설계가 필요하다.",
+      "Tags": "News, Event, Agent"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1(Google)과 Tier 4(Replit)가 공동으로 에이전트 시장의 기술적/문화적 한계를 지적하며 과도한 기대감(Hype)을 조정하는 기사다. 산업 전반의 패러다임(X3)에 대한 진단이나, 실질적인 솔루션보다는 현황 파악(Y3)에 그쳐 폭발적인 점수는 아니다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google Cloud",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Replit",
+            "Se_Tier": 4,
+            "PE/SE_Reason": "사건(컨퍼런스 발언)의 공동 주체이나, Tier Map상 최상위 포식자인 Google을 PE로, 파트너인 스타트업 Replit을 SE로 선정함."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": -1,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 2.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 8,
+        "T3": 8,
+        "Rationale": "업계 리더들의 구체적인 한계 지적과 '200분 자율 작동' 등 수치 언급."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "비교적 객관적인 현황 진단으로 노이즈가 적음."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 4,
+        "V3": 7,
+        "Rationale": "즉시 적용 가능한 기술보다는 전략적 방향성 제시에 가까움."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "균형 잡힌 인사이트 기사로 보정 없음."
+      }
+    }
+  },
+  "source_id": "venturebeat",
+  "original_title": "Even Google and Replit struggle to deploy AI agents reliably — here&apos;s why",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 7.0,
+        "T2": 8.0,
+        "T3": 8.0,
+        "S_Avg": 7.67
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 3.0,
+        "P3": 2.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 4.0,
+        "V3": 7.0,
+        "U_Avg": 5.67
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.66,
+      "ZS_Final": 5.7
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 8,
+        "T3": 8,
+        "Rationale": "업계 리더들의 구체적인 한계 지적과 '200분 자율 작동' 등 수치 언급."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "비교적 객관적인 현황 진단으로 노이즈가 적음."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 4,
+        "V3": 7,
+        "Rationale": "즉시 적용 가능한 기술보다는 전략적 방향성 제시에 가까움."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "균형 잡힌 인사이트 기사로 보정 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": -1.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 6.0,
+      "IS_Final": 6.0,
+      "Score_Commentary": "Tier 1(Google)과 Tier 4(Replit)가 공동으로 에이전트 시장의 기술적/문화적 한계를 지적하며 과도한 기대감(Hype)을 조정하는 기사다. 산업 전반의 패러다임(X3)에 대한 진단이나, 실질적인 솔루션보다는 현황 파악(Y3)에 그쳐 폭발적인 점수는 아니다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google Cloud",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Replit",
+      "Se_Tier": 4,
+      "PE/SE_Reason": "사건(컨퍼런스 발언)의 공동 주체이나, Tier Map상 최상위 포식자인 Google을 PE로, 파트너인 스타트업 Replit을 SE로 선정함."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 2.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "False"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-19T19:44:04.271172+00:00",
+  "edition": "251219_FRI_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-19T19:44:05.741092+00:00",
+  "category": "Engineering",
+  "dedup_status": "selected",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:35:52.210925+00:00"
+}

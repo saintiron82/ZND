@@ -1,0 +1,148 @@
+﻿{
+    "article_id":  "2b2c7b",
+    "author":  [
+                   "源?댁썝 湲곗옄"
+               ],
+    "cached_at":  "2025-12-19T18:04:18.298439+00:00",
+    "crawled_at":  "2025-12-19T19:35:59.778080+00:00",
+    "edition":  "251219_FRI_1",
+    "evidence":  {
+
+                 },
+    "image":  "https://cdn.aitimes.com/news/photo/202512/204935_206344_283.png",
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  1.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  1.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  0.5,
+                                                                     "Criticality_Total":  1.0,
+                                                                     "IE_Total":  1.5
+                                                                 },
+                                                 "IS_Raw":  2.5,
+                                                 "IS_Final":  2.5,
+                                                 "Score_Commentary":  "援?궡 湲곗뾽???섏긽 ?뚯떇. ?곗뾽???곹뼢?λ낫?ㅻ뒗 ?됱궗???댁뒪(X1)."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P6",
+                                               "Pe_Entity_Name":  "Hancom",
+                                               "Pe_Tier":  3,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "援?궡 二쇱슂 ?뚰봽?몄썾??湲곗뾽(T3)?쇰줈 ?섏긽 ?섑삙??"
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  1,
+                                                  "Y_Evidence_Code":  4,
+                                                  "Scope_Matrix_Score":  0.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0,
+                                                  "Criticality_Total":  1,
+                                                  "SOTA_Check_Result":  "False"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "impact_score":  2.5,
+    "modified_at":  "2025-12-19T17:50:00+09:00",
+    "original_title":  "[寃뚯떆?? ?쒖뺨쨌?쒖뺨?몄뒪?섏씠?? 怨쇨린遺 珥앸━???숈떆 ?섏긽 ???⑥떊",
+    "raw_analysis":  {
+                         "Article_ID":  "2b2c7b",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "?쒖뺨쨌?ы떚?щ쭏猷???援?궡 湲곗뾽 怨쇨린遺 ?κ????섏긽",
+                                      "Summary":  "?쒓?怨쇱뺨?⑦꽣, ?ы떚?щ쭏猷? ?섎━?ㅺ렇猷??깆씠 ?곗씠?걔룻겢?쇱슦???곗뾽 諛쒖쟾 ?좉났?쇰줈 怨쇨린遺 ?κ??곸쓣 ?섏긽?덈떎.",
+                                      "Tags":  [
+                                                   "Event",
+                                                   "Cloud"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "援?궡 湲곗뾽???섏긽 ?뚯떇. ?곗뾽???곹뼢?λ낫?ㅻ뒗 ?됱궗???댁뒪(X1).",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P6",
+                                                                                                     "Pe_Entity_Name":  "Hancom",
+                                                                                                     "Pe_Tier":  3,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "援?궡 二쇱슂 ?뚰봽?몄썾??湲곗뾽(T3)?쇰줈 ?섏긽 ?섑삙??"
+                                                                                                 },
+                                                                                      "Tier_Score":  1,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  1
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  1,
+                                                                                                     "Y_Evidence_Code":  4,
+                                                                                                     "Scope_Matrix_Score":  0.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0,
+                                                                                                     "Criticality_Total":  1,
+                                                                                                     "SOTA_Check_Result":  "False"
+                                                                                                 },
+                                                                                      "IE_Score":  1.5
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+
+                                             }
+                     },
+    "saved":  true,
+    "saved_at":  "2025-12-19T19:44:35.821372+00:00",
+    "schema_version":  "V1.0",
+    "source_id":  "venturebeat",
+    "status":  "ACCEPTED",
+    "summary":  "?쒓?怨쇱뺨?⑦꽣, ?ы떚?щ쭏猷? ?섎━?ㅺ렇猷??깆씠 ?곗씠?걔룻겢?쇱슦???곗뾽 諛쒖쟾 ?좉났?쇰줈 怨쇨린遺 ?κ??곸쓣 ?섏긽?덈떎.",
+    "text":  "(?ъ쭊=?쒓?怨쇱뺨?⑦꽣) ???쒓?怨쇱뺨?⑦꽣(???蹂?깆?쨌源?곗닔)? ?쒖뺨?몄뒪?섏씠?????理쒕챸吏????섏븘?쒖븘 AI ??곣숈뿉??遺珥앸━ 寃?怨쇳븰湲곗닠?뺣낫?듭떊遺 ?κ??곸쓣 ?섏긽?덈떎怨?諛앺삍?? ?쒓?怨쇱뺨?⑦꽣???쁀I媛 ?쎌쓣 ???덈뒗 ?꾨옒?꾪븳湲??臾몄꽌 湲곗닠濡?AI ?곗씠??湲곕컲??留덈젴?덈떎??怨듬줈媛 ?몄젙?먮떎. ?쒖뺨?몄뒪?섏씠?ㅻ뒗 ?꾩꽦怨??쒕줎, 吏???쇱꽌 ?깆쓽 ?곗씠?곕? ?섏쭛쨌遺꾩꽍?섎뒗 硫?곗씤?붾━?꾩뒪 湲곗닠??????꾩꽦?꾨? ?뺤씤??寃곌낵?쇨퀬 ?꾪뻽?? ???앹꽦 AI ?꾨Ц ?ы떚?щ쭏猷????源?숉솚)????025 ?곗씠?겸닕?대씪?곕뱶 ?곗뾽 吏꾪씎 ?좉났???쒖갹 ?쒖긽?앪숈뿉??怨쇳븰湲곗닠?뺣낫?듭떊遺 ?κ? ?쒖갹???섏긽?덈떎怨?諛앺삍?? ?섎룄?먯뿉?댁쟾??2?숈? ?섏궗?댄듃踰꾨땲?숇줈 ??쒕릺???꾨찓???뱁솕 寃쎈웾??嫄곕??몄뼱紐⑤뜽(LLM42)怨?寃??利앷컯 ?앹꽦(RAG42) ?깆쓣 ?쒕퉬?ㅽ삎 ?뚰봽?몄썾??SaaS)濡?蹂닿툒?섎ŉ 湲곗뾽?ㅼ씠 ?먯돺寃?AI瑜??꾩엯?????덈뒗 ?섍꼍??議곗꽦???먯씠 ?믪? ?됯?瑜?諛쏆븯?? ??AI ?꾨Ц ?섎━?ㅺ렇猷????源?ъ썝)? ??025 ?곗씠?겸닕?대씪?곕뱶 ?곗뾽 吏꾪씎 ?좉났???쒖갹 ?쒖긽?앪숈뿉???대씪?곕뱶 ?곗뾽諛쒖쟾 ?좉났 遺臾?怨쇳븰湲곗닠?뺣낫?듭떊遺 ?κ? ?쒖갹???섏긽?덈떎. 援?궡 理쒖큹 ?섎옲??B200 湲곕컲 AI ?곗씠?곗꽱?곕? 援ъ텞?섍퀬 ?먯껜 AI ?대씪?곕뱶 ?명봽?쇰줈 GPU ?먯썝???덉젙?곸쑝濡??ъ슜?????덈뒗 ?섍꼍???곗뾽 ?꾨컲???뺤궛???먯쓣 ?몄젙 諛쏆븯?ㅺ퀬 ?꾪뻽?? ???곗씠???뚰겕 ?꾨Ц 鍮낅갭瑜????援щ쫫쨌?대퀝??????025 踰ㅼ쿂李쎌뾽吏꾪씎 ?좉났 ?ъ긽 ?쒖긽?앪숈뿉??踰ㅼ쿂 ?쒖꽦??遺꾩빞 以묒냼踰ㅼ쿂湲곗뾽遺?κ? ?쒖갹???섏긽?덈떎怨?諛앺삍?? 吏??4?꾧컙 留ㅼ텧 840% ?깆옣, 泥?뀈 怨좎슜 380% 利앷?濡?踰ㅼ쿂 ?앺깭怨??쒖꽦?붿뿉 湲곗뿬?덈떎???ㅻ챸?대떎. 源?댁썝 湲곗옄 hwkim@aitimes.com",
+    "title":  "[寃뚯떆?? ?쒖뺨쨌?쒖뺨?몄뒪?섏씠?? 怨쇨린遺 珥앸━???숈떆 ?섏긽 ???⑥떊",
+    "url":  "https://www.aitimes.com/news/articleView.html?idxno=204935",
+    "zero_echo_score":  5.0,
+    "title_ko":  "?쒖뺨쨌?ы떚?щ쭏猷???援?궡 湲곗뾽 怨쇨린遺 ?κ????섏긽",
+    "tags":  [
+
+             ],
+    "IS_Analysis":  {
+                        "Score_Commentary":  "援?궡 湲곗뾽???섏긽 ?뚯떇. ?곗뾽???곹뼢?λ낫?ㅻ뒗 ?됱궗???댁뒪(X1).",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P6",
+                                                                                "Pe_Entity_Name":  "Hancom",
+                                                                                "Pe_Tier":  3,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "援?궡 二쇱슂 ?뚰봽?몄썾??湲곗뾽(T3)?쇰줈 ?섏긽 ?섑삙??"
+                                                                            },
+                                                                 "Tier_Score":  1,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  1
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  1,
+                                                                                "Y_Evidence_Code":  4,
+                                                                                "Scope_Matrix_Score":  0.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0,
+                                                                                "Criticality_Total":  1,
+                                                                                "SOTA_Check_Result":  "False"
+                                                                            },
+                                                                 "IE_Score":  1.5
+                                                             }
+                                         }
+                    },
+    "ZES_Raw_Metrics":  {
+
+                        },
+    "category":  "Community",
+    "dedup_status":  "selected",
+    "data_file":  "venturebeat_2b2c7b.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:52.621275+00:00"
+}

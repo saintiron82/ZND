@@ -1,0 +1,188 @@
+{
+  "article_id": "707363",
+  "cached_at": "2025-12-19T18:10:27.145903+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/openai_science_logo.jpeg",
+  "summary": "OpenAI가 올림피아드 및 박사급 연구 문제를 포함한 새로운 벤치마크 'FrontierScience'를 공개했다. 테스트 결과 GPT-5.2가 올림피아드 문제에서 77%로 1위를 차지했으나, 개방형 연구 과제에서는 25%에 그쳐 여전히 한계를 보였다. 구글의 Gemini 3 Pro가 근소한 차이로 뒤따랐으며, AI의 과학 연구 활용 가능성과 위험성이 동시에 제기되었다.",
+  "text": "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. Content Summary OpenAI's new FrontierScience benchmark tests AI models at Olympiad and research levels. GPT-5.2 comes out on top, but the results also reveal where current systems still fall short. Ad OpenAI says existing scientific benchmarks are running out of headroom. When the company released GPQA—a \"Google-proof\" multiple-choice test for PhD-level science questions—in November 2023, GPT-4 scored 39 percent. Two years later, GPT-5.2 hits 92 percent. That rapid improvement, the company says, calls for tougher evaluation methods. Enter FrontierScience, a two-part benchmark: an Olympiad set with problems at the level of international science competitions, and a research set with open-ended PhD-level challenges. The published Gold set contains 160 questions on physics, chemistry, and biology, filtered down from over 700 original problems. OpenAI is holding back the rest to check for potential contamination. Olympic medalists and researchers designed the questions The 100 Olympiad questions were created by 42 former international medalists or national coaches who have collectively won 108 Olympic medals. The problems draw from the International Physics Olympiad, International Chemistry Olympiad, and International Biology Olympiad. Every answer can be verified as a single number, algebraic expression, or unique term. Ad Ad THE DECODER Newsletter The most important AI news straight to your inbox. ✓ Weekly ✓ Free ✓ Cancel at any time Please leave this field empty The 60 research questions come from 45 scientists with expertise spanning quantum mechanics, molecular biology, and photochemistry. OpenAI says each task should take at least three to five hours to solve. Instead of a single correct answer, research tasks are scored on a ten-point rubric, with GPT-5 handling the automated grading at high reasoning intensity. GPT-5.2 leads, but research tasks remain tough All reasoning models were tested at \"high\" reasoning intensity, with GPT-5.2 also tested at \"xhigh\" - and without browsing enabled. GPT-5.2 scores 77 percent on the Olympiad set and 25 percent on Research. Gemini 3 Pro trails close behind on Olympiad at 76 percent. On Research, GPT-5.2 and GPT-5 tie for first place, and in a \"surprising\" (OpenAI) twist, GPT-5 significantly outperforms the newer GPT-5.1, which manages just about 19 percent. Claude Opus 4.5 hits 71 percent on Olympiad and 18 percent on Research. Grok 4 scores 66.2 percent and 16 percent respectively. The older GPT-4o lags far behind at 12 percent on Olympiad and under one percent on Research. OpenAI's first reasoning model o1, released last September, marked a major leap forward. Share Recommend our article Share More compute means better results Performance scales with compute time. GPT-5.2 jumps from 67.5 percent at low reasoning intensity to 77 percent at the highest setting on the Olympiad set. On Research, scores climb from 18 to 25 percent. OpenAI's o3 model bucks the trend on Research: it actually does slightly worse at high reasoning intensity than at medium. The company calls this \"surprising\" but doesn't explain why. OpenAI says the results show real progress on expert-level questions but leave plenty of room for improvement, especially on open research tasks. Across subjects, models do best in chemistry. Common failure modes include logic errors, trouble with niche concepts, calculation mistakes, and factual errors. Language models are getting better at working with numbers Recent months have brought multiple reports of AI speeding up research. OpenAI released \"GPT-5 Science Acceleration,\" a collection of case studies showing mathematicians getting help with proofs, physicists with symmetry analysis, and immunologists with hypotheses and experimental design. Physicist Steve Hsu published a paper whose central idea came from GPT-5. He sees this as the start of \"hybrid human-AI collaborations\" that could become standard in math, physics, and other formal sciences. The result has also drawn criticism. OpenAI has announced plans to build autonomous research agents by 2028 that could fundamentally speed up scientific discovery. Google DeepMind and OpenAI also showed in 2025 that AI models with advanced reasoning and reinforcement learning can increasingly solve complex math problems on their own for hours without symbolic aids. Mathematician Terence Tao has said AI helped him solve problems too. At the same time, experts warn of risks: uncritical use of AI in science could churn out large volumes of plausible-sounding but wrong results. Ad",
+  "title": "GPT-5.2 tops OpenAI's new FrontierScience test but struggles with real research problems",
+  "url": "https://the-decoder.com/gpt-5-2-tops-openais-new-frontierscience-test-but-struggles-with-real-research-problems/",
+  "title_ko": "GPT-5.2, OpenAI의 새로운 프론티어 사이언스 벤치마크 1위 달성했으나 심층 연구 과제엔 한계",
+  "tags": [],
+  "impact_score": 7.5,
+  "IS_Analysis": {
+    "Score_Commentary": "새로운 산업 표준(Benchmark) 제시 및 SOTA 모델 성능 검증. Industry Scope의 변화를 이끄는 사건. 경쟁사(Gemini)와의 비교가 있으나 일방적 벤치마크이므로 SE는 None 처리.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "벤치마크 개발 및 모델 테스트 주체. 경쟁사 언급은 비교 대상일 뿐 분쟁 아님."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "zero_echo_score": 8.5,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "Rationale": "벤치마크 구성(문항 수, 출제자), 모델별 점수 비교 데이터 풍부"
+    },
+    "Utility": {
+      "V3": 7,
+      "Rationale": "최신 모델의 한계점(연구 과제 25%)을 명확히 드러냄"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "707363",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "GPT-5.2, OpenAI의 새로운 프론티어 사이언스 벤치마크 1위 달성했으나 심층 연구 과제엔 한계",
+      "Summary": "OpenAI가 올림피아드 및 박사급 연구 문제를 포함한 새로운 벤치마크 'FrontierScience'를 공개했다. 테스트 결과 GPT-5.2가 올림피아드 문제에서 77%로 1위를 차지했으나, 개방형 연구 과제에서는 25%에 그쳐 여전히 한계를 보였다. 구글의 Gemini 3 Pro가 근소한 차이로 뒤따랐으며, AI의 과학 연구 활용 가능성과 위험성이 동시에 제기되었다.",
+      "Tags": [
+        "OpenAI",
+        "Benchmark",
+        "GPT"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "새로운 산업 표준(Benchmark) 제시 및 SOTA 모델 성능 검증. Industry Scope의 변화를 이끄는 사건. 경쟁사(Gemini)와의 비교가 있으나 일방적 벤치마크이므로 SE는 None 처리.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "벤치마크 개발 및 모델 테스트 주체. 경쟁사 언급은 비교 대상일 뿐 분쟁 아님."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "Rationale": "벤치마크 구성(문항 수, 출제자), 모델별 점수 비교 데이터 풍부"
+      },
+      "Utility": {
+        "V3": 7,
+        "Rationale": "최신 모델의 한계점(연구 과제 25%)을 명확히 드러냄"
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "GPT-5.2 tops OpenAI's new FrontierScience test but struggles with real research problems",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 0.0,
+        "T3": 0.0,
+        "S_Avg": 3.0
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 0.0,
+        "V2": 0.0,
+        "V3": 7.0,
+        "U_Avg": 2.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.48,
+      "ZS_Final": 8.5
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "Rationale": "벤치마크 구성(문항 수, 출제자), 모델별 점수 비교 데이터 풍부"
+      },
+      "Utility": {
+        "V3": 7,
+        "Rationale": "최신 모델의 한계점(연구 과제 25%)을 명확히 드러냄"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 7.5,
+      "IS_Final": 7.5,
+      "Score_Commentary": "새로운 산업 표준(Benchmark) 제시 및 SOTA 모델 성능 검증. Industry Scope의 변화를 이끄는 사건. 경쟁사(Gemini)와의 비교가 있으나 일방적 벤치마크이므로 SE는 None 처리."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "벤치마크 개발 및 모델 테스트 주체. 경쟁사 언급은 비교 대상일 뿐 분쟁 아님."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    },
+    "schema_version": "V1.0"
+  },
+  "crawled_at": "2025-12-19T20:00:30.291237+00:00",
+  "edition": "251219_FRI_1",
+  "status": "ACCEPTED",
+  "saved": true,
+  "saved_at": "2025-12-19T20:00:30.556396+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:35:55.366843+00:00"
+}

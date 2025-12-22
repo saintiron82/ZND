@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import CategoryNav from './CategoryNav';
 
@@ -32,6 +34,19 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
         <header
             className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-4 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
         >
+            {/* 좌측 상단 로고 */}
+            <Link href="/" className="absolute left-4 top-2">
+                <Image
+                    src="/logo.png"
+                    alt="ZED"
+                    width={160}
+                    height={160}
+                    className="object-contain"
+                    style={{ width: 'auto', height: 'auto', maxHeight: '100px' }}
+                    priority
+                />
+            </Link>
+
             {/* 테마 토글 버튼 - 우측 상단 고정 */}
             <div className="absolute right-4 top-4">
                 <ThemeToggle />

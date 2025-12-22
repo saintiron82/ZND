@@ -88,8 +88,18 @@ def desk_publish_selected():
         # 2. Process Articles
         published_count = 0
         failed_count = 0
+        skipped_count = 0  # [NEW] 이미 발행된 기사 스킵 카운터
+        skipped_articles = []  # [NEW] 스킵된 기사 ID 목록
         published_article_ids = []       # DB용: ID만 저장
         published_articles_detail = []   # 로컬 인덱스용: 상세 정보
+        
+        # [NEW] Firebase에서 이미 발행된 article_ids 조회
+        already_published_ids = set()
+        try:
+            from src.published_articles import get_published_article_ids, invalidate_cache
+            already_published_ids = get_published_article_ids(force_refresh=True)
+        except Exception as e:
+            print(f"⚠️ [Publish] Failed to load published IDs: {e}")
         
         for filename in filenames:
             filepath = os.path.join(cache_date_dir, filename)
@@ -106,6 +116,14 @@ def desk_publish_selected():
             try:
                 with open(filepath, 'r', encoding='utf-8') as f:
                     staging_data = json.load(f)
+                
+                # [NEW] 이미 발행된 기사인지 확인
+                article_id = staging_data.get('article_id', '')
+                if article_id and article_id in already_published_ids:
+                    skipped_count += 1
+                    skipped_articles.append(article_id)
+                    print(f"⏭️ [Publish] Skipped (already published): {article_id}")
+                    continue
                 
                 staging_data['publish_id'] = publish_id
                 staging_data['edition_code'] = edition_code
@@ -179,13 +197,26 @@ def desk_publish_selected():
             'updated_at': datetime.now(timezone.utc).isoformat()
         })
         
+        # [NEW] 발행 후 캐시 무효화
+        try:
+            invalidate_cache()
+        except Exception as e:
+            print(f"⚠️ [Publish] Cache invalidation failed: {e}")
+        
+        # 응답 메시지 구성
+        message = f'{published_count}개 기사 발행 완료 ({edition_name})'
+        if skipped_count > 0:
+            message += f' / {skipped_count}개 중복 스킵'
+        
         return jsonify({
             'success': True,
             'published': published_count,
             'failed': failed_count,
+            'skipped': skipped_count,
+            'skipped_articles': skipped_articles,
             'publish_id': publish_id,
             'edition_name': edition_name,
-            'message': f'{published_count}개 기사 발행 완료 ({edition_name})'
+            'message': message
         })
     except Exception as e:
         print(f"❌ [Publish] Error: {e}")

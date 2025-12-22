@@ -1,0 +1,190 @@
+﻿{
+    "article_id":  "736ed0",
+    "cached_at":  "2025-12-19T18:10:27.144902+00:00",
+    "image":  "https://the-decoder.com/wp-content/uploads/2025/11/anthropic_opus_45.png",
+    "summary":  "?ㅼ뒪濡쒗뵿???쒕줈 ?ㅻⅨ AI ?뚮옯??媛?湲곕뒫???명솚?섍쾶 ?섎뒗 \u0027Agent Skills\u0027瑜??ㅽ뵂 ?쒖??쇰줈 怨듦컻?덈떎. ?대뒗 Claude?먯꽌 ?묐룞?섎뒗 湲곕뒫???ㅻⅨ AI ?쒖뒪?쒖뿉?쒕룄 ?ъ슜?????덇쾶 ?섎뒗 寃껋쓣 紐⑺몴濡??섎ŉ, OpenAI ???뚰듃?덈뱾怨??묐젰 以묒씠?? 湲곗뾽 愿由ъ옄??以묒븰?먯꽌 湲곗닠??諛고룷 諛?愿由ы븷 ???덇쾶 ?섏뿀??",
+    "text":  "Matthias is the co-founder and publisher of THE DECODER, exploring how AI is fundamentally changing the relationship between humans and computers. Anthropic is releasing \"Agent Skills\" as an open standard at agentskills.io. The idea is to make these skills interoperable across different platforms, meaning a capability that works in Claude should function just as well in other AI systems. Anthropic likens this strategy to the Model Context Protocol (MCP) and notes that it is already working with ecosystem partners on the project. OpenAI already adopted skills. Ad The company is also upgrading how skills function within Claude. These skills are basically repeatable workflows that customize the AI assistant for specific jobs. Administrators on Team and Enterprise plans can now manage skills from a central hub and push them to every user in their organization, though individuals still have the option to turn them off. External media content (www.youtube.com) has been blocked here. When loading or playing, connections are established to the servers of the respective providers. Personal data may be communicated to the providers in the process. You can find more information in our privacy policy. Allow external media content Creating these skills has also gotten easier: users just describe what they need, and Claude helps configure it. Anthropic has also launched a directory of partner skills from companies like Notion, Canva, Figma, and Atlassian at claude.com/connectors. Developers can find technical documentation at platform.claude.com/docs, and skills are now live across Claude apps, Claude Code, and the developer API. Ad",
+    "title":  "Anthropic publishes Agent Skills as an open standard for AI platforms",
+    "url":  "https://the-decoder.com/anthropic-publishes-agent-skills-as-an-open-standard-for-ai-platforms/",
+    "title_ko":  "?ㅼ뒪濡쒗뵿, AI ?뚮옯???곹샇?댁슜?깆쓣 ?꾪븳 \u0027Agent Skills\u0027 ?ㅽ뵂 ?쒖? 怨듦컻",
+    "tags":  [
+
+             ],
+    "impact_score":  6.0,
+    "IS_Analysis":  {
+                        "Score_Commentary":  "?뱀젙 湲곗뾽???쒗뭹???섏뼱 ?곗뾽 ?쒖?(Standard)???쒖븞?섎뒗 ?吏곸엫?쇰줈 Industry Scope???대떦. ?ㅼ젣 API 諛??깆뿉 ?곸슜(Availability)???곹깭?? ?앺깭怨??뺤옣?깆뿉 湲곗뿬.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "Anthropic",
+                                                                                "Pe_Tier":  2,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "?쒖? 怨듦컻 諛??앺깭怨?議곗꽦??二쇱껜."
+                                                                            },
+                                                                 "Tier_Score":  2,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  2
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  3,
+                                                                                "Y_Evidence_Code":  3,
+                                                                                "Scope_Matrix_Score":  2.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "False"
+                                                                            },
+                                                                 "IE_Score":  4
+                                                             }
+                                         }
+                    },
+    "zero_echo_score":  8.4,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T2":  7,
+                                           "Rationale":  "?쒖????묐룞 ?먮━ 諛??곸슜 踰붿쐞 ?ㅻ챸"
+                                       },
+                            "Utility":  {
+                                            "V1":  8,
+                                            "Rationale":  "?뚮옯??媛??명솚?깆? 媛쒕컻 ?앺깭怨꾩뿉 ???곹뼢"
+                                        }
+                        },
+    "schema_version":  "V1.0",
+    "raw_analysis":  {
+                         "Article_ID":  "736ed0",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "?ㅼ뒪濡쒗뵿, AI ?뚮옯???곹샇?댁슜?깆쓣 ?꾪븳 \u0027Agent Skills\u0027 ?ㅽ뵂 ?쒖? 怨듦컻",
+                                      "Summary":  "?ㅼ뒪濡쒗뵿???쒕줈 ?ㅻⅨ AI ?뚮옯??媛?湲곕뒫???명솚?섍쾶 ?섎뒗 \u0027Agent Skills\u0027瑜??ㅽ뵂 ?쒖??쇰줈 怨듦컻?덈떎. ?대뒗 Claude?먯꽌 ?묐룞?섎뒗 湲곕뒫???ㅻⅨ AI ?쒖뒪?쒖뿉?쒕룄 ?ъ슜?????덇쾶 ?섎뒗 寃껋쓣 紐⑺몴濡??섎ŉ, OpenAI ???뚰듃?덈뱾怨??묐젰 以묒씠?? 湲곗뾽 愿由ъ옄??以묒븰?먯꽌 湲곗닠??諛고룷 諛?愿由ы븷 ???덇쾶 ?섏뿀??",
+                                      "Tags":  [
+                                                   "Anthropic",
+                                                   "Open Source",
+                                                   "Agent"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "?뱀젙 湲곗뾽???쒗뭹???섏뼱 ?곗뾽 ?쒖?(Standard)???쒖븞?섎뒗 ?吏곸엫?쇰줈 Industry Scope???대떦. ?ㅼ젣 API 諛??깆뿉 ?곸슜(Availability)???곹깭?? ?앺깭怨??뺤옣?깆뿉 湲곗뿬.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "Anthropic",
+                                                                                                     "Pe_Tier":  2,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "?쒖? 怨듦컻 諛??앺깭怨?議곗꽦??二쇱껜."
+                                                                                                 },
+                                                                                      "Tier_Score":  2,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  2
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  3,
+                                                                                                     "Y_Evidence_Code":  3,
+                                                                                                     "Scope_Matrix_Score":  2.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "False"
+                                                                                                 },
+                                                                                      "IE_Score":  4
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T2":  7,
+                                                                "Rationale":  "?쒖????묐룞 ?먮━ 諛??곸슜 踰붿쐞 ?ㅻ챸"
+                                                            },
+                                                 "Utility":  {
+                                                                 "V1":  8,
+                                                                 "Rationale":  "?뚮옯??媛??명솚?깆? 媛쒕컻 ?앺깭怨꾩뿉 ???곹뼢"
+                                                             }
+                                             }
+                     },
+    "source_id":  "the_decoder",
+    "original_title":  "Anthropic publishes Agent Skills as an open standard for AI platforms",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  0.0,
+                                                      "T2":  7.0,
+                                                      "T3":  0.0,
+                                                      "S_Avg":  2.33
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  0.0,
+                                                     "P2":  0.0,
+                                                     "P3":  0.0,
+                                                     "N_Avg":  0.0
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  8.0,
+                                                       "V2":  0.0,
+                                                       "V3":  0.0,
+                                                       "U_Avg":  2.67
+                                                   },
+                                       "Fine_Adjustment":  0.0,
+                                       "ZS_Raw":  8.36,
+                                       "ZS_Final":  8.4
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T2":  7,
+                                                        "Rationale":  "?쒖????묐룞 ?먮━ 諛??곸슜 踰붿쐞 ?ㅻ챸"
+                                                    },
+                                         "Utility":  {
+                                                         "V1":  8,
+                                                         "Rationale":  "?뚮옯??媛??명솚?깆? 媛쒕컻 ?앺깭怨꾩뿉 ???곹뼢"
+                                                     }
+                                     }
+                 },
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  2.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  2.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  2.5,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  4.0
+                                                                 },
+                                                 "IS_Raw":  6.0,
+                                                 "IS_Final":  6.0,
+                                                 "Score_Commentary":  "?뱀젙 湲곗뾽???쒗뭹???섏뼱 ?곗뾽 ?쒖?(Standard)???쒖븞?섎뒗 ?吏곸엫?쇰줈 Industry Scope???대떦. ?ㅼ젣 API 諛??깆뿉 ?곸슜(Availability)???곹깭?? ?앺깭怨??뺤옣?깆뿉 湲곗뿬."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "Anthropic",
+                                               "Pe_Tier":  2,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "?쒖? 怨듦컻 諛??앺깭怨?議곗꽦??二쇱껜."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  3,
+                                                  "Y_Evidence_Code":  3,
+                                                  "Scope_Matrix_Score":  2.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "False"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "crawled_at":  "2025-12-19T20:00:30.030321+00:00",
+    "edition":  "251219_FRI_1",
+    "status":  "ACCEPTED",
+    "saved":  true,
+    "saved_at":  "2025-12-19T20:00:30.284479+00:00",
+    "dedup_status":  "duplicate",
+    "data_file":  "the_decoder_736ed0.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:55.738371+00:00"
+}

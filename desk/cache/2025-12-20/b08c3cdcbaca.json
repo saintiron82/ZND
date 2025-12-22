@@ -1,0 +1,230 @@
+﻿{
+    "article_id":  "b08c3c",
+    "cached_at":  "2025-12-20T19:03:28.005825+00:00",
+    "image":  "https://the-decoder.com/wp-content/uploads/2025/12/AI-Generated-Banner-Ad-Nano-Banana-Pro.jpeg",
+    "summary":  "NYU? Emory ??숈쓽 ?곌뎄???곕Ⅴ硫? ?꾩쟾??AI濡??앹꽦??愿묎퀬???대┃瑜?CTR)??19% ?믪씠吏留? ?멸컙???묒뾽臾쇱쓣 AI濡??섏젙??愿묎퀬???깃낵媛 ?議고뻽?? ?뱁엳 EU AI 踰뺤븞 ??洹쒖젣 以?섎? ?꾪빐 \u0027AI ?앹꽦\u0027 ?쇰꺼??遺李⑺븷 寃쎌슦 ?대┃瑜좎씠 31.5% 湲됰씫?섎뒗 寃껋쑝濡??섑??щ떎. ?대뒗 ?щ챸?깃낵 留덉????깃낵 媛꾩쓽 異⑸룎???쒖궗?섎ŉ, 留덉????꾨왂???섏젙(Modify)???꾨땶 珥덇린 ?앹꽦(Create) 以묒떖?쇰줈 媛???⑥쓣 ?쒖븞?쒕떎.",
+    "text":  "Ask about this article??Search A new study from researchers at NYU and Emory University shows a stark divide in AI marketing performance. While ads created entirely by AI significantly boost click-through rates, attempts to merely tweak human work with AI fall flat. Most strikingly, labeling ads as AI-generated causes performance to plummet. The findings highlight a major gap between two approaches: ads built from scratch by AI (\"Gen AI created\") perform much better than those where AI simply edits existing human designs (\"Gen AI modified\"). In a field study on the Google Display Network (GDN), fully AI-generated ads achieved a 19 percent higher click-through rate (CTR) than the human control group. The GDN places banner ads across millions of websites, apps, and videos based on context. Ad By contrast, AI-modified ads?봴sing features like inpainting to change backgrounds or faces?봣ailed to show improvements and sometimes performed worse. Ad DEC_D_Incontent-1 Creative freedom drives results The researchers trace this back to \"output constraints.\" While text AI often works better when editing existing copy, visual AI is the opposite. When modifying existing images, the model must adhere to strict guidelines. The study shows that such AI-modified ads are perceived by consumers as less realistic. This reduced realism has a negative impact on purchase intent. Ad If, on the other hand, the AI is generated from scratch, it can freely design visual dimensions such as composition, color, style and perspective. The analysis shows that such fully generated ads are easy to grasp at a glance and evoke stronger emotional engagement. The effect becomes stronger when the AI also creates the product packaging design. In the experiments, the combination of AI-generated ad and AI-designed packaging achieved the best values for purchase intent and click-through rate. This suggests that visual AI is most effective when it holistically designs new advertising media, including packaging. Ad DEC_D_Incontent-2 Transparency labels kill clicks The study\u0027s second major finding could have an even bigger impact on AI use in marketing. With the EU AI Act requiring clear markings for AI content, the authors tested how these labels actually affect performance. Ad The results reveal a direct conflict between transparency and sales: when ads were openly labeled as \"AI-generated\" or \"AI-edited,\" performance tanked. In the field test, disclosing AI involvement dropped the click-through rate by about 31.5 percent compared to unlabeled human ads. Even with identical images, simply knowing AI created them caused consumers to rate the ads lower. These findings suggest marketing teams should use visual AI early on to generate complete concepts, rather than using it to fix human designs later. Last year, OpenAI outlined a vision of \"AI First\" marketing that extends far beyond content creation. The company sees new models as more than just tools for routine work, viewing them as strategic partners capable of complex analysis and long-term planning.",
+    "title":  "Telling consumers an ad is AI-generated cuts clicks by 31 percent, study finds",
+    "url":  "https://the-decoder.com/telling-consumers-an-ad-is-ai-generated-cuts-clicks-by-31-percent-study-finds/",
+    "title_ko":  "?뚮퉬?먯뿉寃?AI ?앹꽦 愿묎퀬?꾩쓣 ?뚮━硫??대┃瑜?31% 媛먯냼, ?곌뎄 寃곌낵",
+    "tags":  [
+
+             ],
+    "impact_score":  3.5,
+    "IS_Analysis":  {
+                        "Score_Commentary":  "?숆퀎(NYU/Emory)???곌뎄濡? AI 留덉????⑥쑉?깃낵 洹쒖젣(?쇰꺼留? 媛꾩쓽 ??꽕???뺣웾?곸쑝濡??낆쬆?? 湲곗뾽???꾨왂 ?섎┰??以묒슂???몄궗?댄듃瑜??쒓났?섎굹, ?곌뎄 諛쒗몴 ?먯껜媛 ?곗뾽 援ъ“瑜?利됱떆 蹂寃쏀븯??臾쇰━???ш굔? ?꾨떂.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "NYU \u0026 Emory University",
+                                                                                "Pe_Tier":  2,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "?곌뎄瑜?吏곸젒 ?섑뻾?섍퀬 諛쒗몴??二쇱껜????숇뱾??PE濡??좎젙(Academic Research Tier 2 ?곸슜). ?뱀젙 湲곗뾽??怨듦꺽?섍굅???묐젰?섎뒗 援ъ“媛 ?꾨땲誘濡?SE??None."
+                                                                            },
+                                                                 "Tier_Score":  2,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  2
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  1,
+                                                                                "Y_Evidence_Code":  4,
+                                                                                "Scope_Matrix_Score":  0,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "False"
+                                                                            },
+                                                                 "IE_Score":  1.5
+                                                             }
+                                         }
+                    },
+    "zero_echo_score":  3.6,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  9,
+                                           "T2":  7,
+                                           "T3":  9,
+                                           "Rationale":  "31.5%, 19% ??援ъ껜?곸씤 ?議곌뎔 ?ㅽ뿕 ?섏튂? EU AI Act ?곌퀎?깆씠 紐낇솗??"
+                                       },
+                            "Noise":  {
+                                          "P1":  1,
+                                          "P2":  0,
+                                          "P3":  1,
+                                          "Rationale":  "?곌뎄 寃곌낵 以묒떖??媛앷????쒖닠."
+                                      },
+                            "Utility":  {
+                                            "V1":  5,
+                                            "V2":  8,
+                                            "V3":  7,
+                                            "Rationale":  "留덉????ㅻТ?먯뿉寃?利됯컖?곸씤 ?꾨왂 ?섏젙 洹쇨굅瑜??쒓났?섎뒗 ?믪? ?⑥슜??"
+                                        },
+                            "Fine_Adjustment":  {
+                                                    "Score":  0.5,
+                                                    "Reason":  "洹쒖젣? ?섏씡???ъ씠???쒕젅留덈? 援ъ껜???レ옄濡?利앸챸??怨좏뭹吏?由ы룷??"
+                                                }
+                        },
+    "schema_version":  "V1.0",
+    "raw_analysis":  {
+                         "Article_ID":  "b08c3c",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "?뚮퉬?먯뿉寃?AI ?앹꽦 愿묎퀬?꾩쓣 ?뚮━硫??대┃瑜?31% 媛먯냼, ?곌뎄 寃곌낵",
+                                      "Summary":  "NYU? Emory ??숈쓽 ?곌뎄???곕Ⅴ硫? ?꾩쟾??AI濡??앹꽦??愿묎퀬???대┃瑜?CTR)??19% ?믪씠吏留? ?멸컙???묒뾽臾쇱쓣 AI濡??섏젙??愿묎퀬???깃낵媛 ?議고뻽?? ?뱁엳 EU AI 踰뺤븞 ??洹쒖젣 以?섎? ?꾪빐 \u0027AI ?앹꽦\u0027 ?쇰꺼??遺李⑺븷 寃쎌슦 ?대┃瑜좎씠 31.5% 湲됰씫?섎뒗 寃껋쑝濡??섑??щ떎. ?대뒗 ?щ챸?깃낵 留덉????깃낵 媛꾩쓽 異⑸룎???쒖궗?섎ŉ, 留덉????꾨왂???섏젙(Modify)???꾨땶 珥덇린 ?앹꽦(Create) 以묒떖?쇰줈 媛???⑥쓣 ?쒖븞?쒕떎.",
+                                      "Tags":  [
+                                                   "Marketing",
+                                                   "Regulation",
+                                                   "Research"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "?숆퀎(NYU/Emory)???곌뎄濡? AI 留덉????⑥쑉?깃낵 洹쒖젣(?쇰꺼留? 媛꾩쓽 ??꽕???뺣웾?곸쑝濡??낆쬆?? 湲곗뾽???꾨왂 ?섎┰??以묒슂???몄궗?댄듃瑜??쒓났?섎굹, ?곌뎄 諛쒗몴 ?먯껜媛 ?곗뾽 援ъ“瑜?利됱떆 蹂寃쏀븯??臾쇰━???ш굔? ?꾨떂.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "NYU \u0026 Emory University",
+                                                                                                     "Pe_Tier":  2,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "?곌뎄瑜?吏곸젒 ?섑뻾?섍퀬 諛쒗몴??二쇱껜????숇뱾??PE濡??좎젙(Academic Research Tier 2 ?곸슜). ?뱀젙 湲곗뾽??怨듦꺽?섍굅???묐젰?섎뒗 援ъ“媛 ?꾨땲誘濡?SE??None."
+                                                                                                 },
+                                                                                      "Tier_Score":  2,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  2
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  1,
+                                                                                                     "Y_Evidence_Code":  4,
+                                                                                                     "Scope_Matrix_Score":  0,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "False"
+                                                                                                 },
+                                                                                      "IE_Score":  1.5
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  9,
+                                                                "T2":  7,
+                                                                "T3":  9,
+                                                                "Rationale":  "31.5%, 19% ??援ъ껜?곸씤 ?議곌뎔 ?ㅽ뿕 ?섏튂? EU AI Act ?곌퀎?깆씠 紐낇솗??"
+                                                            },
+                                                 "Noise":  {
+                                                               "P1":  1,
+                                                               "P2":  0,
+                                                               "P3":  1,
+                                                               "Rationale":  "?곌뎄 寃곌낵 以묒떖??媛앷????쒖닠."
+                                                           },
+                                                 "Utility":  {
+                                                                 "V1":  5,
+                                                                 "V2":  8,
+                                                                 "V3":  7,
+                                                                 "Rationale":  "留덉????ㅻТ?먯뿉寃?利됯컖?곸씤 ?꾨왂 ?섏젙 洹쇨굅瑜??쒓났?섎뒗 ?믪? ?⑥슜??"
+                                                             },
+                                                 "Fine_Adjustment":  {
+                                                                         "Score":  0.5,
+                                                                         "Reason":  "洹쒖젣? ?섏씡???ъ씠???쒕젅留덈? 援ъ껜???レ옄濡?利앸챸??怨좏뭹吏?由ы룷??"
+                                                                     }
+                                             }
+                     },
+    "source_id":  "the_decoder",
+    "original_title":  "Telling consumers an ad is AI-generated cuts clicks by 31 percent, study finds",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  9.0,
+                                                      "T2":  7.0,
+                                                      "T3":  9.0,
+                                                      "S_Avg":  8.33
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  1.0,
+                                                     "P2":  0.0,
+                                                     "P3":  1.0,
+                                                     "N_Avg":  0.67
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  5.0,
+                                                       "V2":  8.0,
+                                                       "V3":  7.0,
+                                                       "U_Avg":  6.67
+                                                   },
+                                       "Fine_Adjustment":  0.5,
+                                       "ZS_Raw":  3.61,
+                                       "ZS_Final":  3.6
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  9,
+                                                        "T2":  7,
+                                                        "T3":  9,
+                                                        "Rationale":  "31.5%, 19% ??援ъ껜?곸씤 ?議곌뎔 ?ㅽ뿕 ?섏튂? EU AI Act ?곌퀎?깆씠 紐낇솗??"
+                                                    },
+                                         "Noise":  {
+                                                       "P1":  1,
+                                                       "P2":  0,
+                                                       "P3":  1,
+                                                       "Rationale":  "?곌뎄 寃곌낵 以묒떖??媛앷????쒖닠."
+                                                   },
+                                         "Utility":  {
+                                                         "V1":  5,
+                                                         "V2":  8,
+                                                         "V3":  7,
+                                                         "Rationale":  "留덉????ㅻТ?먯뿉寃?利됯컖?곸씤 ?꾨왂 ?섏젙 洹쇨굅瑜??쒓났?섎뒗 ?믪? ?⑥슜??"
+                                                     },
+                                         "Fine_Adjustment":  {
+                                                                 "Score":  0.5,
+                                                                 "Reason":  "洹쒖젣? ?섏씡???ъ씠???쒕젅留덈? 援ъ껜???レ옄濡?利앸챸??怨좏뭹吏?由ы룷??"
+                                                             }
+                                     }
+                 },
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  2.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  2.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  0.0,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  1.5
+                                                                 },
+                                                 "IS_Raw":  3.5,
+                                                 "IS_Final":  3.5,
+                                                 "Score_Commentary":  "?숆퀎(NYU/Emory)???곌뎄濡? AI 留덉????⑥쑉?깃낵 洹쒖젣(?쇰꺼留? 媛꾩쓽 ??꽕???뺣웾?곸쑝濡??낆쬆?? 湲곗뾽???꾨왂 ?섎┰??以묒슂???몄궗?댄듃瑜??쒓났?섎굹, ?곌뎄 諛쒗몴 ?먯껜媛 ?곗뾽 援ъ“瑜?利됱떆 蹂寃쏀븯??臾쇰━???ш굔? ?꾨떂."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "NYU \u0026 Emory University",
+                                               "Pe_Tier":  2,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "?곌뎄瑜?吏곸젒 ?섑뻾?섍퀬 諛쒗몴??二쇱껜????숇뱾??PE濡??좎젙(Academic Research Tier 2 ?곸슜). ?뱀젙 湲곗뾽??怨듦꺽?섍굅???묐젰?섎뒗 援ъ“媛 ?꾨땲誘濡?SE??None."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  1,
+                                                  "Y_Evidence_Code":  4,
+                                                  "Scope_Matrix_Score":  0,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "False"
+                                              }
+                        },
+    "status":  "reviewed",
+    "staged":  true,
+    "staged_at":  "2025-12-20T19:07:49.361337+00:00",
+    "category":  "Business",
+    "dedup_status":  "selected",
+    "data_file":  "the_decoder_b08c3c.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:36:03.883363+00:00"
+}

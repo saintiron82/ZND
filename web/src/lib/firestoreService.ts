@@ -80,11 +80,15 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
 }
 
 /**
- * 특정 회차(publish_id)의 기사 목록 가져오기
+ * 특정 회차(issueId)의 기사 목록 가져오기
+ * 1차: publish_id로 조회
+ * 2차(폴백): publications 문서의 article_ids로 개별 조회
  */
 export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]> {
     try {
         // console.log(`🔥 [Firestore] Fetching articles for issue: ${issueId}`);
+
+        // 1차 시도: publish_id로 조회
         const q = query(
             collection(db, COLLECTION_ARTICLES),
             where('publish_id', '==', issueId)
@@ -96,17 +100,72 @@ export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]
         snapshot.forEach((docSnap) => {
             articles.push({
                 id: docSnap.id,
-                article_id: docSnap.id, // 호환성 유지
+                article_id: docSnap.id,
                 ...docSnap.data()
             } as Article);
         });
 
-        return articles;
+        // 기사가 있으면 반환
+        if (articles.length > 0) {
+            return articles;
+        }
+
+        // 2차 시도(폴백): publications 문서에서 article_ids 가져와서 개별 조회
+        console.log(`⚠️ [Firestore] No articles found by publish_id, trying article_ids fallback...`);
+
+        const pubDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, issueId));
+        if (!pubDoc.exists()) {
+            console.log(`❌ [Firestore] Publication not found: ${issueId}`);
+            return [];
+        }
+
+        const pubData = pubDoc.data();
+        const articleIds: string[] = pubData.article_ids || [];
+
+        if (articleIds.length === 0) {
+            return [];
+        }
+
+        // article_ids로 개별 기사 조회 (article_id 필드로 쿼리)
+        const articlePromises = articleIds.map(async (artId) => {
+            // 1차: 문서 ID로 직접 조회 시도
+            const artDoc = await getDoc(doc(db, COLLECTION_ARTICLES, artId));
+            if (artDoc.exists()) {
+                return {
+                    id: artDoc.id,
+                    article_id: artDoc.id,
+                    ...artDoc.data()
+                } as Article;
+            }
+
+            // 2차: article_id 필드로 쿼리
+            const q = query(
+                collection(db, COLLECTION_ARTICLES),
+                where('article_id', '==', artId)
+            );
+            const snapshot = await getDocs(q);
+            if (!snapshot.empty) {
+                const docSnap = snapshot.docs[0];
+                return {
+                    id: docSnap.id,
+                    article_id: artId,
+                    ...docSnap.data()
+                } as Article;
+            }
+
+            console.log(`⚠️ [Firestore] Article not found: ${artId}`);
+            return null;
+        });
+
+        const results = await Promise.all(articlePromises);
+        return results.filter((a): a is Article => a !== null);
+
     } catch (error) {
         console.error(`❌ [Firestore] Failed to fetch articles for ${issueId}:`, error);
         return [];
     }
 }
+
 
 /**
  * 최신 변경 사항 확인 

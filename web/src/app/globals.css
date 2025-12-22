@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable dark mode via .dark class (for manual toggle) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ========================================
    ZeroEcho.Daily - Design System
    ======================================== */
@@ -52,8 +55,9 @@
   --glass-blur: 20px;
 }
 
+/* Dark mode - System preference */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0a0a0a;
     --foreground: #ededed;
 
@@ -61,6 +65,16 @@
     --glass-bg: rgba(24, 24, 27, 0.85);
     --glass-border: rgba(255, 255, 255, 0.1);
   }
+}
+
+/* Dark mode - Manual toggle via .dark class */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  /* Dark mode glass */
+  --glass-bg: rgba(24, 24, 27, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {

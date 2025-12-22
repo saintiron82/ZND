@@ -1,0 +1,199 @@
+{
+  "article_id": "bfe9c2",
+  "cached_at": "2025-12-22T13:27:18.143735+00:00",
+  "description": "페이페이 리 스탠포드대학교 교수가 최근 출시한 첫 월드 모델의 용도에 대해 자세히 설명했다. 또 자신이 설립한 월드 랩스는 (World Labs) 다른 회사와 차",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204980_206427_4610.png",
+  "source_id": "aitimes",
+  "status": "PUBLISHED",
+  "text": "기사를 읽어드립니다. 페이페이 리 교수(오른쪽)와 월드 랩스 공동 창립자 (사진=월드랩스) 페이페이 리 스탠포드대학교 교수가 최근 출시한 첫 월드 모델의 용도에 대해 자세히 설명했다. 또 자신이 설립한 월드 랩스는 (World Labs) 다른 회사와 차별화됐다는 점을 강조했다. 리 교수는 17일(현지시간) 파이낸셜 타임스와의 인터뷰를 통해 월드 모델 '마블(Marble)'과 '공간 지능(Spatial Intelligence)'을 설명했다. 그는 먼저 마블을 상용 출시한 이유로 \"3D 세계를 생성하는 능력과 크리에이터의 워크플로우를 지원하는 것\"을 들었다. 이를 실제 사용 사례에 더 많이 모델을 사용하게 유도하는 것이 중요하다는 말이다. 이제까지 월드 모델은 동영상 생성 AI의 연장선으로, 로봇 공학이나 게임 제작에 유용하다는 정도로만 알려졌다. 그러나 리 교수는 사용 사례가 광범위하다고 소개했다. 그 예로 마블을 영화 산업에서 다양한 시각 효과(VFX)에 활용할 수 있다고 전했다. 월드 모델로 제작자가 미리 아이디어를 구체화하고, 가상으로 영화를 촬영하며 영화 세트를 구상하는 데 사용할 수 있다는 것이다. 3D 공간 구현과 정밀한 색상 제어도 가능하다. 이를 통해 아이디어 구상과 개발 속도가 40배 빨라졌다는 사례도 있다. 이는 건축에도 유용하다. 디자이너, 인테리어 디자이너, 건축가들이 인테리어나 건물 디자인에 대한 아이디어를 시각화할 뿐만 아니라, 구축된 가상 건물의 내부까지 둘러볼 수 있다. 로봇 시뮬레이션 개발자들이 마블을 활용, 로봇 훈련 환경을 시뮬레이션하고 합성 데이터를 구축하는 것을 봤다고 전했다. 또 게임 개발자를 위해 마블은 메시 콜라이더와 메시 구조를 제공해 가상 세계와 메시를 쉽게 다운로드하고 게임플레이를 구축할 수 있도록 지원한다고도 덧붙였다. 이런 작업은 과거 비용과 시간이 엄청나게 투입됐던 작업이다. 여기에 일부 연구자들은 마블로 구축한 가상환경을 인간 심리와 임상 상태를 연구하기 위한 연구에 활용하려고 시도 중이라고 밝혔다. 그리고 이런 사례들의 공통점으로는 \"시간을 절약해 준다는 것\"을 꼽았다. 기존의 몰입형 환경 구축은 많은 시간과 비용을 들여 수작업으로 3D 환경을 모델링해야 했지만, 마블은 아이디어를 몇분 만에 가상 환경으로 만들 수 있다. 이렇게 연구원과 개발자들의 시간을 절약해야만, 더 많은 아이디어가 연구로 이뤄지고 창의성이 확장할 기회를 잡는다는 논리다. \"나는 인간 창의성에는 한계가 없다고 생각한다\"라고 덧붙였다. 또, 마블은 특정 사례에 맞춰 색상과 위치, 소리 등 세부 환경의 맞춤화가 가능, 쉽게 변경하고 반복 실험할 수 있다고 소개했다. 특히, 하나의 콘텐츠를 게임과 경험, 교육, 생산성 등 다양한 미디어 플랫폼으로 확장해 통합 경험을 제공하는 '트렌스 미디어' 트렌드에도 부합한다고 전했다. 마블로 생성한 가상 공간 (사진=월드 랩스) 리 교수는 다른 월드 모델 기업과는 접근법이 다르다고 설명했다. 타 기업은 대부분 대형언어모델(LLM) 고도화나 인공일반지능(AGI) 연구를 위한 과정, 또는 동영상 생성 AI의 확장으로 접근했지만, 월드 랩스는 2년 전부터 공간 지능에 초점을 맞추고 연구를 진행했다는 것이다. 즉, 월드 모델은 인간의 다중 지능 중 하나인 공간 지능을 달성하려는 방법이라는 것이다. \"인간이 언어, 수학, 감정 등 다양한 지능을 오케스트라처럼 활용하듯, 미래 AI는 공간 지능을 통해 실체를 가진 존재로 세상을 이해하게 될 것'이라고 설명했다. 특히 로봇 공학에서는 가장 중요한 역할을 담당하게 될 것으로 봤다. 현재 로봇 학습은 인간이 동작을 시연한 원격 조종 데이터와 웹 데이터, 그리고 컴퓨터로 생성된 합성 데이터의 조합이 학습의 핵심이다. 로봇 공학보다 훨씬 단순한 자율주행차도 데이터 문제를 해결하는 데 수십년이 걸렸는데, 로봇 공학이 성공하려면 시뮬레이션 환경과 시뮬레이션 데이터, 합성 데이터 등을 확보해야만 가능하다는 것이다. 이처럼 월드 모델의 목표를 창의성 생태계와 로봇 공학 생태계 확장 두가지로 꼽았다. 그는 \"이것이 바로 우리가 개발 중인 월드 모델을 통한 공간 지능이 매우 중요한 이유\"라며 \"이는 우리가 창의성 생태계뿐 아니라 로봇 공학 생태계의 일원으로 나아가는 미래를 위한 발판이 될 것\"이라고 말했다. 마지막으로 \"우리의 목표는 사람에게 이로운 지능을 만드는 것\"이라며 \"AI는 다른 모든 도구와 마찬가지로 사람을 위해 존재한다. 모든 연구자와 기술 기업은 바로 이 점에 집중해야 한다\"라고 강조했다. 임대준 기자 ydj@aitimes.com",
+  "title": "페이페이 리 \"월드 모델 사례 광범위해..인간 창의성·로봇공학에 큰 도움\" - AI타임스",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204980",
+  "title_ko": "페이페이 리 '월드 랩스', 공간 지능 모델 '마블' 활용성 강조",
+  "summary": "페이페이 리 교수는 월드 랩스의 첫 월드 모델 '마블'이 영화, 건축, 로봇 공학 등 다양한 분야에서 3D 공간 생성 시간을 획기적으로 단축시킨다고 밝혔다. 그녀는 월드 모델이 로봇 공학의 핵심인 '공간 지능'을 구현하는 발판이 될 것이라 강조했다.",
+  "tags": [],
+  "impact_score": 4.5,
+  "IS_Analysis": {
+    "Score_Commentary": "저명한 석학(Fei-Fei Li)이 이끄는 스타트업(Tier 4)의 비전 제시 기사다. '공간 지능(Spatial Intelligence)'이라는 새로운 패러다임(Scope 3 or 4)을 제시하고 있으나, 아직은 초기 단계의 제품 공개 및 비전 선포 성격이 강하다. PE의 Tier가 낮지만, 주제의 혁신성이 높다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "월드 랩스(World Labs)",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE: 모델 개발 및 비전 발표의 주체인 World Labs. 스타트업이므로 Tier 4 분류. (설립자가 유명인이나 기업 주체 기준 적용). SE: None."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 2.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 8.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T2": 7,
+      "Rationale": "마블 모델의 활용 사례(영화, 건축, 로봇)와 기술 철학을 상세 설명."
+    },
+    "Utility": {
+      "V1": 7,
+      "Rationale": "공간 지능이라는 차세대 AI 트렌드를 이해하는 데 유용함."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "없음"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "bfe9c2",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "페이페이 리 '월드 랩스', 공간 지능 모델 '마블' 활용성 강조",
+      "Summary": "페이페이 리 교수는 월드 랩스의 첫 월드 모델 '마블'이 영화, 건축, 로봇 공학 등 다양한 분야에서 3D 공간 생성 시간을 획기적으로 단축시킨다고 밝혔다. 그녀는 월드 모델이 로봇 공학의 핵심인 '공간 지능'을 구현하는 발판이 될 것이라 강조했다.",
+      "Tags": [
+        "Deep Dive",
+        "Vision",
+        "Startup"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "저명한 석학(Fei-Fei Li)이 이끄는 스타트업(Tier 4)의 비전 제시 기사다. '공간 지능(Spatial Intelligence)'이라는 새로운 패러다임(Scope 3 or 4)을 제시하고 있으나, 아직은 초기 단계의 제품 공개 및 비전 선포 성격이 강하다. PE의 Tier가 낮지만, 주제의 혁신성이 높다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "월드 랩스(World Labs)",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE: 모델 개발 및 비전 발표의 주체인 World Labs. 스타트업이므로 Tier 4 분류. (설립자가 유명인이나 기업 주체 기준 적용). SE: None."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 2.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T2": 7,
+        "Rationale": "마블 모델의 활용 사례(영화, 건축, 로봇)와 기술 철학을 상세 설명."
+      },
+      "Utility": {
+        "V1": 7,
+        "Rationale": "공간 지능이라는 차세대 AI 트렌드를 이해하는 데 유용함."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "original_title": "페이페이 리 \"월드 모델 사례 광범위해..인간 창의성·로봇공학에 큰 도움\" - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 0.0,
+        "T2": 7.0,
+        "T3": 0.0,
+        "S_Avg": 2.33
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 7.0,
+        "V2": 0.0,
+        "V3": 0.0,
+        "U_Avg": 2.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.56,
+      "ZS_Final": 8.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T2": 7,
+        "Rationale": "마블 모델의 활용 사례(영화, 건축, 로봇)와 기술 철학을 상세 설명."
+      },
+      "Utility": {
+        "V1": 7,
+        "Rationale": "공간 지능이라는 차세대 AI 트렌드를 이해하는 데 유용함."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "없음"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 4.5,
+      "IS_Final": 4.5,
+      "Score_Commentary": "저명한 석학(Fei-Fei Li)이 이끄는 스타트업(Tier 4)의 비전 제시 기사다. '공간 지능(Spatial Intelligence)'이라는 새로운 패러다임(Scope 3 or 4)을 제시하고 있으나, 아직은 초기 단계의 제품 공개 및 비전 선포 성격이 강하다. PE의 Tier가 낮지만, 주제의 혁신성이 높다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "월드 랩스(World Labs)",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE: 모델 개발 및 비전 발표의 주체인 World Labs. 스타트업이므로 Tier 4 분류. (설립자가 유명인이나 기업 주체 기준 적용). SE: None."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 2.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "staged": true,
+  "staged_at": "2025-12-22T13:33:36.322500+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "saved": true,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:10.813268+00:00"
+}

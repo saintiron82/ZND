@@ -1,0 +1,196 @@
+﻿{
+    "IS_Analysis":  {
+                        "Score_Commentary":  "?쒗뭹 異쒖떆 怨꾪쉷(X1)??遺덇낵?섎ŉ, ?ㅼ젣 ?ъ슜 媛?ν븳 ?곹깭媛 ?꾨떂(Y1). 硫뷀?(Tier 2)??諛쒗몴?대굹 ?ㅼ껜??利앷굅 遺議깆쑝濡??곹뼢???쒗븳??",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "Meta",
+                                                                                "Pe_Tier":  2,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "媛쒕컻 諛?異쒖떆 ?덇퀬??二쇱껜."
+                                                                            },
+                                                                 "Tier_Score":  2,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  2
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  1,
+                                                                                "Y_Evidence_Code":  1,
+                                                                                "Scope_Matrix_Score":  0,
+                                                                                "Criticality_C1_Provenness":  0,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  0.5,
+                                                                                "SOTA_Check_Result":  "False"
+                                                                            },
+                                                                 "IE_Score":  0.5
+                                                             }
+                                         }
+                    },
+    "article_id":  "32fbd6",
+    "author":  [
+                   "?꾨?以 湲곗옄"
+               ],
+    "cached_at":  "2025-12-19T18:04:18.295362+00:00",
+    "crawled_at":  "2025-12-19T18:10:00.377633+00:00",
+    "edition":  "251219_FRI_1",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  2.0,
+                                                      "T2":  0.0,
+                                                      "T3":  0.0,
+                                                      "S_Avg":  0.67
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  5.0,
+                                                     "P2":  0.0,
+                                                     "P3":  0.0,
+                                                     "N_Avg":  1.67
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  0.0,
+                                                       "V2":  0.0,
+                                                       "V3":  0.0,
+                                                       "U_Avg":  0.0
+                                                   },
+                                       "Fine_Adjustment":  0.0,
+                                       "ZS_Raw":  10.0,
+                                       "ZS_Final":  10.0
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  2,
+                                                        "Rationale":  "援ъ껜???ㅽ럺 ?놁씠 肄붾뱶紐낃낵 異쒖떆 ?쒓린留??멸툒."
+                                                    },
+                                         "Noise":  {
+                                                       "P1":  5,
+                                                       "Rationale":  "?ㅼ껜 ?놁씠 \u0027?덊띁?명뀛由ъ쟾??, \u0027??⑦븳 湲곕?\u0027 ???섏떇???ㅼ닔."
+                                                   }
+                                     }
+                 },
+    "image":  "https://cdn.aitimes.com/news/photo/202512/204939_206350_82.png",
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  2.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  2.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  0.0,
+                                                                     "Criticality_Total":  0.5,
+                                                                     "IE_Total":  0.5
+                                                                 },
+                                                 "IS_Raw":  2.5,
+                                                 "IS_Final":  2.5,
+                                                 "Score_Commentary":  "?쒗뭹 異쒖떆 怨꾪쉷(X1)??遺덇낵?섎ŉ, ?ㅼ젣 ?ъ슜 媛?ν븳 ?곹깭媛 ?꾨떂(Y1). 硫뷀?(Tier 2)??諛쒗몴?대굹 ?ㅼ껜??利앷굅 遺議깆쑝濡??곹뼢???쒗븳??"
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "Meta",
+                                               "Pe_Tier":  2,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "媛쒕컻 諛?異쒖떆 ?덇퀬??二쇱껜."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  1,
+                                                  "Y_Evidence_Code":  1,
+                                                  "Scope_Matrix_Score":  0,
+                                                  "Criticality_C1_Provenness":  0,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  0.5,
+                                                  "SOTA_Check_Result":  "False"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "impact_score":  2.5,
+    "modified_at":  "2025-12-19T18:10:20+09:00",
+    "original_title":  "硫뷀?, ?대뀈 ?곷컲湲??숈쁺???앹꽦 紐⑤뜽 \u0027留앷퀬\u0027 異쒖떆...\u0026quot;?붾뱶 紐⑤뜽??珥덇린 ?④퀎\u0026quot;",
+    "raw_analysis":  {
+                         "Article_ID":  "32fbd6",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "硫뷀?, ?숈쁺???앹꽦 紐⑤뜽 \u0027留앷퀬\u0027 ?대뀈 ?곷컲湲?異쒖떆",
+                                      "Summary":  "硫뷀?媛 ?숈쁺???앹꽦 紐⑤뜽 \u0027留앷퀬\u0027? 李⑥꽭? LLM \u0027?꾨낫移대룄\u0027瑜??대뀈 ?곷컲湲?異쒖떆???덉젙?대떎. ?대뒗 ?붾뱶 紐⑤뜽 援ъ텞???꾪븳 珥덇린 ?④퀎濡? 寃쎌웳???鍮???? ?됰낫?대굹 ?먯궗 ?뚮옯???듯빀???덇퀬?덈떎.",
+                                      "Tags":  [
+                                                   "Meta",
+                                                   "Model",
+                                                   "Rumor"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "?쒗뭹 異쒖떆 怨꾪쉷(X1)??遺덇낵?섎ŉ, ?ㅼ젣 ?ъ슜 媛?ν븳 ?곹깭媛 ?꾨떂(Y1). 硫뷀?(Tier 2)??諛쒗몴?대굹 ?ㅼ껜??利앷굅 遺議깆쑝濡??곹뼢???쒗븳??",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "Meta",
+                                                                                                     "Pe_Tier":  2,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "媛쒕컻 諛?異쒖떆 ?덇퀬??二쇱껜."
+                                                                                                 },
+                                                                                      "Tier_Score":  2,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  2
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  1,
+                                                                                                     "Y_Evidence_Code":  1,
+                                                                                                     "Scope_Matrix_Score":  0,
+                                                                                                     "Criticality_C1_Provenness":  0,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  0.5,
+                                                                                                     "SOTA_Check_Result":  "False"
+                                                                                                 },
+                                                                                      "IE_Score":  0.5
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  2,
+                                                                "Rationale":  "援ъ껜???ㅽ럺 ?놁씠 肄붾뱶紐낃낵 異쒖떆 ?쒓린留??멸툒."
+                                                            },
+                                                 "Noise":  {
+                                                               "P1":  5,
+                                                               "Rationale":  "?ㅼ껜 ?놁씠 \u0027?덊띁?명뀛由ъ쟾??, \u0027??⑦븳 湲곕?\u0027 ???섏떇???ㅼ닔."
+                                                           }
+                                             }
+                     },
+    "saved":  true,
+    "saved_at":  "2025-12-19T19:44:32.851681+00:00",
+    "schema_version":  "V1.0",
+    "source_id":  "venturebeat",
+    "status":  "ACCEPTED",
+    "summary":  "硫뷀?媛 ?숈쁺???앹꽦 紐⑤뜽 \u0027留앷퀬\u0027? 李⑥꽭? LLM \u0027?꾨낫移대룄\u0027瑜??대뀈 ?곷컲湲?異쒖떆???덉젙?대떎. ?대뒗 ?붾뱶 紐⑤뜽 援ъ텞???꾪븳 珥덇린 ?④퀎濡? 寃쎌웳???鍮???? ?됰낫?대굹 ?먯궗 ?뚮옯???듯빀???덇퀬?덈떎.",
+    "tags":  [
+
+             ],
+    "text":  "(?ъ쭊=?뷀꽣?ㅽ넚) 硫뷀????덊띁?명뀛由ъ쟾????MSL)??李⑥꽭? 泥⑤떒 紐⑤뜽怨??숈떆??怨좎꽦???대?吏 諛??숈쁺???앹꽦 紐⑤뜽??媛쒕컻 以묒씤 寃껋쑝濡??뚮젮議뚮떎. ?대? ?듯빐 ?붾뱶 紐⑤뜽 援ъ텞?쇰줈 ?뺤옣?섍쿋?ㅻ뒗 ?섎룄濡??댁꽍?쒕떎. ?붿뒪?몃━?몄??먯? 18???꾩??쒓컙) ?뺥넻???뚯떇?듭쓣 ?몄슜, 硫뷀?媛 \u0027留앷퀬(Mango)\u0027?쇰뒗 肄붾뱶紐낆쓽 ?대?吏 諛??숈쁺??紐⑤뜽??媛쒕컻 以묒씠?쇨퀬 蹂대룄?덈떎. ?댁뿉 ?곕Ⅴ硫? ?뚮젆?곕뱶瑜???硫뷀? 理쒓퀬 AI梨낆엫??CAIO)? ?щ━??肄뺤뒪 理쒓퀬 ?쒗뭹梨낆엫??CPO)???대궇 ?щ궡 吏덉쓽?묐떟 ?쒓컙???듯빐 ?쒗뭹 媛쒕컻 濡쒕뱶留듭쓣 怨듦컻?덈떎. ?ш린?먮뒗 李⑥꽭? ?뚮옒洹몄떗 ??꾩뼵?대え??LLM)??紐⑤뜽??\u0027?꾨낫移대룄(avocado)\u0027???ы븿?먮떎. 留앷퀬? ?꾨낫移대룄??MSL ?ㅻ┰???듯빐 AI ?몄옱瑜??뚯뼱紐⑥? ??泥섏쓬?쇰줈 ?좊낫?대뒗 寃곌낵臾쇱씠?? ??紐⑤뜽? ?대뀈 ?곷컲湲?異쒖떆???덉젙?대떎. ???먮━?먯꽌 ??CAIO???꾨낫移대룄媛 寃쎌웳?ъ뿉 鍮꾪빐 ?쎌젏?댁뿀??怨좉툒 肄붾뵫 湲곕뒫??吏묒쨷??寃껋씠?쇨퀬 媛뺤“??寃껋쑝濡??뚮젮議뚮떎. ????紐⑤뜽???ㅽ뵂 ?뚯뒪 異쒖떆???꾩쭅 ?쇱쓽 以묒씠硫? 紐⑤뜽???깅뒫 ?섏????곕씪 寃곗젙??寃껋쑝濡??뚮젮議뚮떎. 利? 理쒓퀬 ?깅뒫???꾨떖???뚮뒗 鍮꾧났媛?異쒖떆 媛?μ꽦??寃?좏븯寃좊떎??寃껋씠?? 洹몃뒗 ?붾뱶 紐⑤뜽 媛쒕컻 珥덇린 ?④퀎???덈떎怨좊룄 留먰뻽?? ?먯꽭???ㅻ챸? ?녿떎. ?섏?留? ?꾩떎 ?멸퀎? 媛숈? ?쒕Ъ?덉씠???섍꼍??媛뽰텣 ?붾뱶 紐⑤뜽??援ъ텞?섍린 ?꾪빐?쒕뒗 ?숈쁺???앹꽦 紐⑤뜽? ?꾩닔?? 留앷퀬???대? ?꾪븳 珥덇린 ?④퀎?????덈떎. ?뱁엳, ?댁젣源뚯? 硫뷀??먯꽌 ?붾뱶 紐⑤뜽 媛쒕컻??二쇰룄?섎뜕 ? 瑜댁엘 ?섏꽍 怨쇳븰?먭? ?댁궗瑜??덇퀬?????멸툒???댁슜?대씪 ?덇만???덈떎. ???숈쁺?곸씠???대?吏 ?앹꽦 紐⑤뜽? ?뚮퉬???쒕퉬???뺣?瑜??꾪빐 ?꾩닔濡?瑗쏀엺?? ?ㅽ뵂AI???대?吏 ?앹꽦 湲곕뒫怨?\u0027?뚮씪\u0027 ?깆쑝濡? 援ш?? \u0027?섎끂 諛붾굹??? \u0027鍮꾩삤 3\u0027濡??蹂???뺣???諛??덈떎. 硫뷀???留앷퀬? ?꾨낫移대룄媛 ?섏씠?ㅻ턿怨??몄뒪?洹몃옩, ?볦툩?깃낵 媛숈? 硫뷀????듭떖 ?뚮퉬???쒗뭹???듯빀??寃껋씠?쇨퀬 ?덇퀬?덈떎. MSL? ?대? 吏??9??\u0027諛붿씠釉??쇰뒗 ?숈쁺???앹꽦 諛?怨듭쑀 ?깆쓣 異쒖떆??諛??덈떎. ?대뒗 11????湲곗? ?쇱씪 ?쒖꽦 ?ъ슜??DAU) 200留뚮챸???뚰뙆?섎뒗 ???멸린瑜??산퀬 ?덈떎. ?댁쿂??硫뷀????대뀈 珥???紐⑤뜽??以묒떖?쇰줈 ???곸씤 諛섍꺽???섏꽕 ?덉젙?대떎. MSL? 留덊겕 ?而ㅻ쾭洹?CEO媛 吏곸젒 嫄곌툑???쒖떆?섎ŉ ?곸엯???몄옱?ㅻ줈 援ъ꽦, ??⑦븳 湲곕?瑜?紐⑥쑝怨??덈떎. ?댁뿉 ?곕씪 ??CAIO ??MSL 硫ㅻ쾭?ㅼ쓽 遺?댁씠 ?곷떦??寃껋쑝濡??뚮젮議뚮떎. ???대뱾濡??명빐 湲곗〈 ?곌뎄?먮뱾怨쇱쓽 媛덈벑??遺媛곷릱?? ?뱁엳 ?대뀈 珥덉뿉???꾨줎?곗뼱 紐⑤뜽 寃쎌웳???ㅼ떆 遺덈텤??寃껋쑝濡??덉륫?쒕떎. ?ㅽ뵂AI??1??以?李⑥꽭? 紐⑤뜽??異쒖떆???덉젙?대ŉ, ?쇰줎 癒몄뒪??CEO???대뀈 ?곷컲湲?以?\u0027洹몃줉 5\u0027瑜?異쒖떆?쒕떎怨??덇퀬?덈떎. ?꾨?以 湲곗옄 ydj@aitimes.com",
+    "title":  "硫뷀?, ?대뀈 ?곷컲湲??숈쁺???앹꽦 紐⑤뜽 \u0027留앷퀬\u0027 異쒖떆...\u0026quot;?붾뱶 紐⑤뜽??珥덇린 ?④퀎\u0026quot;",
+    "title_ko":  "硫뷀?, ?숈쁺???앹꽦 紐⑤뜽 \u0027留앷퀬\u0027 ?대뀈 ?곷컲湲?異쒖떆",
+    "url":  "https://www.aitimes.com/news/articleView.html?idxno=204939",
+    "zero_echo_score":  9.6,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  2,
+                                           "Rationale":  "援ъ껜???ㅽ럺 ?놁씠 肄붾뱶紐낃낵 異쒖떆 ?쒓린留??멸툒."
+                                       },
+                            "Noise":  {
+                                          "P1":  5,
+                                          "Rationale":  "?ㅼ껜 ?놁씠 \u0027?덊띁?명뀛由ъ쟾??, \u0027??⑦븳 湲곕?\u0027 ???섏떇???ㅼ닔."
+                                      }
+                        },
+    "rejected":  false,
+    "category":  "AI/ML",
+    "dedup_status":  "selected",
+    "data_file":  "venturebeat_32fbd6.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:53.462517+00:00"
+}

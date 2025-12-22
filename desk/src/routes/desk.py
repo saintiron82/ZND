@@ -86,6 +86,18 @@ def desk_list():
         
         from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
         
+        # [NEW] Firebase에서 발행된 article_ids 조회 (동기화)
+        # 환경 변수로 비활성화 가능: DESK_SKIP_FIREBASE_SYNC=true
+        published_article_ids = set()
+        skip_firebase_sync = os.getenv('DESK_SKIP_FIREBASE_SYNC', 'false').lower() == 'true'
+        if not include_published and not skip_firebase_sync:
+            try:
+                from src.published_articles import get_published_article_ids
+                published_article_ids = get_published_article_ids()
+                print(f"🔗 [Desk] Firebase sync: {len(published_article_ids)} published IDs loaded")
+            except Exception as e:
+                print(f"⚠️ [Desk] Failed to load published IDs (using local cache only): {e}")
+        
         for cache_date_dir in target_dirs:
             # Skip if not directory (double check)
             if not os.path.isdir(cache_date_dir):
@@ -114,6 +126,13 @@ def desk_list():
                     # We only want "Work in Progress" items.
                     is_published = data.get('published', False)
                     is_rejected = data.get('rejected', False)
+                    
+                    # [NEW] Firebase 발행 기록과 동기화
+                    article_id = data.get('article_id', '')
+                    if article_id and article_id in published_article_ids:
+                        is_published = True
+                        # 캐시 파일도 업데이트 (선택적 - 성능 영향 있을 수 있음)
+                        # data['published'] = True
                     
                     # 1. Trash Filter
                     if not include_trash and is_rejected:

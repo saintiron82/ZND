@@ -2,7 +2,6 @@
   "article_id": "ef764f",
   "cached_at": "2025-12-22T04:23:48.577898+00:00",
   "image": "https://the-decoder.com/wp-content/uploads/2025/12/qwen-image-layered-scaled.jpg",
-  "published_at": "2025-12-21T16:12:16+00:00",
   "source_id": "the_decoder",
   "summary": "알리바바의 AI 조직 Qwen이 이미지를 투명 배경의 개별 레이어로 분리하여 편집을 용이하게 하는 'Qwen-Image-Layered' 모델을 공개했다. 사용자는 특정 객체나 배경을 독립적으로 수정할 수 있으며, 관련 코드와 모델은 깃허브와 허깅페이스를 통해 공개되었다.",
   "text": "Alibaba's AI unit Qwen has released a new image editing model that breaks down photos into separate, editable components. Qwen-Image-Layered splits images into multiple individual layers with transparent backgrounds (RGBA layers), letting users edit each layer independently without affecting the rest of the image. The model handles straightforward edits like resizing, repositioning, and recoloring individual elements. Users can swap out backgrounds, replace people, modify text, or delete, move, and enlarge objects. Images can be split into either 3 or 8 layers, and the process is repeatable - each layer can be broken down into additional layers as needed. The Qwen team describes this approach as a bridge between standard images and structured, editable representations. The Qwen team has published the code on GitHub, with models available on Hugging Face and ModelScope. More details are available in the blog post and technical report. For hands-on testing, demos are available on Hugging Face and ModelScope. Ad DEC_D_Incontent-1",
@@ -218,7 +217,12 @@
       "SOTA_Check_Result": "Par"
     }
   },
-  "status": "reviewed",
+  "status": "PUBLISHED",
   "staged": true,
-  "staged_at": "2025-12-22T06:26:54.663162+00:00"
+  "staged_at": "2025-12-22T06:26:54.663162+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "saved": true,
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:13.732390+00:00"
 }

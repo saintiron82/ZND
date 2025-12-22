@@ -1,0 +1,228 @@
+{
+  "article_id": "61171a",
+  "cached_at": "2025-12-21T15:07:22.291577+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/10/anthropic_thinker.png",
+  "summary": "앤스로픽의 신규 모델 Claude Opus 4.5가 METR 벤치마크에서 역대 최고 점수를 기록함. 50% 성공률 기준 약 4시간 49분의 '타임 호라이즌'을 달성하여, 기존 모델 대비 장기 작업(Long-context) 처리 능력이 대폭 향상됨을 입증.",
+  "text": "AI research organization METR has released new benchmark results for Claude Opus 4.5. Anthropic's latest model achieved a 50 percent time horizon of roughly 4 hours and 49 minutes—the highest score ever recorded. The time horizon measures how long a task can be while still being solved by an AI model at a given success rate (in this case, 50 percent). The gap between difficulty levels is big. At the 80 percent success rate, the time horizon drops to just 27 minutes, about the same as older models, so Opus 4.5 mainly shines on longer tasks. The theoretical upper limit of over 20 hours is likely noise from limited test data, METR says. Like any benchmark, the METR test has its limits, most notably, it only covers 14 samples. A detailed breakdown by Shashwat Goel of the weaknesses is here. Ad DEC_D_Incontent-1",
+  "title": "Anthropic's Claude Opus 4.5 can tackle some tasks lasting nearly five hours",
+  "url": "https://the-decoder.com/anthropics-claude-opus-4-5-can-tackle-some-tasks-lasting-nearly-five-hours/",
+  "title_ko": "앤스로픽 Claude Opus 4.5, 5시간 분량의 작업 처리 가능",
+  "tags": [],
+  "impact_score": 4.0,
+  "IS_Analysis": {
+    "Score_Commentary": "특정 기업(Anthropic)의 기술적 성취를 다루는 벤치마크 결과 보도. SOTA를 갱신했으나, 산업 전반의 구조적 변화보다는 단일 제품의 성능 향상(Corporate Scope)에 집중됨.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Anthropic",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "신규 모델 성능 달성의 실행 주체인 Anthropic(Tier 2)을 PE로 선정. METR은 평가 기관이므로 SE 아님."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 5.1,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 6,
+      "T3": 8,
+      "Rationale": "구체적인 벤치마크 시간(4h 49m)과 성공률 데이터 제시."
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 1,
+      "P3": 1,
+      "Rationale": "건조하고 사실 위주의 서술로 노이즈가 거의 없음."
+    },
+    "Utility": {
+      "V1": 6,
+      "V2": 7,
+      "V3": 5,
+      "Rationale": "특정 모델 사용자에게 유용한 정보이나, 시장 전체에 미치는 즉각적 파급력은 제한적."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "표준적인 벤치마크 리포트로 보정 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "61171a",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "앤스로픽 Claude Opus 4.5, 5시간 분량의 작업 처리 가능",
+      "Summary": "앤스로픽의 신규 모델 Claude Opus 4.5가 METR 벤치마크에서 역대 최고 점수를 기록함. 50% 성공률 기준 약 4시간 49분의 '타임 호라이즌'을 달성하여, 기존 모델 대비 장기 작업(Long-context) 처리 능력이 대폭 향상됨을 입증.",
+      "Tags": [
+        "Benchmark",
+        "Model",
+        "Anthropic"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "특정 기업(Anthropic)의 기술적 성취를 다루는 벤치마크 결과 보도. SOTA를 갱신했으나, 산업 전반의 구조적 변화보다는 단일 제품의 성능 향상(Corporate Scope)에 집중됨.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Anthropic",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "신규 모델 성능 달성의 실행 주체인 Anthropic(Tier 2)을 PE로 선정. METR은 평가 기관이므로 SE 아님."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "구체적인 벤치마크 시간(4h 49m)과 성공률 데이터 제시."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "건조하고 사실 위주의 서술로 노이즈가 거의 없음."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 7,
+        "V3": 5,
+        "Rationale": "특정 모델 사용자에게 유용한 정보이나, 시장 전체에 미치는 즉각적 파급력은 제한적."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "표준적인 벤치마크 리포트로 보정 없음."
+      }
+    }
+  },
+  "source_id": "the_decoder",
+  "original_title": "Anthropic's Claude Opus 4.5 can tackle some tasks lasting nearly five hours",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 6.0,
+        "T3": 8.0,
+        "S_Avg": 7.33
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 1.0,
+        "P3": 1.0,
+        "N_Avg": 1.0
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 7.0,
+        "V3": 5.0,
+        "U_Avg": 6.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.1,
+      "ZS_Final": 5.1
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "구체적인 벤치마크 시간(4h 49m)과 성공률 데이터 제시."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "건조하고 사실 위주의 서술로 노이즈가 거의 없음."
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 7,
+        "V3": 5,
+        "Rationale": "특정 모델 사용자에게 유용한 정보이나, 시장 전체에 미치는 즉각적 파급력은 제한적."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "표준적인 벤치마크 리포트로 보정 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 4.0,
+      "IS_Final": 4.0,
+      "Score_Commentary": "특정 기업(Anthropic)의 기술적 성취를 다루는 벤치마크 결과 보도. SOTA를 갱신했으나, 산업 전반의 구조적 변화보다는 단일 제품의 성능 향상(Corporate Scope)에 집중됨."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Anthropic",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "신규 모델 성능 달성의 실행 주체인 Anthropic(Tier 2)을 PE로 선정. METR은 평가 기관이므로 SE 아님."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "PUBLISHED",
+  "staged": true,
+  "staged_at": "2025-12-21T15:19:11.053591+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "synced_to_firebase": true,
+  "synced_at": "2025-12-22T16:36:05.706412+00:00",
+  "saved": true
+}

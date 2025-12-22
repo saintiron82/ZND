@@ -6,12 +6,14 @@
 
 ```
 desk/
-├── manual_crawler.py          # Flask 앱 엔트리 포인트 (~250줄)
+├── manual_crawler.py          # Flask 앱 엔트리 포인트 (~55줄)
 └── src/
     └── routes/                # Flask Blueprint 모듈
         ├── __init__.py        # Blueprint export
         ├── automation.py      # 자동화 파이프라인 API
-        ├── desk.py            # 조판(Desk) API
+        ├── desk.py            # 조판(Desk) API - 기사 관리
+        ├── desk_publish.py    # 발행 API - 기사 발행, 캐시 동기화
+        ├── desk_schedule.py   # 스케줄 API - 자동 크롤링 스케줄
         ├── publications.py    # 발행 관리 API
         ├── batch.py           # 배치 처리 API
         ├── crawler.py         # 크롤링/추출 API
@@ -47,7 +49,6 @@ desk/
 | POST | `/api/desk/restore_selected` | `desk_restore_selected` | 거부 기사 복구 |
 | POST | `/api/desk/update_categories` | `desk_update_categories` | 카테고리 업데이트 |
 | POST | `/api/desk/reset_dedup` | `desk_reset_dedup` | 중복 상태 초기화 |
-| POST | `/api/desk/delete_legacy` | `desk_delete_legacy` | LEGACY 기사 삭제 |
 | POST | `/api/desk/delete_file` | `desk_delete_file` | 파일 삭제 |
 | POST | `/api/desk/clear_cache` | `desk_clear_cache` | 날짜별 캐시 삭제 |
 | POST | `/api/desk/publish_selected` | `desk_publish_selected` | 선택 기사 발행 |

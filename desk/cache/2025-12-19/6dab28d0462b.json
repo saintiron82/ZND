@@ -1,0 +1,191 @@
+﻿{
+    "article_id":  "6dab28",
+    "cached_at":  "2025-12-19T18:10:27.146916+00:00",
+    "crawled_at":  "2025-12-19T19:36:18.561390+00:00",
+    "edition":  "251219_FRI_1",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  8.0,
+                                                      "T2":  0.0,
+                                                      "T3":  0.0,
+                                                      "S_Avg":  2.67
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  0.0,
+                                                     "P2":  0.0,
+                                                     "P3":  0.0,
+                                                     "N_Avg":  0.0
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  6.0,
+                                                       "V2":  0.0,
+                                                       "V3":  0.0,
+                                                       "U_Avg":  2.0
+                                                   },
+                                       "Fine_Adjustment":  0.0,
+                                       "ZS_Raw":  8.73,
+                                       "ZS_Final":  8.7
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  8,
+                                                        "Rationale":  "?ъ옄湲덉븸($330M), 諛몃쪟?먯씠??$6.6B), 留ㅼ텧($100M ARR) ???щТ ?곗씠???곸꽭"
+                                                    },
+                                         "Utility":  {
+                                                         "V1":  6,
+                                                         "Rationale":  "?몄퐫??媛쒕컻 ???쒖옣???깆옣???뺤씤"
+                                                     }
+                                     }
+                 },
+    "image":  "https://the-decoder.com/wp-content/uploads/2025/12/Lovable-Logo-Wall-Nano-Banana-Pro.jpg",
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  0.5,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  0.5
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  0.0,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  1.5
+                                                                 },
+                                                 "IS_Raw":  2.0,
+                                                 "IS_Final":  2.0,
+                                                 "Score_Commentary":  "?ㅽ??몄뾽(Tier 4)???ъ옄 ?좎튂 嫄? 援ш?(Tier 1)???ъ옄?먮줈 李몄뿬?덉쑝?? Tier 4 湲곗뾽??媛쒕퀎???깃낵(Corporate)???대떦?섎?濡?Hard Filter(Tier 4 + Corporate Scope)媛 ?곸슜?섏뼱 Scope ?먯닔??0??泥섎━??"
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "Lovable",
+                                               "Pe_Tier":  4,
+                                               "Se_Entity_Name":  "Google",
+                                               "Se_Tier":  1,
+                                               "PE/SE ?좎젙?댁쑀":  "PE: ?ъ옄 ?좎튂 諛??깆옣??二쇱껜(P4). SE: ?먭툑 ?ъ엯 二쇱껜(P4, ?ъ옄??."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  1,
+                                                  "Y_Evidence_Code":  4,
+                                                  "Scope_Matrix_Score":  0,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "False"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "impact_score":  2.0,
+    "original_title":  "Vibe coding app Lovable heralds the \"Age of the Builder\" following major financing",
+    "raw_analysis":  {
+                         "Article_ID":  "6dab28",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "?몄퐫????\u0027Lovable\u0027, 援ш? 二쇰룄 ?ъ옄 ?좎튂濡?湲곗뾽媛移?66???щ윭 ?ъ꽦",
+                                      "Summary":  "?좊읇 AI ?ㅽ??몄뾽 Lovable??援ш???二쇰룄???쒕━利?B ?쇱슫?쒖뿉??3??3泥쒕쭔 ?щ윭瑜??좎튂?섎ŉ 湲곗뾽媛移?66???щ윭瑜??몄젙諛쏆븯?? ?띿뒪???꾨＼?꾪듃濡????깆쓣 留뚮뱶??湲곕뒫???쒓났?섎ŉ 鍮좊Ⅸ 留ㅼ텧 ?깆옣??湲곕줉 以묒씠?? ?대쾲 ?ъ옄??\u0027鍮뚮뜑???쒕?\u0027瑜??쒕갑?섎뒗 ?몄퐫??媛쒕컻 ?쒖옣??寃쎌웳 寃⑺솕瑜?蹂댁뿬以??",
+                                      "Tags":  [
+                                                   "Startup",
+                                                   "Investment",
+                                                   "Google"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "?ㅽ??몄뾽(Tier 4)???ъ옄 ?좎튂 嫄? 援ш?(Tier 1)???ъ옄?먮줈 李몄뿬?덉쑝?? Tier 4 湲곗뾽??媛쒕퀎???깃낵(Corporate)???대떦?섎?濡?Hard Filter(Tier 4 + Corporate Scope)媛 ?곸슜?섏뼱 Scope ?먯닔??0??泥섎━??",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "Lovable",
+                                                                                                     "Pe_Tier":  4,
+                                                                                                     "Se_Entity_Name":  "Google",
+                                                                                                     "Se_Tier":  1,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "PE: ?ъ옄 ?좎튂 諛??깆옣??二쇱껜(P4). SE: ?먭툑 ?ъ엯 二쇱껜(P4, ?ъ옄??."
+                                                                                                 },
+                                                                                      "Tier_Score":  0.5,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  0.5
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  1,
+                                                                                                     "Y_Evidence_Code":  4,
+                                                                                                     "Scope_Matrix_Score":  0,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "False"
+                                                                                                 },
+                                                                                      "IE_Score":  1.5
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  8,
+                                                                "Rationale":  "?ъ옄湲덉븸($330M), 諛몃쪟?먯씠??$6.6B), 留ㅼ텧($100M ARR) ???щТ ?곗씠???곸꽭"
+                                                            },
+                                                 "Utility":  {
+                                                                 "V1":  6,
+                                                                 "Rationale":  "?몄퐫??媛쒕컻 ???쒖옣???깆옣???뺤씤"
+                                                             }
+                                             }
+                     },
+    "saved":  true,
+    "saved_at":  "2025-12-19T20:00:31.157268+00:00",
+    "schema_version":  "V1.0",
+    "source_id":  "the_decoder",
+    "status":  "ACCEPTED",
+    "summary":  "?좊읇 AI ?ㅽ??몄뾽 Lovable??援ш???二쇰룄???쒕━利?B ?쇱슫?쒖뿉??3??3泥쒕쭔 ?щ윭瑜??좎튂?섎ŉ 湲곗뾽媛移?66???щ윭瑜??몄젙諛쏆븯?? ?띿뒪???꾨＼?꾪듃濡????깆쓣 留뚮뱶??湲곕뒫???쒓났?섎ŉ 鍮좊Ⅸ 留ㅼ텧 ?깆옣??湲곕줉 以묒씠?? ?대쾲 ?ъ옄??\u0027鍮뚮뜑???쒕?\u0027瑜??쒕갑?섎뒗 ?몄퐫??媛쒕컻 ?쒖옣??寃쎌웳 寃⑺솕瑜?蹂댁뿬以??",
+    "text":  "European AI startup Lovable has raised $330 million in a Series B financing round, bringing its valuation to $6.6 billion. Google led the round, with additional backing from Nvidia, HubSpot, and Deutsche Telekom.Lovable, which allows users to build web applications through simple text prompts, has quickly become one of the fastest-growing startups in the world. The company says its Sweden-based team of 120 employees hit $100 million in annual recurring revenue just eight months after reaching its first million. This follows a massive summer for the company, where it secured one of the largest European Series A rounds on record - raising $200 million at a $1.8 billion valuation. Ad External media content (www.youtube.com) has been blocked here. When loading or playing, connections are established to the servers of the respective providers. Personal data may be communicated to the providers in the process. You can find more information in our privacy policy. Allow external media content Lovable calls its mission the \"Age of the Builder\" - a time when people without coding experience, such as teachers, marketers, or founders, can turn their ideas into working software on their own. Despite its rapid growth, Lovable still trails market leaders like ChatGPT in total user numbers. The space is also becoming increasingly competitive: US rival Cursor recently raised $2.3 billion, highlighting both the intense competition in AI-assisted software development, but also the difference in investment volume. Ad",
+    "title":  "Vibe coding app Lovable heralds the \"Age of the Builder\" following major financing",
+    "url":  "https://the-decoder.com/vibe-coding-app-lovable-heralds-the-age-of-the-builder-following-major-financing/",
+    "zero_echo_score":  8.7,
+    "title_ko":  "?몄퐫????\u0027Lovable\u0027, 援ш? 二쇰룄 ?ъ옄 ?좎튂濡?湲곗뾽媛移?66???щ윭 ?ъ꽦",
+    "tags":  [
+
+             ],
+    "IS_Analysis":  {
+                        "Score_Commentary":  "?ㅽ??몄뾽(Tier 4)???ъ옄 ?좎튂 嫄? 援ш?(Tier 1)???ъ옄?먮줈 李몄뿬?덉쑝?? Tier 4 湲곗뾽??媛쒕퀎???깃낵(Corporate)???대떦?섎?濡?Hard Filter(Tier 4 + Corporate Scope)媛 ?곸슜?섏뼱 Scope ?먯닔??0??泥섎━??",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "Lovable",
+                                                                                "Pe_Tier":  4,
+                                                                                "Se_Entity_Name":  "Google",
+                                                                                "Se_Tier":  1,
+                                                                                "PE/SE ?좎젙?댁쑀":  "PE: ?ъ옄 ?좎튂 諛??깆옣??二쇱껜(P4). SE: ?먭툑 ?ъ엯 二쇱껜(P4, ?ъ옄??."
+                                                                            },
+                                                                 "Tier_Score":  0.5,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  0.5
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  1,
+                                                                                "Y_Evidence_Code":  4,
+                                                                                "Scope_Matrix_Score":  0,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "False"
+                                                                            },
+                                                                 "IE_Score":  1.5
+                                                             }
+                                         }
+                    },
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  8,
+                                           "Rationale":  "?ъ옄湲덉븸($330M), 諛몃쪟?먯씠??$6.6B), 留ㅼ텧($100M ARR) ???щТ ?곗씠???곸꽭"
+                                       },
+                            "Utility":  {
+                                            "V1":  6,
+                                            "Rationale":  "?몄퐫??媛쒕컻 ???쒖옣???깆옣???뺤씤"
+                                        }
+                        },
+    "category":  "Business",
+    "dedup_status":  "selected",
+    "data_file":  "the_decoder_6dab28.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:54.991380+00:00"
+}

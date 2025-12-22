@@ -1,0 +1,193 @@
+﻿{
+    "article_id":  "828dd0",
+    "cached_at":  "2025-12-19T18:10:27.144902+00:00",
+    "image":  "https://the-decoder.com/wp-content/uploads/2025/12/openai-cyber-security-nano-banana-pro.jpg",
+    "summary":  "OpenAI媛 ?먯쑉 ?뚰봽?몄썾???먯씠?꾪듃 湲곕뒫??媛뺥솕??\u0027GPT-5.2-Codex\u0027瑜?異쒖떆?덈떎. 湲?臾몃㎘ 泥섎━瑜??꾪븳 ?뺤텞 湲곗닠???곸슜?섏뿀?쇰ŉ, ?ъ씠踰?蹂댁븞 ?꾨Ц媛瑜??꾪븳 ?쒗븳 ?댁젣 踰꾩쟾???쒓났?쒕떎. 踰ㅼ튂留덊겕 ???깅뒫 ?μ긽? 誘몃??섎굹, 痍⑥빟??遺꾩꽍 ??蹂댁븞 遺꾩빞?먯꽌??\u0027Dual-use\u0027 ?꾪뿕?깃낵 ?⑥슜?깆씠 ?숈떆??媛뺤“?섏뿀??",
+    "text":  "Jonathan writes for THE DECODER about how AI tools can improve both work and creative projects. Content Summary The new AI model GPT-5.2-Codex is built to solve complex tasks as an autonomous software agent. Because the technology is also effective at finding vulnerabilities, OpenAI is launching an exclusive access program where verified experts get a version with relaxed security filters. Ad Technically, OpenAI relies on advanced context compression, or \"compaction.\" This method helps the model process long conversation histories and extensive code analyses more efficiently. The system is designed to maintain an overview even in complex projects, building directly on the capabilities of its predecessor, GPT-5.1-Codex-Max, which was already designed to work on tasks for longer than a day. OpenAI has also optimized image processing, allowing GPT-5.2-Codex to interpret technical diagrams or screenshots of user interfaces more precisely. According to the company, controlling native Windows environments now works more reliably than it did with the previous model. Benchmarks show only slight gains In standardized tests, the new model shows only slight improvements over the basic version. In SWE-Bench Pro, where software simulates solving real problems in GitHub repositories, GPT-5.2-Codex achieves a solution rate of 56.4 percent, compared to the standard version\u0027s 55.6 percent. Ad Ad THE DECODER Newsletter The most important AI news straight to your inbox. ??Weekly ??Free ??Cancel at any time Please leave this field empty Share Recommend our article Share In Terminal-Bench 2.0, accuracy increases slightly more to 64 percent. This test checks how well AI agents can operate command-line tools, set up servers, or compile code. Dual-use risks for cybersecurity A major focus of the release is cybersecurity. The increased ability to analyze code can be used for both defense and attack, and OpenAI cites a recent incident as proof. Security researcher Andrew MacPherson reportedly used an earlier version of the model to investigate a vulnerability in the React framework. The AI discovered unexpected behaviors that, after further analysis, led to three previously unknown vulnerabilities capable of paralyzing services or exposing source code. According to OpenAI, the discovery demonstrates how autonomous AI systems can speed up the work of security researchers. These capabilities carry risks. OpenAI now rates the model at nearly a \"high\" level within its Preparedness Framework for cybersecurity. In response, the company is introducing a trusted access program. Aimed at certified security experts and organizations, the program gives participants access to models that are less restrictive than the public version. This allows experts to search for security vulnerabilities without being blocked by the AI\u0027s standard protection filters. GPT-5.2-Codex is available now to paying ChatGPT users. Integration is handled via the command line, development environments, and the cloud, with an interface for third-party providers coming soon. Ad",
+    "title":  "OpenAI updates Codex model, adds trusted access program for cyber defense",
+    "url":  "https://the-decoder.com/openai-updates-codex-model-adds-trusted-access-program-for-cyber-defense/",
+    "title_ko":  "OpenAI, 肄붾뵫 ?뱁솕 紐⑤뜽 GPT-5.2-Codex 諛??ъ씠踰?蹂댁븞 ?꾩슜 ?꾨줈洹몃옩 怨듦컻",
+    "tags":  [
+
+             ],
+    "impact_score":  7.0,
+    "IS_Analysis":  {
+                        "Score_Commentary":  "肄붾뵫 諛?蹂댁븞 ?곗뾽 ?꾨컲(Industry)???곹뼢??誘몄튂???쒖? 紐⑤뜽???낅뜲?댄듃. ?뱁엳 ?ъ씠踰?蹂댁븞 遺꾩빞???덈줈?????쒓났? ?⑥닚 湲곗뾽 ?쒕룞???섏뼱?좊떎. 利됱떆 ?ъ슜 媛??Availability) ?곹깭.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "OpenAI",
+                                                                                "Pe_Tier":  1,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "?좉퇋 紐⑤뜽 諛??꾨줈洹몃옩 異쒖떆 二쇱껜."
+                                                                            },
+                                                                 "Tier_Score":  3,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  3
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  3,
+                                                                                "Y_Evidence_Code":  3,
+                                                                                "Scope_Matrix_Score":  2.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0.5,
+                                                                                "Criticality_Total":  1.5,
+                                                                                "SOTA_Check_Result":  "True"
+                                                                            },
+                                                                 "IE_Score":  4
+                                                             }
+                                         }
+                    },
+    "zero_echo_score":  8.2,
+    "ZES_Raw_Metrics":  {
+                            "Signal":  {
+                                           "T1":  8,
+                                           "T2":  7,
+                                           "Rationale":  "SWE-Bench ?먯닔(56.4%), 援ъ껜??痍⑥빟??諛쒓껄 ?щ?(React ?꾨젅?꾩썙?? ?쒖떆"
+                                       },
+                            "Utility":  {
+                                            "V1":  7,
+                                            "Rationale":  "蹂댁븞 ?낃퀎 諛?媛쒕컻????泥댁씤??吏곸젒???곹뼢"
+                                        }
+                        },
+    "schema_version":  "V1.0",
+    "raw_analysis":  {
+                         "Article_ID":  "828dd0",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "OpenAI, 肄붾뵫 ?뱁솕 紐⑤뜽 GPT-5.2-Codex 諛??ъ씠踰?蹂댁븞 ?꾩슜 ?꾨줈洹몃옩 怨듦컻",
+                                      "Summary":  "OpenAI媛 ?먯쑉 ?뚰봽?몄썾???먯씠?꾪듃 湲곕뒫??媛뺥솕??\u0027GPT-5.2-Codex\u0027瑜?異쒖떆?덈떎. 湲?臾몃㎘ 泥섎━瑜??꾪븳 ?뺤텞 湲곗닠???곸슜?섏뿀?쇰ŉ, ?ъ씠踰?蹂댁븞 ?꾨Ц媛瑜??꾪븳 ?쒗븳 ?댁젣 踰꾩쟾???쒓났?쒕떎. 踰ㅼ튂留덊겕 ???깅뒫 ?μ긽? 誘몃??섎굹, 痍⑥빟??遺꾩꽍 ??蹂댁븞 遺꾩빞?먯꽌??\u0027Dual-use\u0027 ?꾪뿕?깃낵 ?⑥슜?깆씠 ?숈떆??媛뺤“?섏뿀??",
+                                      "Tags":  [
+                                                   "OpenAI",
+                                                   "Security",
+                                                   "Coding"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "肄붾뵫 諛?蹂댁븞 ?곗뾽 ?꾨컲(Industry)???곹뼢??誘몄튂???쒖? 紐⑤뜽???낅뜲?댄듃. ?뱁엳 ?ъ씠踰?蹂댁븞 遺꾩빞???덈줈?????쒓났? ?⑥닚 湲곗뾽 ?쒕룞???섏뼱?좊떎. 利됱떆 ?ъ슜 媛??Availability) ?곹깭.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "OpenAI",
+                                                                                                     "Pe_Tier":  1,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "?좉퇋 紐⑤뜽 諛??꾨줈洹몃옩 異쒖떆 二쇱껜."
+                                                                                                 },
+                                                                                      "Tier_Score":  3,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  3
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  3,
+                                                                                                     "Y_Evidence_Code":  3,
+                                                                                                     "Scope_Matrix_Score":  2.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0.5,
+                                                                                                     "Criticality_Total":  1.5,
+                                                                                                     "SOTA_Check_Result":  "True"
+                                                                                                 },
+                                                                                      "IE_Score":  4
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Signal":  {
+                                                                "T1":  8,
+                                                                "T2":  7,
+                                                                "Rationale":  "SWE-Bench ?먯닔(56.4%), 援ъ껜??痍⑥빟??諛쒓껄 ?щ?(React ?꾨젅?꾩썙?? ?쒖떆"
+                                                            },
+                                                 "Utility":  {
+                                                                 "V1":  7,
+                                                                 "Rationale":  "蹂댁븞 ?낃퀎 諛?媛쒕컻????泥댁씤??吏곸젒???곹뼢"
+                                                             }
+                                             }
+                     },
+    "source_id":  "the_decoder",
+    "original_title":  "OpenAI updates Codex model, adds trusted access program for cyber defense",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  8.0,
+                                                      "T2":  7.0,
+                                                      "T3":  0.0,
+                                                      "S_Avg":  5.0
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  0.0,
+                                                     "P2":  0.0,
+                                                     "P3":  0.0,
+                                                     "N_Avg":  0.0
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  7.0,
+                                                       "V2":  0.0,
+                                                       "V3":  0.0,
+                                                       "U_Avg":  2.33
+                                                   },
+                                       "Fine_Adjustment":  0.0,
+                                       "ZS_Raw":  8.25,
+                                       "ZS_Final":  8.2
+                                   },
+                     "raw_metrics":  {
+                                         "Signal":  {
+                                                        "T1":  8,
+                                                        "T2":  7,
+                                                        "Rationale":  "SWE-Bench ?먯닔(56.4%), 援ъ껜??痍⑥빟??諛쒓껄 ?щ?(React ?꾨젅?꾩썙?? ?쒖떆"
+                                                    },
+                                         "Utility":  {
+                                                         "V1":  7,
+                                                         "Rationale":  "蹂댁븞 ?낃퀎 諛?媛쒕컻????泥댁씤??吏곸젒???곹뼢"
+                                                     }
+                                     }
+                 },
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  3.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  3.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  2.5,
+                                                                     "Criticality_Total":  1.5,
+                                                                     "IE_Total":  4.0
+                                                                 },
+                                                 "IS_Raw":  7.0,
+                                                 "IS_Final":  7.0,
+                                                 "Score_Commentary":  "肄붾뵫 諛?蹂댁븞 ?곗뾽 ?꾨컲(Industry)???곹뼢??誘몄튂???쒖? 紐⑤뜽???낅뜲?댄듃. ?뱁엳 ?ъ씠踰?蹂댁븞 遺꾩빞???덈줈?????쒓났? ?⑥닚 湲곗뾽 ?쒕룞???섏뼱?좊떎. 利됱떆 ?ъ슜 媛??Availability) ?곹깭."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "OpenAI",
+                                               "Pe_Tier":  1,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "?좉퇋 紐⑤뜽 諛??꾨줈洹몃옩 異쒖떆 二쇱껜."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  3,
+                                                  "Y_Evidence_Code":  3,
+                                                  "Scope_Matrix_Score":  2.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0.5,
+                                                  "Criticality_Total":  1.5,
+                                                  "SOTA_Check_Result":  "True"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "crawled_at":  "2025-12-19T20:00:29.440573+00:00",
+    "edition":  "251219_FRI_1",
+    "status":  "ACCEPTED",
+    "saved":  true,
+    "saved_at":  "2025-12-19T20:00:29.710145+00:00",
+    "dedup_status":  "duplicate",
+    "data_file":  "the_decoder_828dd0.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:56.092495+00:00"
+}

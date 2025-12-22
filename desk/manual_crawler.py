@@ -28,19 +28,23 @@ def add_header(response):
 
 from src.routes.automation import automation_bp
 from src.routes.desk import desk_bp
+from src.routes.desk_publish import publish_bp
+from src.routes.desk_schedule import schedule_bp
 from src.routes.publications import publications_bp
 from src.routes.batch import batch_bp
 from src.routes.crawler import crawler_bp
 from src.routes.cleanup import cleanup_bp
-from src.routes.utility import utility_bp  # New: Utility routes
+from src.routes.utility import utility_bp
 
 app.register_blueprint(automation_bp)
 app.register_blueprint(desk_bp)
+app.register_blueprint(publish_bp)
+app.register_blueprint(schedule_bp)
 app.register_blueprint(publications_bp)
 app.register_blueprint(batch_bp)
 app.register_blueprint(crawler_bp)
 app.register_blueprint(cleanup_bp)
-app.register_blueprint(utility_bp)         # New: Utility routes
+app.register_blueprint(utility_bp)
 
 
 # ============================================================================

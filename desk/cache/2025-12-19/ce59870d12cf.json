@@ -1,0 +1,185 @@
+﻿{
+    "IS_Analysis":  {
+                        "Score_Commentary":  "?⑥닚 ?쒖슜 ?щ? ?띾낫(X1). ?대? ?쒕퉬??以묒씤 紐⑤뜽??留덉????쒕룞.",
+                        "Calculations":  {
+                                             "IW_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "Pe_Selection_Rule":  "P4",
+                                                                                "Pe_Entity_Name":  "Google",
+                                                                                "Pe_Tier":  1,
+                                                                                "Se_Entity_Name":  "None",
+                                                                                "Se_Tier":  0,
+                                                                                "PE/SE ?좎젙?댁쑀":  "?쒕퉬???쒓났 諛??띾낫 二쇱껜."
+                                                                            },
+                                                                 "Tier_Score":  3,
+                                                                 "Gap_Score":  0,
+                                                                 "IW_Score":  3
+                                                             },
+                                             "IE_Analysis":  {
+                                                                 "Inputs":  {
+                                                                                "X_Magnitude_Code":  1,
+                                                                                "Y_Evidence_Code":  4,
+                                                                                "Scope_Matrix_Score":  0.5,
+                                                                                "Criticality_C1_Provenness":  1,
+                                                                                "Criticality_C2_Societal_Weight":  0,
+                                                                                "Criticality_Total":  1,
+                                                                                "SOTA_Check_Result":  "Par"
+                                                                            },
+                                                                 "IE_Score":  1.5
+                                                             }
+                                         }
+                    },
+    "ZES_Raw_Metrics":  {
+                            "Utility":  {
+                                            "V2":  7,
+                                            "Rationale":  "?ㅼ젣 ?щ━?먯씠???쒖슜踰??쒖떆濡??ㅼ슜???믪쓬."
+                                        }
+                        },
+    "article_id":  "ce5987",
+    "author":  [
+                   "?μ꽭誘?湲곗옄"
+               ],
+    "cached_at":  "2025-12-19T18:04:18.295868+00:00",
+    "category":  "Business",
+    "crawled_at":  "2025-12-19T18:11:11.675273+00:00",
+    "dedup_status":  "selected",
+    "edition":  "251219_FRI_1",
+    "evidence":  {
+                     "breakdown":  {
+                                       "Signal":  {
+                                                      "T1":  0.0,
+                                                      "T2":  0.0,
+                                                      "T3":  0.0,
+                                                      "S_Avg":  0.0
+                                                  },
+                                       "Noise":  {
+                                                     "P1":  0.0,
+                                                     "P2":  0.0,
+                                                     "P3":  0.0,
+                                                     "N_Avg":  0.0
+                                                 },
+                                       "Utility":  {
+                                                       "V1":  0.0,
+                                                       "V2":  7.0,
+                                                       "V3":  0.0,
+                                                       "U_Avg":  2.33
+                                                   },
+                                       "Fine_Adjustment":  0.0,
+                                       "ZS_Raw":  8.83,
+                                       "ZS_Final":  8.8
+                                   },
+                     "raw_metrics":  {
+                                         "Utility":  {
+                                                         "V2":  7,
+                                                         "Rationale":  "?ㅼ젣 ?щ━?먯씠???쒖슜踰??쒖떆濡??ㅼ슜???믪쓬."
+                                                     }
+                                     }
+                 },
+    "image":  "https://cdn.aitimes.com/news/photo/202512/204930_206336_2034.jpg",
+    "impact_evidence":  {
+                            "calculations":  {
+                                                 "IW_Analysis":  {
+                                                                     "Tier_Score":  3.0,
+                                                                     "Gap_Score":  0.0,
+                                                                     "IW_Total":  3.0
+                                                                 },
+                                                 "IE_Analysis":  {
+                                                                     "Scope_Total":  0.5,
+                                                                     "Criticality_Total":  1.0,
+                                                                     "IE_Total":  1.5
+                                                                 },
+                                                 "IS_Raw":  4.5,
+                                                 "IS_Final":  4.5,
+                                                 "Score_Commentary":  "?⑥닚 ?쒖슜 ?щ? ?띾낫(X1). ?대? ?쒕퉬??以묒씤 紐⑤뜽??留덉????쒕룞."
+                                             },
+                            "raw_inputs":  {
+                                               "Pe_Selection_Rule":  "P4",
+                                               "Pe_Entity_Name":  "Google",
+                                               "Pe_Tier":  1,
+                                               "Se_Entity_Name":  "None",
+                                               "Se_Tier":  0,
+                                               "PE/SE ?좎젙?댁쑀":  "?쒕퉬???쒓났 諛??띾낫 二쇱껜."
+                                           },
+                            "raw_ie_inputs":  {
+                                                  "X_Magnitude_Code":  1,
+                                                  "Y_Evidence_Code":  4,
+                                                  "Scope_Matrix_Score":  0.5,
+                                                  "Criticality_C1_Provenness":  1,
+                                                  "Criticality_C2_Societal_Weight":  0,
+                                                  "Criticality_Total":  1,
+                                                  "SOTA_Check_Result":  "Par"
+                                              },
+                            "schema_version":  "V1.0"
+                        },
+    "impact_score":  4.5,
+    "modified_at":  "2025-12-19T17:21:04+09:00",
+    "original_title":  "?щ━?먯씠?곕뱾??援ш? ?섎굹??諛붾굹???꾨줈?숇? ?쒖슜?섎뒗 踰뺤?",
+    "raw_analysis":  {
+                         "Article_ID":  "ce5987",
+                         "Meta":  {
+                                      "Specification_Version":  "v 1.0.0",
+                                      "Headline":  "援ш? \u0027?섎끂 諛붾굹???꾨줈\u0027, ?щ━?먯씠???쒖슜 ?щ? 怨듦컻",
+                                      "Summary":  "援ш????대?吏 ?앹꽦 紐⑤뜽 ?섎끂 諛붾굹???꾨줈瑜??쒖슜???좏뒠踰꾨뱾??肄섑뀗痢??쒖옉 ?щ?瑜?怨듦컻?덈떎. ?ㅼ젣 ?ъ슜(Y4)? ?대（?댁?怨??덉쑝??留덉??낆꽦 ?띾낫(X1)??洹몄묠.",
+                                      "Tags":  [
+                                                   "Google",
+                                                   "Review"
+                                               ]
+                                  },
+                         "IS_Analysis":  {
+                                             "Score_Commentary":  "?⑥닚 ?쒖슜 ?щ? ?띾낫(X1). ?대? ?쒕퉬??以묒씤 紐⑤뜽??留덉????쒕룞.",
+                                             "Calculations":  {
+                                                                  "IW_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "Pe_Selection_Rule":  "P4",
+                                                                                                     "Pe_Entity_Name":  "Google",
+                                                                                                     "Pe_Tier":  1,
+                                                                                                     "Se_Entity_Name":  "None",
+                                                                                                     "Se_Tier":  0,
+                                                                                                     "PE/SE ?좎젙?댁쑀":  "?쒕퉬???쒓났 諛??띾낫 二쇱껜."
+                                                                                                 },
+                                                                                      "Tier_Score":  3,
+                                                                                      "Gap_Score":  0,
+                                                                                      "IW_Score":  3
+                                                                                  },
+                                                                  "IE_Analysis":  {
+                                                                                      "Inputs":  {
+                                                                                                     "X_Magnitude_Code":  1,
+                                                                                                     "Y_Evidence_Code":  4,
+                                                                                                     "Scope_Matrix_Score":  0.5,
+                                                                                                     "Criticality_C1_Provenness":  1,
+                                                                                                     "Criticality_C2_Societal_Weight":  0,
+                                                                                                     "Criticality_Total":  1,
+                                                                                                     "SOTA_Check_Result":  "Par"
+                                                                                                 },
+                                                                                      "IE_Score":  1.5
+                                                                                  }
+                                                              }
+                                         },
+                         "ZES_Raw_Metrics":  {
+                                                 "Utility":  {
+                                                                 "V2":  7,
+                                                                 "Rationale":  "?ㅼ젣 ?щ━?먯씠???쒖슜踰??쒖떆濡??ㅼ슜???믪쓬."
+                                                             }
+                                             }
+                     },
+    "reason":  "high_noise (7.6 \u003e= 7.0)",
+    "saved":  true,
+    "saved_at":  "2025-12-19T19:44:34.486485+00:00",
+    "schema_version":  "V1.0",
+    "source_id":  "venturebeat",
+    "staged":  true,
+    "staged_at":  "2025-12-19T18:41:23.252764+00:00",
+    "status":  "ACCEPTED",
+    "summary":  "援ш????대?吏 ?앹꽦 紐⑤뜽 ?섎끂 諛붾굹???꾨줈瑜??쒖슜???좏뒠踰꾨뱾??肄섑뀗痢??쒖옉 ?щ?瑜?怨듦컻?덈떎. ?ㅼ젣 ?ъ슜(Y4)? ?대（?댁?怨??덉쑝??留덉??낆꽦 ?띾낫(X1)??洹몄묠.",
+    "tags":  [
+
+             ],
+    "text":  "援ш?? \u0027?쒕??섏씠 3\u0027???대?吏 ?앹꽦 紐⑤뜽 ?섎굹??諛붾굹???꾨줈(Nano Banana Pro)?숇? ?쒖슜??援?궡 ?좏뒠釉??щ━?먯씠?곕뱾???ㅼ뼇??肄섑뀗痢??щ?瑜?19??怨듦컻?덈떎. ?섎끂 諛붾굹?섎줈 遺덈━??\u0027?쒕??섏씠 2.5 ?뚮옒???대?吏\u0027??怨좏뭹吏??대?吏 ?앹꽦?쇰줈 ?멸린瑜??살쑝硫? ?뚯뀥 誘몃뵒?댁? ?щ━?먯씠??而ㅻ??덊떚瑜?以묒떖?쇰줈 ?쒖슜???뺤궛?덈떎. 理쒓렐?먮뒗 ?섎끂 諛붾굹???꾨줈瑜??듯빐 ?꾩꽦?꾧? ?믪븘吏硫??곕쭚 肄섑뀗痢??쒖옉?먮룄 ?곴레 ?쒖슜?섍퀬 ?덈떎???ㅻ챸?대떎. ?댁뿉 援ш?? ?댁긽??怨쇱옄媛寃? ?щ궡酉곌났?? ?덈떎, ?щ굹怨? ?몃뜑?붾뱶 ??媛?遺꾩빞 ????좏뒠釉??щ━?먯씠?곕뱾???쒕??섏씠 3? ?섎끂 諛붾굹???꾨줈瑜??쒖슜???좊낫???곕쭚 肄섑뀗痢좊? ?뚭컻?덈떎. 癒쇱?, 媛꾩떇 ?쒖옉 肄섑뀗痢??꾨Ц ?좏뒠釉??щ━?먯씠???댁긽??怨쇱옄媛寃뚮뒗 ?쒖궛? ?좎븘踰꾩? 蹂대뵲由ъ뿉???대뼡 媛꾩떇???ㅼ뼱 ?덉쓣源뚢앸씪??吏덈Ц??二쇱젣濡? ?쒕??섏씠 3瑜??쒖슜???꾩씠?붿뼱瑜?援ъ긽?섍퀬 ?섎끂 諛붾굹???꾨줈瑜??듯빐 ?꾩씠?붿뼱瑜??쒓컖?뷀뻽?ㅺ퀬 ?꾪뻽?? 酉고떚?щ━?먯씠???덈떎媛 ?섎끂 諛붾굹???꾨줈瑜??듯빐 ?대?吏瑜??몄쭛?섎뒗 紐⑥뒿 (?ъ쭊=?좏뒠釉? ?덈떎 梨꾨꼸) 酉고떚?щ━?먯씠???섏븞?ㅲ숇뒗 ?섎끂 諛붾굹???꾨줈瑜??쒖슜???곕쭚 ?뚰떚 硫붿씠?ъ뾽怨?猷⑹쓣 媛?곸쑝濡??쒕??덉씠?섑뻽?? ?⑤씪?몄뿉??援щℓ?섍퀬 ?띠?留? 諛붾줈 援ъ엯?????녿뒗 ?섏긽?대굹 ?꾩씠?쒕뱾???먯떊???ъ쭊???낇?蹂대뒗 ??AI瑜??쒖슜?덈떎. ?섎끂 諛붾굹???꾨줈瑜??듯빐 ?ㅼ뼇???ㅼ뼱?ㅽ??쇱쓣 異붿쿇 諛쏅뒗 紐⑥뒿 (?ъ쭊=?좏뒠釉? 湲곗슦??梨꾨꼸) ?ㅼ뼱 ?ㅽ??쇰━?ㅽ듃 寃??좏뒠釉??щ━?먯씠???섍린?곗뙟?숈? ?명뀒由ъ뼱 援ъ긽 諛??ㅽ??쇰쭅???섎끂 諛붾굹???꾨줈瑜??쒖슜?덈떎. ?명뀒由ъ뼱 肄섏뀎?몃? AI濡?援ы쁽??蹂닿퀬, 異붿쿇 諛쏆? ?ㅼ뼱?ㅽ??쇱쓣 ?대?吏濡??뺤씤?????ㅼ젣 ?ㅽ??쇰쭅?쇰줈 ?댁뼱媛??怨쇱젙???좊낫??? ?щ━?먯씠?곕뱾???뚭컻??援ъ껜?곸씤 ?쒖슜 ?щ?? 肄섑뀗痢좊뒗 援ш?肄붾━??釉붾줈洹??먯꽌 ?뺤씤??蹂????덈떎. 援ш?? 理쒓렐 ?섎굹??諛붾굹???꾨줈?숇? ?쒖슜???곕쭚 罹좏럹???곸긽 ?섏궛? ?댁쫰 而ㅻ컢 ????닳??쒕━利덈? 怨듦컻?섍린???덈떎. ?μ꽭誘?湲곗옄 semim99@aitimes.com",
+    "title":  "?щ━?먯씠?곕뱾??援ш? ?섎굹??諛붾굹???꾨줈?숇? ?쒖슜?섎뒗 踰뺤?",
+    "title_ko":  "援ш? \u0027?섎끂 諛붾굹???꾨줈\u0027, ?щ━?먯씠???쒖슜 ?щ? 怨듦컻",
+    "url":  "https://www.aitimes.com/news/articleView.html?idxno=204930",
+    "zero_echo_score":  8.8,
+    "data_file":  "venturebeat_ce5987.json",
+    "synced_to_firebase":  true,
+    "synced_at":  "2025-12-22T16:35:57.984647+00:00"
+}

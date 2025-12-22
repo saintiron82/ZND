@@ -1,0 +1,198 @@
+{
+  "article_id": "c0dea8",
+  "author": [
+    "박찬 기자"
+  ],
+  "cached_at": "2025-12-22T04:21:56.236386+00:00",
+  "image": "https://cdn.aitimes.com/news/photo/202512/204972_206416_1516.jpg",
+  "modified_at": "2025-12-22T12:10:35+09:00",
+  "published_at": "2025-12-22T12:10:35+09:00",
+  "source_id": "aitimes",
+  "summary": "뉴욕주가 연 매출 5억 달러 이상 기업 대상의 AI 안전 규제법에 서명하며 연방 정부의 규제 완화 기조에 반기. 위반 시 최대 300만 달러 벌금을 부과하며, 캘리포니아보다 엄격한 72시간 내 사고 보고 의무화.",
+  "text": "캐시 호컬 뉴욕 주지사 (사진=셔터스톡) 미국 뉴욕주가 대형 AI 기업을 대상으로 안전 규제를 의무화하는 법안을 제정, 캘리포니아에 이어 두번째로 본격적인 주 차원의 AI 안전 규제에 나섰다. 이는 도널드 트럼프 미국 대통령이 주정부의 AI 규제를 제한하는 행정명령에 서명한 지 일주일만이다. 캐시 호컬 뉴욕 주지사는 19일(현지시간) ‘책임 있는 AI 안전 및 교육법(RAISE Act)’에 서명했다고 발표했다. 이 법은 2027년 1월1일부터 연 매출 5억달러(약 7000억원)를 넘는 기업이 대규모 AI 시스템을 개발·운영할 경우, AI로 인한 중대한 피해를 예방하기 위한 안전 프로토콜을 작성해 공개하고 이를 준수하도록 요구한다. 또 AI 모델과 관련된 중대한 안전 사고나 위반 사항이 발생하면 72시간 이내에 주 정부에 보고해야 한다. 이를 어기거나 허위로 보고할 경우 최대 100만달러(약 14억원), 재차 위반 시 최대 300만달러(약 44억원)의 벌금이 부과된다. 법 집행을 위해 뉴욕주 금융서비스국(DFS) 산하에 AI 감독 전담 사무국도 신설된다. 이 기구는 세부 규칙 제정과 집행, 수수료 부과, 연례 AI 안전 보고서 발간 등을 담당한다. 일부 조항은 이미 업계에서 통용되던 모범 사례를 법제화한 것이라는 설명이다. 이번 법 제정은 트럼프 대통령의 행정명령에 반발한 대표 사례로 부각됐다. 법안 발의자인 알렉스 보리스 뉴욕주 하원의원은 “연방 차원에서 규제하는 것이 바람직하지만, 실제로는 아무런 조치가 없었다”라며 “시민을 보호하기 위한 행동 자체를 막을 수는 없다”라고 강조했다. 보리스 의원은 최종 법안이 캘리포니아의 AI 안전법(SB53)을 토대로 했지만, 사고 공개 시한 등 일부 조항에서는 더 엄격하다고 설명했다. 캘리포니아가 15일 이내 보고를 요구하지만, 뉴욕은 72시간으로 제한했다. 그는 “법안 서명 몇시간 전까지도 AI 기업들이 수정 요청을 해올 정도로 강한 로비가 있었다”라며 “강력한 이해관계자들이 규제의 상한선을 캘리포니아 수준으로 고정하려 했지만 이를 막아냈다”라고 말했다. 뉴욕 주의회는 이미 지난 6월 법안을 통과시켰지만, 기술 업계의 반발 이후 호컬 주지사가 일부 완화안을 제시했다. 그러나 최종적으로는 원안에 서명하고, 주지사가 요구한 수정 사항은 내년에 논의하기로 합의한 것으로 알려졌다. 호컬 주지사는 “이 법은 캘리포니아의 프레임워크를 바탕으로 미국 주들 간의 공통 기준을 만드는 것”이라며 “연방 정부가 상식적인 규제를 도입하지 못하는 상황에서 공공의 안전을 지키려는 조치”라고 밝혔다. 공동 발의자인 앤드루 고나디스 주 상원의원도 “빅테크가 법안을 무력화하려 했지만, 우리는 이를 저지하고 미국에서 가장 강력한 AI 안전법을 통과시켰다”라고 강조했다. 업계 반응은 엇갈린다. 오픈AI와 앤트로픽은 뉴욕 법안을 지지하면서도 연방 차원의 통일된 입법이 필요하다고 밝혔다. 사라 헥 앤트로픽 대외협력 책임자는 “미국에서 가장 큰 두 주가 AI 투명성 법안을 제정했다는 사실은 안전의 중요성을 분명히 보여주며, 의회가 이를 바탕으로 행동에 나서야 한다는 신호”라고 평했다. 일부 기술 진영은 강하게 반발하고 있다. 벤처캐피털 앤드리슨 호로비츠(a16z)와 그렉 브록먼 오픈AI 사장이 지지하는 슈퍼 PAC은 법안 공동 발의자인 보리스 의원을 견제할 정치 활동을 준비 중인 것으로 알려졌다. 보리스 의원은 이에 대해 “그들이 이렇게 노골적으로 나서는 점이 오히려 솔직해 보인다”라고 말했다. 트럼프 행정부는 이달 초 서명한 행정명령을 통해 주 정부의 AI 규제 권한을 제한하려 하고 있어, 뉴욕 법을 둘러싸고 연방과 주가 법적 분쟁을 벌일 가능성도 제기된다. 박찬 기자 cpark@aitimes.com",
+  "title": "뉴욕, 트럼프 행정명령 무시하고 AI 안전 법안에 서명",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204972",
+  "title_ko": "뉴욕주, 트럼프 행정명령 무시하고 AI 안전 법안(RAISE Act) 서명",
+  "tags": [],
+  "impact_score": 5.5,
+  "IS_Analysis": {
+    "Score_Commentary": "PE(뉴욕주)와 SE(미 연방/트럼프) 간의 명확한 규제 충돌(Defiance). PE는 Tier Map에 없으나 GIP를 통해 '주요 국가급 경제 규모를 가진 지자체'로서 Tier 3로 유추함. 행정명령 무시라는 정치/법적 충돌이 IW를 구성.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P5",
+          "Pe_Entity_Name": "New York State",
+          "Pe_Tier": 3,
+          "Se_Entity_Name": "USA (Trump Admin)",
+          "Se_Tier": 1,
+          "PE/SE 선정이유": "규제 실행 주체인 뉴욕주를 PE로 선정(P5). 트럼프 대통령의 행정명령을 무시하고 법안을 강행했으므로 직접적 대립관계(Conflict)인 연방 정부를 SE로 선정."
+        },
+        "Tier_Score": 1,
+        "Gap_Score": 0.5,
+        "IW_Score": 1.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 2,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 2,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 2,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 7.5,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "Rationale": "법안 적용 기준(5억 달러), 벌금 액수, 보고 시한(72시간) 등 규제 데이터가 매우 구체적임."
+    },
+    "Utility": {
+      "V1": 9,
+      "Rationale": "미국 내 AI 규제 파편화를 가속화시키는 중대한 입법 사례로 시장 영향력 막대."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "단순 법안 소개를 넘어 연방 대 주 정부의 정치적 갈등 맥락을 잘 포착하여 가점."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "c0dea8",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "뉴욕주, 트럼프 행정명령 무시하고 AI 안전 법안(RAISE Act) 서명",
+      "Summary": "뉴욕주가 연 매출 5억 달러 이상 기업 대상의 AI 안전 규제법에 서명하며 연방 정부의 규제 완화 기조에 반기. 위반 시 최대 300만 달러 벌금을 부과하며, 캘리포니아보다 엄격한 72시간 내 사고 보고 의무화.",
+      "Tags": [
+        "Regulation",
+        "Safety",
+        "Ethics"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "PE(뉴욕주)와 SE(미 연방/트럼프) 간의 명확한 규제 충돌(Defiance). PE는 Tier Map에 없으나 GIP를 통해 '주요 국가급 경제 규모를 가진 지자체'로서 Tier 3로 유추함. 행정명령 무시라는 정치/법적 충돌이 IW를 구성.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P5",
+            "Pe_Entity_Name": "New York State",
+            "Pe_Tier": 3,
+            "Se_Entity_Name": "USA (Trump Admin)",
+            "Se_Tier": 1,
+            "PE/SE 선정이유": "규제 실행 주체인 뉴욕주를 PE로 선정(P5). 트럼프 대통령의 행정명령을 무시하고 법안을 강행했으므로 직접적 대립관계(Conflict)인 연방 정부를 SE로 선정."
+          },
+          "Tier_Score": 1,
+          "Gap_Score": 0.5,
+          "IW_Score": 1.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 2,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 2,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 2,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "Rationale": "법안 적용 기준(5억 달러), 벌금 액수, 보고 시한(72시간) 등 규제 데이터가 매우 구체적임."
+      },
+      "Utility": {
+        "V1": 9,
+        "Rationale": "미국 내 AI 규제 파편화를 가속화시키는 중대한 입법 사례로 시장 영향력 막대."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "단순 법안 소개를 넘어 연방 대 주 정부의 정치적 갈등 맥락을 잘 포착하여 가점."
+      }
+    }
+  },
+  "original_title": "뉴욕, 트럼프 행정명령 무시하고 AI 안전 법안에 서명",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 0.0,
+        "T3": 0.0,
+        "S_Avg": 3.0
+      },
+      "Noise": {
+        "P1": 0.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.0
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 0.0,
+        "V3": 0.0,
+        "U_Avg": 3.0
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 7.55,
+      "ZS_Final": 7.5
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "Rationale": "법안 적용 기준(5억 달러), 벌금 액수, 보고 시한(72시간) 등 규제 데이터가 매우 구체적임."
+      },
+      "Utility": {
+        "V1": 9,
+        "Rationale": "미국 내 AI 규제 파편화를 가속화시키는 중대한 입법 사례로 시장 영향력 막대."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "단순 법안 소개를 넘어 연방 대 주 정부의 정치적 갈등 맥락을 잘 포착하여 가점."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 1.0,
+        "Gap_Score": 0.5,
+        "IW_Total": 1.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.0,
+        "Criticality_Total": 2.0,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 5.5,
+      "IS_Final": 5.5,
+      "Score_Commentary": "PE(뉴욕주)와 SE(미 연방/트럼프) 간의 명확한 규제 충돌(Defiance). PE는 Tier Map에 없으나 GIP를 통해 '주요 국가급 경제 규모를 가진 지자체'로서 Tier 3로 유추함. 행정명령 무시라는 정치/법적 충돌이 IW를 구성."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P5",
+      "Pe_Entity_Name": "New York State",
+      "Pe_Tier": 3,
+      "Se_Entity_Name": "USA (Trump Admin)",
+      "Se_Tier": 1,
+      "PE/SE 선정이유": "규제 실행 주체인 뉴욕주를 PE로 선정(P5). 트럼프 대통령의 행정명령을 무시하고 법안을 강행했으므로 직접적 대립관계(Conflict)인 연방 정부를 SE로 선정."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 2,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 2,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 2,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-22T06:16:59.942623+00:00"
+}

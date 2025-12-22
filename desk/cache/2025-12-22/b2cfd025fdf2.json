@@ -1,0 +1,224 @@
+{
+  "article_id": "b2cfd0",
+  "cached_at": "2025-12-22T04:23:41.926055+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/kling26_features.png",
+  "published_at": "2025-12-21T19:21:53+00:00",
+  "source_id": "the_decoder",
+  "summary": "중국 Kuaishou의 영상 생성 AI 'Kling 2.6'이 음성 제어와 향상된 모션 제어 기능을 업데이트했다. 사용자는 고유의 목소리를 업로드하여 캐릭터 일관성을 유지할 수 있으며, 서구권 경쟁 모델 대비 경쟁력 있는 API 가격을 제시했다. 이는 영상 AI 시장의 기술 경쟁이 가속화되고 있음을 시사한다.",
+  "text": "Ask about this article… Search Chinese AI company Kuaishou has released two new features for its Kling 2.6 video generator: voice control for spoken content and improved motion control for more precise movement handling. The new voice control builds on the synchronized video audio generation Kling 2.6 introduced recently. Like Google's Veo 3 or Sora 2, the model can generate sound effects that match video content, including voices and music. According to Kling AI, the feature supports various types of human voices: speaking, dialog, narration, singing, and rapping. It also handles ambient noise and composite scene sounds. The model accepts both pure text descriptions and combinations of text and images as input. Ad Kling AI highlights numerous use cases: product demos, lifestyle vlogs, news broadcasts, sports commentary, documentaries, interview formats, dramatic short films, and music performances, including singing and even polyphonic choirs. Ad DEC_D_Incontent-1 Custom voice training enables more consistent characters The new Voice Control feature lets users upload their own voices to train a model. They can also upload an audio file directly. The trained or uploaded voice can then be applied to text-to-video creations. This improves character consistency—characters in generated videos can now speak with a defined, recognizable voice. That makes it possible to create consistent characters across multiple video clips. Ad Kling AI didn't share technical details about how Kling 2.6 was trained and built. A user guide is available here. Motion control now handles complex actions better The second major feature is an upgrade to motion control. According to Kling AI, the system now captures full-body movements in greater detail. Even fast and complex actions like martial arts or dances should be processed more accurately. Ad DEC_D_Incontent-2 The company specifically highlights improvements in two areas where AI videos typically struggle: hand movements should now appear precise and blur-free, while facial expressions and lip sync should remain natural. Ad Users can upload motion references between 3 and 30 seconds long to create uninterrupted sequences. Scene details can also be adjusted using text prompts. Impressive examples are already circulating on social media, suggesting that AI-generated video content will continue to grow as platform algorithms reward quick clicks and AI creators capitalize on this low-hanging fruit. At the same time, some genuinely creative ideas are emerging. Competitive pricing Kling is available through third-party providers like Fal.ai, Artlist, and Media.io in addition to its own platform. API pricing through these providers runs about $0.07 to $0.14 per second of generated video—highly competitive rates. Prices vary based on generation speed, length, and resolution. KlingAI itself uses a credit system. In early December, Kuaishou unveiled Video O1, which the company calls the \"world's first unified multimodal video model\" - combining generation and editing in one system. Video O1 can edit existing videos using text commands, changing protagonists, weather, or video style. With these new Kling 2.6 features, Kuaishou is competing in a crowded market against Western players like Google, OpenAI, and Runway, as well as Chinese competitors including Hailuo, Seedance, and Vidu. Kuaishou operates Kwai, one of the world's largest short video platforms, comparable to TikTok. This gives the company access to massive amounts of video-audio pairs and motion data that can be used directly to train video models with synchronized sound and realistic motion sequences.",
+  "title": "Kling 2.6 adds voice control and motion upgrades as AI video tools race toward realism",
+  "url": "https://the-decoder.com/kling-2-6-adds-voice-control-and-motion-upgrades-as-ai-video-tools-race-toward-realism/",
+  "title_ko": "Kling 2.6, 음성 제어 및 모션 기능 업그레이드로 AI 비디오 리얼리즘 강화",
+  "tags": [],
+  "impact_score": 4.0,
+  "IS_Analysis": {
+    "Score_Commentary": "PE인 Kuaishou는 명시된 Tier Map에 없으나, 거대 플랫폼 Kwai를 운영하는 시장 지배적 사업자로 Tier 2(Major Tech)로 유추함. 상용 서비스의 기능 업데이트(Availability/Realization)이며, 시장 내 경쟁력 확보를 위한 기업 차원의 활동(Corporate)으로 평가됨.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Kuaishou (Kling AI)",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 5,
+          "PE_SE_Reason": "PE는 제품 업데이트의 실행 주체인 Kuaishou(P4). 구글, OpenAI 등은 벤치마크 및 시장 경쟁 상황 설명을 위한 단순 비교 언급이므로 SE 선정 제외(Rule 1). PE Tier는 GIP에 의거, 글로벌 숏폼 플랫폼 운영 및 AI 기술력을 고려하여 Tier 2로 유추함."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 7.1,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 5,
+      "T2": 4,
+      "T3": 5,
+      "Rationale": "구체적 가격($0.07-$0.14)과 기능 나열이 있으나 기술적 원리 설명은 부족함."
+    },
+    "Noise": {
+      "P1": 6,
+      "P2": 3,
+      "P3": 2,
+      "Rationale": "'technically impressive', 'genuinely creative' 등 주관적 평가와 수식어가 다수 포함됨."
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 8,
+      "V3": 4,
+      "Rationale": "API 가격 정보 등 실사용자에게 유용한 정보가 포함되어 있음."
+    },
+    "Fine_Adjustment": {
+      "Score": -0.2,
+      "Reason": "홍보성 수식어 비중이 다소 높아 신뢰도 측면에서 소폭 감점."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "b2cfd0",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "Kling 2.6, 음성 제어 및 모션 기능 업그레이드로 AI 비디오 리얼리즘 강화",
+      "Summary": "중국 Kuaishou의 영상 생성 AI 'Kling 2.6'이 음성 제어와 향상된 모션 제어 기능을 업데이트했다. 사용자는 고유의 목소리를 업로드하여 캐릭터 일관성을 유지할 수 있으며, 서구권 경쟁 모델 대비 경쟁력 있는 API 가격을 제시했다. 이는 영상 AI 시장의 기술 경쟁이 가속화되고 있음을 시사한다.",
+      "Tags": [
+        "Update",
+        "Audio",
+        "Model"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "PE인 Kuaishou는 명시된 Tier Map에 없으나, 거대 플랫폼 Kwai를 운영하는 시장 지배적 사업자로 Tier 2(Major Tech)로 유추함. 상용 서비스의 기능 업데이트(Availability/Realization)이며, 시장 내 경쟁력 확보를 위한 기업 차원의 활동(Corporate)으로 평가됨.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Kuaishou (Kling AI)",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 5,
+            "PE_SE_Reason": "PE는 제품 업데이트의 실행 주체인 Kuaishou(P4). 구글, OpenAI 등은 벤치마크 및 시장 경쟁 상황 설명을 위한 단순 비교 언급이므로 SE 선정 제외(Rule 1). PE Tier는 GIP에 의거, 글로벌 숏폼 플랫폼 운영 및 AI 기술력을 고려하여 Tier 2로 유추함."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 4,
+        "T3": 5,
+        "Rationale": "구체적 가격($0.07-$0.14)과 기능 나열이 있으나 기술적 원리 설명은 부족함."
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "'technically impressive', 'genuinely creative' 등 주관적 평가와 수식어가 다수 포함됨."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 8,
+        "V3": 4,
+        "Rationale": "API 가격 정보 등 실사용자에게 유용한 정보가 포함되어 있음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.2,
+        "Reason": "홍보성 수식어 비중이 다소 높아 신뢰도 측면에서 소폭 감점."
+      }
+    }
+  },
+  "original_title": "Kling 2.6 adds voice control and motion upgrades as AI video tools race toward realism",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 5.0,
+        "T2": 4.0,
+        "T3": 5.0,
+        "S_Avg": 4.67
+      },
+      "Noise": {
+        "P1": 6.0,
+        "P2": 3.0,
+        "P3": 2.0,
+        "N_Avg": 3.67
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 8.0,
+        "V3": 4.0,
+        "U_Avg": 5.67
+      },
+      "Fine_Adjustment": -0.2,
+      "ZS_Raw": 7.08,
+      "ZS_Final": 7.1
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 4,
+        "T3": 5,
+        "Rationale": "구체적 가격($0.07-$0.14)과 기능 나열이 있으나 기술적 원리 설명은 부족함."
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 3,
+        "P3": 2,
+        "Rationale": "'technically impressive', 'genuinely creative' 등 주관적 평가와 수식어가 다수 포함됨."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 8,
+        "V3": 4,
+        "Rationale": "API 가격 정보 등 실사용자에게 유용한 정보가 포함되어 있음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.2,
+        "Reason": "홍보성 수식어 비중이 다소 높아 신뢰도 측면에서 소폭 감점."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 4.0,
+      "IS_Final": 4.0,
+      "Score_Commentary": "PE인 Kuaishou는 명시된 Tier Map에 없으나, 거대 플랫폼 Kwai를 운영하는 시장 지배적 사업자로 Tier 2(Major Tech)로 유추함. 상용 서비스의 기능 업데이트(Availability/Realization)이며, 시장 내 경쟁력 확보를 위한 기업 차원의 활동(Corporate)으로 평가됨."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Kuaishou (Kling AI)",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 5,
+      "PE_SE_Reason": "PE는 제품 업데이트의 실행 주체인 Kuaishou(P4). 구글, OpenAI 등은 벤치마크 및 시장 경쟁 상황 설명을 위한 단순 비교 언급이므로 SE 선정 제외(Rule 1). PE Tier는 GIP에 의거, 글로벌 숏폼 플랫폼 운영 및 AI 기술력을 고려하여 Tier 2로 유추함."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-22T06:26:54.615733+00:00"
+}

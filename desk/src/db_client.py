@@ -569,35 +569,41 @@ class DBClient:
         If date_str provided, we filter by 'edition_code' prefix or a specific date field.
         """
         if not self.db:
+            print("⚠️ [Firestore] DB not connected in get_issues_by_date")
             return []
             
         try:
-            query = self.db.collection('publications')
+            # date_str 필터링은 일단 비활성화하고 전체 조회
+            # (복합 인덱스 문제 방지)
+            docs = self.db.collection('publications').stream()
             
-            if date_str:
-                # Assuming edition_code starts with YYMMDD
-                # 2025-12-20 -> 251220
-                yy = date_str[2:4]
-                mm = date_str[5:7]
-                dd = date_str[8:10]
-                prefix = f"{yy}{mm}{dd}"
-                
-                # Filter by edition_code prefix
-                query = query.where('edition_code', '>=', prefix).where('edition_code', '<', prefix + 'z')
-            
-            # Order by published_at desc
-            query = query.order_by('published_at', direction=firestore.Query.DESCENDING)
-            
-            docs = query.stream()
             issues = []
             for doc in docs:
                 data = doc.to_dict()
                 data['id'] = doc.id
+                
+                # date_str 필터가 있으면 Python에서 필터링
+                if date_str:
+                    edition_code = data.get('edition_code', '')
+                    # 2025-12-20 -> 251220
+                    yy = date_str[2:4]
+                    mm = date_str[5:7]
+                    dd = date_str[8:10]
+                    prefix = f"{yy}{mm}{dd}"
+                    if not edition_code.startswith(prefix):
+                        continue
+                        
                 issues.append(data)
             
+            # Python에서 published_at 기준 내림차순 정렬
+            issues.sort(key=lambda x: x.get('published_at', ''), reverse=True)
+            
+            print(f"📰 [Firestore] Found {len(issues)} publications")
             return issues
         except Exception as e:
+            import traceback
             print(f"❌ [Firestore] Get Issues Failed: {e}")
+            traceback.print_exc()
             return []
 
     def get_publication(self, publish_id):

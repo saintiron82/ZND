@@ -1,0 +1,224 @@
+{
+  "article_id": "ef764f",
+  "cached_at": "2025-12-22T04:23:48.577898+00:00",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/qwen-image-layered-scaled.jpg",
+  "published_at": "2025-12-21T16:12:16+00:00",
+  "source_id": "the_decoder",
+  "summary": "알리바바의 AI 조직 Qwen이 이미지를 투명 배경의 개별 레이어로 분리하여 편집을 용이하게 하는 'Qwen-Image-Layered' 모델을 공개했다. 사용자는 특정 객체나 배경을 독립적으로 수정할 수 있으며, 관련 코드와 모델은 깃허브와 허깅페이스를 통해 공개되었다.",
+  "text": "Alibaba's AI unit Qwen has released a new image editing model that breaks down photos into separate, editable components. Qwen-Image-Layered splits images into multiple individual layers with transparent backgrounds (RGBA layers), letting users edit each layer independently without affecting the rest of the image. The model handles straightforward edits like resizing, repositioning, and recoloring individual elements. Users can swap out backgrounds, replace people, modify text, or delete, move, and enlarge objects. Images can be split into either 3 or 8 layers, and the process is repeatable - each layer can be broken down into additional layers as needed. The Qwen team describes this approach as a bridge between standard images and structured, editable representations. The Qwen team has published the code on GitHub, with models available on Hugging Face and ModelScope. More details are available in the blog post and technical report. For hands-on testing, demos are available on Hugging Face and ModelScope. Ad DEC_D_Incontent-1",
+  "title": "Alibaba's Qwen releases AI model that splits images into editable layers like Photoshop",
+  "url": "https://the-decoder.com/alibabas-qwen-releases-ai-model-that-splits-images-into-editable-layers-like-photoshop/",
+  "title_ko": "알리바바 Qwen, 포토샵처럼 이미지 레이어 분리하는 AI 모델 공개",
+  "tags": [],
+  "impact_score": 4.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Alibaba(Tier 2 유추)의 특정 비전 태스크 모델 공개. 이미지 편집의 편의성을 높이는 실용적 기술이나, 산업 전반의 패러다임 변화보다는 특정 기능 구현(Corporate)에 해당함. 오픈소스 공개(Availability)로 개발자 접근성을 확보함.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Alibaba (Qwen)",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 5,
+          "PE_SE_Reason": "모델을 개발하고 배포한 실행 주체인 Alibaba(Qwen)를 PE로 선정(P4). PE Tier는 Global Big Tech 기업으로서의 위상과 LLM 기술력을 고려하여 Tier 2로 유추(GIP). Photoshop은 기능 설명을 위한 비유적 표현이므로 SE 아님."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 5.9,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 5,
+      "T2": 6,
+      "T3": 7,
+      "Rationale": "레이어 분리(3 or 8 layers) 및 작동 방식에 대한 설명이 명확함."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 0,
+      "P3": 0,
+      "Rationale": "기능 설명 위주의 건조하고 객관적인 톤을 유지함."
+    },
+    "Utility": {
+      "V1": 4,
+      "V2": 7,
+      "V3": 5,
+      "Rationale": "디자인 및 이미지 편집 툴 개발자에게 즉시 활용 가능한 유틸리티를 제공함."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "특이사항 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "ef764f",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "알리바바 Qwen, 포토샵처럼 이미지 레이어 분리하는 AI 모델 공개",
+      "Summary": "알리바바의 AI 조직 Qwen이 이미지를 투명 배경의 개별 레이어로 분리하여 편집을 용이하게 하는 'Qwen-Image-Layered' 모델을 공개했다. 사용자는 특정 객체나 배경을 독립적으로 수정할 수 있으며, 관련 코드와 모델은 깃허브와 허깅페이스를 통해 공개되었다.",
+      "Tags": [
+        "Model",
+        "Vision",
+        "Open Source"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Alibaba(Tier 2 유추)의 특정 비전 태스크 모델 공개. 이미지 편집의 편의성을 높이는 실용적 기술이나, 산업 전반의 패러다임 변화보다는 특정 기능 구현(Corporate)에 해당함. 오픈소스 공개(Availability)로 개발자 접근성을 확보함.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Alibaba (Qwen)",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 5,
+            "PE_SE_Reason": "모델을 개발하고 배포한 실행 주체인 Alibaba(Qwen)를 PE로 선정(P4). PE Tier는 Global Big Tech 기업으로서의 위상과 LLM 기술력을 고려하여 Tier 2로 유추(GIP). Photoshop은 기능 설명을 위한 비유적 표현이므로 SE 아님."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 6,
+        "T3": 7,
+        "Rationale": "레이어 분리(3 or 8 layers) 및 작동 방식에 대한 설명이 명확함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 0,
+        "P3": 0,
+        "Rationale": "기능 설명 위주의 건조하고 객관적인 톤을 유지함."
+      },
+      "Utility": {
+        "V1": 4,
+        "V2": 7,
+        "V3": 5,
+        "Rationale": "디자인 및 이미지 편집 툴 개발자에게 즉시 활용 가능한 유틸리티를 제공함."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "특이사항 없음."
+      }
+    }
+  },
+  "original_title": "Alibaba's Qwen releases AI model that splits images into editable layers like Photoshop",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 5.0,
+        "T2": 6.0,
+        "T3": 7.0,
+        "S_Avg": 6.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.67
+      },
+      "Utility": {
+        "V1": 4.0,
+        "V2": 7.0,
+        "V3": 5.0,
+        "U_Avg": 5.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.91,
+      "ZS_Final": 5.9
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 6,
+        "T3": 7,
+        "Rationale": "레이어 분리(3 or 8 layers) 및 작동 방식에 대한 설명이 명확함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 0,
+        "P3": 0,
+        "Rationale": "기능 설명 위주의 건조하고 객관적인 톤을 유지함."
+      },
+      "Utility": {
+        "V1": 4,
+        "V2": 7,
+        "V3": 5,
+        "Rationale": "디자인 및 이미지 편집 툴 개발자에게 즉시 활용 가능한 유틸리티를 제공함."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "특이사항 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 4.0,
+      "IS_Final": 4.0,
+      "Score_Commentary": "Alibaba(Tier 2 유추)의 특정 비전 태스크 모델 공개. 이미지 편집의 편의성을 높이는 실용적 기술이나, 산업 전반의 패러다임 변화보다는 특정 기능 구현(Corporate)에 해당함. 오픈소스 공개(Availability)로 개발자 접근성을 확보함."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Alibaba (Qwen)",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 5,
+      "PE_SE_Reason": "모델을 개발하고 배포한 실행 주체인 Alibaba(Qwen)를 PE로 선정(P4). PE Tier는 Global Big Tech 기업으로서의 위상과 LLM 기술력을 고려하여 Tier 2로 유추(GIP). Photoshop은 기능 설명을 위한 비유적 표현이므로 SE 아님."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "staged_at": "2025-12-22T06:26:54.663162+00:00"
+}

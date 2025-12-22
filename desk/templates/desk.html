@@ -1720,7 +1720,7 @@
                         const allArticles = grouped[date];
 
                         // Show all articles (no schema filter)
-                        const visibleArticles = allArticles.slice();
+                        let visibleArticles = allArticles.slice();
 
                         // 카테고리 순서: 미분류(null) → 각 카테고리 알파벳순 → 중복/거부됨/발행됨
                         // 같은 그룹 내에서는 Priority 내림차순

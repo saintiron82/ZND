@@ -1,8 +1,11 @@
+'use client';
+
 import React from 'react';
 import { LAYOUT_CONFIG } from '../config/layoutConfig';
 import { ExternalLink, Clock } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { sendGAEvent } from '@next/third-parties/google';
 import ZSFeedbackButtons from './ZSFeedbackButtons';
 
 function cn(...inputs: ClassValue[]) {
@@ -53,7 +56,7 @@ const getAwardStyle = (award: string) => {
 };
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true }) => {
-    const { id, title_ko, summary, tags, url, crawled_at, published_at, source_id, impact_score, zero_echo_score, awards } = article;
+    const { id, title_ko, summary, tags, url, crawled_at, published_at, source_id, impact_score, zero_echo_score, awards, layout_type } = article;
 
     // Use zero_echo_score for quality indication
     const zeScore = zero_echo_score ?? 0;
@@ -107,11 +110,26 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         e.stopPropagation();
     };
 
+    // GA4 기사 클릭 이벤트 추적
+    const handleArticleClick = () => {
+        sendGAEvent('event', 'article_click', {
+            article_id: id,
+            article_title: title_ko.substring(0, 100), // 제목 100자 제한
+            article_score: zeScore,
+            layout_type: layout_type || 'standard',
+            source: source_id,
+            tags: tags?.slice(0, 3).join(',') || '',
+            has_award: awards && awards.length > 0 ? 'yes' : 'no'
+        });
+    };
+
+
     return (
         <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleArticleClick}
             className={cn(
                 "group flex flex-col h-full p-5 transition-all duration-300 rounded-xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-800/50 hover:border-teal-400/40 hover:shadow-lg hover:shadow-teal-500/5",
                 className

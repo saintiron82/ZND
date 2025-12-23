@@ -383,7 +383,7 @@ function backToDesk() {
     onIssueSelectorChange();
 }
 async function syncCacheToFirebase() {
-    const syncAll = confirm('☁️ 캐시를 Firebase에 동기화합니다.\n\n⚡ 이미 동기화된 기사는 자동으로 건너뜁니다 (안전 모드).\n\n[확인] 전체 캐시 동기화\n[취소] 선택된 날짜만 동기화');
+    const syncAll = confirm('☁️ 캐시 + 히스토리를 Firebase에 동기화합니다.\n\n⚡ 이미 동기화된 기사는 자동으로 건너뜁니다.\n📜 크롤링 히스토리도 함께 동기화됩니다.\n\n[확인] 전체 동기화\n[취소] 선택된 날짜만 동기화');
 
     const payload = syncAll ? {} : { date: selectedDate };
 
@@ -401,7 +401,16 @@ async function syncCacheToFirebase() {
         const result = await response.json();
 
         if (result.success) {
-            alert(`✅ ${result.message}\n\n동기화: ${result.synced}개\n건너뜀: ${result.skipped}개\n실패: ${result.failed}개`);
+            let msg = `✅ 동기화 완료!\n\n`;
+            msg += `📦 캐시: ${result.synced}개 업로드\n`;
+            msg += `⏭️ 스킵: ${result.skipped}개\n`;
+            if (result.history_count > 0) {
+                msg += `📜 히스토리: ${result.history_count}개 URL\n`;
+            }
+            if (result.failed > 0) {
+                msg += `❌ 실패: ${result.failed}개`;
+            }
+            alert(msg);
         } else {
             alert(`❌ 동기화 실패: ${result.error}`);
         }

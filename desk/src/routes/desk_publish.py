@@ -240,17 +240,22 @@ def desk_publish_selected():
 @publish_bp.route('/api/cache/sync', methods=['POST'])
 def cache_sync():
     """
-    ☁️ 로컬 캐시를 Firebase에 동기화
-    - 분석된 기사만 대상
-    - URL 기준 중복 방지 (upsert)
+    ☁️ 로컬 캐시 + 크롤링 히스토리를 Firebase에 동기화
+    
+    - synced_at 필드로 동기화 여부 판단 (Firestore 조회 불필요 = 비용 0)
+    - 동기화 후 로컬 파일에 synced_at 마킹
+    - 크롤링 히스토리도 함께 동기화
     """
     try:
-        from src.pipeline import get_db
-        from src.core_logic import get_article_id
-        db = get_db()
+        from src.db_client import DBClient
+        
+        db = DBClient()
+        if not db.db:
+            return jsonify({'success': False, 'error': 'Firestore 연결 실패. serviceAccountKey.json을 확인하세요.'}), 500
         
         data = request.json or {}
         date_str = data.get('date')  # None이면 전체 날짜
+        sync_all = date_str is None
         
         synced_count = 0
         skipped_count = 0
@@ -260,10 +265,13 @@ def cache_sync():
         if date_str:
             date_folders = [date_str] if os.path.exists(os.path.join(CACHE_DIR, date_str)) else []
         else:
-            date_folders = [d for d in os.listdir(CACHE_DIR) if os.path.isdir(os.path.join(CACHE_DIR, d))]
+            date_folders = [d for d in os.listdir(CACHE_DIR) 
+                          if os.path.isdir(os.path.join(CACHE_DIR, d)) and len(d) == 10]
         
+        # 날짜별 캐시 동기화
         for date_folder in date_folders:
             cache_date_dir = os.path.join(CACHE_DIR, date_folder)
+            cache_list = []
             
             for filename in os.listdir(cache_date_dir):
                 if not filename.endswith('.json'):
@@ -274,78 +282,83 @@ def cache_sync():
                     with open(filepath, 'r', encoding='utf-8') as f:
                         cache_data = json.load(f)
                     
-                    # 분석된 기사만 대상
-                    is_analyzed = (
-                        cache_data.get('mll_status') == 'analyzed' or
-                        cache_data.get('raw_analysis') is not None or
-                        cache_data.get('zero_echo_score') is not None
-                    )
-                    if not is_analyzed:
+                    # synced_at 필드가 있으면 이미 동기화됨 → 스킵 (Firestore 조회 없음!)
+                    if cache_data.get('synced_at'):
                         skipped_count += 1
                         continue
                     
-                    # 거부된 기사 제외
-                    if cache_data.get('rejected'):
-                        skipped_count += 1
-                        continue
+                    # article_id 확인
+                    article_id = cache_data.get('article_id')
+                    if not article_id:
+                        article_id = filename.replace('.json', '')
+                        cache_data['article_id'] = article_id
                     
-                    url = cache_data.get('url')
-                    if not url:
-                        skipped_count += 1
-                        continue
-                        
-                    # [OPTIMIZATION] 이미 동기화된 기사는 건너뜀 (Force 옵션 없으면)
-                    if not data.get('force') and cache_data.get('synced_to_firebase'):
-                        skipped_count += 1
-                        continue
-                    
-                    # URL 기준 중복 체크
-                    existing = db.get_article_by_url(url)
-                    
-                    # 동기화할 데이터 준비 (발행용 필드만)
-                    article_id = cache_data.get('article_id') or get_article_id(url)
-                    sync_data = {
-                        'article_id': article_id,
-                        'title_ko': cache_data.get('title_ko') or cache_data.get('title', ''),
-                        'summary': cache_data.get('summary', ''),
-                        'url': url,
-                        'tags': cache_data.get('tags', []),
-                        'category': cache_data.get('category', ''),
-                        'zero_echo_score': cache_data.get('zero_echo_score', 0),
-                        'impact_score': cache_data.get('impact_score', 0),
-                        'source_id': cache_data.get('source_id', ''),
-                        'cached_at': cache_data.get('cached_at') or cache_data.get('crawled_at', ''),
-                        'synced_at': datetime.now(timezone.utc).isoformat(),
-                        'sync_source': 'cache_sync'
-                    }
-                    
-                    if existing:
-                        # 업데이트
-                        db.update_article(existing['id'], sync_data)
-                        print(f"🔄 [Sync] Updated: {url[:50]}...")
-                    else:
-                        # 새로 생성
-                        db.db.collection('articles').document(article_id).set(sync_data)
-                        print(f"☁️ [Sync] Created: {url[:50]}...")
-                    
-                    # 캐시 파일에 동기화 상태 기록
-                    cache_data['synced_to_firebase'] = True
-                    cache_data['synced_at'] = sync_data['synced_at']
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        json.dump(cache_data, f, ensure_ascii=False, indent=2)
-                    
-                    synced_count += 1
+                    cache_list.append(cache_data)
                     
                 except Exception as e:
-                    print(f"⚠️ [Sync] Error on {filename}: {e}")
+                    print(f"⚠️ [Sync] Read error {filename}: {e}")
                     failed_count += 1
+            
+            # 배치 업로드
+            if cache_list:
+                result = db.upload_cache_batch(date_folder, cache_list)
+                synced_count += result.get('success', 0)
+                failed_count += result.get('failed', 0)
+                
+                # 업로드 성공한 파일에 synced_at 마킹
+                synced_at = datetime.now(timezone.utc).isoformat()
+                for cache_data in cache_list:
+                    article_id = cache_data.get('article_id')
+                    if not article_id:
+                        continue
+                    
+                    filepath = os.path.join(cache_date_dir, f"{article_id}.json")
+                    if not os.path.exists(filepath):
+                        # 해시 기반 파일명 찾기
+                        for fn in os.listdir(cache_date_dir):
+                            if fn.endswith('.json'):
+                                try:
+                                    with open(os.path.join(cache_date_dir, fn), 'r', encoding='utf-8') as f:
+                                        d = json.load(f)
+                                        if d.get('article_id') == article_id:
+                                            filepath = os.path.join(cache_date_dir, fn)
+                                            break
+                                except:
+                                    pass
+                    
+                    if os.path.exists(filepath):
+                        try:
+                            with open(filepath, 'r', encoding='utf-8') as f:
+                                file_data = json.load(f)
+                            file_data['synced_at'] = synced_at
+                            with open(filepath, 'w', encoding='utf-8') as f:
+                                json.dump(file_data, f, ensure_ascii=False, indent=2)
+                        except:
+                            pass
+        
+        # 크롤링 히스토리 동기화
+        history_count = 0
+        try:
+            data_dir = os.path.join(os.path.dirname(CACHE_DIR), 'data')
+            history_file = os.path.join(data_dir, 'crawling_history.json')
+            
+            if os.path.exists(history_file):
+                with open(history_file, 'r', encoding='utf-8') as f:
+                    local_history = json.load(f)
+                
+                if local_history:
+                    result = db.upload_crawling_history(local_history)
+                    history_count = result.get('count', 0)
+        except Exception as e:
+            print(f"⚠️ [Sync] History sync error: {e}")
         
         return jsonify({
             'success': True,
             'synced': synced_count,
             'skipped': skipped_count,
             'failed': failed_count,
-            'message': f'☁️ Firebase 동기화 완료: {synced_count}개 동기화, {skipped_count}개 건너뜀'
+            'history_count': history_count,
+            'message': f'☁️ 동기화 완료: 캐시 {synced_count}개, 히스토리 {history_count}개 URL'
         })
         
     except Exception as e:

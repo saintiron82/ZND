@@ -1,0 +1,11 @@
+{
+  "title": "Alibaba's new Qwen models can clone voices from three seconds of audio",
+  "description": "The Qwen team at Alibaba Cloud has released two new AI models that create or clone voices using text commands.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/Alibaba-Qwen3-TTS-Voicedesign-Voiceclone-Teaser.jpg",
+  "text": "The Qwen team at Alibaba Cloud has released two new AI models that create or clone voices using text commands. The Qwen3-TTS-VD-Flash model lets users generate voices based on detailed descriptions, allowing them to precisely define characteristics like emotion and speaking tempo. For example, a user could request a \"Male, middle-aged, booming baritone - hyper-energetic infomercial voice with rapid-fire delivery and exaggerated pitch rises, dripping with salesmanship.\" According to the manufacturer, the model outperforms the API for OpenAI's GPT-4o mini-tts, which launched earlier this spring. The second release, Qwen3-TTS-VC-Flash, can copy voices from just three seconds of audio and reproduce them in ten languages. Qwen claims the model achieves a lower error rate than competitors like Elevenlabs or MiniMax. The AI is also capable of processing complex texts, imitating animal sounds, and extracting voices from recordings. Both models are accessible via the Alibaba Cloud API. You can try demos for the design model and the clone model on Hugging Face. Ad DEC_D_Incontent-1",
+  "published_at": "2025-12-23T15:00:39+00:00",
+  "url": "https://the-decoder.com/alibabas-new-qwen-models-can-clone-voices-from-three-seconds-of-audio/",
+  "source_id": "the_decoder",
+  "article_id": "d931dc2d9fe9",
+  "cached_at": "2025-12-23T15:48:54.303887+00:00"
+}

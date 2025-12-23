@@ -1002,3 +1002,280 @@ class DBClient:
         except Exception as e:
             print(f"❌ [Issue Index] Save Failed: {e}")
             return None
+
+    # ============================================
+    # Cache Sync Operations (캐시 동기화)
+    # ============================================
+    
+    def upload_cache_batch(self, date_str: str, cache_list: list) -> dict:
+        """
+        캐시 데이터를 Firestore cache_sync/{date} 컬렉션에 일괄 저장
+        
+        Args:
+            date_str: 'YYYY-MM-DD' 형식
+            cache_list: 캐시 데이터 리스트 [{'article_id': ..., ...}, ...]
+        
+        Returns:
+            {'success': int, 'failed': int, 'errors': [...]}
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return {'success': 0, 'failed': len(cache_list), 'errors': ['DB not connected']}
+        
+        result = {'success': 0, 'failed': 0, 'errors': []}
+        
+        try:
+            from datetime import datetime, timezone
+            
+            batch = self.db.batch()
+            batch_count = 0
+            MAX_BATCH = 500  # Firestore 배치 한도
+            
+            for cache_data in cache_list:
+                try:
+                    article_id = cache_data.get('article_id')
+                    if not article_id:
+                        result['failed'] += 1
+                        result['errors'].append(f"Missing article_id")
+                        continue
+                    
+                    # cache_sync/{date}/{article_id} 경로에 저장
+                    doc_ref = self.db.collection('cache_sync').document(date_str).collection('articles').document(article_id)
+                    batch.set(doc_ref, cache_data)
+                    batch_count += 1
+                    result['success'] += 1
+                    
+                    # 배치 한도 도달 시 커밋
+                    if batch_count >= MAX_BATCH:
+                        batch.commit()
+                        self._track_write(batch_count)
+                        batch = self.db.batch()
+                        batch_count = 0
+                        
+                except Exception as e:
+                    result['failed'] += 1
+                    result['errors'].append(str(e))
+            
+            # 남은 배치 커밋
+            if batch_count > 0:
+                batch.commit()
+                self._track_write(batch_count)
+            
+            print(f"☁️ [Sync] Uploaded {result['success']} cache items for {date_str}")
+            
+            # 동기화 메타데이터 업데이트
+            self.update_sync_metadata({
+                'last_push': datetime.now(timezone.utc).isoformat(),
+                'last_push_date': date_str,
+                'last_push_count': result['success']
+            })
+            
+            return result
+            
+        except Exception as e:
+            print(f"❌ [Sync] Upload Failed: {e}")
+            result['errors'].append(str(e))
+            return result
+    
+    def download_cache_batch(self, date_str: str) -> list:
+        """
+        Firestore cache_sync/{date} 컬렉션에서 캐시 데이터 일괄 조회
+        
+        Args:
+            date_str: 'YYYY-MM-DD' 형식
+        
+        Returns:
+            캐시 데이터 리스트 [{'article_id': ..., ...}, ...]
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return []
+        
+        try:
+            cache_list = []
+            
+            # cache_sync/{date}/articles 서브컬렉션 조회
+            docs = self.db.collection('cache_sync').document(date_str).collection('articles').stream()
+            
+            read_count = 0
+            for doc in docs:
+                data = doc.to_dict()
+                data['article_id'] = doc.id  # 문서 ID = article_id
+                cache_list.append(data)
+                read_count += 1
+            
+            self._track_read(read_count)
+            print(f"☁️ [Sync] Downloaded {len(cache_list)} cache items for {date_str}")
+            
+            # 동기화 메타데이터 업데이트
+            from datetime import datetime, timezone
+            self.update_sync_metadata({
+                'last_pull': datetime.now(timezone.utc).isoformat(),
+                'last_pull_date': date_str,
+                'last_pull_count': len(cache_list)
+            })
+            
+            return cache_list
+            
+        except Exception as e:
+            print(f"❌ [Sync] Download Failed: {e}")
+            return []
+    
+    def get_sync_metadata(self) -> dict:
+        """
+        동기화 메타데이터 조회
+        
+        Returns:
+            {
+                'last_push': ISO 시간,
+                'last_pull': ISO 시간,
+                'last_push_date': 'YYYY-MM-DD',
+                'last_pull_date': 'YYYY-MM-DD',
+                ...
+            }
+        """
+        if not self.db:
+            return {}
+        
+        try:
+            doc = self.db.collection('cache_sync').document('_meta').get()
+            self._track_read()
+            
+            if doc.exists:
+                return doc.to_dict()
+            return {}
+            
+        except Exception as e:
+            print(f"❌ [Sync] Get Metadata Failed: {e}")
+            return {}
+    
+    def update_sync_metadata(self, info: dict) -> bool:
+        """
+        동기화 메타데이터 업데이트
+        
+        Args:
+            info: 업데이트할 정보 딕셔너리
+        
+        Returns:
+            성공 여부
+        """
+        if not self.db:
+            return False
+        
+        try:
+            self.db.collection('cache_sync').document('_meta').set(info, merge=True)
+            self._track_write()
+            return True
+            
+        except Exception as e:
+            print(f"❌ [Sync] Update Metadata Failed: {e}")
+            return False
+    
+    def get_cache_sync_dates(self) -> list:
+        """
+        Firestore에 동기화된 날짜 목록 조회
+        
+        Returns:
+            날짜 문자열 리스트 ['2025-12-24', '2025-12-23', ...]
+        """
+        if not self.db:
+            return []
+        
+        try:
+            # cache_sync 컬렉션의 문서 ID = 날짜
+            docs = self.db.collection('cache_sync').stream()
+            
+            dates = []
+            for doc in docs:
+                if doc.id != '_meta':  # 메타 문서 제외
+                    dates.append(doc.id)
+            
+            self._track_read(len(dates))
+            dates.sort(reverse=True)  # 최신 날짜 우선
+            return dates
+            
+        except Exception as e:
+            print(f"❌ [Sync] Get Dates Failed: {e}")
+            return []
+
+    def upload_crawling_history(self, history: dict) -> dict:
+        """
+        크롤링 히스토리를 Firestore에 업로드 (병합 방식)
+        
+        Args:
+            history: {url: {status, reason, timestamp}, ...}
+        
+        Returns:
+            {'success': bool, 'count': int}
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return {'success': False, 'count': 0}
+        
+        try:
+            from datetime import datetime, timezone
+            
+            # crawling_history 문서에 저장 (병합)
+            # Firestore 문서 크기 제한(1MB) 때문에 청크로 분할
+            CHUNK_SIZE = 500
+            urls = list(history.keys())
+            total_count = 0
+            
+            for i in range(0, len(urls), CHUNK_SIZE):
+                chunk_urls = urls[i:i+CHUNK_SIZE]
+                chunk_data = {url: history[url] for url in chunk_urls}
+                
+                # 청크별 문서에 저장
+                chunk_id = f"chunk_{i // CHUNK_SIZE}"
+                self.db.collection('crawling_history').document(chunk_id).set(chunk_data, merge=True)
+                self._track_write()
+                total_count += len(chunk_data)
+            
+            # 메타 정보 업데이트
+            self.db.collection('crawling_history').document('_meta').set({
+                'total_count': len(history),
+                'last_sync': datetime.now(timezone.utc).isoformat(),
+                'chunk_count': (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
+            }, merge=True)
+            self._track_write()
+            
+            print(f"☁️ [Sync] Uploaded crawling history: {total_count} URLs")
+            return {'success': True, 'count': total_count}
+            
+        except Exception as e:
+            print(f"❌ [Sync] History Upload Failed: {e}")
+            return {'success': False, 'count': 0}
+    
+    def download_crawling_history(self) -> dict:
+        """
+        Firestore에서 크롤링 히스토리 다운로드
+        
+        Returns:
+            {url: {status, reason, timestamp}, ...}
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return {}
+        
+        try:
+            history = {}
+            
+            # 모든 청크 문서 조회
+            docs = self.db.collection('crawling_history').stream()
+            
+            read_count = 0
+            for doc in docs:
+                if doc.id.startswith('_'):  # 메타 문서 스킵
+                    continue
+                    
+                chunk_data = doc.to_dict()
+                history.update(chunk_data)
+                read_count += 1
+            
+            self._track_read(read_count)
+            print(f"☁️ [Sync] Downloaded crawling history: {len(history)} URLs")
+            return history
+            
+        except Exception as e:
+            print(f"❌ [Sync] History Download Failed: {e}")
+            return {}

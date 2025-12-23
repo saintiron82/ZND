@@ -10,3 +10,6 @@
 {"timestamp": "2025-12-23T20:34:03.648880", "action": "Collect", "result": "Collected 16 new links", "duration": 3.83, "success": true}
 {"timestamp": "2025-12-23T20:34:30.226242", "action": "Collect", "result": "Collected 0 new links", "duration": 3.9, "success": true}
 {"timestamp": "2025-12-23T20:34:30.227142", "action": "Manual", "result": "Collected 0 new links", "duration": 3.91, "success": true}
+{"timestamp": "2025-12-24T00:48:40.392212", "action": "Collect", "result": "Collected 3 new links", "duration": 4.57, "success": true}
+{"timestamp": "2025-12-24T00:49:01.774076", "action": "Extract", "result": "Extracted 3 (Skip:0, Fail:0)", "duration": 21.38, "success": true}
+{"timestamp": "2025-12-24T00:49:01.774076", "action": "Manual", "result": "Extracted 3 (Skip:0, Fail:0)", "duration": 25.96, "success": true}

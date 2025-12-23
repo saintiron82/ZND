@@ -1,0 +1,2011 @@
+[00:00:01.013] Server  LOG     ✓ Ready in 662ms
+[00:00:01.065] Server  WARN    ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[00:00:02.482] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:00:02.482] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:00:02.508] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:00:02.508] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:00:02.518] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:00:02.518] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:00:02.888] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:00:02.892] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:00:02.895] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:00:03.257] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:00:03.257] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:00:03.257] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:00:03.257] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.259] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:00:03.260] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:00:03.260] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:00:03.261] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:00:03.261] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.262] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:00:03.263] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:00:03.263] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:00:03.263] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:00:03.263] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.264] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:00:03.266] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:00:03.266] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:00:03.266] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:00:03.266] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.266] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:00:03.267] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:00:03.267] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:00:03.267] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:00:03.267] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.268] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:00:03.269] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:00:03.269] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:00:03.269] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:00:03.269] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.269] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:00:03.270] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:00:03.270] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:00:03.270] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:00:03.271] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.271] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:00:03.271] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:00:03.280] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:00:03.281] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:00:03.281] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:00:03.281] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.281] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:00:03.281] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:00:03.287] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:00:03.287] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:00:03.287] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:00:03.287] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:00:03.287] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:00:03.288] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:00:03.681] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.723] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.749] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.755] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:03.901] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.979] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:04.136] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.222] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:04.354] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.433] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:04.584] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.668] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:04.823] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.886] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:05.048] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:34.072] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:34.364] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:00:34.617] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:26.947] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:01:27.371] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:53.513] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:04:53.755] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:01.444] Server  LOG     ✓ Compiled in 64ms
+[00:13:20.075] Server  LOG     ✓ Compiled in 36ms
+[00:13:36.304] Server  LOG     ✓ Compiled in 33ms
+[00:34:01.893] Server  LOG     ✓ Compiled in 35ms
+[00:34:02.129] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.129] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.202] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.203] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.214] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.214] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.229] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.230] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.243] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.243] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.272] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.272] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.284] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.284] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.296] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.296] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.313] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.314] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.333] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.333] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.349] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.349] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.367] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.367] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.382] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.382] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.394] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.394] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.407] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.408] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.420] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.420] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.446] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.446] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.460] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.460] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.472] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.472] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.489] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.489] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.507] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.511] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.513] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.515] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.517] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.519] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.520] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.522] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.524] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.528] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.530] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.532] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.534] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.536] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.538] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.540] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.541] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.543] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.544] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.547] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:02.556] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.556] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.571] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.571] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.582] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.582] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.592] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:02.593] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:02.921] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.921] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.922] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.922] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.924] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.925] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.926] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.926] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.926] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.927] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.927] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.927] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.928] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.928] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.928] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.929] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.930] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.930] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.930] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.931] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.932] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.932] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.932] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.932] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.933] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.933] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.934] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.934] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.934] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.934] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.935] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.935] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.936] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.936] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.937] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.937] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.937] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.937] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.938] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.938] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.939] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.939] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.939] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.939] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.939] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.940] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.940] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.940] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.940] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.941] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.941] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.941] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.941] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.941] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.942] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.942] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.943] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.943] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.943] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.943] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.944] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.944] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.944] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.944] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.944] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.945] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.945] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.945] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.945] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.946] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.947] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.947] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.947] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.947] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.948] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.948] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.949] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.949] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.949] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.950] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.950] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.950] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.951] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.951] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.953] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.954] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.954] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.954] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.954] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.955] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.955] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.955] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.955] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.956] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.956] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.957] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:02.957] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:02.957] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:02.957] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.958] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:02.958] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.958] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.959] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.959] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.959] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.960] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.960] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.960] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.960] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.961] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.961] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.962] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.962] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.962] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.962] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.963] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.963] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.963] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.964] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.964] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.964] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.965] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.965] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.965] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.965] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.966] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.966] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.966] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.966] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.966] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.967] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.967] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.967] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.967] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.968] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.968] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.969] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.969] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.969] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.969] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.970] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.970] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.970] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.970] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.971] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.971] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.971] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.971] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.971] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.972] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.972] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.972] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.972] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.972] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.973] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.973] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.973] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.973] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.973] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.974] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.974] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.974] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.975] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.975] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.975] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.976] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.976] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.976] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.976] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.976] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.977] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.977] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.977] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.977] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.977] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.978] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.978] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.978] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.978] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.978] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.978] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.978] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.979] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.979] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.979] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.980] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.980] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.980] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.980] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.981] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.981] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.981] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.982] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.982] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.982] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.983] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:02.983] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:02.983] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:02.983] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.983] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.984] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:02.984] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:02.984] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:02.985] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:02.985] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:02.985] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.003] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.003] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.003] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.003] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.003] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.004] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.017] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.017] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.017] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.017] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.018] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.018] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.029] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.029] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.030] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.030] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.030] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.030] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.045] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.045] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.045] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.045] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.045] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.045] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.057] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.057] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.057] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.057] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.058] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.058] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.075] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.075] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.075] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.075] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.075] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.075] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.086] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.086] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.086] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.086] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.086] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.087] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.096] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.096] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.096] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.096] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.097] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.097] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.106] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.106] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.107] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.107] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.107] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.107] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.120] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.121] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.121] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.121] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.121] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.121] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.129] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.129] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.129] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.129] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.129] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.130] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.138] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.138] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.138] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.138] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.138] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.138] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.145] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.145] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.145] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.145] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.146] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.146] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.153] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.153] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.153] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.154] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.154] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.154] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.161] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.161] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.161] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.161] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.161] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.162] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.168] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.168] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.168] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.169] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.169] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.169] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.174] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.174] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.174] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.174] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.174] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.175] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.179] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.179] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.179] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.179] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.180] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.180] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.185] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.185] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.185] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.185] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.186] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.186] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.191] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:03.194] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:03.196] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:03.199] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:03.416] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:03.416] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:03.416] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:03.416] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.417] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:03.418] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:03.418] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:03.419] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:03.419] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.420] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:03.421] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:03.421] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:03.422] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:03.422] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.422] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:03.423] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:03.424] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:03.424] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:03.424] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.425] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:03.426] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:03.426] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:03.427] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:03.427] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.427] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.428] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:03.428] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:03.428] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:03.428] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.429] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.429] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:03.430] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:03.430] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:03.430] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.430] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.431] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:03.431] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:03.431] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:03.432] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.432] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.434] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.434] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.434] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.434] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.435] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.435] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.443] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.443] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.444] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.444] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.444] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.444] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.456] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.456] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.456] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.456] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.456] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.457] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.464] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:03.465] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:03.465] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:03.465] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:03.466] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:03.466] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:03.571] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.575] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.580] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.584] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.587] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.589] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.592] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.595] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.598] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.600] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.604] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.802] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.807] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.811] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.814] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.821] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.827] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.832] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.837] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:03.841] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.118] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.122] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.126] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.131] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.135] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.140] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.144] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.148] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.151] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.154] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.159] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.404] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.409] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.413] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.417] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.424] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.427] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.430] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.436] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.438] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.441] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.443] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.446] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.664] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.668] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.671] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.674] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.677] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.683] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.686] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.689] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.691] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.694] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.697] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.980] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.984] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.987] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.991] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:04.996] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.001] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.005] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.264] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.267] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.271] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.276] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.281] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.285] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.560] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.564] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.567] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.570] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.575] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.578] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.836] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.839] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.842] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.850] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.854] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:05.858] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.097] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.101] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.103] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.106] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.109] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.115] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.353] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.356] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.360] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.363] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.366] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.370] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.594] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.597] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.600] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.604] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.607] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.609] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.832] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.835] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.837] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.840] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.842] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:06.845] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.077] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.080] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.083] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.086] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.089] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.093] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.309] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.311] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.315] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.317] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.320] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.323] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.553] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.556] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.559] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.561] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.564] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.567] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.783] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.787] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.790] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.792] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.794] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:07.797] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.029] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.032] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.036] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.039] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.041] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.044] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.334] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.338] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.340] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.345] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.349] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.353] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.578] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.582] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.585] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.588] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.591] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.597] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.837] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.840] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.843] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.845] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.849] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:08.852] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.074] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.077] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.079] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.084] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.087] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.089] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.309] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.314] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.318] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.321] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.324] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.327] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.570] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.573] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.575] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.578] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.580] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.584] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.833] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.836] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.841] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.845] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.849] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:09.852] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.088] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.091] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.094] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.096] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.099] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.102] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.325] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.331] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.334] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.337] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.340] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.345] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.568] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.575] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.578] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.583] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.586] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.589] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.825] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.828] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:10.831] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:57.483] Server  LOG       Reload env: .env.local
+[00:34:57.656] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.656] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.673] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.673] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.688] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.689] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.738] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.738] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.743] Server  LOG     ✓ Compiled in 11ms
+[00:34:57.756] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.756] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.768] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.769] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.780] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.780] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.793] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.793] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:57.805] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:34:57.805] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:34:58.073] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.077] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.078] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.080] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.081] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.083] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.085] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.086] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.089] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:34:58.594] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.594] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.594] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.595] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.597] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.598] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.598] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.598] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.599] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.600] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.600] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.600] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.601] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.601] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.601] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.602] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.602] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.602] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.603] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.603] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.604] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.604] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.604] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.604] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.605] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.605] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.606] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.606] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.606] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.606] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.607] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.607] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.607] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.607] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.608] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.608] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.608] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.608] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.608] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.609] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.610] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:34:58.610] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:34:58.610] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:34:58.610] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.610] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:34:58.611] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.611] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.612] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.612] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.612] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.612] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.613] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.613] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.613] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.613] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.613] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.613] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.613] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.614] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.614] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.614] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.614] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.614] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.614] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.615] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.615] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.615] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.615] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.615] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.616] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.616] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.617] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.617] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.617] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.617] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.618] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.618] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.618] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.618] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.618] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.619] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.619] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.619] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.619] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.619] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.620] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:34:58.620] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:34:58.620] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:34:58.620] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.621] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.622] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.622] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.622] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.622] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.622] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.622] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.635] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.635] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.635] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.635] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.636] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.636] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.645] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.645] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.645] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.645] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.645] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.645] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.656] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.656] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.656] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.656] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.656] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.656] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.667] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.667] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.667] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.667] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.668] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.668] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.679] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.679] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.679] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.679] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.680] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.680] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.690] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.690] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.690] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.690] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.690] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.690] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.700] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.700] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.700] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.700] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.701] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.701] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.710] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:34:58.710] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:34:58.711] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:34:58.711] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:34:58.711] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:34:58.711] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:34:58.993] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:34:58.996] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:35:16.541] Server  LOG     [Contact API] 메시지 전송 성공
+[00:40:00.404] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.404] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.483] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.483] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.527] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.527] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.541] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.541] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.557] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.557] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.573] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.574] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.600] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.600] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.614] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.614] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.626] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.627] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.639] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.640] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.656] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.656] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.669] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.669] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.681] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.681] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.691] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.692] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.709] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.709] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.720] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.720] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.735] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.735] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.751] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.751] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.768] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.768] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.781] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.781] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.794] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.795] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.806] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.806] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.826] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.831] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.835] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.838] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.840] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.843] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.847] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.849] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.850] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.852] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.853] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.854] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.856] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.858] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.860] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.862] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.865] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.866] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.868] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.869] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.871] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.873] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:00.884] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.884] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:00.897] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:00.897] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:01.208] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.208] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.208] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.209] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.211] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.212] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.212] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.213] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.213] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.215] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.215] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.216] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.216] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.216] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.217] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.218] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.218] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.218] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.219] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.219] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.220] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.220] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.220] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.220] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.221] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.221] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.221] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.221] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.221] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.222] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.222] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.223] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.223] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.223] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.223] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.224] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.224] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.224] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.224] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.225] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.226] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.226] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.227] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.227] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.228] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.229] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.229] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.229] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.229] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.230] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.231] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.231] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.231] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.231] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.232] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.233] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.233] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.233] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.234] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.234] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.235] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.236] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.236] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.236] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.237] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.238] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.238] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.238] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.238] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.239] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.240] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.240] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.240] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.240] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.242] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.243] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.243] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.243] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.243] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.244] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.245] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.245] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.245] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.245] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.247] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.247] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.248] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.248] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.248] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.249] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.250] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.250] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.250] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.250] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.251] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.251] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.251] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.251] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.251] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.252] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.253] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.253] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.253] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.253] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.254] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.255] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:01.255] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:01.255] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:01.255] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.256] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:01.263] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.263] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.263] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.264] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.264] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.264] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.264] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.265] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.265] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.265] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.265] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.265] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.266] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.266] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.266] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.266] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.266] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.266] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.266] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.266] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.267] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.267] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.267] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.267] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.267] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.268] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.268] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.268] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.268] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.268] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.269] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.269] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.269] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.269] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.269] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.269] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.270] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.270] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.270] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.270] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.271] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.271] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.271] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.271] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.272] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.272] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.272] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.272] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.272] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.273] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.273] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.273] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.273] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.273] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.273] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.274] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.274] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.274] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.274] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.274] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.274] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.275] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.275] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.275] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.275] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.275] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.275] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.275] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.275] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.276] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.276] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.276] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.276] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.276] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.276] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.277] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.277] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.277] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.277] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.278] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.278] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.279] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.279] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.279] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.280] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.281] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.281] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.281] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.281] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.282] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.283] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.283] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.283] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.283] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.283] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.284] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.284] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.285] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.285] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.285] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.286] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.286] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.286] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.286] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.286] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.288] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:01.289] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:01.289] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:01.289] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.289] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.290] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.290] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.290] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.290] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.290] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.290] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.316] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.317] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.317] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.317] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.317] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.317] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.338] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.339] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.339] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.339] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.339] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.339] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.362] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.363] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.363] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.363] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.364] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.364] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.385] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.386] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.386] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.386] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.386] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.386] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.414] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.414] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.415] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.415] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.415] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.415] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.447] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.447] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.448] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.448] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.448] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.448] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.473] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.473] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.473] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.473] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.474] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.474] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.502] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.502] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.502] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.502] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.502] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.503] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.525] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.526] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.526] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.526] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.526] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.527] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.550] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.550] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.550] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.550] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.551] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.551] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.578] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.578] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.578] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.579] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.579] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.579] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.601] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.601] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.601] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.601] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.602] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.602] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.623] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.623] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.624] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.624] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.624] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.624] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.656] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.656] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.656] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.656] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.657] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.657] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.681] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.681] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.681] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.681] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.682] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.682] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.708] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.708] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.708] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.708] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.708] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.709] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.732] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.733] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.733] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.733] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.733] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.733] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.758] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.758] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.759] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.759] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.759] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.759] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.783] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.783] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.783] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.783] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.784] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.784] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.807] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.807] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.807] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.807] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.807] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.808] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.827] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:01.827] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:01.828] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:01.828] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:01.828] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:01.829] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:01.851] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:01.855] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:02.129] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:02.130] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:02.130] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:02.130] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:02.131] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:02.133] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:02.133] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:02.134] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:02.134] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:02.135] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:02.137] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:02.137] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:02.138] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:02.138] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:02.138] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:02.139] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:02.140] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:02.140] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:02.140] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:02.140] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:02.142] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:02.142] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:02.142] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:02.142] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:02.143] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:02.143] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:02.151] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:02.151] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:02.151] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:02.151] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:02.152] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:02.152] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:02.267] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.273] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.277] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.282] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.286] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.297] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.303] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.306] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.308] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.311] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.315] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.319] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.529] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.533] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.536] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.540] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.545] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.549] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.553] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.557] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.565] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.568] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.799] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.802] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.806] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.812] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.818] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.821] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.824] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.828] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.832] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.835] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.837] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.840] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.842] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:02.848] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.152] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.157] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.160] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.167] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.172] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.176] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.181] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.184] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.188] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.191] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.196] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.201] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.204] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.434] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.437] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.440] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.443] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.446] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.450] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.456] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.458] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.461] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.465] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.468] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.719] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.722] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.725] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.730] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.733] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.736] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.741] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.746] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.749] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:03.998] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.001] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.004] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.006] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.009] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.012] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.264] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.269] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.272] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.275] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.282] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.285] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.512] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.515] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.518] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.521] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.524] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.530] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.756] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.759] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.762] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.766] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.769] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.771] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.993] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:04.998] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.001] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.004] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.006] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.008] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.256] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.259] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.262] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.266] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.269] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.272] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.503] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.506] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.508] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.511] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.515] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.518] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.745] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.749] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.752] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.755] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.757] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:05.760] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.010] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.014] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.017] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.020] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.022] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.024] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.424] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.427] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.432] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.435] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.439] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.445] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.670] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.674] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.677] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.680] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.683] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.686] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.930] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.934] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.936] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.939] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.942] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:06.946] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.186] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.189] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.192] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.195] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.200] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.203] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.451] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.455] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.457] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.460] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.464] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.469] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.698] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.701] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.704] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.706] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.709] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.712] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.944] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.949] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.952] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.955] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.960] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:07.966] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.190] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.193] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.196] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.199] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.202] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.204] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.434] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.437] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.440] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.442] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.445] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.448] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.669] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.672] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.675] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.677] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.681] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.685] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.923] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.927] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.931] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.934] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.936] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:08.939] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.154] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.157] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.159] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.162] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.167] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.170] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.385] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.388] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.390] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.393] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.396] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.400] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.643] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.647] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.650] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.653] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.655] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.658] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.878] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.882] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.885] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.887] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.890] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:09.892] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:10.194] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:10.198] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:10.201] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:10.203] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:10.206] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:18.615] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.615] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.662] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.662] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.687] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.687] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.701] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.701] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.722] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.722] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.744] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.745] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.842] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.842] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.856] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.856] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.869] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:18.870] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:18.964] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.968] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.969] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.971] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.972] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.974] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.975] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.977] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:18.979] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:19.221] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.221] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.221] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.222] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.223] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.224] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.224] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.225] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.225] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.227] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.227] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.227] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.227] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.228] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.228] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.230] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.230] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.233] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.233] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.233] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.234] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.234] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.234] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.235] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.236] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.237] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.237] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.237] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.237] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.238] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.238] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.238] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.238] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.238] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.239] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.239] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.239] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.240] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.240] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.240] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.241] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:19.241] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:19.241] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:19.241] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.242] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:19.243] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.243] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.243] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.243] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.244] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.245] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.245] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.245] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.245] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.246] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.247] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.247] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.247] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.247] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.247] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.248] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.248] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.248] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.248] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.248] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.249] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.249] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.249] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.249] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.249] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.250] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.250] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.250] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.250] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.250] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.251] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.251] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.251] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.251] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.251] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.252] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.252] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.252] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.252] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.252] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.253] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:19.253] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:19.253] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:19.253] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.254] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.255] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.255] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.255] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.255] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.255] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.256] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.269] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.269] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.269] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.269] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.269] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.269] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.284] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.284] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.284] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.284] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.284] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.284] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.294] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.294] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.294] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.294] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.294] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.294] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.306] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.306] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.307] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.307] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.307] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.307] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.320] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.320] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.320] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.321] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.321] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.321] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.336] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.336] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.336] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.337] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.337] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.337] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.348] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.348] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.348] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.348] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.348] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.348] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.358] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:19.358] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:19.358] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:19.358] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:19.358] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:19.359] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:19.683] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:19.686] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:29.645] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.646] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.667] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.668] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.718] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.718] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.741] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.741] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.755] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.755] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.767] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.768] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.827] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.828] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.848] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.849] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.860] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.861] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.892] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.892] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.918] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.919] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:29.946] Server  LOG     [ServerCache] Fetching fresh data from Firestore (Direct)...
+[00:40:29.947] Server  LOG     🔥 [Firestore] Fetching _meta document...
+[00:40:30.051] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.055] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.058] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.061] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.064] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.065] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.067] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.068] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.070] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.072] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.073] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.075] Server  LOG     ✅ [Firestore] Found 3 released issues from _meta
+[00:40:30.439] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.439] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.440] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.440] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.442] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.444] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.444] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.444] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.444] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.445] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.447] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.447] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.447] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.447] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.448] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.449] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.450] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.450] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.450] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.451] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.452] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.452] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.452] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.452] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.453] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.454] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.454] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.454] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.454] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.455] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.456] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.456] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.456] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.456] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.456] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.457] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.457] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.457] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.457] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.458] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.458] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.458] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.458] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.459] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.460] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.461] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.461] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.461] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.461] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.462] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.463] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.464] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.464] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.464] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.465] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.466] Server  LOG     [Awards] Today's Headline: db76c8477c2a
+[00:40:30.466] Server  LOG     [Awards] Zero Echo Award: c34a5df52490
+[00:40:30.466] Server  LOG     [Awards] Hot Topic: db76c8477c2a
+[00:40:30.466] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.467] Server  LOG     [LayoutOptimizer] Input: 24, Output: 24
+[00:40:30.468] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.468] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.468] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.468] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.468] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.469] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.469] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.469] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.469] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.469] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.470] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.470] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.470] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.470] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.471] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.471] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.471] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.471] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.472] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.472] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.473] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.473] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.473] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.473] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.474] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.474] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.474] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.474] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.475] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.475] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.475] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.475] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.475] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.476] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.476] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.476] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.476] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.476] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.476] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.476] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.477] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.477] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.477] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.477] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.477] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.478] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.478] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.478] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.478] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.478] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.479] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.480] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.480] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.480] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.480] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.481] Server  LOG     [Awards] Today's Headline: 8bbd9d3886cf
+[00:40:30.482] Server  LOG     [Awards] Zero Echo Award: 23bf4b6f7a35
+[00:40:30.482] Server  LOG     [Awards] Hot Topic: 8bbd9d3886cf
+[00:40:30.482] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.482] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.484] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.484] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.484] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.484] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.485] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.485] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.502] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.502] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.502] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.502] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.502] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.502] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.518] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.519] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.519] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.519] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.519] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.519] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.532] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.532] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.533] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.533] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.533] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.533] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.545] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.545] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.546] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.546] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.546] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.547] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.559] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.559] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.559] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.559] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.560] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.560] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.575] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.575] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.575] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.576] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.576] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.576] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.591] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.591] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.591] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.591] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.591] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.592] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.606] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.606] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.606] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.606] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.607] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.607] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.621] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.621] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.621] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.622] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.622] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.622] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.639] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.639] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.639] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.639] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.640] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.640] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:30.654] Server  LOG     [Awards] Today's Headline: 4d9bb71876a7
+[00:40:30.654] Server  LOG     [Awards] Zero Echo Award: d998e3357368
+[00:40:30.654] Server  LOG     [Awards] Hot Topic: 4d9bb71876a7
+[00:40:30.655] Server  LOG     [Phase 0] After Top 3: finalOrder=2, placed=2
+[00:40:30.655] Server  LOG     [LayoutOptimizer] Input: 5, Output: 5
+[00:40:30.655] Server  LOG     [ServerCache] Fetched 3 issues, 34 articles
+[00:40:31.143] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.170] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:31.214] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:31.231] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:31.380] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.385] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.389] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.393] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.658] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.704] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:31.861] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:31.916] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:31.932] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:32.042] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:32.187] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:32.260] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:32.381] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:32.419] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:32.621] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:32.698] Server  LOG     [ServerCache] No Change (Latest: 2025-12-23T08:22:32.546981+00:00)
+[00:40:32.938] Server  LOG     [Visitor] 마일스톤 10명 알림 전송 완료
+[00:40:33.017] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

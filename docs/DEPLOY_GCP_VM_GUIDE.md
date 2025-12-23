@@ -55,12 +55,21 @@ sudo npm install -g pm2
 
 ## 4. 프로젝트 설정
 
+### 브랜치 전략
+| 브랜치 | 용도 |
+|--------|------|
+| `main` | 안정화된 코드 (배포용) |
+| `feature/YYYY_MM_DD` | 개발 작업 브랜치 |
+| `release/YYYY_MM_DD` | **프로덕션 배포용** - 특정 날짜 릴리스 |
+
 ### (1) 코드 가져오기
-(*SSH 키 설정 과정은 생략, 필요 시 이전 대화 참조*)
 ```bash
 cd ~
 git clone git@github.com:saintiron82/ZND.git
 cd ZND
+
+# release 브랜치로 체크아웃 (예: 2025년 12월 24일 릴리스)
+git checkout release/2025_12_24
 ```
 
 ### (2) 🐍 Python Backend (Crawler/Desk) 설정
@@ -148,4 +157,68 @@ pm2 save
 1.  GCP 콘솔 -> **VPC 네트워크** -> **방화벽**
 2.  `allow-web-public` 규칙 생성: `tcp:8080` 허용 (타겟: 모든 인스턴스, 소스: 0.0.0.0/0)
 3.  *(필요 시)* `allow-admin-private` 규칙 생성: `tcp:5500` 허용 (소스: `내_IP주소`)
+
+---
+
+## 7. Quick Deploy (이미 세팅된 VM용) 🚀
+
+기본 환경이 이미 구축된 VM에서 새 릴리스를 배포할 때 사용합니다.
+
+```bash
+cd ~/ZND
+
+# 1. 최신 코드 가져오기
+git fetch origin
+git checkout release/2025_12_24  # 또는 원하는 release 브랜치
+git pull origin release/2025_12_24
+
+# 2. Python Backend 의존성 업데이트
+cd desk
+source venv/bin/activate
+pip install -r requirements.txt
+deactivate
+cd ..
+
+# 3. Web 빌드
+cd web
+npm install
+npm run build
+cd ..
+
+# 4. PM2 서비스 재시작
+pm2 restart all
+pm2 status
+```
+
+### 환경변수 체크리스트
+배포 전 다음 파일들이 VM에 존재하는지 확인하세요:
+
+| 파일 | 위치 | 용도 |
+|------|------|------|
+| `.env` | `~/ZND/desk/.env` | Desk 백엔드 설정 |
+| `.env.local` | `~/ZND/web/.env.local` | Next.js Firebase 설정 |
+| `serviceAccountKey.json` | `~/ZND/desk/` | Firebase Admin SDK 인증 |
+
+---
+
+## 8. 문제 해결
+
+### PM2 로그 확인
+```bash
+pm2 logs znd-web --lines 50
+pm2 logs znd-backend --lines 50
+```
+
+### 메모리 확인
+```bash
+free -h
+htop
+```
+
+### 서비스 상태 확인
+```bash
+pm2 status
+curl http://localhost:8080  # Web 테스트
+curl http://localhost:5500  # Backend 테스트
+```
 

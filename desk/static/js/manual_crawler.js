@@ -7,7 +7,54 @@ let currentDetailItem = null; // For modal actions
 
 window.onload = function () {
     loadDates();
+    startPolling();
 };
+
+// [NEW] Polling Status
+let pollingInterval = null;
+
+function startPolling() {
+    if (pollingInterval) clearInterval(pollingInterval);
+    pollingInterval = setInterval(checkCrawlStatus, 3000);
+}
+
+async function checkCrawlStatus() {
+    try {
+        const res = await fetch('/api/crawl/status');
+        const data = await res.json();
+
+        // Update Header Badge
+        const badge = document.getElementById('crawlerStatusBadge');
+        if (badge) {
+            if (data.is_crawling) {
+                badge.textContent = `Running: ${data.current_task || '...'}`;
+                badge.style.background = '#e83e8c';
+                badge.style.color = 'white';
+            } else {
+                badge.textContent = 'Idle';
+                badge.style.background = '#444';
+                badge.style.color = '#aaa';
+            }
+        }
+
+        // Also update Inbox Header (legacy, keep for compatibility)
+        const headerTitle = document.querySelector('.col-inbox .col-header span:first-child');
+        if (headerTitle) {
+            const smallTag = headerTitle.querySelector('small');
+            if (smallTag) {
+                if (data.is_crawling) {
+                    smallTag.innerHTML = `(Crawling... ⏳)`;
+                    smallTag.style.color = '#e83e8c';
+                } else {
+                    smallTag.innerHTML = `(Raw)`;
+                    smallTag.style.color = '';
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Polling error:', e);
+    }
+}
 
 // 1. Load Dates
 async function loadDates() {
@@ -385,4 +432,242 @@ function showLoading(msg) {
 }
 function hideLoading() {
     document.getElementById('loadingOverlay').style.display = 'none';
+}
+
+// ============================================
+// Schedule Management Functions (from desk_schedule.js)
+// ============================================
+
+function openSchedulePanel() {
+    document.getElementById('scheduleModal').style.display = 'flex';
+    loadSchedules();
+}
+function closeScheduleModal() {
+    document.getElementById('scheduleModal').style.display = 'none';
+}
+
+async function loadSchedules() {
+    try {
+        const resp = await fetch('/api/schedule');
+        const result = await resp.json();
+        const container = document.getElementById('scheduleList');
+        if (!result.success || !result.schedules || result.schedules.length === 0) {
+            container.innerHTML = '<div style="text-align:center; color:#666; padding:10px;">스케줄 없음</div>';
+            return;
+        }
+        // 시간 순으로 정렬
+        const sortedSchedules = result.schedules.sort((a, b) => {
+            const partsA = a.cron.split(' ');
+            const partsB = b.cron.split(' ');
+            const timeA = parseInt(partsA[1] || 0) * 60 + parseInt(partsA[0] || 0);
+            const timeB = parseInt(partsB[1] || 0) * 60 + parseInt(partsB[0] || 0);
+            return timeA - timeB;
+        });
+        container.innerHTML = sortedSchedules.map(s => {
+            const parts = s.cron.split(' ');
+            const minute = parts[0] || '0';
+            const hour = parts[1] || '0';
+            const timeStr = `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
+            return `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; margin-bottom:8px; 
+                    background:${s.enabled ? 'rgba(32,201,151,0.15)' : 'rgba(108,117,125,0.15)'}; 
+                    border-radius:8px; border-left:4px solid ${s.enabled ? '#20c997' : '#6c757d'};">
+                    <div style="flex:1;">
+                        <div style="font-size:0.9em; font-weight:bold; color:${s.enabled ? '#fff' : '#888'};">${s.name}</div>
+                        <div style="font-size:1.1em; font-weight:bold; color:${s.enabled ? '#20c997' : '#666'};">⏰ ${timeStr}</div>
+                    </div>
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="toggleSchedule('${s.id}')" 
+                            style="padding:5px 10px; font-size:0.8em; border:none; border-radius:4px; cursor:pointer;
+                                   background:${s.enabled ? '#28a745' : '#6c757d'}; color:white;">
+                            ${s.enabled ? 'ON' : 'OFF'}
+                        </button>
+                        <button onclick="editSchedule('${s.id}', '${s.name}', '${hour}', '${minute}')" 
+                            style="padding:5px 10px; font-size:0.8em; border:none; border-radius:4px; cursor:pointer; background:#ffc107; color:#333;">✏️</button>
+                        <button onclick="deleteSchedule('${s.id}')" 
+                            style="padding:5px 10px; font-size:0.8em; border:none; border-radius:4px; cursor:pointer; background:#dc3545; color:white;">🗑️</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } catch (e) {
+        console.error('Schedule load failed:', e);
+    }
+}
+
+async function toggleSchedule(scheduleId) {
+    try {
+        const resp = await fetch(`/api/schedule/${scheduleId}/toggle`, { method: 'POST' });
+        const result = await resp.json();
+        if (result.success) loadSchedules();
+        else alert('토글 실패: ' + result.error);
+    } catch (e) { alert('오류: ' + e.message); }
+}
+
+async function deleteSchedule(scheduleId) {
+    if (!confirm('이 스케줄을 삭제하시겠습니까?')) return;
+    try {
+        const resp = await fetch(`/api/schedule/${scheduleId}`, { method: 'DELETE' });
+        const result = await resp.json();
+        if (result.success) loadSchedules();
+        else alert('삭제 실패: ' + result.error);
+    } catch (e) { alert('오류: ' + e.message); }
+}
+
+function openAddScheduleDialog() {
+    const name = prompt('스케줄 이름:', '새 스케줄');
+    if (!name) return;
+    const hour = prompt('시 (0-23):', '8');
+    if (hour === null) return;
+    const minute = prompt('분 (0-59):', '30');
+    if (minute === null) return;
+    const cron = `${minute} ${hour} * * *`;
+    addSchedule(name, cron);
+}
+
+function editSchedule(scheduleId, currentName, currentHour, currentMinute) {
+    const name = prompt('스케줄 이름:', currentName);
+    if (!name) return;
+    const hour = prompt('시 (0-23):', currentHour);
+    if (hour === null) return;
+    const minute = prompt('분 (0-59):', currentMinute);
+    if (minute === null) return;
+    const cron = `${minute} ${hour} * * *`;
+    updateSchedule(scheduleId, name, cron);
+}
+
+async function addSchedule(name, cron) {
+    try {
+        const resp = await fetch('/api/schedule', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, cron, enabled: true })
+        });
+        const result = await resp.json();
+        if (result.success) loadSchedules();
+        else alert('추가 실패: ' + result.error);
+    } catch (e) { alert('오류: ' + e.message); }
+}
+
+async function updateSchedule(scheduleId, name, cron) {
+    try {
+        const resp = await fetch(`/api/schedule/${scheduleId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, cron })
+        });
+        const result = await resp.json();
+        if (result.success) loadSchedules();
+        else alert('수정 실패: ' + result.error);
+    } catch (e) { alert('오류: ' + e.message); }
+}
+
+async function runCrawlNow() {
+    if (!confirm('지금 자동 수집(Auto-Collect)을 실행하시겠습니까?')) return;
+    showLoading('🚀 Collecting new articles...');
+    try {
+        const resp = await fetch('/api/automation/collect', { method: 'POST' });
+        const result = await resp.json();
+        if (result.success) {
+            alert('✅ ' + result.message);
+            loadDate(currentDate); // Refresh board
+        } else {
+            alert('실행 실패: ' + result.error);
+        }
+    } catch (e) {
+        alert('오류: ' + e.message);
+    } finally {
+        hideLoading();
+    }
+}
+
+// 스케줄 모달 내 상태 표시 버전
+async function runCrawlNowWithStatus() {
+    const statusBox = document.getElementById('crawlStatusBox');
+    const statusText = document.getElementById('crawlStatusText');
+    const statusDetail = document.getElementById('crawlStatusDetail');
+    const spinner = document.getElementById('crawlStatusSpinner');
+    const btn = document.getElementById('btnRunCrawlNow');
+
+    // 상태 표시 시작
+    statusBox.style.display = 'block';
+    statusText.textContent = '🚀 크롤링 시작 중...';
+    statusDetail.textContent = '링크 수집 및 콘텐츠 추출을 진행합니다.';
+    spinner.style.display = 'block';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+
+    try {
+        statusText.textContent = '📡 새 링크 수집 중...';
+        const resp = await fetch('/api/schedule/run_now', { method: 'POST' });
+        const result = await resp.json();
+
+        spinner.style.display = 'none';
+
+        if (result.success) {
+            statusText.textContent = '✅ 크롤링 완료!';
+            statusText.style.color = '#28a745';
+            statusDetail.textContent = result.message || '새 기사가 수집되었습니다.';
+            // 로그 새로고침
+            if (typeof refreshLogs === 'function') refreshLogs();
+            // 2초 후 상태창 숨기기
+            setTimeout(() => {
+                statusBox.style.display = 'none';
+                statusText.style.color = '#20c997';
+            }, 3000);
+        } else {
+            statusText.textContent = '❌ 실행 실패';
+            statusText.style.color = '#dc3545';
+            statusDetail.textContent = result.error || '알 수 없는 오류';
+        }
+    } catch (e) {
+        spinner.style.display = 'none';
+        statusText.textContent = '❌ 오류 발생';
+        statusText.style.color = '#dc3545';
+        statusDetail.textContent = e.message;
+    } finally {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+    }
+}
+
+// ============================================
+// Logs Panel Functions
+// ============================================
+
+function openLogsPanel() {
+    document.getElementById('logsModal').style.display = 'flex';
+    refreshLogs();
+}
+function closeLogsPanel() {
+    document.getElementById('logsModal').style.display = 'none';
+}
+
+async function refreshLogs() {
+    const list = document.getElementById('crawlerLogList');
+    if (!list) return;
+    try {
+        const res = await fetch('/api/logs/crawler?limit=20');
+        const logs = await res.json();
+        if (!logs || logs.length === 0) {
+            list.innerHTML = '<div style="color:#666; text-align:center; padding:20px;">기록 없음</div>';
+            return;
+        }
+        list.innerHTML = logs.map(log => {
+            let timeStr = log.timestamp || '';
+            if (timeStr.includes('T')) timeStr = timeStr.split('T')[1].substring(0, 8);
+            const color = log.success ? '#28a745' : '#dc3545';
+            return `
+                <div style="border-bottom:1px solid #444; padding:8px 0;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#eee; font-weight:bold;">[${timeStr}] ${log.action}</span>
+                        <span style="color:${color};">${log.duration}s</span>
+                    </div>
+                    <div style="color:#aaa; margin-top:4px;">${log.result}</div>
+                </div>
+            `;
+        }).join('');
+    } catch (e) {
+        list.textContent = 'Log Load Error';
+    }
 }

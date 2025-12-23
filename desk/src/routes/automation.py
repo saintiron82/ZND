@@ -47,8 +47,16 @@ def automation_collect():
     1️⃣ 링크 수집: 모든 활성 타겟에서 새 링크 수집
     - 히스토리에 없는 링크만 반환
     """
+    from src.crawler_state import set_crawling, log_crawl_event # [MODIFIED]
+    import time
+    
+    start_time = time.time()
     try:
         targets = load_targets()
+        
+        # [NEW] Status
+        set_crawling(True, "Scanning Targets for Links")
+        
         all_links = []
         
         for target in targets:
@@ -73,6 +81,10 @@ def automation_collect():
                 seen.add(item['url'])
                 unique_links.append(item)
         
+        duration = time.time() - start_time
+        msg = f"Collected {len(unique_links)} new links"
+        log_crawl_event("Collect", msg, duration, success=True)
+        
         print(f"📡 [Collect] 수집 완료: {len(unique_links)} 새 링크")
         return jsonify({
             'success': True,
@@ -83,6 +95,8 @@ def automation_collect():
     except Exception as e:
         print(f"❌ [Collect] Error: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
+    finally:
+        set_crawling(False)
 
 
 @automation_bp.route('/api/automation/extract', methods=['POST'])
@@ -91,6 +105,10 @@ def automation_extract():
     2️⃣ 콘텐츠 추출: 수집된 링크 → 캐시 저장
     - 이미 캐시된 것은 건너뜀
     """
+    from src.crawler_state import set_crawling, log_crawl_event # [MODIFIED]
+    import time
+
+    start_time = time.time()
     try:
         data = request.json or {}
         # 링크 목록이 없으면 자동 수집
@@ -106,6 +124,8 @@ def automation_extract():
                     if not db.check_history(url):
                         links.append({'url': url, 'source_id': target['id']})
         
+        set_crawling(True, f"Content Extraction: {len(links)} items") # [NEW] Status
+
         extracted_count = 0
         skipped_count = 0
         failed_count = 0
@@ -141,6 +161,10 @@ def automation_extract():
         
         asyncio.run(extract_all())
         
+        duration = time.time() - start_time
+        msg = f"Extracted {extracted_count} (Skip:{skipped_count}, Fail:{failed_count})"
+        log_crawl_event("Extract", msg, duration, success=True)
+
         print(f"📥 [Extract] 추출: {extracted_count}, 스킵: {skipped_count}, 실패: {failed_count}")
         return jsonify({
             'success': True,
@@ -152,6 +176,8 @@ def automation_extract():
     except Exception as e:
         print(f"❌ [Extract] Error: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
+    finally:
+        set_crawling(False)
 
 
 @automation_bp.route('/api/automation/analyze', methods=['POST'])

@@ -288,3 +288,4 @@ function toggleSelectAll() {
     checkboxes.forEach(cb => cb.checked = !allChecked);
     updateSelectedCount();
 }
+

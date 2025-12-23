@@ -20,7 +20,7 @@
         <div class="issue-selector-container">
             <span class="issue-selector-label">📰 보기:</span>
             <select id="issueSelector" class="issue-selector" onchange="onIssueSelectorChange()">
-                <option value="desk">✨ 미발행 (Desk)</option>
+                <option value="desk" selected>✨ 미발행 (Desk)</option>
                 <!-- Dynamic options will be added here -->
             </select>
             <button class="btn" style="background:#6c757d; color:white; padding:5px 10px; font-size:0.8em;"
@@ -43,8 +43,6 @@
             </div>
             <div class="header-actions">
                 <a href="/crawler" class="btn" style="background:#667eea; color:white; text-decoration:none;">🔧 크롤러</a>
-                <button class="btn" style="background:#20c997; color:white;" onclick="openSchedulePanel()">🕐 자동
-                    크롤링</button>
                 <button class="btn btn-refresh" onclick="loadDesk()">🔄 새로고침</button>
             </div>
         </div>
@@ -54,7 +52,7 @@
     <div style="display: flex; gap: 20px; padding: 0 20px;">
         <!-- 왼쪽: 진행 상황 사이드 패널 (고정) -->
         <div id="sidePanel"
-            style="width: 280px; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); overflow-y: auto;">
+            style="width: 420px; flex-shrink: 0; position: sticky; top: 20px; align-self: flex-start; max-height: calc(100vh - 40px); overflow-y: auto;">
             <!-- 1. 미발행 현황 패널 (Desk 모드일 때 표시) -->
             <div id="deskStatsPanel"
                 style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
@@ -78,6 +76,7 @@
                         <div style="font-size: 0.7em; color: #aaa;">발행</div>
                     </div>
                 </div>
+
 
             </div>
 
@@ -410,39 +409,6 @@
                 </div>
             </div>
 
-            <!-- 🕐 스케줄 관리 모달 -->
-            <div id="scheduleModal" class="modal-overlay">
-                <div class="modal-content" style="max-width: 500px; border: 2px solid #20c997;">
-                    <div class="modal-header" style="background: linear-gradient(135deg, #20c997, #1ea87f);">
-                        <h3 style="color: white; margin: 0;">🕐 자동 크롤링 스케줄 관리</h3>
-                        <button class="modal-close" onclick="closeScheduleModal()">✕</button>
-                    </div>
-                    <div class="modal-body">
-                        <div style="margin-bottom: 15px;">
-                            <button class="btn" style="background:#28a745; color:white; width:100%; padding: 12px;"
-                                onclick="runCrawlNow()">▶️ 지금 바로 크롤링 실행</button>
-                        </div>
-
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <h4 style="margin: 0; color: #20c997;">📅 스케줄 목록</h4>
-                            <button class="btn"
-                                style="background:#6c757d; color:white; padding:4px 10px; font-size:0.8em;"
-                                onclick="loadSchedules()">🔄 새로고침</button>
-                        </div>
-
-                        <div id="scheduleList"
-                            style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 10px;">
-                            <div style="text-align: center; color: #666; padding: 20px; font-size: 0.9em;">로딩 중...</div>
-                        </div>
-
-                        <button class="btn" style="background:#667eea; color:white; width:100%; padding: 10px;"
-                            onclick="openAddScheduleDialog()">➕ 새 스케줄 추가</button>
-                    </div>
-                </div>
-            </div>
-
-
             <!-- JS External Link -->
             <!-- Core Dependencies -->
             <script src="{{ url_for('static', filename='js/desk_core.js') }}"></script>
@@ -452,7 +418,6 @@
             <script src="{{ url_for('static', filename='js/desk_actions.js') }}"></script>
             <script src="{{ url_for('static', filename='js/desk_dedup.js') }}"></script>
             <script src="{{ url_for('static', filename='js/desk_publish.js') }}"></script>
-            <script src="{{ url_for('static', filename='js/desk_schedule.js') }}"></script>
 </body>
 
 </html>

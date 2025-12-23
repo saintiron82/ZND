@@ -128,11 +128,32 @@ class DBClient:
         """
         Checks if the URL has been processed with a final state.
         Returns True if status is ACCEPTED, REJECTED, SKIPPED, WORTHLESS, or MLL_FAILED.
+        For EXTRACT_FAILED: allows retry after 24 hours.
         """
+        from datetime import datetime, timezone, timedelta
+        
         if url in self.history:
-            status = self.history[url].get('status')
+            entry = self.history[url]
+            status = entry.get('status')
+            
+            # 영구 차단 상태
             if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS', 'MLL_FAILED']:
                 return True
+            
+            # EXTRACT_FAILED: 24시간 후 재시도 허용
+            if status == 'EXTRACT_FAILED':
+                timestamp = entry.get('timestamp')
+                if timestamp:
+                    try:
+                        failed_at = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+                        if datetime.now(timezone.utc) - failed_at < timedelta(hours=24):
+                            return True  # 24시간 안됨, 스킵
+                        # 24시간 지남, 재시도 허용
+                        return False
+                    except:
+                        pass
+                return True  # 타임스탬프 없으면 스킵
+                
         return False
 
     def get_history_status(self, url):
@@ -600,6 +621,15 @@ class DBClient:
         """
         Update an existing publication record.
         """
+        # [DEBUG] Entry Logging
+        try:
+            with open('debug_update.log', 'a', encoding='utf-8') as f:
+                from datetime import datetime
+                f.write(f"[{datetime.now()}] update_publication_record called for {publish_id}\n")
+                f.write(f"Keys: {list(update_data.keys())}\n")
+        except Exception as err:
+            print(f"Log Error: {err}")
+
         if not self.db:
             return False
             
@@ -611,8 +641,8 @@ class DBClient:
             self._track_write()  # 통계 추적
             print(f"✏️ [Firestore] Updated Publication: {publish_id}")
             
-            # _meta 업데이트 (article_count 변경 시)
-            if 'article_count' in update_data or 'articles' in update_data:
+            # _meta 업데이트 (article_count, articles, status, schema_version 변경 시)
+            if 'article_count' in update_data or 'articles' in update_data or 'status' in update_data or 'schema_version' in update_data:
                 self._update_meta_for_issue(publish_id, update_data)
             
             return True
@@ -639,7 +669,8 @@ class DBClient:
                 'name': issue_data.get('edition_name'),
                 'count': issue_data.get('article_count', 0),
                 'updated_at': issue_data.get('updated_at'),
-                'status': issue_data.get('status', 'preview')
+                'status': issue_data.get('status', 'preview'),
+                'schema_version': issue_data.get('schema_version') # [NEW]
             }
             
             # 기존 _meta 가져오기
@@ -675,6 +706,18 @@ class DBClient:
     
     def _update_meta_for_issue(self, edition_code, update_data):
         """기존 회차의 _meta 항목 업데이트"""
+        # [DEBUG] File Logging
+        try:
+            with open('debug_meta.log', 'a', encoding='utf-8') as f:
+                f.write(f"[{datetime.now()}] _update_meta_for_issue called for {edition_code}\n")
+                f.write(f"Update Data Keys: {list(update_data.keys())}\n")
+                if 'schema_version' in update_data:
+                    f.write(f"Schema Version: {update_data['schema_version']}\n")
+                else:
+                    f.write("Schema Version NOT FOUND in update_data\n")
+        except Exception as log_err:
+            print(f"Log Error: {log_err}")
+
         if not self.db:
             return
             
@@ -692,6 +735,10 @@ class DBClient:
                             issues[i]['count'] = update_data['article_count']
                         if 'updated_at' in update_data:
                             issues[i]['updated_at'] = update_data['updated_at']
+                        if 'schema_version' in update_data: # [NEW]
+                            issues[i]['schema_version'] = update_data['schema_version']
+                        if 'status' in update_data: # [NEW] Release 시 status 동기화
+                            issues[i]['status'] = update_data['status']
                         break
                 
                 meta_ref.update({
@@ -782,8 +829,8 @@ class DBClient:
             # code가 '_'로 시작하는 항목 필터링 (안전장치)
             issues = [i for i in issues if not i.get('code', '').startswith('_')]
             
-            # updated_at 기준 내림차순 정렬
-            issues.sort(key=lambda x: x.get('updated_at', ''), reverse=True)
+            # code (edition_code) 기준 내림차순 정렬 (발행순 유지)
+            issues.sort(key=lambda x: x.get('code', ''), reverse=True)
             
             # API 응답 형식에 맞게 변환 (id 필드 추가)
             result = []
@@ -794,7 +841,8 @@ class DBClient:
                     'edition_name': iss.get('name'),
                     'article_count': iss.get('count', 0),
                     'updated_at': iss.get('updated_at'),
-                    'status': iss.get('status', 'preview')
+                    'status': iss.get('status', 'preview'),
+                    'schema_version': iss.get('schema_version')  # [NEW]
                 })
             
             print(f"📋 [Firestore] Loaded {len(result)} issues from _meta (1 READ)")

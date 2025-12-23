@@ -71,6 +71,18 @@ d:\ZND\desk\
     -   회차 코드 생성 (예: `251223_1`).
     -   Firestore에 `publications/{edition_code}` 문서 생성.
     -   **V2 구조**: 기사 데이터 전체를 회차 문서 내 `articles` 배열에 **직접 내장**.
+
+## Environment Variables
+
+The project uses `.env` files for configuration.
+- `desk/.env`: Configuration for the Desk system (Flask).
+- `web/.env.local`: Configuration for the Web interface (Next.js).
+
+### Google Cloud Service Account Key
+To access Firebase/Firestore, a Service Account Key JSON file is required.
+- **Path**: `desk/zeroechodaily-serviceAccountKey.json`
+- **Important**: This file contains sensitive credentials and is git-ignored. Do not commit it.
+- **Environment Variable**: `FIREBASE_SERVICE_ACCOUNT_KEY` (optional, defaults to looking for the file in well-known locations)
 3.  **메타 업데이트 (Meta Update)**:
     -   `publications/_meta` 업데이트 (회차 목록, 최신 버전 정보).
     -   `publications/_article_ids` 업데이트 (전역 중복 체크용 인덱스).

@@ -49,6 +49,6 @@ echo [ZED] Opening browser...
 start http://localhost:5500
 
 echo [ZED] Starting Manual Crawler Server...
-python manual_crawler.py
+.\.venv\Scripts\python.exe manual_crawler.py
 
 pause

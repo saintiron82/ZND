@@ -1,0 +1,30 @@
+{
+  "schedules": [
+    {
+      "id": "morning_crawl",
+      "name": "오전 수집",
+      "cron": "30 6 * * *",
+      "enabled": true
+    },
+    {
+      "id": "evening_crawl",
+      "name": "오후 수집",
+      "cron": "30 18 * * *",
+      "enabled": true
+    },
+    {
+      "id": "7594d174",
+      "name": "점심수집",
+      "cron": "30 12 * * *",
+      "enabled": true,
+      "description": ""
+    },
+    {
+      "id": "718b26df",
+      "name": "새벽수집",
+      "cron": "30 0 * * *",
+      "enabled": true,
+      "description": ""
+    }
+  ]
+}

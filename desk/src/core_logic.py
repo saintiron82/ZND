@@ -242,6 +242,18 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
     if 'cached_at' not in content:
         content['cached_at'] = datetime.now(timezone.utc).isoformat()
     
+    # [FIX] Convert any datetime objects to ISO strings for JSON serialization
+    def _serialize_datetimes(obj):
+        if isinstance(obj, dict):
+            return {k: _serialize_datetimes(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [_serialize_datetimes(i) for i in obj]
+        elif isinstance(obj, datetime):
+            return obj.isoformat()
+        return obj
+    
+    content = _serialize_datetimes(content)
+    
     try:
         os.makedirs(cache_dir, exist_ok=True)
         with open(cache_path, 'w', encoding='utf-8') as f:

@@ -2,6 +2,8 @@
  * desk_publish.js
  * ============================================ */
 
+const LATEST_SCHEMA_VERSION = '2.0.0';
+
 async function refreshIssueList() {
     try {
         const resp = await fetch('/api/publications/list');
@@ -31,8 +33,8 @@ async function refreshIssueList() {
                 const borderColor = isReleased ? '#28a745' : '#ffc107';
                 const bgColor = isReleased ? 'rgba(40,167,69,0.1)' : 'rgba(255,193,7,0.1)';
                 const statusBadge = isPreview
-                    ? '<span style="background:#ffc107;color:#333;padding:2px 6px;border-radius:4px;font-size:0.7em;font-weight:bold;">Preview</span>'
-                    : '<span style="background:#28a745;color:white;padding:2px 6px;border-radius:4px;font-size:0.7em;font-weight:bold;">Released</span>';
+                    ? '<span style="background:#ffc107;color:#333;padding:2px 6px;border-radius:4px;font-size:0.7em;font-weight:bold;">📝 프리뷰</span>'
+                    : '<span style="background:#28a745;color:white;padding:2px 6px;border-radius:4px;font-size:0.7em;font-weight:bold;">✅ 발행</span>';
                 const releaseBtn = isPreview
                     ? `<button onclick="event.stopPropagation(); releaseIssue('${issue.id}', '${issue.edition_name}')" style="background:#28a745;color:white;border:none;padding:4px 8px;border-radius:4px;font-size:0.75em;cursor:pointer;margin-left:6px;">🚀 Release</button>`
                     : '';
@@ -47,6 +49,7 @@ async function refreshIssueList() {
                                         <div style="display:flex; align-items:center;">
                                             <span style="font-size: 0.8em; color: #888;">${issue.article_count || 0}건</span>
                                             ${releaseBtn}
+                                            ${issue.schema_version === LATEST_SCHEMA_VERSION ? '' : `<button onclick="event.stopPropagation(); updateIssueFormat('${issue.id}', '${issue.edition_name}')" style="background:#17a2b8;color:white;border:none;padding:4px 8px;border-radius:4px;font-size:0.75em;cursor:pointer;margin-left:4px;" title="최신 데이터로 업데이트">⬆️</button>`}
                                             ${deleteBtn}
                                         </div>
                                     </div>
@@ -469,5 +472,28 @@ async function setNextIssueNumber() {
         }
     } catch (e) {
         alert(`❌ 오류: ${e.message}`);
+    }
+}
+
+async function updateIssueFormat(publishId, editionName) {
+    if (!confirm(`🔄 "${editionName}" 회차를 최신 데이터로 업데이트하시겠습니까?\n\n로컬 캐시(Staging)에 있는 상세 정보를 바탕으로\n회차 문서(Cloud & Local)를 보강합니다.`)) {
+        return;
+    }
+
+    try {
+        const resp = await fetch(`/api/publication/${publishId}/update`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const result = await resp.json();
+
+        if (result.success) {
+            alert(`✅ 업데이트 완료!\n\n- 보강됨: ${result.enriched}건\n- 캐시 없음: ${result.not_found}건\n- 총 기사: ${result.total}건`);
+            await refreshIssueList();
+        } else {
+            alert(`❌ 업데이트 실패: ${result.error}`);
+        }
+    } catch (e) {
+        alert(`❌ 통신 오류: ${e.message}`);
     }
 }

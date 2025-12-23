@@ -197,7 +197,8 @@ def desk_publish_selected():
             'published_at': datetime.now(timezone.utc).isoformat(),
             'date': today_str,
             'article_count': len(final_article_ids),
-            'articles': final_article_detail  # 로컬에는 상세 정보 유지
+            'articles': final_article_detail,  # 로컬에는 상세 정보 유지
+            'schema_version': '2.0.0' # [NEW] 스키마 버전
         }
         db.save_issue_index_file(index_data)
         
@@ -206,7 +207,8 @@ def desk_publish_selected():
             'article_count': len(final_article_ids),
             'article_ids': final_article_ids,
             'articles': final_article_detail,  # [NEW] 기사 상세 내장
-            'updated_at': datetime.now(timezone.utc).isoformat()
+            'updated_at': datetime.now(timezone.utc).isoformat(),
+            'schema_version': '2.0.0' # [NEW] 스키마 버전
         })
         
         # [NEW] 발행 후 캐시 무효화
@@ -558,14 +560,57 @@ def build_enriched_article(article: dict, cache_data: dict) -> dict:
         'title_en': cache_data.get('title', ''),
         'summary': cache_data.get('summary', ''),
         'url': cache_data.get('url') or article.get('url', ''),
+        'image_url': cache_data.get('image_url', ''),  # [NEW] 대표 이미지
+        'author': cache_data.get('author', ''),        # [NEW] 작성자
         'source_id': cache_data.get('source_id', ''),
         'zero_echo_score': cache_data.get('zero_echo_score'),
         'impact_score': cache_data.get('impact_score'),
-        'layout_type': cache_data.get('layout_type', 'Standard'),
+        'layout_type': cache_data.get('layout_type', 'Standard'), # 기본값 Standard
         'tags': cache_data.get('tags', []),
         'category': cache_data.get('category', '미분류'),
+        'reading_time': cache_data.get('reading_time', 0), # [NEW] 예상 읽기 시간
         'filename': article.get('filename', ''),
         'date': article.get('date', cache_data.get('crawled_at', '')[:10] if cache_data.get('crawled_at') else ''),
-        'published_at': cache_data.get('published_at', article.get('published_at', ''))
+        'published_at': cache_data.get('published_at', article.get('published_at', '')),
+        # [NEW] 기사 원본 입력 시간 (Real Input Time)
+        'origin_published_at': cache_data.get('published_at', ''), 
+        # [NEW] 원본 데이터 일부 보존 (필요 시)
+        'meta_description': cache_data.get('description', '')
     }
+
+
+@publish_bp.route('/api/debug/latest_issue')
+def debug_latest_issue():
+    """🐛 디버그: Firestore의 최신 회차 데이터 원본 조회"""
+    try:
+        from src.db_client import DBClient
+        db = DBClient()
+        issues = db.get_issues_from_meta()
+        if not issues:
+            return jsonify({'error': 'No issues found'})
+            
+        latest_id = issues[0].get('id') or issues[0].get('edition_code')
+        data = db.get_publication(latest_id)
+        
+        return jsonify({
+            'issue_id': latest_id,
+            'data': data
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@publish_bp.route('/api/debug/meta')
+def debug_meta_doc():
+    """🐛 디버그: Firestore _meta 문서 원본 조회"""
+    try:
+        from src.db_client import DBClient
+        db = DBClient()
+        meta_ref = db.db.collection('publications').document('_meta')
+        meta_doc = meta_ref.get()
+        if meta_doc.exists:
+            return jsonify(meta_doc.to_dict())
+        return jsonify({'error': '_meta not found'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 

@@ -21,6 +21,7 @@ from src.core_logic import (
     load_automation_config
 )
 from src.trash_manager import TrashManager # [NEW]
+from src.crawler_state import set_crawling, get_crawling_status, get_crawl_logs # [MODIFIED]
 
 crawler_bp = Blueprint('crawler', __name__)
 
@@ -28,6 +29,18 @@ db = DBClient()
 robots_checker = RobotsChecker()
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
 trash_manager = TrashManager(CACHE_DIR) # [NEW]
+
+
+@crawler_bp.route('/api/crawl/status')
+def crawl_status():
+    """크롤링 진행 상태 반환"""
+    return jsonify(get_crawling_status())
+
+@crawler_bp.route('/api/logs/crawler')
+def crawler_logs():
+    """최근 크롤링 로그 반환"""
+    limit = int(request.args.get('limit', 5))
+    return jsonify(get_crawl_logs(limit))
 
 
 def load_from_cache(url):
@@ -261,6 +274,11 @@ def extract_batch():
             await crawler.close()
 
     try:
+        # [NEW] Update Status
+        fetch_count = len(urls_to_fetch)
+        if fetch_count > 0:
+            set_crawling(True, f"Extracting {fetch_count} URLs")
+
         fetched_results = []
         if urls_to_fetch:
             fetched_results = asyncio.run(get_data_batch(urls_to_fetch))
@@ -287,6 +305,8 @@ def extract_batch():
         return jsonify(valid_results)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    finally:
+        set_crawling(False)
 
 
 @crawler_bp.route('/api/save', methods=['POST'])

@@ -1,0 +1,17 @@
+{
+  "id": "73254ae95f04",
+  "article_id": "73254ae95f04",
+  "title_ko": "메타, 소리 분리 AI 'SAM 오디오' 오픈 소스 공개",
+  "summary": "메타가 이미지 분리 기술 SAM을 오디오로 확장한 'SAM 오디오'를 공개했다. 자연어, 클릭, 시간대 표시 등으로 특정 소리만 분리 가능하며, 관련 벤치마크와 평가 모델도 함께 오픈 소스로 배포했다. 이는 오디오 편집 및 멀티모달 이해 분야의 기술적 진보를 의미한다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204998",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 5.8,
+  "impact_score": 6.0,
+  "published_at": "2025-12-23T05:22:55.419532+00:00",
+  "source_id": "aitimes",
+  "original_title": "메타, 원하는 오디오만 쉽게 분리하는 첨단 모델 ‘SAM 오디오’ 출시 - AI타임스",
+  "publish_id": "251223_3",
+  "edition_code": "251223_3",
+  "edition_name": "3호"
+}

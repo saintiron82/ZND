@@ -76,7 +76,8 @@ async function loadDesk() {
         }
 
         deskData = data.articles || [];
-        console.log(`Loaded ${deskData.length} items for date=${selectedDate}`);
+        window.unanalyzedCount = data.unanalyzed_count || 0;  // [NEW] API에서 받은 미분석 수
+        console.log(`Loaded ${deskData.length} items for date=${selectedDate}, unanalyzed=${window.unanalyzedCount}`);
 
         renderArticles();
         updateStats();
@@ -302,10 +303,14 @@ function renderArticles() {
 
 function updateStats() {
     // 전체 통계
+    // 미분석: API에서 직접 받음 (카드로는 표시되지 않음)
+    const unanalyzed = window.unanalyzedCount || 0;
     const staged = deskData.filter(a => !a.rejected && !a.published && a.dedup_status !== 'duplicate').length;
     const rejected = deskData.filter(a => a.rejected || a.dedup_status === 'duplicate').length;
     const published = deskData.filter(a => a.published).length;
 
+    const unanalyzedEl = document.getElementById('unanalyzedCount');
+    if (unanalyzedEl) unanalyzedEl.textContent = unanalyzed;
     document.getElementById('stagedCount').textContent = staged;
     document.getElementById('rejectedCount').textContent = rejected;
     document.getElementById('publishedCount').textContent = published;
@@ -691,4 +696,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     await refreshIssueList();
     await loadPublicationConfig(); // 설정 로드 추가
     await loadDesk();
+
+    // 🔥 Firebase 통계 로드
+    await loadFirebaseStats();
 });
+
+// ============================================
+// 🔥 Firebase 사용량 통계
+// ============================================
+
+async function loadFirebaseStats() {
+    try {
+        const resp = await fetch('/api/firebase/stats');
+        const result = await resp.json();
+        if (result.success && result.stats) {
+            updateFirebaseStatsUI(result.stats);
+        }
+    } catch (e) {
+        console.warn('Firebase stats load failed:', e);
+    }
+}
+
+function updateFirebaseStatsUI(stats) {
+    const reads = document.getElementById('fbStatReads');
+    const writes = document.getElementById('fbStatWrites');
+    const deletes = document.getElementById('fbStatDeletes');
+    const total = document.getElementById('fbStatTotal');
+
+    if (reads) reads.textContent = stats.reads || 0;
+    if (writes) writes.textContent = stats.writes || 0;
+    if (deletes) deletes.textContent = stats.deletes || 0;
+    if (total) total.textContent = stats.total || 0;
+}
+
+async function resetFirebaseStats() {
+    if (!confirm('🔥 Firebase 사용량 통계를 리셋하시겠습니까?')) return;
+
+    try {
+        const resp = await fetch('/api/firebase/stats/reset', { method: 'POST' });
+        const result = await resp.json();
+        if (result.success) {
+            updateFirebaseStatsUI(result.stats);
+            console.log('🔄 Firebase stats reset');
+        }
+    } catch (e) {
+        console.warn('Firebase stats reset failed:', e);
+    }
+}

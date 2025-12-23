@@ -195,5 +195,11 @@
   "dedup_status": "selected",
   "saved": true,
   "synced_to_firebase": true,
-  "synced_at": "2025-12-22T16:36:08.608589+00:00"
+  "synced_at": "2025-12-22T16:36:08.608589+00:00",
+  "publish_id": "251223_3",
+  "edition_code": "251223_3",
+  "edition_name": "3호",
+  "published": true,
+  "published_at": "2025-12-23T05:22:55.525230+00:00",
+  "data_file": "aitimes_5533d49cb8ee.json"
 }

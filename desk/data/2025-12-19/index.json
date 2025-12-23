@@ -1,7 +1,7 @@
 {
   "date": "2025-12-19",
-  "updated_at": "2025-12-20T12:09:18.836370",
-  "count": 26,
+  "updated_at": "2025-12-23T14:21:55.749423",
+  "count": 31,
   "articles": [
     {
       "article_id": "4d9bb7",
@@ -9,8 +9,18 @@
       "impact_score": 8.0
     },
     {
+      "article_id": "4d9bb71876a7",
+      "filename": "venturebeat_4d9bb71876a7.json",
+      "impact_score": 8.0
+    },
+    {
       "article_id": "707363",
       "filename": "the_decoder_7073633f.json",
+      "impact_score": 7.5
+    },
+    {
+      "article_id": "7073633f8efb",
+      "filename": "the_decoder_7073633f8efb.json",
       "impact_score": 7.5
     },
     {
@@ -49,6 +59,11 @@
       "impact_score": 6.0
     },
     {
+      "article_id": "188514434dff",
+      "filename": "venturebeat_188514434dff.json",
+      "impact_score": 6.0
+    },
+    {
       "article_id": "3c0024",
       "filename": "venturebeat_3c0024af.json",
       "impact_score": 6.0
@@ -56,6 +71,11 @@
     {
       "article_id": "d998e3",
       "filename": "venturebeat_d998e335.json",
+      "impact_score": 6.0
+    },
+    {
+      "article_id": "d998e3357368",
+      "filename": "venturebeat_d998e3357368.json",
       "impact_score": 6.0
     },
     {
@@ -101,6 +121,11 @@
     {
       "article_id": "a6af4d",
       "filename": "the_decoder_a6af4d7e.json",
+      "impact_score": 3.0
+    },
+    {
+      "article_id": "a6af4d7e6922",
+      "filename": "the_decoder_a6af4d7e6922.json",
       "impact_score": 3.0
     },
     {

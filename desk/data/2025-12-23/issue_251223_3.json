@@ -1,178 +1,178 @@
 {
-  "id": "VgJuf51wCPxwDe4yuSVi",
+  "id": "251223_3",
   "edition_code": "251223_3",
   "edition_name": "3호",
-  "published_at": "2025-12-22T16:32:14.504173+00:00",
+  "published_at": "2025-12-23T05:22:55.642509+00:00",
   "date": "2025-12-23",
   "article_count": 24,
   "articles": [
     {
-      "id": "52e9e8",
+      "id": "52e9e8cf4d8c",
       "title": "중국, 오픈 모델 경쟁 승리... 경제를 넘어선 정치적 대가",
       "url": "https://the-decoder.com/china-wins-the-open-model-race-and-the-price-to-pay-goes-beyond-economics/",
-      "filename": "the_decoder_52e9e8.json",
-      "date": "2025-12-22"
+      "filename": "the_decoder_52e9e8cf4d8c.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "c9da6e",
+      "id": "c9da6ebc4ee1",
       "title": "엔비디아, 범용 게임 AI 에이전트 '나이트로젠' 오픈 소스 공개",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204986",
-      "filename": "aitimes_c9da6e.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_c9da6ebc4ee1.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "73254a",
+      "id": "73254ae95f04",
       "title": "메타, 소리 분리 AI 'SAM 오디오' 오픈 소스 공개",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204998",
-      "filename": "aitimes_73254a.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_73254ae95f04.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "61171a",
+      "id": "61171a5be2af",
       "title": "앤스로픽 Claude Opus 4.5, 5시간 분량의 작업 처리 가능",
       "url": "https://the-decoder.com/anthropics-claude-opus-4-5-can-tackle-some-tasks-lasting-nearly-five-hours/",
-      "filename": "the_decoder_61171a.json",
-      "date": "2025-12-22"
+      "filename": "the_decoder_61171a5be2af.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "bfe9c2",
+      "id": "bfe9c29f00e6",
       "title": "페이페이 리 '월드 랩스', 공간 지능 모델 '마블' 활용성 강조",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204980",
-      "filename": "aitimes_bfe9c2.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_bfe9c29f00e6.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "ef764f",
+      "id": "ef764fe206a6",
       "title": "알리바바 Qwen, 포토샵처럼 이미지 레이어 분리하는 AI 모델 공개",
       "url": "https://the-decoder.com/alibabas-qwen-releases-ai-model-that-splits-images-into-editable-layers-like-photoshop/",
-      "filename": "the_decoder_ef764f.json",
-      "date": "2025-12-22"
+      "filename": "the_decoder_ef764fe206a6.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "b2cfd0",
+      "id": "b2cfd025fdf2",
       "title": "Kling 2.6, 음성 제어 및 모션 기능 업그레이드로 AI 비디오 리얼리즘 강화",
       "url": "https://the-decoder.com/kling-2-6-adds-voice-control-and-motion-upgrades-as-ai-video-tools-race-toward-realism/",
-      "filename": "the_decoder_b2cfd0.json",
-      "date": "2025-12-22"
+      "filename": "the_decoder_b2cfd025fdf2.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "c34a5d",
+      "id": "c34a5df52490",
       "title": "美 에너지부, 빅테크 총출동 '제네시스 미션' 착수",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204961",
-      "filename": "aitimes_c34a5d.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_c34a5df52490.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "db76c8",
+      "id": "db76c8477c2a",
       "title": "ChatGPT에서 미키 마우스 만난다…디즈니, 오픈AI에 1.5조원 투자",
       "url": "https://techneedle.com/archives/43019",
-      "filename": "techneedle_db76c8.json",
-      "date": "2025-12-22"
+      "filename": "techneedle_db76c8477c2a.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "d359db",
+      "id": "d359dbd87afa",
       "title": "샘 알트먼 \"딥시크·제미나이 대응해 연 1~2회 '코드 레드' 발령\"",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204975",
-      "filename": "aitimes_d359db.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_d359dbd87afa.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "27eee5",
+      "id": "27eee513a3b3",
       "title": "OpenAI, 컴퓨팅 수익 마진 70%로 대폭 개선... 흑자 전환 청신호",
       "url": "https://the-decoder.com/openai-reportedly-dramatically-improved-its-compute-profit-margins/",
-      "filename": "the_decoder_27eee5.json",
-      "date": "2025-12-22"
+      "filename": "the_decoder_27eee513a3b3.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "4270fd",
+      "id": "4270fdd88133",
       "title": "에디슨 사이언티픽, 1000억 투자 유치하며 'AI 과학자' 가속화",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204959",
-      "filename": "aitimes_4270fd.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_4270fdd88133.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "5533d4",
+      "id": "5533d49cb8ee",
       "title": "NC AI, 맞춤형 음성 생성 및 실시간 번역 서비스 출시",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204973",
-      "filename": "aitimes_5533d4.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_5533d49cb8ee.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "8bc5ed",
+      "id": "8bc5ed372abf",
       "title": "프렌들리AI, 엔비디아 파트너 합류... '네모트론 3' 서비스 개시",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204985",
-      "filename": "aitimes_8bc5ed.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_8bc5ed372abf.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "8ae507",
+      "id": "8ae5073a5e97",
       "title": "자라(Zara), AI 디지털 트윈 모델 도입 확대",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204960",
-      "filename": "aitimes_8ae507.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_8ae5073a5e97.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "5a06cf",
+      "id": "5a06cf117afc",
       "title": "오픈AI, 미성년자 보호 위한 강력한 '안전 지침' 시행",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204964",
-      "filename": "aitimes_5a06cf.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_5a06cf117afc.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "c0dea8",
+      "id": "c0dea8c4899e",
       "title": "뉴욕주, 트럼프 행정명령 무시하고 AI 안전 법안(RAISE Act) 서명",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204972",
-      "filename": "aitimes_c0dea8.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_c0dea8c4899e.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "d39363",
+      "id": "d39363e95e33",
       "title": "미국, 올해 AI 이유로 5.5만 명 해고... \"과잉 고용 조정의 핑계\" 분석도",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=205007",
-      "filename": "aitimes_d39363.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_d39363e95e33.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "bf445c",
+      "id": "bf445c18014c",
       "title": "과기부, AI 연구용 첨단 GPU 4000장 지원 공모",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204989",
-      "filename": "aitimes_bf445c.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_bf445c18014c.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "ec75bd",
+      "id": "ec75bd5dd621",
       "title": "유로폴 \"10년 뒤 로봇·드론 범죄 본격화... 경찰 무장 필요\"",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204999",
-      "filename": "aitimes_ec75bd.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_ec75bd5dd621.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "d4afec",
+      "id": "d4afecd8d3bb",
       "title": "웹사이트 개편 및 RAG 기반 검색 기능 도입 공지",
       "url": "https://the-decoder.com/some-notes-on-whats-new/",
-      "filename": "the_decoder_d4afec.json",
-      "date": "2025-12-22"
+      "filename": "the_decoder_d4afecd8d3bb.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "f2706e",
+      "id": "f2706e526d56",
       "title": "구글, 행동하는 온디바이스 AI '펑션젬마' 공개",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204962",
-      "filename": "aitimes_f2706e.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_f2706e526d56.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "c6828c",
+      "id": "c6828cd069b1",
       "title": "정전 사태로 웨이모 로보택시 작동 정지... '자율주행 기술의 한계'",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204974",
-      "filename": "aitimes_c6828c.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_c6828cd069b1.json",
+      "date": "2025-12-23"
     },
     {
-      "id": "a7c902",
+      "id": "a7c90294f7b5",
       "title": "싱킹머신즈랩, 기업용 미세조정 API '팅커' 정식 출시",
       "url": "https://www.aitimes.com/news/articleView.html?idxno=204963",
-      "filename": "aitimes_a7c902.json",
-      "date": "2025-12-22"
+      "filename": "aitimes_a7c90294f7b5.json",
+      "date": "2025-12-23"
     }
   ]
 }

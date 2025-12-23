@@ -1,0 +1,45 @@
+{
+  "id": "251223_2",
+  "edition_code": "251223_2",
+  "edition_name": "2호",
+  "published_at": "2025-12-23T05:22:34.028390+00:00",
+  "date": "2025-12-23",
+  "article_count": 5,
+  "articles": [
+    {
+      "id": "cf3b58549ae4",
+      "title": "미스트랄 AI, 기업용 고성능·저비용 OCR 모델 출시",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204953",
+      "filename": "aitimes_cf3b58549ae4.json",
+      "date": "2025-12-23"
+    },
+    {
+      "id": "99c23ec533e3",
+      "title": "구글, 컴퓨팅 자원 부족으로 '최고경영진 비상 위원회' 가동",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204956",
+      "filename": "aitimes_99c23ec533e3.json",
+      "date": "2025-12-23"
+    },
+    {
+      "id": "0ea3cf319782",
+      "title": "오픈AI-오라클 미시간 데이터센터, 주민 반발 속 승인 신청",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204957",
+      "filename": "aitimes_0ea3cf319782.json",
+      "date": "2025-12-23"
+    },
+    {
+      "id": "8bbd9d3886cf",
+      "title": "구글의 개방형 표준, AI 에이전트가 즉석에서 사용자 인터페이스 구축 가능하게 해",
+      "url": "https://the-decoder.com/googles-open-standard-lets-ai-agents-build-user-interfaces-on-the-fly/",
+      "filename": "the_decoder_8bbd9d3886cf.json",
+      "date": "2025-12-23"
+    },
+    {
+      "id": "23bf4b6f7a35",
+      "title": "앤트로픽, '에이전트 스킬' 오픈 소스 공개",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204958",
+      "filename": "aitimes_23bf4b6f7a35.json",
+      "date": "2025-12-23"
+    }
+  ]
+}

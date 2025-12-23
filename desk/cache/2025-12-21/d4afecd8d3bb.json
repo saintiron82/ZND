@@ -224,5 +224,11 @@
   "dedup_status": "selected",
   "synced_to_firebase": true,
   "synced_at": "2025-12-22T16:36:07.140355+00:00",
-  "saved": true
+  "saved": true,
+  "publish_id": "251223_3",
+  "edition_code": "251223_3",
+  "edition_name": "3호",
+  "published": true,
+  "published_at": "2025-12-23T05:22:55.609333+00:00",
+  "data_file": "the_decoder_d4afecd8d3bb.json"
 }

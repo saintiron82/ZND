@@ -221,11 +221,17 @@
       "SOTA_Check_Result": "True"
     }
   },
-  "status": "reviewed",
+  "status": "PUBLISHED",
   "staged": true,
   "staged_at": "2025-12-20T19:06:39.061128+00:00",
   "category": "Business",
   "dedup_status": "selected",
   "synced_to_firebase": true,
-  "synced_at": "2025-12-22T16:36:03.160712+00:00"
+  "synced_at": "2025-12-22T16:36:03.160712+00:00",
+  "publish_id": "251223_2",
+  "edition_code": "251223_2",
+  "edition_name": "2호",
+  "published": true,
+  "published_at": "2025-12-23T05:22:33.999396+00:00",
+  "data_file": "aitimes_99c23ec533e3.json"
 }

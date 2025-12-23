@@ -59,7 +59,7 @@ trash_manager = None  # Will be initialized with CACHE_DIR
 
 @desk_bp.route('/api/desk/list')
 def desk_list():
-    """Cache 폴더의 기사 목록 반환 (조판 UI용) - 분석된 기사만 표시"""
+    """Cache 폴더의 기사 목록 반환 (조판 UI용) - 미분석 기사도 포함"""
     global trash_manager
     if trash_manager is None:
         trash_manager = TrashManager(CACHE_DIR)
@@ -68,6 +68,7 @@ def desk_list():
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
         include_published = request.args.get('include_published', 'false').lower() == 'true'
         include_trash = request.args.get('include_trash', 'false').lower() == 'true'
+        include_unanalyzed = request.args.get('include_unanalyzed', 'false').lower() == 'true'  # [NEW] 기본값 false (카드 표시 안 함)
         
         # [MODIFIED] Support 'all' date for Global Staging View
         is_all_dates = (date_str == 'all')
@@ -83,6 +84,7 @@ def desk_list():
                 target_dirs = [cache_date_dir]
         
         articles = []
+        unanalyzed_count = 0  # [NEW] 미분석 기사 카운터
         
         from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
         
@@ -112,14 +114,18 @@ def desk_list():
                     with open(filepath, 'r', encoding='utf-8') as f:
                         data = json.load(f)
                     
-                    # 분석되지 않은 기사는 조판 목록에서 제외
+                    # [MODIFIED] 분석 상태 체크 (미분석도 표시 가능)
                     is_analyzed = (
                         data.get('mll_status') == 'analyzed' or
                         data.get('raw_analysis') is not None or
                         data.get('zero_echo_score') is not None
                     )
+                    
+                    # 미분석 기사 카운트 (카드로는 표시 안 함)
                     if not is_analyzed:
-                        continue
+                        unanalyzed_count += 1
+                        if not include_unanalyzed:
+                            continue
                     
                     # [CRITICAL FILTER]
                     # If date='all' (Global Staging), strictly hide Published & Rejected
@@ -168,6 +174,8 @@ def desk_list():
                         'staged_at': data.get('staged_at', ''),
                         'dedup_status': data.get('dedup_status'),
                         'category': data.get('category'),
+                        'status': data.get('status', ''),  # [NEW] 상태 필드 추가
+                        'mll_status': data.get('mll_status', ''),  # [NEW] MLL 분석 상태
                         'date_folder': os.path.basename(cache_date_dir), # [NEW] Explicit folder name
                         'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat()
                     })
@@ -185,7 +193,8 @@ def desk_list():
         return jsonify({
             'date': date_str,
             'articles': articles,
-            'total': len(articles)
+            'total': len(articles),
+            'unanalyzed_count': unanalyzed_count  # [NEW] 미분석 기사 카운터
         })
     except Exception as e:
         print(f"❌ [Staging List] Error: {e}")

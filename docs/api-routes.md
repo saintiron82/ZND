@@ -63,7 +63,7 @@ desk/
 | GET | `/api/publications/view` | `publications_view` | 회차 상세 기사 목록 |
 | POST | `/api/publications/release` | `publications_release` | Preview→Released |
 | POST | `/api/publications/move_articles` | `publications_move_articles` | 기사 이동 (미구현) |
-| POST | `/api/desk/delete_from_db` | `publications_delete_from_db` | Firestore에서 삭제 |
+
 | POST | `/api/desk/unpublish_selected` | `publications_unpublish_selected` | 발행 취소 |
 
 ---

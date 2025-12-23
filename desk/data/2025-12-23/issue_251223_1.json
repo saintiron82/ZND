@@ -1,0 +1,45 @@
+{
+  "id": "251223_1",
+  "edition_code": "251223_1",
+  "edition_name": "1호",
+  "published_at": "2025-12-23T05:21:55.750803+00:00",
+  "date": "2025-12-23",
+  "article_count": 5,
+  "articles": [
+    {
+      "id": "4d9bb71876a7",
+      "title": "오픈AI, 보안 강화된 코딩 모델 'GPT-5.2-코덱스' 출시",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=204919",
+      "filename": "venturebeat_4d9bb71876a7.json",
+      "date": "2025-12-19"
+    },
+    {
+      "id": "7073633f8efb",
+      "title": "GPT-5.2, OpenAI의 새로운 프론티어 사이언스 벤치마크 1위 달성했으나 심층 연구 과제엔 한계",
+      "url": "https://the-decoder.com/gpt-5-2-tops-openais-new-frontierscience-test-but-struggles-with-real-research-problems/",
+      "filename": "the_decoder_7073633f8efb.json",
+      "date": "2025-12-19"
+    },
+    {
+      "id": "a6af4d7e6922",
+      "title": "앤스로픽 AI 키오스크, 수익성 확보했으나 '영원한 초월' 논쟁 등 엉뚱한 행동 보여",
+      "url": "https://the-decoder.com/anthropics-ai-store-makes-money-while-debating-eternal-transcendence/",
+      "filename": "the_decoder_a6af4d7e6922.json",
+      "date": "2025-12-19"
+    },
+    {
+      "id": "d998e3357368",
+      "title": "Anthropic, 기업용 'Agent Skills' 출시 및 표준 개방... OpenAI에 도전장",
+      "url": "https://venturebeat.com/technology/anthropic-launches-enterprise-agent-skills-and-opens-the-standard",
+      "filename": "venturebeat_d998e3357368.json",
+      "date": "2025-12-19"
+    },
+    {
+      "id": "188514434dff",
+      "title": "Google과 Replit, AI 에이전트의 신뢰성 있는 배포에 난항... 그 이유는?",
+      "url": "https://venturebeat.com/orchestration/even-google-and-replit-struggle-to-deploy-ai-agents-reliably-heres-why",
+      "filename": "venturebeat_188514434dff.json",
+      "date": "2025-12-19"
+    }
+  ]
+}

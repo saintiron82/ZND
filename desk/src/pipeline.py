@@ -170,7 +170,7 @@ def save_article(data: dict, source_id: str = None, skip_evaluation: bool = Fals
             'status': 'saved',
             'article_id': article_id,
             'date': date_str,
-            'filename': f"{data['source_id']}_{get_article_id(url)[:8]}.json"
+            'filename': f"{data['source_id']}_{get_article_id(url)}.json"
         }
     except Exception as e:
         print(f"❌ [Save] Error: {e}")

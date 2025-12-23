@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 발행된 기사 조회 유틸리티
-- Firebase publications 컬렉션에서 발행된 article_ids 조회
+- Firestore _article_ids 문서에서 발행된 article_ids 조회 (1 READ)
 - 캐싱을 통해 반복 조회 최소화
 """
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 # 캐시 (메모리)
 _published_ids_cache = None
-_published_urls_cache = None
 _cache_updated_at = None
 _CACHE_TTL_SECONDS = 300  # 5분 캐시
 
@@ -21,7 +20,7 @@ def get_db():
 
 def get_published_article_ids(force_refresh: bool = False) -> set:
     """
-    Firebase publications 컬렉션에서 발행된 모든 article_id 조회
+    Firestore _article_ids 문서에서 발행된 모든 article_id 조회 (1 READ)
     
     Args:
         force_refresh: True면 캐시 무시하고 새로 조회
@@ -43,27 +42,8 @@ def get_published_article_ids(force_refresh: bool = False) -> set:
         return _published_ids_cache or set()
     
     try:
-        published_ids = set()
-        
-        # publications 컬렉션에서 모든 문서 조회
-        docs = db.db.collection('publications').stream()
-        
-        for doc in docs:
-            data = doc.to_dict()
-            # released 상태인 것만 대상
-            if data.get('status') != 'released':
-                continue
-                
-            # article_ids 배열에서 ID 추출
-            article_ids = data.get('article_ids', [])
-            if article_ids:
-                published_ids.update(article_ids)
-            
-            # 하위 호환: articles 배열에서도 ID 추출
-            articles = data.get('articles', [])
-            for art in articles:
-                if art.get('id'):
-                    published_ids.add(art['id'])
+        # _article_ids 문서에서 직접 조회 (1 READ, 경량)
+        published_ids = db.get_published_article_ids_from_firestore()
         
         _published_ids_cache = published_ids
         _cache_updated_at = now
@@ -92,8 +72,7 @@ def is_article_published(article_id: str) -> bool:
 
 def invalidate_cache():
     """캐시 강제 무효화 (발행 후 호출)"""
-    global _published_ids_cache, _published_urls_cache, _cache_updated_at
+    global _published_ids_cache, _cache_updated_at
     _published_ids_cache = None
-    _published_urls_cache = None
     _cache_updated_at = None
     print("🔄 [PublishedArticles] Cache invalidated")

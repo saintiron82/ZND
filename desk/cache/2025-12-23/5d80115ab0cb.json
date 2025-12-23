@@ -1,0 +1,12 @@
+{
+  "title": "GPT-5 allegedly solves open math problem without human help",
+  "description": "GPT-5 solves an open math problem for the first time, and the mathematician behind it shows exactly which line came from which AI. Does science really need this level of transparency?",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/ai_in_science_math.jpeg",
+  "text": "Ask about this article… Search As scientists debate how to transparently integrate AI into research and writing, Swiss mathematician Johannes Schmitt has put forward a concrete proposal. Schmitt reports on X that GPT-5 has independently solved an open mathematical problem for the first time—without human input or intervention. According to Schmitt, GPT-5 delivered an elegant solution that surprisingly drew on techniques from a different area of algebraic geometry rather than applying the usual methods. Peer review is still pending. Similar anecdotal reports on AI's usefulness in mathematics have recently come from math star Terence Tao, among others. The resulting paper showcases various forms of human-AI collaboration: proofs from GPT-5 (base model, not Pro) and Gemini 3 Pro, text passages from Claude, and formal Lean proofs via Claude code and ChatGPT 5.2. As an experiment in transparent AI attribution, every paragraph is labeled as human or AI-written, with links to prompts and conversation transcripts. Ad Transparency matters, but it shouldn't become red tape Schmitt's approach offers a high level of transparency and traceability—anyone can check which ideas came from humans and which from AI. But the approach has drawbacks too: labeling each paragraph in detail is time-consuming and could become impractical as AI becomes an everyday tool. Transparency matters, but it shouldn't turn into bureaucracy. Ad DEC_D_Incontent-1 The line between human and AI input isn't always clear either. Who writes the prompt? Who selects and corrects the output? This model probably won't transfer easily to other sciences. Perhaps science needs to answer a more fundamental question first: Why does it matter whether a contribution came from a human alone, a human with AI assistance, or solely from AI—and is the latter even possible without human intention?",
+  "published_at": "2025-12-22T19:57:40+00:00",
+  "url": "https://the-decoder.com/gpt-5-allegedly-solves-open-math-problem-without-human-help/",
+  "source_id": "the_decoder",
+  "status": "RAW",
+  "article_id": "5d80115ab0cb",
+  "cached_at": "2025-12-23T05:23:37.078197+00:00"
+}

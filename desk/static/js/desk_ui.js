@@ -82,6 +82,9 @@ async function showDetail(filename, date) {
     contentEl.textContent = '로딩 중...';
     modal.classList.add('active');
 
+    // 회차 선택 드롭다운 업데이트
+    updateAssignIssueDropdown();
+
     try {
         let targetDate = date;
         if (!targetDate || targetDate === 'all') {
@@ -144,6 +147,10 @@ async function showDetail(filename, date) {
                             </td>
                         </tr>
                         <tr>
+                            <td style="padding: 4px;">Issue:</td>
+                            <td style="padding: 4px; color: #ffc107;">${data.edition_name || data.publish_id || '미지정'}</td>
+                        </tr>
+                        <tr>
                             <td style="padding: 4px;">Timestamps:</td>
                             <td style="padding: 4px; font-size: 0.85em;">
                                 Crawled: ${data.crawled_at?.substring(0, 16) || '-'}<br>
@@ -158,21 +165,6 @@ async function showDetail(filename, date) {
                     </table>
                 </div>
             `;
-
-            // 기존 내용 뒤에 추가 (JSON 뷰어 앞이 아니라, 별도 영역이 없다면 텍스트 뷰에? 
-            // 아니면 모달 구조를 봐야 함. 
-            // 현재 desk.html의 모달: <pre id="jsonContent"></pre>
-            // pre 안에 HTML을 넣을 순 없음. 
-            // 모달 body에 별도 div를 만들어야 함.
-
-            // desk.html을 확인하지 않았지만, 보통 pre는 textContent로 넣음.
-            // desk_ui.js를 보면: contentEl.textContent = JSON.stringify(...)
-
-            // 해결책: contentEl(pre) 아래에 statusDiv를 추가하거나, 
-            // 모달의 구조를 수정해야 함.
-
-            // desk_ui.js를 다시 보면 'jsonContent' 요소 하나만 사용하는 듯.
-            // JS로 동적 요소 추가하는 게 나음.
 
             let statusDiv = document.getElementById('modalStatusInfo');
             if (!statusDiv) {
@@ -190,9 +182,85 @@ async function showDetail(filename, date) {
                 btnRestore.style.display = 'none';
                 btnReject.style.display = 'inline-block';
             }
+
+            // 현재 기사의 날짜 폴더 저장 (이동 시 사용)
+            window.currentArticleDateFolder = data.date_folder || targetDate;
         }
     } catch (error) {
         contentEl.textContent = `로드 실패: ${error.message}`;
+    }
+}
+
+// 회차 선택 드롭다운 업데이트
+function updateAssignIssueDropdown() {
+    const select = document.getElementById('assignIssueSelect');
+    if (!select) return;
+
+    // 기존 옵션 제거 (첫 번째 제외)
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+
+    // "새 회차로 발행" 옵션 추가
+    const newOpt = document.createElement('option');
+    newOpt.value = 'new';
+    newOpt.textContent = '📑 새 회차로 발행';
+    select.appendChild(newOpt);
+
+    // 기존 회차 목록 추가
+    if (availableIssues && availableIssues.length > 0) {
+        availableIssues.forEach(issue => {
+            const opt = document.createElement('option');
+            opt.value = issue.id;
+            opt.textContent = `📌 ${issue.edition_name}에 추가`;
+            select.appendChild(opt);
+        });
+    }
+}
+
+// 현재 기사를 선택한 회차로 이동/발행
+async function assignCurrentToIssue() {
+    const select = document.getElementById('assignIssueSelect');
+    const targetValue = select.value;
+
+    if (!targetValue) {
+        alert('회차를 선택해주세요.');
+        return;
+    }
+
+    if (!currentDetailFilename) {
+        alert('기사가 선택되지 않았습니다.');
+        return;
+    }
+
+    const payload = {
+        filenames: [currentDetailFilename],
+        mode: targetValue === 'new' ? 'new' : 'append'
+    };
+
+    if (targetValue !== 'new') {
+        payload.target_publish_id = targetValue;
+    }
+
+    try {
+        const resp = await fetch('/api/desk/publish_selected', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const result = await resp.json();
+
+        if (result.success) {
+            alert(`✅ ${result.message}`);
+            closeModal();
+            await refreshIssueList();
+            await loadDesk();
+            await loadFirebaseStats();
+        } else {
+            alert(`❌ 실패: ${result.error}`);
+        }
+    } catch (e) {
+        alert(`❌ 오류: ${e.message}`);
     }
 }
 function closeModal(event) {

@@ -178,11 +178,17 @@
   },
   "crawled_at": "2025-12-19T20:00:30.291237+00:00",
   "edition": "251219_FRI_1",
-  "status": "ACCEPTED",
+  "status": "PUBLISHED",
   "saved": true,
   "saved_at": "2025-12-19T20:00:30.556396+00:00",
   "category": "AI/ML",
   "dedup_status": "selected",
   "synced_to_firebase": true,
-  "synced_at": "2025-12-22T16:35:55.366843+00:00"
+  "synced_at": "2025-12-22T16:35:55.366843+00:00",
+  "publish_id": "251223_1",
+  "edition_code": "251223_1",
+  "edition_name": "1호",
+  "published": true,
+  "published_at": "2025-12-23T05:21:55.714013+00:00",
+  "data_file": "the_decoder_7073633f8efb.json"
 }

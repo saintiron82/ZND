@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 
 // 타입 정의 (serverCache와 동일하게 유지)
 export interface Issue {
@@ -18,6 +18,7 @@ export interface Article {
     article_id?: string;
     id?: string;
     title_ko?: string;
+    title?: string;
     summary?: string;
     url?: string;
     impact_score?: number;
@@ -27,24 +28,88 @@ export interface Article {
     [key: string]: any;
 }
 
+// _meta 문서 구조
+interface MetaIssue {
+    code: string;
+    name: string;
+    count: number;
+    updated_at: string;
+    status: 'preview' | 'released';
+}
+
+interface MetaDoc {
+    issues: MetaIssue[];
+    latest_updated_at: string;
+}
+
 const COLLECTION_PUBLICATIONS = 'publications';
-const COLLECTION_ARTICLES = 'articles';
 
 /**
  * 공개된(released) 회차 목록 가져오기
- * 복합 인덱스 불필요: 전체 가져온 후 클라이언트에서 필터링/정렬
+ * [NEW] _meta 문서에서 직접 조회 (1 READ, 경량)
  */
 export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
     try {
-        console.log('🔥 [Firestore] Fetching all publications...');
+        console.log('🔥 [Firestore] Fetching _meta document...');
 
-        // 단순 쿼리: 컬렉션 전체 조회 (인덱스 불필요)
+        // _meta 문서에서 목록 조회 (1 READ)
+        const metaDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, '_meta'));
+
+        if (!metaDoc.exists()) {
+            console.log('⚠️ [Firestore] _meta document not found, falling back to full scan...');
+            return await fetchPublishedIssuesFallback();
+        }
+
+        const metaData = metaDoc.data() as MetaDoc;
+        const latestUpdate = metaData.latest_updated_at || null;
+
+        // released 상태인 것만 필터링
+        const releasedMeta = (metaData.issues || []).filter(i => i.status === 'released');
+
+        // Issue 형식으로 변환 (상세 정보는 회차 문서에서 가져와야 함)
+        const issues: Issue[] = releasedMeta.map(meta => ({
+            id: meta.code,
+            edition_code: meta.code,
+            edition_name: meta.name,
+            article_count: meta.count,
+            published_at: meta.updated_at,
+            updated_at: meta.updated_at,
+            status: meta.status,
+            date: meta.code.replace(/_\d+$/, '').replace(/(\d{2})(\d{2})(\d{2})/, '20$1-$2-$3')
+        }));
+
+        // published_at 내림차순 정렬
+        issues.sort((a, b) => {
+            const dateA = new Date(a.published_at || 0).getTime();
+            const dateB = new Date(b.published_at || 0).getTime();
+            return dateB - dateA;
+        });
+
+        console.log(`✅ [Firestore] Found ${issues.length} released issues from _meta`);
+        return { issues, latestUpdatedAt: latestUpdate };
+
+    } catch (error) {
+        console.error('❌ [Firestore] Failed to fetch _meta:', error);
+        return await fetchPublishedIssuesFallback();
+    }
+}
+
+/**
+ * 폴백: 전체 publications 스캔 (기존 방식, _meta 없을 때)
+ */
+async function fetchPublishedIssuesFallback(): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
+    try {
+        console.log('🔥 [Firestore] Fallback: scanning all publications...');
         const snapshot = await getDocs(collection(db, COLLECTION_PUBLICATIONS));
 
         let allIssues: Issue[] = [];
         let latestUpdate: string | null = null;
 
         snapshot.forEach((docSnap) => {
+            const docId = docSnap.id;
+            // _meta, _article_ids 제외
+            if (docId.startsWith('_')) return;
+
             const data = docSnap.data();
             allIssues.push({
                 id: docSnap.id,
@@ -52,17 +117,14 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
             } as Issue);
         });
 
-        // 클라이언트에서 status 필터링
         const releasedIssues = allIssues.filter(issue => issue.status === 'released');
 
-        // 클라이언트에서 published_at 내림차순 정렬
         releasedIssues.sort((a, b) => {
             const dateA = new Date(a.published_at || 0).getTime();
             const dateB = new Date(b.published_at || 0).getTime();
             return dateB - dateA;
         });
 
-        // 최신 업데이트 시간 추적
         for (const issue of releasedIssues) {
             if (issue.updated_at) {
                 if (!latestUpdate || new Date(issue.updated_at) > new Date(latestUpdate)) {
@@ -71,94 +133,39 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
             }
         }
 
-        console.log(`✅ [Firestore] Found ${releasedIssues.length} released issues`);
+        console.log(`✅ [Firestore] Fallback found ${releasedIssues.length} released issues`);
         return { issues: releasedIssues, latestUpdatedAt: latestUpdate };
     } catch (error) {
-        console.error('❌ [Firestore] Failed to fetch issues:', error);
+        console.error('❌ [Firestore] Fallback failed:', error);
         return { issues: [], latestUpdatedAt: null };
     }
 }
 
 /**
  * 특정 회차(issueId)의 기사 목록 가져오기
- * 1차: publish_id로 조회
- * 2차(폴백): publications 문서의 article_ids로 개별 조회
+ * [NEW] publications 문서의 내장된 articles 배열 사용 (1 READ)
  */
 export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]> {
     try {
         // console.log(`🔥 [Firestore] Fetching articles for issue: ${issueId}`);
 
-        // 1차 시도: publish_id로 조회
-        const q = query(
-            collection(db, COLLECTION_ARTICLES),
-            where('publish_id', '==', issueId)
-        );
-
-        const snapshot = await getDocs(q);
-        const articles: Article[] = [];
-
-        snapshot.forEach((docSnap) => {
-            articles.push({
-                id: docSnap.id,
-                article_id: docSnap.id,
-                ...docSnap.data()
-            } as Article);
-        });
-
-        // 기사가 있으면 반환
-        if (articles.length > 0) {
-            return articles;
-        }
-
-        // 2차 시도(폴백): publications 문서에서 article_ids 가져와서 개별 조회
-        console.log(`⚠️ [Firestore] No articles found by publish_id, trying article_ids fallback...`);
-
+        // 회차 문서에서 직접 articles 배열 읽기 (1 READ)
         const pubDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, issueId));
+
         if (!pubDoc.exists()) {
             console.log(`❌ [Firestore] Publication not found: ${issueId}`);
             return [];
         }
 
         const pubData = pubDoc.data();
-        const articleIds: string[] = pubData.article_ids || [];
+        const articles: Article[] = pubData.articles || [];
 
-        if (articleIds.length === 0) {
-            return [];
-        }
-
-        // article_ids로 개별 기사 조회 (article_id 필드로 쿼리)
-        const articlePromises = articleIds.map(async (artId) => {
-            // 1차: 문서 ID로 직접 조회 시도
-            const artDoc = await getDoc(doc(db, COLLECTION_ARTICLES, artId));
-            if (artDoc.exists()) {
-                return {
-                    id: artDoc.id,
-                    article_id: artDoc.id,
-                    ...artDoc.data()
-                } as Article;
-            }
-
-            // 2차: article_id 필드로 쿼리
-            const q = query(
-                collection(db, COLLECTION_ARTICLES),
-                where('article_id', '==', artId)
-            );
-            const snapshot = await getDocs(q);
-            if (!snapshot.empty) {
-                const docSnap = snapshot.docs[0];
-                return {
-                    id: docSnap.id,
-                    article_id: artId,
-                    ...docSnap.data()
-                } as Article;
-            }
-
-            console.log(`⚠️ [Firestore] Article not found: ${artId}`);
-            return null;
-        });
-
-        const results = await Promise.all(articlePromises);
-        return results.filter((a): a is Article => a !== null);
+        // article_id 필드 정규화
+        return articles.map(art => ({
+            ...art,
+            article_id: art.id || art.article_id,
+            id: art.id || art.article_id
+        }));
 
     } catch (error) {
         console.error(`❌ [Firestore] Failed to fetch articles for ${issueId}:`, error);
@@ -169,27 +176,25 @@ export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]
 
 /**
  * 최신 변경 사항 확인 
- * 복합 인덱스 불필요: 전체 가져온 후 클라이언트에서 필터링
+ * [NEW] _meta 문서의 latest_updated_at 확인 (1 READ, 경량)
  */
 export async function checkLatestUpdate(): Promise<string | null> {
     try {
-        // 단순 쿼리: 전체 조회
-        const snapshot = await getDocs(collection(db, COLLECTION_PUBLICATIONS));
+        // _meta 문서에서 latest_updated_at 확인 (1 READ)
+        const metaDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, '_meta'));
 
-        let latestUpdate: string | null = null;
+        if (metaDoc.exists()) {
+            const metaData = metaDoc.data() as MetaDoc;
+            return metaData.latest_updated_at || null;
+        }
 
-        snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            // released 상태만 체크
-            if (data.status === 'released' && data.updated_at) {
-                if (!latestUpdate || new Date(data.updated_at) > new Date(latestUpdate)) {
-                    latestUpdate = data.updated_at;
-                }
-            }
-        });
+        // _meta 없으면 폴백
+        console.log('⚠️ [Firestore] _meta not found, falling back...');
+        const { latestUpdatedAt } = await fetchPublishedIssuesFallback();
+        return latestUpdatedAt;
 
-        return latestUpdate;
     } catch (error) {
+        console.error('❌ [Firestore] checkLatestUpdate failed:', error);
         return null;
     }
 }

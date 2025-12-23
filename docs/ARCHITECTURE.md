@@ -65,8 +65,9 @@ desk/
 | `cleanup` | `/api/cleanup/*` | 데이터 정리 |
 
 ### 포트
-- **5500** (로컬 개발)
-- **8000** (VM 배포)
+### 포트
+- **5500** (Desk UI)
+- **8000** (VM 배포 시 / MLL 엔진)
 
 ---
 
@@ -114,8 +115,9 @@ web/
 ```
 
 ### 포트
-- **3000** (로컬 개발)
-- **8080** (VM 배포)
+### 포트
+- **8080** (Web Service)
+- **3000** (Development Default / MLL Fallback)
 
 ---
 
@@ -158,44 +160,38 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
 ## 🔥 Firestore 데이터 구조
 
-### 컬렉션
+**상세 내용은 [docs/FIRESTORE_STRUCTURE.md](file:///d:/ZND/docs/FIRESTORE_STRUCTURE.md) 참조**
 
-| 컬렉션 | 설명 |
-|:---|:---|
-| `publications` | 발행 회차 정보 |
-| `articles` | 발행된 기사 데이터 |
+### 구조 (V2 Meta + Embedded)
 
-### `publications` 문서 구조
+```
+publications/
+├── _meta                     ← 목록/버전 체크 (경량)
+├── _article_ids              ← 중복 체크 (경량)
+└── {edition_code}            ← 회차 문서 (articles 배열 내장)
+```
+
+### `publications/{edition_code}` 문서 구조
 ```json
 {
-  "id": "auto_generated_id",
   "edition_code": "251221_1",
   "edition_name": "1호",
+  "status": "preview", // or "released"
   "article_count": 10,
-  "article_ids": ["11daca", "cf3b58", ...],
-  "articles": [{"id": "...", "title": "...", "url": "..."}],
-  "published_at": "2025-12-21T12:00:00Z",
-  "released_at": "2025-12-21T14:00:00Z",
-  "updated_at": "2025-12-21T14:30:00Z",
-  "status": "preview" | "released",
-  "date": "2025-12-21"
+  "articles": [
+    {
+      "article_id": "abc123def456",
+      "title_ko": "한국어 제목",
+      "url": "https://...",
+      "impact_score": 7.5,
+      "zero_echo_score": 2.3
+    }
+  ],
+  "published_at": "2025-12-21T12:00:00Z"
 }
 ```
 
-### `articles` 문서 구조
-```json
-{
-  "id": "article_xxx",
-  "title_ko": "한국어 제목",
-  "summary": "요약 내용",
-  "url": "https://...",
-  "impact_score": 7.5,
-  "zero_echo_score": 2.3,
-  "publish_id": "issue_20251221_001",
-  "tags": ["AI", "Tech"],
-  "crawled_at": "2025-12-21T10:00:00Z"
-}
-```
+> **Note**: 별도의 `articles` 컬렉션은 사용하지 않습니다. 모든 기사 데이터는 회차 문서에 내장됩니다.
 
 ---
 
@@ -256,7 +252,8 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 │  ┌─────────────────┐  ┌───────────────┐ │
 │  │     DESK        │  │     WEB       │ │
 │  │   (Python)      │  │   (Next.js)   │ │
-│  │   Port: 8000    │  │   Port: 8080  │ │
+│  │   Port: 5500    │  │   Port: 8080  │ │
+│  │   (MLL: 8000)   │  │               │ │
 │  └────────┬────────┘  └───────┬───────┘ │
 │           └─────────┬─────────┘         │
 │                     ▼                   │

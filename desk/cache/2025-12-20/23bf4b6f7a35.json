@@ -221,11 +221,17 @@
       "SOTA_Check_Result": "Par"
     }
   },
-  "status": "reviewed",
+  "status": "PUBLISHED",
   "staged": true,
   "staged_at": "2025-12-20T19:06:38.479288+00:00",
   "category": "Engineering",
   "dedup_status": "selected",
   "synced_to_firebase": true,
-  "synced_at": "2025-12-22T16:36:00.938267+00:00"
+  "synced_at": "2025-12-22T16:36:00.938267+00:00",
+  "publish_id": "251223_2",
+  "edition_code": "251223_2",
+  "edition_name": "2호",
+  "published": true,
+  "published_at": "2025-12-23T05:22:34.027615+00:00",
+  "data_file": "aitimes_23bf4b6f7a35.json"
 }

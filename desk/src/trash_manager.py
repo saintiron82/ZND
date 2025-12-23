@@ -31,7 +31,7 @@ class TrashManager:
 
                 # 2. Find and Delete Cache Files
                 # Hash logic must match crawler's saving logic
-                url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
+                url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
                 
                 # Search recursively: cache_dir/**/{source_id}_{hash}.json
                 # Since source_id might vary, we search by hash suffix.

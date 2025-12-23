@@ -59,21 +59,23 @@
             <div id="deskStatsPanel"
                 style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
                 <h4 style="margin: 0 0 10px 0; color: #4ecdc4;">📊 미발행 현황</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-                    <div
-                        style="text-align: center; padding: 10px; background: rgba(78,205,196,0.2); border-radius: 8px;">
-                        <div id="stagedCount" style="font-size: 1.5em; font-weight: bold; color: #4ecdc4;">-</div>
-                        <div style="font-size: 0.75em; color: #aaa;">대기중</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;">
+                    <div style="text-align: center; padding: 8px; background: rgba(255,193,7,0.2); border-radius: 8px;">
+                        <div id="unanalyzedCount" style="font-size: 1.3em; font-weight: bold; color: #ffc107;">-</div>
+                        <div style="font-size: 0.7em; color: #aaa;">미분석</div>
                     </div>
                     <div
-                        style="text-align: center; padding: 10px; background: rgba(220,53,69,0.2); border-radius: 8px;">
-                        <div id="rejectedCount" style="font-size: 1.5em; font-weight: bold; color: #dc3545;">-</div>
-                        <div style="font-size: 0.75em; color: #aaa;">거부</div>
+                        style="text-align: center; padding: 8px; background: rgba(78,205,196,0.2); border-radius: 8px;">
+                        <div id="stagedCount" style="font-size: 1.3em; font-weight: bold; color: #4ecdc4;">-</div>
+                        <div style="font-size: 0.7em; color: #aaa;">대기중</div>
                     </div>
-                    <div
-                        style="text-align: center; padding: 10px; background: rgba(40,167,69,0.2); border-radius: 8px;">
-                        <div id="publishedCount" style="font-size: 1.5em; font-weight: bold; color: #28a745;">-</div>
-                        <div style="font-size: 0.75em; color: #aaa;">발행</div>
+                    <div style="text-align: center; padding: 8px; background: rgba(220,53,69,0.2); border-radius: 8px;">
+                        <div id="rejectedCount" style="font-size: 1.3em; font-weight: bold; color: #dc3545;">-</div>
+                        <div style="font-size: 0.7em; color: #aaa;">거부</div>
+                    </div>
+                    <div style="text-align: center; padding: 8px; background: rgba(40,167,69,0.2); border-radius: 8px;">
+                        <div id="publishedCount" style="font-size: 1.3em; font-weight: bold; color: #28a745;">-</div>
+                        <div style="font-size: 0.7em; color: #aaa;">발행</div>
                     </div>
                 </div>
 
@@ -141,6 +143,37 @@
                 </div>
                 <div id="publicationsPanel" style="max-height: 200px; overflow-y: auto;">
                     <div style="text-align: center; color: #666; padding: 10px; font-size: 0.85em;">로딩 중...</div>
+                </div>
+            </div>
+
+            <!-- 🔥 Firebase 통계 -->
+            <div
+                style="background: rgba(255,140,0,0.1); border: 1px solid rgba(255,140,0,0.3); border-radius: 10px; padding: 12px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <h4 style="margin: 0; color: #ff8c00; font-size: 0.9em;">🔥 Firebase 사용량</h4>
+                    <button class="btn"
+                        style="background:transparent; border:1px solid #ff8c00; color:#ff8c00; padding:2px 6px; font-size:0.65em;"
+                        onclick="resetFirebaseStats()" title="통계 리셋">↻</button>
+                </div>
+                <div style="display: flex; gap: 6px; justify-content: space-between;">
+                    <div
+                        style="flex:1; text-align: center; padding: 6px; background: rgba(78,205,196,0.15); border-radius: 6px;">
+                        <div id="fbStatReads" style="font-size: 1.1em; font-weight: bold; color: #4ecdc4;">0</div>
+                        <div style="font-size: 0.6em; color: #888;">읽기</div>
+                    </div>
+                    <div
+                        style="flex:1; text-align: center; padding: 6px; background: rgba(40,167,69,0.15); border-radius: 6px;">
+                        <div id="fbStatWrites" style="font-size: 1.1em; font-weight: bold; color: #28a745;">0</div>
+                        <div style="font-size: 0.6em; color: #888;">쓰기</div>
+                    </div>
+                    <div
+                        style="flex:1; text-align: center; padding: 6px; background: rgba(220,53,69,0.15); border-radius: 6px;">
+                        <div id="fbStatDeletes" style="font-size: 1.1em; font-weight: bold; color: #dc3545;">0</div>
+                        <div style="font-size: 0.6em; color: #888;">삭제</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 6px; font-size: 0.65em; color: #888;">
+                    총 <span id="fbStatTotal" style="color: #ff8c00; font-weight: bold;">0</span>회
                 </div>
             </div>
 
@@ -276,7 +309,16 @@
                 <div class="modal-content" onclick="event.stopPropagation()">
                     <div class="modal-header">
                         <h3>📄 <span id="modalTitle">파일 상세</span></h3>
-                        <div style="display: flex; gap: 8px;">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <!-- 회차 지정 드롭다운 -->
+                            <div id="assignToIssueContainer" style="display: flex; gap: 4px; align-items: center;">
+                                <select id="assignIssueSelect" class="btn"
+                                    style="background: #6610f2; color: white; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer;">
+                                    <option value="">📌 회차 지정...</option>
+                                </select>
+                                <button class="btn" style="background: #6610f2; color: white; padding: 6px 10px;"
+                                    onclick="assignCurrentToIssue()">이동</button>
+                            </div>
                             <button id="btnRestore" class="btn"
                                 style="background: #28a745; color: white; display: none;"
                                 onclick="restoreCurrentArticle()">♻️ 복구하기</button>

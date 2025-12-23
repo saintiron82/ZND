@@ -218,11 +218,17 @@
   },
   "crawled_at": "2025-12-19T19:44:06.377015+00:00",
   "edition": "251219_FRI_1",
-  "status": "ACCEPTED",
+  "status": "PUBLISHED",
   "saved": true,
   "saved_at": "2025-12-19T19:44:06.787169+00:00",
   "category": "Engineering",
   "dedup_status": "selected",
   "synced_to_firebase": true,
-  "synced_at": "2025-12-22T16:35:58.702870+00:00"
+  "synced_at": "2025-12-22T16:35:58.702870+00:00",
+  "publish_id": "251223_1",
+  "edition_code": "251223_1",
+  "edition_name": "1호",
+  "published": true,
+  "published_at": "2025-12-23T05:21:55.738623+00:00",
+  "data_file": "venturebeat_d998e3357368.json"
 }

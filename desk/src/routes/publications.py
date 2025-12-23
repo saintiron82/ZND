@@ -76,23 +76,20 @@ def publications_check():
 
 @publications_bp.route('/api/publications/list')
 def publications_list():
-    """발행 회차 목록 반환 (status 필터 지원)"""
+    """뎌행 회차 목록 반환 (_meta 문서에서 1 READ로 최적화)"""
     try:
         from src.pipeline import get_db
         db = get_db()
         
-        date_str = request.args.get('date')
         status_filter = request.args.get('status')
         
-        issues = db.get_issues_by_date(date_str)
-        
-        if status_filter:
-            issues = [i for i in issues if i.get('status') == status_filter]
+        # [OPTIMIZED] _meta 문서에서 회차 목록 조회 (1 READ)
+        issues = db.get_issues_from_meta(status_filter=status_filter)
         
         # 최신 updated_at 반환 (캐싱 비교용)
         latest_updated = None
         if issues:
-            latest_updated = issues[0].get('updated_at') or issues[0].get('published_at')
+            latest_updated = issues[0].get('updated_at')
         
         return jsonify({
             'success': True,
@@ -145,7 +142,7 @@ def publications_release():
 
 @publications_bp.route('/api/publications/view')
 def publications_view():
-    """특정 발행 회차의 기사 목록 반환 (DB 기반)"""
+    """특정 발행 회차의 기사 목록 반환 (내장 articles 사용으로 1 READ 최적화)"""
     try:
         from src.pipeline import get_db
         db = get_db()
@@ -158,21 +155,18 @@ def publications_view():
         if not record:
             return jsonify({'success': False, 'error': 'Publication not found'}), 404
         
-        # 1. publish_id로 articles 컬렉션에서 직접 조회
-        full_articles = db.get_articles_by_publish_id(publish_id)
+        # [OPTIMIZED] 내장 articles 배열 사용 (1 READ, 추가 쿼리 없음)
+        full_articles = record.get('articles', [])
         
-        # 2. 결과 없으면 article_ids로 개별 조회
+        # Fallback: articles 배열이 비어있으면 article_ids로 개별 조회 (하위 호환)
         if not full_articles:
             article_ids = record.get('article_ids', [])
             if article_ids:
+                print(f"⚠️ [View] Fallback: Loading {len(article_ids)} articles individually")
                 for aid in article_ids:
                     article = db.get_article(aid)
                     if article:
                         full_articles.append(article)
-        
-        # 3. 여전히 없으면 기존 articles 배열 사용 (하위 호환)
-        if not full_articles:
-            full_articles = record.get('articles', [])
 
         return jsonify({
             'success': True,
@@ -555,6 +549,9 @@ def publications_delete():
         # 3. 회차 문서 삭제
         db.db.collection('publications').document(publish_id).delete()
         print(f"🗑️ [Delete] Deleted publication: {publish_id} ({edition_name})")
+        
+        # 3-1. [NEW] _meta 문서에서도 회차 제거
+        db.remove_issue_from_meta(edition_code)
         
         # 4. 연쇄 재정렬 (Cascade Renumbering)
         renumbered_count = 0

@@ -1,0 +1,167 @@
+{
+  "date": "2025-12-23",
+  "updated_at": "2025-12-23T14:25:36.586843",
+  "count": 32,
+  "articles": [
+    {
+      "article_id": "db76c8477c2a",
+      "filename": "techneedle_db76c8477c2a.json",
+      "impact_score": 9.5
+    },
+    {
+      "article_id": "c34a5df52490",
+      "filename": "aitimes_c34a5df52490.json",
+      "impact_score": 8.5
+    },
+    {
+      "article_id": "8bbd9d3886cf",
+      "filename": "the_decoder_8bbd9d3886cf.json",
+      "impact_score": 8.5
+    },
+    {
+      "article_id": "5a06cf117afc",
+      "filename": "aitimes_5a06cf117afc.json",
+      "impact_score": 7.5
+    },
+    {
+      "article_id": "c9da6ebc4ee1",
+      "filename": "aitimes_c9da6ebc4ee1.json",
+      "impact_score": 7.5
+    },
+    {
+      "article_id": "d359dbd87afa",
+      "filename": "aitimes_d359dbd87afa.json",
+      "impact_score": 7.5
+    },
+    {
+      "article_id": "52e9e8cf4d8c",
+      "filename": "the_decoder_52e9e8cf4d8c.json",
+      "impact_score": 7.0
+    },
+    {
+      "article_id": "0ea3cf319782",
+      "filename": "aitimes_0ea3cf319782.json",
+      "impact_score": 6.0
+    },
+    {
+      "article_id": "23bf4b6f7a35",
+      "filename": "aitimes_23bf4b6f7a35.json",
+      "impact_score": 6.0
+    },
+    {
+      "article_id": "73254ae95f04",
+      "filename": "aitimes_73254ae95f04.json",
+      "impact_score": 6.0
+    },
+    {
+      "article_id": "c0dea8c4899e",
+      "filename": "aitimes_c0dea8c4899e.json",
+      "impact_score": 5.5
+    },
+    {
+      "article_id": "c6828cd069b1",
+      "filename": "aitimes_c6828cd069b1.json",
+      "impact_score": 5.5
+    },
+    {
+      "article_id": "99c23ec533e3",
+      "filename": "aitimes_99c23ec533e3.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "f2706e526d56",
+      "filename": "aitimes_f2706e526d56.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "27eee513a3b3",
+      "filename": "the_decoder_27eee513a3b3.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "bfe9c29f00e6",
+      "filename": "aitimes_bfe9c29f00e6.json",
+      "impact_score": 4.5
+    },
+    {
+      "article_id": "d39363e95e33",
+      "filename": "aitimes_d39363e95e33.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "61171a5be2af",
+      "filename": "the_decoder_61171a5be2af.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "b2cfd025fdf2",
+      "filename": "the_decoder_b2cfd025fdf2.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "ef764fe206a6",
+      "filename": "the_decoder_ef764fe206a6.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "4270fdd88133",
+      "filename": "aitimes_4270fdd88133.json",
+      "impact_score": 3.0
+    },
+    {
+      "article_id": "bf445c18014c",
+      "filename": "aitimes_bf445c18014c.json",
+      "impact_score": 3.0
+    },
+    {
+      "article_id": "ec75bd5dd621",
+      "filename": "aitimes_ec75bd5dd621.json",
+      "impact_score": 3.0
+    },
+    {
+      "article_id": "a7c90294f7b5",
+      "filename": "aitimes_a7c90294f7b5.json",
+      "impact_score": 2.5
+    },
+    {
+      "article_id": "5533d49cb8ee",
+      "filename": "aitimes_5533d49cb8ee.json",
+      "impact_score": 2.0
+    },
+    {
+      "article_id": "8bc5ed372abf",
+      "filename": "aitimes_8bc5ed372abf.json",
+      "impact_score": 2.0
+    },
+    {
+      "article_id": "cf3b58549ae4",
+      "filename": "aitimes_cf3b58549ae4.json",
+      "impact_score": 2.0
+    },
+    {
+      "article_id": "d4afecd8d3bb",
+      "filename": "the_decoder_d4afecd8d3bb.json",
+      "impact_score": 1.5
+    },
+    {
+      "article_id": "8ae5073a5e97",
+      "filename": "aitimes_8ae5073a5e97.json",
+      "impact_score": 1.0
+    },
+    {
+      "article_id": "1",
+      "filename": "issue_251223_1.json",
+      "impact_score": 0
+    },
+    {
+      "article_id": "2",
+      "filename": "issue_251223_2.json",
+      "impact_score": 0
+    },
+    {
+      "article_id": "3",
+      "filename": "issue_251223_3.json",
+      "impact_score": 0
+    }
+  ]
+}

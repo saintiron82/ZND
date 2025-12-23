@@ -1,0 +1,12 @@
+{
+  "title": "Nvidia wants to create universal AI agents for all worlds with NitroGen",
+  "description": "Nvidia has released a new base model for gaming agents. NitroGen is a vision-action model that has been trained on 40,000 hours of gameplay videos from more than 1,000 games.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/nvidia_nitrogen-1200x675.png",
+  "text": "Nvidia has released a new base model for gaming agents. NitroGen is an open vision action model trained on 40,000 hours of gameplay videos from more than 1,000 games. The researchers tapped into a previously overlooked resource: YouTube and Twitch videos with visible controller overlays. Using template matching and a fine-tuned SegFormer model, they extracted player inputs directly from these recordings. NitroGen builds on Nvidia's GR00T N1.5 robotics model. According to the researchers, it's the first model to demonstrate that robotics foundation models can work as universal agents across virtual environments with different physics engines and visual styles. The model handles various genres—action RPGs, platformers, roguelikes, and more. When dropped into unfamiliar games, it achieves up to 52 percent better success rates than models trained from scratch. The team, which includes researchers from Nvidia, Stanford, Caltech, and other universities, has made the dataset, model weights, paper, and code publicly available. Ad DEC_D_Incontent-1",
+  "published_at": "2025-12-21T17:17:59+00:00",
+  "url": "https://the-decoder.com/nvidia-wants-to-create-universal-ai-agents-for-all-worlds-with-nitrogen/",
+  "source_id": "the_decoder",
+  "status": "RAW",
+  "article_id": "6b4e6f74332d",
+  "cached_at": "2025-12-23T05:23:48.069808+00:00"
+}

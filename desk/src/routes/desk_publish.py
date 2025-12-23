@@ -65,6 +65,7 @@ def desk_publish_selected():
                 'edition_name': edition_name,
                 'article_count': 0,
                 'article_ids': [],  # ID만 저장 (중복 제거)
+                'articles': [],     # [NEW] 기사 상세 내장
                 'published_at': datetime.now(timezone.utc).isoformat(),
                 'date': today_str,
                 'status': 'preview'
@@ -145,13 +146,23 @@ def desk_publish_selected():
                     article_id = result.get('article_id', staging_data.get('article_id'))
                     published_article_ids.append(article_id)
                     
-                    # 로컬 인덱스 파일용 상세 정보
+                    # 로컬 인덱스 파일용 상세 정보 (Firebase 내장 구조)
                     published_articles_detail.append({
                         'id': article_id,
                         'title': staging_data.get('title_ko') or staging_data.get('title'),
+                        'title_ko': staging_data.get('title_ko', ''),
+                        'title_en': staging_data.get('title', ''),
+                        'summary': staging_data.get('summary', ''),
                         'url': staging_data.get('url'),
+                        'source_id': staging_data.get('source_id', ''),
+                        'zero_echo_score': staging_data.get('zero_echo_score'),
+                        'impact_score': staging_data.get('impact_score'),
+                        'layout_type': staging_data.get('layout_type', 'Standard'),
+                        'tags': staging_data.get('tags', []),
+                        'category': staging_data.get('category', '미분류'),
                         'filename': result.get('filename'),
-                        'date': result.get('date')
+                        'date': result.get('date'),
+                        'published_at': staging_data.get('published_at', datetime.now(timezone.utc).isoformat())
                     })
                 else:
                     failed_count += 1
@@ -190,10 +201,11 @@ def desk_publish_selected():
         }
         db.save_issue_index_file(index_data)
         
-        # Firestore DB (ID만 저장 - 중복 제거)
+        # Firestore DB (내장형 구조: articles 배열 포함)
         db.update_publication_record(publish_id, {
             'article_count': len(final_article_ids),
-            'article_ids': final_article_ids,  # ID만 저장!
+            'article_ids': final_article_ids,
+            'articles': final_article_detail,  # [NEW] 기사 상세 내장
             'updated_at': datetime.now(timezone.utc).isoformat()
         })
         
@@ -384,3 +396,176 @@ def publication_config():
             })
         except Exception as e:
             return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@publish_bp.route('/api/firebase/stats')
+def firebase_stats():
+    """
+    🔥 Firebase 사용량 통계 조회
+    - 이번 세션의 읽기/쓰기/삭제 횟수
+    """
+    try:
+        from src.db_client import DBClient
+        stats = DBClient.get_usage_stats()
+        return jsonify({
+            'success': True,
+            'stats': stats
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@publish_bp.route('/api/firebase/stats/reset', methods=['POST'])
+def firebase_stats_reset():
+    """
+    🔄 Firebase 사용량 통계 리셋
+    """
+    try:
+        from src.db_client import DBClient
+        DBClient.reset_usage_stats()
+        stats = DBClient.get_usage_stats()
+        return jsonify({
+            'success': True,
+            'stats': stats,
+            'message': '통계가 리셋되었습니다.'
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@publish_bp.route('/api/publication/<publish_id>/update', methods=['POST'])
+def update_publication_format(publish_id):
+    """
+    🔄 회차 데이터 최신 포맷으로 업데이트
+    - 로컬 캐시에서 기사 상세 정보를 읽어와 보강
+    - 로컬 인덱스 + Firebase 동시 업데이트
+    """
+    try:
+        from src.db_client import DBClient
+        
+        db = DBClient()
+        
+        # 1. 현재 회차 정보 조회
+        pub_data = db.get_publication(publish_id)
+        if not pub_data:
+            return jsonify({'success': False, 'error': f'회차 {publish_id}를 찾을 수 없습니다.'}), 404
+        
+        articles = pub_data.get('articles', [])
+        article_ids = pub_data.get('article_ids', [])
+        
+        # articles 배열이 없으면 article_ids에서 복원
+        if not articles and article_ids:
+            articles = [{'id': aid} for aid in article_ids]
+        
+        if not articles:
+            return jsonify({'success': False, 'error': '업데이트할 기사가 없습니다.'}), 400
+        
+        # 2. 로컬 캐시에서 기사 상세 정보 보강
+        enriched_articles = []
+        enriched_count = 0
+        not_found_count = 0
+        
+        for article in articles:
+            article_id = article.get('id', '')
+            
+            # 이미 summary가 있으면 보강됨
+            if article.get('summary') and article.get('zero_echo_score') is not None:
+                enriched_articles.append(article)
+                continue
+            
+            # 캐시에서 찾기
+            cache_data = find_article_in_cache(article_id)
+            
+            if cache_data:
+                enriched = build_enriched_article(article, cache_data)
+                enriched_articles.append(enriched)
+                enriched_count += 1
+            else:
+                # 캐시에 없으면 기존 데이터 유지
+                enriched_articles.append(article)
+                not_found_count += 1
+        
+        # 3. 업데이트
+        update_data = {
+            'articles': enriched_articles,
+            'article_count': len(enriched_articles),
+            'updated_at': datetime.now(timezone.utc).isoformat(),
+            'schema_version': '2.0.0'  # 스키마 버전 기록
+        }
+        
+        # Firebase 업데이트
+        db.update_publication_record(publish_id, update_data)
+        
+        # 로컬 인덱스 업데이트
+        index_data = {
+            'id': publish_id,
+            'edition_code': pub_data.get('edition_code', publish_id),
+            'edition_name': pub_data.get('edition_name', ''),
+            'published_at': pub_data.get('published_at', ''),
+            'date': pub_data.get('date', ''),
+            'article_count': len(enriched_articles),
+            'articles': enriched_articles
+        }
+        db.save_issue_index_file(index_data)
+        
+        return jsonify({
+            'success': True,
+            'enriched': enriched_count,
+            'not_found': not_found_count,
+            'total': len(enriched_articles),
+            'message': f'{enriched_count}개 기사 보강 완료 ({not_found_count}개 캐시 없음)'
+        })
+        
+    except Exception as e:
+        print(f"❌ [Update Format] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+def find_article_in_cache(article_id: str) -> dict | None:
+    """캐시에서 article_id로 기사 찾기"""
+    import glob
+    
+    if not os.path.exists(CACHE_DIR):
+        return None
+    
+    # 파일명 패턴으로 검색: *_article_id.json 또는 article_id.json
+    patterns = [
+        os.path.join(CACHE_DIR, '*', f'*{article_id}.json'),
+        os.path.join(CACHE_DIR, '*', f'{article_id}.json')
+    ]
+    
+    for pattern in patterns:
+        found = glob.glob(pattern)
+        if found:
+            try:
+                with open(found[0], 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    # article_id 일치 확인
+                    if data.get('article_id') == article_id or article_id in found[0]:
+                        return data
+            except Exception:
+                pass
+    
+    return None
+
+
+def build_enriched_article(article: dict, cache_data: dict) -> dict:
+    """캐시 데이터로 articles 배열 항목 보강"""
+    return {
+        'id': article.get('id', ''),
+        'title': cache_data.get('title_ko') or cache_data.get('title') or article.get('title', ''),
+        'title_ko': cache_data.get('title_ko', ''),
+        'title_en': cache_data.get('title', ''),
+        'summary': cache_data.get('summary', ''),
+        'url': cache_data.get('url') or article.get('url', ''),
+        'source_id': cache_data.get('source_id', ''),
+        'zero_echo_score': cache_data.get('zero_echo_score'),
+        'impact_score': cache_data.get('impact_score'),
+        'layout_type': cache_data.get('layout_type', 'Standard'),
+        'tags': cache_data.get('tags', []),
+        'category': cache_data.get('category', '미분류'),
+        'filename': article.get('filename', ''),
+        'date': article.get('date', cache_data.get('crawled_at', '')[:10] if cache_data.get('crawled_at') else ''),
+        'published_at': cache_data.get('published_at', article.get('published_at', ''))
+    }
+

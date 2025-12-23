@@ -104,10 +104,11 @@ cd ..
 ## 5. 통합 서비스 실행 (PM2)
 
 ### (1) 실행 명령어
-**Web은 8080포트, Backend는 8000포트**로 설정합니다.
+### (1) 실행 명령어
+**Web은 8080포트, Desk Backend는 5500포트**로 설정합니다. (MLL 엔진은 별도 8000포트)
 
 ```bash
-# 1. Python Flask Backend 실행 (포트 8000)
+# 1. Python Flask Backend (Desk) 실행 (포트 5500)
 pm2 start desk/manual_crawler.py --name "znd-backend" --interpreter python3
 
 # 2. Next.js Web 실행 (포트 8080)
@@ -138,7 +139,7 @@ pm2 save
 
 ### (2) Desk/Crawler 서비스 (어드민용)
 *   **성격**: 관리자 전용. 외부인은 접속하면 안 됨.
-*   **포트**: `8000`
+*   **포트**: `5500` (Desk), `8000` (MLL 엔진)
 *   **설정**:
     *   **옵션 A (권장)**: 방화벽을 **열지 않음**. (웹 서버와 백엔드는 `localhost`로 내부 통신하므로, 웹 서비스 가동에는 문제없음)
     *   **옵션 B (외부 접속 필요 시)**: 본인의 집/사무실 IP만 허용하도록 `소스 IPv4 범위`를 특정 IP로 제한해서 개방.
@@ -146,5 +147,5 @@ pm2 save
 **[설정 방법]**
 1.  GCP 콘솔 -> **VPC 네트워크** -> **방화벽**
 2.  `allow-web-public` 규칙 생성: `tcp:8080` 허용 (타겟: 모든 인스턴스, 소스: 0.0.0.0/0)
-3.  *(필요 시)* `allow-admin-private` 규칙 생성: `tcp:8000` 허용 (소스: `내_IP주소`)
+3.  *(필요 시)* `allow-admin-private` 규칙 생성: `tcp:5500` 허용 (소스: `내_IP주소`)
 

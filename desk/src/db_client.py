@@ -3,9 +3,22 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 class DBClient:
+    # 클래스 레벨 사용량 카운터 (세션 유지)
+    _usage_stats = {
+        'reads': 0,
+        'writes': 0,
+        'deletes': 0,
+        'session_start': None
+    }
+    
     def __init__(self):
         self.db = self._initialize_firebase()
         self.history = self._load_history()
+        
+        # 세션 시작 시간 기록 (최초 1회)
+        if DBClient._usage_stats['session_start'] is None:
+            from datetime import datetime, timezone
+            DBClient._usage_stats['session_start'] = datetime.now(timezone.utc).isoformat()
 
     def _initialize_firebase(self):
         # supplier/src/db_client.py -> supplier/ 폴더 기준 절대 경로 생성
@@ -27,6 +40,48 @@ class DBClient:
         except Exception as e:
             print(f"❌ Firebase Init Failed: {e}")
             return None
+
+    # ============================================
+    # Firebase 사용량 추적 메서드
+    # ============================================
+    
+    @classmethod
+    def _track_read(cls, count=1):
+        """읽기 작업 카운트"""
+        cls._usage_stats['reads'] += count
+    
+    @classmethod
+    def _track_write(cls, count=1):
+        """쓰기 작업 카운트"""
+        cls._usage_stats['writes'] += count
+    
+    @classmethod
+    def _track_delete(cls, count=1):
+        """삭제 작업 카운트"""
+        cls._usage_stats['deletes'] += count
+    
+    @classmethod
+    def get_usage_stats(cls):
+        """현재 세션 사용량 통계 반환"""
+        return {
+            'reads': cls._usage_stats['reads'],
+            'writes': cls._usage_stats['writes'],
+            'deletes': cls._usage_stats['deletes'],
+            'total': cls._usage_stats['reads'] + cls._usage_stats['writes'] + cls._usage_stats['deletes'],
+            'session_start': cls._usage_stats['session_start']
+        }
+    
+    @classmethod
+    def reset_usage_stats(cls):
+        """사용량 통계 리셋"""
+        from datetime import datetime, timezone
+        cls._usage_stats = {
+            'reads': 0,
+            'writes': 0,
+            'deletes': 0,
+            'session_start': datetime.now(timezone.utc).isoformat()
+        }
+        print("🔄 [Stats] Firebase usage stats reset")
 
     def _get_data_dir(self):
         # supplier/src/db_client.py -> supplier/data
@@ -133,23 +188,8 @@ class DBClient:
         article_data['status'] = 'ACCEPTED'
         publish_data = self._save_to_individual_file(article_data)
         
-        # 2. Save to Firestore using result from step 1
-        doc_id = None
-        if self.db and publish_data:
-            try:
-                # Check for existing document by URL
-                existing_doc = self.get_article_by_url(publish_data.get('url'))
-                
-                if existing_doc:
-                    doc_id = existing_doc['id']
-                    print(f"🔄 [Firestore] URL exists ({doc_id}), updating sanitized data...")
-                    self.update_article(doc_id, publish_data)
-                else:
-                    doc_ref = self.db.collection('articles').add(publish_data)
-                    doc_id = doc_ref[1].id
-                    print(f"🔥 [Firestore] Saved new sanitized doc with doc_id: {doc_id}")
-            except Exception as e:
-                print(f"❌ [Firestore] Save Failed: {e}")
+        # 2. Firestore 저장은 발행(publish) 시에만 수행 (비용 절감)
+        # 개별 기사 저장 시에는 로컬 파일만 저장
 
         # 3. Update history as ACCEPTED
         if 'url' in article_data:
@@ -182,7 +222,7 @@ class DBClient:
         
         # Generate hash for uniqueness (using URL)
         url = article_data.get('url', '')
-        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
+        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
         source_id = article_data.get('source_id') or 'unknown'  # Handle empty string too
         
         # Simplified filename: source_id_hash.json
@@ -233,7 +273,7 @@ class DBClient:
         import json
         
         # 1. Calculate Expected Hash
-        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
+        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
         
         # 2. Search pattern: data/YYYY-MM-DD/*_{hash}.json
         search_pattern = os.path.join(self._get_data_dir(), "**", f"*_{url_hash}.json")
@@ -269,7 +309,7 @@ class DBClient:
         import shutil
         
         # 1. Find the existing file
-        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:8]
+        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
         search_pattern = os.path.join(self._get_data_dir(), "**", f"*_{url_hash}.json")
         files = glob.glob(search_pattern, recursive=True)
         
@@ -354,6 +394,7 @@ class DBClient:
             
         try:
             doc = self.db.collection('articles').document(doc_id).get()
+            self._track_read()  # 통계 추적
             if doc.exists:
                 data = doc.to_dict()
                 data['id'] = doc.id  # 문서 ID 포함
@@ -401,6 +442,7 @@ class DBClient:
             update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
             
             self.db.collection('articles').document(doc_id).update(update_data)
+            self._track_write()  # 통계 추적
             print(f"✏️ [Firestore] Updated: {doc_id}")
             return True, f"Updated document: {doc_id}"
         except Exception as e:
@@ -419,6 +461,7 @@ class DBClient:
             
         try:
             self.db.collection('articles').document(doc_id).delete()
+            self._track_delete()  # 통계 추적
             print(f"🗑️ [Firestore] Deleted: {doc_id}")
             return True, f"Deleted document: {doc_id}"
         except Exception as e:
@@ -504,41 +547,51 @@ class DBClient:
 
     def create_publication_record(self, summary_data):
         """
-        Create a new publication record in Firestore.
+        Create a new publication record in Firestore (메타+내장형 구조).
+        
         summary_data: {
             'published_at': isoformat string,
             'edition_code': '251220_1',
             'edition_name': '12/20 1호',
             'article_count': int,
-            'articles': [list of article_ids or metadata],
-            'mode': 'new' or 'append'
+            'articles': [list of article dicts with full data],
+            'status': 'preview' or 'released'
         }
-        Returns: document ID (publish_id)
+        Returns: edition_code (= publish_id)
         """
         if not self.db:
             print("⚠️ [Firestore] DB not connected")
             return None
 
         try:
-            # Create a new document in 'publications' collection
-            # We can use edition_code as ID or auto-generate.
-            # Use auto-generate for now to be safe, or edition_code if guaranteed unique.
-            # Using edition_code is cleaner if unique.
+            from datetime import datetime, timezone
             
-            # Ensure published_at is set
+            edition_code = summary_data.get('edition_code')
+            if not edition_code:
+                print("❌ [Firestore] edition_code is required")
+                return None
+            
+            # Ensure timestamps
             if 'published_at' not in summary_data:
-                from datetime import datetime, timezone
                 summary_data['published_at'] = datetime.now(timezone.utc).isoformat()
-            
-            # Ensure updated_at is set (캐싱 비교 기준)
             if 'updated_at' not in summary_data:
-                from datetime import datetime, timezone
                 summary_data['updated_at'] = summary_data['published_at']
             
-            doc_ref = self.db.collection('publications').add(summary_data)
-            doc_id = doc_ref[1].id
-            print(f"🎉 [Firestore] Created Publication Record: {doc_id} ({summary_data.get('edition_name')})")
-            return doc_id
+            # 1. 회차 문서 저장 (edition_code = 문서 ID)
+            self.db.collection('publications').document(edition_code).set(summary_data)
+            self._track_write()  # 통계 추적
+            print(f"🎉 [Firestore] Created Publication: {edition_code} ({summary_data.get('edition_name')})")
+            
+            # 2. _meta 문서 업데이트
+            self._update_meta(summary_data)
+            
+            # 3. _article_ids 문서 업데이트
+            article_ids = [a.get('id') or a.get('article_id') for a in summary_data.get('articles', []) if a.get('id') or a.get('article_id')]
+            if article_ids:
+                self._add_to_article_ids(article_ids)
+            
+            return edition_code
+            
         except Exception as e:
             print(f"❌ [Firestore] Publication Record Creation Failed: {e}")
             return None
@@ -555,11 +608,228 @@ class DBClient:
             update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
             
             self.db.collection('publications').document(publish_id).update(update_data)
+            self._track_write()  # 통계 추적
             print(f"✏️ [Firestore] Updated Publication: {publish_id}")
+            
+            # _meta 업데이트 (article_count 변경 시)
+            if 'article_count' in update_data or 'articles' in update_data:
+                self._update_meta_for_issue(publish_id, update_data)
+            
             return True
         except Exception as e:
             print(f"❌ [Firestore] Publication Update Failed: {e}")
             return False
+
+    # ============================================
+    # Meta + Article IDs Management (새 구조)
+    # ============================================
+    
+    def _update_meta(self, issue_data):
+        """_meta 문서에 회차 정보 추가/업데이트"""
+        if not self.db:
+            return
+            
+        try:
+            from google.cloud.firestore_v1 import ArrayUnion
+            
+            meta_ref = self.db.collection('publications').document('_meta')
+            
+            issue_entry = {
+                'code': issue_data.get('edition_code'),
+                'name': issue_data.get('edition_name'),
+                'count': issue_data.get('article_count', 0),
+                'updated_at': issue_data.get('updated_at'),
+                'status': issue_data.get('status', 'preview')
+            }
+            
+            # 기존 _meta 가져오기
+            meta_doc = meta_ref.get()
+            if meta_doc.exists:
+                existing_data = meta_doc.to_dict()
+                issues = existing_data.get('issues', [])
+                
+                # 같은 code가 있으면 교체, 없으면 추가
+                updated = False
+                for i, iss in enumerate(issues):
+                    if iss.get('code') == issue_entry['code']:
+                        issues[i] = issue_entry
+                        updated = True
+                        break
+                if not updated:
+                    issues.append(issue_entry)
+                
+                meta_ref.update({
+                    'issues': issues,
+                    'latest_updated_at': issue_data.get('updated_at')
+                })
+            else:
+                # 새로 생성
+                meta_ref.set({
+                    'issues': [issue_entry],
+                    'latest_updated_at': issue_data.get('updated_at')
+                })
+            
+            print(f"📋 [Firestore] Updated _meta for {issue_entry['code']}")
+        except Exception as e:
+            print(f"⚠️ [Firestore] _meta update failed: {e}")
+    
+    def _update_meta_for_issue(self, edition_code, update_data):
+        """기존 회차의 _meta 항목 업데이트"""
+        if not self.db:
+            return
+            
+        try:
+            meta_ref = self.db.collection('publications').document('_meta')
+            meta_doc = meta_ref.get()
+            
+            if meta_doc.exists:
+                existing_data = meta_doc.to_dict()
+                issues = existing_data.get('issues', [])
+                
+                for i, iss in enumerate(issues):
+                    if iss.get('code') == edition_code:
+                        if 'article_count' in update_data:
+                            issues[i]['count'] = update_data['article_count']
+                        if 'updated_at' in update_data:
+                            issues[i]['updated_at'] = update_data['updated_at']
+                        break
+                
+                meta_ref.update({
+                    'issues': issues,
+                    'latest_updated_at': update_data.get('updated_at')
+                })
+        except Exception as e:
+            print(f"⚠️ [Firestore] _meta update for issue failed: {e}")
+    
+    def _add_to_article_ids(self, article_ids: list):
+        """_article_ids 문서에 신규 ID 추가"""
+        if not self.db or not article_ids:
+            return
+            
+        try:
+            from google.cloud.firestore_v1 import ArrayUnion
+            
+            ids_ref = self.db.collection('publications').document('_article_ids')
+            ids_ref.set({
+                'ids': ArrayUnion(article_ids)
+            }, merge=True)
+            
+            print(f"🔑 [Firestore] Added {len(article_ids)} article IDs to _article_ids")
+        except Exception as e:
+            print(f"⚠️ [Firestore] _article_ids update failed: {e}")
+    
+    def _remove_from_article_ids(self, article_ids: list):
+        """_article_ids 문서에서 ID 제거"""
+        if not self.db or not article_ids:
+            return
+            
+        try:
+            from google.cloud.firestore_v1 import ArrayRemove
+            
+            ids_ref = self.db.collection('publications').document('_article_ids')
+            ids_ref.update({
+                'ids': ArrayRemove(article_ids)
+            })
+            
+            print(f"🗑️ [Firestore] Removed {len(article_ids)} article IDs from _article_ids")
+        except Exception as e:
+            print(f"⚠️ [Firestore] _article_ids removal failed: {e}")
+    
+    def get_published_article_ids_from_firestore(self) -> set:
+        """Firestore _article_ids 문서에서 발행된 article_id 목록 조회 (1 READ)"""
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return set()
+            
+        try:
+            ids_doc = self.db.collection('publications').document('_article_ids').get()
+            if ids_doc.exists:
+                ids = ids_doc.to_dict().get('ids', [])
+                print(f"🔑 [Firestore] Loaded {len(ids)} published article IDs")
+                return set(ids)
+            return set()
+        except Exception as e:
+            print(f"❌ [Firestore] Failed to get _article_ids: {e}")
+            return set()
+
+    def get_issues_from_meta(self, status_filter=None):
+        """
+        _meta 문서에서 회차 목록 조회 (1 READ로 최적화)
+        Args:
+            status_filter: 'preview' 또는 'released' (None이면 전체)
+        Returns: list of issue dicts [{code, name, count, updated_at, status}, ...]
+        """
+        if not self.db:
+            print("⚠️ [Firestore] DB not connected")
+            return []
+            
+        try:
+            meta_doc = self.db.collection('publications').document('_meta').get()
+            self._track_read()  # 통계 추적
+            
+            if not meta_doc.exists:
+                print("📋 [Firestore] No _meta document found")
+                return []
+            
+            meta_data = meta_doc.to_dict()
+            issues = meta_data.get('issues', [])
+            
+            # status 필터 적용
+            if status_filter:
+                issues = [i for i in issues if i.get('status') == status_filter]
+            
+            # _meta 문서의 issues 배열에는 _meta, _article_ids 같은 시스템 문서가 없으므로
+            # code가 '_'로 시작하는 항목 필터링 (안전장치)
+            issues = [i for i in issues if not i.get('code', '').startswith('_')]
+            
+            # updated_at 기준 내림차순 정렬
+            issues.sort(key=lambda x: x.get('updated_at', ''), reverse=True)
+            
+            # API 응답 형식에 맞게 변환 (id 필드 추가)
+            result = []
+            for iss in issues:
+                result.append({
+                    'id': iss.get('code'),  # edition_code = publish_id
+                    'edition_code': iss.get('code'),
+                    'edition_name': iss.get('name'),
+                    'article_count': iss.get('count', 0),
+                    'updated_at': iss.get('updated_at'),
+                    'status': iss.get('status', 'preview')
+                })
+            
+            print(f"📋 [Firestore] Loaded {len(result)} issues from _meta (1 READ)")
+            return result
+            
+        except Exception as e:
+            print(f"❌ [Firestore] Failed to get _meta: {e}")
+            return []
+
+    def remove_issue_from_meta(self, edition_code):
+        """_meta 문서에서 회차 제거"""
+        if not self.db:
+            return
+            
+        try:
+            meta_ref = self.db.collection('publications').document('_meta')
+            meta_doc = meta_ref.get()
+            
+            if meta_doc.exists:
+                from datetime import datetime, timezone
+                
+                existing_data = meta_doc.to_dict()
+                issues = existing_data.get('issues', [])
+                
+                # 해당 code 제외
+                issues = [i for i in issues if i.get('code') != edition_code]
+                
+                meta_ref.update({
+                    'issues': issues,
+                    'latest_updated_at': datetime.now(timezone.utc).isoformat()
+                })
+                
+                print(f"🗑️ [Firestore] Removed {edition_code} from _meta")
+        except Exception as e:
+            print(f"⚠️ [Firestore] Failed to remove from _meta: {e}")
 
     def get_issues_by_date(self, date_str=None):
         """
@@ -612,6 +882,7 @@ class DBClient:
             return None
         try:
             doc = self.db.collection('publications').document(publish_id).get()
+            self._track_read()  # 통계 추적
             if doc.exists:
                 data = doc.to_dict()
                 data['id'] = doc.id

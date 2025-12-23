@@ -7,7 +7,7 @@ import time
 class MLLClient:
     def __init__(self):
         # Default to localhost:5000 as per user example, but allow env override
-        self.api_url = os.getenv("MLL_API_URL", "http://localhost:5000")
+        self.api_url = os.getenv("MLL_API_URL", "http://localhost:8000")
         self.fallback_url = "http://localhost:3000"
         self.api_token = os.getenv("MLL_API_TOKEN")
         self.project_key = os.getenv("MLL_PROJECT_KEY", "news_factory")

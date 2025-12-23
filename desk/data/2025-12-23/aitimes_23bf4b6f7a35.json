@@ -1,0 +1,17 @@
+{
+  "id": "23bf4b6f7a35",
+  "article_id": "23bf4b6f7a35",
+  "title_ko": "앤트로픽, '에이전트 스킬' 오픈 소스 공개",
+  "summary": "앤트로픽이 에이전트 표준화를 위해 '에이전트 스킬'을 깃허브에 오픈 소스로 공개했다. 이는 복잡한 작업을 모듈화하여 재사용 가능하게 함으로써 LLM의 절차적 지식 부족 문제를 해결한다. 아틀라시안 등 주요 기업이 이미 도입 중이다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=204958",
+  "tags": [],
+  "category": "Engineering",
+  "zero_echo_score": 2.6,
+  "impact_score": 6.0,
+  "published_at": "2025-12-23T05:22:34.019144+00:00",
+  "source_id": "aitimes",
+  "original_title": "앤트로픽, '에이전트 스킬' 오픈 소스 공개...&quot;또 하나의 기업 AI 표준 선점&quot;",
+  "publish_id": "251223_2",
+  "edition_code": "251223_2",
+  "edition_name": "2호"
+}

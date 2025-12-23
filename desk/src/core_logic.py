@@ -119,15 +119,15 @@ def get_url_hash(url: str, length: int = 12) -> str:
 def get_article_id(url: str) -> str:
     """
     Generate article_id from URL.
-    Uses 6-character hash to match manual crawler convention.
+    Uses 12-character hash for collision prevention.
     
     Args:
         url: The article URL
     
     Returns:
-        6-character article ID
+        12-character article ID
     """
-    return get_url_hash(url, length=6)
+    return get_url_hash(url, length=12)
 
 
 # ==============================================================================
@@ -306,8 +306,10 @@ def normalize_field_names(data: dict) -> dict:
                 normalized['title_ko'] = meta['Headline']
             if 'Summary' in meta:
                 normalized['summary'] = meta['Summary']
-            # Tag는 V0.9 호환
-            if 'Tag' in meta:
+            # Tags는 V1.0에서 'Tags', V0.9에서 'Tag'로 키가 다름
+            if 'Tags' in meta:
+                normalized['tags'] = meta['Tags']
+            elif 'Tag' in meta:
                 normalized['tags'] = meta['Tag']
         
         # V1.0 Article_ID Mapping
@@ -339,7 +341,9 @@ def normalize_field_names(data: dict) -> dict:
                 normalized['title_ko'] = meta['Headline']
             if 'summary' in meta:
                 normalized['summary'] = meta['summary']
-            if 'Tag' in meta:
+            if 'Tags' in meta:
+                normalized['tags'] = meta['Tags']
+            elif 'Tag' in meta:
                 normalized['tags'] = meta['Tag']
             
     # --- Legacy raw_analysis 처리 (v6.2 - 바로 계산) ---

@@ -13,8 +13,8 @@
 # testing
 /coverage
 
-# next.js
-/.next/
+# next.js (dev cache only - production build is included for deployment)
+/.next/dev/
 /out/
 
 # production

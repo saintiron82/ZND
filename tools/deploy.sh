@@ -3,8 +3,30 @@
 # Stop execution if any command fails
 set -e
 
-# 배포할 브랜치 (인자로 받거나 기본값 사용)
-TARGET_BRANCH=${1:-$(git branch --show-current)}
+# 0. Branch Selection & Confirmation
+CURRENT_BRANCH=$(git branch --show-current)
+TARGET_BRANCH=$1
+
+# If no argument provided, ask user
+if [ -z "$TARGET_BRANCH" ]; then
+    echo "Current branch is: $CURRENT_BRANCH"
+    read -p "Enter branch to deploy (default: $CURRENT_BRANCH): " INPUT_BRANCH
+    TARGET_BRANCH=${INPUT_BRANCH:-$CURRENT_BRANCH}
+fi
+
+echo ""
+echo "============================================"
+echo "🚀 Deployment Configuration"
+echo "============================================"
+echo "Target Branch: $TARGET_BRANCH"
+echo "============================================"
+echo ""
+
+read -p "Are you sure you want to deploy this branch? (y/N): " CONFIRM
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+    echo "❌ Deployment cancelled."
+    exit 0
+fi
 
 echo "🚀 Starting deployment for branch: $TARGET_BRANCH"
 

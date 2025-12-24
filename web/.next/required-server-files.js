@@ -140,7 +140,7 @@ self.__SERVER_FILES_MANIFEST={
       "isExperimentalCompile": false
     }
   },
-  "appDir": "D:\\ZND\\web",
+  "appDir": "C:\\Users\\saint\\ZND\\web",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

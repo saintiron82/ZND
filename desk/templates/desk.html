@@ -274,9 +274,12 @@
                         <button class="btn"
                             style="width: 100%; background: #17a2b8; color: white; padding: 8px; margin-top: 6px;"
                             onclick="window.open('http://localhost:3000/preview', '_blank')">👁️ 프리뷰 사이트 열기</button>
-                        <button class="btn"
-                            style="width: 100%; background: #ff9800; color: white; padding: 8px; margin-top: 6px;"
-                            onclick="syncCacheToFirebase()">☁️ 캐시 동기화</button>
+                        <div style="display: flex; gap: 6px; margin-top: 6px;">
+                            <button class="btn" style="flex: 1; background: #ff9800; color: white; padding: 8px;"
+                                onclick="syncCachePush()">☁️ 캐시 올리기</button>
+                            <button class="btn" style="flex: 1; background: #4caf50; color: white; padding: 8px;"
+                                onclick="syncCachePull()">⬇️ 캐시 내려받기</button>
+                        </div>
                     </div>
 
                     <!-- 위험 작업 -->

@@ -1,12 +1,226 @@
 {
-  "title": "From assistance to autonomy: How agentic AI is redefining enterprises",
+  "article_id": "7bd90ef7eb2b",
+  "cached_at": "2025-12-23T05:23:32.674256+00:00",
   "description": "Unified platforms simplify outcome monitoring and strengthen governance —both critical as systems become increasingly autonomous.",
   "image": "https://images.ctfassets.net/jdtwqhzvc2n1/25m5IkWENg9oga60pxJfyg/7162178b086b57e6277a81f077116973/AdobeStock_1666071459.jpeg?w=800&q=75",
-  "text": "Presented by EdgeVerve Artificial intelligence (AI) has long promised to change the way enterprises operate. For years, the focus was on assistants, systems that could surface information, summarize documents, or streamline repetitive tasks. While valuable, these technological assistants were reactive: they waited for human prompts and provided limited support within narrow boundaries. Today, a new chapter is unfolding. Agentic AI, whose systems are capable of autonomous decision-making and multi-step orchestration, represents a significant evolution. These systems don’t just assist, they act. They evaluate context, weigh outcomes and autonomously initiate actions, orchestrating complex workflows across functions. They adapt dynamically and collaborate with other agents in ways that are beginning to reshape enterprise operations at large. For leaders, this shift carries both opportunity and responsibility. The potential is immense, but so are the governance, trust and design challenges that come with giving AI systems greater autonomy. Enterprises must be able to monitor and override any actions taken by the agentic AI systems. Shift from assistance to autonomy Traditional AI assistants primarily respond to queries and perform isolated tasks. They are helpful but constrained. Agentic AI pushes further: multiple agents can collaborate, exchange context and manage workflows end-to-end. Imagine a procurement workflow. An assistant can pull vendor data or draft a purchase order. An agentic system, however, can review demand forecasts, evaluate vendor risk, check compliance policies, negotiate terms and finalize transactions. It does this all while coordinating across global business departments, including finance, operations and compliance. This shift from narrow support to autonomous orchestration is the defining leap of the next era of enterprise AI. It is not about replacing humans but about embedding intelligence into the very fabric of organizational workflows. Rethink enterprise workflows The goal of every enterprise department is focused on efficiency, scale and standardization. But agentic AI challenges enterprises to think differently. Instead of designing workflows step by step and inserting automation, organizations now need to completely reimagine and architect intelligent ecosystems for orchestrating processes, adapting to evolving business needs, and enabling seamless collaboration between humans and agents. That requires new thinking. Which decisions should remain human-led, and which can be delegated? How do you ensure agents access the correct data without overstepping boundaries? What happens when agents from finance, HR and supply chain must coordinate autonomously? The design of workflows is no longer about linear handoffs; it is about orchestrated ecosystems. Enterprises that get this right can achieve speed and agility that traditional automation cannot match. Accelerate agentic AI-led transformation with a unified platform In this environment, unified platforms become critical. Without them, enterprises risk a proliferation of disconnected agents working at cross-purposes. A unified approach provides the guardrails with shared knowledge graphs, consistent policy frameworks and a single orchestration layer that ensures interoperability across business functions. This platform-based approach not only reduces complexity but also enables scale. Enterprises don’t want dozens of fragmented AI projects that stall in the pilot stages. They want enterprise-grade systems where agents can collaborate securely and consistently across the enterprise. Unified platforms simplify outcome monitoring and strengthen governance —both critical as systems become increasingly autonomous. Build trust and accountability As AI systems act with greater independence, the stakes rise. An agent who makes flawed decisions in customer service may frustrate a client. An agent that mishandles a compliance process could expose the enterprise to regulatory risk. That’s why trust and accountability must be designed into agentic AI from the start. Governance is not an afterthought; it is a foundation. Leaders need clear policies defining the scope of agentic autonomy, transparent logging of decisions, evaluating and monitoring agents and escalation mechanisms when human oversight is required. Equally important is cultural trust. Employees must believe these systems are partners, not threats. This calls for change management, training, and communication that positions agentic AI as augmenting human capability rather than replacing it. Measure business value early One of the most common pitfalls in enterprise AI adoption is the gap between promising pilots and at-scale results. Studies show that a significant percentage of AI projects never make it past experimentation. Agentic AI cannot afford to fall into this trap. Enterprises must measure business value early and continuously. This includes efficiency gains, cost reductions, error avoidance and even intangible benefits like faster decision-making or improved compliance. Success will be defined by automation coverage across processes, reductions in manual intervention and the ability to deliver new services at speed and scale. When designed responsibly, agentic AI can deliver exponential improvements. A procurement cycle reduced from weeks to hours, or a compliance review automated at scale, can fundamentally alter enterprise performance. Preparing for the future The rise of agentic AI does not mean handing over control to machines or codes. Instead, it marks the next phase of enterprise transformation, where humans and agents operate side by side in orchestrated systems. Leaders should start by piloting agentic systems in well-defined domains with clear governance models. From there, scaling across the enterprise requires investment in unified platforms, robust policy frameworks, and a culture that embraces intelligent automation as a partner in value creation. The enterprises that succeed will be those that approach agentic AI not as another tool, but as a strategic shift. Just as ERP and cloud once redefined operations, agentic AI is poised to do the same, reshaping workflows, governance, and the very way decisions are made. Agentic AI is moving the enterprise conversation from assistance to autonomy. That change comes with objective complexity, but also with extraordinary promise. The foundation for success lies in unified platforms that enable enterprises to orchestrate with intelligence, govern with trust, and scale with confidence. The journey is just beginning. And for enterprise leaders, now is the time to lead with vision, responsibility, and ambition. N Shashidhar is VP and Global Platform Head of EdgeVerve AI Next.",
   "published_at": "2025-12-22T00:00:00-05:00",
-  "url": "https://venturebeat.com/technology/from-assistance-to-autonomy-how-agentic-ai-is-redefining-enterprises",
   "source_id": "venturebeat",
-  "status": "RAW",
-  "article_id": "7bd90ef7eb2b",
-  "cached_at": "2025-12-23T05:23:32.674256+00:00"
+  "status": "reviewed",
+  "text": "Presented by EdgeVerve Artificial intelligence (AI) has long promised to change the way enterprises operate. For years, the focus was on assistants, systems that could surface information, summarize documents, or streamline repetitive tasks. While valuable, these technological assistants were reactive: they waited for human prompts and provided limited support within narrow boundaries. Today, a new chapter is unfolding. Agentic AI, whose systems are capable of autonomous decision-making and multi-step orchestration, represents a significant evolution. These systems don’t just assist, they act. They evaluate context, weigh outcomes and autonomously initiate actions, orchestrating complex workflows across functions. They adapt dynamically and collaborate with other agents in ways that are beginning to reshape enterprise operations at large. For leaders, this shift carries both opportunity and responsibility. The potential is immense, but so are the governance, trust and design challenges that come with giving AI systems greater autonomy. Enterprises must be able to monitor and override any actions taken by the agentic AI systems. Shift from assistance to autonomy Traditional AI assistants primarily respond to queries and perform isolated tasks. They are helpful but constrained. Agentic AI pushes further: multiple agents can collaborate, exchange context and manage workflows end-to-end. Imagine a procurement workflow. An assistant can pull vendor data or draft a purchase order. An agentic system, however, can review demand forecasts, evaluate vendor risk, check compliance policies, negotiate terms and finalize transactions. It does this all while coordinating across global business departments, including finance, operations and compliance. This shift from narrow support to autonomous orchestration is the defining leap of the next era of enterprise AI. It is not about replacing humans but about embedding intelligence into the very fabric of organizational workflows. Rethink enterprise workflows The goal of every enterprise department is focused on efficiency, scale and standardization. But agentic AI challenges enterprises to think differently. Instead of designing workflows step by step and inserting automation, organizations now need to completely reimagine and architect intelligent ecosystems for orchestrating processes, adapting to evolving business needs, and enabling seamless collaboration between humans and agents. That requires new thinking. Which decisions should remain human-led, and which can be delegated? How do you ensure agents access the correct data without overstepping boundaries? What happens when agents from finance, HR and supply chain must coordinate autonomously? The design of workflows is no longer about linear handoffs; it is about orchestrated ecosystems. Enterprises that get this right can achieve speed and agility that traditional automation cannot match. Accelerate agentic AI-led transformation with a unified platform In this environment, unified platforms become critical. Without them, enterprises risk a proliferation of disconnected agents working at cross-purposes. A unified approach provides the guardrails with shared knowledge graphs, consistent policy frameworks and a single orchestration layer that ensures interoperability across business functions. This platform-based approach not only reduces complexity but also enables scale. Enterprises don’t want dozens of fragmented AI projects that stall in the pilot stages. They want enterprise-grade systems where agents can collaborate securely and consistently across the enterprise. Unified platforms simplify outcome monitoring and strengthen governance —both critical as systems become increasingly autonomous. Build trust and accountability As AI systems act with greater independence, the stakes rise. An agent who makes flawed decisions in customer service may frustrate a client. An agent that mishandles a compliance process could expose the enterprise to regulatory risk. That’s why trust and accountability must be designed into agentic AI from the start. Governance is not an afterthought; it is a foundation. Leaders need clear policies defining the scope of agentic autonomy, transparent logging of decisions, evaluating and monitoring agents and escalation mechanisms when human oversight is required. Equally important is cultural trust. Employees must believe these systems are partners, not threats. This calls for change management, training, and communication that positions agentic AI as augmenting human capability rather than replacing it. Measure business value early One of the most common pitfalls in enterprise AI adoption is the gap between promising pilots and at-scale results. Studies show that a significant percentage of AI projects never make it past experimentation. Agentic AI cannot afford to fall into this trap. Enterprises must measure business value early and continuously. This includes efficiency gains, cost reductions, error avoidance and even intangible benefits like faster decision-making or improved compliance. Success will be defined by automation coverage across processes, reductions in manual intervention and the ability to deliver new services at speed and scale. When designed responsibly, agentic AI can deliver exponential improvements. A procurement cycle reduced from weeks to hours, or a compliance review automated at scale, can fundamentally alter enterprise performance. Preparing for the future The rise of agentic AI does not mean handing over control to machines or codes. Instead, it marks the next phase of enterprise transformation, where humans and agents operate side by side in orchestrated systems. Leaders should start by piloting agentic systems in well-defined domains with clear governance models. From there, scaling across the enterprise requires investment in unified platforms, robust policy frameworks, and a culture that embraces intelligent automation as a partner in value creation. The enterprises that succeed will be those that approach agentic AI not as another tool, but as a strategic shift. Just as ERP and cloud once redefined operations, agentic AI is poised to do the same, reshaping workflows, governance, and the very way decisions are made. Agentic AI is moving the enterprise conversation from assistance to autonomy. That change comes with objective complexity, but also with extraordinary promise. The foundation for success lies in unified platforms that enable enterprises to orchestrate with intelligence, govern with trust, and scale with confidence. The journey is just beginning. And for enterprise leaders, now is the time to lead with vision, responsibility, and ambition. N Shashidhar is VP and Global Platform Head of EdgeVerve AI Next.",
+  "title": "From assistance to autonomy: How agentic AI is redefining enterprises",
+  "url": "https://venturebeat.com/technology/from-assistance-to-autonomy-how-agentic-ai-is-redefining-enterprises",
+  "title_ko": "지원에서 자율로: 에이전트 AI가 기업을 재정의하는 방법",
+  "summary": "EdgeVerve가 제시하는 에이전트 AI(Agentic AI)의 개념과 기업 적용에 대한 가이드이다. 단순 보조(Assistant)를 넘어 자율적 의사결정과 업무 오케스트레이션이 가능한 에이전트 AI의 필요성을 강조하며, 이를 위한 통합 플랫폼 구축, 거버넌스 강화, 그리고 조직 내 신뢰 구축이 필수적임을 역설한다.",
+  "tags": [],
+  "impact_score": 0.0,
+  "IS_Analysis": {
+    "Score_Commentary": "특정 사건(Event)이 아닌 기업의 기술 비전과 가이드를 제시하는 스폰서드 콘텐츠(Opinion/Guide) 성격의 기사다. PE인 EdgeVerve는 글로벌 IT 서비스 기업의 자회사이나, Tier Map상 명시되지 않아 Tier 5로 분류한다. 실질적 사건 발생이 부재하므로 점수는 산출되지 않는다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P5",
+          "Pe_Entity_Name": "EdgeVerve",
+          "Pe_Tier": 5,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "PE는 기사의 주체이자 화자인 EdgeVerve(Infosys 자회사)로 선정(규제/발표 주체 성격). SE는 일반적인 기업(Enterprises)을 대상으로 하므로 특정 대상을 지정할 수 없어 None 처리."
+        },
+        "Tier_Score": 0,
+        "Gap_Score": 0,
+        "IW_Score": 0
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 0,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 0
+      }
+    }
+  },
+  "zero_echo_score": 9.4,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 2,
+      "T2": 7,
+      "T3": 3,
+      "Rationale": "에이전트 AI의 개념적 정의와 작동 방식(T2)은 상세하나, 구체적인 수치나 실증 데이터(T1)는 부족함."
+    },
+    "Noise": {
+      "P1": 8,
+      "P2": 9,
+      "P3": 0,
+      "Rationale": "'Redefining', 'Immense potential' 등 마케팅적 수식어(P1)와 자사 관점의 주장(P2)이 지배적임."
+    },
+    "Utility": {
+      "V1": 2,
+      "V2": 4,
+      "V3": 2,
+      "Rationale": "일반적인 기술 트렌드 설명으로 실질적인 시장 파급력이나 희소한 정보 가치는 낮음."
+    },
+    "Fine_Adjustment": {
+      "Score": -0.5,
+      "Reason": "정보성 가이드 형식을 취하고 있으나 실질적으로는 기업 홍보물에 가까워 유틸리티 점수 소폭 하향 조정."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "7bd90ef7eb2b",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "지원에서 자율로: 에이전트 AI가 기업을 재정의하는 방법",
+      "Summary": "EdgeVerve가 제시하는 에이전트 AI(Agentic AI)의 개념과 기업 적용에 대한 가이드이다. 단순 보조(Assistant)를 넘어 자율적 의사결정과 업무 오케스트레이션이 가능한 에이전트 AI의 필요성을 강조하며, 이를 위한 통합 플랫폼 구축, 거버넌스 강화, 그리고 조직 내 신뢰 구축이 필수적임을 역설한다.",
+      "Tags": [
+        "Opinion",
+        "Guide",
+        "Agent"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "특정 사건(Event)이 아닌 기업의 기술 비전과 가이드를 제시하는 스폰서드 콘텐츠(Opinion/Guide) 성격의 기사다. PE인 EdgeVerve는 글로벌 IT 서비스 기업의 자회사이나, Tier Map상 명시되지 않아 Tier 5로 분류한다. 실질적 사건 발생이 부재하므로 점수는 산출되지 않는다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P5",
+            "Pe_Entity_Name": "EdgeVerve",
+            "Pe_Tier": 5,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "PE는 기사의 주체이자 화자인 EdgeVerve(Infosys 자회사)로 선정(규제/발표 주체 성격). SE는 일반적인 기업(Enterprises)을 대상으로 하므로 특정 대상을 지정할 수 없어 None 처리."
+          },
+          "Tier_Score": 0,
+          "Gap_Score": 0,
+          "IW_Score": 0
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 0,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 0
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 2,
+        "T2": 7,
+        "T3": 3,
+        "Rationale": "에이전트 AI의 개념적 정의와 작동 방식(T2)은 상세하나, 구체적인 수치나 실증 데이터(T1)는 부족함."
+      },
+      "Noise": {
+        "P1": 8,
+        "P2": 9,
+        "P3": 0,
+        "Rationale": "'Redefining', 'Immense potential' 등 마케팅적 수식어(P1)와 자사 관점의 주장(P2)이 지배적임."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 4,
+        "V3": 2,
+        "Rationale": "일반적인 기술 트렌드 설명으로 실질적인 시장 파급력이나 희소한 정보 가치는 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "정보성 가이드 형식을 취하고 있으나 실질적으로는 기업 홍보물에 가까워 유틸리티 점수 소폭 하향 조정."
+      }
+    }
+  },
+  "original_title": "From assistance to autonomy: How agentic AI is redefining enterprises",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 2.0,
+        "T2": 7.0,
+        "T3": 3.0,
+        "S_Avg": 4.0
+      },
+      "Noise": {
+        "P1": 8.0,
+        "P2": 9.0,
+        "P3": 0.0,
+        "N_Avg": 5.67
+      },
+      "Utility": {
+        "V1": 2.0,
+        "V2": 4.0,
+        "V3": 2.0,
+        "U_Avg": 2.67
+      },
+      "Fine_Adjustment": -0.5,
+      "ZS_Raw": 9.39,
+      "ZS_Final": 9.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 2,
+        "T2": 7,
+        "T3": 3,
+        "Rationale": "에이전트 AI의 개념적 정의와 작동 방식(T2)은 상세하나, 구체적인 수치나 실증 데이터(T1)는 부족함."
+      },
+      "Noise": {
+        "P1": 8,
+        "P2": 9,
+        "P3": 0,
+        "Rationale": "'Redefining', 'Immense potential' 등 마케팅적 수식어(P1)와 자사 관점의 주장(P2)이 지배적임."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 4,
+        "V3": 2,
+        "Rationale": "일반적인 기술 트렌드 설명으로 실질적인 시장 파급력이나 희소한 정보 가치는 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "정보성 가이드 형식을 취하고 있으나 실질적으로는 기업 홍보물에 가까워 유틸리티 점수 소폭 하향 조정."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 0.0,
+        "IE_Total": 0.0
+      },
+      "IS_Raw": 0.0,
+      "IS_Final": 0.0,
+      "Score_Commentary": "특정 사건(Event)이 아닌 기업의 기술 비전과 가이드를 제시하는 스폰서드 콘텐츠(Opinion/Guide) 성격의 기사다. PE인 EdgeVerve는 글로벌 IT 서비스 기업의 자회사이나, Tier Map상 명시되지 않아 Tier 5로 분류한다. 실질적 사건 발생이 부재하므로 점수는 산출되지 않는다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P5",
+      "Pe_Entity_Name": "EdgeVerve",
+      "Pe_Tier": 5,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "PE는 기사의 주체이자 화자인 EdgeVerve(Infosys 자회사)로 선정(규제/발표 주체 성격). SE는 일반적인 기업(Enterprises)을 대상으로 하므로 특정 대상을 지정할 수 없어 None 처리."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 0,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:32.501439+00:00"
 }

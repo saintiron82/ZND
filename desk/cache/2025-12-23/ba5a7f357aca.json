@@ -1,12 +1,225 @@
 {
-  "title": "﻿[신년사] 올거나이즈, \"에이전트 중심 LLM 올인원 플랫폼으로 도약할 것\" - AI타임스",
+  "article_id": "ba5a7f357aca",
+  "cached_at": "2025-12-23T08:25:50.165097+00:00",
   "description": "대형언어모델(LLM) 전문 올거나이즈(대표 이창수)는 신년사를 통해 그간 축적한 검색 증강 생성(RAG) 기술과 플랫폼 경험을 바탕으로 기업들의 실질적인 업무 자",
   "image": "https://cdn.aitimes.com/news/photo/202512/205040_206496_4510.jpeg",
-  "text": "이원강 올거나이즈 부대표 (사진=올거나이즈) 대형언어모델(LLM) 전문 올거나이즈(대표 이창수)는 신년사를 통해 그간 축적한 검색 증강 생성(RAG) 기술과 플랫폼 경험을 바탕으로 기업들의 실질적인 업무 자동화를 지원하겠다고 밝혔다. 이원강 올거나이즈 부대표는 최근 업무용 LLM 플랫폼 업계 흐름이 RAG를 활용한 '정확성 개선' 단계에서 실제 업무를 수행하는 'AI 에이전트 구현 단계'로 전환되고 있다고 진단했다. 이원강 부대표는 \"LLM은 지속적으로 진화하며 최첨단(SOTA) 성과를 지속적으로 경신하고 있다\"라며 \"실제 사람의 업무를 대신하는 AI 에이전트에 대한 수요도 증가하는 만큼 기업은 한 가지 모델에만 의존하는 것이 아니라 상황에 따라 전략적으로 대응해야 한다\"라고 강조했다. AI 에이전트를 쉽게 만들 수 있는 플랫폼과 해당 AI 에이전트가 업무 목표를 달성할 수 있도록 솔루션을 고도화할 계획이다. 올거나이즈는 기업을 위한 업무용 올인원 LLM 플랫폼 '알리(Alli)'를 제공한다. 금융과 공공 기관의 온프레미스 수요에 특화한 '알파 LLM 모델'을 비롯해 기업이 코딩 없이도 다양한 업무 자동화 앱을 자체 제작할 수 있는 'LLM 앱 빌더', 고객사별로 특화 제작한 LLM 앱을 모아 '앱 마켓' 형태로 제공한다. 강점으로는 RAG 기술을 꼽았다. 기업 내부의 대규모 문서와 데이터베이스를 활용해 사용자의 의도를 자율적으로 인지해 최적의 답변을 제공한다. 지난 4월에는 MCP 기반의 '에이전트 빌더'를 개발해 알리에 탑재했다. 코딩 없이 AI 에이전트를 제작하고 외부 시스템과 유연하게 연동할 수 있게 됐다고 설명했다. 이에 단순 LLM 앱을 넘어 AI 에이전트를 알리에서 직접 개발하고 활용하며 에이전트를 가장 잘 활용할 수 있는 LLM 플랫폼으로 공공·금융·엔터프라이즈 등 산업 다방면에서 활약할 계획이라고 전했다. 현재 알리는 서비스형 소프트웨어(SaaS)와 온프레미스 환경 모두에서 사용 가능하며 SaaS는 일본 고객을 중심으로 온프레미스는 국내 고객사를 중심으로 성장하고 있다. 이 부대표는 \"내년에는 SaaS와 온프레미스 분야 모두에서 최고의 기업이 되기 위해 노력할 것\"이라고 밝혔다. 김해원 기자 hwkim@aitimes.com",
   "published_at": "2025-12-23T16:26:26+09:00",
-  "url": "https://www.aitimes.com/news/articleView.html?idxno=205040",
   "source_id": "aitimes",
-  "status": "RAW",
-  "article_id": "ba5a7f357aca",
-  "cached_at": "2025-12-23T08:25:50.165097+00:00"
+  "status": "reviewed",
+  "text": "이원강 올거나이즈 부대표 (사진=올거나이즈) 대형언어모델(LLM) 전문 올거나이즈(대표 이창수)는 신년사를 통해 그간 축적한 검색 증강 생성(RAG) 기술과 플랫폼 경험을 바탕으로 기업들의 실질적인 업무 자동화를 지원하겠다고 밝혔다. 이원강 올거나이즈 부대표는 최근 업무용 LLM 플랫폼 업계 흐름이 RAG를 활용한 '정확성 개선' 단계에서 실제 업무를 수행하는 'AI 에이전트 구현 단계'로 전환되고 있다고 진단했다. 이원강 부대표는 \"LLM은 지속적으로 진화하며 최첨단(SOTA) 성과를 지속적으로 경신하고 있다\"라며 \"실제 사람의 업무를 대신하는 AI 에이전트에 대한 수요도 증가하는 만큼 기업은 한 가지 모델에만 의존하는 것이 아니라 상황에 따라 전략적으로 대응해야 한다\"라고 강조했다. AI 에이전트를 쉽게 만들 수 있는 플랫폼과 해당 AI 에이전트가 업무 목표를 달성할 수 있도록 솔루션을 고도화할 계획이다. 올거나이즈는 기업을 위한 업무용 올인원 LLM 플랫폼 '알리(Alli)'를 제공한다. 금융과 공공 기관의 온프레미스 수요에 특화한 '알파 LLM 모델'을 비롯해 기업이 코딩 없이도 다양한 업무 자동화 앱을 자체 제작할 수 있는 'LLM 앱 빌더', 고객사별로 특화 제작한 LLM 앱을 모아 '앱 마켓' 형태로 제공한다. 강점으로는 RAG 기술을 꼽았다. 기업 내부의 대규모 문서와 데이터베이스를 활용해 사용자의 의도를 자율적으로 인지해 최적의 답변을 제공한다. 지난 4월에는 MCP 기반의 '에이전트 빌더'를 개발해 알리에 탑재했다. 코딩 없이 AI 에이전트를 제작하고 외부 시스템과 유연하게 연동할 수 있게 됐다고 설명했다. 이에 단순 LLM 앱을 넘어 AI 에이전트를 알리에서 직접 개발하고 활용하며 에이전트를 가장 잘 활용할 수 있는 LLM 플랫폼으로 공공·금융·엔터프라이즈 등 산업 다방면에서 활약할 계획이라고 전했다. 현재 알리는 서비스형 소프트웨어(SaaS)와 온프레미스 환경 모두에서 사용 가능하며 SaaS는 일본 고객을 중심으로 온프레미스는 국내 고객사를 중심으로 성장하고 있다. 이 부대표는 \"내년에는 SaaS와 온프레미스 분야 모두에서 최고의 기업이 되기 위해 노력할 것\"이라고 밝혔다. 김해원 기자 hwkim@aitimes.com",
+  "title": "﻿[신년사] 올거나이즈, \"에이전트 중심 LLM 올인원 플랫폼으로 도약할 것\" - AI타임스",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=205040",
+  "title_ko": "올거나이즈 신년사, 에이전트 중심 LLM 플랫폼 도약 선언",
+  "summary": "올거나이즈가 신년사를 통해 RAG 기반 정확성 개선을 넘어 AI 에이전트 구현 단계로 나아가겠다는 목표를 밝혔다. 일본과 국내 시장에서 SaaS 및 온프레미스 성장을 도모한다.",
+  "tags": [],
+  "impact_score": 0.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 5 기업의 신년사. Hard Filter 적용.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Allganize",
+          "Pe_Tier": 5,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "비전 발표 주체."
+        },
+        "Tier_Score": 0,
+        "Gap_Score": 0,
+        "IW_Score": 0
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 0,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 0
+      }
+    }
+  },
+  "zero_echo_score": 9.4,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 2,
+      "T2": 2,
+      "T3": 2,
+      "Rationale": "일반적 비전 선포."
+    },
+    "Noise": {
+      "P1": 6,
+      "P2": 7,
+      "P3": 0,
+      "Rationale": "홍보성 기사."
+    },
+    "Utility": {
+      "V1": 2,
+      "V2": 2,
+      "V3": 1,
+      "Rationale": "정보 희소성 낮음."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": ""
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "ba5a7f357aca",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "올거나이즈 신년사, 에이전트 중심 LLM 플랫폼 도약 선언",
+      "Summary": "올거나이즈가 신년사를 통해 RAG 기반 정확성 개선을 넘어 AI 에이전트 구현 단계로 나아가겠다는 목표를 밝혔다. 일본과 국내 시장에서 SaaS 및 온프레미스 성장을 도모한다.",
+      "Tags": [
+        "Agent",
+        "News"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 5 기업의 신년사. Hard Filter 적용.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Allganize",
+            "Pe_Tier": 5,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "비전 발표 주체."
+          },
+          "Tier_Score": 0,
+          "Gap_Score": 0,
+          "IW_Score": 0
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 0,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 0
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 2,
+        "T2": 2,
+        "T3": 2,
+        "Rationale": "일반적 비전 선포."
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 7,
+        "P3": 0,
+        "Rationale": "홍보성 기사."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 2,
+        "V3": 1,
+        "Rationale": "정보 희소성 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": ""
+      }
+    }
+  },
+  "original_title": "﻿[신년사] 올거나이즈, \"에이전트 중심 LLM 올인원 플랫폼으로 도약할 것\" - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 2.0,
+        "T2": 2.0,
+        "T3": 2.0,
+        "S_Avg": 2.0
+      },
+      "Noise": {
+        "P1": 6.0,
+        "P2": 7.0,
+        "P3": 0.0,
+        "N_Avg": 4.33
+      },
+      "Utility": {
+        "V1": 2.0,
+        "V2": 2.0,
+        "V3": 1.0,
+        "U_Avg": 1.67
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 9.36,
+      "ZS_Final": 9.4
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 2,
+        "T2": 2,
+        "T3": 2,
+        "Rationale": "일반적 비전 선포."
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 7,
+        "P3": 0,
+        "Rationale": "홍보성 기사."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 2,
+        "V3": 1,
+        "Rationale": "정보 희소성 낮음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": ""
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 0.0,
+        "IE_Total": 0.0
+      },
+      "IS_Raw": 0.0,
+      "IS_Final": 0.0,
+      "Score_Commentary": "Tier 5 기업의 신년사. Hard Filter 적용."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Allganize",
+      "Pe_Tier": 5,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "비전 발표 주체."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 0,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:12.115978+00:00"
 }

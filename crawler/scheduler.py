@@ -54,14 +54,15 @@ def save_schedules(schedules: list):
         json.dump({'schedules': schedules}, f, indent=2, ensure_ascii=False)
 
 
-def run_scheduled_crawl():
+def run_scheduled_crawl(schedule_name: str = "Scheduled"):
     """스케줄에 의해 호출되는 크롤링 작업"""
     print(f"\n{'='*50}")
     print(f"⏰ [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Scheduled crawl triggered")
+    print(f"📋 Schedule: {schedule_name}")
     print(f"{'='*50}\n")
     
     try:
-        result = run_full_pipeline()
+        result = run_full_pipeline(schedule_name)
         log_crawl_event("Scheduled", f"Pipeline completed: {result.get('message', 'OK')}", 0, success=result.get('success', True))
     except Exception as e:
         log_crawl_event("Scheduled", f"Pipeline failed: {str(e)}", 0, success=False)
@@ -103,6 +104,7 @@ def create_scheduler() -> BlockingScheduler:
                 scheduler.add_job(
                     run_scheduled_crawl,
                     trigger,
+                    args=[sched.get('name', 'Unnamed')],  # 스케줄 이름 전달
                     id=sched.get('id', f"job_{sched.get('name', 'unknown')}"),
                     name=sched.get('name', 'Unnamed')
                 )

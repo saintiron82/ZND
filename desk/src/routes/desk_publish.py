@@ -366,6 +366,111 @@ def cache_sync():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@publish_bp.route('/api/cache/pull', methods=['POST'])
+def cache_pull():
+    """
+    ⬇️ Firebase에서 캐시를 로컬로 다운로드
+    
+    - 지정된 날짜 또는 전체 날짜의 캐시를 다운로드
+    - 크롤링 히스토리도 함께 병합
+    """
+    try:
+        from src.db_client import DBClient
+        
+        db = DBClient()
+        if not db.db:
+            return jsonify({'success': False, 'error': 'Firestore 연결 실패'}), 500
+        
+        data = request.json or {}
+        date_str = data.get('date')
+        pull_all = data.get('all', False)
+        
+        downloaded_count = 0
+        
+        # 다운로드 대상 날짜 결정
+        if pull_all:
+            date_folders = db.get_cache_sync_dates()
+        elif date_str:
+            date_folders = [date_str]
+        else:
+            date_folders = [datetime.now().strftime('%Y-%m-%d')]
+        
+        # 날짜별 캐시 다운로드
+        for date_folder in date_folders:
+            cache_list = db.download_cache_batch(date_folder)
+            
+            if not cache_list:
+                continue
+            
+            # 로컬에 저장
+            cache_date_dir = os.path.join(CACHE_DIR, date_folder)
+            os.makedirs(cache_date_dir, exist_ok=True)
+            
+            for cache_data in cache_list:
+                article_id = cache_data.get('article_id')
+                if not article_id:
+                    continue
+                
+                filepath = os.path.join(cache_date_dir, f"{article_id}.json")
+                
+                # 기존 파일이 있으면 병합 (원격 데이터 우선)
+                if os.path.exists(filepath):
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            existing = json.load(f)
+                        existing.update(cache_data)
+                        cache_data = existing
+                    except:
+                        pass
+                
+                try:
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        json.dump(cache_data, f, ensure_ascii=False, indent=2)
+                    downloaded_count += 1
+                except Exception as e:
+                    print(f"⚠️ [Pull] Save error: {article_id} - {e}")
+        
+        # 크롤링 히스토리 다운로드 및 병합
+        history_count = 0
+        try:
+            remote_history = db.download_crawling_history()
+            
+            if remote_history:
+                data_dir = os.path.join(os.path.dirname(CACHE_DIR), 'data')
+                history_file = os.path.join(data_dir, 'crawling_history.json')
+                
+                local_history = {}
+                if os.path.exists(history_file):
+                    try:
+                        with open(history_file, 'r', encoding='utf-8') as f:
+                            local_history = json.load(f)
+                    except:
+                        pass
+                
+                # 병합 (원격 우선)
+                local_history.update(remote_history)
+                
+                os.makedirs(data_dir, exist_ok=True)
+                with open(history_file, 'w', encoding='utf-8') as f:
+                    json.dump(local_history, f, ensure_ascii=False, indent=2)
+                
+                history_count = len(remote_history)
+        except Exception as e:
+            print(f"⚠️ [Pull] History error: {e}")
+        
+        return jsonify({
+            'success': True,
+            'downloaded': downloaded_count,
+            'history_count': history_count,
+            'dates': date_folders,
+            'message': f'⬇️ 다운로드 완료: 캐시 {downloaded_count}개, 히스토리 {history_count}개'
+        })
+        
+    except Exception as e:
+        print(f"❌ [Cache Pull] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @publish_bp.route('/api/publication/config', methods=['GET', 'POST'])
 def publication_config():
     """

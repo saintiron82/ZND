@@ -13,3 +13,8 @@ desk/.env
 *.pyc
 desk/venv/Lib/
 desk/venv
+
+# Next.js build output
+.next/
+web/.next/
+node_modules/

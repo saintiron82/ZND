@@ -1,12 +1,222 @@
 {
-  "title": "Nvidia wants to create universal AI agents for all worlds with NitroGen",
+  "article_id": "6b4e6f74332d",
+  "cached_at": "2025-12-23T05:23:48.069808+00:00",
   "description": "Nvidia has released a new base model for gaming agents. NitroGen is a vision-action model that has been trained on 40,000 hours of gameplay videos from more than 1,000 games.",
   "image": "https://the-decoder.com/wp-content/uploads/2025/12/nvidia_nitrogen-1200x675.png",
-  "text": "Nvidia has released a new base model for gaming agents. NitroGen is an open vision action model trained on 40,000 hours of gameplay videos from more than 1,000 games. The researchers tapped into a previously overlooked resource: YouTube and Twitch videos with visible controller overlays. Using template matching and a fine-tuned SegFormer model, they extracted player inputs directly from these recordings. NitroGen builds on Nvidia's GR00T N1.5 robotics model. According to the researchers, it's the first model to demonstrate that robotics foundation models can work as universal agents across virtual environments with different physics engines and visual styles. The model handles various genres—action RPGs, platformers, roguelikes, and more. When dropped into unfamiliar games, it achieves up to 52 percent better success rates than models trained from scratch. The team, which includes researchers from Nvidia, Stanford, Caltech, and other universities, has made the dataset, model weights, paper, and code publicly available. Ad DEC_D_Incontent-1",
   "published_at": "2025-12-21T17:17:59+00:00",
-  "url": "https://the-decoder.com/nvidia-wants-to-create-universal-ai-agents-for-all-worlds-with-nitrogen/",
   "source_id": "the_decoder",
-  "status": "RAW",
-  "article_id": "6b4e6f74332d",
-  "cached_at": "2025-12-23T05:23:48.069808+00:00"
+  "status": "reviewed",
+  "text": "Nvidia has released a new base model for gaming agents. NitroGen is an open vision action model trained on 40,000 hours of gameplay videos from more than 1,000 games. The researchers tapped into a previously overlooked resource: YouTube and Twitch videos with visible controller overlays. Using template matching and a fine-tuned SegFormer model, they extracted player inputs directly from these recordings. NitroGen builds on Nvidia's GR00T N1.5 robotics model. According to the researchers, it's the first model to demonstrate that robotics foundation models can work as universal agents across virtual environments with different physics engines and visual styles. The model handles various genres—action RPGs, platformers, roguelikes, and more. When dropped into unfamiliar games, it achieves up to 52 percent better success rates than models trained from scratch. The team, which includes researchers from Nvidia, Stanford, Caltech, and other universities, has made the dataset, model weights, paper, and code publicly available. Ad DEC_D_Incontent-1",
+  "title": "Nvidia wants to create universal AI agents for all worlds with NitroGen",
+  "url": "https://the-decoder.com/nvidia-wants-to-create-universal-ai-agents-for-all-worlds-with-nitrogen/",
+  "title_ko": "엔비디아, 게임 및 로봇을 위한 범용 AI 에이전트 'NitroGen' 공개",
+  "summary": "엔비디아가 4만 시간의 게임 영상을 학습해 다양한 환경에서 작동하는 범용 시각-행동 모델 'NitroGen'을 오픈소스로 공개했다.  이 모델은 낯선 게임 환경에서도 기존 모델 대비 52% 높은 성공률을 보이며, 로보틱스 파운데이션 모델의 범용성을 입증했다.",
+  "tags": [],
+  "impact_score": 7.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1 기업의 기술 공개(Open Source)이며, 특정 게임을 넘어선 '범용성'을 입증했다는 점에서 기술적 함의가 큼.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4 (실행/출시 주체)",
+          "Pe_Entity_Name": "Nvidia",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Rationale": "엔비디아의 일방적 기술 공개 및 배포. 특정 경쟁사나 협력사가 부각되지 않음."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 2.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4
+      }
+    }
+  },
+  "zero_echo_score": 3.3,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 8,
+      "T3": 9,
+      "Rationale": "학습 데이터량(40k hrs), 성능 향상폭(52%) 등 구체적 수치 제시"
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 1,
+      "P3": 1,
+      "Rationale": "기술 논문 기반의 객관적 서술"
+    },
+    "Utility": {
+      "V1": 7,
+      "V2": 9,
+      "V3": 6,
+      "Rationale": "코드와 가중치가 공개되어 즉시 연구/활용 가능"
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "오픈소스 공개로 인한 실질적 효용성 가점"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "6b4e6f74332d",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "엔비디아, 게임 및 로봇을 위한 범용 AI 에이전트 'NitroGen' 공개",
+      "Summary": "엔비디아가 4만 시간의 게임 영상을 학습해 다양한 환경에서 작동하는 범용 시각-행동 모델 'NitroGen'을 오픈소스로 공개했다.  이 모델은 낯선 게임 환경에서도 기존 모델 대비 52% 높은 성공률을 보이며, 로보틱스 파운데이션 모델의 범용성을 입증했다.",
+      "Tags": "Nvidia, Agent, Open Source"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1 기업의 기술 공개(Open Source)이며, 특정 게임을 넘어선 '범용성'을 입증했다는 점에서 기술적 함의가 큼.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4 (실행/출시 주체)",
+            "Pe_Entity_Name": "Nvidia",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Rationale": "엔비디아의 일방적 기술 공개 및 배포. 특정 경쟁사나 협력사가 부각되지 않음."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 2.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 8,
+        "T3": 9,
+        "Rationale": "학습 데이터량(40k hrs), 성능 향상폭(52%) 등 구체적 수치 제시"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "기술 논문 기반의 객관적 서술"
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 9,
+        "V3": 6,
+        "Rationale": "코드와 가중치가 공개되어 즉시 연구/활용 가능"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "오픈소스 공개로 인한 실질적 효용성 가점"
+      }
+    }
+  },
+  "original_title": "Nvidia wants to create universal AI agents for all worlds with NitroGen",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 8.0,
+        "T3": 9.0,
+        "S_Avg": 8.33
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 1.0,
+        "P3": 1.0,
+        "N_Avg": 1.33
+      },
+      "Utility": {
+        "V1": 7.0,
+        "V2": 9.0,
+        "V3": 6.0,
+        "U_Avg": 7.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 3.27,
+      "ZS_Final": 3.3
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 8,
+        "T3": 9,
+        "Rationale": "학습 데이터량(40k hrs), 성능 향상폭(52%) 등 구체적 수치 제시"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "기술 논문 기반의 객관적 서술"
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 9,
+        "V3": 6,
+        "Rationale": "코드와 가중치가 공개되어 즉시 연구/활용 가능"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "오픈소스 공개로 인한 실질적 효용성 가점"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.5,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.0
+      },
+      "IS_Raw": 7.0,
+      "IS_Final": 7.0,
+      "Score_Commentary": "Tier 1 기업의 기술 공개(Open Source)이며, 특정 게임을 넘어선 '범용성'을 입증했다는 점에서 기술적 함의가 큼."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4 (실행/출시 주체)",
+      "Pe_Entity_Name": "Nvidia",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Rationale": "엔비디아의 일방적 기술 공개 및 배포. 특정 경쟁사나 협력사가 부각되지 않음."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 2.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:26.614397+00:00"
 }

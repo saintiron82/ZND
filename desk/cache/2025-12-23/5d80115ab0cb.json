@@ -1,12 +1,222 @@
 {
-  "title": "GPT-5 allegedly solves open math problem without human help",
+  "article_id": "5d80115ab0cb",
+  "cached_at": "2025-12-23T05:23:37.078197+00:00",
   "description": "GPT-5 solves an open math problem for the first time, and the mathematician behind it shows exactly which line came from which AI. Does science really need this level of transparency?",
   "image": "https://the-decoder.com/wp-content/uploads/2025/12/ai_in_science_math.jpeg",
-  "text": "Ask about this article… Search As scientists debate how to transparently integrate AI into research and writing, Swiss mathematician Johannes Schmitt has put forward a concrete proposal. Schmitt reports on X that GPT-5 has independently solved an open mathematical problem for the first time—without human input or intervention. According to Schmitt, GPT-5 delivered an elegant solution that surprisingly drew on techniques from a different area of algebraic geometry rather than applying the usual methods. Peer review is still pending. Similar anecdotal reports on AI's usefulness in mathematics have recently come from math star Terence Tao, among others. The resulting paper showcases various forms of human-AI collaboration: proofs from GPT-5 (base model, not Pro) and Gemini 3 Pro, text passages from Claude, and formal Lean proofs via Claude code and ChatGPT 5.2. As an experiment in transparent AI attribution, every paragraph is labeled as human or AI-written, with links to prompts and conversation transcripts. Ad Transparency matters, but it shouldn't become red tape Schmitt's approach offers a high level of transparency and traceability—anyone can check which ideas came from humans and which from AI. But the approach has drawbacks too: labeling each paragraph in detail is time-consuming and could become impractical as AI becomes an everyday tool. Transparency matters, but it shouldn't turn into bureaucracy. Ad DEC_D_Incontent-1 The line between human and AI input isn't always clear either. Who writes the prompt? Who selects and corrects the output? This model probably won't transfer easily to other sciences. Perhaps science needs to answer a more fundamental question first: Why does it matter whether a contribution came from a human alone, a human with AI assistance, or solely from AI—and is the latter even possible without human intention?",
   "published_at": "2025-12-22T19:57:40+00:00",
-  "url": "https://the-decoder.com/gpt-5-allegedly-solves-open-math-problem-without-human-help/",
   "source_id": "the_decoder",
-  "status": "RAW",
-  "article_id": "5d80115ab0cb",
-  "cached_at": "2025-12-23T05:23:37.078197+00:00"
+  "status": "reviewed",
+  "text": "Ask about this article… Search As scientists debate how to transparently integrate AI into research and writing, Swiss mathematician Johannes Schmitt has put forward a concrete proposal. Schmitt reports on X that GPT-5 has independently solved an open mathematical problem for the first time—without human input or intervention. According to Schmitt, GPT-5 delivered an elegant solution that surprisingly drew on techniques from a different area of algebraic geometry rather than applying the usual methods. Peer review is still pending. Similar anecdotal reports on AI's usefulness in mathematics have recently come from math star Terence Tao, among others. The resulting paper showcases various forms of human-AI collaboration: proofs from GPT-5 (base model, not Pro) and Gemini 3 Pro, text passages from Claude, and formal Lean proofs via Claude code and ChatGPT 5.2. As an experiment in transparent AI attribution, every paragraph is labeled as human or AI-written, with links to prompts and conversation transcripts. Ad Transparency matters, but it shouldn't become red tape Schmitt's approach offers a high level of transparency and traceability—anyone can check which ideas came from humans and which from AI. But the approach has drawbacks too: labeling each paragraph in detail is time-consuming and could become impractical as AI becomes an everyday tool. Transparency matters, but it shouldn't turn into bureaucracy. Ad DEC_D_Incontent-1 The line between human and AI input isn't always clear either. Who writes the prompt? Who selects and corrects the output? This model probably won't transfer easily to other sciences. Perhaps science needs to answer a more fundamental question first: Why does it matter whether a contribution came from a human alone, a human with AI assistance, or solely from AI—and is the latter even possible without human intention?",
+  "title": "GPT-5 allegedly solves open math problem without human help",
+  "url": "https://the-decoder.com/gpt-5-allegedly-solves-open-math-problem-without-human-help/",
+  "title_ko": "GPT-5, 인간 개입 없이 난제 수학 문제 해결 주장 제기",
+  "summary": "스위스 수학자 요하네스 슈미트가 GPT-5가 인간의 도움 없이 개방형 수학 난제를 독자적으로 해결했다고 주장했다.  AI는 기존 방식과 다른 대수 기하학적 접근법을 사용했으나 아직 피어 리뷰 전이다. 기사는 과학 연구에서 AI 기여도를 투명하게 표시하는 방식의 중요성과 한계를 동시에 논한다.",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "과학적 발견의 패러다임을 바꿀 수 있는 사건(Paradigm)이나, '주장(Allegedly)' 단계이며 피어 리뷰가 없어 증거 수준(Evidence)이 낮음.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4 (실행/기술 주체)",
+          "Pe_Entity_Name": "OpenAI (GPT-5)",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Johannes Schmitt",
+          "Se_Tier": 4,
+          "PE/SE_Rationale": "사건의 핵심 기술 주체는 OpenAI이나, 이를 검증/주장하는 학자(개인)와의 관계임."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": -1,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 4,
+          "Y_Evidence_Code": 2,
+          "Scope_Matrix_Score": 2.5,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 0.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 3
+      }
+    }
+  },
+  "zero_echo_score": 7.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 4,
+      "T2": 5,
+      "T3": 3,
+      "Rationale": "'주장'에 기반하며 검증된 데이터 부재"
+    },
+    "Noise": {
+      "P1": 6,
+      "P2": 5,
+      "P3": 2,
+      "Rationale": "추측성 내용과 Anecdotal 증거 혼재"
+    },
+    "Utility": {
+      "V1": 7,
+      "V2": 2,
+      "V3": 8,
+      "Rationale": "사실일 경우 파급력은 크나 현재 활용 불가능"
+    },
+    "Fine_Adjustment": {
+      "Score": -0.5,
+      "Reason": "미확인 정보(Allegedly)에 대한 패널티 적용"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "5d80115ab0cb",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "GPT-5, 인간 개입 없이 난제 수학 문제 해결 주장 제기",
+      "Summary": "스위스 수학자 요하네스 슈미트가 GPT-5가 인간의 도움 없이 개방형 수학 난제를 독자적으로 해결했다고 주장했다.  AI는 기존 방식과 다른 대수 기하학적 접근법을 사용했으나 아직 피어 리뷰 전이다. 기사는 과학 연구에서 AI 기여도를 투명하게 표시하는 방식의 중요성과 한계를 동시에 논한다.",
+      "Tags": "GPT, Math, OpenAI"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "과학적 발견의 패러다임을 바꿀 수 있는 사건(Paradigm)이나, '주장(Allegedly)' 단계이며 피어 리뷰가 없어 증거 수준(Evidence)이 낮음.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4 (실행/기술 주체)",
+            "Pe_Entity_Name": "OpenAI (GPT-5)",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Johannes Schmitt",
+            "Se_Tier": 4,
+            "PE/SE_Rationale": "사건의 핵심 기술 주체는 OpenAI이나, 이를 검증/주장하는 학자(개인)와의 관계임."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": -1,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 4,
+            "Y_Evidence_Code": 2,
+            "Scope_Matrix_Score": 2.5,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 0.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 3
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 5,
+        "T3": 3,
+        "Rationale": "'주장'에 기반하며 검증된 데이터 부재"
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 5,
+        "P3": 2,
+        "Rationale": "추측성 내용과 Anecdotal 증거 혼재"
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 2,
+        "V3": 8,
+        "Rationale": "사실일 경우 파급력은 크나 현재 활용 불가능"
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "미확인 정보(Allegedly)에 대한 패널티 적용"
+      }
+    }
+  },
+  "original_title": "GPT-5 allegedly solves open math problem without human help",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 4.0,
+        "T2": 5.0,
+        "T3": 3.0,
+        "S_Avg": 4.0
+      },
+      "Noise": {
+        "P1": 6.0,
+        "P2": 5.0,
+        "P3": 2.0,
+        "N_Avg": 4.33
+      },
+      "Utility": {
+        "V1": 7.0,
+        "V2": 2.0,
+        "V3": 8.0,
+        "U_Avg": 5.67
+      },
+      "Fine_Adjustment": -0.5,
+      "ZS_Raw": 7.76,
+      "ZS_Final": 7.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 5,
+        "T3": 3,
+        "Rationale": "'주장'에 기반하며 검증된 데이터 부재"
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 5,
+        "P3": 2,
+        "Rationale": "추측성 내용과 Anecdotal 증거 혼재"
+      },
+      "Utility": {
+        "V1": 7,
+        "V2": 2,
+        "V3": 8,
+        "Rationale": "사실일 경우 파급력은 크나 현재 활용 불가능"
+      },
+      "Fine_Adjustment": {
+        "Score": -0.5,
+        "Reason": "미확인 정보(Allegedly)에 대한 패널티 적용"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": -1.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 2.5,
+        "Criticality_Total": 0.5,
+        "IE_Total": 3.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "과학적 발견의 패러다임을 바꿀 수 있는 사건(Paradigm)이나, '주장(Allegedly)' 단계이며 피어 리뷰가 없어 증거 수준(Evidence)이 낮음."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4 (실행/기술 주체)",
+      "Pe_Entity_Name": "OpenAI (GPT-5)",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Johannes Schmitt",
+      "Se_Tier": 4,
+      "PE/SE_Rationale": "사건의 핵심 기술 주체는 OpenAI이나, 이를 검증/주장하는 학자(개인)와의 관계임."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 4,
+      "Y_Evidence_Code": 2,
+      "Scope_Matrix_Score": 2.5,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 0.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:26.559678+00:00"
 }

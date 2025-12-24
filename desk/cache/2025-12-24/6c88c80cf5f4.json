@@ -1,11 +1,222 @@
 {
-  "title": "OpenAI admits prompt injection may never be fully solved, casting doubt on the agentic AI vision",
+  "article_id": "6c88c80cf5f4",
+  "cached_at": "2025-12-23T15:49:01.702786+00:00",
   "description": "OpenAI is using automated red teaming to fight prompt injections in ChatGPT Atlas. The company compares the problem to online fraud against humans, a framing that downplays a technical flaw that could slow the rise of the agentic web.",
   "image": "https://the-decoder.com/wp-content/uploads/2025/10/openai_atlas-1.png",
-  "text": "Ask about this article… Search OpenAI acknowledges that prompt injections - text-based attacks on language models running in browsers - may never be completely eliminated. Still, the company says it's \"optimistic\" about reducing the risks over time. OpenAI has released a security update for the browser agent in ChatGPT Atlas. The update includes a newly adversarially trained model and enhanced security measures, prompted by a new class of prompt injection attacks discovered through OpenAI's internal automated red-teaming. The agent mode in ChatGPT Atlas is one of the most comprehensive agent features OpenAI has shipped to date. The browser agent can view web pages and perform actions—clicks and keystrokes—just like a human user. This makes it an easy target for prompt attacks. But AI models that simply read text on websites can also be hacked this way, as already happened with OpenAI's Deep Research in ChatGPT. Germany's BSI has already issued a warning about these prompt attacks. Ad A security problem that may never go away Prompt injection attacks aim to manipulate AI agents through embedded malicious instructions. These instructions try to overwrite or redirect the agent's behavior—away from what the user wants and toward what the attacker wants. Ad DEC_D_Incontent-1 The attack surface is virtually unlimited: anywhere an LLM reads text can be a target. Emails and attachments, calendar invitations, shared documents, forums, social media posts, and any website. Since the agent can perform many of the same actions as a user, a successful attack can have broad consequences, from forwarding sensitive emails and transferring money to editing or deleting cloud files. Ad How a malicious email could resign on your behalf As a concrete example, OpenAI presents an exploit discovered by its newly developed automated attacker for security tests (see below). The attack unfolds in stages: an attacker plants a malicious email in the user's inbox containing a prompt injection. The hidden instructions tell the agent to send a resignation letter to the user's CEO. When the user later asks the agent to write an out-of-office message, it stumbles across this email during normal task execution. The agent treats the injected instructions as authoritative and follows them. So instead of setting up an out-of-office reply, it sends a resignation letter on the user's behalf. Ad DEC_D_Incontent-2 OpenAI says that after the security update, the agent mode now catches this prompt injection attempt and asks the user how to proceed. Ad OpenAI trains AI to attack itself To build the update, OpenAI developed an LLM-based automated attacker and trained it with reinforcement learning. The attacker learns from its own successes and failures to sharpen its red-teaming skills. During reasoning, the attacker can suggest a candidate injection and send it to an external simulator. The simulator tests how the targeted agent would respond and returns a complete trace of its reasoning and actions. The attacker uses this feedback, tweaks the attack, and runs the simulation again, repeating the process several times. OpenAI says it picked reinforcement learning for three reasons: it handles long-term goals with sparse success signals well, it directly leverages frontier model capabilities, and it scales while mimicking how adaptive human attackers operate. When the automated attacker discovers a new class of successful prompt injections, the team gets a concrete target for improving defenses. OpenAI continuously trains updated agent models against the best automated attacker, focusing on attacks where target agents are currently failing. OpenAI offers no guarantees but remains hopeful OpenAI admits that deterministic security guarantees are \"challenging\" with prompt injection. The company sees this as a long-term AI security issue that will require years of work. Still, OpenAI says it's \"optimistic\" that a proactive cycle of attack detection and rapid countermeasures can significantly reduce real-world risk over time. The goal: users should be able to trust a ChatGPT agent like a \"highly competent, security-aware colleague or friend.\" For users, OpenAI recommends several precautions: use logged-out mode when possible, check confirmation requests carefully, and give agents explicit instructions instead of broad prompts like \"review my emails and take whatever action is needed.\" The deeper problem with OpenAI's framing OpenAI compares prompt injection to \"scams and social engineering on the web,\" which have also never been \"fully 'solved'.\" But this comparison is misleading. Social engineering and phishing exploit human weaknesses: inattention, trust, time pressure. Humans are the weak link. Prompt injection is different—the vulnerability is technical, baked into the architecture of language models themselves. These systems can't reliably tell the difference between legitimate user instructions and malicious injected commands. The problem has been known since at least GPT-3 and remains unsolved despite many attempts. With social engineering, users can be trained and educated. With prompt injection, it's on OpenAI to find a technical fix. By equating the two, the company shifts responsibility onto users or at least suggests it's acceptable that agents fall for scams since humans do too and still use the internet. Why this could derail the vision of autonomous AI agents Until this technical security flaw is fundamentally solved—and OpenAI itself acknowledges it may never be fully resolved—it's hard to justify using AI agents for sensitive tasks like banking or accessing confidential documents. The idea of AI agents trading with each other or handling automated shopping also seems unlikely to work safely. Prompt injections could prove to be a showstopper for the vision of an agentic web where AI systems act autonomously online on behalf of users. Anthropic recently showed that its most powerful model to date, Claude Opus 4.5, falls for targeted prompt attacks more than three times out of ten. That's an unacceptable failure rate for any transactional agentic web.",
   "published_at": "2025-12-23T12:10:43+00:00",
-  "url": "https://the-decoder.com/openai-admits-prompt-injection-may-never-be-fully-solved-casting-doubt-on-the-agentic-ai-vision/",
   "source_id": "the_decoder",
-  "article_id": "6c88c80cf5f4",
-  "cached_at": "2025-12-23T15:49:01.702786+00:00"
+  "text": "Ask about this article… Search OpenAI acknowledges that prompt injections - text-based attacks on language models running in browsers - may never be completely eliminated. Still, the company says it's \"optimistic\" about reducing the risks over time. OpenAI has released a security update for the browser agent in ChatGPT Atlas. The update includes a newly adversarially trained model and enhanced security measures, prompted by a new class of prompt injection attacks discovered through OpenAI's internal automated red-teaming. The agent mode in ChatGPT Atlas is one of the most comprehensive agent features OpenAI has shipped to date. The browser agent can view web pages and perform actions—clicks and keystrokes—just like a human user. This makes it an easy target for prompt attacks. But AI models that simply read text on websites can also be hacked this way, as already happened with OpenAI's Deep Research in ChatGPT. Germany's BSI has already issued a warning about these prompt attacks. Ad A security problem that may never go away Prompt injection attacks aim to manipulate AI agents through embedded malicious instructions. These instructions try to overwrite or redirect the agent's behavior—away from what the user wants and toward what the attacker wants. Ad DEC_D_Incontent-1 The attack surface is virtually unlimited: anywhere an LLM reads text can be a target. Emails and attachments, calendar invitations, shared documents, forums, social media posts, and any website. Since the agent can perform many of the same actions as a user, a successful attack can have broad consequences, from forwarding sensitive emails and transferring money to editing or deleting cloud files. Ad How a malicious email could resign on your behalf As a concrete example, OpenAI presents an exploit discovered by its newly developed automated attacker for security tests (see below). The attack unfolds in stages: an attacker plants a malicious email in the user's inbox containing a prompt injection. The hidden instructions tell the agent to send a resignation letter to the user's CEO. When the user later asks the agent to write an out-of-office message, it stumbles across this email during normal task execution. The agent treats the injected instructions as authoritative and follows them. So instead of setting up an out-of-office reply, it sends a resignation letter on the user's behalf. Ad DEC_D_Incontent-2 OpenAI says that after the security update, the agent mode now catches this prompt injection attempt and asks the user how to proceed. Ad OpenAI trains AI to attack itself To build the update, OpenAI developed an LLM-based automated attacker and trained it with reinforcement learning. The attacker learns from its own successes and failures to sharpen its red-teaming skills. During reasoning, the attacker can suggest a candidate injection and send it to an external simulator. The simulator tests how the targeted agent would respond and returns a complete trace of its reasoning and actions. The attacker uses this feedback, tweaks the attack, and runs the simulation again, repeating the process several times. OpenAI says it picked reinforcement learning for three reasons: it handles long-term goals with sparse success signals well, it directly leverages frontier model capabilities, and it scales while mimicking how adaptive human attackers operate. When the automated attacker discovers a new class of successful prompt injections, the team gets a concrete target for improving defenses. OpenAI continuously trains updated agent models against the best automated attacker, focusing on attacks where target agents are currently failing. OpenAI offers no guarantees but remains hopeful OpenAI admits that deterministic security guarantees are \"challenging\" with prompt injection. The company sees this as a long-term AI security issue that will require years of work. Still, OpenAI says it's \"optimistic\" that a proactive cycle of attack detection and rapid countermeasures can significantly reduce real-world risk over time. The goal: users should be able to trust a ChatGPT agent like a \"highly competent, security-aware colleague or friend.\" For users, OpenAI recommends several precautions: use logged-out mode when possible, check confirmation requests carefully, and give agents explicit instructions instead of broad prompts like \"review my emails and take whatever action is needed.\" The deeper problem with OpenAI's framing OpenAI compares prompt injection to \"scams and social engineering on the web,\" which have also never been \"fully 'solved'.\" But this comparison is misleading. Social engineering and phishing exploit human weaknesses: inattention, trust, time pressure. Humans are the weak link. Prompt injection is different—the vulnerability is technical, baked into the architecture of language models themselves. These systems can't reliably tell the difference between legitimate user instructions and malicious injected commands. The problem has been known since at least GPT-3 and remains unsolved despite many attempts. With social engineering, users can be trained and educated. With prompt injection, it's on OpenAI to find a technical fix. By equating the two, the company shifts responsibility onto users or at least suggests it's acceptable that agents fall for scams since humans do too and still use the internet. Why this could derail the vision of autonomous AI agents Until this technical security flaw is fundamentally solved—and OpenAI itself acknowledges it may never be fully resolved—it's hard to justify using AI agents for sensitive tasks like banking or accessing confidential documents. The idea of AI agents trading with each other or handling automated shopping also seems unlikely to work safely. Prompt injections could prove to be a showstopper for the vision of an agentic web where AI systems act autonomously online on behalf of users. Anthropic recently showed that its most powerful model to date, Claude Opus 4.5, falls for targeted prompt attacks more than three times out of ten. That's an unacceptable failure rate for any transactional agentic web.",
+  "title": "OpenAI admits prompt injection may never be fully solved, casting doubt on the agentic AI vision",
+  "url": "https://the-decoder.com/openai-admits-prompt-injection-may-never-be-fully-solved-casting-doubt-on-the-agentic-ai-vision/",
+  "title_ko": "OpenAI, \"프롬프트 인젝션 완전 차단 불가능\" 보안 한계 인정",
+  "summary": "OpenAI가 브라우저 에이전트의 보안 업데이트를 발표하며, 프롬프트 인젝션 공격을 원천 차단하는 것은 불가능할 수 있다고 인정했다.  자동화된 레드팀 훈련을 도입했으나, 공격자가 사용자 몰래 사직서를 제출하게 만드는 등 기술적 취약점은 여전히 존재한다. 이는 에이전트 AI 상용화의 걸림돌이 될 수 있다.",
+  "tags": [],
+  "impact_score": 8.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1 기업이 핵심 기술(Agent)의 치명적 취약점(Safety)을 공식 인정한 사례. 이는 AI 신뢰성에 직결되는 중대한 이슈(Criticality High)임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P1 (법적/윤리적 책임/안전)",
+          "Pe_Entity_Name": "OpenAI",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Rationale": "제품 안전성 문제에 대한 자사의 인정 및 발표. 대립 대상 없음."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 1,
+          "Criticality_Total": 2,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 5
+      }
+    }
+  },
+  "zero_echo_score": 3.2,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 9,
+      "T3": 8,
+      "Rationale": "공격 메커니즘과 대응 방식(RL 레드팀)에 대한 상세 설명"
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "보안 위협에 대한 진지하고 분석적인 어조"
+    },
+    "Utility": {
+      "V1": 8,
+      "V2": 8,
+      "V3": 9,
+      "Rationale": "AI 보안 엔지니어 및 개발자에게 필수적인 정보"
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "높은 기술적 가치를 지닌 기사"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "6c88c80cf5f4",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "OpenAI, \"프롬프트 인젝션 완전 차단 불가능\" 보안 한계 인정",
+      "Summary": "OpenAI가 브라우저 에이전트의 보안 업데이트를 발표하며, 프롬프트 인젝션 공격을 원천 차단하는 것은 불가능할 수 있다고 인정했다.  자동화된 레드팀 훈련을 도입했으나, 공격자가 사용자 몰래 사직서를 제출하게 만드는 등 기술적 취약점은 여전히 존재한다. 이는 에이전트 AI 상용화의 걸림돌이 될 수 있다.",
+      "Tags": "Security, OpenAI, Agent"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1 기업이 핵심 기술(Agent)의 치명적 취약점(Safety)을 공식 인정한 사례. 이는 AI 신뢰성에 직결되는 중대한 이슈(Criticality High)임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P1 (법적/윤리적 책임/안전)",
+            "Pe_Entity_Name": "OpenAI",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Rationale": "제품 안전성 문제에 대한 자사의 인정 및 발표. 대립 대상 없음."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 1,
+            "Criticality_Total": 2,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 9,
+        "T3": 8,
+        "Rationale": "공격 메커니즘과 대응 방식(RL 레드팀)에 대한 상세 설명"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "보안 위협에 대한 진지하고 분석적인 어조"
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 8,
+        "V3": 9,
+        "Rationale": "AI 보안 엔지니어 및 개발자에게 필수적인 정보"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "높은 기술적 가치를 지닌 기사"
+      }
+    }
+  },
+  "original_title": "OpenAI admits prompt injection may never be fully solved, casting doubt on the agentic AI vision",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 7.0,
+        "T2": 9.0,
+        "T3": 8.0,
+        "S_Avg": 8.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.67
+      },
+      "Utility": {
+        "V1": 8.0,
+        "V2": 8.0,
+        "V3": 9.0,
+        "U_Avg": 8.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 3.19,
+      "ZS_Final": 3.2
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 9,
+        "T3": 8,
+        "Rationale": "공격 메커니즘과 대응 방식(RL 레드팀)에 대한 상세 설명"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "보안 위협에 대한 진지하고 분석적인 어조"
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 8,
+        "V3": 9,
+        "Rationale": "AI 보안 엔지니어 및 개발자에게 필수적인 정보"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "높은 기술적 가치를 지닌 기사"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 2.0,
+        "IE_Total": 5.0
+      },
+      "IS_Raw": 8.0,
+      "IS_Final": 8.0,
+      "Score_Commentary": "Tier 1 기업이 핵심 기술(Agent)의 치명적 취약점(Safety)을 공식 인정한 사례. 이는 AI 신뢰성에 직결되는 중대한 이슈(Criticality High)임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P1 (법적/윤리적 책임/안전)",
+      "Pe_Entity_Name": "OpenAI",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Rationale": "제품 안전성 문제에 대한 자사의 인정 및 발표. 대립 대상 없음."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 1,
+      "Criticality_Total": 2,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:26.922535+00:00"
 }

@@ -1,11 +1,222 @@
 {
-  "title": "Alibaba's new Qwen models can clone voices from three seconds of audio",
+  "article_id": "d931dc2d9fe9",
+  "cached_at": "2025-12-23T15:48:54.303887+00:00",
   "description": "The Qwen team at Alibaba Cloud has released two new AI models that create or clone voices using text commands.",
   "image": "https://the-decoder.com/wp-content/uploads/2025/12/Alibaba-Qwen3-TTS-Voicedesign-Voiceclone-Teaser.jpg",
-  "text": "The Qwen team at Alibaba Cloud has released two new AI models that create or clone voices using text commands. The Qwen3-TTS-VD-Flash model lets users generate voices based on detailed descriptions, allowing them to precisely define characteristics like emotion and speaking tempo. For example, a user could request a \"Male, middle-aged, booming baritone - hyper-energetic infomercial voice with rapid-fire delivery and exaggerated pitch rises, dripping with salesmanship.\" According to the manufacturer, the model outperforms the API for OpenAI's GPT-4o mini-tts, which launched earlier this spring. The second release, Qwen3-TTS-VC-Flash, can copy voices from just three seconds of audio and reproduce them in ten languages. Qwen claims the model achieves a lower error rate than competitors like Elevenlabs or MiniMax. The AI is also capable of processing complex texts, imitating animal sounds, and extracting voices from recordings. Both models are accessible via the Alibaba Cloud API. You can try demos for the design model and the clone model on Hugging Face. Ad DEC_D_Incontent-1",
   "published_at": "2025-12-23T15:00:39+00:00",
-  "url": "https://the-decoder.com/alibabas-new-qwen-models-can-clone-voices-from-three-seconds-of-audio/",
   "source_id": "the_decoder",
-  "article_id": "d931dc2d9fe9",
-  "cached_at": "2025-12-23T15:48:54.303887+00:00"
+  "text": "The Qwen team at Alibaba Cloud has released two new AI models that create or clone voices using text commands. The Qwen3-TTS-VD-Flash model lets users generate voices based on detailed descriptions, allowing them to precisely define characteristics like emotion and speaking tempo. For example, a user could request a \"Male, middle-aged, booming baritone - hyper-energetic infomercial voice with rapid-fire delivery and exaggerated pitch rises, dripping with salesmanship.\" According to the manufacturer, the model outperforms the API for OpenAI's GPT-4o mini-tts, which launched earlier this spring. The second release, Qwen3-TTS-VC-Flash, can copy voices from just three seconds of audio and reproduce them in ten languages. Qwen claims the model achieves a lower error rate than competitors like Elevenlabs or MiniMax. The AI is also capable of processing complex texts, imitating animal sounds, and extracting voices from recordings. Both models are accessible via the Alibaba Cloud API. You can try demos for the design model and the clone model on Hugging Face. Ad DEC_D_Incontent-1",
+  "title": "Alibaba's new Qwen models can clone voices from three seconds of audio",
+  "url": "https://the-decoder.com/alibabas-new-qwen-models-can-clone-voices-from-three-seconds-of-audio/",
+  "title_ko": "알리바바 Qwen, 3초 오디오로 목소리 복제하는 신규 모델 공개",
+  "summary": "알리바바 클라우드의 Qwen 팀이 텍스트 명령 또는 3초 분량의 샘플만으로 고품질 음성을 생성하는 AI 모델 2종을 출시했다.  10개 언어를 지원하며 경쟁사 대비 낮은 오류율을 보인다. 이는 알리바바가 멀티모달 AI 분야에서도 경쟁력을 강화하고 있음을 보여준다.",
+  "tags": [],
+  "impact_score": 3.5,
+  "IS_Analysis": {
+    "Score_Commentary": "중국 주요 Tech 기업(GIP Tier 2)의 신규 모델 출시. 성능은 우수하나(Market Impact), 구조적 혁신보다는 기능 개선(Corporate Scope)에 가까움.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4 (실행/출시 주체)",
+          "Pe_Entity_Name": "Alibaba (Qwen)",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Rationale": "Tier Map에 명시되지 않았으나 GIP(Guided Inference Protocol)에 의거, 시장 지배력과 기술력을 고려하여 Tier 2(Meta/MS 급)로 유추 적용함. 단독 제품 출시."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 5.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 6,
+      "T3": 6,
+      "Rationale": "3초, 10개 언어 등 구체적 스펙 제시"
+    },
+    "Noise": {
+      "P1": 3,
+      "P2": 2,
+      "P3": 2,
+      "Rationale": "제품 홍보성 내용이 일부 포함됨"
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 8,
+      "V3": 5,
+      "Rationale": "API로 즉시 사용 가능하나 대체재가 존재함"
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "표준적인 제품 출시 기사"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "d931dc2d9fe9",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "알리바바 Qwen, 3초 오디오로 목소리 복제하는 신규 모델 공개",
+      "Summary": "알리바바 클라우드의 Qwen 팀이 텍스트 명령 또는 3초 분량의 샘플만으로 고품질 음성을 생성하는 AI 모델 2종을 출시했다.  10개 언어를 지원하며 경쟁사 대비 낮은 오류율을 보인다. 이는 알리바바가 멀티모달 AI 분야에서도 경쟁력을 강화하고 있음을 보여준다.",
+      "Tags": "Audio, Model, API"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "중국 주요 Tech 기업(GIP Tier 2)의 신규 모델 출시. 성능은 우수하나(Market Impact), 구조적 혁신보다는 기능 개선(Corporate Scope)에 가까움.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4 (실행/출시 주체)",
+            "Pe_Entity_Name": "Alibaba (Qwen)",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Rationale": "Tier Map에 명시되지 않았으나 GIP(Guided Inference Protocol)에 의거, 시장 지배력과 기술력을 고려하여 Tier 2(Meta/MS 급)로 유추 적용함. 단독 제품 출시."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 6,
+        "T3": 6,
+        "Rationale": "3초, 10개 언어 등 구체적 스펙 제시"
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 2,
+        "P3": 2,
+        "Rationale": "제품 홍보성 내용이 일부 포함됨"
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 8,
+        "V3": 5,
+        "Rationale": "API로 즉시 사용 가능하나 대체재가 존재함"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "표준적인 제품 출시 기사"
+      }
+    }
+  },
+  "original_title": "Alibaba's new Qwen models can clone voices from three seconds of audio",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 7.0,
+        "T2": 6.0,
+        "T3": 6.0,
+        "S_Avg": 6.33
+      },
+      "Noise": {
+        "P1": 3.0,
+        "P2": 2.0,
+        "P3": 2.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 8.0,
+        "V3": 5.0,
+        "U_Avg": 6.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.8,
+      "ZS_Final": 5.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 6,
+        "T3": 6,
+        "Rationale": "3초, 10개 언어 등 구체적 스펙 제시"
+      },
+      "Noise": {
+        "P1": 3,
+        "P2": 2,
+        "P3": 2,
+        "Rationale": "제품 홍보성 내용이 일부 포함됨"
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 8,
+        "V3": 5,
+        "Rationale": "API로 즉시 사용 가능하나 대체재가 존재함"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "표준적인 제품 출시 기사"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 3.5,
+      "IS_Final": 3.5,
+      "Score_Commentary": "중국 주요 Tech 기업(GIP Tier 2)의 신규 모델 출시. 성능은 우수하나(Market Impact), 구조적 혁신보다는 기능 개선(Corporate Scope)에 가까움."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4 (실행/출시 주체)",
+      "Pe_Entity_Name": "Alibaba (Qwen)",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Rationale": "Tier Map에 명시되지 않았으나 GIP(Guided Inference Protocol)에 의거, 시장 지배력과 기술력을 고려하여 Tier 2(Meta/MS 급)로 유추 적용함. 단독 제품 출시."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:27.184739+00:00"
 }

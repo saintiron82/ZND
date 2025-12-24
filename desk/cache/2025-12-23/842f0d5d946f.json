@@ -1,12 +1,226 @@
 {
-  "title": "﻿레드브릭, 보안 강화형 기업 AI 솔루션 ‘엔터프라이즈 AI’ 출시 - AI타임스",
+  "article_id": "842f0d5d946f",
+  "cached_at": "2025-12-23T08:25:53.202478+00:00",
   "description": "AI 전문 레드브릭(대표 양영모)은 보안 강화형 기업용 AI 솔루션 ‘엔터프라이즈 AI’를 출시했다고 23일 밝혔다.엔터프라이즈 AI는 기업의 문서·메일 등 사내",
   "image": "https://cdn.aitimes.com/news/photo/202512/205034_206489_3935.jpeg",
-  "text": "(사진=레드브릭) AI 전문 레드브릭(대표 양영모)은 보안 강화형 기업용 AI 솔루션 ‘엔터프라이즈 AI’를 출시했다고 23일 밝혔다. 엔터프라이즈 AI는 기업의 문서·메일 등 사내 데이터를 학습해 직원의 역할과 권한에 맞춤화된 응답을 제공하는 솔루션이다. 챗GPT, 제미나이 등 여러 AI 모델과 슬랙, 팀즈 등 협업 툴을 결합해 기획안과 보고서 작성 등 반복 업무를 자동화한다. 주요 특징은 프롬프트 템플릿과 노코드 기반 AI 에이전트 제작 기능이다. 자주 사용하는 작업은 템플릿으로 저장하고 부서별 반복 업무는 AI 에이전트로 자동화가 가능하다. 이를 통해 운영 비용을 절감하면서도 실무에 최적화된 결과를 얻을 수 있다는 설명이다. 보안 측면도 강화했다. 기업 내부망 설치형 환경과 데이터 비보관 정책, 전 구간 암호화 기술로 내부 데이터 유출 우려 없이 맞춤형 커스터마이징이 가능하다. 데이터 처리 과정에서 원본을 열람하지 않는 '무복호화 추론 구조'와 개인정보 마스킹, 역할 권한 설정 등 세부 보안 기능도 제공한다. 레드브릭은 기업의 실무 흐름과 내부 지식을 이해하고 실행까지 지원하는 업무형 AI 솔루션으로 확장한다는 계획이다. 이를 위해 AI 컨텍스트 엔진과 보안 아키텍처를 강화하고 산업별 맞춤형 AI 모델 개발을 추진한다. 양영모 레드브릭 대표는 “엔터프라이즈 AI는 기업 내부의 반복적인 문서 작업과 의사결정 과정을 크게 줄여주는 솔루션”이라며 “기업들의 업무 방식이 AI 중심으로 효율화될 수 있도록 지속적으로 발전시켜 나갈 것”이라고 말했다. 김해원 기자 hwkim@aitimes.com",
   "published_at": "2025-12-23T15:24:49+09:00",
-  "url": "https://www.aitimes.com/news/articleView.html?idxno=205034",
   "source_id": "aitimes",
-  "status": "RAW",
-  "article_id": "842f0d5d946f",
-  "cached_at": "2025-12-23T08:25:53.202478+00:00"
+  "status": "reviewed",
+  "text": "(사진=레드브릭) AI 전문 레드브릭(대표 양영모)은 보안 강화형 기업용 AI 솔루션 ‘엔터프라이즈 AI’를 출시했다고 23일 밝혔다. 엔터프라이즈 AI는 기업의 문서·메일 등 사내 데이터를 학습해 직원의 역할과 권한에 맞춤화된 응답을 제공하는 솔루션이다. 챗GPT, 제미나이 등 여러 AI 모델과 슬랙, 팀즈 등 협업 툴을 결합해 기획안과 보고서 작성 등 반복 업무를 자동화한다. 주요 특징은 프롬프트 템플릿과 노코드 기반 AI 에이전트 제작 기능이다. 자주 사용하는 작업은 템플릿으로 저장하고 부서별 반복 업무는 AI 에이전트로 자동화가 가능하다. 이를 통해 운영 비용을 절감하면서도 실무에 최적화된 결과를 얻을 수 있다는 설명이다. 보안 측면도 강화했다. 기업 내부망 설치형 환경과 데이터 비보관 정책, 전 구간 암호화 기술로 내부 데이터 유출 우려 없이 맞춤형 커스터마이징이 가능하다. 데이터 처리 과정에서 원본을 열람하지 않는 '무복호화 추론 구조'와 개인정보 마스킹, 역할 권한 설정 등 세부 보안 기능도 제공한다. 레드브릭은 기업의 실무 흐름과 내부 지식을 이해하고 실행까지 지원하는 업무형 AI 솔루션으로 확장한다는 계획이다. 이를 위해 AI 컨텍스트 엔진과 보안 아키텍처를 강화하고 산업별 맞춤형 AI 모델 개발을 추진한다. 양영모 레드브릭 대표는 “엔터프라이즈 AI는 기업 내부의 반복적인 문서 작업과 의사결정 과정을 크게 줄여주는 솔루션”이라며 “기업들의 업무 방식이 AI 중심으로 효율화될 수 있도록 지속적으로 발전시켜 나갈 것”이라고 말했다. 김해원 기자 hwkim@aitimes.com",
+  "title": "﻿레드브릭, 보안 강화형 기업 AI 솔루션 ‘엔터프라이즈 AI’ 출시 - AI타임스",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=205034",
+  "title_ko": "레드브릭, 보안 강화형 '엔터프라이즈 AI' 솔루션 출시",
+  "summary": "레드브릭이 기업용 보안 강화 AI 솔루션 '엔터프라이즈 AI'를 출시했다. 사내 데이터 학습, 노코드 기반 에이전트 제작, 무복호화 추론 구조 등 보안 기능을 특징으로 한다.",
+  "tags": [],
+  "impact_score": 0.5,
+  "IS_Analysis": {
+    "Score_Commentary": "스타트업(Tier 5)의 제품 출시(Corporate Scope) 건으로, 산업 전반에 미치는 영향이 제한적이므로 Hard Filter 적용.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Redbrick",
+          "Pe_Tier": 5,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE 선정이유": "제품 출시 주체."
+        },
+        "Tier_Score": 0,
+        "Gap_Score": 0,
+        "IW_Score": 0
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 3,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 0,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 0,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 0
+      }
+    }
+  },
+  "zero_echo_score": 8.8,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 4,
+      "T2": 4,
+      "T3": 2,
+      "Rationale": "기능 설명 위주."
+    },
+    "Noise": {
+      "P1": 6,
+      "P2": 6,
+      "P3": 0,
+      "Rationale": "홍보성 기사."
+    },
+    "Utility": {
+      "V1": 2,
+      "V2": 4,
+      "V3": 2,
+      "Rationale": "유사 솔루션 다수 존재."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": ""
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "842f0d5d946f",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "레드브릭, 보안 강화형 '엔터프라이즈 AI' 솔루션 출시",
+      "Summary": "레드브릭이 기업용 보안 강화 AI 솔루션 '엔터프라이즈 AI'를 출시했다. 사내 데이터 학습, 노코드 기반 에이전트 제작, 무복호화 추론 구조 등 보안 기능을 특징으로 한다.",
+      "Tags": [
+        "Launch",
+        "Security",
+        "Startup"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "스타트업(Tier 5)의 제품 출시(Corporate Scope) 건으로, 산업 전반에 미치는 영향이 제한적이므로 Hard Filter 적용.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Redbrick",
+            "Pe_Tier": 5,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE 선정이유": "제품 출시 주체."
+          },
+          "Tier_Score": 0,
+          "Gap_Score": 0,
+          "IW_Score": 0
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 3,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 0,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 0,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 0
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 4,
+        "T3": 2,
+        "Rationale": "기능 설명 위주."
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 6,
+        "P3": 0,
+        "Rationale": "홍보성 기사."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 4,
+        "V3": 2,
+        "Rationale": "유사 솔루션 다수 존재."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": ""
+      }
+    }
+  },
+  "original_title": "﻿레드브릭, 보안 강화형 기업 AI 솔루션 ‘엔터프라이즈 AI’ 출시 - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 4.0,
+        "T2": 4.0,
+        "T3": 2.0,
+        "S_Avg": 3.33
+      },
+      "Noise": {
+        "P1": 6.0,
+        "P2": 6.0,
+        "P3": 0.0,
+        "N_Avg": 4.0
+      },
+      "Utility": {
+        "V1": 2.0,
+        "V2": 4.0,
+        "V3": 2.0,
+        "U_Avg": 2.67
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.76,
+      "ZS_Final": 8.8
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 4,
+        "T2": 4,
+        "T3": 2,
+        "Rationale": "기능 설명 위주."
+      },
+      "Noise": {
+        "P1": 6,
+        "P2": 6,
+        "P3": 0,
+        "Rationale": "홍보성 기사."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 4,
+        "V3": 2,
+        "Rationale": "유사 솔루션 다수 존재."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": ""
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 0.0,
+        "IE_Total": 0.5
+      },
+      "IS_Raw": 0.5,
+      "IS_Final": 0.5,
+      "Score_Commentary": "스타트업(Tier 5)의 제품 출시(Corporate Scope) 건으로, 산업 전반에 미치는 영향이 제한적이므로 Hard Filter 적용."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Redbrick",
+      "Pe_Tier": 5,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE 선정이유": "제품 출시 주체."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 3,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 0,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 0,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:11.081098+00:00"
 }

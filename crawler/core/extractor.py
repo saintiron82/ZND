@@ -116,20 +116,57 @@ def extract_content(links: list = None) -> dict:
         return {'success': False, 'error': str(e)}
 
 
-def run_full_pipeline():
+def run_full_pipeline(schedule_name: str = "Scheduled"):
     """
-    전체 파이프라인 실행: Collect -> Extract
+    전체 파이프라인 실행: Collect -> Extract -> Discord 알림
     스케줄러에서 호출용
+    
+    Args:
+        schedule_name: 스케줄 이름 (디스코드 알림용)
     """
     print("🚀 [Pipeline] Starting full crawl pipeline...")
     
+    # 결과 수집용
+    final_result = {
+        'success': True,
+        'collected': 0,
+        'extracted': 0,
+        'analyzed': 0,
+        'cached': 0,
+        'failed': 0,
+        'message': ''
+    }
+    
     # 1. Collect
     collect_result = collect_links()
+    final_result['collected'] = collect_result.get('total', 0)
+    
     if not collect_result['success'] or collect_result['total'] == 0:
         print(f"📭 [Pipeline] No new links to process")
+        final_result['message'] = 'No new links'
+        
+        # 수집 결과가 0이어도 알림 전송 (선택적)
+        try:
+            from core.discord_notifier import send_crawl_notification
+            send_crawl_notification(final_result, schedule_name)
+        except Exception as e:
+            print(f"⚠️ [Discord] Notification failed: {e}")
+        
         return collect_result
     
     # 2. Extract
     extract_result = extract_content(collect_result['links'])
+    final_result['extracted'] = extract_result.get('extracted', 0)
+    final_result['cached'] = extract_result.get('extracted', 0)  # 추출된 것 = 캐시됨
+    final_result['failed'] = extract_result.get('failed', 0)
+    final_result['success'] = extract_result.get('success', True)
+    final_result['message'] = extract_result.get('message', '')
+    
+    # 3. 디스코드 알림 전송
+    try:
+        from core.discord_notifier import send_crawl_notification
+        send_crawl_notification(final_result, schedule_name)
+    except Exception as e:
+        print(f"⚠️ [Discord] Notification failed: {e}")
     
     return extract_result

@@ -382,8 +382,8 @@ function backToDesk() {
     selector.value = 'desk';
     onIssueSelectorChange();
 }
-async function syncCacheToFirebase() {
-    const syncAll = confirm('☁️ 캐시 + 히스토리를 Firebase에 동기화합니다.\n\n⚡ 이미 동기화된 기사는 자동으로 건너뜁니다.\n📜 크롤링 히스토리도 함께 동기화됩니다.\n\n[확인] 전체 동기화\n[취소] 선택된 날짜만 동기화');
+async function syncCachePush() {
+    const syncAll = confirm('☁️ 캐시 + 히스토리를 Firebase에 업로드합니다.\n\n⚡ 이미 동기화된 기사는 자동으로 건너뜁니다.\n📜 크롤링 히스토리도 함께 동기화됩니다.\n\n[확인] 전체 업로드\n[취소] 선택된 날짜만 업로드');
 
     const payload = syncAll ? {} : { date: selectedDate };
 
@@ -401,7 +401,7 @@ async function syncCacheToFirebase() {
         const result = await response.json();
 
         if (result.success) {
-            let msg = `✅ 동기화 완료!\n\n`;
+            let msg = `✅ 업로드 완료!\n\n`;
             msg += `📦 캐시: ${result.synced}개 업로드\n`;
             msg += `⏭️ 스킵: ${result.skipped}개\n`;
             if (result.history_count > 0) {
@@ -412,11 +412,50 @@ async function syncCacheToFirebase() {
             }
             alert(msg);
         } else {
-            alert(`❌ 동기화 실패: ${result.error}`);
+            alert(`❌ 업로드 실패: ${result.error}`);
         }
     } catch (error) {
         alert(`❌ 오류: ${error.message}`);
     }
+}
+
+async function syncCachePull() {
+    const pullAll = confirm('⬇️ Firebase에서 캐시를 내려받습니다.\n\n📦 클라우드에 저장된 캐시를 로컬에 저장합니다.\n📜 크롤링 히스토리도 함께 병합됩니다.\n\n[확인] 전체 다운로드\n[취소] 선택된 날짜만 다운로드');
+
+    const payload = pullAll ? { all: true } : { date: selectedDate };
+
+    if (!pullAll && (!selectedDate || selectedDate === 'all')) {
+        alert('📅 먼저 특정 날짜를 선택해주세요.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/cache/pull', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+
+        if (result.success) {
+            let msg = `✅ 다운로드 완료!\n\n`;
+            msg += `📦 캐시: ${result.downloaded}개 저장\n`;
+            if (result.history_count > 0) {
+                msg += `📜 히스토리: ${result.history_count}개 병합\n`;
+            }
+            alert(msg);
+            await loadDesk(); // 새로고침
+        } else {
+            alert(`❌ 다운로드 실패: ${result.error}`);
+        }
+    } catch (error) {
+        alert(`❌ 오류: ${error.message}`);
+    }
+}
+
+// [BACKWARD COMPAT] 기존 함수명 호환
+function syncCacheToFirebase() {
+    syncCachePush();
 }
 async function publishAll() {
     // Check only Visible checkboxes

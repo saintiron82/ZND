@@ -1,11 +1,222 @@
 {
-  "title": "Ex-Tesla AI chief Andrej Karpathy shares four tips for AI startups competing with OpenAI",
+  "article_id": "e59b6d9cc5a7",
+  "cached_at": "2025-12-23T15:48:57.789694+00:00",
   "description": "Karpathy sees Cursor as proof that a new category of AI applications is emerging. Startups shouldn't try to compete with the large language model labs head-on. Instead, they should focus on becoming specialists for vertical markets.",
   "image": "https://the-decoder.com/wp-content/uploads/2025/12/ai_startup_cliche-3.jpeg",
-  "text": "Ask about this article… Search Karpathy sees Cursor as proof that a new category of AI applications is emerging. Startups shouldn't view themselves as competitors to the large language model labs but as specialists serving vertical markets. Ever since apps started building on top of language models from the major AI labs, there's been an ongoing debate about so-called \"AI wrappers\" - applications optimized for specific tasks or audiences, but whose core capabilities come from underlying language models. The question: can these apps differentiate enough to survive? Former Tesla AI chief Andrej Karpathy recently shared his take on the future of these AI startups. He finds the rise of Cursor, the AI-powered code editor, particularly striking. According to Karpathy, the tool \"convincingly revealed a new layer of an 'LLM app.'\" People now talk about \"Cursor for X,\" a sign that a new paradigm is taking hold. Ad What makes the new app layer work Karpathy says LLM apps like Cursor bundle and orchestrate LLM calls for specific verticals. He identifies four core functions: first, these apps perform what's known as \"context engineering.\" They prepare and structure the context fed to the language model, taking this strenuous but important work from the user. Ad DEC_D_Incontent-1 Second, they orchestrate multiple LLM calls under the hood, \"strung into increasingly more complex DAGs, carefully balancing performance and cost tradeoffs.\" Third, LLM apps provide an \"application-specific GUI for the human in the loop.\" Fourth, they offer an \"autonomy slider\": users can decide how much control to hand over and how independently the AI should act. Ad Startups vs. the major labs: who wins? The AI industry has been intensely debating how \"thick\" this new app layer really is ever since \"wrappers\" first appeared on the market. The central question: will the large language model labs like OpenAI, Anthropic, or Google cover all applications themselves, or is there room for specialized providers? Karpathy suspects the LLM labs will tend to train what he calls the \"generally capable college student\" - versatile but not specialized models. LLM apps, on the other hand, would organize and fine-tune teams of these models, turning them into deployed professionals in specific industries. Ad DEC_D_Incontent-2 The key lies in private data, tools for action, and real-world feedback. According to Karpathy, anyone who can feed information to an AI and let it do things—like trigger orders, send messages, or control machines—has a good chance of holding their own against the major labs. Ad But the labs won't back down easily: OpenAI has made crystal clear the company wants to cover the entire AI value chain, from chips to apps. Anthropic and Google are also continuously developing their AI chatbots to handle more and more everyday tasks.",
   "published_at": "2025-12-23T13:36:46+00:00",
-  "url": "https://the-decoder.com/ex-tesla-ai-chief-andrej-karpathy-shares-four-tips-for-ai-startups-competing-with-openai/",
   "source_id": "the_decoder",
-  "article_id": "e59b6d9cc5a7",
-  "cached_at": "2025-12-23T15:48:57.789694+00:00"
+  "text": "Ask about this article… Search Karpathy sees Cursor as proof that a new category of AI applications is emerging. Startups shouldn't view themselves as competitors to the large language model labs but as specialists serving vertical markets. Ever since apps started building on top of language models from the major AI labs, there's been an ongoing debate about so-called \"AI wrappers\" - applications optimized for specific tasks or audiences, but whose core capabilities come from underlying language models. The question: can these apps differentiate enough to survive? Former Tesla AI chief Andrej Karpathy recently shared his take on the future of these AI startups. He finds the rise of Cursor, the AI-powered code editor, particularly striking. According to Karpathy, the tool \"convincingly revealed a new layer of an 'LLM app.'\" People now talk about \"Cursor for X,\" a sign that a new paradigm is taking hold. Ad What makes the new app layer work Karpathy says LLM apps like Cursor bundle and orchestrate LLM calls for specific verticals. He identifies four core functions: first, these apps perform what's known as \"context engineering.\" They prepare and structure the context fed to the language model, taking this strenuous but important work from the user. Ad DEC_D_Incontent-1 Second, they orchestrate multiple LLM calls under the hood, \"strung into increasingly more complex DAGs, carefully balancing performance and cost tradeoffs.\" Third, LLM apps provide an \"application-specific GUI for the human in the loop.\" Fourth, they offer an \"autonomy slider\": users can decide how much control to hand over and how independently the AI should act. Ad Startups vs. the major labs: who wins? The AI industry has been intensely debating how \"thick\" this new app layer really is ever since \"wrappers\" first appeared on the market. The central question: will the large language model labs like OpenAI, Anthropic, or Google cover all applications themselves, or is there room for specialized providers? Karpathy suspects the LLM labs will tend to train what he calls the \"generally capable college student\" - versatile but not specialized models. LLM apps, on the other hand, would organize and fine-tune teams of these models, turning them into deployed professionals in specific industries. Ad DEC_D_Incontent-2 The key lies in private data, tools for action, and real-world feedback. According to Karpathy, anyone who can feed information to an AI and let it do things—like trigger orders, send messages, or control machines—has a good chance of holding their own against the major labs. Ad But the labs won't back down easily: OpenAI has made crystal clear the company wants to cover the entire AI value chain, from chips to apps. Anthropic and Google are also continuously developing their AI chatbots to handle more and more everyday tasks.",
+  "title": "Ex-Tesla AI chief Andrej Karpathy shares four tips for AI startups competing with OpenAI",
+  "url": "https://the-decoder.com/ex-tesla-ai-chief-andrej-karpathy-shares-four-tips-for-ai-startups-competing-with-openai/",
+  "title_ko": "안드레이 카패시, AI 스타트업에 'LLM 랩과 정면 승부 피하라' 조언",
+  "summary": "전 테슬라 AI 총괄 안드레이 카패시가 AI 스타트업들을 향해 거대 모델 랩과 경쟁하지 말고 버티컬 시장에 집중하라고 조언했다.  그는 'Cursor'를 성공 사례로 들며, LLM을 오케스트레이션하고 구체적 도구와 데이터를 결합해 사용자에게 완성된 경험을 제공하는 '앱 레이어'의 가능성을 강조했다.",
+  "tags": [],
+  "impact_score": 1.5,
+  "IS_Analysis": {
+    "Score_Commentary": "업계 영향력 있는 개인(Inference Tier 4)의 전략적 조언. 스타트업 생태계에 방향성을 제시하나, 물리적 사건이나 제품 출시는 아님.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P5 (규제/간접적 영향 - 인플루언서)",
+          "Pe_Entity_Name": "Andrej Karpathy",
+          "Pe_Tier": 4,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Rationale": "개인 자격의 조언. 특정 기업(OpenAI)을 언급했으나 벤치마킹/조언의 대상일 뿐 직접적 분쟁/협력 관계(SE) 아님. GIP에 따라 영향력 있는 개인을 Tier 4로 설정."
+        },
+        "Tier_Score": 0.5,
+        "Gap_Score": 0,
+        "IW_Score": 0.5
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 5.5,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 3,
+      "T2": 7,
+      "T3": 5,
+      "Rationale": "구체적 전략(4가지 팁)을 구조적으로 설명"
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 4,
+      "P3": 1,
+      "Rationale": "개인의 견해가 주된 내용"
+    },
+    "Utility": {
+      "V1": 6,
+      "V2": 6,
+      "V3": 7,
+      "Rationale": "창업자들에게 실질적인 전략적 프레임워크 제공"
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "업계 최고 전문가의 깊이 있는 통찰(Deep Dive) 가점"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "e59b6d9cc5a7",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "안드레이 카패시, AI 스타트업에 'LLM 랩과 정면 승부 피하라' 조언",
+      "Summary": "전 테슬라 AI 총괄 안드레이 카패시가 AI 스타트업들을 향해 거대 모델 랩과 경쟁하지 말고 버티컬 시장에 집중하라고 조언했다.  그는 'Cursor'를 성공 사례로 들며, LLM을 오케스트레이션하고 구체적 도구와 데이터를 결합해 사용자에게 완성된 경험을 제공하는 '앱 레이어'의 가능성을 강조했다.",
+      "Tags": "Opinion, Startup, OpenAI"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "업계 영향력 있는 개인(Inference Tier 4)의 전략적 조언. 스타트업 생태계에 방향성을 제시하나, 물리적 사건이나 제품 출시는 아님.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P5 (규제/간접적 영향 - 인플루언서)",
+            "Pe_Entity_Name": "Andrej Karpathy",
+            "Pe_Tier": 4,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Rationale": "개인 자격의 조언. 특정 기업(OpenAI)을 언급했으나 벤치마킹/조언의 대상일 뿐 직접적 분쟁/협력 관계(SE) 아님. GIP에 따라 영향력 있는 개인을 Tier 4로 설정."
+          },
+          "Tier_Score": 0.5,
+          "Gap_Score": 0,
+          "IW_Score": 0.5
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 3,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "구체적 전략(4가지 팁)을 구조적으로 설명"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 4,
+        "P3": 1,
+        "Rationale": "개인의 견해가 주된 내용"
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 6,
+        "V3": 7,
+        "Rationale": "창업자들에게 실질적인 전략적 프레임워크 제공"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "업계 최고 전문가의 깊이 있는 통찰(Deep Dive) 가점"
+      }
+    }
+  },
+  "original_title": "Ex-Tesla AI chief Andrej Karpathy shares four tips for AI startups competing with OpenAI",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 3.0,
+        "T2": 7.0,
+        "T3": 5.0,
+        "S_Avg": 5.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 4.0,
+        "P3": 1.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 6.0,
+        "V2": 6.0,
+        "V3": 7.0,
+        "U_Avg": 6.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 5.49,
+      "ZS_Final": 5.5
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 3,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "구체적 전략(4가지 팁)을 구조적으로 설명"
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 4,
+        "P3": 1,
+        "Rationale": "개인의 견해가 주된 내용"
+      },
+      "Utility": {
+        "V1": 6,
+        "V2": 6,
+        "V3": 7,
+        "Rationale": "창업자들에게 실질적인 전략적 프레임워크 제공"
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "업계 최고 전문가의 깊이 있는 통찰(Deep Dive) 가점"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.5,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.5
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 1.5,
+      "IS_Final": 1.5,
+      "Score_Commentary": "업계 영향력 있는 개인(Inference Tier 4)의 전략적 조언. 스타트업 생태계에 방향성을 제시하나, 물리적 사건이나 제품 출시는 아님."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P5 (규제/간접적 영향 - 인플루언서)",
+      "Pe_Entity_Name": "Andrej Karpathy",
+      "Pe_Tier": 4,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Rationale": "개인 자격의 조언. 특정 기업(OpenAI)을 언급했으나 벤치마킹/조언의 대상일 뿐 직접적 분쟁/협력 관계(SE) 아님. GIP에 따라 영향력 있는 개인을 Tier 4로 설정."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:27.230290+00:00"
 }

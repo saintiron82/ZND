@@ -83,7 +83,7 @@ async function recalculateGroup(date) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                date: new Date().getFullYear() + '-' + String(new Date().getMonth() + 1).padStart(2, '0') + '-' + String(new Date().getDate()).padStart(2, '0'),
+                date: date,  // [FIX] 선택된 날짜 사용 (하드코딩 제거)
                 filenames: filenames,
                 schema_version: selectedSchema
             })
@@ -127,7 +127,15 @@ async function openDedupModal(date) {
     }
 
     // 해당 날짜의 기사들 필터링 (대기 중인 것만)
+    // [FIX] date가 'all'이면 날짜 필터링 없이 전체 기사 처리
     currentDedupArticles = deskData.filter(article => {
+        // 거부됨/발행됨은 제외
+        if (article.rejected || article.published) return false;
+
+        // 'all'이면 모든 날짜 포함
+        if (date === 'all') return true;
+
+        // 특정 날짜 선택 시 해당 날짜만 필터링
         const dateRaw = article.crawled_at || article.cached_at || article.saved_at || 'Unknown';
         if (dateRaw === 'Unknown') return false;
 
@@ -141,7 +149,7 @@ async function openDedupModal(date) {
                 String(d.getDate()).padStart(2, '0');
         }
 
-        return articleDate === date && !article.rejected && !article.published;
+        return articleDate === date;
     });
 
     // 간결한 JSON 생성 (Priority = IS×0.5 + IS/ZS 기준 내림차순 정렬)

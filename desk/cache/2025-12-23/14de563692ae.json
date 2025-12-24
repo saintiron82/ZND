@@ -1,12 +1,222 @@
 {
-  "title": "Google locks in new energy reserves for its AI expansion",
+  "article_id": "14de563692ae",
+  "cached_at": "2025-12-23T05:23:40.613759+00:00",
   "description": "Google is ramping up its AI infrastructure with a major energy acquisition. Parent company Alphabet is buying clean energy developer Intersect for $4.75 billion in cash, plus assumed debt.",
   "image": "https://the-decoder.com/wp-content/uploads/2024/10/google_nuclear_energy_plant_illustration.png",
-  "text": "Google is ramping up its AI infrastructure with a major energy acquisition. Parent company Alphabet is buying clean energy developer Intersect for $4.75 billion in cash, plus assumed debt. Alphabet is acquiring Intersect's energy and data center projects that are currently under development or construction. The company holds assets worth $15 billion. By 2028, projects with roughly 10.8 gigawatts of capacity should be online—more than twenty times the electricity output of the Hoover Dam, as Reuters reports. Intersect will continue to operate separately from Alphabet. Existing plants in Texas and California aren't part of the deal. The deal reflects a broader trend: big tech companies are pouring money into energy assets as US power grids struggle to keep pace with soaring electricity demand from artificial intelligence. Google says it plans to double its AI capacity every six months, aiming for a thousandfold increase in output within four to five years. To hit those targets, Google is also investing in advanced reactor technology. Ad DEC_D_Incontent-1",
   "published_at": "2025-12-22T18:22:41+00:00",
-  "url": "https://the-decoder.com/google-locks-in-new-energy-reserves-for-its-ai-expansion/",
   "source_id": "the_decoder",
-  "status": "RAW",
-  "article_id": "14de563692ae",
-  "cached_at": "2025-12-23T05:23:40.613759+00:00"
+  "status": "reviewed",
+  "text": "Google is ramping up its AI infrastructure with a major energy acquisition. Parent company Alphabet is buying clean energy developer Intersect for $4.75 billion in cash, plus assumed debt. Alphabet is acquiring Intersect's energy and data center projects that are currently under development or construction. The company holds assets worth $15 billion. By 2028, projects with roughly 10.8 gigawatts of capacity should be online—more than twenty times the electricity output of the Hoover Dam, as Reuters reports. Intersect will continue to operate separately from Alphabet. Existing plants in Texas and California aren't part of the deal. The deal reflects a broader trend: big tech companies are pouring money into energy assets as US power grids struggle to keep pace with soaring electricity demand from artificial intelligence. Google says it plans to double its AI capacity every six months, aiming for a thousandfold increase in output within four to five years. To hit those targets, Google is also investing in advanced reactor technology. Ad DEC_D_Incontent-1",
+  "title": "Google locks in new energy reserves for its AI expansion",
+  "url": "https://the-decoder.com/google-locks-in-new-energy-reserves-for-its-ai-expansion/",
+  "title_ko": "구글(Alphabet), AI 전력 확보 위해 47.5억 달러 에너지 기업 인수",
+  "summary": "구글의 모회사 알파벳이 AI 데이터센터 전력 공급을 위해 청정 에너지 개발사 'Intersect Power'를 47.5억 달러에 인수하기로 합의했다.  이번 인수로 구글은 2028년까지 후버댐 출력의 20배에 달하는 10.8GW의 전력 용량을 확보하게 된다. 이는 AI 인프라 확장이 거대 자본의 에너지 자산 흡수로 이어지는 메가 트렌드를 보여준다.",
+  "tags": [],
+  "impact_score": 6.5,
+  "IS_Analysis": {
+    "Score_Commentary": "AI 인프라의 물리적 제약(전력)을 해소하기 위한 Tier 1 기업의 대규모 자본 투입(Realization). 산업 간 경계를 허무는 인프라 통합이므로 높은 IE 부여.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P2 (M&A 규칙)",
+          "Pe_Entity_Name": "Alphabet (Google)",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Intersect Power",
+          "Se_Tier": 4,
+          "PE/SE_Rationale": "명확한 인수 주체(PE)와 피인수 대상(SE). SE는 글로벌 Tier 목록에 없으나 대규모 에너지 인프라 기업으로 GIP를 통해 Tier 4로 추론함."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": -1,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "zero_echo_score": 3.3,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 9,
+      "T2": 7,
+      "T3": 8,
+      "Rationale": "구체적 인수가($4.75B)와 확보 용량(10.8GW) 등 핵심 데이터 풍부"
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "사실 위주의 건조한 보도"
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 8,
+      "V3": 7,
+      "Rationale": "AI 산업의 에너지 병목 현상에 대한 명확한 해결책 제시"
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "데이터와 중요도가 균형 잡힌 고품질 기사"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "14de563692ae",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "구글(Alphabet), AI 전력 확보 위해 47.5억 달러 에너지 기업 인수",
+      "Summary": "구글의 모회사 알파벳이 AI 데이터센터 전력 공급을 위해 청정 에너지 개발사 'Intersect Power'를 47.5억 달러에 인수하기로 합의했다.  이번 인수로 구글은 2028년까지 후버댐 출력의 20배에 달하는 10.8GW의 전력 용량을 확보하게 된다. 이는 AI 인프라 확장이 거대 자본의 에너지 자산 흡수로 이어지는 메가 트렌드를 보여준다.",
+      "Tags": "Acquisition, Energy, Cloud"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "AI 인프라의 물리적 제약(전력)을 해소하기 위한 Tier 1 기업의 대규모 자본 투입(Realization). 산업 간 경계를 허무는 인프라 통합이므로 높은 IE 부여.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P2 (M&A 규칙)",
+            "Pe_Entity_Name": "Alphabet (Google)",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Intersect Power",
+            "Se_Tier": 4,
+            "PE/SE_Rationale": "명확한 인수 주체(PE)와 피인수 대상(SE). SE는 글로벌 Tier 목록에 없으나 대규모 에너지 인프라 기업으로 GIP를 통해 Tier 4로 추론함."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": -1,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 4.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 7,
+        "T3": 8,
+        "Rationale": "구체적 인수가($4.75B)와 확보 용량(10.8GW) 등 핵심 데이터 풍부"
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "사실 위주의 건조한 보도"
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 8,
+        "V3": 7,
+        "Rationale": "AI 산업의 에너지 병목 현상에 대한 명확한 해결책 제시"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "데이터와 중요도가 균형 잡힌 고품질 기사"
+      }
+    }
+  },
+  "original_title": "Google locks in new energy reserves for its AI expansion",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 9.0,
+        "T2": 7.0,
+        "T3": 8.0,
+        "S_Avg": 8.0
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.33
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 8.0,
+        "V3": 7.0,
+        "U_Avg": 8.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 3.33,
+      "ZS_Final": 3.3
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 9,
+        "T2": 7,
+        "T3": 8,
+        "Rationale": "구체적 인수가($4.75B)와 확보 용량(10.8GW) 등 핵심 데이터 풍부"
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "사실 위주의 건조한 보도"
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 8,
+        "V3": 7,
+        "Rationale": "AI 산업의 에너지 병목 현상에 대한 명확한 해결책 제시"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "데이터와 중요도가 균형 잡힌 고품질 기사"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": -1.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 6.5,
+      "IS_Final": 6.5,
+      "Score_Commentary": "AI 인프라의 물리적 제약(전력)을 해소하기 위한 Tier 1 기업의 대규모 자본 투입(Realization). 산업 간 경계를 허무는 인프라 통합이므로 높은 IE 부여."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P2 (M&A 규칙)",
+      "Pe_Entity_Name": "Alphabet (Google)",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Intersect Power",
+      "Se_Tier": 4,
+      "PE/SE_Rationale": "명확한 인수 주체(PE)와 피인수 대상(SE). SE는 글로벌 Tier 목록에 없으나 대규모 에너지 인프라 기업으로 GIP를 통해 Tier 4로 추론함."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:26.292869+00:00"
 }

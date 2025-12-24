@@ -1,12 +1,222 @@
 {
-  "title": "Yann LeCun calls general intelligence \"complete BS\" and Deepmind CEO Hassabis fires back publicly",
+  "article_id": "837d2a2b083c",
+  "cached_at": "2025-12-23T05:23:44.284092+00:00",
   "description": "Meta's outgoing AI researcher thinks the concept of \"general intelligence\" is meaningless. Google Deepmind's head publicly disagrees, accusing him of a fundamental category error.",
   "image": "https://the-decoder.com/wp-content/uploads/2025/12/galaxy_brain_style.jpeg",
-  "text": "LeCun put it bluntly: \"So first of all, there is no such thing as general intelligence. This concept makes absolutely no sense because it's really designed to designate human-level intelligence,\" he said in the podcast. The problem, he argues, is that human intelligence is itself highly specialized. \"We think of ourselves as being general, but it's simply an illusion.\" Demis Hassabis , co-founder and CEO of Google Deepmind, shot back on X with unusual directness: LeCun is \"just plain incorrect.\" The disagreement centers on a term that has shaped the AI industry for years and justifies billions in investment. Two of AI research's most influential figures have staked out opposing positions on a concept worth billions in investment. Yann LeCun, Meta's outgoing AI researcher and Turing Prize winner, called the concept of \"general intelligence\" \"complete BS\" (bullshit) on the AI podcast \"The Information Bottleneck\" . For LeCun, intelligence boils down to predicting the consequences of actions and using those predictions for planning. Physics serves as his model: \"What should I represent about reality to be able to make predictive models? And that's really what intelligence is about.\" This definition shapes his take on AI risks. LeCun distances himself from so-called \"doomers\" who warn about superintelligent AI: \"It's not because something is intelligent that it wants to dominate. Those are two different things.\" He's made this case before—even if AI became far more capable than humans, people would still remain at the top of the food chain. LeCun reserves his harshest criticism for those predicting AGI soon. \"You have all those people bloviating about AGI in a year or two. Just completely delusional, just complete delusion,\" he said. The real world is far more complicated, and \"tokenizing the world\" through neural language models won't get us there. \"It's just not going to happen.\" Hassabis draws a line between general and universal intelligence Hassabis responded on X with a technical-philosophical distinction: LeCun is \"…confusing general intelligence with universal intelligence.\" \"Brains are the most exquisite and complex phenomena we know of in the universe (so far), and they are in fact extremely general,\" he wrote. Hassabis acknowledges the no-free-lunch theorem’s practical constraint: in any practical, finite system there has to be some degree of specialization around the target distribution being learned. But that’s not the core issue, he argues: \"But the point about generality is that in theory, in the Turing Machine sense, the architecture of such a general system is capable of learning anything computable given enough time and memory (and data)…\" \"…and the human brain (and AI foundation models) are approximate Turing Machines,\" Hassabis wrote. The chess player argument LeCun points to chess as proof of human intelligence's limitations. \"Chess. We suck,\" he said in the podcast. Humans are terrible at chess and Go, machines are much better (thanks in no small part to Google Deepmind). The reason comes down to brain architecture: \"Because of the speed of tree exploration and the memory that's required for tree exploration. We just don't have enough memory capacity to do breadth-first tree exploration. So we suck at it.\" LeCun invokes the Moravec paradox: tasks humans consider uniquely intellectual—physics, calculus—computers mastered decades ago. But what any cat can do, robots still can't. Back in the 1960s, Marvin Minsky predicted a computer would be the world's best chess player within ten years. \"It took a bit longer than that,\" LeCun notes. Hassabis shifts focus from playing to inventing Hassabis reframed LeCun’s chess argument entirely: \"…it’s amazing that humans could have invented chess in the first place (and all the other aspects of modern civilization from science to 747s!).\" Magnus Carlsen may not be strictly optimal—he has finite memory and limited time to make a decision. Still, Hassabis stresses: \"…but it’s incredible what he and we can do with our brains given they were evolved for hunter gathering.\" Deepmind appears increasingly confident about AGI LeCun previously clashed with Deepmind researcher Adam Brown in what was, by AI researcher standards, an emotional debate. There too, he argued that LLMs alone can't achieve AGI and that more fundamental research is needed. LeCun says, with LLMs, the AI industry is falling for the same trap it has before, each time convinced it's finally on the right track to AGI, only to hit a wall. Brown disagreed: from simple rule-based next-token prediction, massive scaling creates emergent complexity that people perceive as understanding—and could potentially even lead to awareness. Deepmind co-founder Shane Legg stated in the company's official podcast in mid-December that a form of \"minimal AGI,\" AI agents capable of handling many human cognitive tasks, could arrive as early as 2028. Now, with Hassabis echoing his colleagues and publicly pushing back on LeCun, it signals that Deepmind remains firmly committed to the AGI concept and confident it's approaching. Historically, betting against Deepmind hasn't paid off.",
   "published_at": "2025-12-22T17:45:42+00:00",
-  "url": "https://the-decoder.com/yann-lecun-calls-general-intelligence-complete-bs-and-deepmind-ceo-hassabis-fires-back-publicly/",
   "source_id": "the_decoder",
-  "status": "RAW",
-  "article_id": "837d2a2b083c",
-  "cached_at": "2025-12-23T05:23:44.284092+00:00"
+  "status": "reviewed",
+  "text": "LeCun put it bluntly: \"So first of all, there is no such thing as general intelligence. This concept makes absolutely no sense because it's really designed to designate human-level intelligence,\" he said in the podcast. The problem, he argues, is that human intelligence is itself highly specialized. \"We think of ourselves as being general, but it's simply an illusion.\" Demis Hassabis , co-founder and CEO of Google Deepmind, shot back on X with unusual directness: LeCun is \"just plain incorrect.\" The disagreement centers on a term that has shaped the AI industry for years and justifies billions in investment. Two of AI research's most influential figures have staked out opposing positions on a concept worth billions in investment. Yann LeCun, Meta's outgoing AI researcher and Turing Prize winner, called the concept of \"general intelligence\" \"complete BS\" (bullshit) on the AI podcast \"The Information Bottleneck\" . For LeCun, intelligence boils down to predicting the consequences of actions and using those predictions for planning. Physics serves as his model: \"What should I represent about reality to be able to make predictive models? And that's really what intelligence is about.\" This definition shapes his take on AI risks. LeCun distances himself from so-called \"doomers\" who warn about superintelligent AI: \"It's not because something is intelligent that it wants to dominate. Those are two different things.\" He's made this case before—even if AI became far more capable than humans, people would still remain at the top of the food chain. LeCun reserves his harshest criticism for those predicting AGI soon. \"You have all those people bloviating about AGI in a year or two. Just completely delusional, just complete delusion,\" he said. The real world is far more complicated, and \"tokenizing the world\" through neural language models won't get us there. \"It's just not going to happen.\" Hassabis draws a line between general and universal intelligence Hassabis responded on X with a technical-philosophical distinction: LeCun is \"…confusing general intelligence with universal intelligence.\" \"Brains are the most exquisite and complex phenomena we know of in the universe (so far), and they are in fact extremely general,\" he wrote. Hassabis acknowledges the no-free-lunch theorem’s practical constraint: in any practical, finite system there has to be some degree of specialization around the target distribution being learned. But that’s not the core issue, he argues: \"But the point about generality is that in theory, in the Turing Machine sense, the architecture of such a general system is capable of learning anything computable given enough time and memory (and data)…\" \"…and the human brain (and AI foundation models) are approximate Turing Machines,\" Hassabis wrote. The chess player argument LeCun points to chess as proof of human intelligence's limitations. \"Chess. We suck,\" he said in the podcast. Humans are terrible at chess and Go, machines are much better (thanks in no small part to Google Deepmind). The reason comes down to brain architecture: \"Because of the speed of tree exploration and the memory that's required for tree exploration. We just don't have enough memory capacity to do breadth-first tree exploration. So we suck at it.\" LeCun invokes the Moravec paradox: tasks humans consider uniquely intellectual—physics, calculus—computers mastered decades ago. But what any cat can do, robots still can't. Back in the 1960s, Marvin Minsky predicted a computer would be the world's best chess player within ten years. \"It took a bit longer than that,\" LeCun notes. Hassabis shifts focus from playing to inventing Hassabis reframed LeCun’s chess argument entirely: \"…it’s amazing that humans could have invented chess in the first place (and all the other aspects of modern civilization from science to 747s!).\" Magnus Carlsen may not be strictly optimal—he has finite memory and limited time to make a decision. Still, Hassabis stresses: \"…but it’s incredible what he and we can do with our brains given they were evolved for hunter gathering.\" Deepmind appears increasingly confident about AGI LeCun previously clashed with Deepmind researcher Adam Brown in what was, by AI researcher standards, an emotional debate. There too, he argued that LLMs alone can't achieve AGI and that more fundamental research is needed. LeCun says, with LLMs, the AI industry is falling for the same trap it has before, each time convinced it's finally on the right track to AGI, only to hit a wall. Brown disagreed: from simple rule-based next-token prediction, massive scaling creates emergent complexity that people perceive as understanding—and could potentially even lead to awareness. Deepmind co-founder Shane Legg stated in the company's official podcast in mid-December that a form of \"minimal AGI,\" AI agents capable of handling many human cognitive tasks, could arrive as early as 2028. Now, with Hassabis echoing his colleagues and publicly pushing back on LeCun, it signals that Deepmind remains firmly committed to the AGI concept and confident it's approaching. Historically, betting against Deepmind hasn't paid off.",
+  "title": "Yann LeCun calls general intelligence \"complete BS\" and Deepmind CEO Hassabis fires back publicly",
+  "url": "https://the-decoder.com/yann-lecun-calls-general-intelligence-complete-bs-and-deepmind-ceo-hassabis-fires-back-publicly/",
+  "title_ko": "얀 르쿤 vs 데미스 허사비스, 'AGI의 정의' 두고 공개 설전",
+  "summary": "메타의 얀 르쿤이 '일반 인공지능(AGI)' 개념을 '헛소리(BS)'라고 비판하자, 구글 딥마인드의 데미스 허사비스가 이를 정면으로 반박했다.  르쿤은 생물학적 지능의 특수성을, 허사비스는 튜링 머신에 기반한 범용성을 강조하며 AI 업계의 근본적 철학 차이를 드러냈다.",
+  "tags": [],
+  "impact_score": 5.0,
+  "IS_Analysis": {
+    "Score_Commentary": "AI 업계 최상위 인물 간의 철학적 논쟁. PE(Meta)가 먼저 공격적 발언을 했으므로 주도권을 가짐. 실질적 기술 변화보다는 담론(Paradigm/Promise)에 해당함.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P5 (규제/간접적 영향 - 사상적 리더십)",
+          "Pe_Entity_Name": "Meta (Yann LeCun)",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "Google (Demis Hassabis)",
+          "Se_Tier": 1,
+          "PE/SE_Rationale": "르쿤(Meta)의 발언이 선행되었고 이에 대해 허사비스(Google)가 반박하는 구도. (직접적 대립 관계)"
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 1,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 4,
+          "Y_Evidence_Code": 1,
+          "Scope_Matrix_Score": 1,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 2
+      }
+    }
+  },
+  "zero_echo_score": 8.6,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 2,
+      "T2": 6,
+      "T3": 5,
+      "Rationale": "인용문 위주이며 정량적 데이터는 없음"
+    },
+    "Noise": {
+      "P1": 5,
+      "P2": 8,
+      "P3": 4,
+      "Rationale": "개인의 주관적 의견과 논쟁이 주를 이룸"
+    },
+    "Utility": {
+      "V1": 4,
+      "V2": 1,
+      "V3": 5,
+      "Rationale": "인사이트를 주지만 당장 적용 가능한 기술 정보는 아님"
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "담론 분석 기사로서의 표준적인 품질"
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "837d2a2b083c",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "얀 르쿤 vs 데미스 허사비스, 'AGI의 정의' 두고 공개 설전",
+      "Summary": "메타의 얀 르쿤이 '일반 인공지능(AGI)' 개념을 '헛소리(BS)'라고 비판하자, 구글 딥마인드의 데미스 허사비스가 이를 정면으로 반박했다.  르쿤은 생물학적 지능의 특수성을, 허사비스는 튜링 머신에 기반한 범용성을 강조하며 AI 업계의 근본적 철학 차이를 드러냈다.",
+      "Tags": "Opinion, Meta, Google"
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "AI 업계 최상위 인물 간의 철학적 논쟁. PE(Meta)가 먼저 공격적 발언을 했으므로 주도권을 가짐. 실질적 기술 변화보다는 담론(Paradigm/Promise)에 해당함.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P5 (규제/간접적 영향 - 사상적 리더십)",
+            "Pe_Entity_Name": "Meta (Yann LeCun)",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "Google (Demis Hassabis)",
+            "Se_Tier": 1,
+            "PE/SE_Rationale": "르쿤(Meta)의 발언이 선행되었고 이에 대해 허사비스(Google)가 반박하는 구도. (직접적 대립 관계)"
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 1,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 4,
+            "Y_Evidence_Code": 1,
+            "Scope_Matrix_Score": 1,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 2
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 2,
+        "T2": 6,
+        "T3": 5,
+        "Rationale": "인용문 위주이며 정량적 데이터는 없음"
+      },
+      "Noise": {
+        "P1": 5,
+        "P2": 8,
+        "P3": 4,
+        "Rationale": "개인의 주관적 의견과 논쟁이 주를 이룸"
+      },
+      "Utility": {
+        "V1": 4,
+        "V2": 1,
+        "V3": 5,
+        "Rationale": "인사이트를 주지만 당장 적용 가능한 기술 정보는 아님"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "담론 분석 기사로서의 표준적인 품질"
+      }
+    }
+  },
+  "original_title": "Yann LeCun calls general intelligence \"complete BS\" and Deepmind CEO Hassabis fires back publicly",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 2.0,
+        "T2": 6.0,
+        "T3": 5.0,
+        "S_Avg": 4.33
+      },
+      "Noise": {
+        "P1": 5.0,
+        "P2": 8.0,
+        "P3": 4.0,
+        "N_Avg": 5.67
+      },
+      "Utility": {
+        "V1": 4.0,
+        "V2": 1.0,
+        "V3": 5.0,
+        "U_Avg": 3.33
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 8.56,
+      "ZS_Final": 8.6
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 2,
+        "T2": 6,
+        "T3": 5,
+        "Rationale": "인용문 위주이며 정량적 데이터는 없음"
+      },
+      "Noise": {
+        "P1": 5,
+        "P2": 8,
+        "P3": 4,
+        "Rationale": "개인의 주관적 의견과 논쟁이 주를 이룸"
+      },
+      "Utility": {
+        "V1": 4,
+        "V2": 1,
+        "V3": 5,
+        "Rationale": "인사이트를 주지만 당장 적용 가능한 기술 정보는 아님"
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "담론 분석 기사로서의 표준적인 품질"
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 1.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 1.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 2.0
+      },
+      "IS_Raw": 5.0,
+      "IS_Final": 5.0,
+      "Score_Commentary": "AI 업계 최상위 인물 간의 철학적 논쟁. PE(Meta)가 먼저 공격적 발언을 했으므로 주도권을 가짐. 실질적 기술 변화보다는 담론(Paradigm/Promise)에 해당함."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P5 (규제/간접적 영향 - 사상적 리더십)",
+      "Pe_Entity_Name": "Meta (Yann LeCun)",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "Google (Demis Hassabis)",
+      "Se_Tier": 1,
+      "PE/SE_Rationale": "르쿤(Meta)의 발언이 선행되었고 이에 대해 허사비스(Google)가 반박하는 구도. (직접적 대립 관계)"
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 4,
+      "Y_Evidence_Code": 1,
+      "Scope_Matrix_Score": 1,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-24T00:43:26.875802+00:00"
 }

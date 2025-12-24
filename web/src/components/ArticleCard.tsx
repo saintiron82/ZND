@@ -186,7 +186,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 <div className="flex gap-1.5 items-center overflow-hidden">
                     <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 whitespace-nowrap font-sans">{source_id}</span>
                     {tags && tags.length > 0 && <span className="text-muted-foreground/50">·</span>}
-                    {tags?.slice(0, 2).map(tag => (
+                    {tags?.slice(0, 3).map(tag => (
                         <span key={tag} className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded-sm whitespace-nowrap font-sans">
                             #{tag}
                         </span>

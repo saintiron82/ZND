@@ -99,12 +99,11 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
                         key={item.tag}
                         className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-colors cursor-default"
                     >
-                        <div className="flex items-center gap-2">
-                            <span className={cn("text-sm w-5", getRankStyle(index + 1))}>
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                            <span className={cn("text-sm w-5 shrink-0", getRankStyle(index + 1))}>
                                 {index + 1}
                             </span>
-                            <Hash className="w-3 h-3 text-muted-foreground" />
-                            <span className="text-sm font-medium text-foreground break-words">
+                            <span className="text-sm font-medium text-foreground truncate">
                                 {item.tag}
                             </span>
                         </div>

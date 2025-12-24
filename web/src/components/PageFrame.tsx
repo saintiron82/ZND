@@ -145,7 +145,7 @@ export default function PageFrame({
                     {/* Trending Keywords - 좌측 Issue Selector와 동일 높이 */}
                     {articles.length > 0 && (
                         <div className="w-full px-2 mt-8">
-                            <TrendingKeywords articles={articles} maxItems={8} />
+                            <TrendingKeywords articles={articles} maxItems={5} />
                         </div>
                     )}
                 </div>

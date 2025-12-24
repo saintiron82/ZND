@@ -35,9 +35,10 @@ echo "📥 Pulling latest changes..."
 git fetch origin
 
 # 기존 빌드 파일로 인한 충돌 방지: 로컬 변경사항 강제 리셋
-echo "🔄 Resetting local changes (build artifacts)..."
+echo "🔄 Resetting local changes..."
 git reset --hard HEAD
-git clean -fd web/.next 2>/dev/null || true
+# dev 캐시만 정리 (프로덕션 빌드 파일은 보존)
+rm -rf web/.next/dev 2>/dev/null || true
 
 git checkout $TARGET_BRANCH
 git pull origin $TARGET_BRANCH

@@ -14,7 +14,6 @@ desk/.env
 desk/venv/Lib/
 desk/venv
 
-# Next.js build output
-.next/
-web/.next/
+# Next.js build output (dev cache only - production build is included)
+web/.next/dev/
 node_modules/

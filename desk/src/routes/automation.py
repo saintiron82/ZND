@@ -499,6 +499,59 @@ def automation_all():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@automation_bp.route('/api/automation/collect-extract', methods=['POST'])
+def automation_collect_extract():
+    """
+    ⚡ 수집 + 추출만 실행 (비용 절약: 분석/조판은 수동)
+    스케줄러에서 정기 실행용
+    """
+    try:
+        from flask import current_app
+        
+        results = {}
+        
+        # 1. 수집
+        with current_app.test_client() as client:
+            resp = client.post('/api/automation/collect')
+            results['collect'] = resp.get_json()
+        
+        # 2. 추출
+        with current_app.test_client() as client:
+            resp = client.post('/api/automation/extract', 
+                              json={'links': results['collect'].get('links', [])})
+            results['extract'] = resp.get_json()
+        
+        collected = results.get('collect', {}).get('total', 0)
+        extracted = results.get('extract', {}).get('extracted', 0)
+        failed = results.get('extract', {}).get('failed', 0)
+        
+        print(f"⚡ [Collect+Extract] 수집 {collected} → 추출 {extracted} (실패 {failed})")
+        
+        # Discord 알림 전송
+        if DISCORD_ENABLED:
+            notification_result = {
+                'success': True,
+                'collected': collected,
+                'extracted': extracted,
+                'analyzed': 0,
+                'cached': 0,
+                'failed': failed,
+                'message': f'수집 {collected} → 추출 {extracted} (분석 대기중)'
+            }
+            send_crawl_notification(notification_result, "자동 수집+추출")
+        
+        return jsonify({
+            'success': True,
+            'results': results,
+            'collected': collected,
+            'extracted': extracted,
+            'failed': failed,
+            'message': f'수집 {collected} → 추출 {extracted} 완료 (분석/조판은 수동 필요)'
+        })
+    except Exception as e:
+        print(f"❌ [Collect+Extract] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @automation_bp.route('/api/desk/recalculate', methods=['POST'])
 def automation_stage_recalc():
     """

@@ -107,10 +107,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         return "text-xs md:text-base";
     };
 
-    // Dynamic Line Clamp based on actual Height
-    const gapPx = 16;
-    const heightPx = (rows * 10) + Math.max(0, rows - 1) * gapPx;
-    const maxLines = Math.max(3, Math.floor((heightPx - 100) / 24));
+
 
     // Click handler for feedback buttons to prevent bubbling
     const handleFeedbackClick = (e: React.MouseEvent) => {
@@ -171,22 +168,14 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 </div>
 
                 <h3 className={cn(
-                    "font-black font-sans leading-[1.1] group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors tracking-tight shrink-0",
+                    "font-black font-sans leading-[1.1] group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors tracking-tight shrink-0 break-keep",
                     getTitleSize(impact_score)
                 )}>
                     {title_ko}
                 </h3>
 
                 {!hideSummary && (
-                    <p
-                        className="text-muted-foreground leading-relaxed font-sans text-sm"
-                        style={{
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical',
-                            WebkitLineClamp: maxLines,
-                            overflow: 'hidden'
-                        }}
-                    >
+                    <p className="text-muted-foreground leading-relaxed font-sans text-sm break-keep">
                         {summary}
                     </p>
                 )}

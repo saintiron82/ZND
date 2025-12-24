@@ -32,9 +32,9 @@ export const LAYOUT_CONFIG = {
     physics: {
         colWidthPx: 116,       // Approx 1 column width in pixels (Desktop 1200px / 10 cols)
         lineHeightPx: 24,      // Relaxed line height
-        charWidthPx: 11,       // Avg character width (Korean/English mix)
+        charWidthPx: 13,       // Increased from 11 to 13 to account for 'break-keep' wrapping overhead
         paddingPx: 40,         // Horizontal padding (p-5 = 20px * 2)
-        headerHeightPx: 100,   // Title + Date + Tags + Vertical Padding overhead
+        headerHeightPx: 130,   // Increased from 100 to 130 to accommodate multi-line titles
     },
     // Content display rules (Line Clamping)
     corrections: {

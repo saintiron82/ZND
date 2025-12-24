@@ -12,6 +12,28 @@ publish_bp = Blueprint('publish', __name__)
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
 
 
+def extract_tags_from_data(data: dict) -> list:
+    """
+    데이터에서 태그 추출 (tags가 비어있으면 raw_analysis.Meta.Tags에서 복원)
+    """
+    tags = data.get('tags', [])
+    if tags and len(tags) > 0:
+        return tags
+    
+    # Fallback: raw_analysis.Meta.Tags에서 복원
+    raw = data.get('raw_analysis', {})
+    meta = raw.get('Meta', {})
+    tags_raw = meta.get('Tags') or meta.get('Tag')
+    
+    if tags_raw:
+        if isinstance(tags_raw, str):
+            return [t.strip() for t in tags_raw.split(',') if t.strip()]
+        elif isinstance(tags_raw, list):
+            return tags_raw
+    
+    return []
+
+
 @publish_bp.route('/api/desk/publish_selected', methods=['POST'])
 def desk_publish_selected():
     """선택된 Staging 파일만 발행 (New or Append to Issue)"""
@@ -158,7 +180,7 @@ def desk_publish_selected():
                         'zero_echo_score': staging_data.get('zero_echo_score'),
                         'impact_score': staging_data.get('impact_score'),
                         'layout_type': staging_data.get('layout_type', 'Standard'),
-                        'tags': staging_data.get('tags', []),
+                        'tags': extract_tags_from_data(staging_data),  # [FIX] 태그 복원 fallback
                         'category': staging_data.get('category', '미분류'),
                         'filename': result.get('filename'),
                         'date': result.get('date'),
@@ -677,6 +699,114 @@ def update_publication_format(publish_id):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@publish_bp.route('/api/publication/update_all', methods=['POST'])
+def update_all_publications():
+    """
+    🔄 모든 회차 데이터를 최신 포맷으로 업데이트
+    - 태그 복원, 기사 상세 보강 등
+    """
+    try:
+        from src.db_client import DBClient
+        
+        db = DBClient()
+        
+        # 모든 회차 조회
+        issues = db.get_issues_from_meta()
+        if not issues:
+            return jsonify({'success': False, 'error': '발행된 회차가 없습니다.'}), 404
+        
+        results = []
+        total_enriched = 0
+        
+        for issue in issues:
+            publish_id = issue.get('id') or issue.get('edition_code')
+            if not publish_id:
+                continue
+            
+            try:
+                # 회차 정보 조회
+                pub_data = db.get_publication(publish_id)
+                if not pub_data:
+                    continue
+                
+                articles = pub_data.get('articles', [])
+                article_ids = pub_data.get('article_ids', [])
+                
+                if not articles and article_ids:
+                    articles = [{'id': aid} for aid in article_ids]
+                
+                if not articles:
+                    continue
+                
+                # 캐시에서 기사 상세 보강
+                enriched_articles = []
+                enriched_count = 0
+                
+                for article in articles:
+                    article_id = article.get('id', '')
+                    cache_data = find_article_in_cache(article_id)
+                    
+                    if cache_data:
+                        enriched = build_enriched_article(article, cache_data)
+                        enriched_articles.append(enriched)
+                        # 태그가 생겼으면 보강된 것
+                        if enriched.get('tags') and not article.get('tags'):
+                            enriched_count += 1
+                    else:
+                        enriched_articles.append(article)
+                
+                # 업데이트
+                update_data = {
+                    'articles': enriched_articles,
+                    'article_count': len(enriched_articles),
+                    'updated_at': datetime.now(timezone.utc).isoformat(),
+                    'schema_version': '2.0.0'
+                }
+                
+                db.update_publication_record(publish_id, update_data)
+                
+                # 로컬 인덱스 업데이트
+                index_data = {
+                    'id': publish_id,
+                    'edition_code': pub_data.get('edition_code', publish_id),
+                    'edition_name': pub_data.get('edition_name', ''),
+                    'published_at': pub_data.get('published_at', ''),
+                    'date': pub_data.get('date', ''),
+                    'article_count': len(enriched_articles),
+                    'articles': enriched_articles
+                }
+                db.save_issue_index_file(index_data)
+                
+                total_enriched += enriched_count
+                results.append({
+                    'publish_id': publish_id,
+                    'edition_name': pub_data.get('edition_name', ''),
+                    'enriched': enriched_count,
+                    'total': len(enriched_articles)
+                })
+                
+                print(f"✅ [Update All] {pub_data.get('edition_name', publish_id)}: {enriched_count}개 보강")
+                
+            except Exception as e:
+                print(f"⚠️ [Update All] {publish_id} 업데이트 실패: {e}")
+                results.append({
+                    'publish_id': publish_id,
+                    'error': str(e)
+                })
+        
+        return jsonify({
+            'success': True,
+            'updated_count': len([r for r in results if 'error' not in r]),
+            'total_enriched': total_enriched,
+            'results': results,
+            'message': f'✅ {len(results)}개 회차 업데이트 완료 (태그 {total_enriched}개 복원)'
+        })
+        
+    except Exception as e:
+        print(f"❌ [Update All] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 def find_article_in_cache(article_id: str) -> dict | None:
     """캐시에서 article_id로 기사 찾기"""
     import glob
@@ -720,7 +850,7 @@ def build_enriched_article(article: dict, cache_data: dict) -> dict:
         'zero_echo_score': cache_data.get('zero_echo_score'),
         'impact_score': cache_data.get('impact_score'),
         'layout_type': cache_data.get('layout_type', 'Standard'), # 기본값 Standard
-        'tags': cache_data.get('tags', []),
+        'tags': extract_tags_from_data(cache_data),  # [FIX] 태그 복원 fallback
         'category': cache_data.get('category', '미분류'),
         'reading_time': cache_data.get('reading_time', 0), # [NEW] 예상 읽기 시간
         'filename': article.get('filename', ''),

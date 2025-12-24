@@ -322,10 +322,16 @@ def normalize_field_names(data: dict) -> dict:
             if 'Summary' in meta:
                 normalized['summary'] = meta['Summary']
             # Tags는 V1.0에서 'Tags', V0.9에서 'Tag'로 키가 다름
-            if 'Tags' in meta:
-                normalized['tags'] = meta['Tags']
-            elif 'Tag' in meta:
-                normalized['tags'] = meta['Tag']
+            # MLL이 문자열로 반환할 수 있으므로 배열로 변환 처리
+            tags_raw = meta.get('Tags') or meta.get('Tag')
+            if tags_raw:
+                if isinstance(tags_raw, str):
+                    # 콤마로 구분된 문자열을 배열로 변환
+                    normalized['tags'] = [t.strip() for t in tags_raw.split(',') if t.strip()]
+                elif isinstance(tags_raw, list):
+                    normalized['tags'] = tags_raw
+                else:
+                    normalized['tags'] = []
         
         # V1.0 Article_ID Mapping
         if 'Article_ID' in normalized and 'article_id' not in normalized:
@@ -356,10 +362,15 @@ def normalize_field_names(data: dict) -> dict:
                 normalized['title_ko'] = meta['Headline']
             if 'summary' in meta:
                 normalized['summary'] = meta['summary']
-            if 'Tags' in meta:
-                normalized['tags'] = meta['Tags']
-            elif 'Tag' in meta:
-                normalized['tags'] = meta['Tag']
+            # Tags 처리: 문자열인 경우 배열로 변환
+            tags_raw = meta.get('Tags') or meta.get('Tag')
+            if tags_raw:
+                if isinstance(tags_raw, str):
+                    normalized['tags'] = [t.strip() for t in tags_raw.split(',') if t.strip()]
+                elif isinstance(tags_raw, list):
+                    normalized['tags'] = tags_raw
+                else:
+                    normalized['tags'] = []
             
     # --- Legacy raw_analysis 처리 (v6.2 - 바로 계산) ---
     elif 'raw_analysis' in normalized:

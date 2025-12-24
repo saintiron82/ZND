@@ -63,7 +63,7 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                     <p className="text-sm font-bold tracking-[0.1em] text-muted-foreground font-sans">
                         {editionName && <span className="text-teal-600 dark:text-teal-400">{formatEdition(editionName)}</span>}
                         {editionName && currentDate && <span className="mx-2">•</span>}
-                        {currentDate ? formatDate(currentDate) : 'Loading...'}
+                        {currentDate ? formatDate(currentDate) : '불러오는 중...'}
                     </p>
                     <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-widest font-sans relative group/slogan cursor-help inline-flex items-center gap-1">
                         Pure Signal, Zero Echo

@@ -1,7 +1,7 @@
 ﻿﻿'use client';
 
 import React from 'react';
-import { TrendingUp, Hash } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -52,7 +52,7 @@ const getTagDisplayName = (tag: string): string => {
     return displayNames[tag] || tag.replace(/_/g, ' ');
 };
 
-// Rank badge colors
+// Rank badge colors (number)
 const getRankStyle = (rank: number): string => {
     switch (rank) {
         case 1: return 'text-amber-500 font-black';
@@ -62,22 +62,35 @@ const getRankStyle = (rank: number): string => {
     }
 };
 
+// Trending rank badge style (same as article tags)
+const getTrendingBadgeStyle = (rank: number): string => {
+    switch (rank) {
+        case 1: return "bg-gradient-to-r from-amber-400 to-orange-500 text-white"; // Gold
+        case 2: return "bg-gradient-to-r from-slate-300 to-slate-400 text-slate-800"; // Silver
+        case 3: return "bg-gradient-to-r from-amber-600 to-amber-700 text-white"; // Bronze
+        case 4: return "bg-teal-500 text-white";
+        case 5: return "bg-sky-500 text-white";
+        default: return "bg-secondary/50 text-muted-foreground";
+    }
+};
+
 export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKeywordsProps) {
     const trendingTags = React.useMemo(() => {
         return calculateTagFrequencies(articles).slice(0, maxItems);
     }, [articles, maxItems]);
 
-    // ?쒓렇媛 ?놁뼱??而⑦뀒?대꼫???쒖떆
+    // Display container even when no tags
     if (trendingTags.length === 0) {
         return (
             <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm rounded-xl border border-zinc-200/50 dark:border-zinc-800/50 p-4">
                 <div className="flex items-center gap-2 mb-4">
                     <TrendingUp className="w-4 h-4 text-teal-500" />
                     <h3 className="font-bold text-sm uppercase tracking-wider text-foreground">
-                        ?ㅻ뒛???몃젋??                    </h3>
+                        오늘의 트렌드
+                    </h3>
                 </div>
                 <p className="text-xs text-muted-foreground text-center py-4">
-                    ?쒓렇 ?곗씠??以鍮?以?..
+                    태그 데이터 준비 중...
                 </p>
             </div>
         );
@@ -88,26 +101,25 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
             <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="w-4 h-4 text-teal-500" />
                 <h3 className="font-bold text-sm uppercase tracking-wider text-foreground">
-                    ?ㅻ뒛???몃젋??                </h3>
+                    오늘의 트렌드
+                </h3>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
                 {trendingTags.map((item, index) => (
                     <div
                         key={item.tag}
-                        className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-colors cursor-default"
+                        className={cn(
+                            "flex items-center gap-1.5 py-1.5 px-2 rounded-lg transition-colors cursor-default",
+                            getTrendingBadgeStyle(index + 1)
+                        )}
                     >
-                        <div className="flex items-center gap-2">
-                            <span className={cn("text-sm w-5", getRankStyle(index + 1))}>
-                                {index + 1}
-                            </span>
-                            <Hash className="w-3 h-3 text-muted-foreground" />
-                            <span className="text-sm font-medium text-foreground break-words">
-                                {item.tag}
-                            </span>
-                        </div>
-                        <span className="text-xs text-muted-foreground bg-secondary/70 px-2 py-0.5 rounded-full">
-                            {item.count}嫄?                        </span>
+                        <span className="text-xs font-black w-4 flex-shrink-0">
+                            {index + 1}
+                        </span>
+                        <span className="text-xs font-bold">
+                            {getTagDisplayName(item.tag)}
+                        </span>
                     </div>
                 ))}
             </div>

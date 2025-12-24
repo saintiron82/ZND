@@ -25,7 +25,7 @@ interface HomePageClientProps {
 export default function HomePageClient({ articles, issues = [] }: HomePageClientProps) {
     const router = useRouter();
 
-    // Group articles by issue + award calculation
+    // Group by issue + award calculation logic
     const { groupedByIssue, sortedIssueIds } = useMemo(() => {
         const grouped: { [key: string]: { issue: Issue | null; articles: any[] } } = {};
 
@@ -114,13 +114,14 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
             });
         });
 
-        // Sort issues by released_at or published_at (latest first)
+        // Sort issues by edition_code (higher number is latest)
+        // edition_code format: YYMMDD_N (e.g. 241224_1, 241224_2)
         const sorted = Object.keys(grouped).sort((a, b) => {
             const issueA = grouped[a].issue;
             const issueB = grouped[b].issue;
-            const dateA = issueA?.released_at || issueA?.published_at || '';
-            const dateB = issueB?.released_at || issueB?.published_at || '';
-            return new Date(dateB).getTime() - new Date(dateA).getTime();
+            const codeA = issueA?.edition_code || a;
+            const codeB = issueB?.edition_code || b;
+            return codeB.localeCompare(codeA);
         });
 
         return { groupedByIssue: grouped, sortedIssueIds: sorted };
@@ -153,6 +154,7 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
 
     // Date-based navigation (for PageFrame)
     const handleDateChange = (target: string) => {
+        // Check if target is an issue id
         if (groupedByIssue[target]) {
             handleIssueChange(target);
         }
@@ -169,10 +171,17 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
             editionName={currentIssue?.edition_name || null}
             prevDate={prevIssue?.date || null}
             prevEditionName={prevIssue?.edition_name || null}
+            prevIssueId={prevIssueId}
             nextDate={nextIssue?.date || null}
             nextEditionName={nextIssue?.edition_name || null}
+            nextIssueId={nextIssueId}
             onDateChange={(target) => {
-                // Find issue matching by date
+                // Check if target is issue ID first
+                if (sortedIssueIds.includes(target)) {
+                    handleIssueChange(target);
+                    return;
+                }
+                // Find issue by date
                 const matchingId = sortedIssueIds.find(id => {
                     const issue = groupedByIssue[id]?.issue;
                     return issue?.date === target;

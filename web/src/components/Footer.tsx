@@ -52,7 +52,7 @@ export default function Footer() {
                                 ZeroEcho<span className="text-teal-500">.</span>Daily
                             </div>
                             <p className="text-muted-foreground text-xs md:text-sm leading-relaxed max-w-xs font-sans">
-                                Curated high-importance news from around the world, delivered without the echo.
+                                전 세계의 핵심 뉴스를 엄선하여 에코 없이 전달합니다.
                             </p>
                         </div>
 
@@ -60,36 +60,36 @@ export default function Footer() {
                         <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-4 md:gap-6 md:grid-cols-2">
                             {/* Connect */}
                             <div className="flex flex-col gap-2 md:gap-3">
-                                <h4 className="font-bold uppercase tracking-widest text-[10px] md:text-xs font-sans">Connect</h4>
+                                <h4 className="font-bold uppercase tracking-widest text-[10px] md:text-xs font-sans">연락하기</h4>
                                 <button
                                     onClick={() => setIsContactModalOpen(true)}
                                     className="px-2.5 py-1.5 md:px-3 md:py-2 bg-teal-500 hover:bg-teal-600 text-white text-[10px] md:text-xs font-bold rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-1 w-fit"
                                 >
-                                    <Mail className="w-3 h-3 md:w-3.5 md:h-3.5" /> Message
+                                    <Mail className="w-3 h-3 md:w-3.5 md:h-3.5" /> 문의하기
                                 </button>
                             </div>
 
                             {/* Legal */}
                             <div className="flex flex-col gap-2 md:gap-3">
-                                <h4 className="font-bold uppercase tracking-widest text-[10px] md:text-xs font-sans">Legal</h4>
+                                <h4 className="font-bold uppercase tracking-widest text-[10px] md:text-xs font-sans">법적고지</h4>
                                 <div className="flex flex-col gap-1">
                                     <button
                                         onClick={() => openLegalModal('disclaimer')}
                                         className="text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-[10px] md:text-xs text-left"
                                     >
-                                        Legal Notice
+                                        면책조항
                                     </button>
                                     <button
                                         onClick={() => openLegalModal('privacy')}
                                         className="text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-[10px] md:text-xs text-left"
                                     >
-                                        Privacy
+                                        개인정보처리방침
                                     </button>
                                     <button
                                         onClick={() => openLegalModal('terms')}
                                         className="text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-[10px] md:text-xs text-left"
                                     >
-                                        Terms
+                                        이용약관
                                     </button>
                                 </div>
                             </div>

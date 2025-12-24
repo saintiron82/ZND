@@ -85,6 +85,23 @@ const getSizeFromScore = (score: number, id: string, summary: string = '', title
 };
 
 export default function ArticleDisplay({ articles, loading, error, currentDate }: ArticleDisplayProps) {
+    // ?몃젋???쒓렇 ?쒖쐞 怨꾩궛 (?곸쐞 5媛?
+    const trendingTags = useMemo(() => {
+        if (!articles || articles.length === 0) return [];
+
+        const tagCounts: Record<string, number> = {};
+        articles.forEach(article => {
+            article.tags?.forEach(tag => {
+                tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+            });
+        });
+
+        return Object.entries(tagCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([tag]) => tag);
+    }, [articles]);
+
     // Optimization Logic:
     // If articles already have layout data (cols, rows) from server-side baking, use them directly.
     // Otherwise, generate layout client-side (fallback).
@@ -133,27 +150,27 @@ export default function ArticleDisplay({ articles, loading, error, currentDate }
                 {optimizedArticles.map((article, index) => {
                     const key = article.id || `article-${index}`;
 
-                    // Headline article - special handling
+                    // Headline article - ?꾩껜 媛濡쒗룺 李⑥?
                     if (index === 0) {
                         // Use pre-calculated size from optimizer if available, otherwise calculate
-                        const cols = article.cols || 6;
-                        const rows = article.rows ? Math.max(article.rows, 15) : 15;
+                        const rows = article.rows ? Math.max(article.rows, 12) : 12;
 
                         return (
-                            <React.Fragment key={key}>
-                                <div className="hidden md:block md:col-start-1 md:col-span-2 md:row-start-1 pointer-events-none" style={{ gridRowEnd: `span ${rows}` }} />
-                                <div className="md:col-start-3 md:col-span-6 md:row-start-1 flex flex-col" style={{ gridRowEnd: `span ${rows}` }}>
-                                    <ArticleCard
-                                        article={article}
-                                        className="h-full font-sans"
-                                        hideSummary={false}
-                                        cols={6}
-                                        rows={rows}
-                                        currentDate={currentDate}
-                                    />
-                                </div>
-                                <div className="hidden md:block md:col-start-9 md:col-span-2 md:row-start-1 pointer-events-none" style={{ gridRowEnd: `span ${rows}` }} />
-                            </React.Fragment>
+                            <div
+                                key={key}
+                                className="col-span-2 md:col-span-10 flex flex-col"
+                                style={{ gridRowEnd: `span ${rows}` }}
+                            >
+                                <ArticleCard
+                                    article={article}
+                                    className="h-full font-sans"
+                                    hideSummary={false}
+                                    cols={10}
+                                    rows={rows}
+                                    currentDate={currentDate}
+                                    trendingTags={trendingTags}
+                                />
+                            </div>
                         );
                     }
 
@@ -188,6 +205,7 @@ export default function ArticleDisplay({ articles, loading, error, currentDate }
                                 cols={cols}
                                 rows={rows}
                                 currentDate={currentDate}
+                                trendingTags={trendingTags}
                             />
                         </div>
                     );

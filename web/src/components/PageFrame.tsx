@@ -46,7 +46,7 @@ export default function PageFrame({
         return `${month}월 ${day}일`;
     };
 
-    // Edition format ("12월 21일 1호" format)
+    // Edition label format ("12월 21일 1호" format)
     const formatEditionLabel = (dateStr: string, edition?: string | null) => {
         const datePart = formatDateKo(dateStr);
         if (edition) {
@@ -68,7 +68,7 @@ export default function PageFrame({
                     {/* PREV button (placeholder if none) */}
                     {prevDate ? (
                         <button
-                            onClick={() => onDateChange(prevDate)}
+                            onClick={() => onDateChange(prevIssueId || prevDate)}
                             className="flex flex-col items-center gap-2 p-4 text-foreground transition-all rounded-lg group opacity-40 hover:opacity-100 hover:bg-card hover:shadow-lg"
                         >
                             <ChevronLeft className="w-10 h-10" />
@@ -97,7 +97,7 @@ export default function PageFrame({
                     {/* Mobile: Navigation bar */}
                     <div className="lg:hidden flex justify-between items-center py-4 border-b border-border/50 mb-6">
                         <button
-                            onClick={() => prevDate && onDateChange(prevDate)}
+                            onClick={() => prevDate && onDateChange(prevIssueId || prevDate)}
                             disabled={!prevDate}
                             className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30"
                         >
@@ -108,7 +108,7 @@ export default function PageFrame({
                             {currentDate ? formatEditionLabel(currentDate, editionName) : ''}
                         </span>
                         <button
-                            onClick={() => nextDate && onDateChange(nextDate)}
+                            onClick={() => nextDate && onDateChange(nextIssueId || nextDate)}
                             disabled={!nextDate}
                             className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30"
                         >
@@ -144,7 +144,7 @@ export default function PageFrame({
                     {/* Trending Keywords - same height as Issue Selector */}
                     {articles.length > 0 && (
                         <div className="w-full px-2 mt-8">
-                            <TrendingKeywords articles={articles} maxItems={8} />
+                            <TrendingKeywords articles={articles} maxItems={5} />
                         </div>
                     )}
                 </div>

@@ -45,8 +45,8 @@ interface MetaDoc {
 const COLLECTION_PUBLICATIONS = 'publications';
 
 /**
- * Fetch released issues list
- * [NEW] Directly query from _meta document (1 READ, lightweight)
+ * Get released issues list
+ * [NEW] Query directly from _meta document (1 READ, lightweight)
  */
 export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
     try {
@@ -66,7 +66,7 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
         // Filter only released status
         const releasedMeta = (metaData.issues || []).filter(i => i.status === 'released');
 
-        // Convert to Issue format
+        // Convert to Issue format (detailed info from issue document if needed)
         const issues: Issue[] = releasedMeta.map(meta => ({
             id: meta.code,
             edition_code: meta.code,
@@ -78,11 +78,10 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
             date: meta.code.replace(/_\d+$/, '').replace(/(\d{2})(\d{2})(\d{2})/, '20$1-$2-$3')
         }));
 
-        // Sort by published_at descending
+        // Sort by edition_code descending (higher issue number is latest)
+        // edition_code format: YYMMDD_N (e.g. 241224_1, 241224_2)
         issues.sort((a, b) => {
-            const dateA = new Date(a.published_at || 0).getTime();
-            const dateB = new Date(b.published_at || 0).getTime();
-            return dateB - dateA;
+            return b.edition_code.localeCompare(a.edition_code);
         });
 
         console.log(`✅ [Firestore] Found ${issues.length} released issues from _meta`);
@@ -119,10 +118,9 @@ async function fetchPublishedIssuesFallback(): Promise<{ issues: Issue[], latest
 
         const releasedIssues = allIssues.filter(issue => issue.status === 'released');
 
+        // Sort by edition_code descending (higher issue number is latest)
         releasedIssues.sort((a, b) => {
-            const dateA = new Date(a.published_at || 0).getTime();
-            const dateB = new Date(b.published_at || 0).getTime();
-            return dateB - dateA;
+            return b.edition_code.localeCompare(a.edition_code);
         });
 
         for (const issue of releasedIssues) {
@@ -147,6 +145,8 @@ async function fetchPublishedIssuesFallback(): Promise<{ issues: Issue[], latest
  */
 export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]> {
     try {
+        // console.log(`📖 [Firestore] Fetching articles for issue: ${issueId}`);
+
         // Read articles array directly from issue document (1 READ)
         const pubDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, issueId));
 

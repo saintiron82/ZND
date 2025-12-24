@@ -39,9 +39,9 @@ interface ArticleCardProps {
     rows?: number;
     currentDate?: string;
     showFeedback?: boolean;
+    trendingTags?: string[];
 }
 
-// Award badge styling
 const getAwardStyle = (award: string) => {
     switch (award) {
         case "Today's Headline":
@@ -55,7 +55,19 @@ const getAwardStyle = (award: string) => {
     }
 };
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true }) => {
+// Trending tag style by rank
+const getTrendingTagStyle = (rank: number): string => {
+    switch (rank) {
+        case 1: return "bg-gradient-to-r from-amber-400 to-orange-500 text-white"; // Gold
+        case 2: return "bg-gradient-to-r from-slate-300 to-slate-400 text-slate-800"; // Silver
+        case 3: return "bg-gradient-to-r from-amber-600 to-amber-700 text-white"; // Bronze
+        case 4: return "bg-teal-500 text-white";
+        case 5: return "bg-sky-500 text-white";
+        default: return "bg-secondary/50 text-muted-foreground"; // Default
+    }
+};
+
+const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true, trendingTags = [] }) => {
     const { id, title_ko, summary, tags, url, crawled_at, published_at, source_id, impact_score, zero_echo_score, awards, layout_type } = article;
 
     // Use zero_echo_score for quality indication
@@ -80,7 +92,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         return '';
     };
 
-    // Use currentDate (issue date) if available, otherwise fall back to published_at or crawled_at
+    // Use currentDate (issue date) if available, otherwise fall back
     const dateStr = currentDate ? formatDate(currentDate) : (formatDate(published_at) || formatDate(crawled_at));
 
     // Dynamic Title Size based on Impact Score
@@ -95,7 +107,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         return "text-xs md:text-base";
     };
 
-    // Dynamic Line Clamp based on actual Height (High-Res 10px Rows)
+    // Dynamic Line Clamp based on actual Height
     const gapPx = 16;
     const heightPx = (rows * 10) + Math.max(0, rows - 1) * gapPx;
     const maxLines = Math.max(3, Math.floor((heightPx - 100) / 24));
@@ -127,11 +139,14 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
             rel="noopener noreferrer"
             onClick={handleArticleClick}
             className={cn(
-                "group flex flex-col h-full p-5 transition-all duration-300 rounded-xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-800/50 hover:border-teal-400/40 hover:shadow-lg hover:shadow-teal-500/5",
+                "group flex flex-col h-full p-5 transition-all duration-300 rounded-xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm border border-zinc-300 dark:border-zinc-700 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-500/10",
                 className
             )}
         >
-            <div className="flex flex-col gap-3 flex-1 min-h-0">
+            <div className={cn(
+                "flex flex-col gap-3 flex-1 min-h-0",
+                cols === 10 && "items-center text-center max-w-4xl mx-auto"
+            )}>
                 {/* Award Badges */}
                 {awards && awards.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 shrink-0">
@@ -181,11 +196,23 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 <div className="flex gap-1.5 items-center overflow-hidden">
                     <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 whitespace-nowrap font-sans">{source_id}</span>
                     {tags && tags.length > 0 && <span className="text-muted-foreground/50">·</span>}
-                    {tags?.slice(0, 2).map(tag => (
-                        <span key={tag} className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded-sm whitespace-nowrap font-sans">
-                            #{tag}
-                        </span>
-                    ))}
+                    {tags?.slice(0, 3).map(tag => {
+                        const trendRank = trendingTags.indexOf(tag) + 1;
+                        const tagStyle = trendRank > 0 && trendRank <= 5
+                            ? getTrendingTagStyle(trendRank)
+                            : "bg-secondary/50 text-muted-foreground";
+                        return (
+                            <span
+                                key={tag}
+                                className={cn(
+                                    "text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-sm whitespace-nowrap font-sans",
+                                    tagStyle
+                                )}
+                            >
+                                {tag}
+                            </span>
+                        );
+                    })}
                 </div>
                 <div className="flex items-center gap-2">
                     {/* ZS Feedback Buttons */}

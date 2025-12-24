@@ -33,6 +33,12 @@ echo "🚀 Starting deployment for branch: $TARGET_BRANCH"
 # 1. Pull latest code
 echo "📥 Pulling latest changes..."
 git fetch origin
+
+# 기존 빌드 파일로 인한 충돌 방지: 로컬 변경사항 강제 리셋
+echo "🔄 Resetting local changes (build artifacts)..."
+git reset --hard HEAD
+git clean -fd web/.next 2>/dev/null || true
+
 git checkout $TARGET_BRANCH
 git pull origin $TARGET_BRANCH
 

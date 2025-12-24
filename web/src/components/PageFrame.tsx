@@ -94,32 +94,8 @@ export default function PageFrame({
 
                 {/* Center: Main content */}
                 <div className="flex flex-col w-full max-w-7xl mx-auto px-4 md:px-8">
-                    {/* Mobile: Navigation bar */}
-                    <div className="lg:hidden flex justify-between items-center py-4 border-b border-border/50 mb-6">
-                        <button
-                            onClick={() => prevDate && onDateChange(prevIssueId || prevDate)}
-                            disabled={!prevDate}
-                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30"
-                        >
-                            <ChevronLeft className="w-4 h-4" />
-                            {prevDate ? formatDateKo(prevDate) : '이전'}
-                        </button>
-                        <span className="text-xs font-bold text-teal-600 dark:text-teal-400">
-                            {currentDate ? formatEditionLabel(currentDate, editionName) : ''}
-                        </span>
-                        <button
-                            onClick={() => nextDate && onDateChange(nextIssueId || nextDate)}
-                            disabled={!nextDate}
-                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30"
-                        >
-                            {nextDate ? formatDateKo(nextDate) : '다음'}
-                            <ChevronRight className="w-4 h-4" />
-                        </button>
-                    </div>
-
-
                     {/* Article content area */}
-                    <main className="flex-1 py-6">
+                    <main className="flex-1 pt-4 pb-4">
                         {children}
                     </main>
                 </div>
@@ -146,6 +122,54 @@ export default function PageFrame({
                         <div className="w-full px-2 mt-8">
                             <TrendingKeywords articles={articles} maxItems={5} />
                         </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Mobile: Bottom Fixed Navigation */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border z-50 px-4 py-3 safe-area-inset-bottom">
+                <div className="flex items-center justify-between max-w-lg mx-auto">
+                    {/* 이전 버튼 */}
+                    <button
+                        onClick={() => prevDate && onDateChange(prevIssueId || prevDate)}
+                        disabled={!prevDate}
+                        className="flex flex-col items-center gap-0.5 text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30 transition-colors min-w-[60px]"
+                    >
+                        <ChevronLeft className="w-5 h-5" />
+                        <span className="text-[10px] font-medium">이전</span>
+                    </button>
+
+                    {/* 현재 호수 표시 */}
+                    <div className="flex flex-col items-center">
+                        <span className="text-xs font-bold text-teal-600 dark:text-teal-400">
+                            {editionName || ''}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground">
+                            {currentDate ? formatDateKo(currentDate) : ''}
+                        </span>
+                    </div>
+
+                    {/* 다음 버튼 */}
+                    <button
+                        onClick={() => nextDate && onDateChange(nextIssueId || nextDate)}
+                        disabled={!nextDate}
+                        className="flex flex-col items-center gap-0.5 text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-30 transition-colors min-w-[60px]"
+                    >
+                        <ChevronRight className="w-5 h-5" />
+                        <span className="text-[10px] font-medium">다음</span>
+                    </button>
+
+                    {/* 최신호 버튼 - 다음 버튼이 최신호가 아닐 때만 표시 */}
+                    {issues.length > 0 && onIssueSelect && nextIssueId && nextIssueId !== issues[0]?.id && (
+                        <button
+                            onClick={() => onIssueSelect(issues[0].id)}
+                            className="flex flex-col items-center gap-0.5 text-white min-w-[60px]"
+                        >
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
+                                <span className="text-sm">⚡</span>
+                            </div>
+                            <span className="text-[10px] font-medium text-teal-600 dark:text-teal-400">최신호</span>
+                        </button>
                     )}
                 </div>
             </div>

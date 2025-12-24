@@ -51,7 +51,7 @@ export default function ArticleDisplayMobile({ articles, loading, error, current
     }
 
     return (
-        <div className="w-full flex flex-col gap-6 pb-8">
+        <div className="w-full flex flex-col gap-6 pb-2">
             {/* 1. Top Section: Stacked Vertically */}
             <div className="flex flex-col gap-6 px-4">
                 {topArticles.map((article, index) => (
@@ -69,33 +69,42 @@ export default function ArticleDisplayMobile({ articles, loading, error, current
                 ))}
             </div>
 
-            {/* 2. Scroll Section: Horizontal Snap Scroll */}
+            {/* 2. Scroll Section: Horizontal Snap Scroll with Glassmorphism */}
             {scrollArticles.length > 0 && (
-                <div className="w-full flex flex-col gap-3">
+                <div className="w-full flex flex-col gap-3 relative">
                     <div className="px-4 text-sm font-bold text-muted-foreground tracking-widest uppercase">
                         More News
                     </div>
-                    {/* Snap Scroll Container */}
-                    <div
-                        className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 pb-4 -mx-4 md:mx-0 w-screen md:w-full scrollbar-hide cursor-grab active:cursor-grabbing"
-                        style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch' }}
-                    >
-                        {/* Spacer for left padding in scroll view if needed, but padding on container works well */}
-                        {scrollArticles.map((article, index) => (
-                            <div
-                                key={article.id || `mobile-scroll-${index}`}
-                                className="flex-none w-[85vw] snap-center first:pl-4 last:pr-4"
-                            >
-                                <ArticleCard
-                                    article={article}
-                                    className="h-full"
-                                    hideSummary={false}
-                                    cols={6}
-                                    rows={10}
-                                    currentDate={currentDate}
-                                />
-                            </div>
-                        ))}
+
+                    {/* Scroll Container with Glassmorphism edges */}
+                    <div className="relative">
+                        {/* Left blur overlay */}
+                        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
+
+                        {/* Right blur overlay */}
+                        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none" />
+
+                        {/* Snap Scroll Container */}
+                        <div
+                            className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-8 pb-2 scrollbar-hide"
+                            style={{ touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
+                        >
+                            {scrollArticles.map((article, index) => (
+                                <div
+                                    key={article.id || `mobile-scroll-${index}`}
+                                    className="flex-none w-[80vw] snap-center"
+                                >
+                                    <ArticleCard
+                                        article={article}
+                                        className="h-full"
+                                        hideSummary={false}
+                                        cols={6}
+                                        rows={10}
+                                        currentDate={currentDate}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}

@@ -1,8 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import CategoryNav from './CategoryNav';
 
@@ -32,20 +30,9 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
 
     return (
         <header
-            className="relative md:sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-4 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
+            className="relative md:sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-4 pb-2 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
         >
-            {/* 좌측 상단 로고 - 모바일에서는 숨김 (타이틀과 겹침 방지) */}
-            <Link href="/" className="hidden md:block absolute left-4 top-2">
-                <Image
-                    src="/logo.png"
-                    alt="ZED"
-                    width={160}
-                    height={160}
-                    className="object-contain"
-                    style={{ width: 'auto', height: 'auto', maxHeight: '100px' }}
-                    priority
-                />
-            </Link>
+            {/* 로고는 Footer로 이동됨 */}
 
             {/* 테마 토글 버튼 - 우측 상단 고정 */}
             <div className="absolute right-4 top-4">
@@ -54,7 +41,7 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
 
             <div className="flex flex-col items-center max-w-7xl mx-auto">
                 <h1 className="font-black tracking-tighter text-foreground font-sans leading-none flex items-center gap-1 md:gap-2 justify-center text-4xl md:text-6xl">
-                    ZeroEcho
+                    <span className="text-teal-500">Z</span>eroEcho
                     <span className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-teal-500 inline-flex self-end mb-1 md:mb-2"></span>
                     <span className="font-light italic text-muted-foreground tracking-normal font-serif text-2xl md:text-4xl">Daily</span>
                 </h1>
@@ -80,7 +67,7 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                 </div>
 
                 {/* Category Navigation inside Header Frame */}
-                <div className="mt-3 pt-2 border-t border-border/40">
+                <div className="mt-2 pt-0 border-t border-border/40">
                     <CategoryNav />
                 </div>
             </div>

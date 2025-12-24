@@ -45,14 +45,19 @@ deactivate
 cd ..
 
 # 3. Web Deployment
-echo "🏗️ Building Web App..."
 cd web
 
 echo "📦 Installing dependencies..."
 npm install
 
-echo "⚡ Building Next.js..."
-npm run build
+# 빌드 여부 선택 (기본값: N - 로컬에서 빌드 후 push한 경우 스킵)
+read -p "Do you want to build on VM? (y/N): " BUILD_CONFIRM
+if [[ "$BUILD_CONFIRM" =~ ^[Yy]$ ]]; then
+    echo "⚡ Building Next.js..."
+    npm run build
+else
+    echo "⏭️ Skipping build (using pre-built from local)..."
+fi
 
 # Return to root
 cd ..

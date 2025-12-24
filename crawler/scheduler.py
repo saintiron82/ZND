@@ -69,6 +69,111 @@ def run_scheduled_crawl(schedule_name: str = "Scheduled"):
         print(f"❌ Scheduled crawl error: {e}")
 
 
+def run_scheduled_sync():
+    """스케줄에 의해 호출되는 캐시 동기화 작업"""
+    print(f"\n{'='*50}")
+    print(f"☁️ [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Scheduled sync triggered")
+    print(f"{'='*50}\n")
+    
+    try:
+        # desk 모듈의 db_client 사용
+        from src.db_client import DBClient
+        import os as sync_os
+        
+        db = DBClient()
+        if not db.db:
+            print("❌ [Sync] Firestore 연결 실패")
+            return
+        
+        CACHE_DIR = sync_os.path.join(ZND_ROOT, 'desk', 'cache')
+        synced_count = 0
+        skipped_count = 0
+        
+        # 모든 날짜 폴더 동기화
+        if sync_os.path.exists(CACHE_DIR):
+            for date_folder in sync_os.listdir(CACHE_DIR):
+                if not sync_os.path.isdir(sync_os.path.join(CACHE_DIR, date_folder)):
+                    continue
+                if len(date_folder) != 10:  # YYYY-MM-DD 형식만
+                    continue
+                
+                cache_date_dir = sync_os.path.join(CACHE_DIR, date_folder)
+                cache_list = []
+                
+                import json as sync_json
+                from datetime import timezone
+                
+                for filename in sync_os.listdir(cache_date_dir):
+                    if not filename.endswith('.json'):
+                        continue
+                    
+                    filepath = sync_os.path.join(cache_date_dir, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8-sig') as f:
+                            cache_data = sync_json.load(f)
+                        
+                        # synced_at이 있으면 스킵
+                        synced_at = cache_data.get('synced_at')
+                        updated_at = cache_data.get('updated_at') or cache_data.get('staged_at')
+                        
+                        if synced_at:
+                            if updated_at and updated_at > synced_at:
+                                pass  # 변경됨 -> 업로드
+                            else:
+                                skipped_count += 1
+                                continue
+                        
+                        article_id = cache_data.get('article_id')
+                        if not article_id:
+                            article_id = filename.replace('.json', '')
+                            cache_data['article_id'] = article_id
+                        
+                        cache_list.append(cache_data)
+                    except:
+                        pass
+                
+                # 배치 업로드
+                if cache_list:
+                    now = datetime.now(timezone.utc).isoformat()
+                    for cache_data in cache_list:
+                        cache_data['synced_at'] = now
+                    
+                    result = db.upload_cache_batch(date_folder, cache_list)
+                    synced_count += result.get('success', 0)
+                    
+                    # 로컬 파일에 synced_at 마킹
+                    for cache_data in cache_list:
+                        article_id = cache_data.get('article_id')
+                        filepath = sync_os.path.join(cache_date_dir, f"{article_id}.json")
+                        if sync_os.path.exists(filepath):
+                            try:
+                                with open(filepath, 'r', encoding='utf-8-sig') as f:
+                                    file_data = sync_json.load(f)
+                                file_data['synced_at'] = now
+                                with open(filepath, 'w', encoding='utf-8') as f:
+                                    sync_json.dump(file_data, f, ensure_ascii=False, indent=2)
+                            except:
+                                pass
+        
+        print(f"☁️ [Sync] 동기화 완료: {synced_count}개, 스킵: {skipped_count}개")
+        log_crawl_event("Sync", f"Synced {synced_count} items", 0, success=True)
+        
+        # Discord 알림 전송
+        if synced_count > 0:
+            try:
+                from core.discord_notifier import send_simple_message
+                send_simple_message(
+                    f"캐시 {synced_count}개 동기화 완료 (스킵: {skipped_count}개)",
+                    "☁️ 자동 동기화"
+                )
+            except Exception as e:
+                print(f"⚠️ [Discord] 알림 실패: {e}")
+        
+    except Exception as e:
+        log_crawl_event("Sync", f"Sync failed: {str(e)}", 0, success=False)
+        print(f"❌ Scheduled sync error: {e}")
+
+
 def create_scheduler() -> BlockingScheduler:
     """스케줄러 생성 및 작업 등록"""
     scheduler = BlockingScheduler(timezone='Asia/Seoul')
@@ -111,6 +216,15 @@ def create_scheduler() -> BlockingScheduler:
                 print(f"✅ Registered: {sched.get('name')} ({cron})")
             except Exception as e:
                 print(f"⚠️ Failed to register schedule '{sched.get('name')}': {e}")
+    
+    # 자동 동기화 스케줄 추가 (매일 23시)
+    scheduler.add_job(
+        run_scheduled_sync,
+        CronTrigger(hour=23, minute=0),
+        id='auto_sync',
+        name='자동 동기화 (23시)'
+    )
+    print("✅ Registered: 자동 동기화 (23:00)")
     
     return scheduler
 

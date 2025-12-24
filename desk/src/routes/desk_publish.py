@@ -10,6 +10,16 @@ from flask import Blueprint, request, jsonify
 publish_bp = Blueprint('publish', __name__)
 
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+# Discord 알림 모듈
+try:
+    import sys
+    sys.path.insert(0, os.path.join(BASE_DIR, '..', 'crawler'))
+    from core.discord_notifier import send_simple_message
+    DISCORD_ENABLED = True
+except ImportError:
+    DISCORD_ENABLED = False
 
 
 def extract_tags_from_data(data: dict) -> list:
@@ -396,13 +406,14 @@ def cache_sync():
             print(f"⚠️ [Sync] History sync error: {e}")
             failure_details.append(f"History sync: {str(e)}")
         
+        
         return jsonify({
             'success': True,
             'synced': synced_count,
             'skipped': skipped_count,
             'failed': failed_count,
             'history_count': history_count,
-            'failure_details': failure_details, # 실패 사유 반환
+            'failure_details': failure_details,
             'message': f'☁️ 동기화 완료: 캐시 {synced_count}개, 히스토리 {history_count}개 URL'
         })
         

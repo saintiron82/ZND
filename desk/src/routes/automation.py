@@ -25,6 +25,15 @@ automation_bp = Blueprint('automation', __name__)
 db = DBClient()
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
 
+# Discord 알림 모듈
+try:
+    import sys
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', 'crawler'))
+    from core.discord_notifier import send_crawl_notification
+    DISCORD_ENABLED = True
+except ImportError:
+    DISCORD_ENABLED = False
+
 
 def load_from_cache(url):
     """캐시에서 URL 데이터 로드"""
@@ -460,6 +469,26 @@ def automation_all():
             results['stage'] = resp.get_json()
         
         print(f"⚡ [ALL] 파이프라인 완료")
+        
+        # Discord 알림 전송
+        if DISCORD_ENABLED:
+            collected = results.get('collect', {}).get('total', 0)
+            extracted = results.get('extract', {}).get('extracted', 0)
+            analyzed = results.get('analyze', {}).get('analyzed', 0)
+            staged = results.get('stage', {}).get('staged', 0)
+            failed = results.get('extract', {}).get('failed', 0) + results.get('analyze', {}).get('failed', 0)
+            
+            notification_result = {
+                'success': True,
+                'collected': collected,
+                'extracted': extracted,
+                'analyzed': analyzed,
+                'cached': staged,
+                'failed': failed,
+                'message': f'수집 {collected} → 추출 {extracted} → 분석 {analyzed} → 조판 {staged}'
+            }
+            send_crawl_notification(notification_result, "자동화 파이프라인")
+        
         return jsonify({
             'success': True,
             'results': results,

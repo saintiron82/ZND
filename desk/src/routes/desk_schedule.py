@@ -15,6 +15,14 @@ ZND_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__fil
 SCHEDULE_CONFIG_PATH = os.path.join(ZND_ROOT, 'crawler', 'config', 'schedules.json')
 CRAWLER_LOG_PATH = os.path.join(ZND_ROOT, 'crawler', 'logs', 'crawler_history.jsonl')
 
+# Discord 알림 모듈
+try:
+    sys.path.insert(0, os.path.join(ZND_ROOT, 'crawler'))
+    from core.discord_notifier import send_crawl_notification
+    DISCORD_ENABLED = True
+except ImportError:
+    DISCORD_ENABLED = False
+
 
 def load_schedule_config():
     """스케줄 설정 파일 로드 (crawler/config/schedules.json)"""

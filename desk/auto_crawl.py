@@ -25,6 +25,16 @@ from src.core_logic import (
     update_manifest,
 )
 
+# Discord 알림 모듈
+import sys
+sys.path.insert(0, os.path.join(BASE_DIR, '..', 'crawler'))
+try:
+    from core.discord_notifier import send_crawl_notification
+    DISCORD_ENABLED = True
+except ImportError:
+    DISCORD_ENABLED = False
+    print("⚠️ Discord notifier not available")
+
 
 def serialize_datetime(obj):
     """datetime 객체를 ISO 문자열로 변환"""
@@ -159,6 +169,21 @@ async def run_auto_crawl():
     log(f"   - 스킵: {skipped_count}개")
     log(f"   - 실패: {failed_count}개")
     log("=" * 50)
+    
+    # 4. Discord 알림 전송
+    if DISCORD_ENABLED:
+        log("📨 [4단계] Discord 알림 전송 중...")
+        result = {
+            'success': failed_count == 0 or extracted_count > 0,
+            'collected': collected_count,
+            'extracted': extracted_count,
+            'analyzed': 0,  # 자동 크롤링은 MLL 분석 스킵
+            'cached': extracted_count,
+            'failed': failed_count,
+            'message': f'스킵: {skipped_count}개 (이미 캐시됨)'
+        }
+        send_crawl_notification(result, "자동 크롤링")
+        log("📨 Discord 알림 전송 완료")
 
 
 def main():

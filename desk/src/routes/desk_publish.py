@@ -260,6 +260,7 @@ def cache_sync():
         synced_count = 0
         skipped_count = 0
         failed_count = 0
+        failure_details = []  # 실패 사유 수집
         
         # 동기화 대상 폴더 결정
         if date_str:
@@ -279,13 +280,22 @@ def cache_sync():
                 
                 filepath = os.path.join(cache_date_dir, filename)
                 try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
+                    with open(filepath, 'r', encoding='utf-8-sig') as f:
                         cache_data = json.load(f)
                     
-                    # synced_at 필드가 있으면 이미 동기화됨 → 스킵 (Firestore 조회 없음!)
-                    if cache_data.get('synced_at'):
-                        skipped_count += 1
-                        continue
+                    # [FIX] synced_at과 updated_at 비교로 변경된 파일도 재업로드
+                    synced_at = cache_data.get('synced_at')
+                    updated_at = cache_data.get('updated_at') or cache_data.get('staged_at') or cache_data.get('cached_at')
+                    
+                    if synced_at:
+                        # updated_at이 synced_at보다 최신이면 → 재업로드 필요
+                        if updated_at and updated_at > synced_at:
+                            # 변경됨 → 업로드 대상
+                            print(f"🔄 [Sync] Modified: {filename} (updated: {updated_at[:19]})")
+                        else:
+                            # 변경 없음 → 스킵
+                            skipped_count += 1
+                            continue
                     
                     # article_id 확인
                     article_id = cache_data.get('article_id')
@@ -298,15 +308,26 @@ def cache_sync():
                 except Exception as e:
                     print(f"⚠️ [Sync] Read error {filename}: {e}")
                     failed_count += 1
+                    failure_details.append(f"{filename}: {str(e)}")
             
-            # 배치 업로드
+            # [FIX] 업로드 전에 누락된 타임스탬프 필드 자동 채우기
+            now = datetime.now(timezone.utc).isoformat()
+            for cache_data in cache_list:
+                if not cache_data.get('staged_at'):
+                    cache_data['staged_at'] = cache_data.get('cached_at') or now
+                if not cache_data.get('updated_at'):
+                    cache_data['updated_at'] = cache_data.get('staged_at') or now
+                cache_data['synced_at'] = now  # synced_at은 항상 현재 시간
+            
+            # 배치 업로드 (synced_at 포함됨)
             if cache_list:
                 result = db.upload_cache_batch(date_folder, cache_list)
                 synced_count += result.get('success', 0)
                 failed_count += result.get('failed', 0)
+                if result.get('errors'):
+                     failure_details.extend(result.get('errors'))
                 
-                # 업로드 성공한 파일에 synced_at 마킹
-                synced_at = datetime.now(timezone.utc).isoformat()
+                # 업로드 성공 시 로컬 파일에도 synced_at 마킹
                 for cache_data in cache_list:
                     article_id = cache_data.get('article_id')
                     if not article_id:
@@ -318,7 +339,7 @@ def cache_sync():
                         for fn in os.listdir(cache_date_dir):
                             if fn.endswith('.json'):
                                 try:
-                                    with open(os.path.join(cache_date_dir, fn), 'r', encoding='utf-8') as f:
+                                    with open(os.path.join(cache_date_dir, fn), 'r', encoding='utf-8-sig') as f:
                                         d = json.load(f)
                                         if d.get('article_id') == article_id:
                                             filepath = os.path.join(cache_date_dir, fn)
@@ -328,9 +349,9 @@ def cache_sync():
                     
                     if os.path.exists(filepath):
                         try:
-                            with open(filepath, 'r', encoding='utf-8') as f:
+                            with open(filepath, 'r', encoding='utf-8-sig') as f:
                                 file_data = json.load(f)
-                            file_data['synced_at'] = synced_at
+                            file_data['synced_at'] = now  # [FIX] synced_at -> now
                             with open(filepath, 'w', encoding='utf-8') as f:
                                 json.dump(file_data, f, ensure_ascii=False, indent=2)
                         except:
@@ -351,6 +372,7 @@ def cache_sync():
                     history_count = result.get('count', 0)
         except Exception as e:
             print(f"⚠️ [Sync] History sync error: {e}")
+            failure_details.append(f"History sync: {str(e)}")
         
         return jsonify({
             'success': True,
@@ -358,6 +380,7 @@ def cache_sync():
             'skipped': skipped_count,
             'failed': failed_count,
             'history_count': history_count,
+            'failure_details': failure_details, # 실패 사유 반환
             'message': f'☁️ 동기화 완료: 캐시 {synced_count}개, 히스토리 {history_count}개 URL'
         })
         
@@ -386,6 +409,7 @@ def cache_pull():
         pull_all = data.get('all', False)
         
         downloaded_count = 0
+        failure_details = []  # 실패 사유 수집
         
         # 다운로드 대상 날짜 결정
         if pull_all:
@@ -416,12 +440,21 @@ def cache_pull():
                 # 기존 파일이 있으면 병합 (원격 데이터 우선)
                 if os.path.exists(filepath):
                     try:
-                        with open(filepath, 'r', encoding='utf-8') as f:
+                        with open(filepath, 'r', encoding='utf-8-sig') as f:
                             existing = json.load(f)
                         existing.update(cache_data)
                         cache_data = existing
                     except:
                         pass
+                
+                # [FIX] 누락된 타임스탬프 필드 자동 채우기
+                now = datetime.now(timezone.utc).isoformat()
+                if not cache_data.get('staged_at'):
+                    cache_data['staged_at'] = cache_data.get('cached_at') or now
+                if not cache_data.get('updated_at'):
+                    cache_data['updated_at'] = cache_data.get('staged_at') or now
+                if not cache_data.get('synced_at'):
+                    cache_data['synced_at'] = now  # Pull 받은 것도 동기화된 상태
                 
                 try:
                     with open(filepath, 'w', encoding='utf-8') as f:
@@ -429,6 +462,7 @@ def cache_pull():
                     downloaded_count += 1
                 except Exception as e:
                     print(f"⚠️ [Pull] Save error: {article_id} - {e}")
+                    failure_details.append(f"{article_id}: {str(e)}")
         
         # 크롤링 히스토리 다운로드 및 병합
         history_count = 0
@@ -456,13 +490,15 @@ def cache_pull():
                 
                 history_count = len(remote_history)
         except Exception as e:
-            print(f"⚠️ [Pull] History error: {e}")
+            print(f"⚠️ [Pull] History sync error: {e}")
+            failure_details.append(f"History pull: {str(e)}")
         
         return jsonify({
             'success': True,
             'downloaded': downloaded_count,
             'history_count': history_count,
             'dates': date_folders,
+            'failure_details': failure_details, # 실패 사유 반환
             'message': f'⬇️ 다운로드 완료: 캐시 {downloaded_count}개, 히스토리 {history_count}개'
         })
         

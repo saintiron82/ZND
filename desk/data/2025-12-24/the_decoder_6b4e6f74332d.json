@@ -1,0 +1,17 @@
+{
+  "id": "6b4e6f74332d",
+  "article_id": "6b4e6f74332d",
+  "title_ko": "엔비디아, 게임 및 로봇을 위한 범용 AI 에이전트 'NitroGen' 공개",
+  "summary": "엔비디아가 4만 시간의 게임 영상을 학습해 다양한 환경에서 작동하는 범용 시각-행동 모델 'NitroGen'을 오픈소스로 공개했다.  이 모델은 낯선 게임 환경에서도 기존 모델 대비 52% 높은 성공률을 보이며, 로보틱스 파운데이션 모델의 범용성을 입증했다.",
+  "url": "https://the-decoder.com/nvidia-wants-to-create-universal-ai-agents-for-all-worlds-with-nitrogen/",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 3.3,
+  "impact_score": 7.0,
+  "published_at": "2025-12-21T17:17:59+00:00",
+  "source_id": "the_decoder",
+  "original_title": "Nvidia wants to create universal AI agents for all worlds with NitroGen",
+  "publish_id": "251224_4",
+  "edition_code": "251224_4",
+  "edition_name": "4호"
+}

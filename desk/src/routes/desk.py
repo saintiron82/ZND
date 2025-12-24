@@ -76,8 +76,11 @@ def desk_list():
         target_dirs = []
         if is_all_dates:
             if os.path.exists(CACHE_DIR):
-                # Scan all date folders
-                target_dirs = [os.path.join(CACHE_DIR, d) for d in os.listdir(CACHE_DIR) if os.path.isdir(os.path.join(CACHE_DIR, d))]
+                # Scan only date folders (YYYY-MM-DD format), skip batches etc.
+                import re
+                date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+                target_dirs = [os.path.join(CACHE_DIR, d) for d in os.listdir(CACHE_DIR) 
+                              if os.path.isdir(os.path.join(CACHE_DIR, d)) and date_pattern.match(d)]
         else:
             cache_date_dir = os.path.join(CACHE_DIR, date_str)
             if os.path.exists(cache_date_dir):

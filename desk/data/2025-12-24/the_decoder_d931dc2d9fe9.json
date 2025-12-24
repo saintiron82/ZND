@@ -1,0 +1,17 @@
+{
+  "id": "d931dc2d9fe9",
+  "article_id": "d931dc2d9fe9",
+  "title_ko": "알리바바 Qwen, 3초 오디오로 목소리 복제하는 신규 모델 공개",
+  "summary": "알리바바 클라우드의 Qwen 팀이 텍스트 명령 또는 3초 분량의 샘플만으로 고품질 음성을 생성하는 AI 모델 2종을 출시했다.  10개 언어를 지원하며 경쟁사 대비 낮은 오류율을 보인다. 이는 알리바바가 멀티모달 AI 분야에서도 경쟁력을 강화하고 있음을 보여준다.",
+  "url": "https://the-decoder.com/alibabas-new-qwen-models-can-clone-voices-from-three-seconds-of-audio/",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 5.8,
+  "impact_score": 3.5,
+  "published_at": "2025-12-23T15:00:39+00:00",
+  "source_id": "the_decoder",
+  "original_title": "Alibaba's new Qwen models can clone voices from three seconds of audio",
+  "publish_id": "251224_4",
+  "edition_code": "251224_4",
+  "edition_name": "4호"
+}

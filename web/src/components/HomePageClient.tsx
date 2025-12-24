@@ -170,9 +170,16 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
             editionName={currentIssue?.edition_name || null}
             prevDate={prevIssue?.date || null}
             prevEditionName={prevIssue?.edition_name || null}
+            prevIssueId={prevIssueId}
             nextDate={nextIssue?.date || null}
             nextEditionName={nextIssue?.edition_name || null}
+            nextIssueId={nextIssueId}
             onDateChange={(target) => {
+                // target이 issueId인 경우 직접 사용, 아니면 date로 매칭
+                if (groupedByIssue[target]) {
+                    handleIssueChange(target);
+                    return;
+                }
                 // date로 매칭된 issue 찾기
                 const matchingId = sortedIssueIds.find(id => {
                     const issue = groupedByIssue[id]?.issue;

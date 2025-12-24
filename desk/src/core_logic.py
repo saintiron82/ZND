@@ -242,6 +242,9 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
     if 'cached_at' not in content:
         content['cached_at'] = datetime.now(timezone.utc).isoformat()
     
+    # [NEW] Always update 'updated_at' for sync comparison
+    content['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
     # [FIX] Convert any datetime objects to ISO strings for JSON serialization
     def _serialize_datetimes(obj):
         if isinstance(obj, dict):

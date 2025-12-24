@@ -69,7 +69,7 @@ export default function PageFrame({
                     {/* PREV 버튼 (없으면 플레이스홀더) */}
                     {prevDate ? (
                         <button
-                            onClick={() => onDateChange(prevDate)}
+                            onClick={() => onDateChange(prevIssueId || prevDate)}
                             className="flex flex-col items-center gap-2 p-4 text-foreground transition-all rounded-lg group opacity-40 hover:opacity-100 hover:bg-card hover:shadow-lg"
                         >
                             <ChevronLeft className="w-10 h-10" />

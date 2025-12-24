@@ -1,0 +1,17 @@
+{
+  "id": "f9cf0b0375dc",
+  "article_id": "f9cf0b0375dc",
+  "title_ko": "앤트로픽, AI 행동 평가 프레임워크 '블룸' 오픈소스 공개",
+  "summary": "앤트로픽이 AI 모델의 의도치 않은 행동을 탐지하고 정량화하는 자동 평가 도구 '블룸'을 출시했다. 연구자가 설정한 행동을 자동으로 시나리오화하여 평가하며, 16개 모델 벤치마크 결과 인간 판단과 높은 일치도를 보였다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=205039",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 2.4,
+  "impact_score": 6.5,
+  "published_at": "2025-12-23T18:00:00+09:00",
+  "source_id": "aitimes",
+  "original_title": "앤트로픽, 에이전트 문제 행동 찾아내는 평가 프레임워크 ‘블룸’ 출시 - AI타임스",
+  "publish_id": "251224_4",
+  "edition_code": "251224_4",
+  "edition_name": "4호"
+}

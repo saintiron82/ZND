@@ -1,0 +1,107 @@
+{
+  "date": "2025-12-24",
+  "updated_at": "2025-12-24T09:55:28.721070",
+  "count": 20,
+  "articles": [
+    {
+      "article_id": "a25ec0ddee9c",
+      "filename": "aitimes_a25ec0ddee9c.json",
+      "impact_score": 8.0
+    },
+    {
+      "article_id": "6d6c843a2b1e",
+      "filename": "aitimes_6d6c843a2b1e.json",
+      "impact_score": 7.5
+    },
+    {
+      "article_id": "6b4e6f74332d",
+      "filename": "the_decoder_6b4e6f74332d.json",
+      "impact_score": 7.0
+    },
+    {
+      "article_id": "a397bc63204c",
+      "filename": "venturebeat_a397bc63204c.json",
+      "impact_score": 7.0
+    },
+    {
+      "article_id": "f9cf0b0375dc",
+      "filename": "aitimes_f9cf0b0375dc.json",
+      "impact_score": 6.5
+    },
+    {
+      "article_id": "14de563692ae",
+      "filename": "the_decoder_14de563692ae.json",
+      "impact_score": 6.5
+    },
+    {
+      "article_id": "5f7fccb55307",
+      "filename": "aitimes_5f7fccb55307.json",
+      "impact_score": 6.0
+    },
+    {
+      "article_id": "a8431555d2bc",
+      "filename": "aitimes_a8431555d2bc.json",
+      "impact_score": 5.5
+    },
+    {
+      "article_id": "8eb0574e75e8",
+      "filename": "aitimes_8eb0574e75e8.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "a9129f24fc0b",
+      "filename": "aitimes_a9129f24fc0b.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "5d80115ab0cb",
+      "filename": "the_decoder_5d80115ab0cb.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "837d2a2b083c",
+      "filename": "the_decoder_837d2a2b083c.json",
+      "impact_score": 5.0
+    },
+    {
+      "article_id": "14cd8fe2a327",
+      "filename": "aitimes_14cd8fe2a327.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "41553ecfb582",
+      "filename": "aitimes_41553ecfb582.json",
+      "impact_score": 4.0
+    },
+    {
+      "article_id": "d931dc2d9fe9",
+      "filename": "the_decoder_d931dc2d9fe9.json",
+      "impact_score": 3.5
+    },
+    {
+      "article_id": "c561b348765e",
+      "filename": "aitimes_c561b348765e.json",
+      "impact_score": 1.5
+    },
+    {
+      "article_id": "e59b6d9cc5a7",
+      "filename": "the_decoder_e59b6d9cc5a7.json",
+      "impact_score": 1.5
+    },
+    {
+      "article_id": "9c29e553aed7",
+      "filename": "aitimes_9c29e553aed7.json",
+      "impact_score": 1.0
+    },
+    {
+      "article_id": "bd7f60b0d055",
+      "filename": "aitimes_bd7f60b0d055.json",
+      "impact_score": 1.0
+    },
+    {
+      "article_id": "d58527db14ee",
+      "filename": "aitimes_d58527db14ee.json",
+      "impact_score": 1.0
+    }
+  ]
+}

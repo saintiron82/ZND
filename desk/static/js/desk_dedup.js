@@ -59,6 +59,8 @@ async function recalculateGroup(date) {
         return;
     }
 
+    // [FIX] filepath 목록을 보내서 date='all'에서도 동작하도록 수정
+    const filepaths = deskData.map(a => a.filepath).filter(p => p);
     const filenames = deskData.map(a => a.filename);
 
     const schemaSelect = document.getElementById(`schemaSelect-${date}`);
@@ -83,8 +85,9 @@ async function recalculateGroup(date) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                date: date,  // [FIX] 선택된 날짜 사용 (하드코딩 제거)
+                date: date,
                 filenames: filenames,
+                filepaths: filepaths,  // [NEW] filepath 목록 추가
                 schema_version: selectedSchema
             })
         });

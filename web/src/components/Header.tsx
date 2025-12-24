@@ -32,10 +32,10 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
 
     return (
         <header
-            className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-4 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
+            className="relative md:sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-4 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
         >
-            {/* 좌측 상단 로고 */}
-            <Link href="/" className="absolute left-4 top-2">
+            {/* 좌측 상단 로고 - 모바일에서는 숨김 (타이틀과 겹침 방지) */}
+            <Link href="/" className="hidden md:block absolute left-4 top-2">
                 <Image
                     src="/logo.png"
                     alt="ZED"

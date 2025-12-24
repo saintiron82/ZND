@@ -4,6 +4,102 @@
 
 const LATEST_SCHEMA_VERSION = '2.0.0';
 
+// [NEW] 로딩 오버레이 함수
+function showLoadingOverlay(message = '처리 중...') {
+    // 기존 오버레이 제거
+    hideLoadingOverlay();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'loadingOverlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    `;
+    overlay.innerHTML = `
+        <div style="background: white; padding: 30px 50px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div style="font-size: 2em; margin-bottom: 15px;">⏳</div>
+            <div style="font-size: 1.2em; font-weight: bold; color: #333;">${message}</div>
+            <div style="margin-top: 10px; color: #666; font-size: 0.9em;">잠시만 기다려주세요...</div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+function hideLoadingOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+// [NEW] 실패 사유 복사 가능한 결과 모달
+function showResultModal(title, message, details = []) {
+    const modal = document.createElement('div');
+    modal.id = 'resultModal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    `;
+
+    const detailsText = details.join('\n');
+    const hasDetails = details.length > 0;
+
+    modal.innerHTML = `
+        <div style="background: white; padding: 30px 40px; border-radius: 12px; width: 90%; max-width: 800px; max-height: 85vh; overflow: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div style="font-size: 1.4em; font-weight: bold; margin-bottom: 18px; color: #333;">${title}</div>
+            <div style="white-space: pre-wrap; margin-bottom: 15px; color: #555; line-height: 1.6; font-size: 1.05em;">${message}</div>
+            ${hasDetails ? `
+                <div style="margin-top: 18px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                    <div style="font-weight: bold; margin-bottom: 10px; color: #666; font-size: 1em;">📋 상세 내역 (복사 가능)</div>
+                    <textarea id="detailsTextarea" readonly style="width: 100%; height: 250px; border: 1px solid #ddd; border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.9em; resize: vertical; box-sizing: border-box;">${detailsText}</textarea>
+                    <button onclick="copyDetailsToClipboard()" style="margin-top: 10px; padding: 8px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.95em;">📋 복사</button>
+                </div>
+            ` : ''}
+            <div style="text-align: right; margin-top: 20px;">
+                <button onclick="closeResultModal()" style="padding: 10px 25px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1em;">닫기</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // ESC 키로 닫기
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeResultModal();
+    });
+    modal.focus();
+}
+
+function closeResultModal() {
+    const modal = document.getElementById('resultModal');
+    if (modal) modal.remove();
+}
+
+function copyDetailsToClipboard() {
+    const textarea = document.getElementById('detailsTextarea');
+    if (textarea) {
+        textarea.select();
+        document.execCommand('copy');
+        alert('📋 복사되었습니다!');
+    }
+}
+
 async function refreshIssueList() {
     try {
         const resp = await fetch('/api/publications/list');
@@ -392,6 +488,9 @@ async function syncCachePush() {
         return;
     }
 
+    // [NEW] 로딩 오버레이 표시
+    showLoadingOverlay('☁️ 캐시 업로드 중...');
+
     try {
         const response = await fetch('/api/cache/sync', {
             method: 'POST',
@@ -400,9 +499,10 @@ async function syncCachePush() {
         });
         const result = await response.json();
 
+        hideLoadingOverlay();
+
         if (result.success) {
-            let msg = `✅ 업로드 완료!\n\n`;
-            msg += `📦 캐시: ${result.synced}개 업로드\n`;
+            let msg = `📦 캐시: ${result.synced}개 업로드\n`;
             msg += `⏭️ 스킵: ${result.skipped}개\n`;
             if (result.history_count > 0) {
                 msg += `📜 히스토리: ${result.history_count}개 URL\n`;
@@ -410,11 +510,18 @@ async function syncCachePush() {
             if (result.failed > 0) {
                 msg += `❌ 실패: ${result.failed}개`;
             }
-            alert(msg);
+
+            // [FIX] 실패 사유가 있으면 모달로 표시 (복사 가능)
+            if (result.failure_details && result.failure_details.length > 0) {
+                showResultModal('✅ 업로드 완료', msg, result.failure_details);
+            } else {
+                alert(`✅ 업로드 완료!\n\n${msg}`);
+            }
         } else {
             alert(`❌ 업로드 실패: ${result.error}`);
         }
     } catch (error) {
+        hideLoadingOverlay();
         alert(`❌ 오류: ${error.message}`);
     }
 }
@@ -429,6 +536,9 @@ async function syncCachePull() {
         return;
     }
 
+    // [NEW] 로딩 오버레이 표시
+    showLoadingOverlay('⬇️ 캐시 다운로드 중...');
+
     try {
         const response = await fetch('/api/cache/pull', {
             method: 'POST',
@@ -437,18 +547,26 @@ async function syncCachePull() {
         });
         const result = await response.json();
 
+        hideLoadingOverlay();
+
         if (result.success) {
-            let msg = `✅ 다운로드 완료!\n\n`;
-            msg += `📦 캐시: ${result.downloaded}개 저장\n`;
+            let msg = `📦 캐시: ${result.downloaded}개 저장\n`;
             if (result.history_count > 0) {
                 msg += `📜 히스토리: ${result.history_count}개 병합\n`;
             }
-            alert(msg);
+
+            // [FIX] 실패 사유가 있으면 모달로 표시 (복사 가능)
+            if (result.failure_details && result.failure_details.length > 0) {
+                showResultModal('✅ 다운로드 완료', msg, result.failure_details);
+            } else {
+                alert(`✅ 다운로드 완료!\n\n${msg}`);
+            }
             await loadDesk(); // 새로고침
         } else {
             alert(`❌ 다운로드 실패: ${result.error}`);
         }
     } catch (error) {
+        hideLoadingOverlay();
         alert(`❌ 오류: ${error.message}`);
     }
 }

@@ -481,27 +481,30 @@ def automation_stage_recalc():
         data = request.json or {}
         date_str = data.get('date') or request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
         target_filenames = data.get('filenames', [])
+        target_filepaths = data.get('filepaths', [])  # [NEW] filepath 목록 직접 받기
         schema_version_override = data.get('schema_version')
 
-        cache_date_dir = os.path.join(CACHE_DIR, date_str)
-        
-        if not os.path.exists(cache_date_dir):
-            return jsonify({'success': False, 'error': 'Cache folder not found'}), 404
-            
         count = 0
         errors = 0
         
-        # 파일 목록 결정
-        if target_filenames:
-            files_to_process = target_filenames
+        # [NEW] filepaths가 있으면 직접 사용 (date='all'에서도 동작)
+        if target_filepaths:
+            files_to_process = [(fp, os.path.basename(fp)) for fp in target_filepaths if os.path.exists(fp)]
         else:
-            files_to_process = [f for f in os.listdir(cache_date_dir) if f.endswith('.json')]
+            # 기존 로직: date 폴더에서 파일 찾기
+            cache_date_dir = os.path.join(CACHE_DIR, date_str)
             
-        for filename in files_to_process:
-            filepath = os.path.join(cache_date_dir, filename)
+            if not os.path.exists(cache_date_dir):
+                return jsonify({'success': False, 'error': f'Cache folder not found: {date_str}'}), 404
             
+            if target_filenames:
+                files_to_process = [(os.path.join(cache_date_dir, f), f) for f in target_filenames]
+            else:
+                files_to_process = [(os.path.join(cache_date_dir, f), f) for f in os.listdir(cache_date_dir) if f.endswith('.json')]
+            
+        for filepath, filename in files_to_process:
             if not os.path.exists(filepath):
-                 continue
+                continue
 
             try:
                 with open(filepath, 'r', encoding='utf-8') as f:
@@ -518,6 +521,9 @@ def automation_stage_recalc():
                         article_data['impact_evidence'] = {}
                     if scores.get('schema_version'):
                         article_data['impact_evidence']['schema_version'] = scores['schema_version']
+                    
+                    # [NEW] Update timestamp for sync
+                    article_data['updated_at'] = datetime.now(timezone.utc).isoformat()
                     
                     with open(filepath, 'w', encoding='utf-8') as f:
                         json.dump(article_data, f, ensure_ascii=False, indent=2)

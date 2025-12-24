@@ -1,0 +1,17 @@
+{
+  "id": "a25ec0ddee9c",
+  "article_id": "a25ec0ddee9c",
+  "title_ko": "오픈AI, AI 브라우저 '프롬프트 인젝션' 구조적 취약점 인정",
+  "summary": "오픈AI가 AI 브라우저 '챗GPT 아틀라스'의 프롬프트 인젝션 공격이 근본적 차단이 불가능한 구조적 문제임을 인정했다. 이에 '자동화된 공격자' 시스템을 도입해 방어 체계를 강화하고 있으나, 에이전트 모드의 높은 권한과 자율성이 보안 위험을 높인다는 지적이다.",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=205031",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 2.9,
+  "impact_score": 8.0,
+  "published_at": "2025-12-23T18:00:00+09:00",
+  "source_id": "aitimes",
+  "original_title": "오픈AI, AI 브라우저 '프롬프트 공격' 방어 업데이트 - AI타임스",
+  "publish_id": "251224_4",
+  "edition_code": "251224_4",
+  "edition_name": "4호"
+}

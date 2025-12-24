@@ -222,5 +222,8 @@
   },
   "staged": true,
   "saved": true,
-  "staged_at": "2025-12-24T00:43:11.081098+00:00"
+  "staged_at": "2025-12-24T00:43:11.081098+00:00",
+  "rejected": true,
+  "reject_reason": "manual_batch_reject",
+  "synced_at": "2025-12-24T01:18:34.572818+00:00"
 }

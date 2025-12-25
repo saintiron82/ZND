@@ -9,6 +9,9 @@ import asyncio
 from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify, render_template
 
+# 공통 인증 모듈
+from src.routes.auth import requires_auth
+
 from crawler import load_targets, fetch_links
 from src.db_client import DBClient
 from src.crawler.utils import RobotsChecker
@@ -38,9 +41,10 @@ def crawl_status():
 
 @crawler_bp.route('/api/logs/crawler')
 def crawler_logs():
-    """최근 크롤링 로그 반환"""
-    limit = int(request.args.get('limit', 5))
-    return jsonify(get_crawl_logs(limit))
+    """최근 크롤링 로그 반환 (페이지네이션 지원)"""
+    limit = int(request.args.get('limit', 50))
+    offset = int(request.args.get('offset', 0))
+    return jsonify(get_crawl_logs(limit, offset))
 
 
 def load_from_cache(url):
@@ -56,13 +60,15 @@ def normalize_field_names(data):
 
 
 @crawler_bp.route('/crawler')
+@requires_auth
 def crawler_page():
-    return render_template('index.html')
+    return render_template('index.html', active='cache')
 
 
 @crawler_bp.route('/inspector')
+@requires_auth
 def inspector_page():
-    return render_template('inspector.html')
+    return render_template('inspector.html', active='inspector')
 
 
 @crawler_bp.route('/api/targets')
@@ -86,6 +92,7 @@ def get_dedup_categories():
 
 
 @crawler_bp.route('/api/fetch')
+@requires_auth
 def fetch():
     target_id = request.args.get('target_id')
     targets = load_targets()
@@ -144,6 +151,7 @@ def fetch():
 
 
 @crawler_bp.route('/api/extract')
+@requires_auth
 def extract():
     url = request.args.get('url')
     if not url:
@@ -198,6 +206,7 @@ def extract():
 
 
 @crawler_bp.route('/api/force_extract')
+@requires_auth
 def force_extract():
     """강제 추출 - 캐시 무시"""
     url = request.args.get('url')
@@ -225,6 +234,7 @@ def force_extract():
 
 
 @crawler_bp.route('/api/extract_batch', methods=['POST'])
+@requires_auth
 def extract_batch():
     data = request.json
     
@@ -310,6 +320,7 @@ def extract_batch():
 
 
 @crawler_bp.route('/api/save', methods=['POST'])
+@requires_auth
 def save():
     """Save to staging (cache only)"""
     from src.core_logic import save_to_cache, get_article_id
@@ -344,6 +355,7 @@ def save():
 
 
 @crawler_bp.route('/api/skip', methods=['POST'])
+@requires_auth
 def skip():
     """Skip article"""
     from src.pipeline import mark_skipped
@@ -360,6 +372,7 @@ def skip():
 
 
 @crawler_bp.route('/api/update_cache', methods=['POST'])
+@requires_auth
 def update_cache():
     """캐시 업데이트 (LLM 분석 결과 병합)"""
     try:
@@ -382,6 +395,7 @@ def update_cache():
 
 
 @crawler_bp.route('/api/unprocessed_items')
+@requires_auth
 def get_unprocessed_items():
     """
     모든 캐시 파일 중 아직 발행되지 않은(미처리) 항목만 반환
@@ -416,7 +430,7 @@ def get_unprocessed_items():
          files.sort() 
     
     count = 0
-    limit = 2000 if show_all else 500 # "All" 모드에서는 더 많이
+    limit = 10000  # 사실상 무제한 (분석 작업대는 모든 항목 표시)
     
     for filepath in files:
         if count >= limit: break
@@ -533,6 +547,7 @@ def get_unprocessed_items():
 
 # [NEW] Kanban Board APIs
 @crawler_bp.route('/api/cache/dates')
+@requires_auth
 def get_cache_dates():
     """desk/cache 하위의 날짜 폴더 목록 반환 (최신순)"""
     try:
@@ -543,6 +558,7 @@ def get_cache_dates():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @crawler_bp.route('/api/cache/list_by_date')
+@requires_auth
 def get_cache_by_date():
     """특정 날짜의 캐시 파일들을 상태별로 분류하여 반환 for Kanban"""
     target_date = request.args.get('date')
@@ -615,6 +631,7 @@ def get_cache_by_date():
     return jsonify({'success': True, 'data': kanban_data})
 
 @crawler_bp.route('/api/delete_items', methods=['POST'])
+@requires_auth
 def delete_items():
     """
     [NEW] 선택 항목 영구 삭제 (Status=REJECTED, File=Delete)
@@ -634,6 +651,7 @@ def delete_items():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @crawler_bp.route('/api/cache/update_status', methods=['POST'])
+@requires_auth
 def update_cache_status():
     """
     Update status of cached items (Move between Kanban columns).

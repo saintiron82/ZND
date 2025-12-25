@@ -7,6 +7,9 @@ import json
 from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request, jsonify
 
+# 공통 인증 모듈
+from src.routes.auth import requires_auth
+
 from src.core_logic import (
     load_from_cache as _core_load_from_cache,
     save_to_cache as _core_save_to_cache,
@@ -47,6 +50,7 @@ def _find_cache_by_article_id(article_id):
 
 
 @batch_bp.route('/api/batch/list_ready')
+@requires_auth
 def list_ready_batches():
     """배치 파일 목록 조회"""
     try:
@@ -87,6 +91,7 @@ def list_ready_batches():
 
 
 @batch_bp.route('/api/batch/get_content')
+@requires_auth
 def get_batch_content():
     """배치 파일 내용 조회"""
     filename = request.args.get('filename')
@@ -106,6 +111,7 @@ def get_batch_content():
 
 
 @batch_bp.route('/api/batch/inject', methods=['POST'])
+@requires_auth
 def inject_batch_results():
     """외부 분석 결과 주입"""
     try:
@@ -200,6 +206,7 @@ def inject_batch_results():
 
 
 @batch_bp.route('/api/batch/create', methods=['POST'])
+@requires_auth
 def api_create_batch():
     """새 배치 생성"""
     try:
@@ -212,6 +219,7 @@ def api_create_batch():
 
 
 @batch_bp.route('/api/batch/list', methods=['GET'])
+@requires_auth
 def api_list_batches():
     """배치 목록 조회"""
     try:
@@ -222,6 +230,7 @@ def api_list_batches():
 
 
 @batch_bp.route('/api/batch/publish', methods=['POST'])
+@requires_auth
 def api_publish_batch():
     """배치 발행"""
     data = request.json
@@ -240,6 +249,7 @@ def api_publish_batch():
 
 
 @batch_bp.route('/api/batch/discard', methods=['POST'])
+@requires_auth
 def api_discard_batch():
     """배치 폐기"""
     data = request.json

@@ -9,6 +9,9 @@ import asyncio
 from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request, jsonify
 
+# 공통 인증 모듈
+from src.routes.auth import requires_auth
+
 # 공유 모듈 import
 from crawler import load_targets, fetch_links
 from src.db_client import DBClient
@@ -51,28 +54,37 @@ def normalize_field_names(data):
 
 
 @automation_bp.route('/api/automation/collect', methods=['POST'])
+@requires_auth
 def automation_collect():
     """
     1️⃣ 링크 수집: 모든 활성 타겟에서 새 링크 수집
     - 히스토리에 없는 링크만 반환
     """
-    from src.crawler_state import set_crawling, log_crawl_event # [MODIFIED]
+    from src.crawler_state import set_crawling, log_crawl_event, update_progress # [MODIFIED]
     import time
     
     start_time = time.time()
     try:
         targets = load_targets()
+        total_targets = len(targets)
         
         # [NEW] Status
         set_crawling(True, "Scanning Targets for Links")
+        update_progress(target="", index=0, total=total_targets, count=0, message="수집 시작...")
         
         all_links = []
         
-        for target in targets:
+        for idx, target in enumerate(targets, start=1):
+            target_id = target.get('id', 'unknown')
+            
+            # [NEW] 진행 상황 업데이트
+            update_progress(target=target_id, index=idx, message=f"{target_id} 수집 중...")
+            
             links = fetch_links(target)
             limit = target.get('limit', 5)
             links = links[:limit]
             
+            collected_this_target = 0
             for link in links:
                 # 히스토리 체크 (이미 처리된 것 제외)
                 if not db.check_history(link):
@@ -81,6 +93,10 @@ def automation_collect():
                         'source_id': target['id'],
                         'target_name': target.get('name', target['id'])
                     })
+                    collected_this_target += 1
+            
+            # [NEW] 수집 개수 업데이트
+            update_progress(count=collected_this_target)
         
         # 중복 제거
         seen = set()
@@ -109,6 +125,7 @@ def automation_collect():
 
 
 @automation_bp.route('/api/automation/extract', methods=['POST'])
+@requires_auth
 def automation_extract():
     """
     2️⃣ 콘텐츠 추출: 수집된 링크 → 캐시 저장
@@ -190,6 +207,7 @@ def automation_extract():
 
 
 @automation_bp.route('/api/automation/analyze', methods=['POST'])
+@requires_auth
 def automation_analyze():
     """
     3️⃣ MLL 분석: mll_status가 없는 캐시만 분석
@@ -269,6 +287,7 @@ def automation_analyze():
 
 
 @automation_bp.route('/api/automation/stage', methods=['POST'])
+@requires_auth
 def automation_stage():
     """
     4️⃣ 조판 (Staging): 분석 완료된 캐시 점수 재검증 및 고노이즈 필터링
@@ -354,6 +373,7 @@ def automation_stage():
 
 
 @automation_bp.route('/api/automation/publish', methods=['POST'])
+@requires_auth
 def automation_publish():
     """
     5️⃣ 발행: cache → data 폴더 파일 생성
@@ -438,6 +458,7 @@ def automation_publish():
 
 
 @automation_bp.route('/api/automation/all', methods=['POST'])
+@requires_auth
 def automation_all():
     """
     ⚡ ALL: 1~4단계 연속 실행 (발행 제외)
@@ -500,6 +521,7 @@ def automation_all():
 
 
 @automation_bp.route('/api/automation/collect-extract', methods=['POST'])
+@requires_auth
 def automation_collect_extract():
     """
     ⚡ 수집 + 추출만 실행 (비용 절약: 분석/조판은 수동)
@@ -553,6 +575,7 @@ def automation_collect_extract():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @automation_bp.route('/api/desk/recalculate', methods=['POST'])
+@requires_auth
 def automation_stage_recalc():
     """
     ⚡ Cache 폴더의 기사 점수 재계산 (전체 또는 선택)

@@ -5,10 +5,12 @@
 import os
 import json
 import shutil
-from functools import wraps
 from datetime import datetime, timezone
-from flask import Blueprint, request, jsonify, render_template, Response
+from flask import Blueprint, request, jsonify, render_template
 from dotenv import load_dotenv
+
+# 공통 인증 모듈
+from src.routes.auth import requires_auth
 
 # Load environment variables (명시적 경로 지정)
 env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
@@ -19,37 +21,12 @@ desk_bp = Blueprint('desk', __name__)
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
 
 
-# ============================================
-# Basic Auth 데코레이터
-# ============================================
-
-def check_auth(username, password):
-    """인증 정보 확인"""
-    valid_username = os.getenv('DESK_USERNAME', 'master')
-    valid_password = os.getenv('DESK_PASSWORD', '')
-    return username == valid_username and password == valid_password
-
-def requires_auth(f):
-    """Basic Auth 데코레이터"""
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return Response(
-                '🔒 관리자 인증이 필요합니다.',
-                401,
-                {'WWW-Authenticate': 'Basic realm="Desk Admin"'}
-            )
-        return f(*args, **kwargs)
-    return decorated
-
-
 @desk_bp.route('/desk')
 @desk_bp.route('/')
 @requires_auth
 def desk_view():
     """Staging 미리보기 페이지 (관리자 전용)"""
-    return render_template('desk.html')
+    return render_template('desk.html', active='desk')
 
 
 from src.trash_manager import TrashManager
@@ -58,6 +35,7 @@ from src.trash_manager import TrashManager
 trash_manager = None  # Will be initialized with CACHE_DIR
 
 @desk_bp.route('/api/desk/list')
+@requires_auth
 def desk_list():
     """Cache 폴더의 기사 목록 반환 (조판 UI용) - 미분석 기사도 포함"""
     global trash_manager
@@ -205,6 +183,7 @@ def desk_list():
 
 
 @desk_bp.route('/api/desk/reject_selected', methods=['POST'])
+@requires_auth
 def desk_reject_selected():
     """🗑️ 선택된 기사 일괄 거부 (Reject)"""
     try:
@@ -259,6 +238,7 @@ def desk_reject_selected():
 
 
 @desk_bp.route('/api/desk/restore_selected', methods=['POST'])
+@requires_auth
 def desk_restore_selected():
     """♻️ 선택된 기사 복구 (Restore rejected articles)"""
     try:
@@ -310,6 +290,7 @@ def desk_restore_selected():
 
 
 @desk_bp.route('/api/desk/file')
+@requires_auth
 def desk_file():
     """특정 Staging 파일 상세 내용 반환"""
     try:
@@ -349,6 +330,7 @@ def desk_file():
 
 
 @desk_bp.route('/api/desk/update_categories', methods=['POST'])
+@requires_auth
 def desk_update_categories():
     """카테고리 정보를 모든 날짜 폴더의 캐시에 저장"""
     try:
@@ -421,6 +403,7 @@ def desk_update_categories():
 
 
 @desk_bp.route('/api/desk/reset_dedup', methods=['POST'])
+@requires_auth
 def desk_reset_dedup():
     """모든 staging 파일의 dedup_status와 category 초기화"""
     try:
@@ -466,6 +449,7 @@ def desk_reset_dedup():
 
 
 @desk_bp.route('/api/desk/delete_permanent', methods=['POST'])
+@requires_auth
 def desk_delete_permanent():
     """🗑️ 선택된 기사 영구 삭제 (DB Reject + File Delete)"""
     global trash_manager
@@ -505,6 +489,7 @@ def desk_delete_permanent():
 
 
 @desk_bp.route('/api/desk/delete_file', methods=['POST'])
+@requires_auth
 def desk_delete_file():
     """staging 파일 완전 삭제"""
     try:
@@ -540,6 +525,7 @@ def desk_delete_file():
 
 
 @desk_bp.route('/api/desk/clear_cache', methods=['POST'])
+@requires_auth
 def desk_clear_cache():
     """날짜별 캐시 삭제"""
     try:
@@ -567,6 +553,7 @@ def desk_clear_cache():
 
 
 @desk_bp.route('/api/desk/settings', methods=['GET'])
+@requires_auth
 def desk_settings():
     """📋 Desk 환경 설정 조회 (커트라인 기본값 등)"""
     return jsonify({

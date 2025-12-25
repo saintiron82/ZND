@@ -1,0 +1,84 @@
+<!-- 통합 네비게이션 헤더 -->
+<style>
+    .znd-admin-nav {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: white;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        flex-shrink: 0;
+    }
+
+    .znd-admin-nav .nav-brand {
+        font-size: 1.3rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .znd-admin-nav .nav-tabs {
+        display: flex;
+        gap: 5px;
+    }
+
+    .znd-admin-nav .nav-tab {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 8px 8px 0 0;
+        transition: all 0.2s;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .znd-admin-nav .nav-tab:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .znd-admin-nav .nav-tab.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        font-weight: 600;
+        border-bottom: 3px solid #667eea;
+    }
+
+    .znd-admin-nav .nav-user {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        .znd-admin-nav .nav-brand {
+            font-size: 1rem;
+        }
+
+        .znd-admin-nav .nav-tab {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+
+        .znd-admin-nav .nav-tab span {
+            display: none;
+        }
+    }
+</style>
+
+<nav class="znd-admin-nav">
+    <div class="nav-brand">🗞️ ZND Admin</div>
+    <div class="nav-tabs">
+        <a href="/desk" class="nav-tab {% if active == 'desk' %}active{% endif %}">📋 <span>데스크</span></a>
+        <a href="/crawler" class="nav-tab {% if active == 'cache' %}active{% endif %}">🗂️ <span>캐시매니저</span></a>
+        <a href="/inspector" class="nav-tab {% if active == 'inspector' %}active{% endif %}">📦 <span>분석</span></a>
+    </div>
+    <div class="nav-user">👤 master</div>
+</nav>

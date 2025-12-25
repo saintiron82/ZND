@@ -1,0 +1,12 @@
+{
+  "title": "GitHub repository offers more than 50 customizable Claude Skills",
+  "description": "A comprehensive collection of \"Claude Skills\" is now available on GitHub. These skills are customizable workflows that teach Anthropic's AI assistant Claude to perform specific tasks repeatedly and in a standardized way.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/08/ClaudeBrowsing.png",
+  "text": "A comprehensive collection of \"Claude Skills\" is now available on GitHub. These skills are customizable workflows that teach Anthropic's AI assistant Claude to perform specific tasks repeatedly and in a standardized way. The collection includes more than 50 skills across nine categories: Document Processing (Word, PDF, PowerPoint), Development Tools (Playwright, AWS, Git), Data Analysis, Business and Marketing, Communication, Creative Media, Productivity, Project Management, and Security. Users can add skills in Claude.ai through the settings, store them in Claude Code's configuration folder, or integrate them via API. Each skill consists of a folder with a SKILL.md file. The repository is under Apache 2.0 license and accepts contributions. Since skills are essentially just a collection of prompts in a folder, getting the most out of AI means customizing these prompts to fit your needs. That said, the repository is a solid source of inspiration. And as skills seem to be becoming the standard approach, it's worth exploring the topic beyond Claude.ai. Ad DEC_D_Incontent-1",
+  "published_at": "2025-12-23T17:31:39+00:00",
+  "url": "https://the-decoder.com/github-repository-offers-more-than-50-customizable-claude-skills/",
+  "source_id": "the_decoder",
+  "article_id": "748b537bf0a1",
+  "cached_at": "2025-12-25T15:53:18.106727+00:00",
+  "updated_at": "2025-12-25T15:53:18.106727+00:00"
+}

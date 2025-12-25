@@ -1,0 +1,12 @@
+{
+  "title": "Salesforce executives signal declining trust in large language models",
+  "description": "According to Salesforce executives, confidence in large language models (LLMs) has fallen this year.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/salesforce_logo_wall.jpeg",
+  "text": "According to Salesforce leadership, confidence in large language models (LLMs) has slipped over the past year. The Information reports the company is now pivoting toward simple, rule-based automation for its Agentforce product while limiting generative AI in certain use cases. \"We all had more confidence in LLMs a year ago,\" said Sanjna Parulekar, SVP of product marketing at Salesforce. She points to the models' inherent randomness and their tendency to ignore specific instructions as primary reasons for the shift. The company also struggles with \"drift\" - where AI agents lose focus when users ask distracting questions. Salesforce's own studies confirm this behavior remains a persistent challenge. Ad A spokesperson denied the company is backtracking on LLMs, stating they are simply being more intentional about their use. The Agentforce platform, currently on track for over $500 million in annual sales, allows users to set deterministic rules that strictly constrain the AI's capabilities.",
+  "published_at": "2025-12-25T11:15:16+00:00",
+  "url": "https://the-decoder.com/salesforce-executives-signal-declining-trust-in-large-language-models/",
+  "source_id": "the_decoder",
+  "article_id": "cce3749eb226",
+  "cached_at": "2025-12-25T15:52:52.625068+00:00",
+  "updated_at": "2025-12-25T15:52:52.625068+00:00"
+}

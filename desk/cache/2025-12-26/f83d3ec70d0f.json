@@ -1,0 +1,12 @@
+{
+  "title": "Qwen updates image editing model with better character consistency",
+  "description": "Qwen's updated image editing model better preserves facial identity when editing portraits and group photos, with improvements to lighting control and camera angles.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/qwen_image_edit_header-scaled.jpg",
+  "text": "Qwen has released an improved version of its image editing model that better maintains facial identity during edits. The Chinese AI company published Qwen-Image-Edit-2511 on Hugging Face, an upgrade to the earlier Qwen-Image-Edit-2509. The biggest improvement is how the model handles people. It can now make creative changes to portraits while keeping the subject recognizable, the company claims. Group photos with multiple people also work better now. The update also brings improvements to lighting control, camera angles, industrial product design, and geometric calculations. Qwen has baked popular community LoRAs (small add-on models) directly into the base model. The model ships under the Apache 2.0 license. A demo is available on Hugging Face, and users can test the model for free via Qwen Chat. Ad DEC_D_Incontent-1",
+  "published_at": "2025-12-24T16:16:46+00:00",
+  "url": "https://the-decoder.com/qwen-updates-image-editing-model-with-better-character-consistency/",
+  "source_id": "the_decoder",
+  "article_id": "f83d3ec70d0f",
+  "cached_at": "2025-12-25T15:53:07.274953+00:00",
+  "updated_at": "2025-12-25T15:53:07.274953+00:00"
+}

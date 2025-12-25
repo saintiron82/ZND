@@ -441,6 +441,8 @@ function hideLoading() {
 function openSchedulePanel() {
     document.getElementById('scheduleModal').style.display = 'flex';
     loadSchedules();
+    currentLogOffset = 0; // 로그 오프셋 초기화
+    refreshLogs(); // 로그도 함께 로드
 }
 function closeScheduleModal() {
     document.getElementById('scheduleModal').style.display = 'none';
@@ -581,7 +583,7 @@ async function runCrawlNow() {
     }
 }
 
-// 스케줄 모달 내 상태 표시 버전
+// 스케줄 모달 내 상태 표시 버전 (폴링으로 진행 상황 표시)
 async function runCrawlNowWithStatus() {
     const statusBox = document.getElementById('crawlStatusBox');
     const statusText = document.getElementById('crawlStatusText');
@@ -597,11 +599,30 @@ async function runCrawlNowWithStatus() {
     btn.disabled = true;
     btn.style.opacity = '0.6';
 
+    // 진행 상황 폴링 시작
+    let pollInterval = setInterval(async () => {
+        try {
+            const statusRes = await fetch('/api/crawl/status');
+            const status = await statusRes.json();
+            if (status.is_crawling && status.progress) {
+                const p = status.progress;
+                const progressText = p.current_target
+                    ? `📡 ${p.current_target} (${p.current_index}/${p.total_targets})`
+                    : '📡 준비 중...';
+                const countText = p.collected_count > 0 ? ` - ${p.collected_count}개 수집` : '';
+                statusText.textContent = progressText + countText;
+                statusDetail.textContent = p.message || status.current_task;
+            }
+        } catch (e) {
+            console.error('Poll error:', e);
+        }
+    }, 1000);
+
     try {
-        statusText.textContent = '📡 새 링크 수집 중...';
         const resp = await fetch('/api/schedule/run_now', { method: 'POST' });
         const result = await resp.json();
 
+        clearInterval(pollInterval);
         spinner.style.display = 'none';
 
         if (result.success) {
@@ -610,7 +631,7 @@ async function runCrawlNowWithStatus() {
             statusDetail.textContent = result.message || '새 기사가 수집되었습니다.';
             // 로그 새로고침
             if (typeof refreshLogs === 'function') refreshLogs();
-            // 2초 후 상태창 숨기기
+            // 3초 후 상태창 숨기기
             setTimeout(() => {
                 statusBox.style.display = 'none';
                 statusText.style.color = '#20c997';
@@ -621,6 +642,7 @@ async function runCrawlNowWithStatus() {
             statusDetail.textContent = result.error || '알 수 없는 오류';
         }
     } catch (e) {
+        clearInterval(pollInterval);
         spinner.style.display = 'none';
         statusText.textContent = '❌ 오류 발생';
         statusText.style.color = '#dc3545';
@@ -635,39 +657,108 @@ async function runCrawlNowWithStatus() {
 // Logs Panel Functions
 // ============================================
 
+let currentLogOffset = 0;
+const LOG_PAGE_SIZE = 50;
+
 function openLogsPanel() {
     document.getElementById('logsModal').style.display = 'flex';
+    currentLogOffset = 0;
     refreshLogs();
 }
 function closeLogsPanel() {
     document.getElementById('logsModal').style.display = 'none';
 }
 
-async function refreshLogs() {
+async function refreshLogs(append = false) {
     const list = document.getElementById('crawlerLogList');
     if (!list) return;
+
+    if (!append) {
+        currentLogOffset = 0;
+        list.innerHTML = '<div style="text-align:center; color:#666; padding:20px;">로그 로딩 중...</div>';
+    }
+
     try {
-        const res = await fetch('/api/logs/crawler?limit=20');
+        const res = await fetch(`/api/logs/crawler?limit=${LOG_PAGE_SIZE}&offset=${currentLogOffset}`);
         const logs = await res.json();
+
         if (!logs || logs.length === 0) {
-            list.innerHTML = '<div style="color:#666; text-align:center; padding:20px;">기록 없음</div>';
+            if (!append) {
+                list.innerHTML = '<div style="color:#666; text-align:center; padding:20px;">기록 없음</div>';
+            }
+            // 더보기 버튼 숨기기
+            const btnMore = document.getElementById('btnLoadMoreLogs');
+            if (btnMore) btnMore.style.display = 'none';
             return;
         }
-        list.innerHTML = logs.map(log => {
+
+        const logsHtml = logs.map(log => {
             let timeStr = log.timestamp || '';
-            if (timeStr.includes('T')) timeStr = timeStr.split('T')[1].substring(0, 8);
+            // 날짜 + 시간 형식으로 표시
+            if (timeStr.includes('T')) {
+                const parts = timeStr.split('T');
+                const datePart = parts[0].substring(5); // MM-DD
+                const timePart = parts[1].substring(0, 5); // HH:MM
+                timeStr = `${datePart} ${timePart}`;
+            }
             const color = log.success ? '#28a745' : '#dc3545';
+            const icon = log.success ? '✅' : '❌';
             return `
                 <div style="border-bottom:1px solid #444; padding:8px 0;">
                     <div style="display:flex; justify-content:space-between;">
-                        <span style="color:#eee; font-weight:bold;">[${timeStr}] ${log.action}</span>
-                        <span style="color:${color};">${log.duration}s</span>
+                        <span style="color:#eee;">[${timeStr}] <strong>${log.action}</strong></span>
+                        <span style="color:${color};">${icon} ${log.duration}s</span>
                     </div>
-                    <div style="color:#aaa; margin-top:4px;">${log.result}</div>
+                    <div style="color:#aaa; margin-top:4px; font-size:0.9em;">${log.result}</div>
                 </div>
             `;
         }).join('');
+
+        if (append) {
+            list.innerHTML += logsHtml;
+        } else {
+            list.innerHTML = logsHtml;
+        }
+
+        // 더보기 버튼 표시/숨기기
+        const btnMore = document.getElementById('btnLoadMoreLogs');
+        if (btnMore) {
+            btnMore.style.display = logs.length >= LOG_PAGE_SIZE ? 'block' : 'none';
+        }
     } catch (e) {
-        list.textContent = 'Log Load Error';
+        if (!append) {
+            list.innerHTML = '<div style="color:#dc3545; text-align:center; padding:20px;">로그 로드 오류</div>';
+        }
+        console.error('Log load error:', e);
+    }
+}
+
+async function loadMoreLogs() {
+    currentLogOffset += LOG_PAGE_SIZE;
+    await refreshLogs(true);
+}
+
+// ============================================
+// Sync Functions
+// ============================================
+
+async function runSyncNow() {
+    if (!confirm('지금 캐시 동기화를 실행하시겠습니까?')) return;
+
+    showLoading('☁️ 캐시 동기화 중...');
+    try {
+        const resp = await fetch('/api/cache/sync', { method: 'POST' });
+        const result = await resp.json();
+
+        if (result.success) {
+            alert('✅ ' + (result.message || '동기화 완료!'));
+            refreshLogs(); // 로그 새로고침
+        } else {
+            alert('❌ 동기화 실패: ' + (result.error || '알 수 없는 오류'));
+        }
+    } catch (e) {
+        alert('❌ 오류: ' + e.message);
+    } finally {
+        hideLoading();
     }
 }

@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>일괄 로드 (Batch Loader)</title>
+    <title>📊 분석 작업대 (Analyzer)</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
+            flex-direction: column;
             height: 100vh;
             overflow: hidden;
             background: #f4f4f4;
@@ -196,93 +197,119 @@
 </head>
 
 <body>
+    {% include '_header.html' %}
 
-    <!-- 1. Group Pane -->
-    <div id="pane-groups" class="pane">
-        <div class="pane-header">
-            <span>1. Targets</span>
-            <div style="display:flex; gap:5px;">
-                <button onclick="runCrawlNow()" title="지금 바로 크롤링 실행" style="background:#28a745;">▶️ 수집</button>
-                <button onclick="toggleViewMode()" id="btnViewMode" title="뷰 모드 변경 (New Only <-> Show All)"
-                    style="background:#17a2b8;">👁️ View: New</button>
-                <button onclick="loadTargetList()" title="목록 새로고침">🔄 List</button>
-                <button onclick="clearContentCache()" title="Clear Local Storage" style="background:#555;">🗑️
-                    Cache</button>
-            </div>
-        </div>
-        <div class="pane-content" style="position:relative;">
-            <div id="groupList" style="flex:1; overflow-y:auto;">
-                <div style="padding:20px; text-align:center; color:#888;">
-                    Click '🔄 List' to load targets.
+    <!-- Main Content Wrapper -->
+    <div style="display:flex; flex:1; overflow:hidden; height:calc(100vh - 56px);">
+
+        <!-- 1. Group Pane -->
+        <div id="pane-groups" class="pane">
+            <div class="pane-header">
+                <span>📊 분석 대상</span>
+                <div style="display:flex; gap:5px;">
+                    <button onclick="toggleViewMode()" id="btnViewMode" title="뷰 모드 변경 (New Only <-> Show All)"
+                        style="background:#17a2b8;">👁️ View: New</button>
+                    <button onclick="loadTargetList()" title="목록 새로고침">🔄 List</button>
+                    <button onclick="clearContentCache()" title="Clear Local Storage" style="background:#555;">🗑️
+                        Cache</button>
                 </div>
             </div>
-            <!-- 전체 합계 표시 영역 -->
-            <div id="summaryArea" style="padding:10px; border-top:1px solid #ddd; background:#f0f0f0; display:none;">
-                <div
-                    style="font-size:0.85em; color:#333; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
-                    <span>📊 전체: <strong id="totalCount">0</strong></span>
-                    <span style="color:#dc3545;">NEW: <strong id="totalNew">0</strong></span>
-                    <span style="color:#17a2b8;">📦: <strong id="totalCached">0</strong></span>
-                    <span style="color:#28a745;">✅: <strong id="totalAccepted">0</strong></span>
-                    <span style="color:#888;">⏭️: <strong id="totalSkipped">0</strong></span>
+            <div class="pane-content" style="position:relative;">
+                <div id="groupList" style="flex:1; overflow-y:auto;">
+                    <div style="padding:20px; text-align:center; color:#888;">
+                        Click '🔄 List' to load targets.
+                    </div>
+                </div>
+                <!-- 전체 합계 표시 영역 -->
+                <div id="summaryArea"
+                    style="padding:10px; border-top:1px solid #ddd; background:#f0f0f0; display:none;">
+                    <div
+                        style="font-size:0.85em; color:#333; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+                        <span>📊 전체: <strong id="totalCount">0</strong></span>
+                        <span style="color:#dc3545;">NEW: <strong id="totalNew">0</strong></span>
+                        <span style="color:#17a2b8;">📦: <strong id="totalCached">0</strong></span>
+                        <span style="color:#28a745;">✅: <strong id="totalAccepted">0</strong></span>
+                        <span style="color:#888;">⏭️: <strong id="totalSkipped">0</strong></span>
+                    </div>
+                </div>
+                <!-- 배치 추출 컨트롤 영역 -->
+                <div id="groupActionArea"
+                    style="padding:15px; border-top:1px solid #ddd; background:#fff; display:none;">
+                    <!-- 묶음 크기 슬라이더 -->
+                    <div style="margin-bottom:12px;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                            <span style="font-size:0.85em; color:#666;">묶음 크기</span>
+                            <span id="batchSizeValue"
+                                style="font-size:1.1em; font-weight:bold; color:#007bff;">10개</span>
+                        </div>
+                        <input type="range" id="batchSizeSlider" min="1" max="20" value="10"
+                            style="width:100%; accent-color:#007bff;"
+                            oninput="document.getElementById('batchSizeValue').textContent = this.value + '개'">
+                    </div>
+                    <!-- 버튼 그룹 -->
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="extractBatch()" class="action-btn"
+                            style="flex:2; background:#ffc107; color:#333; padding:12px;">⚡ 추출</button>
+                        <button onclick="copyPrompt()" class="action-btn"
+                            style="flex:1; background:#6610f2; color:white; padding:12px;">📋 복사</button>
+                        <button onclick="window.open('https://gemini.google.com/gem/d0df709db734', '_blank')"
+                            class="action-btn" style="flex:1; background:#8e44ad; color:white; padding:12px;">🤖
+                            LLM</button>
+                    </div>
                 </div>
             </div>
-            <!-- Step 3 Action Button Area -->
-            <div id="groupActionArea" style="padding:15px; border-top:1px solid #ddd; background:#fff; display:none;">
-                <button onclick="handleBatchAction()" class="action-btn" style="background:#ffc107; color:#333;">⚡ 선택 그룹
-                    콘텐츠 가져오기 (Fetch)</button>
-            </div>
         </div>
-    </div>
-    </div>
-    <!-- 2. Prompt Pane -->
-    <div id="pane-prompt" class="pane">
-        <div class="pane-header">
-            <span>2. Step 1 (Prompt)</span>
-            <div style="display:flex; gap:5px;">
-                <button onclick="window.open('https://gemini.google.com/gem/d0df709db734', '_blank')"
-                    style="background:#8e44ad;">🤖 Open Gemini</button>
-                <button id="btnCopy" onclick="copyPrompt()">📋 Copy</button>
-            </div>
-        </div>
-        <div class="pane-content" style="display:flex; flex-direction:column; padding:10px; gap:10px;">
-            <!-- Header Instruction -->
-            <div style="flex:0 0 auto;">
-                <label style="font-size:0.85em; color:#666; font-weight:bold;">Instruction (Header):</label>
-                <textarea id="promptHeader"
-                    style="width:100%; height:80px; padding:5px; border:1px solid #ccc; font-family:monospace; font-size:0.9em; resize:vertical; background:#fff;"></textarea>
-            </div>
-
-            <!-- Main Content -->
-            <div style="flex:1; display:flex; flex-direction:column;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <label style="font-size:0.85em; color:#666; font-weight:bold;">Content (Body):</label>
-                    <span id="promptStatus" style="font-size:0.8em; color:#007bff;">Waiting...</span>
+        <!-- 2. Prompt Pane -->
+        <div id="pane-prompt" class="pane">
+            <div class="pane-header">
+                <span>2. Step 1 (Prompt)</span>
+                <div style="display:flex; gap:5px;">
+                    <button onclick="window.open('https://gemini.google.com/gem/d0df709db734', '_blank')"
+                        style="background:#8e44ad;">🤖 Open Gemini</button>
+                    <button id="btnCopy" onclick="copyPrompt()">📋 Copy</button>
                 </div>
-                <!-- [MODIFIED] Added readonly to promptArea to prevent manual edits -->
-                <textarea id="promptArea"
-                    style="flex:1; width:100%; padding:5px; border:1px solid #ccc; font-family:monospace; font-size:0.9em; resize:none;"
-                    readonly placeholder="Select a group to load content..."></textarea>
+            </div>
+            <div class="pane-content" style="display:flex; flex-direction:column; padding:10px; gap:10px;">
+                <!-- Header Instruction -->
+                <div style="flex:0 0 auto;">
+                    <label style="font-size:0.85em; color:#666; font-weight:bold;">Instruction (Header):</label>
+                    <textarea id="promptHeader"
+                        style="width:100%; height:80px; padding:5px; border:1px solid #ccc; font-family:monospace; font-size:0.9em; resize:vertical; background:#fff;"></textarea>
+                </div>
+
+                <!-- Main Content -->
+                <div style="flex:1; display:flex; flex-direction:column;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <label style="font-size:0.85em; color:#666; font-weight:bold;">Content (Body):</label>
+                        <span id="promptStatus" style="font-size:0.8em; color:#007bff;">Waiting...</span>
+                    </div>
+                    <!-- [MODIFIED] Added readonly to promptArea to prevent manual edits -->
+                    <textarea id="promptArea"
+                        style="flex:1; width:100%; padding:5px; border:1px solid #ccc; font-family:monospace; font-size:0.9em; resize:none;"
+                        readonly placeholder="Select a group to load content..."></textarea>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 3. Process Pane -->
-    <div id="pane-process" class="pane">
-        <div class="pane-header">
-            <span>Step 2. Paste & Process</span>
-        </div>
-        <div class="pane-content">
-            <textarea id="inputArea" placeholder="Paste the JSON response from LLM here...
+        <!-- 3. Process Pane -->
+        <div id="pane-process" class="pane">
+            <div class="pane-header">
+                <span>Step 2. Paste & Process</span>
+            </div>
+            <div class="pane-content">
+                <textarea id="inputArea" placeholder="Paste the JSON response from LLM here...
 (Markdown code blocks like ```json ... ``` are automatically handled)"></textarea>
 
-            <button id="btnProcess" class="action-btn" onclick="processBatch()">⚡ Process Batch (Verify & Save)</button>
+                <button id="btnProcess" class="action-btn" onclick="processBatch()">⚡ Process Batch (Verify &
+                    Save)</button>
 
-            <div id="logArea">
-                <div class="log-entry log-info">[System] Ready.</div>
+                <div id="logArea">
+                    <div class="log-entry log-info">[System] Ready.</div>
+                </div>
             </div>
         </div>
-    </div>
+    </div> <!-- End of Main Content Wrapper -->
 
     <div id="loadingOverlay">
         <div style="font-size: 2em; margin-bottom: 20px;">⏳</div>

@@ -1,6 +1,24 @@
 ﻿﻿import { db } from './firebase';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 
+// Environment: dev or release
+const ZND_ENV = process.env.NEXT_PUBLIC_ZND_ENV || 'release';
+
+/**
+ * Get collection reference with environment prefix
+ * Structure: {env}/data/{collectionName}
+ */
+function getCollectionRef(collectionName: string) {
+    return collection(db, ZND_ENV, 'data', collectionName);
+}
+
+/**
+ * Get document reference with environment prefix
+ */
+function getDocRef(collectionName: string, docId: string) {
+    return doc(db, ZND_ENV, 'data', collectionName, docId);
+}
+
 // Interface definitions (same as serverCache)
 export interface Issue {
     id: string;
@@ -53,7 +71,7 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
         console.log('📖 [Firestore] Fetching _meta document...');
 
         // Query from _meta document (1 READ)
-        const metaDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, '_meta'));
+        const metaDoc = await getDoc(getDocRef(COLLECTION_PUBLICATIONS, '_meta'));
 
         if (!metaDoc.exists()) {
             console.log('⚠️ [Firestore] _meta document not found, falling back to full scan...');
@@ -99,7 +117,7 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
 async function fetchPublishedIssuesFallback(): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
     try {
         console.log('📖 [Firestore] Fallback: scanning all publications...');
-        const snapshot = await getDocs(collection(db, COLLECTION_PUBLICATIONS));
+        const snapshot = await getDocs(getCollectionRef(COLLECTION_PUBLICATIONS));
 
         let allIssues: Issue[] = [];
         let latestUpdate: string | null = null;
@@ -148,7 +166,7 @@ export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]
         // console.log(`📖 [Firestore] Fetching articles for issue: ${issueId}`);
 
         // Read articles array directly from issue document (1 READ)
-        const pubDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, issueId));
+        const pubDoc = await getDoc(getDocRef(COLLECTION_PUBLICATIONS, issueId));
 
         if (!pubDoc.exists()) {
             console.log(`⚠️ [Firestore] Publication not found: ${issueId}`);
@@ -179,7 +197,7 @@ export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]
 export async function checkLatestUpdate(): Promise<string | null> {
     try {
         // Check latest_updated_at from _meta document (1 READ)
-        const metaDoc = await getDoc(doc(db, COLLECTION_PUBLICATIONS, '_meta'));
+        const metaDoc = await getDoc(getDocRef(COLLECTION_PUBLICATIONS, '_meta'));
 
         if (metaDoc.exists()) {
             const metaData = metaDoc.data() as MetaDoc;

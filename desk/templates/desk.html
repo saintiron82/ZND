@@ -10,9 +10,11 @@
 </head>
 
 <body>
+    {% include '_header.html' %}
+
     <div class="header">
         <div style="display:flex; flex-direction:column; gap:5px;">
-            <h1>📋 📰 편집 데스크 (Desk) <span style="font-size: 0.6em; color: #888;">(마스터 전용)</span></h1>
+            <h1>📰 편집 데스크 <span style="font-size: 0.6em; color: #888;">(마스터 전용)</span></h1>
             <div style="font-size:0.8em; color:#aaa;">허용된 버전만 표시되며, 표시된 항목만 발행 가능합니다.</div>
         </div>
 
@@ -42,7 +44,6 @@
                 </button>
             </div>
             <div class="header-actions">
-                <a href="/crawler" class="btn" style="background:#667eea; color:white; text-decoration:none;">🔧 크롤러</a>
                 <button class="btn btn-refresh" onclick="loadDesk()">🔄 새로고침</button>
             </div>
         </div>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ZND Cache Manager (Kanban)</title>
+    <title>ZND 캐시 매니저</title>
     <style>
         body {
             margin: 0;
@@ -333,14 +333,11 @@
 </head>
 
 <body>
+    {% include '_header.html' %}
 
     <header>
         <div class="header-left">
-            <button onclick="location.href='/desk'"
-                style="background:transparent; border:1px solid #aaa; color:white; padding:4px 8px; border-radius:4px; font-size:0.9em; cursor:pointer; margin-right:10px;">⬅️
-                Desk</button>
-            <h1>🗂️ Cache Manager <small style="font-size:0.6em; opacity:0.7; margin-left:10px;">(Manual
-                    Crawler)</small></h1>
+            <h1>🗂️ 캐시 매니저</h1>
             <select id="dateSelect" onchange="loadDate(this.value)">
                 <option value="">Loading dates...</option>
             </select>
@@ -462,54 +459,98 @@
         </div>
     </div>
 
-    <!-- 🕐 Schedule Management Modal -->
+
+    <!-- 🕐 Schedule Management Modal (2-Column Layout) -->
     <div id="scheduleModal" class="modal-overlay"
         style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
         <div class="modal-content"
-            style="background:#2d2d2d; color:#eee; border-radius:10px; max-width:600px; width:90%; max-height:85vh; overflow-y:auto; padding:20px;">
+            style="background:#2d2d2d; color:#eee; border-radius:10px; max-width:1000px; width:95%; max-height:90vh; overflow:hidden; display:flex; flex-direction:column;">
+            <!-- Header -->
             <div
-                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #444; padding-bottom:10px;">
-                <h3 style="margin:0; color:#20c997;">🕐 자동 크롤링 스케줄 관리</h3>
+                style="display:flex; justify-content:space-between; align-items:center; padding:15px 20px; border-bottom:1px solid #444;">
+                <h3 style="margin:0; color:#20c997;">🕐 스케줄 & 로그 관리</h3>
                 <button onclick="closeScheduleModal()"
                     style="background:none; border:none; color:#aaa; font-size:1.5em; cursor:pointer;">&times;</button>
             </div>
-            <div style="margin-bottom:15px;">
-                <button id="btnRunCrawlNow" onclick="runCrawlNowWithStatus()"
-                    style="background:#28a745; color:white; border:none; padding:12px; width:100%; border-radius:4px; font-weight:bold; cursor:pointer;">▶️
-                    지금 바로 크롤링 실행</button>
-            </div>
-            <!-- 크롤링 상태 표시 영역 -->
-            <div id="crawlStatusBox"
-                style="display:none; margin-bottom:15px; padding:12px; background:rgba(32,201,151,0.15); border:1px solid #20c997; border-radius:8px;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div id="crawlStatusSpinner" class="spinner"
-                        style="width:20px; height:20px; border:3px solid #20c997; border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite;">
+
+            <!-- 2-Column Body -->
+            <div style="display:flex; flex:1; overflow:hidden;">
+                <!-- Left: Schedule Panel -->
+                <div style="flex:1; padding:15px; overflow-y:auto; border-right:1px solid #444;">
+                    <!-- Run Now Button -->
+                    <button id="btnRunCrawlNow" onclick="runCrawlNowWithStatus()"
+                        style="background:#28a745; color:white; border:none; padding:12px; width:100%; border-radius:4px; font-weight:bold; cursor:pointer; margin-bottom:15px;">▶️
+                        지금 바로 크롤링 실행</button>
+
+                    <!-- Status Box -->
+                    <div id="crawlStatusBox"
+                        style="display:none; margin-bottom:15px; padding:12px; background:rgba(32,201,151,0.15); border:1px solid #20c997; border-radius:8px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div id="crawlStatusSpinner" class="spinner"
+                                style="width:20px; height:20px; border:3px solid #20c997; border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite;">
+                            </div>
+                            <span id="crawlStatusText" style="color:#20c997; font-weight:bold;">크롤링 준비 중...</span>
+                        </div>
+                        <div id="crawlStatusDetail" style="color:#aaa; font-size:0.85em; margin-top:8px;"></div>
                     </div>
-                    <span id="crawlStatusText" style="color:#20c997; font-weight:bold;">크롤링 준비 중...</span>
+
+                    <!-- Crawl Schedules -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h4 style="margin:0; color:#20c997;">📰 크롤링 스케줄</h4>
+                        <button onclick="loadSchedules()"
+                            style="background:#6c757d; color:white; border:none; padding:4px 10px; border-radius:4px; font-size:0.8em; cursor:pointer;">🔄</button>
+                    </div>
+                    <div id="scheduleList"
+                        style="max-height:200px; overflow-y:auto; background:rgba(0,0,0,0.2); border-radius:8px; padding:10px; margin-bottom:10px;">
+                        <div style="text-align:center; color:#666; padding:15px;">로딩 중...</div>
+                    </div>
+                    <button onclick="openAddScheduleDialog()"
+                        style="background:#667eea; color:white; border:none; padding:8px; width:100%; border-radius:4px; font-weight:bold; cursor:pointer; margin-bottom:15px;">➕
+                        크롤링 스케줄 추가</button>
+
+                    <!-- Sync Schedules -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h4 style="margin:0; color:#17a2b8;">☁️ 동기화 스케줄</h4>
+                    </div>
+                    <div id="syncScheduleList" style="background:rgba(0,0,0,0.2); border-radius:8px; padding:10px;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; padding:8px; background:rgba(23,162,184,0.15); border-radius:8px; border-left:4px solid #17a2b8;">
+                            <div>
+                                <div style="font-size:0.9em; font-weight:bold; color:#fff;">자동 동기화</div>
+                                <div style="font-size:1.1em; font-weight:bold; color:#17a2b8;">⏰ 23:00</div>
+                            </div>
+                            <button onclick="runSyncNow()"
+                                style="padding:5px 10px; font-size:0.8em; border:none; border-radius:4px; cursor:pointer; background:#17a2b8; color:white;">▶️
+                                지금 실행</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="crawlStatusDetail" style="color:#aaa; font-size:0.85em; margin-top:8px;"></div>
+
+                <!-- Right: Logs Panel -->
+                <div style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h4 style="margin:0; color:#4ecdc4;">📋 실행 로그</h4>
+                        <button onclick="refreshLogs()"
+                            style="background:#6c757d; color:white; border:none; padding:4px 10px; border-radius:4px; font-size:0.8em; cursor:pointer;">🔄</button>
+                    </div>
+                    <div id="crawlerLogList"
+                        style="flex:1; overflow-y:auto; background:rgba(0,0,0,0.3); border-radius:8px; padding:10px; font-family:monospace; font-size:0.85em; min-height:300px;">
+                        <div style="text-align:center; color:#666; padding:20px;">로그 로딩 중...</div>
+                    </div>
+                    <button id="btnLoadMoreLogs" onclick="loadMoreLogs()"
+                        style="margin-top:10px; background:#6c757d; color:white; border:none; padding:8px; width:100%; border-radius:4px; cursor:pointer;">📄
+                        더 불러오기</button>
+                </div>
             </div>
-            <style>
-                @keyframes spin {
-                    to {
-                        transform: rotate(360deg);
-                    }
-                }
-            </style>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h4 style="margin:0; color:#20c997;">📅 스케줄 목록</h4>
-                <button onclick="loadSchedules()"
-                    style="background:#6c757d; color:white; border:none; padding:4px 10px; border-radius:4px; font-size:0.8em; cursor:pointer;">🔄</button>
-            </div>
-            <div id="scheduleList"
-                style="max-height:350px; overflow-y:auto; background:rgba(0,0,0,0.2); border-radius:8px; padding:10px; margin-bottom:15px;">
-                <div style="text-align:center; color:#666; padding:20px;">로딩 중...</div>
-            </div>
-            <button onclick="openAddScheduleDialog()"
-                style="background:#667eea; color:white; border:none; padding:10px; width:100%; border-radius:4px; font-weight:bold; cursor:pointer;">➕
-                새 스케줄 추가</button>
         </div>
     </div>
+    <style>
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 
     <!-- 📋 Logs Panel Modal -->
     <div id="logsModal" class="modal-overlay"

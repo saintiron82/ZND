@@ -202,23 +202,13 @@ function renderGroupList(showCheckboxes = true) {
         const div = document.createElement('div');
         div.className = 'group-item';
 
-        const isSelected = currentGroup === sid;
-        if (isSelected) div.classList.add('active');
+        // [MODIFIED] 그룹 클릭 이벤트 제거 - 현황만 표시
+        // (기존: selectGroup 호출)
 
-        div.onclick = (e) => {
-            // Check if clicked element is checkbox or button
-            if (e.target.type !== 'checkbox' && e.target.tagName !== 'BUTTON') {
-                selectGroup(sid);
-            }
-        };
-
-        const chkId = `chk-${sid}`;
-
-        // 개선된 UI: 2열 그리드 레이아웃
+        // 개선된 UI: 2열 그리드 레이아웃 (체크박스 제거)
         div.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                 <div style="font-weight:bold; font-size:1.15em;">${sid}</div>
-                ${showCheckboxes ? `<input type="checkbox" id="${chkId}" class="group-checkbox" data-sid="${sid}">` : ''}
             </div>
             <div class="group-stat" style="display:grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 0.9em;">
                 <span style="${pureNewCount > 0 ? 'color:#d63384; font-weight:bold;' : 'color:#ccc;'}">🔥 NEW: ${pureNewCount}</span>
@@ -285,18 +275,104 @@ function resetGroupStatus(sid) {
     // 1. Reset Status
     sourceGroups[sid].forEach(i => i.status = 'NEW');
 
-    // 2. [FIX] Do NOT Clear Cache! User wants to keep content.
-    // sourceGroups[sid].forEach(i => {
-    //     delete loadedContent[i.url];
-    // });
-
-    // Save state (saved flag might need update if we want to un-save? No, just status reset)
+    // Save state
     saveContentCache();
 
     renderGroupList();
-    if (currentGroup === sid) selectGroup(sid); // Refresh prompt if active
-
     log(`'${sid}' 그룹 상태가 NEW로 변경되었습니다. (내용 유지됨)`, 'info');
+}
+
+// [NEW] 배치 추출 - 전체 NEW 기사 중 N개를 추출하여 프롬프트 생성
+async function extractBatch() {
+    const batchSize = parseInt(document.getElementById('batchSizeSlider').value) || 10;
+
+    // 전체 NEW 기사 수집 (분석되지 않은 것만)
+    let allNewItems = [];
+    Object.values(sourceGroups).forEach(items => {
+        items.forEach(item => {
+            if (item.status === 'NEW' && !isAnalyzed(item.url)) {
+                allNewItems.push(item);
+            }
+        });
+    });
+
+    if (allNewItems.length === 0) {
+        alert('분석할 NEW 기사가 없습니다.');
+        return;
+    }
+
+    // batchSize만큼 추출
+    const itemsToProcess = allNewItems.slice(0, batchSize);
+
+    log(`⚡ 추출 시작: ${itemsToProcess.length}개 / 전체 NEW ${allNewItems.length}개`, 'info');
+
+    // 콘텐츠 가져오기 (캐시에 없는 경우)
+    const missingUrls = itemsToProcess
+        .map(i => i.url)
+        .filter(u => !loadedContent[u] || (!loadedContent[u].text && !loadedContent[u].summary));
+
+    if (missingUrls.length > 0) {
+        showLoading(`콘텐츠 추출 중... (${missingUrls.length}개)`);
+        try {
+            const chunkSize = 20;
+            for (let i = 0; i < missingUrls.length; i += chunkSize) {
+                const chunk = missingUrls.slice(i, i + chunkSize);
+                const contentRes = await fetch('/api/extract_batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ urls: chunk })
+                });
+                const fetchedList = await contentRes.json();
+                fetchedList.forEach(item => {
+                    loadedContent[item.url] = item;
+                });
+            }
+            saveContentCache();
+        } catch (e) {
+            log(`❌ 추출 실패: ${e}`, 'error');
+            hideLoading();
+            return;
+        }
+        hideLoading();
+    }
+
+    // 프롬프트 생성
+    articleIdMap = {};
+    const inputArray = [];
+
+    itemsToProcess.forEach(link => {
+        const content = loadedContent[link.url] || {};
+        const title = content.title || content.original_title || link.url;
+        let body = content.text || '';
+        let description = content.description || content.summary || '';
+
+        if (body.length > 5000) body = body.substring(0, 5000) + '...(truncated)';
+
+        // Article ID 생성
+        let articleId = content.article_id;
+        if (!articleId) {
+            articleId = Math.random().toString(36).substring(2, 8);
+            content.article_id = articleId;
+            loadedContent[link.url] = content;
+        }
+        articleIdMap[articleId] = link.url;
+
+        inputArray.push({
+            "Article_ID": articleId,
+            "Source": link.source_id || 'unknown',
+            "Title": title,
+            "Description": description,
+            "Body": body
+        });
+    });
+
+    // 프롬프트 영역에 표시
+    const jsonStr = JSON.stringify(inputArray, null, 2);
+    document.getElementById('promptArea').value = jsonStr;
+    document.getElementById('promptStatus').textContent = `✅ ${inputArray.length}개 준비 완료 (전체 NEW: ${allNewItems.length}개)`;
+
+    saveContentCache();
+    log(`✅ 프롬프트 생성 완료: ${inputArray.length}개`, 'success');
 }
 
 // --- Step 2: Fetch Content for Selected ---

@@ -7,6 +7,9 @@ import json
 from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify
 
+# 공통 인증 모듈
+from src.routes.auth import requires_auth
+
 publish_bp = Blueprint('publish', __name__)
 
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'cache')
@@ -45,6 +48,7 @@ def extract_tags_from_data(data: dict) -> list:
 
 
 @publish_bp.route('/api/desk/publish_selected', methods=['POST'])
+@requires_auth
 def desk_publish_selected():
     """선택된 Staging 파일만 발행 (New or Append to Issue)"""
     try:
@@ -249,6 +253,21 @@ def desk_publish_selected():
         except Exception as e:
             print(f"⚠️ [Publish] Cache invalidation failed: {e}")
         
+        # [NEW] Discord 알림 전송
+        if published_count > 0 and DISCORD_ENABLED:
+            try:
+                kst_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                send_simple_message(
+                    f"**{edition_name}** 발행 완료!\n"
+                    f"📝 발행: {published_count}개\n"
+                    f"⏭️ 스킵: {skipped_count}개\n"
+                    f"❌ 실패: {failed_count}개\n"
+                    f"⏰ 시간: {kst_time}",
+                    "📰 신규 발행 알림"
+                )
+            except Exception as e:
+                print(f"⚠️ [Publish] Discord notification failed: {e}")
+        
         # 응답 메시지 구성
         message = f'{published_count}개 기사 발행 완료 ({edition_name})'
         if skipped_count > 0:
@@ -270,6 +289,7 @@ def desk_publish_selected():
 
 
 @publish_bp.route('/api/cache/sync', methods=['POST'])
+@requires_auth
 def cache_sync():
     """
     ☁️ 로컬 캐시 + 크롤링 히스토리를 Firebase에 동기화
@@ -423,6 +443,7 @@ def cache_sync():
 
 
 @publish_bp.route('/api/cache/pull', methods=['POST'])
+@requires_auth
 def cache_pull():
     """
     ⬇️ Firebase에서 캐시를 로컬로 다운로드
@@ -541,6 +562,7 @@ def cache_pull():
 
 
 @publish_bp.route('/api/publication/config', methods=['GET', 'POST'])
+@requires_auth
 def publication_config():
     """
     📋 발행 설정 조회 및 수정
@@ -588,6 +610,7 @@ def publication_config():
 
 
 @publish_bp.route('/api/firebase/stats')
+@requires_auth
 def firebase_stats():
     """
     🔥 Firebase 사용량 통계 조회
@@ -605,6 +628,7 @@ def firebase_stats():
 
 
 @publish_bp.route('/api/firebase/stats/reset', methods=['POST'])
+@requires_auth
 def firebase_stats_reset():
     """
     🔄 Firebase 사용량 통계 리셋
@@ -623,6 +647,7 @@ def firebase_stats_reset():
 
 
 @publish_bp.route('/api/publication/<publish_id>/update', methods=['POST'])
+@requires_auth
 def update_publication_format(publish_id):
     """
     🔄 회차 데이터 최신 포맷으로 업데이트
@@ -711,6 +736,7 @@ def update_publication_format(publish_id):
 
 
 @publish_bp.route('/api/publication/update_all', methods=['POST'])
+@requires_auth
 def update_all_publications():
     """
     🔄 모든 회차 데이터를 최신 포맷으로 업데이트

@@ -41,6 +41,22 @@ class DBClient:
             print(f"❌ Firebase Init Failed: {e}")
             return None
 
+    def _get_env(self):
+        """환경 설정 반환 (dev 또는 release)"""
+        return os.getenv('ZND_ENV', 'dev')
+    
+    def _get_collection(self, collection_name):
+        """환경별 컬렉션 참조 반환
+        
+        구조: {env}/data/{collection_name}
+        예: dev/data/publications, release/data/publications
+        """
+        if not self.db:
+            return None
+        env = self._get_env()
+        # 환경별 하위 컬렉션 경로
+        return self.db.collection(env).document('data').collection(collection_name)
+
     # ============================================
     # Firebase 사용량 추적 메서드
     # ============================================
@@ -414,7 +430,7 @@ class DBClient:
             return None
             
         try:
-            doc = self.db.collection('articles').document(doc_id).get()
+            doc = self._get_collection('articles').document(doc_id).get()
             self._track_read()  # 통계 추적
             if doc.exists:
                 data = doc.to_dict()
@@ -437,7 +453,7 @@ class DBClient:
             return None
             
         try:
-            docs = self.db.collection('articles').where('url', '==', url).limit(1).stream()
+            docs = self._get_collection('articles').where('url', '==', url).limit(1).stream()
             for doc in docs:
                 data = doc.to_dict()
                 data['id'] = doc.id
@@ -462,7 +478,7 @@ class DBClient:
             from datetime import datetime, timezone
             update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
             
-            self.db.collection('articles').document(doc_id).update(update_data)
+            self._get_collection('articles').document(doc_id).update(update_data)
             self._track_write()  # 통계 추적
             print(f"✏️ [Firestore] Updated: {doc_id}")
             return True, f"Updated document: {doc_id}"
@@ -481,7 +497,7 @@ class DBClient:
             return False, "DB not connected"
             
         try:
-            self.db.collection('articles').document(doc_id).delete()
+            self._get_collection('articles').document(doc_id).delete()
             self._track_delete()  # 통계 추적
             print(f"🗑️ [Firestore] Deleted: {doc_id}")
             return True, f"Deleted document: {doc_id}"
@@ -505,7 +521,7 @@ class DBClient:
         try:
             from google.cloud.firestore_v1 import Query
             
-            query = self.db.collection('articles')
+            query = self._get_collection('articles')
             
             if descending:
                 query = query.order_by(order_by, direction=Query.DESCENDING)
@@ -544,7 +560,7 @@ class DBClient:
             dd = date_str[8:10]
             edition_prefix = f"{yy}{mm}{dd}_"
             
-            docs = self.db.collection('articles')\
+            docs = self._get_collection('articles')\
                 .where('edition_code', '>=', edition_prefix)\
                 .where('edition_code', '<', edition_prefix + 'z')\
                 .stream()
@@ -599,7 +615,7 @@ class DBClient:
                 summary_data['updated_at'] = summary_data['published_at']
             
             # 1. 회차 문서 저장 (edition_code = 문서 ID)
-            self.db.collection('publications').document(edition_code).set(summary_data)
+            self._get_collection('publications').document(edition_code).set(summary_data)
             self._track_write()  # 통계 추적
             print(f"🎉 [Firestore] Created Publication: {edition_code} ({summary_data.get('edition_name')})")
             
@@ -637,7 +653,7 @@ class DBClient:
             from datetime import datetime, timezone
             update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
             
-            self.db.collection('publications').document(publish_id).update(update_data)
+            self._get_collection('publications').document(publish_id).update(update_data)
             self._track_write()  # 통계 추적
             print(f"✏️ [Firestore] Updated Publication: {publish_id}")
             
@@ -662,7 +678,7 @@ class DBClient:
         try:
             from google.cloud.firestore_v1 import ArrayUnion
             
-            meta_ref = self.db.collection('publications').document('_meta')
+            meta_ref = self._get_collection('publications').document('_meta')
             
             issue_entry = {
                 'code': issue_data.get('edition_code'),
@@ -722,7 +738,7 @@ class DBClient:
             return
             
         try:
-            meta_ref = self.db.collection('publications').document('_meta')
+            meta_ref = self._get_collection('publications').document('_meta')
             meta_doc = meta_ref.get()
             
             if meta_doc.exists:
@@ -756,7 +772,7 @@ class DBClient:
         try:
             from google.cloud.firestore_v1 import ArrayUnion
             
-            ids_ref = self.db.collection('publications').document('_article_ids')
+            ids_ref = self._get_collection('publications').document('_article_ids')
             ids_ref.set({
                 'ids': ArrayUnion(article_ids)
             }, merge=True)
@@ -773,7 +789,7 @@ class DBClient:
         try:
             from google.cloud.firestore_v1 import ArrayRemove
             
-            ids_ref = self.db.collection('publications').document('_article_ids')
+            ids_ref = self._get_collection('publications').document('_article_ids')
             ids_ref.update({
                 'ids': ArrayRemove(article_ids)
             })
@@ -789,7 +805,7 @@ class DBClient:
             return set()
             
         try:
-            ids_doc = self.db.collection('publications').document('_article_ids').get()
+            ids_doc = self._get_collection('publications').document('_article_ids').get()
             if ids_doc.exists:
                 ids = ids_doc.to_dict().get('ids', [])
                 print(f"🔑 [Firestore] Loaded {len(ids)} published article IDs")
@@ -811,7 +827,7 @@ class DBClient:
             return []
             
         try:
-            meta_doc = self.db.collection('publications').document('_meta').get()
+            meta_doc = self._get_collection('publications').document('_meta').get()
             self._track_read()  # 통계 추적
             
             if not meta_doc.exists:
@@ -858,7 +874,7 @@ class DBClient:
             return
             
         try:
-            meta_ref = self.db.collection('publications').document('_meta')
+            meta_ref = self._get_collection('publications').document('_meta')
             meta_doc = meta_ref.get()
             
             if meta_doc.exists:
@@ -893,7 +909,7 @@ class DBClient:
         try:
             # date_str 필터링은 일단 비활성화하고 전체 조회
             # (복합 인덱스 문제 방지)
-            docs = self.db.collection('publications').stream()
+            docs = self._get_collection('publications').stream()
             
             issues = []
             for doc in docs:
@@ -929,7 +945,7 @@ class DBClient:
         if not self.db:
             return None
         try:
-            doc = self.db.collection('publications').document(publish_id).get()
+            doc = self._get_collection('publications').document(publish_id).get()
             self._track_read()  # 통계 추적
             if doc.exists:
                 data = doc.to_dict()
@@ -1183,7 +1199,7 @@ class DBClient:
         
         try:
             # cache_sync 컬렉션의 문서 ID = 날짜
-            docs = self.db.collection('cache_sync').stream()
+            docs = self._get_collection('cache_sync').stream()
             
             dates = []
             for doc in docs:
@@ -1227,12 +1243,12 @@ class DBClient:
                 
                 # 청크별 문서에 저장
                 chunk_id = f"chunk_{i // CHUNK_SIZE}"
-                self.db.collection('crawling_history').document(chunk_id).set(chunk_data, merge=True)
+                self._get_collection('crawling_history').document(chunk_id).set(chunk_data, merge=True)
                 self._track_write()
                 total_count += len(chunk_data)
             
             # 메타 정보 업데이트
-            self.db.collection('crawling_history').document('_meta').set({
+            self._get_collection('crawling_history').document('_meta').set({
                 'total_count': len(history),
                 'last_sync': datetime.now(timezone.utc).isoformat(),
                 'chunk_count': (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
@@ -1261,7 +1277,7 @@ class DBClient:
             history = {}
             
             # 모든 청크 문서 조회
-            docs = self.db.collection('crawling_history').stream()
+            docs = self._get_collection('crawling_history').stream()
             
             read_count = 0
             for doc in docs:

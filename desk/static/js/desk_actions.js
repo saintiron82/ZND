@@ -70,6 +70,37 @@ async function restoreSelected() {
         alert(`❌ 오류: ${error.message}`);
     }
 }
+// [NEW] Helper to check if item is qualified for publishing
+function isQualifiedForPublish(item) {
+    if (!item.category) return false;
+    // Add other checks if needed
+    return true;
+}
+
+function publishAll() {
+    const selected = getSelectedItems();
+    if (selected.length === 0) {
+        alert('발행할 기사를 선택해주세요.');
+        return;
+    }
+
+    // [MODIFIED] Validate Classification
+    const selectedUrls = new Set(selected.map(s => s.value));
+    const selectedObjs = deskData.filter(d => selectedUrls.has(d.url));
+
+    const unqualified = selectedObjs.filter(d => !d.category);
+
+    if (unqualified.length > 0) {
+        alert(`⚠️ 다음 ${unqualified.length}개 기사는 '분류(Category)'가 완료되지 않았습니다.\n\n분류를 먼저 완료해주세요.`);
+        return;
+    }
+
+    // Modal open logic...
+    const modal = document.getElementById('publishModal');
+    // ... rest of logic
+    document.getElementById('publishSelectedCount').textContent = selected.length;
+    modal.classList.add('show');
+}
 function updateCutline() {
     const isValue = parseFloat(document.getElementById('cutlineIS').value);
     const zsValue = parseFloat(document.getElementById('cutlineZS').value);

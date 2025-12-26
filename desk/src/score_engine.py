@@ -193,6 +193,14 @@ def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
             
         if data.get('Article_ID'): 
             result['article_id'] = data['Article_ID']
+            
+        # [NEW] Extract Category if present
+        if data.get('Category'):
+            result['category'] = data['Category']
+        elif data.get('category'):
+            result['category'] = data['category']
+        elif meta.get('Category'):
+            result['category'] = meta['Category']
         
         # IS Calculation
         is_analysis = data.get('IS_Analysis', {})
@@ -248,5 +256,13 @@ def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
             result['summary'] = meta.get('Summary') or meta.get('summary')
         elif data.get('summary'):
             result['summary'] = data['summary']
+            
+        # [NEW] Extract Category if present
+        if data.get('Category'):
+            result['category'] = data['Category']
+        elif data.get('category'):
+            result['category'] = data['category']
+        elif meta.get('Category'):
+            result['category'] = meta['Category']
         
         return result

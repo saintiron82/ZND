@@ -142,7 +142,7 @@
   },
   "impact_score": 3.0,
   "original_title": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",
-  "published_at": "2025-12-25T12:43:20+00:00",
+  "published_at": "2025-12-26T12:53:30.614488+00:00",
   "raw_analysis": {
     "Article_ID": "21c7d24ace56",
     "Meta": {
@@ -215,13 +215,21 @@
   "source_id": "the_decoder",
   "staged": true,
   "staged_at": "2025-12-26T06:31:35.201199+00:00",
-  "status": "reviewed",
+  "status": "PUBLISHED",
   "summary": "Jane Manchun Wong이 Waymo 앱 코드 내에서 미출시된 Gemini 기반 차량 내 어시스턴트의 시스템 프롬프트를 발견했다. 이 프롬프트는 에어컨 조절, 음악 변경 등의 기능을 수행하며 자율주행 시스템과는 엄격히 분리되어 작동한다. 이는 AI 에이전트 구축을 위한 프롬프트 엔지니어링의 정교한 사례를 보여준다.",
   "tags": [],
   "text": "Prompt engineers, take note: Jane Manchun Wong has uncovered the system prompt for Waymo's unreleased Gemini AI assistant, a specification over 1,200 lines long buried in the Waymo app's code. The assistant (still) runs on Gemini 2.5 Flash and helps passengers during their ride. It can answer questions, adjust the air conditioning, and change the music, but it can't steer the vehicle or alter the route. The instructions draw a clear line between the AI assistant (Gemini) and the autonomous driving system (Waymo Driver). The prompt uses a trigger-instruction-response pattern throughout: each rule defines a trigger, an action instruction, and often example responses. Wrong and correct answers appear side by side to clarify the desired behavior. For ambiguous questions: first clarify, then draw conclusions, finally deflect. Hard limits are enforced through prohibition lists with alternative answers. Wong's full analysis has many more details. Ad DEC_D_Incontent-1",
   "title": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",
   "title_ko": "Waymo 앱 코드에서 미출시 Gemini 어시스턴트용 1,200줄 시스템 프롬프트 유출",
-  "updated_at": "2025-12-26T06:31:35.201546+00:00",
+  "updated_at": "2025-12-26T10:55:11.074561+00:00",
   "url": "https://the-decoder.com/waymos-leaked-system-prompt-reveals-a-1200-line-rulebook-for-its-in-car-gemini-assistant/",
-  "zero_echo_score": 4.0
+  "zero_echo_score": 4.0,
+  "recalculated_at": "2025-12-26T10:57:58.296331+00:00",
+  "category": "Engineering",
+  "dedup_status": "selected",
+  "publish_id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호",
+  "published": true,
+  "data_file": "the_decoder_21c7d24ace56.json"
 }

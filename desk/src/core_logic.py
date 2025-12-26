@@ -732,6 +732,12 @@ def get_stage(data: dict) -> str:
     if data.get('saved', False) or data.get('status') == 'ACCEPTED':
         return Stage.STAGED
     
+    # [FIX] Check for category (Implicit Staging)
+    # 카테고리가 지정되어 있고, '미분류'가 아니면 Staged로 간주
+    category = data.get('category')
+    if category and category != '미분류' and category != 'Uncategorized':
+        return Stage.STAGED
+    
     # Check for analyzed (has scores or ANALYZED status)
     if (data.get('status') == 'ANALYZED' or
         data.get('mll_status') == 'analyzed' or
@@ -741,6 +747,42 @@ def get_stage(data: dict) -> str:
     
     # Default: inbox
     return Stage.INBOX
+
+
+def classify_article(data: dict) -> dict:
+    """
+    Unified classification function for articles.
+    Returns a dict with 'stage', 'is_published', 'category_key' for consistent
+    classification across Desk and Crawler.
+    
+    Returns:
+        {
+            'stage': Stage value (inbox, analyzed, staged, trash),
+            'is_published': bool,
+            'category_key': str - Which bucket this belongs to for stats
+        }
+    """
+    stage = get_stage(data)
+    is_published = data.get('published', False) is True
+    
+    # Determine category key for stats counting
+    # Priority: Published > Trash > Staged > Analyzed > Inbox
+    if is_published:
+        category_key = 'published'
+    elif stage == Stage.TRASH:
+        category_key = 'rejected'
+    elif stage == Stage.STAGED:
+        category_key = 'staged'
+    elif stage == Stage.ANALYZED:
+        category_key = 'analyzed'
+    else:
+        category_key = 'unanalyzed'
+    
+    return {
+        'stage': stage,
+        'is_published': is_published,
+        'category_key': category_key
+    }
 
 
 def set_stage(data: dict, stage: str) -> dict:

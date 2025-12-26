@@ -1148,5 +1148,165 @@
     "reason": null,
     "status": "ACCEPTED",
     "timestamp": "2025-12-24T00:55:28.713414+00:00"
+  },
+  "corrupted://b08c3cdcbaca.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.927754+00:00"
+  },
+  "corrupted://a32659782506.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.937012+00:00"
+  },
+  "corrupted://7754fae0c545.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.940044+00:00"
+  },
+  "corrupted://72c8c9929171.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.942713+00:00"
+  },
+  "corrupted://44715aa3f8c0.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.943740+00:00"
+  },
+  "corrupted://11daca2a3851.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.945919+00:00"
+  },
+  "corrupted://ead119f48e76.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.948269+00:00"
+  },
+  "corrupted://ce59870d12cf.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.950296+00:00"
+  },
+  "corrupted://c6c27819d2c7.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.951308+00:00"
+  },
+  "corrupted://a4f0ea419a32.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.952817+00:00"
+  },
+  "corrupted://90241c552c03.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.955612+00:00"
+  },
+  "corrupted://828dd08a8594.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.957648+00:00"
+  },
+  "corrupted://736ed0f1db42.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.959177+00:00"
+  },
+  "corrupted://6dab28d0462b.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.961214+00:00"
+  },
+  "corrupted://4b22a959c930.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.962741+00:00"
+  },
+  "corrupted://32fbd6b631b8.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.964771+00:00"
+  },
+  "corrupted://2dc062950ec8.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.966790+00:00"
+  },
+  "corrupted://2b2c7b4730b0.json": {
+    "status": "REJECTED",
+    "reason": "permanent_delete",
+    "timestamp": "2025-12-26T11:31:42.968307+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205089": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.408188+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205052": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.424649+00:00"
+  },
+  "https://the-decoder.com/the-arc-benchmarks-fall-marks-another-casualty-of-relentless-ai-optimization/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.438894+00:00"
+  },
+  "https://the-decoder.com/a-zelda-puzzle-proves-ai-models-can-crack-gaming-riddles-that-require-thinking-six-moves-ahead/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.452007+00:00"
+  },
+  "https://the-decoder.com/qwen-updates-image-editing-model-with-better-character-consistency/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.466220+00:00"
+  },
+  "https://the-decoder.com/nvidias-20-billion-groq-deal-is-really-about-blocking-googles-tpu-momentum/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.480645+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205086": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.495591+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205087": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.514155+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205084": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.530056+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205088": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.545498+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205082": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.559319+00:00"
+  },
+  "https://the-decoder.com/authors-sue-six-ai-giants-for-book-piracy/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.574980+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205008": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.587798+00:00"
+  },
+  "https://the-decoder.com/waymos-leaked-system-prompt-reveals-a-1200-line-rulebook-for-its-in-car-gemini-assistant/": {
+    "status": "ACCEPTED",
+    "reason": null,
+    "timestamp": "2025-12-26T12:53:30.602129+00:00"
   }
 }

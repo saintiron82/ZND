@@ -489,10 +489,11 @@ def get_unprocessed_items():
             # 1. 캐시 파일 내 'saved' 플래그 확인 (이미 발행된 것 제외)
             if not show_all and content.get('saved'): continue
             
-            # [NEW] 시간 범위 필터링
+            # [NEW] 시간 범위 필터링 (Enhanced)
             if cutoff_time:
-                crawled_at_str = content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
-                if crawled_at_str:
+                # Priority: updated_at > crawled_at > cached_at
+                ts_str = content.get('updated_at') or content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
+                if ts_str:
                     try:
                         # ISO format parsing
                         crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
@@ -625,17 +626,42 @@ def get_cache_by_date():
     """특정 날짜 또는 전체 캐시 파일들을 상태별로 분류하여 반환 for Kanban"""
     target_date = request.args.get('date', '')
     
-    # [NEW] 시간 필터 파라미터
-    hours_param = request.args.get('hours', '0')
-    try:
-        filter_hours = int(hours_param)
-    except:
-        filter_hours = 0
+    # [NEW] 시간 범위 파라미터 (start_time, end_time - ISO format)
+    start_time_param = request.args.get('start_time', '')
+    end_time_param = request.args.get('end_time', '')
     
-    cutoff_time = None
-    if filter_hours > 0:
-        from datetime import timedelta
-        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+    # Legacy support: hours 파라미터
+    hours_param = request.args.get('hours', '0')
+    
+    start_cutoff = None
+    end_cutoff = None
+    
+    # 새 방식: start_time/end_time 우선
+    if start_time_param:
+        try:
+            start_cutoff = datetime.fromisoformat(start_time_param.replace('Z', '+00:00'))
+            if start_cutoff.tzinfo is None:
+                start_cutoff = start_cutoff.replace(tzinfo=timezone.utc)
+        except:
+            pass
+    
+    if end_time_param:
+        try:
+            end_cutoff = datetime.fromisoformat(end_time_param.replace('Z', '+00:00'))
+            if end_cutoff.tzinfo is None:
+                end_cutoff = end_cutoff.replace(tzinfo=timezone.utc)
+        except:
+            pass
+    
+    # 레거시 방식: hours 파라미터 (start_time이 없을 때만)
+    if not start_cutoff and hours_param != '0':
+        try:
+            filter_hours = int(hours_param)
+            if filter_hours > 0:
+                from datetime import timedelta
+                start_cutoff = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+        except:
+            pass
     
     # 전체 또는 특정 날짜
     if target_date == 'all' or not target_date:
@@ -660,8 +686,8 @@ def get_cache_by_date():
     
     for filepath in files:
         filename = os.path.basename(filepath)
-        # Skip batch files
-        if 'batch_' in filename or filename == 'index.json':
+        # [FIX] Skip batch files (aligned with Desk logic)
+        if 'batch_' in filename or 'batches' in filepath.split(os.sep) or filename == 'index.json':
             continue
             
         content = {}
@@ -680,35 +706,55 @@ def get_cache_by_date():
                 'error': str(e)
             }
         
-        # [NEW] 시간 필터링
-        if cutoff_time and not is_corrupted:
-            crawled_at_str = content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
-            if crawled_at_str:
-                try:
-                    crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
-                    if crawled_at.tzinfo is None:
-                        crawled_at = crawled_at.replace(tzinfo=timezone.utc)
-                    if crawled_at < cutoff_time:
-                        continue  # 시간 범위 밖
-                except:
-                    pass  # 파싱 실패 시 포함
-            
-        url = content.get('url')
-        
         # Determine Status
         if is_corrupted:
-            kanban_data['trash'].append(content)
-            continue
-            
+             kanban_data['trash'].append(content)
+             continue
+        
+        # [FIX] Define url before use
+        url = content.get('url')
         if not url: continue
         
         # DB Status Check (for reference, not for classification)
         db_status = db.get_history_status(url)
         content['db_status'] = db_status
         
-        # --- UNIFIED CLASSIFICATION: Use get_stage() ---
-        stage = get_stage(content)
-        kanban_data[stage].append(content)
+        # --- UNIFIED CLASSIFICATION: Use classify_article() ---
+        from src.core_logic import classify_article
+        classification = classify_article(content)
+        stage = classification['stage']
+        is_published = classification['is_published']
+        category_key = classification['category_key']
+        
+        # [MODIFIED] 시간 필터링 - start_cutoff ~ end_cutoff 범위
+        if (start_cutoff or end_cutoff) and not is_corrupted:
+            # Priority: updated_at > crawled_at > cached_at
+            ts_str = content.get('updated_at') or content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
+            if ts_str:
+                try:
+                    ts = datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
+                    if ts.tzinfo is None:
+                        ts = ts.replace(tzinfo=timezone.utc)
+                    # Check range
+                    if start_cutoff and ts < start_cutoff:
+                        continue  # Before start time
+                    if end_cutoff and ts > end_cutoff:
+                        continue  # After end time
+                except:
+                    pass  # Parse error - keep it
+        
+        # Kanban Column Assignment (using category_key for consistency)
+        # Map category_key to kanban columns
+        if category_key == 'published':
+            kanban_data['published'].append(content)
+        elif category_key == 'rejected':
+            kanban_data['trash'].append(content)
+        elif category_key == 'staged':
+            kanban_data['staged'].append(content)
+        elif category_key == 'analyzed':
+            kanban_data['analyzed'].append(content)
+        else:
+            kanban_data['inbox'].append(content)
              
     return jsonify({'success': True, 'data': kanban_data})
 

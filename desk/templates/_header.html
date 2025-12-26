@@ -81,46 +81,130 @@
         <a href="/inspector" class="nav-tab {% if active == 'inspector' %}active{% endif %}">📦 <span>분석</span></a>
     </div>
     <div style="display: flex; align-items: center; gap: 15px;">
-        <select id="globalTimeFilter" onchange="onTimeFilterChange()" style="background: #2a2a3e; color: white; border: 1px solid rgba(255,255,255,0.3); 
-                       padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer;">
-            <option value="0" style="background: #2a2a3e;">📅 전체</option>
-            <option value="6" style="background: #2a2a3e;">🕐 최근 6시간</option>
-            <option value="12" style="background: #2a2a3e;">🕐 최근 12시간</option>
-            <option value="24" selected style="background: #2a2a3e;">🕐 최근 24시간</option>
-            <option value="48" style="background: #2a2a3e;">🕐 최근 2일</option>
-            <option value="168" style="background: #2a2a3e;">🕐 최근 1주일</option>
-        </select>
+        <!-- [NEW] 정밀 시간 필터 -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 0.8rem; opacity: 0.7;">📅</span>
+            <input type="datetime-local" id="startTimeFilter" style="background: #2a2a3e; color: white; border: 1px solid rgba(255,255,255,0.3); 
+                          padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer;"
+                onchange="onTimeRangeChange()">
+            <span style="color: rgba(255,255,255,0.5);">~</span>
+            <input type="datetime-local" id="endTimeFilter" style="background: #2a2a3e; color: white; border: 1px solid rgba(255,255,255,0.3); 
+                          padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer;"
+                onchange="onTimeRangeChange()">
+        </div>
+        <!-- 빠른 선택 버튼 -->
+        <div style="display: flex; gap: 4px;">
+            <button onclick="setQuickTime(6)" class="quick-btn"
+                style="background: #3a3a5e; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">6h</button>
+            <button onclick="setQuickTime(12)" class="quick-btn"
+                style="background: #3a3a5e; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">12h</button>
+            <button onclick="setQuickTime(24)" class="quick-btn"
+                style="background: #667eea; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">24h</button>
+            <button onclick="setQuickTime(48)" class="quick-btn"
+                style="background: #3a3a5e; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">48h</button>
+            <button onclick="setQuickTime(0)" class="quick-btn"
+                style="background: #3a3a5e; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">전체</button>
+        </div>
         <div class="nav-user">👤 master</div>
     </div>
 </nav>
 
 <script>
-    // 공유 시간 필터 - localStorage 기반 동기화
-    const TIME_FILTER_KEY = 'znd_time_filter_hours';
+    // 시간 필터 키
+    const TIME_FILTER_START_KEY = 'znd_time_filter_start';
+    const TIME_FILTER_END_KEY = 'znd_time_filter_end';
 
-    // 페이지 로드 시 저장된 값 복원
+    // ISO 형식을 datetime-local 형식으로 변환
+    function toLocalDatetimeString(date) {
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    }
+
+    // 페이지 로드 시 저장된 값 복원 또는 기본값 설정
     document.addEventListener('DOMContentLoaded', function () {
-        const savedValue = localStorage.getItem(TIME_FILTER_KEY) || '24';
-        const select = document.getElementById('globalTimeFilter');
-        if (select) {
-            select.value = savedValue;
+        const startInput = document.getElementById('startTimeFilter');
+        const endInput = document.getElementById('endTimeFilter');
+
+        if (startInput && endInput) {
+            const savedStart = localStorage.getItem(TIME_FILTER_START_KEY);
+            const savedEnd = localStorage.getItem(TIME_FILTER_END_KEY);
+
+            if (savedStart && savedEnd) {
+                startInput.value = savedStart;
+                endInput.value = savedEnd;
+            } else {
+                // 기본값: 최근 24시간
+                setQuickTime(24);
+            }
         }
     });
 
-    // 필터 변경 시 저장 및 페이지별 콜백 호출
-    function onTimeFilterChange() {
-        const select = document.getElementById('globalTimeFilter');
-        const hours = select.value;
-        localStorage.setItem(TIME_FILTER_KEY, hours);
+    // 빠른 선택: N시간 전부터 지금까지
+    function setQuickTime(hours) {
+        const now = new Date();
+        const endInput = document.getElementById('endTimeFilter');
+        const startInput = document.getElementById('startTimeFilter');
+
+        endInput.value = toLocalDatetimeString(now);
+
+        if (hours === 0) {
+            // 전체: 시작 비우기
+            startInput.value = '';
+        } else {
+            const startDate = new Date(now.getTime() - hours * 60 * 60 * 1000);
+            startInput.value = toLocalDatetimeString(startDate);
+        }
+
+        // 버튼 하이라이트
+        document.querySelectorAll('.quick-btn').forEach(btn => btn.style.background = '#3a3a5e');
+        if (hours > 0) {
+            event.target.style.background = '#667eea';
+        }
+
+        onTimeRangeChange();
+    }
+
+    // 시간 범위 변경 시 저장 및 리로드
+    function onTimeRangeChange() {
+        const startInput = document.getElementById('startTimeFilter');
+        const endInput = document.getElementById('endTimeFilter');
+
+        localStorage.setItem(TIME_FILTER_START_KEY, startInput.value || '');
+        localStorage.setItem(TIME_FILTER_END_KEY, endInput.value || '');
 
         // 페이지별 리로드 함수 호출 (있으면)
         if (typeof reloadWithTimeFilter === 'function') {
-            reloadWithTimeFilter(hours);
+            reloadWithTimeFilter();
         }
     }
 
     // 현재 시간 필터 값 반환 (다른 스크립트에서 사용)
+    function getTimeFilterStart() {
+        const val = document.getElementById('startTimeFilter')?.value;
+        return val ? new Date(val).toISOString() : '';
+    }
+
+    function getTimeFilterEnd() {
+        const val = document.getElementById('endTimeFilter')?.value;
+        return val ? new Date(val).toISOString() : '';
+    }
+
+    // 레거시 호환: hours 대신 start/end 사용하도록 변환
     function getTimeFilterHours() {
-        return localStorage.getItem(TIME_FILTER_KEY) || '24';
+        // 레거시 호출 시 start가 없으면 0(전체), 있으면 시간 계산
+        const start = getTimeFilterStart();
+        if (!start) return '0';
+        const diffMs = new Date().getTime() - new Date(start).getTime();
+        return Math.ceil(diffMs / (1000 * 60 * 60)).toString();
+    }
+
+    // [NEW] End time 필터를 현재 시간으로 갱신 (재계산 후 호출)
+    function refreshEndTimeFilter() {
+        const endInput = document.getElementById('endTimeFilter');
+        if (endInput) {
+            const now = new Date();
+            endInput.value = toLocalDatetimeString(now);
+            localStorage.setItem(TIME_FILTER_END_KEY, endInput.value);
+        }
     }
 </script>

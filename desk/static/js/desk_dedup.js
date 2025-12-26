@@ -96,6 +96,8 @@ async function recalculateGroup(date) {
 
         if (result.success) {
             alert(`✅ 재계산 완료: ${result.message}`);
+            // [FIX] Refresh end time to include updated articles
+            refreshEndTimeFilter();
             loadDesk();
         } else {
             alert(`❌ 실패: ${result.error}`);
@@ -106,14 +108,14 @@ async function recalculateGroup(date) {
         loadDesk();
     }
 }
-async function openDedupModal(date) {
+async function openDedupModal(date, explicitArticles = null) {
     currentDedupDate = date;
     const modal = document.getElementById('dedupModal');
     const dateLabel = document.getElementById('dedupDateLabel');
     const contentEl = document.getElementById('dedupJsonContent');
     const pasteArea = document.getElementById('dedupPasteArea');
 
-    dateLabel.textContent = `날짜: ${date}`;
+    dateLabel.textContent = date ? `날짜: ${date}` : `선택된 기사: ${explicitArticles?.length || 0}개`;
     pasteArea.value = '';
     contentEl.textContent = '로딩 중...';
     modal.classList.add('active');
@@ -129,31 +131,36 @@ async function openDedupModal(date) {
         categories = ["AI/ML", "Cloud/Infra", "Security", "Business", "Hardware", "Software", "Research", "Policy", "Startup", "Other"];
     }
 
-    // 해당 날짜의 기사들 필터링 (대기 중인 것만)
-    // [FIX] date가 'all'이면 날짜 필터링 없이 전체 기사 처리
-    currentDedupArticles = deskData.filter(article => {
-        // 거부됨/발행됨은 제외
-        if (article.rejected || article.published) return false;
+    // 기사 필터링
+    if (explicitArticles) {
+        // [NEW] 명시적으로 전달된 기사 목록 사용 (Cache Manager 등)
+        currentDedupArticles = explicitArticles;
+    } else {
+        // [EXISTING] Desk 모드: 날짜별/전체 필터링
+        currentDedupArticles = deskData.filter(article => {
+            // 거부됨/발행됨은 제외
+            if (article.rejected || article.published) return false;
 
-        // 'all'이면 모든 날짜 포함
-        if (date === 'all') return true;
+            // 'all'이면 모든 날짜 포함
+            if (date === 'all') return true;
 
-        // 특정 날짜 선택 시 해당 날짜만 필터링
-        const dateRaw = article.crawled_at || article.cached_at || article.saved_at || 'Unknown';
-        if (dateRaw === 'Unknown') return false;
+            // 특정 날짜 선택 시 해당 날짜만 필터링
+            const dateRaw = article.crawled_at || article.cached_at || article.saved_at || 'Unknown';
+            if (dateRaw === 'Unknown') return false;
 
-        const d = new Date(dateRaw);
-        let articleDate;
-        if (curTimezone === 'gmt') {
-            articleDate = d.toISOString().split('T')[0];
-        } else {
-            articleDate = d.getFullYear() + '-' +
-                String(d.getMonth() + 1).padStart(2, '0') + '-' +
-                String(d.getDate()).padStart(2, '0');
-        }
+            const d = new Date(dateRaw);
+            let articleDate;
+            if (curTimezone === 'gmt') {
+                articleDate = d.toISOString().split('T')[0];
+            } else {
+                articleDate = d.getFullYear() + '-' +
+                    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(d.getDate()).padStart(2, '0');
+            }
 
-        return articleDate === date;
-    });
+            return articleDate === date;
+        });
+    }
 
     // 간결한 JSON 생성 (Priority = IS×0.5 + IS/ZS 기준 내림차순 정렬)
     const articles = currentDedupArticles

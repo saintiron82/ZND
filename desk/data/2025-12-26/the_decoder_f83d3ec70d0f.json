@@ -1,0 +1,17 @@
+{
+  "id": "f83d3ec70d0f",
+  "article_id": "f83d3ec70d0f",
+  "title_ko": "Qwen, 인물 일관성 강화된 이미지 편집 모델 공개",
+  "summary": "Qwen이 인물 일관성을 대폭 개선한 이미지 편집 모델 'Qwen-Image-Edit-2511'을 허깅페이스에 공개했다. 이번 업데이트는 인물 및 단체 사진 편집 시 얼굴 정체성을 유지하는 능력이 강화되었으며, 조명 및 카메라 앵글 제어 기능도 향상되었다. 아파치 2.0 라이선스로 배포되어 누구나 무료로 사용 가능하며, Qwen Chat을 통해 데모를 체험할 수 있다.",
+  "url": "https://the-decoder.com/qwen-updates-image-editing-model-with-better-character-consistency/",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 4.5,
+  "impact_score": 3.5,
+  "published_at": "2025-12-24T16:16:46+00:00",
+  "source_id": "the_decoder",
+  "original_title": "Qwen updates image editing model with better character consistency",
+  "publish_id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호"
+}

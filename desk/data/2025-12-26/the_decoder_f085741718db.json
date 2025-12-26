@@ -1,0 +1,17 @@
+{
+  "id": "f085741718db",
+  "article_id": "f085741718db",
+  "title_ko": "Poetiq, GPT-5.2 기반 시스템으로 ARC 벤치마크 정복 주장",
+  "summary": "AI 스타트업 Poetiq이 GPT-5.2를 활용한 시스템으로 난공불락으로 여겨지던 ARC-AGI 벤치마크를 사실상 해결했다고 발표했다. 이들은 ARC-AGI-1에서 성능을 최대화하고, 더 어려운 ARC-AGI-2에서도 인간 평균을 넘어서는 75%의 정확도를 기록했다고 주장했다. 이는 AI의 추론 능력이 급격히 최적화되고 있음을 시사한다.",
+  "url": "https://the-decoder.com/the-arc-benchmarks-fall-marks-another-casualty-of-relentless-ai-optimization/",
+  "tags": [],
+  "category": "AI/ML",
+  "zero_echo_score": 5.8,
+  "impact_score": 4.5,
+  "published_at": "2025-12-25T16:52:26+00:00",
+  "source_id": "the_decoder",
+  "original_title": "The ARC benchmark's fall marks another casualty of relentless AI optimization",
+  "publish_id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호"
+}

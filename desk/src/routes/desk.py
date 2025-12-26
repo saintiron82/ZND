@@ -44,21 +44,47 @@ def desk_list():
 
     try:
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
-        include_published = request.args.get('include_published', 'false').lower() == 'true'
+        # Parse boolean params
         include_trash = request.args.get('include_trash', 'false').lower() == 'true'
+        include_published = request.args.get('include_published', 'false').lower() == 'true'
         include_unanalyzed = request.args.get('include_unanalyzed', 'false').lower() == 'true'
         
-        # [NEW] 시간 범위 파라미터 (Inspector와 동기화)
-        hours_param = request.args.get('hours', '0')
-        try:
-            filter_hours = int(hours_param)
-        except:
-            filter_hours = 0
+        # [NEW] 시간 범위 파라미터 (start_time, end_time - ISO format)
+        start_time_param = request.args.get('start_time', '')
+        end_time_param = request.args.get('end_time', '')
         
-        cutoff_time = None
-        if filter_hours > 0:
-            from datetime import timedelta
-            cutoff_time = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+        # Legacy support: hours 파라미터
+        hours_param = request.args.get('hours', '0')
+        
+        start_cutoff = None
+        end_cutoff = None
+        
+        # 새 방식: start_time/end_time 우선
+        if start_time_param:
+            try:
+                start_cutoff = datetime.fromisoformat(start_time_param.replace('Z', '+00:00'))
+                if start_cutoff.tzinfo is None:
+                    start_cutoff = start_cutoff.replace(tzinfo=timezone.utc)
+            except:
+                pass
+        
+        if end_time_param:
+            try:
+                end_cutoff = datetime.fromisoformat(end_time_param.replace('Z', '+00:00'))
+                if end_cutoff.tzinfo is None:
+                    end_cutoff = end_cutoff.replace(tzinfo=timezone.utc)
+            except:
+                pass
+        
+        # 레거시 방식: hours 파라미터 (start_time이 없을 때만)
+        if not start_cutoff and hours_param != '0':
+            try:
+                filter_hours = int(hours_param)
+                if filter_hours > 0:
+                    from datetime import timedelta
+                    start_cutoff = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+            except:
+                pass
         
         # [MODIFIED] Support 'all' date for Global Staging View
         is_all_dates = (date_str == 'all')
@@ -106,48 +132,63 @@ def desk_list():
                 with open(filepath, 'r', encoding='utf-8-sig') as f:
                     data = json.load(f)
                 
+                # --- UNIFIED CLASSIFICATION: Use classify_article() ---
+                from src.core_logic import get_stage, Stage, classify_article
+                
+                classification = classify_article(data)
+                stage = classification['stage']
+                is_published = classification['is_published']
+                category_key = classification['category_key']
+                
+                # [MODIFIED] 시간 필터링 - start_cutoff ~ end_cutoff 범위
+                if start_cutoff or end_cutoff:
+                    # Priority: updated_at > crawled_at > cached_at
+                    ts_str = data.get('updated_at') or data.get('crawled_at') or data.get('cached_at') or data.get('saved_at')
+                    if ts_str:
+                        try:
+                            ts = datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
+                            if ts.tzinfo is None:
+                                ts = ts.replace(tzinfo=timezone.utc)
+                            # Check range
+                            if start_cutoff and ts < start_cutoff:
+                                continue  # Before start time
+                            if end_cutoff and ts > end_cutoff:
+                                continue  # After end time
+                        except:
+                            pass  # Parse error - keep it
+                
+                # --- STATS COUNTING (after time filter, matching Crawler) ---
                 stats['total'] += 1
-                
-                # --- UNIFIED CLASSIFICATION: Use get_stage() ---
-                from src.core_logic import get_stage, Stage
-                stage = get_stage(data)
-                is_published = data.get('published', False)
-                
-                # Count Stats (published is independent)
-                if stage == Stage.TRASH:
-                    stats['rejected'] += 1
-                elif stage == Stage.STAGED:
-                    stats['staged'] += 1
-                elif stage == Stage.ANALYZED:
-                    stats['analyzed'] += 1
-                else:
-                    stats['unanalyzed'] += 1
-                
-                # Count published separately
-                if is_published:
-                    stats['published'] += 1
+                stats[category_key] = stats.get(category_key, 0) + 1
                 
                 # --- List Filters ---
-                # Desk shows: Analyzed + Staged by default
-                # Filter by published status if requested
+                # [MODIFIED] Desk shows: ONLY Classified (Staged) for Publishing
+                # Trash/Rejected items are ONLY visible in Cache Manager
                 
                 should_include = False
                 
+                # 1. Trash items are NEVER shown in Desk (manage in Cache Manager)
                 if stage == Stage.TRASH:
-                    if include_trash: should_include = True
-                elif stage == Stage.STAGED or stage == Stage.ANALYZED:
-                    should_include = True  # Always show staged and analyzed
-                elif stage == Stage.INBOX:
-                    if include_unanalyzed: should_include = True
+                    continue  # Skip trash entirely
                 
-                # Published filter: if include_published is False, exclude published items
-                if is_published and not include_published:
-                    should_include = False
+                # 2. Tab Separation (Strict)
+                elif include_published:
+                    # Published Tab: Must be published
+                    if is_published:
+                        should_include = True
+                else:
+                    # Unpublished Tab: ONLY Classified (Ready to Publish)
+                    if not is_published and stage == Stage.STAGED:
+                        should_include = True
+                    # Note: ANALYZED and INBOX are NOT shown in Desk anymore
                 
                 if not should_include:
                     continue
 
                 # [MOVED] 3. Time Filter moved to top of loop
+
+                # [FIX] Define is_rejected
+                is_rejected = (stage == Stage.TRASH)
 
                 articles.append({
                     'filename': filename,
@@ -392,8 +433,13 @@ def desk_update_categories():
                         cat = category_map.get(stored_article_id) or category_map.get(article_id, '미분류')
                         article_data['category'] = cat
                         article_data['dedup_status'] = 'selected'
+                        # [FIX] 분류되었으므로 Staged로 격상
+                        article_data['stage'] = 'staged'
                     else:
                         article_data['dedup_status'] = 'duplicate'
+                        # [FIX] 중복 기사는 자동으로 휴지통으로 이동
+                        article_data['stage'] = 'trash'
+                        article_data['rejected'] = True
                         uncategorized_count += 1
                     
                     with open(filepath, 'w', encoding='utf-8') as f:
@@ -573,3 +619,20 @@ def desk_settings():
         'cutline_is_default': float(os.getenv('CUTLINE_IS_DEFAULT', 6.5)),
         'cutline_zs_default': float(os.getenv('CUTLINE_ZS_DEFAULT', 3.0))
     })
+
+@desk_bp.route('/api/desk/empty_trash', methods=['POST'])
+@requires_auth
+def desk_empty_trash():
+    """
+    🗑️ 휴지통 비우기: stage='rejected'인 모든 기사를 물리적으로 삭제
+    """
+    global trash_manager
+    if trash_manager is None:
+        trash_manager = TrashManager(CACHE_DIR)
+        
+    try:
+        deleted_count = trash_manager.empty_trash()
+        return jsonify({'success': True, 'deleted': deleted_count, 'message': f'{deleted_count}개 기사가 영구 삭제되었습니다.'})
+    except Exception as e:
+        print(f"❌ [Empty Trash] Error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500

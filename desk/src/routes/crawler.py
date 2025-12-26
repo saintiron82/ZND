@@ -681,7 +681,7 @@ def get_cache_by_date():
         elif content.get('saved'):
              kanban_data['staged'].append(content)
         # 4. Analyzed (Has score but not saved)
-        elif content.get('status') == 'ANALYZED' or content.get('impact_score'):
+        elif content.get('status') == 'ANALYZED' or content.get('impact_score') is not None:
              kanban_data['analyzed'].append(content)
         # 5. Inbox (Others)
         else:

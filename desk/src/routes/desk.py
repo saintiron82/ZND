@@ -46,31 +46,39 @@ def desk_list():
         date_str = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
         include_published = request.args.get('include_published', 'false').lower() == 'true'
         include_trash = request.args.get('include_trash', 'false').lower() == 'true'
-        include_unanalyzed = request.args.get('include_unanalyzed', 'false').lower() == 'true'  # [NEW] 기본값 false (카드 표시 안 함)
+        include_unanalyzed = request.args.get('include_unanalyzed', 'false').lower() == 'true'
+        
+        # [NEW] 시간 범위 파라미터 (Inspector와 동기화)
+        hours_param = request.args.get('hours', '0')
+        try:
+            filter_hours = int(hours_param)
+        except:
+            filter_hours = 0
+        
+        cutoff_time = None
+        if filter_hours > 0:
+            from datetime import timedelta
+            cutoff_time = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
         
         # [MODIFIED] Support 'all' date for Global Staging View
         is_all_dates = (date_str == 'all')
         
-        target_dirs = []
+        files_to_process = []
         if is_all_dates:
-            if os.path.exists(CACHE_DIR):
-                # Scan only date folders (YYYY-MM-DD format), skip batches etc.
-                import re
-                date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
-                target_dirs = [os.path.join(CACHE_DIR, d) for d in os.listdir(CACHE_DIR) 
-                              if os.path.isdir(os.path.join(CACHE_DIR, d)) and date_pattern.match(d)]
+            import glob
+            # Inspector와 동일하게 모든 하위 폴더 검색
+            # 구조: desk/cache/YYYY-MM-DD/*.json OR desk/cache/*.json
+            search_pattern = os.path.join(CACHE_DIR, '**', '*.json')
+            files_to_process = glob.glob(search_pattern, recursive=True)
         else:
             cache_date_dir = os.path.join(CACHE_DIR, date_str)
             if os.path.exists(cache_date_dir):
-                target_dirs = [cache_date_dir]
+                files_to_process = [os.path.join(cache_date_dir, f) for f in os.listdir(cache_date_dir) if f.endswith('.json')]
         
         articles = []
         unanalyzed_count = 0  # [NEW] 미분석 기사 카운터
         
-        from src.score_engine import detect_schema_version, SCHEMA_V1_0, SCHEMA_LEGACY
-        
         # [NEW] Firebase에서 발행된 article_ids 조회 (동기화)
-        # 환경 변수로 비활성화 가능: DESK_SKIP_FIREBASE_SYNC=true
         published_article_ids = set()
         skip_firebase_sync = os.getenv('DESK_SKIP_FIREBASE_SYNC', 'false').lower() == 'true'
         if not include_published and not skip_firebase_sync:
@@ -79,91 +87,91 @@ def desk_list():
                 published_article_ids = get_published_article_ids()
                 print(f"🔗 [Desk] Firebase sync: {len(published_article_ids)} published IDs loaded")
             except Exception as e:
-                print(f"⚠️ [Desk] Failed to load published IDs (using local cache only): {e}")
+                pass
         
-        for cache_date_dir in target_dirs:
-            # Skip if not directory (double check)
-            if not os.path.isdir(cache_date_dir):
-                continue
-                
-            for filename in os.listdir(cache_date_dir):
-                if not filename.endswith('.json'):
-                    continue
-                
-                filepath = os.path.join(cache_date_dir, filename)
-                try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                    
-                    # [MODIFIED] 분석 상태 체크 (미분석도 표시 가능)
-                    is_analyzed = (
-                        data.get('mll_status') == 'analyzed' or
-                        data.get('raw_analysis') is not None or
-                        data.get('zero_echo_score') is not None
-                    )
-                    
-                    # 미분석 기사 카운트 (카드로는 표시 안 함)
-                    if not is_analyzed:
-                        unanalyzed_count += 1
-                        if not include_unanalyzed:
-                            continue
-                    
-                    # [CRITICAL FILTER]
-                    # If date='all' (Global Staging), strictly hide Published & Rejected
-                    # We only want "Work in Progress" items.
-                    is_published = data.get('published', False)
-                    is_rejected = data.get('rejected', False)
-                    
-                    # [NEW] Firebase 발행 기록과 동기화
-                    article_id = data.get('article_id', '')
-                    if article_id and article_id in published_article_ids:
-                        is_published = True
-                        # 캐시 파일도 업데이트 (선택적 - 성능 영향 있을 수 있음)
-                        # data['published'] = True
-                    
-                    # 1. Trash Filter
-                    if not include_trash and is_rejected:
-                        continue
-                        
-                    # 2. Published Filter
-                    # If include_published is True, we show them. But for Global Staging default should be strict?
-                    # User request: "미발행된 모든 기사가 대상이다" -> Published items technically aren't "un-published".
-                    # But if user un-published them (published=False), they should show.
-                    if not include_published and is_published:
-                        continue
+        for filepath in files_to_process:
+            try:
+                filename = os.path.basename(filepath)
+                # Skip batch files if any
+                if 'batch_' in filename: continue
 
-                    # If date='all', usually we want ONLY unpublished.
-                    # But allow include_published to override if user assumes they want to see EVERYTHING.
-                    # (Current usage: desk/list defaults include_published=False)
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                
+                # [CRITICAL FILTER] 먼저 상태 체크
+                is_published = data.get('published', False)
+                is_rejected = data.get('rejected', False)
+                is_saved = data.get('saved', False)  # [NEW] Staged 상태 (Inspector 기준 ACCEPTED)
+                dedup_status = data.get('dedup_status')
+                
+                # Firebase Sync
+                article_id = data.get('article_id', '')
+                if article_id and article_id in published_article_ids:
+                    is_published = True
+                
+                # 완료된 기사(발행/거부/중복/저장됨)는 미분석 카운트에서 제외해야 함
+                is_completed = is_published or is_rejected or is_saved or (dedup_status == 'duplicate')
+                
+                # 분석 상태 체크
+                is_analyzed = (
+                    data.get('mll_status') == 'analyzed' or
+                    data.get('raw_analysis') is not None or
+                    data.get('zero_echo_score') is not None
+                )
+                
+                # [FIX Logic] 완료되지 않은 기사 중 분석이 안 된 것만 카운트
+                if not is_completed and not is_analyzed:
+                    unanalyzed_count += 1
+                    if not include_unanalyzed:
+                        continue # 카운트만 하고 목록엔 안 넣음
+                
+                # 1. Trash Filter (거부된 기사)
+                if not include_trash and is_rejected:
+                    continue
                     
-                    articles.append({
-                        'filename': filename,
-                        'filepath': filepath,
-                        'article_id': data.get('article_id', ''),
-                        'url': data.get('url', ''),
-                        'title': data.get('title', ''),
-                        'title_ko': data.get('title_ko', ''),
-                        'summary': data.get('summary', ''),
-                        'zero_echo_score': data.get('zero_echo_score'),
-                        'impact_score': data.get('impact_score'),
-                        'source_id': data.get('source_id', ''),
-                        'rejected': is_rejected,
-                        'reject_reason': data.get('reject_reason', ''),
-                        'published': is_published,
-                        'publish_id': data.get('publish_id', ''),
-                        'edition_name': data.get('edition_name', ''),
-                        'staged_at': data.get('staged_at', ''),
-                        'dedup_status': data.get('dedup_status'),
-                        'category': data.get('category'),
-                        'status': data.get('status', ''),  # [NEW] 상태 필드 추가
-                        'mll_status': data.get('mll_status', ''),  # [NEW] MLL 분석 상태
-                        'date_folder': os.path.basename(cache_date_dir), # [NEW] Explicit folder name
-                        'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat()
-                    })
-                except Exception as e:
-                    # Don't spam logs for every file error in 'all' mode
-                    if not is_all_dates: 
-                        print(f"⚠️ [Staging List] Error reading {filename}: {e}")
+                # 2. Published Filter
+                if not include_published and is_published:
+                    continue
+
+                # [NEW] 3. 시간 범위 필터링 (Inspector와 동기화)
+                if cutoff_time:
+                    crawled_at_str = data.get('crawled_at') or data.get('cached_at') or data.get('saved_at')
+                    if crawled_at_str:
+                        try:
+                            crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
+                            if crawled_at.tzinfo is None:
+                                crawled_at = crawled_at.replace(tzinfo=timezone.utc)
+                            if crawled_at < cutoff_time:
+                                continue  # 시간 범위 밖
+                        except:
+                            pass  # 파싱 실패 시 포함
+
+                articles.append({
+                    'filename': filename,
+                    'filepath': filepath,
+                    'article_id': data.get('article_id', ''),
+                    'url': data.get('url', ''),
+                    'title': data.get('title', ''),
+                    'title_ko': data.get('title_ko', ''),
+                    'summary': data.get('summary', ''),
+                    'zero_echo_score': data.get('zero_echo_score'),
+                    'impact_score': data.get('impact_score'),
+                    'source_id': data.get('source_id', ''),
+                    'rejected': is_rejected,
+                    'reject_reason': data.get('reject_reason', ''),
+                    'published': is_published,
+                    'publish_id': data.get('publish_id', ''),
+                    'edition_name': data.get('edition_name', ''),
+                    'staged_at': data.get('staged_at', ''),
+                    'dedup_status': data.get('dedup_status'),
+                    'category': data.get('category'),
+                    'status': data.get('status', ''),
+                    'mll_status': data.get('mll_status', ''),
+                    'date_folder': os.path.basename(os.path.dirname(filepath)),
+                    'crawled_at': data.get('crawled_at') or data.get('cached_at') or data.get('saved_at') or data.get('staged_at') or datetime.now().isoformat()
+                })
+            except Exception as e:
+                pass
         
         # 정렬: 대기중 → 발행됨 → 거부됨, 날짜 내림차순
         articles.sort(key=lambda x: (
@@ -175,7 +183,7 @@ def desk_list():
             'date': date_str,
             'articles': articles,
             'total': len(articles),
-            'unanalyzed_count': unanalyzed_count  # [NEW] 미분석 기사 카운터
+            'unanalyzed_count': unanalyzed_count
         })
     except Exception as e:
         print(f"❌ [Staging List] Error: {e}")

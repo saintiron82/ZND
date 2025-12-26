@@ -1,64 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-ZND 자동 크롤링 스케줄러
-- 수집 → 추출 → 캐시 저장 (MLL 분석 스킵)
-- index.json 자동 갱신
-- 스케줄: 06:30, 12:30, 18:30, 00:30 (하루 4회)
+ZND 자동 크롤링 스케줄러 (Thin Wrapper)
+- PM2에서 실행되어 automation API를 호출
+- 실제 로직은 automation.py에 통합됨
 """
 import os
 import sys
-import asyncio
-from datetime import datetime, timezone, timedelta
+import requests
+from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-# Import core modules
-from crawler import load_targets, fetch_links
-from src.db_client import DBClient
-from src.crawler.core import AsyncCrawler
-from src.core_logic import (
-    load_from_cache,
-    save_to_cache,
-    update_manifest,
-)
-
-# Discord 알림 모듈
-import sys
-sys.path.insert(0, os.path.join(BASE_DIR, '..', 'crawler'))
-try:
-    from core.discord_notifier import send_crawl_notification
-    DISCORD_ENABLED = True
-except ImportError:
-    DISCORD_ENABLED = False
-    print("⚠️ Discord notifier not available")
-
-
-def serialize_datetime(obj):
-    """datetime 객체를 ISO 문자열로 변환"""
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    return obj
-
-
-def sanitize_content(content: dict) -> dict:
-    """datetime 객체를 JSON 직렬화 가능한 형태로 변환"""
-    sanitized = {}
-    for key, value in content.items():
-        if isinstance(value, datetime):
-            sanitized[key] = value.isoformat()
-        elif isinstance(value, dict):
-            sanitized[key] = sanitize_content(value)
-        elif isinstance(value, list):
-            sanitized[key] = [
-                v.isoformat() if isinstance(v, datetime) else v
-                for v in value
-            ]
-        else:
-            sanitized[key] = value
-    return sanitized
+# API Configuration
+API_BASE = os.getenv('DESK_API_URL', 'http://localhost:5500')
+API_KEY = os.getenv('DESK_API_KEY', '')
 
 
 def log(msg: str):
@@ -67,129 +25,49 @@ def log(msg: str):
     print(f"[{timestamp}] {msg}")
 
 
-async def run_auto_crawl():
+def run_auto_crawl():
     """
-    자동 크롤링 메인 함수
-    1. 모든 타겟에서 새 링크 수집
-    2. 콘텐츠 추출 및 캐시 저장
-    3. index.json 갱신
+    자동 크롤링 - API 호출 래퍼
+    실제 로직은 /api/automation/collect-extract 에서 처리
     """
-    log("🚀 자동 크롤링 시작")
+    log("🚀 자동 크롤링 시작 (API 호출)")
     
-    db = DBClient()
-    targets = load_targets()
+    headers = {}
+    if API_KEY:
+        headers['Authorization'] = f'Bearer {API_KEY}'
     
-    collected_count = 0
-    extracted_count = 0
-    skipped_count = 0
-    failed_count = 0
-    
-    # 1. 링크 수집
-    log("📡 [1단계] 링크 수집 중...")
-    all_links = []
-    
-    for target in targets:
-        links = fetch_links(target)
-        limit = target.get('limit', 5)
-        links = links[:limit]
-        
-        for link in links:
-            # 히스토리 체크 (이미 처리된 것 제외)
-            if not db.check_history(link):
-                all_links.append({
-                    'url': link,
-                    'source_id': target['id']
-                })
-    
-    # 중복 제거
-    seen = set()
-    unique_links = []
-    for item in all_links:
-        if item['url'] not in seen:
-            seen.add(item['url'])
-            unique_links.append(item)
-    
-    collected_count = len(unique_links)
-    log(f"📡 수집 완료: {collected_count}개 새 링크")
-    
-    if collected_count == 0:
-        log("✨ 새로운 링크가 없습니다")
-        return
-    
-    # 2. 콘텐츠 추출
-    log("📥 [2단계] 콘텐츠 추출 중...")
-    
-    crawler = AsyncCrawler(use_playwright=True)
     try:
-        await crawler.start()
+        # 수집 + 추출 API 호출 (MLL 분석은 수동)
+        url = f"{API_BASE}/api/automation/collect-extract"
+        log(f"📡 API 호출: {url}")
         
-        for item in unique_links:
-            url = item['url']
-            source_id = item['source_id']
+        response = requests.post(url, headers=headers, timeout=300)
+        
+        if response.status_code == 200:
+            result = response.json()
+            collected = result.get('collected', 0)
+            extracted = result.get('extracted', 0)
+            failed = result.get('failed', 0)
             
-            # 캐시 체크
-            cached = load_from_cache(url)
-            if cached and cached.get('text'):
-                skipped_count += 1
-                continue
+            log("=" * 50)
+            log(f"🎉 자동 크롤링 완료!")
+            log(f"   - 수집: {collected}개")
+            log(f"   - 추출: {extracted}개")
+            log(f"   - 실패: {failed}개")
+            log("=" * 50)
+        else:
+            log(f"❌ API 오류: {response.status_code} - {response.text}")
             
-            try:
-                content = await crawler.process_url(url)
-                if content and len(content.get('text', '')) >= 200:
-                    content['source_id'] = source_id
-                    content['status'] = 'RAW'  # [MODIFIED] 명시적 상태: 원문 수집 완료
-                    # datetime 객체를 문자열로 변환
-                    content = sanitize_content(content)
-                    save_to_cache(url, content)
-                    extracted_count += 1
-                    log(f"  ✅ 추출: {url[:50]}...")
-                else:
-                    failed_count += 1
-                    log(f"  ⚠️ 콘텐츠 부족: {url[:50]}...")
-            except Exception as e:
-                failed_count += 1
-                log(f"  ❌ 실패: {url[:50]}... - {e}")
-                
-    finally:
-        await crawler.close()
-    
-    log(f"📥 추출 완료: 성공 {extracted_count}, 스킵 {skipped_count}, 실패 {failed_count}")
-    
-    # 3. index.json 갱신
-    log("📋 [3단계] index.json 갱신 중...")
-    today_str = datetime.now().strftime('%Y-%m-%d')
-    update_manifest(today_str)
-    log(f"📋 index.json 갱신 완료: {today_str}")
-    
-    # 완료 요약
-    log("=" * 50)
-    log(f"🎉 자동 크롤링 완료!")
-    log(f"   - 수집: {collected_count}개")
-    log(f"   - 추출: {extracted_count}개")
-    log(f"   - 스킵: {skipped_count}개")
-    log(f"   - 실패: {failed_count}개")
-    log("=" * 50)
-    
-    # 4. Discord 알림 전송
-    if DISCORD_ENABLED:
-        log("📨 [4단계] Discord 알림 전송 중...")
-        result = {
-            'success': failed_count == 0 or extracted_count > 0,
-            'collected': collected_count,
-            'extracted': extracted_count,
-            'analyzed': 0,  # 자동 크롤링은 MLL 분석 스킵
-            'cached': extracted_count,
-            'failed': failed_count,
-            'message': f'스킵: {skipped_count}개 (이미 캐시됨)'
-        }
-        send_crawl_notification(result, "자동 크롤링")
-        log("📨 Discord 알림 전송 완료")
+    except requests.exceptions.ConnectionError:
+        log(f"❌ 연결 실패: Desk 서버가 실행 중인지 확인하세요 ({API_BASE})")
+    except Exception as e:
+        log(f"❌ 오류 발생: {e}")
 
 
 def main():
     """엔트리 포인트"""
     try:
-        asyncio.run(run_auto_crawl())
+        run_auto_crawl()
     except KeyboardInterrupt:
         log("⚠️ 사용자에 의해 중단됨")
     except Exception as e:

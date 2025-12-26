@@ -178,10 +178,13 @@ body {
 
 /* 커트라인 대상 점멸 효과 */
 @keyframes cutlineBlink {
-    0%, 100% {
+
+    0%,
+    100% {
         box-shadow: 0 0 0 2px rgba(245, 87, 108, 0.3);
         background: rgba(245, 87, 108, 0.1);
     }
+
     50% {
         box-shadow: 0 0 15px 3px rgba(245, 87, 108, 0.6);
         background: rgba(245, 87, 108, 0.25);
@@ -708,4 +711,195 @@ body {
     flex: 1;
     padding: 12px;
     font-size: 1em;
+}
+
+/* ============================================
+ * Mobile Responsive Styles
+ * ============================================ */
+
+/* Tablet breakpoint */
+@media (max-width: 1024px) {
+    .article-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .header-controls {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Header */
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 12px;
+    }
+
+    .header h1 {
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    .header-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filter-group {
+        justify-content: center;
+    }
+
+    /* Stats - 가로 스크롤 대신 세로 배치 */
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 12px;
+    }
+
+    .stat-card .value {
+        font-size: 1.5em;
+    }
+
+    /* Article Grid - 단일 열 */
+    .article-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .article-card {
+        padding: 12px;
+    }
+
+    .article-title {
+        font-size: 1em;
+    }
+
+    .article-summary {
+        font-size: 0.85em;
+        -webkit-line-clamp: 3;
+    }
+
+    .article-meta {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    /* Buttons - 터치 친화적 */
+    .btn {
+        padding: 12px 16px;
+        font-size: 0.9em;
+        min-height: 44px;
+    }
+
+    /* Modals */
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        margin: 10px;
+    }
+
+    .modal-header {
+        padding: 12px 15px;
+    }
+
+    .modal-header h3 {
+        font-size: 1em;
+    }
+
+    .modal-body {
+        padding: 12px;
+    }
+
+    .json-view {
+        font-size: 0.75em;
+        max-height: 40vh;
+    }
+
+    .dedup-modal-content,
+    .publish-modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .dedup-json-view {
+        font-size: 0.75em;
+        max-height: 35vh;
+    }
+
+    /* Issue Selector */
+    .issue-selector-container {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .issue-selector {
+        min-width: 140px;
+    }
+
+    /* Publish Modal */
+    .publish-option {
+        padding: 12px;
+    }
+
+    .publish-option h4 {
+        font-size: 0.95em;
+    }
+
+    .publish-modal-actions {
+        flex-direction: column;
+    }
+
+    .publish-modal-actions .btn {
+        padding: 14px;
+    }
+
+    /* Category Headers */
+    .category-group-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 10px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+    body {
+        padding: 8px;
+    }
+
+    .header h1 {
+        font-size: 1em;
+    }
+
+    .stat-card .value {
+        font-size: 1.3em;
+    }
+
+    .article-title {
+        font-size: 0.95em;
+    }
+
+    .btn {
+        padding: 10px 12px;
+        font-size: 0.85em;
+    }
 }

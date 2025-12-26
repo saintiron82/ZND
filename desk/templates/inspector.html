@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>📊 분석 작업대 (Analyzer)</title>
     <style>
         body {
@@ -75,13 +76,13 @@
             flex-direction: column;
         }
 
-        /* Group List Items */
+        /* Group List Items - Compact */
         .group-item {
-            padding: 18px 20px;
-            /* [MODIFIED] Increased padding */
+            padding: 10px 12px;
             border-bottom: 1px solid #e0e0e0;
             cursor: pointer;
             transition: background 0.2s;
+            font-size: 0.9em;
         }
 
         .group-item:hover {
@@ -90,17 +91,14 @@
 
         .group-item.active {
             background: #e7f1ff;
-            /* [MODIFIED] Light blue background instead of dark blue for better readability of colored text */
             color: #333;
-            /* Text color black */
-            border-left: 5px solid #007bff;
+            border-left: 4px solid #007bff;
         }
 
         .group-stat {
-            font-size: 0.95em;
-            /* [MODIFIED] Increased font size */
-            opacity: 0.9;
-            margin-top: 6px;
+            font-size: 0.8em;
+            opacity: 0.85;
+            margin-top: 3px;
         }
 
         /* Textareas */
@@ -193,6 +191,131 @@
         #btnProcess:hover {
             background: #218838;
         }
+
+        /* ============================================
+         * Mobile Responsive Styles
+         * ============================================ */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+
+            /* Main container 세로 배치 - 스크롤 가능 */
+            #main-wrapper {
+                flex-direction: column !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            /* 각 Pane 전체 너비, 최소 높이 설정 */
+            .pane {
+                width: 100% !important;
+                min-width: 100% !important;
+                max-height: none;
+                min-height: 150px;
+                overflow: visible;
+                border-right: none;
+                border-bottom: 2px solid #ddd;
+            }
+
+            /* 1번 패널: 분석 대상 목록 (높이 제한) */
+            #pane-groups {
+                width: 100% !important;
+                max-height: 45vh;
+                overflow-y: auto;
+            }
+
+            #pane-prompt,
+            #pane-process {
+                min-width: 100% !important;
+                height: auto !important;
+            }
+
+            .pane-content {
+                overflow: visible;
+                height: auto;
+            }
+
+            /* 그룹 목록 스크롤 가능, 최대 높이 설정 */
+            #groupList {
+                max-height: 50vh;
+                overflow-y: auto;
+            }
+
+            .pane-header {
+                padding: 10px;
+                flex-wrap: wrap;
+                gap: 8px;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+
+            .pane-header button {
+                padding: 10px 14px;
+                font-size: 0.8em;
+                min-height: 36px;
+            }
+
+            .group-item {
+                padding: 14px 15px;
+            }
+
+            /* Textarea 높이 고정 */
+            textarea {
+                font-size: 13px;
+                padding: 10px;
+                min-height: 200px;
+                max-height: 300px;
+                resize: vertical;
+            }
+
+            #logArea {
+                height: 120px;
+                font-size: 0.8em;
+            }
+
+            button.action-btn {
+                padding: 14px;
+                font-size: 1em;
+                min-height: 48px;
+            }
+
+            /* 그룹 액션 영역 */
+            #groupActionArea {
+                position: sticky;
+                bottom: 0;
+                background: #fff;
+                z-index: 10;
+            }
+
+            /* 모바일에서 2번 패널 헤더 버튼 숨기기 (1번에 이미 있음) */
+            #pane-prompt .pane-header div,
+            #pane-process .pane-header {
+                display: none;
+            }
+
+            /* 모바일에서 프롬프트 패널 간소화 */
+            #pane-prompt {
+                max-height: 250px;
+            }
+
+            #pane-prompt .pane-content {
+                padding: 5px;
+                gap: 5px;
+            }
+
+            /* Instruction 헤더 숨기기 (모바일) */
+            #promptHeader {
+                display: none;
+            }
+
+            /* 프로세스 패널 축소 */
+            #pane-process .pane-content {
+                min-height: 200px;
+            }
+        }
     </style>
 </head>
 
@@ -200,7 +323,7 @@
     {% include '_header.html' %}
 
     <!-- Main Content Wrapper -->
-    <div style="display:flex; flex:1; overflow:hidden; height:calc(100vh - 56px);">
+    <div id="main-wrapper" style="display:flex; flex:1; overflow:hidden; height:calc(100vh - 56px);">
 
         <!-- 1. Group Pane -->
         <div id="pane-groups" class="pane">
@@ -263,32 +386,18 @@
         <!-- 2. Prompt Pane -->
         <div id="pane-prompt" class="pane">
             <div class="pane-header">
-                <span>2. Step 1 (Prompt)</span>
-                <div style="display:flex; gap:5px;">
-                    <button onclick="window.open('https://gemini.google.com/gem/d0df709db734', '_blank')"
-                        style="background:#8e44ad;">🤖 Open Gemini</button>
-                    <button id="btnCopy" onclick="copyPrompt()">📋 Copy</button>
-                </div>
+                <span>📋 Prompt (Content)</span>
+                <span id="promptStatus" style="font-size:0.8em; color:#4ecdc4;">Waiting...</span>
             </div>
             <div class="pane-content" style="display:flex; flex-direction:column; padding:10px; gap:10px;">
-                <!-- Header Instruction -->
-                <div style="flex:0 0 auto;">
-                    <label style="font-size:0.85em; color:#666; font-weight:bold;">Instruction (Header):</label>
-                    <textarea id="promptHeader"
-                        style="width:100%; height:80px; padding:5px; border:1px solid #ccc; font-family:monospace; font-size:0.9em; resize:vertical; background:#fff;"></textarea>
-                </div>
+                <!-- Instruction (Optional) -->
+                <textarea id="promptHeader" placeholder="(선택) LLM 지시사항..."
+                    style="width:100%; height:60px; padding:8px; border:1px solid #ccc; font-family:monospace; font-size:0.85em; resize:vertical; background:#f9f9f9;"></textarea>
 
-                <!-- Main Content -->
-                <div style="flex:1; display:flex; flex-direction:column;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                        <label style="font-size:0.85em; color:#666; font-weight:bold;">Content (Body):</label>
-                        <span id="promptStatus" style="font-size:0.8em; color:#007bff;">Waiting...</span>
-                    </div>
-                    <!-- [MODIFIED] Added readonly to promptArea to prevent manual edits -->
-                    <textarea id="promptArea"
-                        style="flex:1; width:100%; padding:5px; border:1px solid #ccc; font-family:monospace; font-size:0.9em; resize:none;"
-                        readonly placeholder="Select a group to load content..."></textarea>
-                </div>
+                <!-- Main Prompt Content -->
+                <textarea id="promptArea"
+                    style="flex:1; width:100%; padding:8px; border:1px solid #ccc; font-family:monospace; font-size:0.85em; resize:none; min-height:200px;"
+                    readonly placeholder="← 왼쪽에서 '⚡ 추출' 버튼 클릭"></textarea>
             </div>
         </div>
 

@@ -48,7 +48,21 @@ echo [ZED] Opening browser...
 :: though user might need to refresh if server is slow.
 start http://localhost:5500
 
-echo [ZED] Starting Manual Crawler Server...
-.\venv\Scripts\python.exe manual_crawler.py
+:: desk 폴더 기준으로 venv 경로 재탐색 (폴백 지원)
+set DESK_VENV=
+if exist .venv (
+    set DESK_VENV=.venv
+) else if exist venv (
+    set DESK_VENV=venv
+)
+
+if "%DESK_VENV%"=="" (
+    echo [ERROR] Virtual environment not found in desk folder!
+    pause
+    exit /b
+)
+
+echo [ZED] Starting Manual Crawler Server... (using %DESK_VENV%)
+.\%DESK_VENV%\Scripts\python.exe manual_crawler.py
 
 pause

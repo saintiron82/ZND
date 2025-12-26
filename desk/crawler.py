@@ -40,12 +40,21 @@ TARGETS_FILE = os.path.join(BASE_DIR, os.getenv('TARGETS_FILE', 'config/targets.
 CRAWL_LIMIT = int(os.getenv('CRAWL_LIMIT', 999))  # 글로벌 크롤링 수량 제한
 
 def load_targets():
-    """Loads target configurations from JSON."""
+    """
+    Loads settings and targets from JSON.
+    Returns: (settings_dict, targets_list) tuple
+    """
     with open(TARGETS_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        data = json.load(f)
+    
+    # 새 구조: {settings: {...}, targets: [...]} 또는 레거시: [...]
+    if isinstance(data, dict):
+        return data.get('settings', {}), data.get('targets', [])
+    else:
+        return {}, data  # 레거시 배열 형식
 
-def is_recent(date_obj):
-    """Checks if a date is within the last 3 days."""
+def is_recent(date_obj, max_age_hours=48):
+    """Checks if a date is within the specified hours."""
     if not date_obj:
         return True # Keep if no date found (benefit of the doubt) but log warning? Actually standard usually is keep.
     
@@ -62,9 +71,9 @@ def is_recent(date_obj):
         return True # Unknown format, keep it
         
     delta = now - dt
-    return delta <= timedelta(days=3)
+    return delta <= timedelta(hours=max_age_hours)
 
-def fetch_links(target):
+def fetch_links(target, max_age_hours=48):
     """Fetches links based on target type (rss or html)."""
     links = []
     print(f"Fetching from {target['id']}...")
@@ -76,7 +85,7 @@ def fetch_links(target):
                 # Check date for RSS
                 date_parsed = entry.get('published_parsed') or entry.get('updated_parsed')
                 if date_parsed:
-                     if is_recent(date_parsed):
+                     if is_recent(date_parsed, max_age_hours):
                         links.append(entry.link)
                      else:
                         # Optional: Print skipped? Might be too noisy for RSS
@@ -129,27 +138,48 @@ async def main():
     mll = MLLClient()
     db = get_db()
     
-    targets = load_targets()
+    settings, targets = load_targets()
+    max_consecutive_duplicates = settings.get('max_consecutive_duplicates', 3)
+    max_article_age_hours = settings.get('max_article_age_hours', 48)
     
     for target in targets:
         print(f"\n🎯 [Target] Processing target: {target['id']}")
         
-        # 1. Fetch Links
-        article_links = fetch_links(target)
+        # 1. Fetch Links (with age filter)
+        article_links = fetch_links(target, max_article_age_hours)
         
         # Apply limit (타겟 설정과 ENV 중 낮은 값 적용)
         target_limit = target.get('limit', 5)
         effective_limit = min(target_limit, CRAWL_LIMIT)
-        article_links = article_links[:effective_limit]
         
-        print(f"🔗 [Links] Found {len(article_links)} links (Target limit: {target_limit}, Env limit: {CRAWL_LIMIT}, Applied: {effective_limit}).")
+        # [NEW] 하이브리드 전략: limit까지는 안전, 이후는 연속 중복 감지
+        # max_consecutive_duplicates는 targets.json의 settings에서 로드됨
         
-        # 2. Filter duplicates (quick check)
+        print(f"🔗 [Links] Found {len(article_links)} links (Limit: {effective_limit}, Extended mode after limit).")
+        
+        # 2. Filter duplicates with hybrid strategy
         new_links = []
+        consecutive_duplicates = 0
+        processed_count = 0
+        
         for link in article_links:
+            processed_count += 1
+            
             if db.check_history(link):
-                print(f"⏭️ [Skip] Duplicate: {link[:50]}...")
+                # Limit 이내: 스킵만 하고 계속 진행
+                if processed_count <= effective_limit:
+                    print(f"⏭️ [Skip] Duplicate (within limit): {link[:50]}...")
+                    consecutive_duplicates = 0  # limit 이내에서는 리셋
+                else:
+                    # Limit 초과: 연속 중복 카운트
+                    consecutive_duplicates += 1
+                    print(f"⏭️ [Skip] Duplicate ({consecutive_duplicates}/{max_consecutive_duplicates}): {link[:50]}...")
+                    
+                    if consecutive_duplicates >= max_consecutive_duplicates:
+                        print(f"🛑 [Stop] {target['id']}: 연속 {max_consecutive_duplicates}회 중복 감지 - 해당 소스 정지")
+                        break
             else:
+                consecutive_duplicates = 0  # 새 기사 발견 시 리셋
                 new_links.append(link)
         
         if not new_links:

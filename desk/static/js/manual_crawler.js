@@ -1,12 +1,11 @@
 // Manual Crawler (Kanban Logic)
 
-let currentDate = '';
 let currentData = {}; // { inbox: [], analyzed: [], ... }
 let selectedItems = new Set(); // Set of URLs
 let currentDetailItem = null; // For modal actions
 
 window.onload = function () {
-    loadDates();
+    loadCache();
     startPolling();
 };
 
@@ -43,7 +42,7 @@ async function checkCrawlStatus() {
             const smallTag = headerTitle.querySelector('small');
             if (smallTag) {
                 if (data.is_crawling) {
-                    smallTag.innerHTML = `(Crawling... ⏳)`;
+                    smallTag.innerHTML = `(Crawling...)`;
                     smallTag.style.color = '#e83e8c';
                 } else {
                     smallTag.innerHTML = `(Raw)`;
@@ -56,44 +55,21 @@ async function checkCrawlStatus() {
     }
 }
 
-// 1. Load Dates
-async function loadDates() {
-    const sel = document.getElementById('dateSelect');
-    sel.innerHTML = '<option>Loading...</option>';
-
-    try {
-        const res = await fetch('/api/cache/dates');
-        const data = await res.json();
-
-        if (data.success && data.dates.length > 0) {
-            sel.innerHTML = '';
-            data.dates.forEach(d => {
-                const opt = document.createElement('option');
-                opt.value = d;
-                opt.textContent = d;
-                sel.appendChild(opt);
-            });
-            // Auto load first date
-            currentDate = data.dates[0];
-            loadDate(currentDate);
-        } else {
-            sel.innerHTML = '<option>No dates found</option>';
-        }
-    } catch (e) {
-        alert('Failed to load dates: ' + e);
-    }
+// Time filter callback for header dropdown
+function reloadWithTimeFilter(hours) {
+    console.log(`[CacheManager] Time filter changed to ${hours} hours`);
+    loadCache();
 }
 
-// 2. Load Board Data
-async function loadDate(date) {
-    if (!date) return;
-    currentDate = date;
-    showLoading(`Loading cache for ${date}...`);
+// Load cache with time filter
+async function loadCache() {
+    showLoading('Loading cache...');
     selectedItems.clear();
     updateActionBar();
 
     try {
-        const res = await fetch(`/api/cache/list_by_date?date=${date}`);
+        const hours = typeof getTimeFilterHours === 'function' ? getTimeFilterHours() : '0';
+        const res = await fetch(`/api/cache/list_by_date?date=all&hours=${hours}`);
         const json = await res.json();
 
         if (json.success) {
@@ -274,18 +250,20 @@ function closeModal() {
     currentDetailItem = null;
 }
 
-// [NEW] Run Auto Crawler
+// [NEW] Run Auto Crawler (Collect + Extract)
 async function runCrawlNow() {
-    if (!confirm('지금 자동 수집(Auto-Collect)을 실행하시겠습니까?')) return;
+    if (!confirm('지금 자동 수집(Collect + Extract)을 실행하시겠습니까?')) return;
 
-    showLoading('🚀 Collecting new articles...');
+    showLoading('🚀 Collecting and extracting articles...');
     try {
-        const res = await fetch('/api/automation/collect', { method: 'POST' });
+        // collect-extract로 변경 - 수집 + 추출 + 캐시 저장
+        const res = await fetch('/api/automation/collect-extract', { method: 'POST' });
         const json = await res.json();
 
         if (json.success) {
-            alert('Collection Complete!');
-            loadDate(currentDate); // Refresh
+            const msg = `수집 완료!\n- 수집: ${json.collected || 0}개\n- 추출: ${json.extracted || 0}개\n- 실패: ${json.failed || 0}개`;
+            alert(msg);
+            loadCache(); // Refresh
         } else {
             alert('Failed: ' + json.error);
         }
@@ -320,7 +298,7 @@ async function batchAnalyze() {
         const result = await res.json();
 
         alert(`Processed ${result.length} items.`);
-        loadDate(currentDate); // Refresh board
+        loadCache(); // Refresh board
     } catch (e) {
         alert('Batch Process Failed: ' + e);
     } finally {
@@ -360,7 +338,7 @@ async function moveItems(targetStatus) {
         if (json.success) {
             // alert(`Successfully moved ${json.count} items.`);
             if (currentDetailItem) closeModal();
-            loadDate(currentDate); // Refresh
+            loadCache(); // Refresh
         } else {
             alert('Move Failed: ' + json.error);
         }
@@ -388,7 +366,7 @@ async function batchDelete() {
         const json = await res.json();
         if (json.success) {
             alert('Deleted successfully.');
-            loadDate(currentDate);
+            loadCache();
         } else {
             alert('Delete failed: ' + json.error);
         }
@@ -413,7 +391,7 @@ async function deleteCurrentItem() {
         const json = await res.json();
         if (json.success) {
             closeModal();
-            loadDate(currentDate);
+            loadCache();
         } else {
             alert('Delete failed: ' + json.error);
         }
@@ -560,28 +538,11 @@ async function updateSchedule(scheduleId, name, cron) {
         });
         const result = await resp.json();
         if (result.success) loadSchedules();
-        else alert('수정 실패: ' + result.error);
     } catch (e) { alert('오류: ' + e.message); }
 }
 
-async function runCrawlNow() {
-    if (!confirm('지금 자동 수집(Auto-Collect)을 실행하시겠습니까?')) return;
-    showLoading('🚀 Collecting new articles...');
-    try {
-        const resp = await fetch('/api/automation/collect', { method: 'POST' });
-        const result = await resp.json();
-        if (result.success) {
-            alert('✅ ' + result.message);
-            loadDate(currentDate); // Refresh board
-        } else {
-            alert('실행 실패: ' + result.error);
-        }
-    } catch (e) {
-        alert('오류: ' + e.message);
-    } finally {
-        hideLoading();
-    }
-}
+// runCrawlNow는 상단에 정의됨 (line 253) - collect-extract 사용
+
 
 // 스케줄 모달 내 상태 표시 버전 (폴링으로 진행 상황 표시)
 async function runCrawlNowWithStatus() {

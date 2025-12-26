@@ -53,6 +53,111 @@ def normalize_field_names(data):
     return _core_normalize_field_names(data)
 
 
+def automation_collect_extract_internal():
+    """
+    내부 함수: 수집 + 추출 (다른 모듈에서 호출 가능)
+    Returns: dict with 'success', 'collected', 'extracted', 'failed' keys
+    """
+    from src.crawler_state import set_crawling, log_crawl_event, update_progress
+    import time
+    
+    start_time = time.time()
+    try:
+        _, targets = load_targets()
+        total_targets = len(targets)
+        
+        set_crawling(True, "Collect + Extract")
+        update_progress(target="", index=0, total=total_targets, count=0, message="수집 시작...")
+        
+        # 1. 수집 (Collect)
+        all_links = []
+        for idx, target in enumerate(targets, start=1):
+            target_id = target.get('id', 'unknown')
+            update_progress(target=target_id, index=idx, message=f"{target_id} 수집 중...")
+            
+            links = fetch_links(target)
+            limit = target.get('limit', 5)
+            links = links[:limit]
+            
+            for link in links:
+                # 히스토리 체크 (이미 처리된 것 제외)
+                if db.check_history(link):
+                    continue
+                # 캐시 체크 (이미 추출된 것 제외)
+                cached = load_from_cache(link)
+                if cached and cached.get('text'):
+                    continue
+                all_links.append({
+                    'url': link,
+                    'source_id': target['id'],
+                    'target_name': target.get('name', target['id'])
+                })
+        
+        # 중복 제거
+        seen = set()
+        unique_links = []
+        for item in all_links:
+            if item['url'] not in seen:
+                seen.add(item['url'])
+                unique_links.append(item)
+        
+        collected_count = len(unique_links)
+        print(f"📡 [Collect] {collected_count}개 새 링크 수집")
+        
+        # 2. 추출 (Extract)
+        extracted_count = 0
+        skipped_count = 0
+        failed_count = 0
+        
+        async def extract_all():
+            nonlocal extracted_count, skipped_count, failed_count
+            crawler = AsyncCrawler(use_playwright=True)
+            try:
+                await crawler.start()
+                for item in unique_links:
+                    url = item['url']
+                    source_id = item.get('source_id', 'unknown')
+                    
+                    # 캐시 체크
+                    cached = load_from_cache(url)
+                    if cached and cached.get('text'):
+                        skipped_count += 1
+                        continue
+                    
+                    try:
+                        content = await crawler.process_url(url)
+                        if content and len(content.get('text', '')) >= 200:
+                            content['source_id'] = source_id
+                            save_to_cache(url, content)
+                            extracted_count += 1
+                        else:
+                            failed_count += 1
+                    except Exception as e:
+                        print(f"⚠️ [Extract] Failed: {url[:50]}... - {e}")
+                        failed_count += 1
+            finally:
+                await crawler.close()
+        
+        asyncio.run(extract_all())
+        
+        duration = time.time() - start_time
+        log_crawl_event("CollectExtract", f"수집:{collected_count}, 추출:{extracted_count}", duration, success=True)
+        
+        print(f"📥 [Extract] 추출: {extracted_count}, 스킵: {skipped_count}, 실패: {failed_count}")
+        
+        return {
+            'success': True,
+            'collected': collected_count,
+            'extracted': extracted_count,
+            'failed': failed_count,
+            'skipped': skipped_count
+        }
+    except Exception as e:
+        print(f"❌ [CollectExtract] Error: {e}")
+        return {'success': False, 'error': str(e), 'collected': 0, 'extracted': 0, 'failed': 0}
+    finally:
+        set_crawling(False)
+
 @automation_bp.route('/api/automation/collect', methods=['POST'])
 @requires_auth
 def automation_collect():
@@ -65,7 +170,7 @@ def automation_collect():
     
     start_time = time.time()
     try:
-        targets = load_targets()
+        _, targets = load_targets()
         total_targets = len(targets)
         
         # [NEW] Status
@@ -142,7 +247,7 @@ def automation_extract():
         
         if not links:
             # 자동으로 collect 먼저 실행
-            targets = load_targets()
+            _, targets = load_targets()
             links = []
             for target in targets:
                 fetched = fetch_links(target)[:target.get('limit', 5)]
@@ -205,6 +310,18 @@ def automation_extract():
     finally:
         set_crawling(False)
 
+
+@automation_bp.route('/api/automation/collect-extract', methods=['POST'])
+@requires_auth
+def automation_collect_extract():
+    """
+    📦 수집 + 추출 통합 API: 링크 수집부터 캐시 저장까지 한 번에 수행
+    """
+    result = automation_collect_extract_internal()
+    if result.get('success'):
+        return jsonify(result)
+    else:
+        return jsonify(result), 500
 
 @automation_bp.route('/api/automation/analyze', methods=['POST'])
 @requires_auth
@@ -517,61 +634,6 @@ def automation_all():
         })
     except Exception as e:
         print(f"❌ [ALL] Error: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
-@automation_bp.route('/api/automation/collect-extract', methods=['POST'])
-@requires_auth
-def automation_collect_extract():
-    """
-    ⚡ 수집 + 추출만 실행 (비용 절약: 분석/조판은 수동)
-    스케줄러에서 정기 실행용
-    """
-    try:
-        from flask import current_app
-        
-        results = {}
-        
-        # 1. 수집
-        with current_app.test_client() as client:
-            resp = client.post('/api/automation/collect')
-            results['collect'] = resp.get_json()
-        
-        # 2. 추출
-        with current_app.test_client() as client:
-            resp = client.post('/api/automation/extract', 
-                              json={'links': results['collect'].get('links', [])})
-            results['extract'] = resp.get_json()
-        
-        collected = results.get('collect', {}).get('total', 0)
-        extracted = results.get('extract', {}).get('extracted', 0)
-        failed = results.get('extract', {}).get('failed', 0)
-        
-        print(f"⚡ [Collect+Extract] 수집 {collected} → 추출 {extracted} (실패 {failed})")
-        
-        # Discord 알림 전송
-        if DISCORD_ENABLED:
-            notification_result = {
-                'success': True,
-                'collected': collected,
-                'extracted': extracted,
-                'analyzed': 0,
-                'cached': 0,
-                'failed': failed,
-                'message': f'수집 {collected} → 추출 {extracted} (분석 대기중)'
-            }
-            send_crawl_notification(notification_result, "자동 수집+추출")
-        
-        return jsonify({
-            'success': True,
-            'results': results,
-            'collected': collected,
-            'extracted': extracted,
-            'failed': failed,
-            'message': f'수집 {collected} → 추출 {extracted} 완료 (분석/조판은 수동 필요)'
-        })
-    except Exception as e:
-        print(f"❌ [Collect+Extract] Error: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @automation_bp.route('/api/desk/recalculate', methods=['POST'])

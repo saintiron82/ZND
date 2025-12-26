@@ -84,7 +84,7 @@ async def main():
     parser.add_argument('--target', help='Specific target ID to process')
     args = parser.parse_args()
     
-    targets = load_targets()
+    _, targets = load_targets()
     if args.target:
         targets = [t for t in targets if t['id'] == args.target]
         

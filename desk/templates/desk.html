@@ -220,24 +220,24 @@
                 </div>
             </div>
 
-            <!-- 선택된 날짜 기능 버튼 -->
+            <!-- 기사 관리 버튼 -->
             <div id="dateActionsPanel"
                 style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: #4ecdc4;">⚡ 선택된 날짜 작업</h4>
+                <h4 style="margin: 0 0 10px 0; color: #4ecdc4;">⚡ 기사 관리</h4>
                 <div id="selectedDateLabel"
-                    style="font-size: 0.9em; color: #fff; margin-bottom: 10px; font-weight: bold;">📅 -</div>
+                    style="font-size: 0.9em; color: #fff; margin-bottom: 10px; font-weight: bold;">📅 전체 미발행</div>
 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <!-- 날짜 전체 작업 -->
+                    <!-- 전체 작업 -->
                     <div>
-                        <div style="font-size: 0.75em; color: #888; margin-bottom: 6px;">📌 날짜 전체 작업</div>
+                        <div style="font-size: 0.75em; color: #888; margin-bottom: 6px;">📌 전체 작업</div>
                         <div style="display: flex; flex-direction: column; gap: 6px;">
                             <button class="btn" style="width: 100%; background: #ffc107; color: #333; padding: 8px;"
-                                onclick="openDedupModal(selectedDate)">📋 분류 하기</button>
+                                onclick="openDedupModal('all')">📋 분류 하기</button>
                             <button class="btn" style="width: 100%; background: #17a2b8; color: white; padding: 8px;"
-                                onclick="resetDedupByDate(selectedDate)">↩️ 분류 초기화</button>
+                                onclick="resetDedupByDate('all')">↩️ 분류 초기화</button>
                             <button class="btn" style="width: 100%; background: #ffc107; color: #333; padding: 8px;"
-                                onclick="recalculateGroup(selectedDate)">⚡ 점수 재계산</button>
+                                onclick="recalculateGroup('all')">⚡ 점수 재계산</button>
                         </div>
                     </div>
 
@@ -288,11 +288,11 @@
                         <div style="font-size: 0.75em; color: #888; margin-bottom: 6px;">⚠️ 위험 작업</div>
                         <div style="display: flex; flex-direction: column; gap: 6px;">
                             <button class="btn" style="width: 100%; background: #dc3545; color: white; padding: 8px;"
-                                onclick="rejectGroup(selectedDate)">🗑️ 날짜 전체 무시</button>
+                                onclick="rejectGroup('all')">🗑️ 표시된 기사 전체 무시</button>
                             <button class="btn" style="width: 100%; background: #6c757d; color: white; padding: 8px;"
-                                onclick="clearCacheByDate(selectedDate)">🧹 날짜 캐시 삭제</button>
+                                onclick="clearCacheByDate('all')">🧹 표시된 캐시 삭제</button>
                             <button class="btn" style="width: 100%; background: #fd7e14; color: white; padding: 8px;"
-                                onclick="deleteDuplicateArticles(selectedDate)">🗑️ 중복 일괄 소거 (Bulk Delete)</button>
+                                onclick="deleteDuplicateArticles('all')">🗑️ 중복 일괄 소거</button>
                             <button class="btn" style="width: 100%; background: #8b0000; color: white; padding: 8px;"
                                 onclick="deleteFromDB()">🔥 선택 기사 DB 삭제</button>
                         </div>

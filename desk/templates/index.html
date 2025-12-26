@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ZND 캐시 매니저</title>
     <style>
         body {
@@ -329,6 +330,126 @@
         #actionBar button.success:hover {
             background: #218838;
         }
+
+        /* ============================================
+         * Mobile Responsive Styles
+         * ============================================ */
+
+        /* Viewport meta 추가 필요 */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+            }
+
+            header {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 8px 12px;
+                gap: 10px;
+            }
+
+            .header-left {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            h1 {
+                font-size: 1rem;
+            }
+
+            /* Kanban Board - 세로 스크롤로 변경 */
+            #board {
+                flex-direction: column;
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding: 10px;
+                gap: 15px;
+            }
+
+            .column {
+                width: 100%;
+                min-width: 100%;
+                max-height: none;
+            }
+
+            .col-body {
+                max-height: 300px;
+            }
+
+            /* Cards */
+            .card {
+                padding: 10px;
+            }
+
+            .card-title {
+                font-size: 0.85em;
+            }
+
+            .card-scores {
+                font-size: 0.7em;
+            }
+
+            /* Modal */
+            .modal-content {
+                width: 95%;
+                max-width: 95%;
+                margin: 10px;
+            }
+
+            .modal-body {
+                flex-direction: column;
+                padding: 12px;
+            }
+
+            .modal-left,
+            .modal-right {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+                padding: 10px 0;
+            }
+
+            .modal-footer {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .modal-footer button {
+                flex: 1;
+                min-width: 80px;
+            }
+
+            /* Action Bar */
+            #actionBar {
+                width: 90%;
+                padding: 8px 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #actionBar button {
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 375px) {
+            h1 {
+                font-size: 0.9rem;
+            }
+
+            .column {
+                min-width: 100%;
+            }
+
+            .col-body {
+                max-height: 250px;
+            }
+
+            .card-title {
+                font-size: 0.8em;
+            }
+        }
     </style>
 </head>
 
@@ -338,11 +459,9 @@
     <header>
         <div class="header-left">
             <h1>🗂️ 캐시 매니저</h1>
-            <select id="dateSelect" onchange="loadDate(this.value)">
-                <option value="">Loading dates...</option>
-            </select>
-            <button onclick="loadDate(currentDate)"
-                style="background:transparent; border:1px solid #aaa; color:white; cursor:pointer; padding:4px 8px; border-radius:4px;">🔄</button>
+            <button onclick="loadCache()"
+                style="background:transparent; border:1px solid #aaa; color:white; cursor:pointer; padding:4px 8px; border-radius:4px;">🔄
+                새로고침</button>
         </div>
         <div class="header-right" style="display:flex; gap:10px; align-items:center;">
             <!-- Status Badge -->
@@ -573,7 +692,7 @@
         </div>
     </div>
 
-    <script src="/static/js/manual_crawler.js?v=5.0"></script>
+    <script src="/static/js/manual_crawler.js?v=6.0"></script>
 </body>
 
 </html>

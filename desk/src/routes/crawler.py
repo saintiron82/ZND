@@ -73,7 +73,7 @@ def inspector_page():
 
 @crawler_bp.route('/api/targets')
 def get_targets():
-    targets = load_targets()
+    _, targets = load_targets()
     return jsonify(targets)
 
 
@@ -95,7 +95,7 @@ def get_dedup_categories():
 @requires_auth
 def fetch():
     target_id = request.args.get('target_id')
-    targets = load_targets()
+    _, targets = load_targets()
     
     selected_targets = []
     if target_id == 'all':
@@ -399,12 +399,24 @@ def update_cache():
 def get_unprocessed_items():
     """
     모든 캐시 파일 중 아직 발행되지 않은(미처리) 항목만 반환
-    - 날짜 제한 없음 (desk/cache 하위 전체 검색)
+    - hours 파라미터: 현재 시점부터 N시간 이내 항목만 (0 = 전체)
     - 필터 조건: content.get('saved') is not True AND DB status is not ACCEPTED/WORTHLESS
     """
     import glob
+    from datetime import datetime, timezone, timedelta
     
-    # 1. DB History (이미 처리된 URL 확인용)
+    # 1. 시간 범위 파라미터
+    hours_param = request.args.get('hours', '0')
+    try:
+        filter_hours = int(hours_param)
+    except:
+        filter_hours = 0
+    
+    cutoff_time = None
+    if filter_hours > 0:
+        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+    
+    # 2. DB History (이미 처리된 URL 확인용)
     unprocessed = []
     seen_urls = set()
     
@@ -470,6 +482,20 @@ def get_unprocessed_items():
             # 1. 캐시 파일 내 'saved' 플래그 확인 (이미 발행된 것 제외)
             if not show_all and content.get('saved'): continue
             
+            # [NEW] 시간 범위 필터링
+            if cutoff_time:
+                crawled_at_str = content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
+                if crawled_at_str:
+                    try:
+                        # ISO format parsing
+                        crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
+                        if crawled_at.tzinfo is None:
+                            crawled_at = crawled_at.replace(tzinfo=timezone.utc)
+                        if crawled_at < cutoff_time:
+                            continue  # 시간 범위 밖
+                    except:
+                        pass  # 파싱 실패 시 포함
+            
             # 2. DB History Status 확인 (더 확실한 검증)
             status = db.get_history_status(url)
             
@@ -504,7 +530,7 @@ def get_unprocessed_items():
                 try:
                     if 'cached_targets' not in locals():
                         from crawler import load_targets
-                        cached_targets = load_targets()
+                        cached_settings, cached_targets = load_targets()
                     
                     from urllib.parse import urlparse
                     
@@ -560,16 +586,32 @@ def get_cache_dates():
 @crawler_bp.route('/api/cache/list_by_date')
 @requires_auth
 def get_cache_by_date():
-    """특정 날짜의 캐시 파일들을 상태별로 분류하여 반환 for Kanban"""
-    target_date = request.args.get('date')
-    if not target_date:
-        return jsonify({'success': False, 'error': 'Date required'}), 400
+    """특정 날짜 또는 전체 캐시 파일들을 상태별로 분류하여 반환 for Kanban"""
+    target_date = request.args.get('date', '')
     
-    target_dir = os.path.join(CACHE_DIR, target_date)
-    if not os.path.exists(target_dir):
-         return jsonify({'success': False, 'error': 'Date not found'}), 404
-         
-    files = glob.glob(os.path.join(target_dir, "*.json"))
+    # [NEW] 시간 필터 파라미터
+    hours_param = request.args.get('hours', '0')
+    try:
+        filter_hours = int(hours_param)
+    except:
+        filter_hours = 0
+    
+    cutoff_time = None
+    if filter_hours > 0:
+        from datetime import timedelta
+        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+    
+    # 전체 또는 특정 날짜
+    if target_date == 'all' or not target_date:
+        # 모든 날짜 폴더 검색
+        import glob
+        files = glob.glob(os.path.join(CACHE_DIR, '**', '*.json'), recursive=True)
+    else:
+        target_dir = os.path.join(CACHE_DIR, target_date)
+        if not os.path.exists(target_dir):
+            return jsonify({'success': False, 'error': 'Date not found'}), 404
+        files = glob.glob(os.path.join(target_dir, "*.json"))
+    
     files.sort(key=os.path.getmtime, reverse=True)
     
     kanban_data = {
@@ -582,6 +624,10 @@ def get_cache_by_date():
     
     for filepath in files:
         filename = os.path.basename(filepath)
+        # Skip batch files
+        if 'batch_' in filename or filename == 'index.json':
+            continue
+            
         content = {}
         status = 'NEW'
         is_corrupted = False
@@ -597,6 +643,19 @@ def get_cache_by_date():
                 'status': 'CORRUPTED',
                 'error': str(e)
             }
+        
+        # [NEW] 시간 필터링
+        if cutoff_time and not is_corrupted:
+            crawled_at_str = content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
+            if crawled_at_str:
+                try:
+                    crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
+                    if crawled_at.tzinfo is None:
+                        crawled_at = crawled_at.replace(tzinfo=timezone.utc)
+                    if crawled_at < cutoff_time:
+                        continue  # 시간 범위 밖
+                except:
+                    pass  # 파싱 실패 시 포함
             
         url = content.get('url')
         

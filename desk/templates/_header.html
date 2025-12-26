@@ -80,5 +80,47 @@
         <a href="/crawler" class="nav-tab {% if active == 'cache' %}active{% endif %}">🗂️ <span>캐시매니저</span></a>
         <a href="/inspector" class="nav-tab {% if active == 'inspector' %}active{% endif %}">📦 <span>분석</span></a>
     </div>
-    <div class="nav-user">👤 master</div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <select id="globalTimeFilter" onchange="onTimeFilterChange()" style="background: #2a2a3e; color: white; border: 1px solid rgba(255,255,255,0.3); 
+                       padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; cursor: pointer;">
+            <option value="0" style="background: #2a2a3e;">📅 전체</option>
+            <option value="6" style="background: #2a2a3e;">🕐 최근 6시간</option>
+            <option value="12" style="background: #2a2a3e;">🕐 최근 12시간</option>
+            <option value="24" selected style="background: #2a2a3e;">🕐 최근 24시간</option>
+            <option value="48" style="background: #2a2a3e;">🕐 최근 2일</option>
+            <option value="168" style="background: #2a2a3e;">🕐 최근 1주일</option>
+        </select>
+        <div class="nav-user">👤 master</div>
+    </div>
 </nav>
+
+<script>
+    // 공유 시간 필터 - localStorage 기반 동기화
+    const TIME_FILTER_KEY = 'znd_time_filter_hours';
+
+    // 페이지 로드 시 저장된 값 복원
+    document.addEventListener('DOMContentLoaded', function () {
+        const savedValue = localStorage.getItem(TIME_FILTER_KEY) || '24';
+        const select = document.getElementById('globalTimeFilter');
+        if (select) {
+            select.value = savedValue;
+        }
+    });
+
+    // 필터 변경 시 저장 및 페이지별 콜백 호출
+    function onTimeFilterChange() {
+        const select = document.getElementById('globalTimeFilter');
+        const hours = select.value;
+        localStorage.setItem(TIME_FILTER_KEY, hours);
+
+        // 페이지별 리로드 함수 호출 (있으면)
+        if (typeof reloadWithTimeFilter === 'function') {
+            reloadWithTimeFilter(hours);
+        }
+    }
+
+    // 현재 시간 필터 값 반환 (다른 스크립트에서 사용)
+    function getTimeFilterHours() {
+        return localStorage.getItem(TIME_FILTER_KEY) || '24';
+    }
+</script>

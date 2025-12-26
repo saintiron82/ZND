@@ -51,23 +51,40 @@ let pendingPublishFilenames = []; // Filenames to be published
 // ☁️ 캐시를 Firebase에 동기화
 
 
+// [NEW] 시간 필터 콜백 - 헤더 드롭다운과 연동
+function reloadWithTimeFilter(hours) {
+    console.log(`[Desk] Time filter changed to ${hours} hours`);
+    loadDesk();  // 데스크 다시 로드
+}
+
 async function loadDesk() {
     const grid = document.getElementById('articleGrid');
 
-    // [MODIFIED] Default to 'all' (Global Staging View)
-    // If selectedDate is null, we assume global view.
-    // If selectedDate is set (by clicking sidebar), use that.
+    // [MODIFIED] 항상 전체 보기 + 시간 필터 사용
+    selectedDate = 'all';
 
-    if (!selectedDate) {
-        selectedDate = 'all';
-        const label = document.getElementById('selectedDateLabel');
-        if (label) label.textContent = `📅 전체 미발행 (Global Staging)`;
+    // 시간 필터 레이블 업데이트
+    const hours = typeof getTimeFilterHours === 'function' ? getTimeFilterHours() : '0';
+    const label = document.getElementById('selectedDateLabel');
+    if (label) {
+        if (hours === '0') {
+            label.textContent = `📅 전체 미발행`;
+        } else if (hours === '24') {
+            label.textContent = `📅 최근 24시간`;
+        } else if (hours === '48') {
+            label.textContent = `📅 최근 2일`;
+        } else if (hours === '168') {
+            label.textContent = `📅 최근 1주일`;
+        } else {
+            label.textContent = `📅 최근 ${hours}시간`;
+        }
     }
 
-    grid.innerHTML = '<div class="loading">로딩 중... (전체 미발행 기사 스캔)</div>';
+    grid.innerHTML = '<div class="loading">로딩 중...</div>';
 
     try {
-        const response = await fetch(`/api/desk/list?date=${selectedDate}&include_trash=${isTrashMode}`);
+        // [MODIFIED] 시간 필터 적용
+        const response = await fetch(`/api/desk/list?date=all&include_trash=${isTrashMode}&hours=${hours}`);
         const data = await response.json();
 
         if (data.error) {
@@ -76,8 +93,8 @@ async function loadDesk() {
         }
 
         deskData = data.articles || [];
-        window.unanalyzedCount = data.unanalyzed_count || 0;  // [NEW] API에서 받은 미분석 수
-        console.log(`Loaded ${deskData.length} items for date=${selectedDate}, unanalyzed=${window.unanalyzedCount}`);
+        window.unanalyzedCount = data.unanalyzed_count || 0;
+        console.log(`Loaded ${deskData.length} items, hours=${hours}, unanalyzed=${window.unanalyzedCount}`);
 
         renderArticles();
         updateStats();

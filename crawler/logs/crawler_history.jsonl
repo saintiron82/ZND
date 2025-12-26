@@ -16,3 +16,20 @@
 {"timestamp": "2025-12-26T00:52:09.797299", "action": "Collect", "result": "Collected 22 new links", "duration": 3.65, "success": true}
 {"timestamp": "2025-12-26T00:53:18.178970", "action": "Extract", "result": "Extracted 22 (Skip:0, Fail:0)", "duration": 68.38, "success": true}
 {"timestamp": "2025-12-26T00:53:18.178970", "action": "Manual", "result": "Extracted 22 (Skip:0, Fail:0)", "duration": 72.04, "success": true}
+{"timestamp": "2025-12-26T10:17:45.339366", "action": "Collect", "result": "Collected 22 new links", "duration": 4.47, "success": true}
+{"timestamp": "2025-12-26T10:52:36.458415", "action": "Collect", "result": "Collected 21 new links", "duration": 4.41, "success": true}
+{"timestamp": "2025-12-26T10:53:34.883325", "action": "Collect", "result": "Collected 21 new links", "duration": 3.8, "success": true}
+{"timestamp": "2025-12-26T11:01:03.656478", "action": "Collect", "result": "Collected 21 new links", "duration": 4.09, "success": true}
+{"timestamp": "2025-12-26T11:03:35.420009", "action": "Collect", "result": "Collected 21 new links", "duration": 3.71, "success": true}
+{"timestamp": "2025-12-26T11:11:12.298376", "action": "Collect", "result": "Collected 21 new links", "duration": 4.07, "success": true}
+{"timestamp": "2025-12-26T11:11:22.224962", "action": "Collect", "result": "Error: 'id'", "duration": 0.03, "success": false}
+{"timestamp": "2025-12-26T11:11:22.225958", "action": "Manual", "result": "OK", "duration": 0.03, "success": false}
+{"timestamp": "2025-12-26T11:24:09.270167", "action": "Collect", "result": "Collected 21 new links", "duration": 4.03, "success": true}
+{"timestamp": "2025-12-26T11:28:45.687885", "action": "Collect", "result": "Collected 21 new links", "duration": 3.62, "success": true}
+{"timestamp": "2025-12-26T11:29:05.826457", "action": "Collect", "result": "Collected 21 new links", "duration": 3.61, "success": true}
+{"timestamp": "2025-12-26T11:33:23.244429", "action": "Collect", "result": "Collected 21 new links", "duration": 3.81, "success": true}
+{"timestamp": "2025-12-26T11:33:55.287557", "action": "Collect", "result": "Collected 21 new links", "duration": 3.5, "success": true}
+{"timestamp": "2025-12-26T11:34:15.921740", "action": "Collect", "result": "Collected 21 new links", "duration": 3.87, "success": true}
+{"timestamp": "2025-12-26T11:36:56.669321", "action": "CollectExtract", "result": "수집:20, 추출:1", "duration": 14.44, "success": true}
+{"timestamp": "2025-12-26T11:37:10.791345", "action": "CollectExtract", "result": "수집:20, 추출:0", "duration": 4.87, "success": true}
+{"timestamp": "2025-12-26T11:57:42.397509", "action": "CollectExtract", "result": "수집:0, 추출:0", "duration": 4.81, "success": true}

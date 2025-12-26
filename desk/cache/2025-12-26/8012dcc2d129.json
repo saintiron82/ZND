@@ -1,12 +1,229 @@
 {
-  "title": "인텔의 첨단 칩 제작 공정 ‘18A’에 엔비디아 참여 중단 - AI타임스",
-  "description": "인텔의 차세대 칩 제조 기술 ‘18A(1.8나노)’ 개발에 제동이 걸렸다. 엔비디아가 인텔의 기술을 활용해 칩 생산을 시험하려던 계획을 중단한 것으로 알려졌다.로",
-  "image": "https://cdn.aitimes.com/news/photo/202512/205086_206571_2454.jpg",
-  "text": "(사진=셔터스톡) 인텔의 차세대 칩 제조 기술 ‘18A(1.8나노)’ 개발에 제동이 걸렸다. 엔비디아가 인텔의 기술을 활용해 칩 생산을 시험하려던 계획을 중단한 것으로 알려졌다. 로이터는 24일(현지시간) 소식통을 인용, 인텔의 18A 공정을 테스트하던 엔비디아가 현재는 진행을 멈춘 상태라고 보도했다. 이 소식이 알려지자, 뉴욕 증시에서 인텔 주가는 장 초반 약 2.2% 하락했다. 엔비디아는 공식 입장을 내놓지 않았으나, 인텔은 “18A 제조 기술은 순조롭게 발전하고 있다”라고만 전했다. TSMC의 첨단 2나노(2nm)와 비교되는 18A는 인텔이 자체 칩 제조 능력을 확보하기 위한 핵심 기술이다. 최근 미국 애리조나주 오코틸로 캠퍼스에 위치한 ‘팹 52’ 공장을 가동하며, 18A 공정을 적용한 첫 양산 라인을 구축했다고 발표했다. 인텔은 이를 “미국에서 개발·배치된 가장 최첨단 제조 기술”이라고 강조했다. 이 공정에는 인텔이 ‘업계의 돌파구’라고 주장하는 두가지 혁신이 담겼다. 첫째는 트랜지스터 구조다. 18A 제품은 트랜지스터를 사방에서 감싸는 ‘게이트 올 어라운드(GAA)’ 기술을 처음 적용해, 더 많은 트랜지스터를 집적하면서도 전력 효율을 높일 수 있다. 또 전력 공급 방식의 변화로 칩 성능과 에너지 효율을 동시에 개선하는 것이 목표다. 이를 통해 세계 최대 파운드리 업체인 대만 TSMC에 맞서고, 미국 내 첨단 반도체 제조 역량을 회복하려는 의도다. 이런 맥락에서 엔비디아가 이 기술로 칩을 제작하는 테스트에 참여하는 것은 상징적인 의미는 물론, 실질적으로도 큰 힘이 된다. 엔비디아는 지난 9월 미국 정부가 인텔 지분 약 10%를 확보한 이후, 인텔에 50억달러(약 7조원)를 투자하며 지원에 나섰다. 다만, 엔비디아 칩을 인텔이 실제로 생산한다는 계약은 포함되지 않았다. 전문가들은 엔비디아의 시험 중단 소식이 18A 공정의 수율과 양산 안정성에 대한 불확실성을 다시 부각했다고 평했다. 인텔이 18A와 차세대 공정으로 반전을 노리기 위해서는 엔비디아와 같은 주요 고객(Anchor Customer)을 확보해 기술을 실질적으로 입증하는 과정이 여전히 최대 과제라는 지적이다. 박찬 기자 cpark@aitimes.com",
-  "published_at": "2025-12-25T17:15:54+09:00",
-  "url": "https://www.aitimes.com/news/articleView.html?idxno=205086",
-  "source_id": "aitimes",
   "article_id": "8012dcc2d129",
   "cached_at": "2025-12-25T15:52:32.345114+00:00",
-  "updated_at": "2025-12-25T15:52:32.345114+00:00"
+  "description": "인텔의 차세대 칩 제조 기술 ‘18A(1.8나노)’ 개발에 제동이 걸렸다. 엔비디아가 인텔의 기술을 활용해 칩 생산을 시험하려던 계획을 중단한 것으로 알려졌다.로",
+  "image": "https://cdn.aitimes.com/news/photo/202512/205086_206571_2454.jpg",
+  "published_at": "2025-12-25T17:15:54+09:00",
+  "source_id": "aitimes",
+  "text": "(사진=셔터스톡) 인텔의 차세대 칩 제조 기술 ‘18A(1.8나노)’ 개발에 제동이 걸렸다. 엔비디아가 인텔의 기술을 활용해 칩 생산을 시험하려던 계획을 중단한 것으로 알려졌다. 로이터는 24일(현지시간) 소식통을 인용, 인텔의 18A 공정을 테스트하던 엔비디아가 현재는 진행을 멈춘 상태라고 보도했다. 이 소식이 알려지자, 뉴욕 증시에서 인텔 주가는 장 초반 약 2.2% 하락했다. 엔비디아는 공식 입장을 내놓지 않았으나, 인텔은 “18A 제조 기술은 순조롭게 발전하고 있다”라고만 전했다. TSMC의 첨단 2나노(2nm)와 비교되는 18A는 인텔이 자체 칩 제조 능력을 확보하기 위한 핵심 기술이다. 최근 미국 애리조나주 오코틸로 캠퍼스에 위치한 ‘팹 52’ 공장을 가동하며, 18A 공정을 적용한 첫 양산 라인을 구축했다고 발표했다. 인텔은 이를 “미국에서 개발·배치된 가장 최첨단 제조 기술”이라고 강조했다. 이 공정에는 인텔이 ‘업계의 돌파구’라고 주장하는 두가지 혁신이 담겼다. 첫째는 트랜지스터 구조다. 18A 제품은 트랜지스터를 사방에서 감싸는 ‘게이트 올 어라운드(GAA)’ 기술을 처음 적용해, 더 많은 트랜지스터를 집적하면서도 전력 효율을 높일 수 있다. 또 전력 공급 방식의 변화로 칩 성능과 에너지 효율을 동시에 개선하는 것이 목표다. 이를 통해 세계 최대 파운드리 업체인 대만 TSMC에 맞서고, 미국 내 첨단 반도체 제조 역량을 회복하려는 의도다. 이런 맥락에서 엔비디아가 이 기술로 칩을 제작하는 테스트에 참여하는 것은 상징적인 의미는 물론, 실질적으로도 큰 힘이 된다. 엔비디아는 지난 9월 미국 정부가 인텔 지분 약 10%를 확보한 이후, 인텔에 50억달러(약 7조원)를 투자하며 지원에 나섰다. 다만, 엔비디아 칩을 인텔이 실제로 생산한다는 계약은 포함되지 않았다. 전문가들은 엔비디아의 시험 중단 소식이 18A 공정의 수율과 양산 안정성에 대한 불확실성을 다시 부각했다고 평했다. 인텔이 18A와 차세대 공정으로 반전을 노리기 위해서는 엔비디아와 같은 주요 고객(Anchor Customer)을 확보해 기술을 실질적으로 입증하는 과정이 여전히 최대 과제라는 지적이다. 박찬 기자 cpark@aitimes.com",
+  "title": "인텔의 첨단 칩 제작 공정 ‘18A’에 엔비디아 참여 중단 - AI타임스",
+  "updated_at": "2025-12-26T04:01:49.120664+00:00",
+  "url": "https://www.aitimes.com/news/articleView.html?idxno=205086",
+  "title_ko": "엔비디아, 인텔 18A 공정 테스트 중단... 인텔 파운드리 '빨간불'",
+  "summary": "엔비디아가 인텔의 차세대 1.8나노(18A) 공정을 이용한 칩 생산 테스트를 중단했다는 보도가 나왔다. 이는 인텔의 파운드리 재건 계획에 타격을 주는 소식으로, 인텔 주가 하락과 기술적 불확실성 우려를 낳고 있다.",
+  "tags": [],
+  "impact_score": 7.5,
+  "IS_Analysis": {
+    "Score_Commentary": "하드웨어 최상위 포식자 Nvidia(Tier 1)의 결정이 전통 강자 Intel(Tier 3)의 핵심 전략에 제동을 건 사건이다. 반도체 산업(Industry) 전반의 판도에 영향을 미치며, 구체적 행동(중단)이 보도되어 실현(Realization) 단계로 평가된다.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Nvidia",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "Intel",
+          "Se_Tier": 3,
+          "PE/SE_Reason": "테스트 중단을 결정한 주체(P4) Nvidia. 그로 인해 직접적 타격을 입는 대상(P2/P5 연관) Intel. *Tier Map 기준 Intel은 Tier 3.*"
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "zero_echo_score": 5.2,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "T2": 5,
+      "T3": 5,
+      "Rationale": "로이터 인용 및 주가 변동 등 시장 반응 데이터 포함."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 2,
+      "P3": 1,
+      "Rationale": "사실 전달 위주의 기사."
+    },
+    "Utility": {
+      "V1": 9,
+      "V2": 5,
+      "V3": 7,
+      "Rationale": "반도체 시장 투자자 및 업계 관계자에게 매우 중요한 신호."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "보정 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "8012dcc2d129",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "엔비디아, 인텔 18A 공정 테스트 중단... 인텔 파운드리 '빨간불'",
+      "Summary": "엔비디아가 인텔의 차세대 1.8나노(18A) 공정을 이용한 칩 생산 테스트를 중단했다는 보도가 나왔다. 이는 인텔의 파운드리 재건 계획에 타격을 주는 소식으로, 인텔 주가 하락과 기술적 불확실성 우려를 낳고 있다.",
+      "Tags": [
+        "Rumor",
+        "Hardware",
+        "Nvidia",
+        "Intel",
+        "Stock"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "하드웨어 최상위 포식자 Nvidia(Tier 1)의 결정이 전통 강자 Intel(Tier 3)의 핵심 전략에 제동을 건 사건이다. 반도체 산업(Industry) 전반의 판도에 영향을 미치며, 구체적 행동(중단)이 보도되어 실현(Realization) 단계로 평가된다.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Nvidia",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "Intel",
+            "Se_Tier": 3,
+            "PE/SE_Reason": "테스트 중단을 결정한 주체(P4) Nvidia. 그로 인해 직접적 타격을 입는 대상(P2/P5 연관) Intel. *Tier Map 기준 Intel은 Tier 3.*"
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 4.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 5,
+        "T3": 5,
+        "Rationale": "로이터 인용 및 주가 변동 등 시장 반응 데이터 포함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "사실 전달 위주의 기사."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 5,
+        "V3": 7,
+        "Rationale": "반도체 시장 투자자 및 업계 관계자에게 매우 중요한 신호."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "original_title": "인텔의 첨단 칩 제작 공정 ‘18A’에 엔비디아 참여 중단 - AI타임스",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 5.0,
+        "T3": 5.0,
+        "S_Avg": 5.33
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 2.0,
+        "P3": 1.0,
+        "N_Avg": 1.67
+      },
+      "Utility": {
+        "V1": 9.0,
+        "V2": 5.0,
+        "V3": 7.0,
+        "U_Avg": 7.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.22,
+      "ZS_Final": 5.2
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 5,
+        "T3": 5,
+        "Rationale": "로이터 인용 및 주가 변동 등 시장 반응 데이터 포함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 2,
+        "P3": 1,
+        "Rationale": "사실 전달 위주의 기사."
+      },
+      "Utility": {
+        "V1": 9,
+        "V2": 5,
+        "V3": 7,
+        "Rationale": "반도체 시장 투자자 및 업계 관계자에게 매우 중요한 신호."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 7.5,
+      "IS_Final": 7.5,
+      "Score_Commentary": "하드웨어 최상위 포식자 Nvidia(Tier 1)의 결정이 전통 강자 Intel(Tier 3)의 핵심 전략에 제동을 건 사건이다. 반도체 산업(Industry) 전반의 판도에 영향을 미치며, 구체적 행동(중단)이 보도되어 실현(Realization) 단계로 평가된다."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Nvidia",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "Intel",
+      "Se_Tier": 3,
+      "PE/SE_Reason": "테스트 중단을 결정한 주체(P4) Nvidia. 그로 인해 직접적 타격을 입는 대상(P2/P5 연관) Intel. *Tier Map 기준 Intel은 Tier 3.*"
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-26T04:01:49.120258+00:00"
 }

@@ -179,31 +179,29 @@ def toggle_schedule(schedule_id):
 
 @schedule_bp.route('/api/schedule/run_now', methods=['POST'])
 def run_crawl_now():
-    """▶️ 지금 바로 크롤링 실행 (독립 스케줄러 모듈 호출)"""
+    """▶️ 지금 바로 크롤링 실행 (automation API 통합)"""
     try:
-        # 크롤러 모듈 경로 추가
-        crawler_dir = os.path.join(ZND_ROOT, 'crawler')
-        if crawler_dir not in sys.path:
-            sys.path.insert(0, crawler_dir)
-        if ZND_ROOT not in sys.path:
-            sys.path.insert(0, ZND_ROOT)
-        
-        from core.extractor import run_full_pipeline
         from src.crawler_state import set_crawling, log_crawl_event
+        from src.routes.automation import automation_collect_extract_internal
         import time
         
         set_crawling(True, "Manual Trigger")
         start_time = time.time()
         
         try:
-            result = run_full_pipeline()
+            # automation의 collect-extract 로직 재사용
+            result = automation_collect_extract_internal()
             duration = time.time() - start_time
-            log_crawl_event("Manual", result.get('message', 'OK'), duration, success=result.get('success', True))
+            
+            msg = f"수집:{result.get('collected', 0)}, 추출:{result.get('extracted', 0)}, 실패:{result.get('failed', 0)}"
+            log_crawl_event("Manual", msg, duration, success=result.get('success', True))
             
             return jsonify({
                 'success': True,
-                'message': result.get('message', '크롤링 완료'),
-                'result': result
+                'message': msg,
+                'collected': result.get('collected', 0),
+                'extracted': result.get('extracted', 0),
+                'failed': result.get('failed', 0)
             })
         finally:
             set_crawling(False)

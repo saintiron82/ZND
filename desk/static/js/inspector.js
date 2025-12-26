@@ -5,6 +5,12 @@ let loadedContent = {}; // Map: url -> contentData
 let currentGroup = null; // Current selected source_id
 let articleIdMap = {};  // Map: articleId -> url (for hash-based matching)
 
+// [NEW] 시간 필터 콜백 - 헤더 드롭다운과 연동
+function reloadWithTimeFilter(hours) {
+    console.log(`[Inspector] Time filter changed to ${hours} hours`);
+    loadTargetList();  // 리스트 다시 로드
+}
+
 // [Helper] Check if item is already analyzed (has scores)
 function isAnalyzed(url) {
     const content = loadedContent[url];
@@ -119,8 +125,9 @@ async function deleteSelectedPermanently() {
 async function loadTargetList() {
     showLoading('Fetching Unprocessed List... (Checking all history)');
     try {
-        // [MODIFIED] Fetch ALL unprocessed items from cache (regardless of date)
-        const res = await fetch('/api/unprocessed_items');
+        // [MODIFIED] Fetch unprocessed items with time filter
+        const hours = typeof getTimeFilterHours === 'function' ? getTimeFilterHours() : '0';
+        const res = await fetch(`/api/unprocessed_items?hours=${hours}`);
         const data = await res.json();
         allLinks = data.links;
 
@@ -159,11 +166,13 @@ async function loadTargetList() {
 
         log(`Loaded list: ${allLinks.length} items. Select targets and click Fetch.`, 'success');
 
-        // [NEW] Auto-select last group if exists
-        const lastGroup = localStorage.getItem('inspector_last_group');
-        if (lastGroup && sourceGroups[lastGroup]) {
-            log(`Restoring last session: ${lastGroup}`, 'info');
-            selectGroup(lastGroup);
+        // [MODIFIED] 자동 추출 (batchSize 만큼)
+        const allNewCount = Object.values(sourceGroups).reduce((sum, items) =>
+            sum + items.filter(i => i.status === 'NEW' && !isAnalyzed(i.url)).length, 0
+        );
+        if (allNewCount > 0) {
+            log(`Auto-extract: ${allNewCount}개 NEW 기사 발견, 자동 추출 시작...`, 'info');
+            extractBatch();
         }
 
     } catch (e) {
@@ -182,41 +191,33 @@ function renderGroupList(showCheckboxes = true) {
     sortedKeys.forEach(sid => {
         const items = sourceGroups[sid];
 
-        // 상태별 카운트 세분화
-        let pureNewCount = 0;   // RAW or NEW (No Analysis)
-        let analyzedCount = 0;  // ANALYZED or Analyzed Check
-        let savedCount = 0;     // ACCEPTED or PUBLISHED
-        let rejectedCount = 0;  // REJECTED or WORTHLESS
-        let skippedCount = 0;   // SKIPPED
-        let failedCount = 0;    // MLL_FAILED or INVALID or Others
+        // 상태별 카운트
+        let pureNewCount = 0;
+        let analyzedCount = 0;
+        let savedCount = 0;
+        let otherCount = 0;
 
         items.forEach(i => {
             if (i.status === 'ACCEPTED' || i.status === 'PUBLISHED') savedCount++;
-            else if (i.status === 'REJECTED' || i.status === 'WORTHLESS') rejectedCount++;
-            else if (i.status === 'SKIPPED') skippedCount++;
-            else if (i.status === 'MLL_FAILED' || i.status === 'INVALID' || i.status === 'FETCH_FAILED') failedCount++;
             else if (i.status === 'ANALYZED' || isAnalyzed(i.url)) analyzedCount++;
-            else pureNewCount++; // 'NEW' or 'RAW' without analysis
+            else if (i.status === 'NEW' || i.status === 'RAW') pureNewCount++;
+            else otherCount++;
         });
 
         const div = document.createElement('div');
         div.className = 'group-item';
 
-        // [MODIFIED] 그룹 클릭 이벤트 제거 - 현황만 표시
-        // (기존: selectGroup 호출)
-
-        // 개선된 UI: 2열 그리드 레이아웃 (체크박스 제거)
+        // 콤팩트 2줄 레이아웃
         div.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <div style="font-weight:bold; font-size:1.15em;">${sid}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong>${sid}</strong>
+                <span style="font-size:0.75em; color:#666;">${items.length}개</span>
             </div>
-            <div class="group-stat" style="display:grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 0.9em;">
-                <span style="${pureNewCount > 0 ? 'color:#d63384; font-weight:bold;' : 'color:#ccc;'}">🔥 NEW: ${pureNewCount}</span>
-                <span style="${analyzedCount > 0 ? 'color:#fd7e14; font-weight:bold;' : 'color:#ccc;'}">📝 Analyzed: ${analyzedCount}</span>
-                <span style="${savedCount > 0 ? 'color:#198754; font-weight:bold;' : 'color:#ccc;'}">✅ Saved: ${savedCount}</span>
-                <span style="${rejectedCount > 0 ? 'color:#dc3545;' : 'color:#ccc;'}">🚫 Rejected: ${rejectedCount}</span>
-                <span style="${skippedCount > 0 ? 'color:#6c757d;' : 'color:#ccc;'}">⏭️ Skipped: ${skippedCount}</span>
-                ${failedCount > 0 ? `<span style="color:#dc3545; font-weight:bold;">⚠️ Failed: ${failedCount}</span>` : ''}
+            <div style="font-size:0.75em; margin-top:2px; display:flex; gap:8px;">
+                ${pureNewCount > 0 ? `<span style="color:#d63384; font-weight:bold;">🔥${pureNewCount}</span>` : ''}
+                ${analyzedCount > 0 ? `<span style="color:#fd7e14;">📝${analyzedCount}</span>` : ''}
+                ${savedCount > 0 ? `<span style="color:#198754;">✅${savedCount}</span>` : ''}
+                ${otherCount > 0 ? `<span style="color:#888;">⏭${otherCount}</span>` : ''}
             </div>
         `;
 

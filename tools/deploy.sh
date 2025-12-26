@@ -4,6 +4,8 @@
 set -e
 
 # 0. Branch Selection & Confirmation
+# Ensure we run from the project root (assuming script is in tools/)
+cd "$(dirname "$0")/.."
 CURRENT_BRANCH=$(git branch --show-current)
 TARGET_BRANCH=$1
 

@@ -76,8 +76,6 @@ def desk_list():
                 files_to_process = [os.path.join(cache_date_dir, f) for f in os.listdir(cache_date_dir) if f.endswith('.json')]
         
         articles = []
-        unanalyzed_count = 0  # [NEW] 미분석 기사 카운터
-        
         # [NEW] Firebase에서 발행된 article_ids 조회 (동기화)
         published_article_ids = set()
         skip_firebase_sync = os.getenv('DESK_SKIP_FIREBASE_SYNC', 'false').lower() == 'true'
@@ -88,17 +86,45 @@ def desk_list():
                 print(f"🔗 [Desk] Firebase sync: {len(published_article_ids)} published IDs loaded")
             except Exception as e:
                 pass
+
+        # [NEW] Global Counters
+        stats = {
+            'total': 0,
+            'unanalyzed': 0,
+            'analyzed': 0,
+            'staged': 0,
+            'published': 0,
+            'rejected': 0
+        }
         
         for filepath in files_to_process:
             try:
                 filename = os.path.basename(filepath)
                 # Skip batch files if any
-                if 'batch_' in filename: continue
+                if 'batch_' in filename or 'batches' in filepath.split(os.sep): continue
 
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(filepath, 'r', encoding='utf-8-sig') as f:
                     data = json.load(f)
                 
+                stats['total'] += 1
+                
                 # [CRITICAL FILTER] 먼저 상태 체크
+                # ... status checks ...
+                
+                # [NEW] 0. Time Filter (Global - applies to stats too)
+                if cutoff_time:
+                    crawled_at_str = data.get('crawled_at') or data.get('cached_at') or data.get('saved_at')
+                    if crawled_at_str:
+                        try:
+                            # Parse with timezone support
+                            crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
+                            if crawled_at.tzinfo is None:
+                                crawled_at = crawled_at.replace(tzinfo=timezone.utc)
+                            if crawled_at < cutoff_time:
+                                continue  # Skip this file entirely (stats + list)
+                        except:
+                            pass  # Keep if parsing fails
+                
                 is_published = data.get('published', False)
                 is_rejected = data.get('rejected', False)
                 is_saved = data.get('saved', False)  # [NEW] Staged 상태 (Inspector 기준 ACCEPTED)
@@ -113,17 +139,32 @@ def desk_list():
                 is_completed = is_published or is_rejected or is_saved or (dedup_status == 'duplicate')
                 
                 # 분석 상태 체크
+                # [FIXED] Boolean logic for impact_score (0 is valid)
                 is_analyzed = (
                     data.get('mll_status') == 'analyzed' or
                     data.get('raw_analysis') is not None or
                     data.get('zero_echo_score') is not None
                 )
                 
-                # [FIX Logic] 완료되지 않은 기사 중 분석이 안 된 것만 카운트
+                # --- Count Stats (Before Filters) ---
+                if is_published:
+                    stats['published'] += 1
+                elif is_rejected:
+                    stats['rejected'] += 1
+                elif is_saved:
+                    stats['staged'] += 1
+                elif is_analyzed:
+                    stats['analyzed'] += 1
+                else:
+                    stats['unanalyzed'] += 1
+                
+                # --- List Filters ---
+                
+                # [FIX Logic] 완료되지 않은 기사 중 분석이 안 된 것만 카운트 -> 이제 위에서 stats['unanalyzed']로 처리함
+                # 여기서는 목록 포함 여부만 결정
                 if not is_completed and not is_analyzed:
-                    unanalyzed_count += 1
                     if not include_unanalyzed:
-                        continue # 카운트만 하고 목록엔 안 넣음
+                        continue # 목록엔 안 넣음
                 
                 # 1. Trash Filter (거부된 기사)
                 if not include_trash and is_rejected:
@@ -133,18 +174,7 @@ def desk_list():
                 if not include_published and is_published:
                     continue
 
-                # [NEW] 3. 시간 범위 필터링 (Inspector와 동기화)
-                if cutoff_time:
-                    crawled_at_str = data.get('crawled_at') or data.get('cached_at') or data.get('saved_at')
-                    if crawled_at_str:
-                        try:
-                            crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
-                            if crawled_at.tzinfo is None:
-                                crawled_at = crawled_at.replace(tzinfo=timezone.utc)
-                            if crawled_at < cutoff_time:
-                                continue  # 시간 범위 밖
-                        except:
-                            pass  # 파싱 실패 시 포함
+                # [MOVED] 3. Time Filter moved to top of loop
 
                 articles.append({
                     'filename': filename,
@@ -183,7 +213,8 @@ def desk_list():
             'date': date_str,
             'articles': articles,
             'total': len(articles),
-            'unanalyzed_count': unanalyzed_count
+            'stats': stats, # [NEW]
+            'unanalyzed_count': stats['unanalyzed'] # Backward compatibility
         })
     except Exception as e:
         print(f"❌ [Staging List] Error: {e}")

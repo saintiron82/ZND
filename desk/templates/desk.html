@@ -58,23 +58,29 @@
             <div id="deskStatsPanel"
                 style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
                 <h4 style="margin: 0 0 10px 0; color: #4ecdc4;">📊 미발행 현황</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;">
-                    <div style="text-align: center; padding: 8px; background: rgba(255,193,7,0.2); border-radius: 8px;">
-                        <div id="unanalyzedCount" style="font-size: 1.3em; font-weight: bold; color: #ffc107;">-</div>
-                        <div style="font-size: 0.7em; color: #aaa;">미분석</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 6px;">
+                    <div
+                        style="text-align: center; padding: 6px; background: rgba(108,117,125,0.2); border-radius: 8px;">
+                        <div id="unanalyzedCount" style="font-size: 1.1em; font-weight: bold; color: #adb5bd;">-</div>
+                        <div style="font-size: 0.6em; color: #aaa;">미분석</div>
                     </div>
                     <div
-                        style="text-align: center; padding: 8px; background: rgba(78,205,196,0.2); border-radius: 8px;">
-                        <div id="stagedCount" style="font-size: 1.3em; font-weight: bold; color: #4ecdc4;">-</div>
-                        <div style="font-size: 0.7em; color: #aaa;">대기중</div>
+                        style="text-align: center; padding: 6px; background: rgba(23,162,184,0.2); border-radius: 8px;">
+                        <div id="analyzedCount" style="font-size: 1.1em; font-weight: bold; color: #17a2b8;">-</div>
+                        <div style="font-size: 0.6em; color: #aaa;">분석됨</div>
                     </div>
-                    <div style="text-align: center; padding: 8px; background: rgba(220,53,69,0.2); border-radius: 8px;">
-                        <div id="rejectedCount" style="font-size: 1.3em; font-weight: bold; color: #dc3545;">-</div>
-                        <div style="font-size: 0.7em; color: #aaa;">거부</div>
+                    <div
+                        style="text-align: center; padding: 6px; background: rgba(78,205,196,0.2); border-radius: 8px;">
+                        <div id="stagedCount" style="font-size: 1.1em; font-weight: bold; color: #4ecdc4;">-</div>
+                        <div style="font-size: 0.6em; color: #aaa;">대기중</div>
                     </div>
-                    <div style="text-align: center; padding: 8px; background: rgba(40,167,69,0.2); border-radius: 8px;">
-                        <div id="publishedCount" style="font-size: 1.3em; font-weight: bold; color: #28a745;">-</div>
-                        <div style="font-size: 0.7em; color: #aaa;">발행</div>
+                    <div style="text-align: center; padding: 6px; background: rgba(220,53,69,0.2); border-radius: 8px;">
+                        <div id="rejectedCount" style="font-size: 1.1em; font-weight: bold; color: #dc3545;">-</div>
+                        <div style="font-size: 0.6em; color: #aaa;">거부</div>
+                    </div>
+                    <div style="text-align: center; padding: 6px; background: rgba(40,167,69,0.2); border-radius: 8px;">
+                        <div id="publishedCount" style="font-size: 1.1em; font-weight: bold; color: #28a745;">-</div>
+                        <div style="font-size: 0.6em; color: #aaa;">발행</div>
                     </div>
                 </div>
 

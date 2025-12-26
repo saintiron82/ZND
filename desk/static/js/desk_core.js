@@ -93,8 +93,9 @@ async function loadDesk() {
         }
 
         deskData = data.articles || [];
-        window.unanalyzedCount = data.unanalyzed_count || 0;
-        console.log(`Loaded ${deskData.length} items, hours=${hours}, unanalyzed=${window.unanalyzedCount}`);
+        window.deskStats = data.stats || {};
+        window.unanalyzedCount = window.deskStats.unanalyzed || data.unanalyzed_count || 0;
+        console.log(`Loaded ${deskData.length} items, hours=${hours}, stats:`, window.deskStats);
 
         renderArticles();
         updateStats();
@@ -319,15 +320,29 @@ function renderArticles() {
 }
 
 function updateStats() {
-    // 전체 통계
-    // 미분석: API에서 직접 받음 (카드로는 표시되지 않음)
-    const unanalyzed = window.unanalyzedCount || 0;
-    const staged = deskData.filter(a => !a.rejected && !a.published && a.dedup_status !== 'duplicate').length;
-    const rejected = deskData.filter(a => a.rejected || a.dedup_status === 'duplicate').length;
-    const published = deskData.filter(a => a.published).length;
+    // [MODIFIED] Use server-side stats if available
+    const stats = window.deskStats || {};
+
+    // Fallback counts (only if stats not present)
+    const clientUnanalyzed = window.unanalyzedCount || 0;
+    const clientStaged = deskData.filter(a => !a.rejected && !a.published && a.dedup_status !== 'duplicate').length;
+    const clientRejected = deskData.filter(a => a.rejected || a.dedup_status === 'duplicate').length;
+    const clientPublished = deskData.filter(a => a.published).length;
+
+    // Use stats, falling back to client calc
+    const unanalyzed = stats.unanalyzed !== undefined ? stats.unanalyzed : clientUnanalyzed;
+    const analyzed = stats.analyzed || 0;
+    const staged = stats.staged !== undefined ? stats.staged : clientStaged;
+    const rejected = stats.rejected !== undefined ? stats.rejected : clientRejected;
+    const published = stats.published !== undefined ? stats.published : clientPublished;
 
     const unanalyzedEl = document.getElementById('unanalyzedCount');
     if (unanalyzedEl) unanalyzedEl.textContent = unanalyzed;
+
+    // [NEW] Bind Analyzed count
+    const analyzedEl = document.getElementById('analyzedCount');
+    if (analyzedEl) analyzedEl.textContent = analyzed;
+
     document.getElementById('stagedCount').textContent = staged;
     document.getElementById('rejectedCount').textContent = rejected;
     document.getElementById('publishedCount').textContent = published;

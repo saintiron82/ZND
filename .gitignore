@@ -17,3 +17,6 @@ desk/venv
 # Next.js build output (dev cache only - production build is included)
 web/.next/dev/
 node_modules/
+
+# Desk debug logs
+desk/debug_*.log

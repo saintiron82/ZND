@@ -11,14 +11,22 @@ function reloadWithTimeFilter(hours) {
     loadTargetList();  // 리스트 다시 로드
 }
 
-// [Helper] Check if item is already analyzed (has scores)
+// [Helper] Check if item is already analyzed (has scores or stage='analyzed')
+// NOTE: 'published' is NOT a stage, it's an independent flag
 function isAnalyzed(url) {
     const content = loadedContent[url];
     if (!content) return false;
-    // 1. 명시적 상태 확인
+
+    // 1. [UNIFIED] Check explicit 'stage' field first
+    if (content.stage === 'analyzed') return true;
+    if (content.stage === 'staged') return true;  // Already past analyzed
+    if (content.stage === 'inbox' || content.stage === 'trash') return false;
+
+    // 2. 하위 호환: 명시적 status 확인
     if (content.status === 'ANALYZED') return true;
     if (content.status === 'RAW') return false;
-    // 2. 하위 호환: 점수가 있으면 분석된 것으로 간주
+
+    // 3. 하위 호환: 점수가 있으면 분석된 것으로 간주
     return (content.impact_score !== undefined || content.zero_echo_score !== undefined);
 }
 
@@ -127,12 +135,13 @@ async function loadTargetList() {
     try {
         // [MODIFIED] Fetch unprocessed items with time filter
         const hours = typeof getTimeFilterHours === 'function' ? getTimeFilterHours() : '0';
-        const res = await fetch(`/api/unprocessed_items?hours=${hours}`);
+        // [FIX] mode=all을 사용하여 Analyzed 상태 등 모든 미발행 항목을 가져옴
+        const res = await fetch(`/api/unprocessed_items?hours=${hours}&mode=all`);
         const data = await res.json();
         allLinks = data.links;
 
         if (allLinks.length === 0) {
-            log('현재 대기 중인(미처리) 기사가 없습니다. (필요하면 "▶️ 수집"을 실행하세요)', 'info');
+            log('현재 표시할 기사가 없습니다. (필요하면 "▶️ 수집"을 실행하세요)', 'info');
         } else {
             log(`${allLinks.length}개의 미처리 기사를 로드했습니다.`, 'success');
         }
@@ -191,33 +200,31 @@ function renderGroupList(showCheckboxes = true) {
     sortedKeys.forEach(sid => {
         const items = sourceGroups[sid];
 
-        // 상태별 카운트
-        let pureNewCount = 0;
-        let analyzedCount = 0;
-        let savedCount = 0;
-        let otherCount = 0;
-
-        items.forEach(i => {
-            if (i.status === 'ACCEPTED' || i.status === 'PUBLISHED') savedCount++;
-            else if (i.status === 'ANALYZED' || isAnalyzed(i.url)) analyzedCount++;
-            else if (i.status === 'NEW' || i.status === 'RAW') pureNewCount++;
-            else otherCount++;
-        });
+        // Inspector: Only show NEW count (for analysis)
+        const pureNewCount = items.filter(i => i.status === 'NEW' && !isAnalyzed(i.url)).length;
 
         const div = document.createElement('div');
         div.className = 'group-item';
+        div.onclick = (e) => {
+            // Prevent triggering when clicking checkbox
+            if (e.target.tagName !== 'INPUT') selectGroup(sid);
+        };
 
-        // 콤팩트 2줄 레이아웃
+        // Badge: NEW count only
+        const badgeHtml = pureNewCount > 0
+            ? `<span style="color:#d63384; font-weight:bold;">🔥 NEW: ${pureNewCount}</span>`
+            : `<span style="color:#ccc;">- (분석완료)</span>`;
+
         div.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <strong>${sid}</strong>
-                <span style="font-size:0.75em; color:#666;">${items.length}개</span>
+                <span style="font-size:0.75em; color:#666;">Total: ${items.length}</span>
             </div>
-            <div style="font-size:0.75em; margin-top:2px; display:flex; gap:8px;">
-                ${pureNewCount > 0 ? `<span style="color:#d63384; font-weight:bold;">🔥${pureNewCount}</span>` : ''}
-                ${analyzedCount > 0 ? `<span style="color:#fd7e14;">📝${analyzedCount}</span>` : ''}
-                ${savedCount > 0 ? `<span style="color:#198754;">✅${savedCount}</span>` : ''}
-                ${otherCount > 0 ? `<span style="color:#888;">⏭${otherCount}</span>` : ''}
+            <div style="font-size:0.75em; margin-top:4px;">
+                ${badgeHtml}
+            </div>
+            <div style="display:none;">
+               <input type="checkbox" id="chk-${sid}" class="group-checkbox" data-sid="${sid}">
             </div>
         `;
 
@@ -237,32 +244,46 @@ function updateSummary() {
     Object.values(sourceGroups).forEach(items => {
         items.forEach(item => {
             total++;
+            // 1. Staged / Accepted
             if (item.status === 'ACCEPTED') {
                 acceptedCount++;
-            } else if (skippedStatuses.includes(item.status)) {
+            }
+            // 2. Published
+            else if (item.status === 'PUBLISHED') {
+                // acceptedCount++; // Optional: Decide if Published counts as 'Done' alongside Accepted
+                // For now, let's track them but maybe not display in 'Accepted' bucket unless UI changes.
+                // Or just ignore from counters if they are hidden.
+            }
+            // 3. Skipped / Trash
+            else if (skippedStatuses.includes(item.status)) {
                 skippedCount++;
-            } else if (item.status === 'NEW') {
-                if (isAnalyzed(item.url)) {
-                    analyzedCount++;
-                } else {
-                    pureNewCount++;
-                }
+            }
+            // 4. Analyzed (Explicit OR Implicit)
+            else if (item.status === 'ANALYZED' || (item.status === 'NEW' && isAnalyzed(item.url))) {
+                analyzedCount++;
+            }
+            // 5. Inbox (Pure New)
+            else if (item.status === 'NEW') {
+                pureNewCount++;
+            }
+            // Fallback for unknown statuses (e.g. 'reviewed') -> Count as Analyzed if they have scores?
+            else if (isAnalyzed(item.url)) {
+                analyzedCount++;
             }
         });
     });
 
     // DOM 업데이트
     const summaryArea = document.getElementById('summaryArea');
+
     if (summaryArea && total > 0) {
         summaryArea.style.display = 'block';
         document.getElementById('totalCount').textContent = total;
         document.getElementById('totalNew').textContent = pureNewCount;
-        document.getElementById('totalCached').textContent = analyzedCount; // id 유지, 의미 변경 (Analyzed)
-        // summaryArea label도 변경 필요 (아래에서 DOM 조작으로 텍스트 변경)
+        document.getElementById('totalCached').textContent = analyzedCount;
 
-        // 텍스트 변경
         const cachedLabel = document.getElementById('totalCached').parentElement;
-        if (cachedLabel) cachedLabel.innerHTML = `📝요약됨: <strong id="totalCached">${analyzedCount}</strong>`;
+        if (cachedLabel) cachedLabel.innerHTML = `📝분석완료: <strong id="totalCached">${analyzedCount}</strong>`;
 
         document.getElementById('totalAccepted').textContent = acceptedCount;
         document.getElementById('totalSkipped').textContent = skippedCount;
@@ -530,72 +551,114 @@ async function fetchItems(itemsToFetch) {
     }
 }
 
+// --- Unified Pipeline Variables ---
+let currentTabMode = 'inbox'; // 'inbox' (NEW) or 'review' (ANALYZED)
+
+// [NEW] Tab Switching Logic
+function switchTab(mode) {
+    currentTabMode = mode;
+
+    // UI Updates
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+    if (mode === 'inbox') {
+        document.getElementById('tabInbox').classList.add('active');
+        document.getElementById('pane-prompt').style.display = 'block'; // Show Prompt Pane
+        document.getElementById('pane-process').style.display = 'flex'; // Show Process Pane
+
+        // Restore Prompt UI
+        document.getElementById('promptArea').style.display = 'block';
+        document.getElementById('promptHeader').style.display = 'block';
+        const reviewContainer = document.getElementById('reviewContainer');
+        if (reviewContainer) reviewContainer.style.display = 'none';
+
+        // Reset Header Text
+        document.querySelector('#pane-prompt .pane-header span').textContent = '📋 Prompt (Content)';
+        document.getElementById('promptStatus').textContent = 'Waiting...';
+    } else {
+        document.getElementById('tabReview').classList.add('active');
+        document.getElementById('pane-prompt').style.display = 'none'; // Hide Prompt Pane (Not needed for review)
+        document.getElementById('pane-process').style.display = 'none'; // Hide Process Pane
+
+        // Show Review Action Area (Classification)
+        // Note: Implementation of a dedicated Classification Pane or repurposing existing areas might be needed.
+        // For now, we will use a simple "Action" area dynamically injected.
+    }
+
+    // Refresh List
+    renderGroupList();
+
+    // Reset Selection
+    currentGroup = null;
+    document.getElementById('inputArea').value = '';
+    document.getElementById('promptArea').value = '';
+}
+
 async function selectGroup(sid) {
     currentGroup = sid;
-    localStorage.setItem('inspector_last_group', sid); // Save state
+    localStorage.setItem('inspector_last_group', sid);
 
     // Highlight UI
     document.querySelectorAll('.group-item').forEach(el => el.classList.remove('active'));
     const chk = document.getElementById(`chk-${sid}`);
     if (chk) {
         chk.closest('.group-item').classList.add('active');
-        // Ensure checkbox is checked when selected
         chk.checked = true;
     }
 
-    // [NEW] Auto-Fetch Content Logic
-    const items = sourceGroups[sid] || [];
-    // [MODIFIED] Only select Pure NEW items
-    const newItems = items.filter(i => i.status === 'NEW' && !isAnalyzed(i.url));
+    if (currentTabMode === 'inbox') {
+        // [INBOX MODE] Auto-Fetch Content for NEW items
+        const items = sourceGroups[sid] || [];
+        const newItems = items.filter(i => i.status === 'NEW' && !isAnalyzed(i.url));
 
-    // Check if we need to fetch anything
-    const missingUrls = newItems
-        .map(i => i.url)
-        .filter(u => !loadedContent[u] || (!loadedContent[u].text && !loadedContent[u].summary));
+        const missingUrls = newItems
+            .map(i => i.url)
+            .filter(u => !loadedContent[u] || (!loadedContent[u].text && !loadedContent[u].summary));
 
-    if (missingUrls.length > 0) {
-        log(`자동 추출 시작: '${sid}' 그룹 ${missingUrls.length}개 항목...`, 'info');
-        showLoading(`'${sid}' 콘텐츠 자동 추출 중 (${missingUrls.length}개)...`);
-
-        try {
-            const chunkSize = 20;
-            for (let i = 0; i < missingUrls.length; i += chunkSize) {
-                const chunk = missingUrls.slice(i, i + chunkSize);
-                // Update loading text if multiple chunks
-                if (missingUrls.length > chunkSize) {
-                    document.getElementById('loadingText').innerText = `Extracting ${Math.min(i + chunkSize, missingUrls.length)} / ${missingUrls.length}...`;
+        if (missingUrls.length > 0) {
+            log(`자동 추출 시작: '${sid}' 그룹 ${missingUrls.length}개 항목...`, 'info');
+            showLoading(`'${sid}' 콘텐츠 자동 추출 중 (${missingUrls.length}개)...`);
+            try {
+                const chunkSize = 20;
+                for (let i = 0; i < missingUrls.length; i += chunkSize) {
+                    const chunk = missingUrls.slice(i, i + chunkSize);
+                    if (missingUrls.length > chunkSize) {
+                        document.getElementById('loadingText').innerText = `Extracting ${Math.min(i + chunkSize, missingUrls.length)} / ${missingUrls.length}...`;
+                    }
+                    const contentRes = await fetch('/api/extract_batch', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ urls: chunk })
+                    });
+                    const fetchedList = await contentRes.json();
+                    fetchedList.forEach(item => {
+                        loadedContent[item.url] = item;
+                    });
                 }
-
-                const contentRes = await fetch('/api/extract_batch', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ urls: chunk })
-                });
-                const fetchedList = await contentRes.json();
-                fetchedList.forEach(item => {
-                    loadedContent[item.url] = item;
-                });
+                saveContentCache();
+                log(`✅ 자동 추출 완료: ${missingUrls.length}개`, 'success');
+            } catch (e) {
+                log(`⚠️ 자동 추출 실패: ${e}`, 'error');
+            } finally {
+                hideLoading();
             }
-            saveContentCache();
-            log(`✅ 자동 추출 완료: ${missingUrls.length}개`, 'success');
-        } catch (e) {
-            log(`⚠️ 자동 추출 실패: ${e}`, 'error');
-        } finally {
-            hideLoading();
         }
+
+        // Generate Prompt
+        generatePromptForGroup(sid);
+
+    } else {
+        // [REVIEW MODE] Show Analyzed Items directly
+        displayAnalyzedItemsForGroup(sid);
     }
-
-    // Clear Result
-    document.getElementById('inputArea').value = '';
-
-    // Generate Prompt (Now with loaded content)
-    generatePromptForGroup(sid);
 }
 
 // Generate a short unique hash ID for article matching
 function generateArticleId() {
     return Math.random().toString(36).substring(2, 8);
 }
+
+// [MODIFIED] Update renderGroupList to filter based on currentTabMode
+// ... (Logic needs to be inside renderGroupList)
 
 async function generatePromptForGroup(sid) {
     const items = sourceGroups[sid];
@@ -1075,7 +1138,7 @@ async function processBatch() {
                     } else {
                         log(`✅ 저장: ${finalDoc.title_ko || url}`, 'success');
                     }
-                    itemLink.status = 'ACCEPTED';
+                    itemLink.status = 'ANALYZED';
                     successCount++;
                 } else {
                     log(`❌ 실패: ${url} - ${saveJson.error}`, 'error');

@@ -1,12 +1,235 @@
 {
-  "title": "Authors sue six AI giants for book piracy",
-  "description": "Pulitzer Prize winner John Carreyrou and other authors are suing OpenAI, Anthropic, Google, Meta, xAI, and Perplexity for book piracy. The AI companies allegedly stole their works from illegal online libraries. The lawsuit has a strong case, and this time the plaintiffs are going after the big bucks instead of the \"pennies\" of a class action settlement.",
-  "image": "https://the-decoder.com/wp-content/uploads/2025/08/wireframe_book_illustration_2.png",
-  "text": "Ask about this article… Search Another day, another lawsuit: Pulitzer Prize winner John Carreyrou and other authors accuse OpenAI, Anthropic, Google, Meta, xAI, and Perplexity of stealing their books from illegal piracy libraries. The lawsuit marks the first of its kind against xAI and Perplexity. Six of the largest AI companies are now facing a new copyright lawsuit. According to Bloomberg Law, several authors, including Pulitzer Prize-winning journalist John Carreyrou, filed suit in the US District Court for the Northern District of California on Monday. The lawsuit names Anthropic, Google, OpenAI, Meta, xAI, and Perplexity as defendants. The authors accuse the companies of a \"deliberate act of theft.\" This marks the first copyright lawsuit against xAI over its training practices and the first author lawsuit against Perplexity. Ad According to the complaint, the AI companies illegally downloaded copies of the books from so-called \"shadow libraries\" - piracy platforms like LibGen, Z-Library, and OceanofPDF. Ad DEC_D_Incontent-1 The lawsuit argues that the companies violated copyright law twice: first by illegally downloading the books, and again by creating additional copies during the training or \"optimization\" of their models. Their books \"now anchor multibillion-dollar product ecosystems\" without any compensation, they say. xAI dismisses claims as \"Legacy Media Lies\" According to Bloomberg Law, xAI simply replied with \"Legacy Media Lies.\" Perplexity's head of communications, Jesse Dwyer, said the company doesn't index books. According to the complaint, however, Perplexity reproduced and exploited the authors' copyrighted works without authorization in its RAG-based AI search system. Ad A similar case recently ended with Anthropic settling with authors for $1.5 billion based on legal reasoning that, even if fair use applies to AI training, it doesn't protect companies that used pirated copies. Carreyrou and several co-plaintiffs declined to join the Anthropic class action settlement, arguing that the proposed compensation—approximately $3,000 per work—amounted to little more than \"pennies on the dollar.\" By avoiding the class action route, the new lawsuit opens the door to much bigger payouts. If a jury finds willful infringement, the authors could receive up to $150,000 in damages per infringed work. Ad DEC_D_Incontent-2 \"LLM companies should not be able to so easily extinguish thousands upon thousands of high-value claims at bargain-basement rates, eliding what should be the true cost of their massive willful infringement,\" the complaint argues.",
-  "published_at": "2025-12-24T12:48:40+00:00",
-  "url": "https://the-decoder.com/authors-sue-six-ai-giants-for-book-piracy/",
-  "source_id": "the_decoder",
   "article_id": "d05fda59174b",
   "cached_at": "2025-12-25T15:53:10.988792+00:00",
-  "updated_at": "2025-12-25T15:53:10.988792+00:00"
+  "description": "Pulitzer Prize winner John Carreyrou and other authors are suing OpenAI, Anthropic, Google, Meta, xAI, and Perplexity for book piracy. The AI companies allegedly stole their works from illegal online libraries. The lawsuit has a strong case, and this time the plaintiffs are going after the big bucks instead of the \"pennies\" of a class action settlement.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/08/wireframe_book_illustration_2.png",
+  "published_at": "2025-12-26T12:53:30.584761+00:00",
+  "source_id": "the_decoder",
+  "text": "Ask about this article… Search Another day, another lawsuit: Pulitzer Prize winner John Carreyrou and other authors accuse OpenAI, Anthropic, Google, Meta, xAI, and Perplexity of stealing their books from illegal piracy libraries. The lawsuit marks the first of its kind against xAI and Perplexity. Six of the largest AI companies are now facing a new copyright lawsuit. According to Bloomberg Law, several authors, including Pulitzer Prize-winning journalist John Carreyrou, filed suit in the US District Court for the Northern District of California on Monday. The lawsuit names Anthropic, Google, OpenAI, Meta, xAI, and Perplexity as defendants. The authors accuse the companies of a \"deliberate act of theft.\" This marks the first copyright lawsuit against xAI over its training practices and the first author lawsuit against Perplexity. Ad According to the complaint, the AI companies illegally downloaded copies of the books from so-called \"shadow libraries\" - piracy platforms like LibGen, Z-Library, and OceanofPDF. Ad DEC_D_Incontent-1 The lawsuit argues that the companies violated copyright law twice: first by illegally downloading the books, and again by creating additional copies during the training or \"optimization\" of their models. Their books \"now anchor multibillion-dollar product ecosystems\" without any compensation, they say. xAI dismisses claims as \"Legacy Media Lies\" According to Bloomberg Law, xAI simply replied with \"Legacy Media Lies.\" Perplexity's head of communications, Jesse Dwyer, said the company doesn't index books. According to the complaint, however, Perplexity reproduced and exploited the authors' copyrighted works without authorization in its RAG-based AI search system. Ad A similar case recently ended with Anthropic settling with authors for $1.5 billion based on legal reasoning that, even if fair use applies to AI training, it doesn't protect companies that used pirated copies. Carreyrou and several co-plaintiffs declined to join the Anthropic class action settlement, arguing that the proposed compensation—approximately $3,000 per work—amounted to little more than \"pennies on the dollar.\" By avoiding the class action route, the new lawsuit opens the door to much bigger payouts. If a jury finds willful infringement, the authors could receive up to $150,000 in damages per infringed work. Ad DEC_D_Incontent-2 \"LLM companies should not be able to so easily extinguish thousands upon thousands of high-value claims at bargain-basement rates, eliding what should be the true cost of their massive willful infringement,\" the complaint argues.",
+  "title": "Authors sue six AI giants for book piracy",
+  "updated_at": "2025-12-26T10:55:11.071263+00:00",
+  "url": "https://the-decoder.com/authors-sue-six-ai-giants-for-book-piracy/",
+  "title_ko": "퓰리처상 수상 작가들, OpenAI 등 6개 빅테크 대상 저작권 침해 소송 제기",
+  "summary": "존 캐리루 등 작가들이 OpenAI, Google, Meta, xAI 등을 상대로 불법 해적판 사이트의 도서를 학습에 사용했다며 저작권 침해 소송을 제기함. 집단 소송 합의를 거부하고 개별 소송을 택해, 고의적 침해 인정 시 막대한 배상금이 예상됨.",
+  "tags": [],
+  "impact_score": 4.5,
+  "IS_Analysis": {
+    "Score_Commentary": "개인/작가 그룹(Tier 5)이 Tier 1 기업들을 상대로 법적 공방(P1)을 시작함. PE가 T5이므로 Base Score는 0이나, 사건의 성격이 산업 전반의 데이터 학습 관행(Industry)에 제동을 거는 실제적 소송(Realization)이므로 IE 점수가 높게 책정됨. Hard Filter는 T5 & X=3이므로 적용되지 않음(생존).",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P1",
+          "Pe_Entity_Name": "Authors (John Carreyrou et al.)",
+          "Pe_Tier": 5,
+          "Se_Entity_Name": "OpenAI",
+          "Se_Tier": 1,
+          "PE_SE_Reasoning": "소송의 원고(법적 책임 추궁 주체)인 작가들을 P1 규칙에 의거 PE로 선정. 피고 중 가장 Tier가 높은 OpenAI를 대표 SE로 선정."
+        },
+        "Tier_Score": 0,
+        "Gap_Score": 0,
+        "IW_Score": 0
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 3,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 3,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0.5,
+          "Criticality_Total": 1.5,
+          "SOTA_Check_Result": "False"
+        },
+        "IE_Score": 4.5
+      }
+    }
+  },
+  "zero_echo_score": 5.9,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 6,
+      "T2": 4,
+      "T3": 8,
+      "Rationale": "소송 당사자, 법원, 법적 논리(고의적 침해) 등이 명확함."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 5,
+      "P3": 0,
+      "Rationale": "원고 측의 주장('도둑질') 인용이 많아 편향성 일부 존재."
+    },
+    "Utility": {
+      "V1": 8,
+      "V2": 4,
+      "V3": 6,
+      "Rationale": "AI 학습 데이터 저작권 문제의 향방을 가를 중요한 판례가 될 가능성."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "보정 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "d05fda59174b",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "퓰리처상 수상 작가들, OpenAI 등 6개 빅테크 대상 저작권 침해 소송 제기",
+      "Summary": "존 캐리루 등 작가들이 OpenAI, Google, Meta, xAI 등을 상대로 불법 해적판 사이트의 도서를 학습에 사용했다며 저작권 침해 소송을 제기함. 집단 소송 합의를 거부하고 개별 소송을 택해, 고의적 침해 인정 시 막대한 배상금이 예상됨.",
+      "Tags": [
+        "Copyright",
+        "Regulation",
+        "OpenAI"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "개인/작가 그룹(Tier 5)이 Tier 1 기업들을 상대로 법적 공방(P1)을 시작함. PE가 T5이므로 Base Score는 0이나, 사건의 성격이 산업 전반의 데이터 학습 관행(Industry)에 제동을 거는 실제적 소송(Realization)이므로 IE 점수가 높게 책정됨. Hard Filter는 T5 & X=3이므로 적용되지 않음(생존).",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P1",
+            "Pe_Entity_Name": "Authors (John Carreyrou et al.)",
+            "Pe_Tier": 5,
+            "Se_Entity_Name": "OpenAI",
+            "Se_Tier": 1,
+            "PE_SE_Reasoning": "소송의 원고(법적 책임 추궁 주체)인 작가들을 P1 규칙에 의거 PE로 선정. 피고 중 가장 Tier가 높은 OpenAI를 대표 SE로 선정."
+          },
+          "Tier_Score": 0,
+          "Gap_Score": 0,
+          "IW_Score": 0
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 3,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 3,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0.5,
+            "Criticality_Total": 1.5,
+            "SOTA_Check_Result": "False"
+          },
+          "IE_Score": 4.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 4,
+        "T3": 8,
+        "Rationale": "소송 당사자, 법원, 법적 논리(고의적 침해) 등이 명확함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 5,
+        "P3": 0,
+        "Rationale": "원고 측의 주장('도둑질') 인용이 많아 편향성 일부 존재."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 4,
+        "V3": 6,
+        "Rationale": "AI 학습 데이터 저작권 문제의 향방을 가를 중요한 판례가 될 가능성."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "original_title": "Authors sue six AI giants for book piracy",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 6.0,
+        "T2": 4.0,
+        "T3": 8.0,
+        "S_Avg": 6.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 5.0,
+        "P3": 0.0,
+        "N_Avg": 2.33
+      },
+      "Utility": {
+        "V1": 8.0,
+        "V2": 4.0,
+        "V3": 6.0,
+        "U_Avg": 6.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 5.9,
+      "ZS_Final": 5.9
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 6,
+        "T2": 4,
+        "T3": 8,
+        "Rationale": "소송 당사자, 법원, 법적 논리(고의적 침해) 등이 명확함."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 5,
+        "P3": 0,
+        "Rationale": "원고 측의 주장('도둑질') 인용이 많아 편향성 일부 존재."
+      },
+      "Utility": {
+        "V1": 8,
+        "V2": 4,
+        "V3": 6,
+        "Rationale": "AI 학습 데이터 저작권 문제의 향방을 가를 중요한 판례가 될 가능성."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 0.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 0.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 3.0,
+        "Criticality_Total": 1.5,
+        "IE_Total": 4.5
+      },
+      "IS_Raw": 4.5,
+      "IS_Final": 4.5,
+      "Score_Commentary": "개인/작가 그룹(Tier 5)이 Tier 1 기업들을 상대로 법적 공방(P1)을 시작함. PE가 T5이므로 Base Score는 0이나, 사건의 성격이 산업 전반의 데이터 학습 관행(Industry)에 제동을 거는 실제적 소송(Realization)이므로 IE 점수가 높게 책정됨. Hard Filter는 T5 & X=3이므로 적용되지 않음(생존)."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P1",
+      "Pe_Entity_Name": "Authors (John Carreyrou et al.)",
+      "Pe_Tier": 5,
+      "Se_Entity_Name": "OpenAI",
+      "Se_Tier": 1,
+      "PE_SE_Reasoning": "소송의 원고(법적 책임 추궁 주체)인 작가들을 P1 규칙에 의거 PE로 선정. 피고 중 가장 Tier가 높은 OpenAI를 대표 SE로 선정."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 3,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 3,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0.5,
+      "Criticality_Total": 1.5,
+      "SOTA_Check_Result": "False"
+    }
+  },
+  "status": "PUBLISHED",
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-26T06:23:21.587780+00:00",
+  "recalculated_at": "2025-12-26T10:57:58.293683+00:00",
+  "category": "Community",
+  "dedup_status": "selected",
+  "publish_id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호",
+  "published": true,
+  "data_file": "the_decoder_d05fda59174b.json"
 }

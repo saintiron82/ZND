@@ -21,7 +21,10 @@ from src.core_logic import (
     save_to_cache as _core_save_to_cache,
     normalize_field_names as _core_normalize_field_names,
     get_article_id,
-    load_automation_config
+    load_automation_config,
+    get_stage,
+    set_stage,
+    Stage
 )
 from src.trash_manager import TrashManager # [NEW]
 from src.crawler_state import set_crawling, get_crawling_status, get_crawl_logs # [MODIFIED]
@@ -337,16 +340,15 @@ def save():
     
     try:
         url = data['url']
-        data['status'] = 'reviewed'
-        data['staged'] = True
-        data['saved'] = True  # [FIX] Inspector에서 'New' 목록에서 제외하기 위해 추가
-        data['staged_at'] = datetime.now(timezone.utc).isoformat()
+        # [UNIFIED] Use set_stage for consistent classification
+        set_stage(data, Stage.ANALYZED)
+        data['analyzed_at'] = datetime.now(timezone.utc).isoformat()
         
         save_to_cache(url, data)
         
         return jsonify({
             'status': 'success',
-            'message': 'Article saved to staging.',
+            'message': 'Article analyzed and saved (Status: ANALYZED).',
             'article_id': get_article_id(url)
         })
         
@@ -421,9 +423,14 @@ def get_unprocessed_items():
     seen_urls = set()
     
     # [NEW] Check for Mode
+    # mode='all': Show everything including Saved/Staged (for Inspecting history)
+    # include_trash: Explicitly show Rejected/Trash items
+    
     mode = request.args.get('mode', 'normal')
-    include_trash = (request.args.get('include_trash') == 'true') or (mode == 'trash') or (mode == 'all')
     show_all = (mode == 'all')
+    
+    # [FIX] mode='all' should NOT automatically include trash. Trash must be explicit.
+    include_trash = (request.args.get('include_trash') == 'true') or (mode == 'trash')
     
     # cache 디렉토리 하위의 모든 json 파일 검색 (재귀적)
     # 구조: desk/cache/YYYY-MM-DD/*.json
@@ -482,10 +489,11 @@ def get_unprocessed_items():
             # 1. 캐시 파일 내 'saved' 플래그 확인 (이미 발행된 것 제외)
             if not show_all and content.get('saved'): continue
             
-            # [NEW] 시간 범위 필터링
+            # [NEW] 시간 범위 필터링 (Enhanced)
             if cutoff_time:
-                crawled_at_str = content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
-                if crawled_at_str:
+                # Priority: updated_at > crawled_at > cached_at
+                ts_str = content.get('updated_at') or content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
+                if ts_str:
                     try:
                         # ISO format parsing
                         crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
@@ -496,33 +504,62 @@ def get_unprocessed_items():
                     except:
                         pass  # 파싱 실패 시 포함
             
-            # 2. DB History Status 확인 (더 확실한 검증)
-            status = db.get_history_status(url)
+            # 2. Logic Unification with Desk.py
+            # File Content is the Source of Truth for current status
             
-            is_trash_status = status in ['ACCEPTED', 'WORTHLESS', 'SKIPPED', 'REJECTED']
+            # --- Unified Classification Logic for Visibility ---
             
-            # [MODIFIED] Trash filtering logic
-            if not include_trash:
-                # Normal mode: Hide processed/trash items
-                if is_trash_status: continue
+            # Desk Logic for Rejection:
+            is_file_rejected = content.get('rejected', False) or content.get('status') in ['MLL_FAILED', 'INVALID', 'TRASH', 'CORRUPTED', 'SKIPPED', 'WORTHLESS', 'REJECTED']
             
-            # (If include_trash is True, we include everything, including ACCEPTED/REJECTED)
-            # But maybe we still want to filter 'ACCEPTED' (Published)?
-            # Usually Trash View is for 'Rejected/Skipped'. 'Accepted' is Published.
-            # Let's include everything if trash mode is ON, or refine?
-            # User request: "거부되어서 발행이 취소된 리스트" -> REJECTED/SKIPPED/WORTHLESS.
-            # ACCEPTED는 '발행됨'이므로 휴지통이 아님. 하지만 목록에 보여도 됨.
+            db_status = db.get_history_status(url)
+            is_db_rejected = db_status in ['REJECTED', 'WORTHLESS', 'SKIPPED']
+
+            # Resurrect check: if file says ANALYZED/NEW, ignore DB rejection
+            is_analyzed_file = (
+                content.get('status') == 'ANALYZED' or
+                content.get('mll_status') == 'analyzed' or
+                content.get('impact_score') is not None or
+                content.get('zero_echo_score') is not None
+            )
+            is_resurrected = is_analyzed_file and not is_file_rejected
             
-            # For now, simplistic approach:
-            # If include_trash is False, hide all status items.
-            # If include_trash is True, show everything.
+            # Determine if effective rejected
+            is_effective_rejected = is_file_rejected or (is_db_rejected and not is_resurrected)
             
-            # 3. 추가 필터: 만약 Trash Mode인데 Status가 없는(NEW) 항목은? -> 보여줌.
-            # 결과적으로 include_trash=True면 '모든 캐시 파일'을 보여줌.
+            # Determine if effective published
+            is_published = content.get('published', False) or db_status == 'ACCEPTED'
+            
+            # Determine if staging (saved)
+            is_saved = content.get('saved', False) or content.get('status') == 'ACCEPTED'
+
+            # --- Filtering based on Mode ---
+            
+            if include_trash:
+                # Mode: Trash Only (or include) meaning we WANT rejected items
+                # But typically 'Trash Mode' means SHOW ONLY TRASH
+                if not is_effective_rejected: continue
+                # Pass through if rejected
                 
-            # 여기까지 오면 포함 대상
-            # status가 None이면 NEW, 아니면(MLL_FAILED 등) 그대로 사용
-            final_status = status if status else 'NEW'
+            elif show_all:
+                # Mode: All (Show Inbox + Analyzed + potentially Staged/Published for history view?)
+                # Inspector 'View All' usually means "Don't hide Staged/Published/Analyzed"
+                # BUT Hide Rejected (Trash)
+                if is_effective_rejected: continue
+                
+            else:
+                # Mode: Normal (Show Inbox + Analyzed)
+                # Hide Staged/Published (Completed work)
+                # Hide Rejected (Trash)
+                if is_effective_rejected: continue
+                if is_published: continue
+                if is_saved: continue # Hide Staged items in default view (Since they are done in Inspector's eyes, moved to Desk)
+
+            
+            # [FIX] Prefer File status if explicit
+            final_status = content.get('status')
+            if not final_status or final_status == 'NEW':
+                final_status = db_status if db_status else 'NEW'
 
             # [FIX] Recover source_id if unknown (heuristic)
             src_id = content.get('source_id', 'unknown')
@@ -589,17 +626,42 @@ def get_cache_by_date():
     """특정 날짜 또는 전체 캐시 파일들을 상태별로 분류하여 반환 for Kanban"""
     target_date = request.args.get('date', '')
     
-    # [NEW] 시간 필터 파라미터
-    hours_param = request.args.get('hours', '0')
-    try:
-        filter_hours = int(hours_param)
-    except:
-        filter_hours = 0
+    # [NEW] 시간 범위 파라미터 (start_time, end_time - ISO format)
+    start_time_param = request.args.get('start_time', '')
+    end_time_param = request.args.get('end_time', '')
     
-    cutoff_time = None
-    if filter_hours > 0:
-        from datetime import timedelta
-        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+    # Legacy support: hours 파라미터
+    hours_param = request.args.get('hours', '0')
+    
+    start_cutoff = None
+    end_cutoff = None
+    
+    # 새 방식: start_time/end_time 우선
+    if start_time_param:
+        try:
+            start_cutoff = datetime.fromisoformat(start_time_param.replace('Z', '+00:00'))
+            if start_cutoff.tzinfo is None:
+                start_cutoff = start_cutoff.replace(tzinfo=timezone.utc)
+        except:
+            pass
+    
+    if end_time_param:
+        try:
+            end_cutoff = datetime.fromisoformat(end_time_param.replace('Z', '+00:00'))
+            if end_cutoff.tzinfo is None:
+                end_cutoff = end_cutoff.replace(tzinfo=timezone.utc)
+        except:
+            pass
+    
+    # 레거시 방식: hours 파라미터 (start_time이 없을 때만)
+    if not start_cutoff and hours_param != '0':
+        try:
+            filter_hours = int(hours_param)
+            if filter_hours > 0:
+                from datetime import timedelta
+                start_cutoff = datetime.now(timezone.utc) - timedelta(hours=filter_hours)
+        except:
+            pass
     
     # 전체 또는 특정 날짜
     if target_date == 'all' or not target_date:
@@ -624,8 +686,8 @@ def get_cache_by_date():
     
     for filepath in files:
         filename = os.path.basename(filepath)
-        # Skip batch files
-        if 'batch_' in filename or filename == 'index.json':
+        # [FIX] Skip batch files (aligned with Desk logic)
+        if 'batch_' in filename or 'batches' in filepath.split(os.sep) or filename == 'index.json':
             continue
             
         content = {}
@@ -644,48 +706,55 @@ def get_cache_by_date():
                 'error': str(e)
             }
         
-        # [NEW] 시간 필터링
-        if cutoff_time and not is_corrupted:
-            crawled_at_str = content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
-            if crawled_at_str:
-                try:
-                    crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
-                    if crawled_at.tzinfo is None:
-                        crawled_at = crawled_at.replace(tzinfo=timezone.utc)
-                    if crawled_at < cutoff_time:
-                        continue  # 시간 범위 밖
-                except:
-                    pass  # 파싱 실패 시 포함
-            
-        url = content.get('url')
-        
         # Determine Status
         if is_corrupted:
-            kanban_data['trash'].append(content)
-            continue
-            
+             kanban_data['trash'].append(content)
+             continue
+        
+        # [FIX] Define url before use
+        url = content.get('url')
         if not url: continue
         
-        # DB Status Check
+        # DB Status Check (for reference, not for classification)
         db_status = db.get_history_status(url)
         content['db_status'] = db_status
         
-        # Classification Logic
-        # 1. Trash
-        if db_status in ['REJECTED', 'WORTHLESS', 'SKIPPED'] or content.get('status') in ['MLL_FAILED', 'INVALID']:
+        # --- UNIFIED CLASSIFICATION: Use classify_article() ---
+        from src.core_logic import classify_article
+        classification = classify_article(content)
+        stage = classification['stage']
+        is_published = classification['is_published']
+        category_key = classification['category_key']
+        
+        # [MODIFIED] 시간 필터링 - start_cutoff ~ end_cutoff 범위
+        if (start_cutoff or end_cutoff) and not is_corrupted:
+            # Priority: updated_at > crawled_at > cached_at
+            ts_str = content.get('updated_at') or content.get('crawled_at') or content.get('cached_at') or content.get('saved_at')
+            if ts_str:
+                try:
+                    ts = datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
+                    if ts.tzinfo is None:
+                        ts = ts.replace(tzinfo=timezone.utc)
+                    # Check range
+                    if start_cutoff and ts < start_cutoff:
+                        continue  # Before start time
+                    if end_cutoff and ts > end_cutoff:
+                        continue  # After end time
+                except:
+                    pass  # Parse error - keep it
+        
+        # Kanban Column Assignment (using category_key for consistency)
+        # Map category_key to kanban columns
+        if category_key == 'published':
+            kanban_data['published'].append(content)
+        elif category_key == 'rejected':
             kanban_data['trash'].append(content)
-        # 2. Published
-        elif content.get('published') or db_status == 'ACCEPTED':
-             kanban_data['published'].append(content)
-        # 3. Staged (Saved but not published)
-        elif content.get('saved'):
-             kanban_data['staged'].append(content)
-        # 4. Analyzed (Has score but not saved)
-        elif content.get('status') == 'ANALYZED' or content.get('impact_score') is not None:
-             kanban_data['analyzed'].append(content)
-        # 5. Inbox (Others)
+        elif category_key == 'staged':
+            kanban_data['staged'].append(content)
+        elif category_key == 'analyzed':
+            kanban_data['analyzed'].append(content)
         else:
-             kanban_data['inbox'].append(content)
+            kanban_data['inbox'].append(content)
              
     return jsonify({'success': True, 'data': kanban_data})
 
@@ -744,34 +813,35 @@ def update_cache_status():
                 with open(cache_path, 'r', encoding='utf-8') as f:
                     content = json.load(f)
                 
-                # Apply Status Logic
+                # Apply Status Logic using set_stage() / set_published()
+                from src.core_logic import set_published
+                
                 if target_status == 'inbox':
+                    set_stage(content, Stage.INBOX)
                     content['saved'] = False
                     content['published'] = False
-                    content['status'] = 'RAW'
                     
                 elif target_status == 'analyzed':
-                    content['saved'] = False
-                    content['published'] = False
-                    content['status'] = 'ANALYZED'
+                    set_stage(content, Stage.ANALYZED)
                     
                 elif target_status == 'staged':
-                    content['saved'] = True
+                    set_stage(content, Stage.STAGED)
                     content['published'] = False
                     content.pop('publish_id', None)
                     content.pop('edition_name', None)
                     content.pop('published_at', None)
                     
                 elif target_status == 'published':
-                    content['saved'] = True
-                    content['published'] = True
-                    if 'published_at' not in content:
-                        content['published_at'] = datetime.now(timezone.utc).isoformat()
+                    # Published is independent flag, not a stage change
+                    set_published(content, True)
+                    
+                elif target_status == 'unpublished':
+                    # Remove published flag (keep stage unchanged)
+                    set_published(content, False)
+                    content.pop('published_at', None)
                         
                 elif target_status == 'trash':
-                    content['status'] = 'TRASH'
-                    content['saved'] = False
-                    content['published'] = False
+                    set_stage(content, Stage.TRASH)
 
                 # Save In-Place
                 with open(cache_path, 'w', encoding='utf-8') as f:

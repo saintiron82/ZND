@@ -55,9 +55,9 @@ async function checkCrawlStatus() {
     }
 }
 
-// Time filter callback for header dropdown
-function reloadWithTimeFilter(hours) {
-    console.log(`[CacheManager] Time filter changed to ${hours} hours`);
+// Time filter callback for header datetime picker
+function reloadWithTimeFilter() {
+    console.log(`[CacheManager] Time filter changed`);
     loadCache();
 }
 
@@ -68,8 +68,15 @@ async function loadCache() {
     updateActionBar();
 
     try {
-        const hours = typeof getTimeFilterHours === 'function' ? getTimeFilterHours() : '0';
-        const res = await fetch(`/api/cache/list_by_date?date=all&hours=${hours}`);
+        // [NEW] 시간 범위 가져오기
+        const startTime = typeof getTimeFilterStart === 'function' ? getTimeFilterStart() : '';
+        const endTime = typeof getTimeFilterEnd === 'function' ? getTimeFilterEnd() : '';
+
+        let url = `/api/cache/list_by_date?date=all`;
+        if (startTime) url += `&start_time=${encodeURIComponent(startTime)}`;
+        if (endTime) url += `&end_time=${encodeURIComponent(endTime)}`;
+
+        const res = await fetch(url);
         const json = await res.json();
 
         if (json.success) {
@@ -126,9 +133,12 @@ function createCard(item, colType) {
     const sourceId = item.source_id || 'unknown';
 
     card.innerHTML = `
-        <div class="card-meta">
-            <span>${sourceId}</span>
-            <span style="font-size:0.9em; opacity:0.7;">${colType.toUpperCase()}</span>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div class="card-meta">
+                <span>${sourceId}</span>
+                <span style="font-size:0.9em; opacity:0.7;">${colType.toUpperCase()}</span>
+            </div>
+            <input type="checkbox" class="card-checkbox" data-url="${item.url}" style="cursor:pointer; transform:scale(1.2);">
         </div>
         <div class="card-title" title="${item.title}">${item.title || '(No Title)'}</div>
         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -138,9 +148,18 @@ function createCard(item, colType) {
 
     // Click Handler (Selection vs Detail)
     card.onclick = (e) => {
+        // If clicked on checkbox, let it bubble (or handle selection)
+        if (e.target.type === 'checkbox') {
+            e.stopPropagation(); // prevent card click
+            toggleSelection(item.url, card, e.target.checked);
+            return;
+        }
+
         if (e.ctrlKey || e.metaKey || e.shiftKey) {
             // Toggle Selection
-            toggleSelection(item.url, card);
+            const cb = card.querySelector('.card-checkbox');
+            cb.checked = !cb.checked;
+            toggleSelection(item.url, card, cb.checked);
         } else {
             // Show Detail
             showDetail(item);
@@ -151,15 +170,56 @@ function createCard(item, colType) {
 }
 
 // 4. Interaction
-function toggleSelection(url, cardEl) {
-    if (selectedItems.has(url)) {
-        selectedItems.delete(url);
-        cardEl.classList.remove('selected');
+function toggleSelection(url, cardEl, forceState = null) {
+    let isSelected = selectedItems.has(url);
+
+    if (forceState !== null) {
+        isSelected = !forceState; // If forceState is true (checked), we want to ADD (so initial isSelected should be false-ish logic) 
+        // Logic fix:
+        // if forceState == true (checked), we want to ADD.
+        // if forceState == false (unchecked), we want to REMOVE.
+        if (forceState) {
+            selectedItems.add(url);
+            cardEl.classList.add('selected');
+            const cb = cardEl.querySelector('.card-checkbox');
+            if (cb) cb.checked = true;
+        } else {
+            selectedItems.delete(url);
+            cardEl.classList.remove('selected');
+            const cb = cardEl.querySelector('.card-checkbox');
+            if (cb) cb.checked = false;
+        }
     } else {
-        selectedItems.add(url);
-        cardEl.classList.add('selected');
+        // Toggle
+        if (isSelected) {
+            selectedItems.delete(url);
+            cardEl.classList.remove('selected');
+            const cb = cardEl.querySelector('.card-checkbox');
+            if (cb) cb.checked = false;
+        } else {
+            selectedItems.add(url);
+            cardEl.classList.add('selected');
+            const cb = cardEl.querySelector('.card-checkbox');
+            if (cb) cb.checked = true;
+        }
     }
     updateActionBar();
+}
+
+function toggleColumnSelection(colType) {
+    const listEl = document.getElementById(`list-${colType}`);
+    if (!listEl) return;
+
+    const cards = listEl.querySelectorAll('.card');
+    const allSelected = Array.from(cards).every(c => c.classList.contains('selected'));
+
+    cards.forEach(card => {
+        const url = card.querySelector('.card-checkbox')?.dataset.url;
+        if (!url) return;
+
+        // If all selected, deselect all. Otherwise select all.
+        toggleSelection(url, card, !allSelected);
+    });
 }
 
 function updateActionBar() {
@@ -723,3 +783,81 @@ async function runSyncNow() {
         hideLoading();
     }
 }
+
+// ============================================
+// Classification Functions (분류하기)
+// ============================================
+
+// [UNIFIED] Desk 공유 분류 모달 사용
+async function openClassifyModal() {
+    // Get selected items from Analyzed column
+    const selected = Array.from(selectedItems);
+    if (selected.length === 0) {
+        alert('분류할 기사를 선택해주세요.');
+        return;
+    }
+
+    // Collect article data for the modal
+    const articles = [];
+    selected.forEach(url => {
+        ['inbox', 'analyzed', 'staged', 'published', 'trash'].forEach(col => {
+            const found = (currentData[col] || []).find(a => a.url === url);
+            if (found) {
+                // desk_dedup.js에서 요구하는 필드 매핑
+                articles.push({
+                    article_id: found.article_id || found.url.slice(-12),
+                    title: found.title_ko || found.title || '',
+                    summary: found.summary || found.one_line_summary || '',
+                    impact_score: found.impact_score || 0,
+                    zero_echo_score: found.zero_echo_score || 0.1,
+                    // desk_dedup.js에서 사용하는 추가 필드
+                    filename: found.filename,
+                    filepath: found.filepath
+                });
+            }
+        });
+    });
+
+    // desk_dedup.js의 openDedupModal 호출 (명시적 기사 목록 전달)
+    if (typeof openDedupModal === 'function') {
+        openDedupModal(null, articles);
+    } else {
+        alert('오류: desk_dedup.js가 로드되지 않았습니다.');
+        console.error('openDedupModal is not defined. Make sure desk_dedup.js is included.');
+    }
+}
+
+// [SHIM] Compatibility for desk_dedup.js in Cache Manager environment
+window.loadDesk = function () {
+    console.log('[Shim] loadDesk called -> loadCache');
+    loadCache();
+};
+
+window.refreshEndTimeFilter = function () {
+    console.log('[Shim] refreshEndTimeFilter called (Ignored in Cache Manager)');
+};
+
+// [NEW] Empty Trash
+async function emptyTrash() {
+    if (!confirm('🗑️ 휴지통을 비우시겠습니까?\n\n이 작업은 되돌릴 수 없으며, "폐기됨" 상태의 모든 기사가 영구 삭제됩니다.')) {
+        return;
+    }
+
+    showLoading('🧹 휴지통 비우는 중...');
+    try {
+        const resp = await fetch('/api/desk/empty_trash', { method: 'POST' });
+        const result = await resp.json();
+
+        if (result.success) {
+            alert(`✅ 완료! ${result.deleted}개의 기사가 삭제되었습니다.`);
+            loadCache(); // Refresh
+        } else {
+            alert('❌ 실패: ' + (result.error || '알 수 없는 오류'));
+        }
+    } catch (e) {
+        alert('❌ 오류: ' + e.message);
+    } finally {
+        hideLoading();
+    }
+}
+

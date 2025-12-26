@@ -1,12 +1,232 @@
 {
-  "title": "Qwen updates image editing model with better character consistency",
-  "description": "Qwen's updated image editing model better preserves facial identity when editing portraits and group photos, with improvements to lighting control and camera angles.",
-  "image": "https://the-decoder.com/wp-content/uploads/2025/12/qwen_image_edit_header-scaled.jpg",
-  "text": "Qwen has released an improved version of its image editing model that better maintains facial identity during edits. The Chinese AI company published Qwen-Image-Edit-2511 on Hugging Face, an upgrade to the earlier Qwen-Image-Edit-2509. The biggest improvement is how the model handles people. It can now make creative changes to portraits while keeping the subject recognizable, the company claims. Group photos with multiple people also work better now. The update also brings improvements to lighting control, camera angles, industrial product design, and geometric calculations. Qwen has baked popular community LoRAs (small add-on models) directly into the base model. The model ships under the Apache 2.0 license. A demo is available on Hugging Face, and users can test the model for free via Qwen Chat. Ad DEC_D_Incontent-1",
-  "published_at": "2025-12-24T16:16:46+00:00",
-  "url": "https://the-decoder.com/qwen-updates-image-editing-model-with-better-character-consistency/",
-  "source_id": "the_decoder",
   "article_id": "f83d3ec70d0f",
   "cached_at": "2025-12-25T15:53:07.274953+00:00",
-  "updated_at": "2025-12-25T15:53:07.274953+00:00"
+  "description": "Qwen's updated image editing model better preserves facial identity when editing portraits and group photos, with improvements to lighting control and camera angles.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/qwen_image_edit_header-scaled.jpg",
+  "published_at": "2025-12-26T12:53:30.477550+00:00",
+  "source_id": "the_decoder",
+  "text": "Qwen has released an improved version of its image editing model that better maintains facial identity during edits. The Chinese AI company published Qwen-Image-Edit-2511 on Hugging Face, an upgrade to the earlier Qwen-Image-Edit-2509. The biggest improvement is how the model handles people. It can now make creative changes to portraits while keeping the subject recognizable, the company claims. Group photos with multiple people also work better now. The update also brings improvements to lighting control, camera angles, industrial product design, and geometric calculations. Qwen has baked popular community LoRAs (small add-on models) directly into the base model. The model ships under the Apache 2.0 license. A demo is available on Hugging Face, and users can test the model for free via Qwen Chat. Ad DEC_D_Incontent-1",
+  "title": "Qwen updates image editing model with better character consistency",
+  "updated_at": "2025-12-26T06:35:12.831271+00:00",
+  "url": "https://the-decoder.com/qwen-updates-image-editing-model-with-better-character-consistency/",
+  "title_ko": "Qwen, 인물 일관성 강화된 이미지 편집 모델 공개",
+  "summary": "Qwen이 인물 일관성을 대폭 개선한 이미지 편집 모델 'Qwen-Image-Edit-2511'을 허깅페이스에 공개했다. 이번 업데이트는 인물 및 단체 사진 편집 시 얼굴 정체성을 유지하는 능력이 강화되었으며, 조명 및 카메라 앵글 제어 기능도 향상되었다. 아파치 2.0 라이선스로 배포되어 누구나 무료로 사용 가능하며, Qwen Chat을 통해 데모를 체험할 수 있다.",
+  "tags": [],
+  "impact_score": 3.5,
+  "IS_Analysis": {
+    "Score_Commentary": "PE인 Qwen(Alibaba)은 TIER_MAP에 명시되지 않았으나, Llama(Meta, Tier 2)와 경쟁하는 Global Major LLM Developer로서 **Tier 2로 유추(Inference)**함. 즉시 사용 가능한 제품 출시(Y=4)이나, 기업의 통상적인 모델 업데이트(X=1) 수준임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Qwen (Alibaba)",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Reason": "PE: 모델을 직접 개발하고 출시한 주체인 Qwen을 선정(P4). SE: 경쟁자나 파트너에 대한 구체적 언급이 없어 None 처리."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 4,
+          "Scope_Matrix_Score": 0.5,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 1.5
+      }
+    }
+  },
+  "zero_echo_score": 4.5,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 7,
+      "T2": 6,
+      "T3": 8,
+      "Rationale": "모델 버전(2511), 라이선스(Apache 2.0), 구체적 개선 사항이 명확히 기재됨."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 1,
+      "P3": 1,
+      "Rationale": "사실 전달 위주의 기사로 불필요한 수식어나 잡음이 거의 없음."
+    },
+    "Utility": {
+      "V1": 5,
+      "V2": 9,
+      "V3": 5,
+      "Rationale": "즉시 사용 가능한(Demo, Open Source) 모델 정보로서 실행 가능성(V2)이 매우 높음."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "개발자와 연구자에게 즉시 도움이 되는 실용적인 정보 구성을 갖춤."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "f83d3ec70d0f",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "Qwen, 인물 일관성 강화된 이미지 편집 모델 공개",
+      "Summary": "Qwen이 인물 일관성을 대폭 개선한 이미지 편집 모델 'Qwen-Image-Edit-2511'을 허깅페이스에 공개했다. 이번 업데이트는 인물 및 단체 사진 편집 시 얼굴 정체성을 유지하는 능력이 강화되었으며, 조명 및 카메라 앵글 제어 기능도 향상되었다. 아파치 2.0 라이선스로 배포되어 누구나 무료로 사용 가능하며, Qwen Chat을 통해 데모를 체험할 수 있다.",
+      "Tags": [
+        "Launch",
+        "Update",
+        "Open Source"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "PE인 Qwen(Alibaba)은 TIER_MAP에 명시되지 않았으나, Llama(Meta, Tier 2)와 경쟁하는 Global Major LLM Developer로서 **Tier 2로 유추(Inference)**함. 즉시 사용 가능한 제품 출시(Y=4)이나, 기업의 통상적인 모델 업데이트(X=1) 수준임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Qwen (Alibaba)",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Reason": "PE: 모델을 직접 개발하고 출시한 주체인 Qwen을 선정(P4). SE: 경쟁자나 파트너에 대한 구체적 언급이 없어 None 처리."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 4,
+            "Scope_Matrix_Score": 0.5,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 1.5
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "모델 버전(2511), 라이선스(Apache 2.0), 구체적 개선 사항이 명확히 기재됨."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "사실 전달 위주의 기사로 불필요한 수식어나 잡음이 거의 없음."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 9,
+        "V3": 5,
+        "Rationale": "즉시 사용 가능한(Demo, Open Source) 모델 정보로서 실행 가능성(V2)이 매우 높음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "개발자와 연구자에게 즉시 도움이 되는 실용적인 정보 구성을 갖춤."
+      }
+    }
+  },
+  "original_title": "Qwen updates image editing model with better character consistency",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 7.0,
+        "T2": 6.0,
+        "T3": 8.0,
+        "S_Avg": 7.0
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 1.0,
+        "P3": 1.0,
+        "N_Avg": 1.33
+      },
+      "Utility": {
+        "V1": 5.0,
+        "V2": 9.0,
+        "V3": 5.0,
+        "U_Avg": 6.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 4.54,
+      "ZS_Final": 4.5
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 7,
+        "T2": 6,
+        "T3": 8,
+        "Rationale": "모델 버전(2511), 라이선스(Apache 2.0), 구체적 개선 사항이 명확히 기재됨."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 1,
+        "P3": 1,
+        "Rationale": "사실 전달 위주의 기사로 불필요한 수식어나 잡음이 거의 없음."
+      },
+      "Utility": {
+        "V1": 5,
+        "V2": 9,
+        "V3": 5,
+        "Rationale": "즉시 사용 가능한(Demo, Open Source) 모델 정보로서 실행 가능성(V2)이 매우 높음."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "개발자와 연구자에게 즉시 도움이 되는 실용적인 정보 구성을 갖춤."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.5,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.5
+      },
+      "IS_Raw": 3.5,
+      "IS_Final": 3.5,
+      "Score_Commentary": "PE인 Qwen(Alibaba)은 TIER_MAP에 명시되지 않았으나, Llama(Meta, Tier 2)와 경쟁하는 Global Major LLM Developer로서 **Tier 2로 유추(Inference)**함. 즉시 사용 가능한 제품 출시(Y=4)이나, 기업의 통상적인 모델 업데이트(X=1) 수준임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Qwen (Alibaba)",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Reason": "PE: 모델을 직접 개발하고 출시한 주체인 Qwen을 선정(P4). SE: 경쟁자나 파트너에 대한 구체적 언급이 없어 None 처리."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 4,
+      "Scope_Matrix_Score": 0.5,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "status": "PUBLISHED",
+  "analyzed_at": "2025-12-26T06:35:12.830884+00:00",
+  "category": "AI/ML",
+  "dedup_status": "selected",
+  "publish_id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호",
+  "published": true,
+  "data_file": "the_decoder_f83d3ec70d0f.json"
 }

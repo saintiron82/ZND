@@ -1,12 +1,235 @@
 {
-  "title": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",
-  "description": "Jane Manchun Wong just found a 1,200-line system prompt for Waymo's unreleased Gemini assistant buried in their app code. A strong example of prompt engineering for anyone building AI assistants.",
-  "image": "https://the-decoder.com/wp-content/uploads/2025/12/waymo_press_shot-scaled.jpg",
-  "text": "Prompt engineers, take note: Jane Manchun Wong has uncovered the system prompt for Waymo's unreleased Gemini AI assistant, a specification over 1,200 lines long buried in the Waymo app's code. The assistant (still) runs on Gemini 2.5 Flash and helps passengers during their ride. It can answer questions, adjust the air conditioning, and change the music, but it can't steer the vehicle or alter the route. The instructions draw a clear line between the AI assistant (Gemini) and the autonomous driving system (Waymo Driver). The prompt uses a trigger-instruction-response pattern throughout: each rule defines a trigger, an action instruction, and often example responses. Wrong and correct answers appear side by side to clarify the desired behavior. For ambiguous questions: first clarify, then draw conclusions, finally deflect. Hard limits are enforced through prohibition lists with alternative answers. Wong's full analysis has many more details. Ad DEC_D_Incontent-1",
-  "published_at": "2025-12-25T12:43:20+00:00",
-  "url": "https://the-decoder.com/waymos-leaked-system-prompt-reveals-a-1200-line-rulebook-for-its-in-car-gemini-assistant/",
-  "source_id": "the_decoder",
+  "IS_Analysis": {
+    "Score_Commentary": "Waymo는 구글(Alphabet)의 자회사이자 자율주행 분야의 시장 지배적 사업자로서, 단순 스타트업이 아닌 Tier 2(Major Tech/Service Leader)로 유추 적용함. 기술적 완성도가 높은 프롬프트가 공개되었으나, 아직 '미출시(Unreleased)' 상태이므로 파급력은 제한적임.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Waymo",
+          "Pe_Tier": 2,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE/SE_Selection_Rationale": "PE: 해당 시스템 프롬프트를 개발하고 앱에 탑재한 실행 주체인 Waymo를 P4에 의거 선정. SE: 단순 발견자(Jane Manchun Wong)나 내부 기술(Gemini) 외에 명확한 대립/협력/수혜 대상이 없으므로 None 처리."
+        },
+        "Tier_Score": 2,
+        "Gap_Score": 0,
+        "IW_Score": 2
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 2,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "Par"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 8,
+      "T2": 9,
+      "T3": 7,
+      "Rationale": "1,200줄이라는 구체적인 규모와 트리거-지시-반응의 작동 메커니즘을 상세히 설명함."
+    },
+    "Noise": {
+      "P1": 1,
+      "P2": 1,
+      "P3": 0,
+      "Rationale": "사실 전달 위주의 기사로 감정적 수식어나 편향이 거의 없음."
+    },
+    "Utility": {
+      "V1": 2,
+      "V2": 8,
+      "V3": 9,
+      "Rationale": "실제 상용 레벨의 시스템 프롬프트 구조를 볼 수 있어 프롬프트 엔지니어링 학습에 매우 높은 효용을 가짐."
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "개발자 및 엔지니어에게 주는 기술적 통찰력(Insight)의 가치를 반영하여 소폭 상향."
+    }
+  },
   "article_id": "21c7d24ace56",
   "cached_at": "2025-12-25T15:52:45.119545+00:00",
-  "updated_at": "2025-12-25T15:52:45.119545+00:00"
+  "description": "Jane Manchun Wong just found a 1,200-line system prompt for Waymo's unreleased Gemini assistant buried in their app code. A strong example of prompt engineering for anyone building AI assistants.",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 8.0,
+        "T2": 9.0,
+        "T3": 7.0,
+        "S_Avg": 8.0
+      },
+      "Noise": {
+        "P1": 1.0,
+        "P2": 1.0,
+        "P3": 0.0,
+        "N_Avg": 0.67
+      },
+      "Utility": {
+        "V1": 2.0,
+        "V2": 8.0,
+        "V3": 9.0,
+        "U_Avg": 6.33
+      },
+      "Fine_Adjustment": 0.5,
+      "ZS_Raw": 4.01,
+      "ZS_Final": 4.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 9,
+        "T3": 7,
+        "Rationale": "1,200줄이라는 구체적인 규모와 트리거-지시-반응의 작동 메커니즘을 상세히 설명함."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 1,
+        "P3": 0,
+        "Rationale": "사실 전달 위주의 기사로 감정적 수식어나 편향이 거의 없음."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 8,
+        "V3": 9,
+        "Rationale": "실제 상용 레벨의 시스템 프롬프트 구조를 볼 수 있어 프롬프트 엔지니어링 학습에 매우 높은 효용을 가짐."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "개발자 및 엔지니어에게 주는 기술적 통찰력(Insight)의 가치를 반영하여 소폭 상향."
+      }
+    }
+  },
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/waymo_press_shot-scaled.jpg",
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 2.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 2.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 3.0,
+      "IS_Final": 3.0,
+      "Score_Commentary": "Waymo는 구글(Alphabet)의 자회사이자 자율주행 분야의 시장 지배적 사업자로서, 단순 스타트업이 아닌 Tier 2(Major Tech/Service Leader)로 유추 적용함. 기술적 완성도가 높은 프롬프트가 공개되었으나, 아직 '미출시(Unreleased)' 상태이므로 파급력은 제한적임."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Waymo",
+      "Pe_Tier": 2,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE/SE_Selection_Rationale": "PE: 해당 시스템 프롬프트를 개발하고 앱에 탑재한 실행 주체인 Waymo를 P4에 의거 선정. SE: 단순 발견자(Jane Manchun Wong)나 내부 기술(Gemini) 외에 명확한 대립/협력/수혜 대상이 없으므로 None 처리."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 2,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "Par"
+    }
+  },
+  "impact_score": 3.0,
+  "original_title": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",
+  "published_at": "2025-12-26T12:53:30.614488+00:00",
+  "raw_analysis": {
+    "Article_ID": "21c7d24ace56",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "Waymo 앱 코드에서 미출시 Gemini 어시스턴트용 1,200줄 시스템 프롬프트 유출",
+      "Summary": "Jane Manchun Wong이 Waymo 앱 코드 내에서 미출시된 Gemini 기반 차량 내 어시스턴트의 시스템 프롬프트를 발견했다. 이 프롬프트는 에어컨 조절, 음악 변경 등의 기능을 수행하며 자율주행 시스템과는 엄격히 분리되어 작동한다. 이는 AI 에이전트 구축을 위한 프롬프트 엔지니어링의 정교한 사례를 보여준다.",
+      "Tags": [
+        "Prompting",
+        "Agent",
+        "Gemini"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Waymo는 구글(Alphabet)의 자회사이자 자율주행 분야의 시장 지배적 사업자로서, 단순 스타트업이 아닌 Tier 2(Major Tech/Service Leader)로 유추 적용함. 기술적 완성도가 높은 프롬프트가 공개되었으나, 아직 '미출시(Unreleased)' 상태이므로 파급력은 제한적임.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Waymo",
+            "Pe_Tier": 2,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE/SE_Selection_Rationale": "PE: 해당 시스템 프롬프트를 개발하고 앱에 탑재한 실행 주체인 Waymo를 P4에 의거 선정. SE: 단순 발견자(Jane Manchun Wong)나 내부 기술(Gemini) 외에 명확한 대립/협력/수혜 대상이 없으므로 None 처리."
+          },
+          "Tier_Score": 2,
+          "Gap_Score": 0,
+          "IW_Score": 2
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 2,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "Par"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 8,
+        "T2": 9,
+        "T3": 7,
+        "Rationale": "1,200줄이라는 구체적인 규모와 트리거-지시-반응의 작동 메커니즘을 상세히 설명함."
+      },
+      "Noise": {
+        "P1": 1,
+        "P2": 1,
+        "P3": 0,
+        "Rationale": "사실 전달 위주의 기사로 감정적 수식어나 편향이 거의 없음."
+      },
+      "Utility": {
+        "V1": 2,
+        "V2": 8,
+        "V3": 9,
+        "Rationale": "실제 상용 레벨의 시스템 프롬프트 구조를 볼 수 있어 프롬프트 엔지니어링 학습에 매우 높은 효용을 가짐."
+      },
+      "Fine_Adjustment": {
+        "Score": 0.5,
+        "Reason": "개발자 및 엔지니어에게 주는 기술적 통찰력(Insight)의 가치를 반영하여 소폭 상향."
+      }
+    }
+  },
+  "saved": true,
+  "schema_version": "V1.0",
+  "source_id": "the_decoder",
+  "staged": true,
+  "staged_at": "2025-12-26T06:31:35.201199+00:00",
+  "status": "PUBLISHED",
+  "summary": "Jane Manchun Wong이 Waymo 앱 코드 내에서 미출시된 Gemini 기반 차량 내 어시스턴트의 시스템 프롬프트를 발견했다. 이 프롬프트는 에어컨 조절, 음악 변경 등의 기능을 수행하며 자율주행 시스템과는 엄격히 분리되어 작동한다. 이는 AI 에이전트 구축을 위한 프롬프트 엔지니어링의 정교한 사례를 보여준다.",
+  "tags": [],
+  "text": "Prompt engineers, take note: Jane Manchun Wong has uncovered the system prompt for Waymo's unreleased Gemini AI assistant, a specification over 1,200 lines long buried in the Waymo app's code. The assistant (still) runs on Gemini 2.5 Flash and helps passengers during their ride. It can answer questions, adjust the air conditioning, and change the music, but it can't steer the vehicle or alter the route. The instructions draw a clear line between the AI assistant (Gemini) and the autonomous driving system (Waymo Driver). The prompt uses a trigger-instruction-response pattern throughout: each rule defines a trigger, an action instruction, and often example responses. Wrong and correct answers appear side by side to clarify the desired behavior. For ambiguous questions: first clarify, then draw conclusions, finally deflect. Hard limits are enforced through prohibition lists with alternative answers. Wong's full analysis has many more details. Ad DEC_D_Incontent-1",
+  "title": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",
+  "title_ko": "Waymo 앱 코드에서 미출시 Gemini 어시스턴트용 1,200줄 시스템 프롬프트 유출",
+  "updated_at": "2025-12-26T10:55:11.074561+00:00",
+  "url": "https://the-decoder.com/waymos-leaked-system-prompt-reveals-a-1200-line-rulebook-for-its-in-car-gemini-assistant/",
+  "zero_echo_score": 4.0,
+  "recalculated_at": "2025-12-26T10:57:58.296331+00:00",
+  "category": "Engineering",
+  "dedup_status": "selected",
+  "publish_id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호",
+  "published": true,
+  "data_file": "the_decoder_21c7d24ace56.json"
 }

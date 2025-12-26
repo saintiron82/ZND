@@ -11,6 +11,30 @@ let curTimezone = 'local'; // 'local' or 'gmt'
 let selectedDate = null; // 선택된 날짜 (null = 전체 표시)
 let currentDetailFilename = null; // 현재 상세보기 중인 파일명
 let isTrashMode = false; // 휴지통 모드 상태
+let currentTab = 'unpublished'; // 'unpublished' | 'published'
+
+// === Tab Management ===
+function switchTab(tab) {
+    currentTab = tab;
+
+    // UI Update
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    if (tab === 'unpublished') {
+        document.getElementById('tabUnpublished').classList.add('active');
+        document.getElementById('sidePanel').style.borderRight = 'none';
+        isTrashMode = false; // Reset trash mode on tab switch
+    } else {
+        document.getElementById('tabPublished').classList.add('active');
+        document.getElementById('sidePanel').style.borderRight = '2px solid #28a745';
+        isTrashMode = false;
+    }
+
+    // Checkbox update (Trash view is separate per tab logic, but simplicity first)
+    const chkTrash = document.getElementById('chkTrashView');
+    if (chkTrash) chkTrash.checked = false;
+    toggleTrashView(); // This calls loadDesk()
+}
+
 
 // === Trash Management Functions ===
 
@@ -51,9 +75,9 @@ let pendingPublishFilenames = []; // Filenames to be published
 // ☁️ 캐시를 Firebase에 동기화
 
 
-// [NEW] 시간 필터 콜백 - 헤더 드롭다운과 연동
-function reloadWithTimeFilter(hours) {
-    console.log(`[Desk] Time filter changed to ${hours} hours`);
+// [NEW] 시간 필터 콜백 - 헤더 datetime picker와 연동
+function reloadWithTimeFilter() {
+    console.log(`[Desk] Time filter changed`);
     loadDesk();  // 데스크 다시 로드
 }
 
@@ -63,28 +87,35 @@ async function loadDesk() {
     // [MODIFIED] 항상 전체 보기 + 시간 필터 사용
     selectedDate = 'all';
 
+    // [NEW] 시간 범위 가져오기
+    const startTime = typeof getTimeFilterStart === 'function' ? getTimeFilterStart() : '';
+    const endTime = typeof getTimeFilterEnd === 'function' ? getTimeFilterEnd() : '';
+
     // 시간 필터 레이블 업데이트
-    const hours = typeof getTimeFilterHours === 'function' ? getTimeFilterHours() : '0';
     const label = document.getElementById('selectedDateLabel');
     if (label) {
-        if (hours === '0') {
-            label.textContent = `📅 전체 미발행`;
-        } else if (hours === '24') {
-            label.textContent = `📅 최근 24시간`;
-        } else if (hours === '48') {
-            label.textContent = `📅 최근 2일`;
-        } else if (hours === '168') {
-            label.textContent = `📅 최근 1주일`;
+        if (!startTime) {
+            label.textContent = `📅 전체`;
         } else {
-            label.textContent = `📅 최근 ${hours}시간`;
+            const startDate = new Date(startTime);
+            const endDate = new Date(endTime);
+            const formatDate = (d) => `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+            label.textContent = `📅 ${formatDate(startDate)} ~ ${formatDate(endDate)}`;
         }
     }
 
     grid.innerHTML = '<div class="loading">로딩 중...</div>';
 
     try {
-        // [MODIFIED] 시간 필터 적용
-        const response = await fetch(`/api/desk/list?date=all&include_trash=${isTrashMode}&hours=${hours}`);
+        // [MODIFIED] Determine params based on Tab
+        const includePublished = (currentTab === 'published');
+
+        // [MODIFIED] 시간 범위 파라미터 적용
+        let url = `/api/desk/list?date=all&include_trash=${isTrashMode}&include_published=${includePublished}`;
+        if (startTime) url += `&start_time=${encodeURIComponent(startTime)}`;
+        if (endTime) url += `&end_time=${encodeURIComponent(endTime)}`;
+
+        const response = await fetch(url);
         const data = await response.json();
 
         if (data.error) {
@@ -93,9 +124,12 @@ async function loadDesk() {
         }
 
         deskData = data.articles || [];
-        window.deskStats = data.stats || {};
-        window.unanalyzedCount = window.deskStats.unanalyzed || data.unanalyzed_count || 0;
-        console.log(`Loaded ${deskData.length} items, hours=${hours}, stats:`, window.deskStats);
+        window.unanalyzedCount = data.unanalyzed_count || 0;
+
+        // [NEW] Store server-side stats globally
+        window.deskStats = data.stats || null;
+
+        console.log(`Loaded ${deskData.length} items, startTime=${startTime}, unanalyzed=${window.unanalyzedCount}`);
 
         renderArticles();
         updateStats();
@@ -112,7 +146,35 @@ function renderArticles() {
     const grid = document.getElementById('articleGrid');
 
     if (deskData.length === 0) {
-        grid.innerHTML = '<div class="empty-state">Desk 데이터가 없습니다.<br>먼저 일괄 분석을 실행해주세요.</div>';
+        // [MODIFIED] Smart Empty State with Specific Hints
+        let msg = 'Desk 데이터가 없습니다.<br>먼저 일괄 분석을 실행해주세요.';
+        const s = window.deskStats || {};
+
+        if (currentTab === 'unpublished') {
+            if (s.published > 0 && s.staged === 0 && s.analyzed === 0 && s.unanalyzed === 0) {
+                msg = '🎉 모든 기사가 발행되었습니다!<br>(대기중인 기사 없음)';
+            } else if (s.staged > 0) {
+                // There ARE staged articles but deskData is empty? This shouldn't happen.
+                msg = '조건에 맞는 기사가 없습니다.<br>(시간 필터를 넓게 조정해보세요)';
+            } else if (s.analyzed > 0) {
+                msg = `📝 분석됨 ${s.analyzed}개가 있지만 분류되지 않았습니다.<br>'Crawler' 탭에서 분류해주세요.`;
+            } else if (s.unanalyzed > 0) {
+                msg = `📥 미분석 기사 ${s.unanalyzed}개 (Crawler 탭에서 분석 필요)`;
+            } else if (s.rejected > 0) {
+                msg = `🗑️ 휴지통에 ${s.rejected}개의 기사가 있습니다.`;
+            } else if (s.total > 0) {
+                msg = '조건에 맞는 기사가 없습니다.<br>(시간 필터를 넓게 조정해보세요)';
+            }
+        } else {
+            // Published Tab
+            if (s.published === 0) {
+                msg = '🚀 발행된 기사가 아직 없습니다.<br>미발행 탭에서 기사를 발행해주세요.';
+            } else {
+                msg = '조건에 맞는 발행 기사가 없습니다.<br>(시간 필터를 확인해주세요)';
+            }
+        }
+
+        grid.innerHTML = `<div class="empty-state">${msg}</div>`;
         return;
     }
 
@@ -320,32 +382,61 @@ function renderArticles() {
 }
 
 function updateStats() {
-    // [MODIFIED] Use server-side stats if available
-    const stats = window.deskStats || {};
+    // 전체 통계
 
-    // Fallback counts (only if stats not present)
-    const clientUnanalyzed = window.unanalyzedCount || 0;
-    const clientStaged = deskData.filter(a => !a.rejected && !a.published && a.dedup_status !== 'duplicate').length;
-    const clientRejected = deskData.filter(a => a.rejected || a.dedup_status === 'duplicate').length;
-    const clientPublished = deskData.filter(a => a.published).length;
+    // [MODIFIED] Use Server Stats if available (Strict Separation)
+    let unanalyzed = window.unanalyzedCount || 0;
+    let analyzed = 0;  // [NEW]
+    let staged = 0;
+    let rejected = 0;
+    let published = 0;
 
-    // Use stats, falling back to client calc
-    const unanalyzed = stats.unanalyzed !== undefined ? stats.unanalyzed : clientUnanalyzed;
-    const analyzed = stats.analyzed || 0;
-    const staged = stats.staged !== undefined ? stats.staged : clientStaged;
-    const rejected = stats.rejected !== undefined ? stats.rejected : clientRejected;
-    const published = stats.published !== undefined ? stats.published : clientPublished;
+    if (window.deskStats) {
+        // Use backend stats (Truth)
+        unanalyzed = window.deskStats.unanalyzed || 0;
+        analyzed = window.deskStats.analyzed || 0;  // [NEW]
+        staged = window.deskStats.staged || 0;
+        rejected = window.deskStats.rejected || 0;
+        published = window.deskStats.published || 0;
+    } else {
+        // Fallback to Frontend calculation (Legacy / Error case)
+        staged = deskData.filter(a => !a.rejected && !a.published && a.dedup_status !== 'duplicate').length;
+        rejected = deskData.filter(a => a.rejected || a.dedup_status === 'duplicate').length;
+        published = deskData.filter(a => a.published).length;
+    }
 
     const unanalyzedEl = document.getElementById('unanalyzedCount');
     if (unanalyzedEl) unanalyzedEl.textContent = unanalyzed;
 
-    // [NEW] Bind Analyzed count
+    // [NEW] Update analyzed count
     const analyzedEl = document.getElementById('analyzedCount');
     if (analyzedEl) analyzedEl.textContent = analyzed;
 
-    document.getElementById('stagedCount').textContent = staged;
-    document.getElementById('rejectedCount').textContent = rejected;
-    document.getElementById('publishedCount').textContent = published;
+    const stagedEl = document.getElementById('stagedCount');
+    if (stagedEl) stagedEl.textContent = staged;
+
+    const rejectedEl = document.getElementById('rejectedCount');
+    if (rejectedEl) rejectedEl.textContent = rejected;
+
+    // [MODIFIED] Update Tab Buttons instead of removed status bar item
+    // Update Unpublished Tab Count (Total pending)
+    const tabUnpublished = document.getElementById('tabUnpublished');
+    if (tabUnpublished) {
+        // Pending = Unanalyzed + Analyzed + Staged
+        // But maybe just Staged? Let's use Staged count for Todo focus or Total Todo.
+        // Let's stick to simple labels or update if we want counts on tabs.
+        // For now, let's just make sure we don't crash on publishedCount
+    }
+
+    // Safely handle publishedCount if it exists (it might not)
+    const publishedEl = document.getElementById('publishedCount');
+    if (publishedEl) publishedEl.textContent = published;
+
+    // [NEW] Update Tab Counts
+    if (tabUnpublished) tabUnpublished.textContent = `📂 미발행 (${staged})`; // Display Staged count as Todo
+
+    const tabPublished = document.getElementById('tabPublished');
+    if (tabPublished) tabPublished.textContent = `🚀 발행됨 (${published})`;
 
     // 날짜별 진행 상황 업데이트
     updateDateProgress();
@@ -591,11 +682,42 @@ function renderDedupedArticles(date, categoryResults) {
 
 // 개별 기사 카드 렌더링 (재사용 가능)
 function renderArticleCard(article, date, extraClass = '', isDuplicate = false) {
-    const cardClass = isDuplicate ? 'duplicate' : (article.rejected ? 'rejected' : (article.published ? 'published' : ''));
-    const canSelect = !isDuplicate && !article.rejected && !article.published;
+    // Status Definitions
+    const isPublished = !!article.published;
+    const isRefused = !!article.rejected;
+    const isClassified = !!article.category;
+
+    // Constraint: Can select only if it is Published (to edit), Refused (to restore), or Classified (to publish)
+    // If it's merely Analyzed (No Category), it cannot be selected for Publish action.
+    // However, user might want to select to "Delete" or "Classify" (if we add that action).
+    // But per user request: "Must be classified to be publishable".
+    // Let's enforce it on the checkbox for the main workflow.
+
+    let canSelect = !isDuplicate;
+    if (canSelect) {
+        if (!isPublished && !isRefused && !isClassified) {
+            canSelect = false; // Analyzed but not Classified -> Cannot select
+        }
+    }
+
+    const cardClass = isDuplicate ? 'duplicate' : (isRefused ? 'rejected' : (isPublished ? 'published' : ''));
+
     const checkboxHtml = canSelect
-        ? `<input type="checkbox" class="article-checkbox" data-filename="${article.filename}" data-date="${date}" checked onclick="toggleCheck(event)" onchange="updateSelectedCount()" style="width:18px; height:18px; cursor:pointer;">`
-        : '';
+        ? `<input type="checkbox" class="article-checkbox" data-filename="${article.filename}" data-date="${date}" onclick="toggleCheck(event)" onchange="updateSelectedCount()" style="width:18px; height:18px; cursor:pointer;">`
+        : `<input type="checkbox" disabled title="⚠ 분류(Category)가 필요합니다" style="width:18px; height:18px; cursor:not-allowed; opacity:0.3;">`;
+
+    // Status Badge Logic
+    let statusBadge = '';
+    if (isPublished) {
+        statusBadge = '<span class="badge badge-published">🚀 발행됨</span>';
+    } else if (isRefused) {
+        statusBadge = '<span class="badge badge-rejected">🗑️ 폐기됨</span>';
+    } else if (isClassified) {
+        statusBadge = '<span class="badge badge-staged">✅ 분류됨</span>';
+    } else {
+        // Analyzed but no category
+        statusBadge = '<span class="badge" style="background:#ffc107; color:#333;">📝 분석됨 (미분류)</span>';
+    }
 
     const priority = article._priority?.toFixed(2) || '-';
     const is = article.impact_score?.toFixed(1) || '-';
@@ -615,6 +737,7 @@ function renderArticleCard(article, date, extraClass = '', isDuplicate = false) 
                     <div class="article-meta">
                         <span class="score-badge score-is">IS: ${is}</span>
                         <span class="score-badge score-zs">ZS: ${zs}</span>
+                        ${statusBadge}
                     </div>
                 </div>
             `;

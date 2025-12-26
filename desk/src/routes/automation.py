@@ -462,6 +462,10 @@ def automation_stage():
                             scores = process_raw_analysis(cache_data['raw_analysis'])
                             cache_data['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
                             cache_data['impact_score'] = scores.get('impact_score', 0.0)
+                            
+                            # [NEW] Auto-assign category if analysis found one
+                            if scores.get('category'):
+                                cache_data['category'] = scores['category']
                         except Exception as e:
                             print(f"⚠️ [Stage] Score calc error: {e}")
                     
@@ -674,7 +678,7 @@ def automation_stage_recalc():
                 continue
 
             try:
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(filepath, 'r', encoding='utf-8-sig') as f:
                     article_data = json.load(f)
                 
                 # raw_analysis가 있어야만 재계산 가능
@@ -689,8 +693,12 @@ def automation_stage_recalc():
                     if scores.get('schema_version'):
                         article_data['impact_evidence']['schema_version'] = scores['schema_version']
                     
-                    # [NEW] Update timestamp for sync
-                    article_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+                    # [NEW] Update category if extracted
+                    if scores.get('category'):
+                        article_data['category'] = scores['category']
+                    
+                    # [FIX] Use recalculated_at instead of updated_at to avoid time filter issues
+                    article_data['recalculated_at'] = datetime.now(timezone.utc).isoformat()
                     
                     with open(filepath, 'w', encoding='utf-8') as f:
                         json.dump(article_data, f, ensure_ascii=False, indent=2)

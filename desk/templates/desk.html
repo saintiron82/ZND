@@ -7,6 +7,18 @@
     <title>📰 편집 데스크 (Desk) - 마스터 전용</title>
     <!-- CSS External Link -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/desk.css') }}">
+    <style>
+        .tab-btn.active {
+            background: #4ecdc4 !important;
+            color: #1a1a2e !important;
+            border-color: #4ecdc4 !important;
+        }
+
+        .tab-btn:hover {
+            border-color: #4ecdc4 !important;
+            color: #4ecdc4;
+        }
+    </style>
 </head>
 
 <body>
@@ -57,30 +69,40 @@
             <!-- 1. 미발행 현황 패널 (Desk 모드일 때 표시) -->
             <div id="deskStatsPanel"
                 style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: #4ecdc4;">📊 미발행 현황</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 6px;">
+
+                <!-- [NEW] Tabs -->
+                <div
+                    style="display:flex; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; gap:10px;">
+                    <button class="btn tab-btn active" id="tabUnpublished" onclick="switchTab('unpublished')"
+                        style="flex:1; background:transparent; color:#aaa; border:1px solid #444; padding:8px; border-radius:6px; font-weight:bold;">
+                        📂 미발행 (Todo)
+                    </button>
+                    <button class="btn tab-btn" id="tabPublished" onclick="switchTab('published')"
+                        style="flex:1; background:transparent; color:#aaa; border:1px solid #444; padding:8px; border-radius:6px; font-weight:bold;">
+                        🚀 발행됨 (Live)
+                    </button>
+                </div>
+
+                <h4 style="margin: 0 0 10px 0; color: #4ecdc4;">📊 현황 (Status)</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
                     <div
                         style="text-align: center; padding: 6px; background: rgba(108,117,125,0.2); border-radius: 8px;">
                         <div id="unanalyzedCount" style="font-size: 1.1em; font-weight: bold; color: #adb5bd;">-</div>
-                        <div style="font-size: 0.6em; color: #aaa;">미분석</div>
+                        <div style="font-size: 0.6em; color: #aaa;">1. 수집됨 (Inbox)</div>
                     </div>
                     <div
                         style="text-align: center; padding: 6px; background: rgba(23,162,184,0.2); border-radius: 8px;">
                         <div id="analyzedCount" style="font-size: 1.1em; font-weight: bold; color: #17a2b8;">-</div>
-                        <div style="font-size: 0.6em; color: #aaa;">분석됨</div>
+                        <div style="font-size: 0.6em; color: #aaa;">2. 분석됨 (Analyzed)</div>
                     </div>
                     <div
                         style="text-align: center; padding: 6px; background: rgba(78,205,196,0.2); border-radius: 8px;">
                         <div id="stagedCount" style="font-size: 1.1em; font-weight: bold; color: #4ecdc4;">-</div>
-                        <div style="font-size: 0.6em; color: #aaa;">대기중</div>
+                        <div style="font-size: 0.6em; color: #aaa;">3. 분류됨 (Classified)</div>
                     </div>
                     <div style="text-align: center; padding: 6px; background: rgba(220,53,69,0.2); border-radius: 8px;">
                         <div id="rejectedCount" style="font-size: 1.1em; font-weight: bold; color: #dc3545;">-</div>
-                        <div style="font-size: 0.6em; color: #aaa;">거부</div>
-                    </div>
-                    <div style="text-align: center; padding: 6px; background: rgba(40,167,69,0.2); border-radius: 8px;">
-                        <div id="publishedCount" style="font-size: 1.1em; font-weight: bold; color: #28a745;">-</div>
-                        <div style="font-size: 0.6em; color: #aaa;">발행</div>
+                        <div style="font-size: 0.6em; color: #aaa;">🗑️ 폐기됨 (Refused)</div>
                     </div>
                 </div>
 
@@ -238,10 +260,9 @@
                     <div>
                         <div style="font-size: 0.75em; color: #888; margin-bottom: 6px;">📌 전체 작업</div>
                         <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <button class="btn" style="width: 100%; background: #ffc107; color: #333; padding: 8px;"
-                                onclick="openDedupModal('all')">📋 분류 하기</button>
-                            <button class="btn" style="width: 100%; background: #17a2b8; color: white; padding: 8px;"
-                                onclick="resetDedupByDate('all')">↩️ 분류 초기화</button>
+                            <!-- [RESTORED] 분류 기능 복구 -->
+                            <button class="btn" style="width: 100%; background: #20c997; color: white; padding: 8px;"
+                                onclick="openDedupModal('all')">📋 분류 및 중복제거</button>
                             <button class="btn" style="width: 100%; background: #ffc107; color: #333; padding: 8px;"
                                 onclick="recalculateGroup('all')">⚡ 점수 재계산</button>
                         </div>

@@ -1,0 +1,310 @@
+{
+  "id": "251226_5",
+  "edition_code": "251226_5",
+  "edition_name": "5호",
+  "published_at": "2025-12-26T12:53:30.614488+00:00",
+  "date": "2025-12-26",
+  "article_count": 14,
+  "articles": [
+    {
+      "id": "3dc29b1061df",
+      "title": "웨이모, 로보택시 정전 대응 SW 업데이트 및 제미나이 통합 실험",
+      "title_ko": "웨이모, 로보택시 정전 대응 SW 업데이트 및 제미나이 통합 실험",
+      "title_en": "웨이모, 로보택시 정전으로 SW 업데이트...'제미나이' 통합도 실험 - AI타임스",
+      "summary": "웨이모가 샌프란시스코 정전 사태로 인한 로보택시 정체 문제를 해결하기 위해 판단 능력을 강화한 SW 업데이트를 배포했다. 또한 구글의 제미나이를 차량 내 비서로 통합하여 탑승객 경험을 개선하려는 테스트 정황이 포착되었다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205089",
+      "source_id": "aitimes",
+      "zero_echo_score": 3.6,
+      "impact_score": 9.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Update",
+        "Hardware",
+        "Gemini",
+        "Safety"
+      ],
+      "category": "AI/ML",
+      "filename": "aitimes_3dc29b1061df.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.420395+00:00"
+    },
+    {
+      "id": "35d81bf9845a",
+      "title": "구글, AI가 UI까지 생성하는 오픈소스 프로토콜 'A2UI' 공개",
+      "title_ko": "구글, AI가 UI까지 생성하는 오픈소스 프로토콜 'A2UI' 공개",
+      "title_en": "구글, AI 응답을 UI로 만들어주는 오픈 소스 프로토콜 'A2UI' 출시 - AI타임스",
+      "summary": "구글이 생성형 AI가 대화 맥락에 맞춰 UI를 직접 생성하는 'A2UI' 프로토콜을 오픈소스로 공개했다. 이는 기존의 무거운 스크립트 전송 방식 대신 JSON 데이터로 UI를 정의하여 보안성과 프레임워크 호환성을 높인 기술이다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205052",
+      "source_id": "aitimes",
+      "zero_echo_score": 3.6,
+      "impact_score": 7.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Launch",
+        "Open Source",
+        "Google",
+        "Framework"
+      ],
+      "category": "AI/ML",
+      "filename": "aitimes_35d81bf9845a.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.435850+00:00"
+    },
+    {
+      "id": "f085741718db",
+      "title": "Poetiq, GPT-5.2 기반 시스템으로 ARC 벤치마크 정복 주장",
+      "title_ko": "Poetiq, GPT-5.2 기반 시스템으로 ARC 벤치마크 정복 주장",
+      "title_en": "The ARC benchmark's fall marks another casualty of relentless AI optimization",
+      "summary": "AI 스타트업 Poetiq이 GPT-5.2를 활용한 시스템으로 난공불락으로 여겨지던 ARC-AGI 벤치마크를 사실상 해결했다고 발표했다. 이들은 ARC-AGI-1에서 성능을 최대화하고, 더 어려운 ARC-AGI-2에서도 인간 평균을 넘어서는 75%의 정확도를 기록했다고 주장했다. 이는 AI의 추론 능력이 급격히 최적화되고 있음을 시사한다.",
+      "url": "https://the-decoder.com/the-arc-benchmarks-fall-marks-another-casualty-of-relentless-ai-optimization/",
+      "source_id": "the_decoder",
+      "zero_echo_score": 5.8,
+      "impact_score": 4.5,
+      "layout_type": "Standard",
+      "tags": [
+        "Benchmark",
+        "Startup",
+        "GPT"
+      ],
+      "category": "AI/ML",
+      "filename": "the_decoder_f085741718db.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.449615+00:00"
+    },
+    {
+      "id": "ca9ff0db3abc",
+      "title": "Google Gemini 3, 복잡한 '젤다의 전설' 퍼즐 해결… 추론 능력 입증",
+      "title_ko": "Google Gemini 3, 복잡한 '젤다의 전설' 퍼즐 해결… 추론 능력 입증",
+      "title_en": "A Zelda puzzle proves AI models can crack gaming riddles that require thinking six moves ahead",
+      "summary": "Google의 Gemini 3 모델이 젤다의 전설 게임 내 색상 변경 퍼즐을 시각적 정보만으로 해결함. 이는 6단계 앞을 내다보는 추론 능력이 필요한 과제로, GPT-5.2 등 타 모델과의 비교 테스트에서도 우수한 성과를 보임.",
+      "url": "https://the-decoder.com/a-zelda-puzzle-proves-ai-models-can-crack-gaming-riddles-that-require-thinking-six-moves-ahead/",
+      "source_id": "the_decoder",
+      "zero_echo_score": 7.0,
+      "impact_score": 4.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Gemini",
+        "Model",
+        "Vision"
+      ],
+      "category": "AI/ML",
+      "filename": "the_decoder_ca9ff0db3abc.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.463706+00:00"
+    },
+    {
+      "id": "f83d3ec70d0f",
+      "title": "Qwen, 인물 일관성 강화된 이미지 편집 모델 공개",
+      "title_ko": "Qwen, 인물 일관성 강화된 이미지 편집 모델 공개",
+      "title_en": "Qwen updates image editing model with better character consistency",
+      "summary": "Qwen이 인물 일관성을 대폭 개선한 이미지 편집 모델 'Qwen-Image-Edit-2511'을 허깅페이스에 공개했다. 이번 업데이트는 인물 및 단체 사진 편집 시 얼굴 정체성을 유지하는 능력이 강화되었으며, 조명 및 카메라 앵글 제어 기능도 향상되었다. 아파치 2.0 라이선스로 배포되어 누구나 무료로 사용 가능하며, Qwen Chat을 통해 데모를 체험할 수 있다.",
+      "url": "https://the-decoder.com/qwen-updates-image-editing-model-with-better-character-consistency/",
+      "source_id": "the_decoder",
+      "zero_echo_score": 4.5,
+      "impact_score": 3.5,
+      "layout_type": "Standard",
+      "tags": [
+        "Launch",
+        "Update",
+        "Open Source"
+      ],
+      "category": "AI/ML",
+      "filename": "the_decoder_f83d3ec70d0f.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.477550+00:00"
+    },
+    {
+      "id": "e127f7e12b14",
+      "title": "엔비디아, 구글 TPU 견제 위해 200억 달러에 Groq 기술 라이선스 및 인력 확보",
+      "title_ko": "엔비디아, 구글 TPU 견제 위해 200억 달러에 Groq 기술 라이선스 및 인력 확보",
+      "title_en": "Nvidia's $20 billion Groq deal is really about blocking Google's TPU momentum",
+      "summary": "엔비디아가 AI 추론 칩 스타트업 Groq에 200억 달러를 투자하여 비독점 기술 라이선스를 확보하고 CEO를 포함한 핵심 인력을 흡수함. 이는 구글 TPU의 확산을 저지하기 위한 사실상의 인수 합병으로, Groq은 독립 기업으로 남으나 엔비디아의 생태계에 통합될 예정임.",
+      "url": "https://the-decoder.com/nvidias-20-billion-groq-deal-is-really-about-blocking-googles-tpu-momentum/",
+      "source_id": "the_decoder",
+      "zero_echo_score": 2.7,
+      "impact_score": 6.5,
+      "layout_type": "Standard",
+      "tags": [
+        "Acquisition",
+        "Hardware",
+        "Nvidia"
+      ],
+      "category": "Business",
+      "filename": "the_decoder_e127f7e12b14.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.492043+00:00"
+    },
+    {
+      "id": "8012dcc2d129",
+      "title": "엔비디아, 인텔 18A 공정 테스트 중단... 인텔 파운드리 '빨간불'",
+      "title_ko": "엔비디아, 인텔 18A 공정 테스트 중단... 인텔 파운드리 '빨간불'",
+      "title_en": "인텔의 첨단 칩 제작 공정 ‘18A’에 엔비디아 참여 중단 - AI타임스",
+      "summary": "엔비디아가 인텔의 차세대 1.8나노(18A) 공정을 이용한 칩 생산 테스트를 중단했다는 보도가 나왔다. 이는 인텔의 파운드리 재건 계획에 타격을 주는 소식으로, 인텔 주가 하락과 기술적 불확실성 우려를 낳고 있다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205086",
+      "source_id": "aitimes",
+      "zero_echo_score": 5.2,
+      "impact_score": 7.5,
+      "layout_type": "Standard",
+      "tags": [
+        "Rumor",
+        "Hardware",
+        "Nvidia",
+        "Intel",
+        "Stock"
+      ],
+      "category": "Business",
+      "filename": "aitimes_8012dcc2d129.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.509003+00:00"
+    },
+    {
+      "id": "21c9e67dad88",
+      "title": "오픈AI, 챗GPT 수익화 위해 검색 광고 도입 테스트 착수",
+      "title_ko": "오픈AI, 챗GPT 수익화 위해 검색 광고 도입 테스트 착수",
+      "title_en": "오픈AI, '챗GPT' 광고 도입 테스트 중...\"사용자 반발 방지 최우선\" - AI타임스",
+      "summary": "오픈AI가 챗GPT 내 광고 도입을 적극 검토 중이며, 사용자 반발을 최소화하기 위해 대화 후반부에 스폰서 정보를 노출하는 방식을 테스트하고 있다. 이는 2030년까지 무료 사용자 매출 확대를 목표로 하며, 구글 등 기존 검색 광고 시장에 영향을 줄 것으로 보인다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205087",
+      "source_id": "aitimes",
+      "zero_echo_score": 5.8,
+      "impact_score": 5.5,
+      "layout_type": "Standard",
+      "tags": [
+        "News",
+        "OpenAI",
+        "GPT",
+        "Business"
+      ],
+      "category": "Business",
+      "filename": "aitimes_21c9e67dad88.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.527499+00:00"
+    },
+    {
+      "id": "feeb8cd3b687",
+      "title": "태양과 바람, 에너지 산업의 재편과 전남의 부상",
+      "title_ko": "태양과 바람, 에너지 산업의 재편과 전남의 부상",
+      "title_en": "태양과 바람이 불러온 변화…에너지가 산업을 바꾼다 - AI타임스",
+      "summary": "2025년 전력 시장이 재생에너지 중심으로 재편됨에 따라 전라남도가 핵심 거점으로 부상했다. 중국의 태양광 독점에 맞서 서구권의 투자가 늘어나는 가운데, 전남은 데이터센터 유치와 솔라시도(Solar City) 조성을 통해 '전력 생산지'에서 '소비 및 기술 허브'로 전환을 시도 중이다. 특히 AI 인공태양 등 차세대 기술 실증이 진행되며 에너지가 단순 환경 이슈를 넘어 핵심 산업 전략으로 자리 잡고 있다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205084",
+      "source_id": "aitimes",
+      "zero_echo_score": 8.5,
+      "impact_score": 1.5,
+      "layout_type": "Standard",
+      "tags": [
+        "News",
+        "Investment",
+        "Market Share"
+      ],
+      "category": "Business",
+      "filename": "aitimes_feeb8cd3b687.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.541851+00:00"
+    },
+    {
+      "id": "ea53c9c90462",
+      "title": "중국, AI를 '국가 주요 위협' 지정 및 고강도 검열 의무화",
+      "title_ko": "중국, AI를 '국가 주요 위협' 지정 및 고강도 검열 의무화",
+      "title_en": "중국, AI를 '국가 주요 위협'으로 지정...이념 테스트 95% 넘어야 출시 가능 - AI타임스",
+      "summary": "중국 정부가 AI를 국가 안보의 잠재적 위협으로 규정하고, 챗봇 출시 전 '이념 테스트' 통과를 의무화하는 등 고강도 검열 시스템을 가동했다. 이는 AI 기술 발전보다 체제 유지를 우선시하는 정책으로, 미중 기술 경쟁에 영향을 미칠 전망이다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205088",
+      "source_id": "aitimes",
+      "zero_echo_score": 6.2,
+      "impact_score": 6.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Regulation",
+        "Politics",
+        "China",
+        "Security"
+      ],
+      "category": "Community",
+      "filename": "aitimes_ea53c9c90462.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.556290+00:00"
+    },
+    {
+      "id": "a1b4f4c4316a",
+      "title": "NIA, AI 편향성 대응 리포트 발간... 사회적 갈등 경고",
+      "title_ko": "NIA, AI 편향성 대응 리포트 발간... 사회적 갈등 경고",
+      "title_en": "\"양극화 심화하는 ‘AI 편향’, 남의 일 아니야\"...NIA ‘AI 편향 대응 리포트’ 발간 - AI타임스",
+      "summary": "한국지능정보사회진흥원(NIA)이 AI 편향으로 인한 사회적 갈등과 양극화 심화를 경고하는 보고서를 발간했다. 보고서는 국내외 편향 사례를 분석하고, 기술적 개선뿐만 아니라 법제도적 대응과 거버넌스 구축의 필요성을 강조했다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205082",
+      "source_id": "aitimes",
+      "zero_echo_score": 6.9,
+      "impact_score": 6.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Regulation",
+        "Ethics",
+        "Report"
+      ],
+      "category": "Community",
+      "filename": "aitimes_a1b4f4c4316a.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.570928+00:00"
+    },
+    {
+      "id": "d05fda59174b",
+      "title": "퓰리처상 수상 작가들, OpenAI 등 6개 빅테크 대상 저작권 침해 소송 제기",
+      "title_ko": "퓰리처상 수상 작가들, OpenAI 등 6개 빅테크 대상 저작권 침해 소송 제기",
+      "title_en": "Authors sue six AI giants for book piracy",
+      "summary": "존 캐리루 등 작가들이 OpenAI, Google, Meta, xAI 등을 상대로 불법 해적판 사이트의 도서를 학습에 사용했다며 저작권 침해 소송을 제기함. 집단 소송 합의를 거부하고 개별 소송을 택해, 고의적 침해 인정 시 막대한 배상금이 예상됨.",
+      "url": "https://the-decoder.com/authors-sue-six-ai-giants-for-book-piracy/",
+      "source_id": "the_decoder",
+      "zero_echo_score": 5.9,
+      "impact_score": 4.5,
+      "layout_type": "Standard",
+      "tags": [
+        "Copyright",
+        "Regulation",
+        "OpenAI"
+      ],
+      "category": "Community",
+      "filename": "the_decoder_d05fda59174b.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.584761+00:00"
+    },
+    {
+      "id": "0995d3d8b97d",
+      "title": "경력단절 여성 5인, AI 아트로 재도약 전시회 개최",
+      "title_ko": "경력단절 여성 5인, AI 아트로 재도약 전시회 개최",
+      "title_en": "“경력단절 여성, AI 아트로 재도약”...5인의 크리에이터가 선보이는 미디어아트 - AI타임스",
+      "summary": "경력 단절 여성 5인으로 구성된 크리에이터들이 AI를 활용한 미디어 아트 전시 '우리를 넘어서'를 개최한다. 이는 AI가 창작의 도구를 넘어 확장된 사고의 파트너가 될 수 있음을 보여주는 사례로, 기술과 인간의 공존을 모색한다.",
+      "url": "https://www.aitimes.com/news/articleView.html?idxno=205008",
+      "source_id": "aitimes",
+      "zero_echo_score": 8.9,
+      "impact_score": 1.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Event",
+        "Vision"
+      ],
+      "category": "Community",
+      "filename": "aitimes_0995d3d8b97d.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.600042+00:00"
+    },
+    {
+      "id": "21c7d24ace56",
+      "title": "Waymo 앱 코드에서 미출시 Gemini 어시스턴트용 1,200줄 시스템 프롬프트 유출",
+      "title_ko": "Waymo 앱 코드에서 미출시 Gemini 어시스턴트용 1,200줄 시스템 프롬프트 유출",
+      "title_en": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",
+      "summary": "Jane Manchun Wong이 Waymo 앱 코드 내에서 미출시된 Gemini 기반 차량 내 어시스턴트의 시스템 프롬프트를 발견했다. 이 프롬프트는 에어컨 조절, 음악 변경 등의 기능을 수행하며 자율주행 시스템과는 엄격히 분리되어 작동한다. 이는 AI 에이전트 구축을 위한 프롬프트 엔지니어링의 정교한 사례를 보여준다.",
+      "url": "https://the-decoder.com/waymos-leaked-system-prompt-reveals-a-1200-line-rulebook-for-its-in-car-gemini-assistant/",
+      "source_id": "the_decoder",
+      "zero_echo_score": 4.0,
+      "impact_score": 3.0,
+      "layout_type": "Standard",
+      "tags": [
+        "Prompting",
+        "Agent",
+        "Gemini"
+      ],
+      "category": "Engineering",
+      "filename": "the_decoder_21c7d24ace56.json",
+      "date": "2025-12-26",
+      "published_at": "2025-12-26T12:53:30.614488+00:00"
+    }
+  ],
+  "schema_version": "2.0.0"
+}

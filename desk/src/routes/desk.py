@@ -76,8 +76,6 @@ def desk_list():
                 files_to_process = [os.path.join(cache_date_dir, f) for f in os.listdir(cache_date_dir) if f.endswith('.json')]
         
         articles = []
-        unanalyzed_count = 0  # [NEW] 미분석 기사 카운터
-        
         # [NEW] Firebase에서 발행된 article_ids 조회 (동기화)
         published_article_ids = set()
         skip_firebase_sync = os.getenv('DESK_SKIP_FIREBASE_SYNC', 'false').lower() == 'true'
@@ -88,63 +86,68 @@ def desk_list():
                 print(f"🔗 [Desk] Firebase sync: {len(published_article_ids)} published IDs loaded")
             except Exception as e:
                 pass
+
+        # [NEW] Global Counters
+        stats = {
+            'total': 0,
+            'unanalyzed': 0,
+            'analyzed': 0,
+            'staged': 0,
+            'published': 0,
+            'rejected': 0
+        }
         
         for filepath in files_to_process:
             try:
                 filename = os.path.basename(filepath)
                 # Skip batch files if any
-                if 'batch_' in filename: continue
+                if 'batch_' in filename or 'batches' in filepath.split(os.sep): continue
 
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(filepath, 'r', encoding='utf-8-sig') as f:
                     data = json.load(f)
                 
-                # [CRITICAL FILTER] 먼저 상태 체크
+                stats['total'] += 1
+                
+                # --- UNIFIED CLASSIFICATION: Use get_stage() ---
+                from src.core_logic import get_stage, Stage
+                stage = get_stage(data)
                 is_published = data.get('published', False)
-                is_rejected = data.get('rejected', False)
-                is_saved = data.get('saved', False)  # [NEW] Staged 상태 (Inspector 기준 ACCEPTED)
-                dedup_status = data.get('dedup_status')
                 
-                # Firebase Sync
-                article_id = data.get('article_id', '')
-                if article_id and article_id in published_article_ids:
-                    is_published = True
+                # Count Stats (published is independent)
+                if stage == Stage.TRASH:
+                    stats['rejected'] += 1
+                elif stage == Stage.STAGED:
+                    stats['staged'] += 1
+                elif stage == Stage.ANALYZED:
+                    stats['analyzed'] += 1
+                else:
+                    stats['unanalyzed'] += 1
                 
-                # 완료된 기사(발행/거부/중복/저장됨)는 미분석 카운트에서 제외해야 함
-                is_completed = is_published or is_rejected or is_saved or (dedup_status == 'duplicate')
+                # Count published separately
+                if is_published:
+                    stats['published'] += 1
                 
-                # 분석 상태 체크
-                is_analyzed = (
-                    data.get('mll_status') == 'analyzed' or
-                    data.get('raw_analysis') is not None or
-                    data.get('zero_echo_score') is not None
-                )
+                # --- List Filters ---
+                # Desk shows: Analyzed + Staged by default
+                # Filter by published status if requested
                 
-                # [FIX Logic] 완료되지 않은 기사 중 분석이 안 된 것만 카운트
-                if not is_completed and not is_analyzed:
-                    unanalyzed_count += 1
-                    if not include_unanalyzed:
-                        continue # 카운트만 하고 목록엔 안 넣음
+                should_include = False
                 
-                # 1. Trash Filter (거부된 기사)
-                if not include_trash and is_rejected:
-                    continue
-                    
-                # 2. Published Filter
-                if not include_published and is_published:
+                if stage == Stage.TRASH:
+                    if include_trash: should_include = True
+                elif stage == Stage.STAGED or stage == Stage.ANALYZED:
+                    should_include = True  # Always show staged and analyzed
+                elif stage == Stage.INBOX:
+                    if include_unanalyzed: should_include = True
+                
+                # Published filter: if include_published is False, exclude published items
+                if is_published and not include_published:
+                    should_include = False
+                
+                if not should_include:
                     continue
 
-                # [NEW] 3. 시간 범위 필터링 (Inspector와 동기화)
-                if cutoff_time:
-                    crawled_at_str = data.get('crawled_at') or data.get('cached_at') or data.get('saved_at')
-                    if crawled_at_str:
-                        try:
-                            crawled_at = datetime.fromisoformat(crawled_at_str.replace('Z', '+00:00'))
-                            if crawled_at.tzinfo is None:
-                                crawled_at = crawled_at.replace(tzinfo=timezone.utc)
-                            if crawled_at < cutoff_time:
-                                continue  # 시간 범위 밖
-                        except:
-                            pass  # 파싱 실패 시 포함
+                # [MOVED] 3. Time Filter moved to top of loop
 
                 articles.append({
                     'filename': filename,
@@ -183,7 +186,8 @@ def desk_list():
             'date': date_str,
             'articles': articles,
             'total': len(articles),
-            'unanalyzed_count': unanalyzed_count
+            'stats': stats, # [NEW]
+            'unanalyzed_count': stats['unanalyzed'] # Backward compatibility
         })
     except Exception as e:
         print(f"❌ [Staging List] Error: {e}")

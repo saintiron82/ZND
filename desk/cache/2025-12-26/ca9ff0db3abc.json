@@ -1,12 +1,227 @@
 {
-  "title": "A Zelda puzzle proves AI models can crack gaming riddles that require thinking six moves ahead",
-  "description": "Current reasoning models can solve a complex color-changing puzzle from a Zelda game, an interesting real-world example of how far the problem-solving capabilities of modern language models have come.",
-  "image": "https://the-decoder.com/wp-content/uploads/2025/12/zelda_riddle_illustration.jpeg",
-  "text": "Ask about this article… Search Current reasoning models can solve a complex color-changing puzzle from a Zelda game, an interesting real-world example of how far the problem-solving capabilities of modern language models have come. A video game puzzle offers an unusual way to test the advanced reasoning capabilities of language models. The puzzle from a Zelda game follows a simple rule: hitting a blue or red object causes all adjacent objects to flip to the opposite color. The goal is to turn every object blue. I gave Google Gemini 3 a screenshot of this puzzle, and the model actually solved it. Despite strong results on the visual puzzle benchmark ARC-AGI, I wasn't expecting this—planning six moves ahead \"in your head\" isn't trivial. Here's the correct solution, starting with the top-left position: Ad Column 1 Column 2 Column 3 X X X X X X Since the model had no internet access during my tests and I had already changed the puzzle's starting state, the solution almost certainly came from the model's own reasoning rather than some external source. Ad DEC_D_Incontent-1 I ran the puzzle multiple times with different prompts. The results revealed clear differences between models: Gemini 3 Pro found the correct solution most of the time but sometimes needed extremely long trial-and-error processes, up to 42 pages in some cases. GPT-5.2-Thinking always solved the puzzle correctly, reliably, and quickly in repeated tests. Claude Opus 4.5 failed at first, the system struggled to interpret the image correctly. After additional prompts explaining the image, it used a mathematical equation to calculate the correct solution. Ad Here's the prompt I tested with all models: You are shown an image containing red and blue orbs. The puzzle concerns only the orbs - ignore any tiles or background elements. Rules: * Clicking an orb toggles its color and the color of any orb directly adjacent to it (up, down, left, or right only - diagonals do NOT count). * There are exactly two colors: red and blue. Goal: Find the correct sequence of clicks that results in all orbs being blue. Return the answer as an ordered list of orbs to click. Gemini 3 Pro also solved another version of this puzzle type with three colors on the first try. In that case, though, I hadn't manipulated the puzzle yet, and the solution was available online. Ad DEC_D_Incontent-2 Agentic AI could make human-written game guides obsolete Taking this capability further and combining it with AI's growing ability to play video games autonomously, human-written game walkthroughs could soon become unnecessary. Ad Nvidia's NitroGen offers one example of this approach: an AI agent plays through a game and documents every action. It then passes the collected information, including screenshots, to a walkthrough writer that uses it to create documentation. If that works, the same principle should apply easily to other software that needs documentation.",
-  "published_at": "2025-12-24T11:35:26+00:00",
-  "url": "https://the-decoder.com/a-zelda-puzzle-proves-ai-models-can-crack-gaming-riddles-that-require-thinking-six-moves-ahead/",
-  "source_id": "the_decoder",
   "article_id": "ca9ff0db3abc",
   "cached_at": "2025-12-25T15:53:14.856345+00:00",
-  "updated_at": "2025-12-25T15:53:14.856345+00:00"
+  "description": "Current reasoning models can solve a complex color-changing puzzle from a Zelda game, an interesting real-world example of how far the problem-solving capabilities of modern language models have come.",
+  "image": "https://the-decoder.com/wp-content/uploads/2025/12/zelda_riddle_illustration.jpeg",
+  "published_at": "2025-12-24T11:35:26+00:00",
+  "source_id": "the_decoder",
+  "text": "Ask about this article… Search Current reasoning models can solve a complex color-changing puzzle from a Zelda game, an interesting real-world example of how far the problem-solving capabilities of modern language models have come. A video game puzzle offers an unusual way to test the advanced reasoning capabilities of language models. The puzzle from a Zelda game follows a simple rule: hitting a blue or red object causes all adjacent objects to flip to the opposite color. The goal is to turn every object blue. I gave Google Gemini 3 a screenshot of this puzzle, and the model actually solved it. Despite strong results on the visual puzzle benchmark ARC-AGI, I wasn't expecting this—planning six moves ahead \"in your head\" isn't trivial. Here's the correct solution, starting with the top-left position: Ad Column 1 Column 2 Column 3 X X X X X X Since the model had no internet access during my tests and I had already changed the puzzle's starting state, the solution almost certainly came from the model's own reasoning rather than some external source. Ad DEC_D_Incontent-1 I ran the puzzle multiple times with different prompts. The results revealed clear differences between models: Gemini 3 Pro found the correct solution most of the time but sometimes needed extremely long trial-and-error processes, up to 42 pages in some cases. GPT-5.2-Thinking always solved the puzzle correctly, reliably, and quickly in repeated tests. Claude Opus 4.5 failed at first, the system struggled to interpret the image correctly. After additional prompts explaining the image, it used a mathematical equation to calculate the correct solution. Ad Here's the prompt I tested with all models: You are shown an image containing red and blue orbs. The puzzle concerns only the orbs - ignore any tiles or background elements. Rules: * Clicking an orb toggles its color and the color of any orb directly adjacent to it (up, down, left, or right only - diagonals do NOT count). * There are exactly two colors: red and blue. Goal: Find the correct sequence of clicks that results in all orbs being blue. Return the answer as an ordered list of orbs to click. Gemini 3 Pro also solved another version of this puzzle type with three colors on the first try. In that case, though, I hadn't manipulated the puzzle yet, and the solution was available online. Ad DEC_D_Incontent-2 Agentic AI could make human-written game guides obsolete Taking this capability further and combining it with AI's growing ability to play video games autonomously, human-written game walkthroughs could soon become unnecessary. Ad Nvidia's NitroGen offers one example of this approach: an AI agent plays through a game and documents every action. It then passes the collected information, including screenshots, to a walkthrough writer that uses it to create documentation. If that works, the same principle should apply easily to other software that needs documentation.",
+  "title": "A Zelda puzzle proves AI models can crack gaming riddles that require thinking six moves ahead",
+  "updated_at": "2025-12-26T06:23:21.899611+00:00",
+  "url": "https://the-decoder.com/a-zelda-puzzle-proves-ai-models-can-crack-gaming-riddles-that-require-thinking-six-moves-ahead/",
+  "title_ko": "Google Gemini 3, 복잡한 '젤다의 전설' 퍼즐 해결… 추론 능력 입증",
+  "summary": "Google의 Gemini 3 모델이 젤다의 전설 게임 내 색상 변경 퍼즐을 시각적 정보만으로 해결함. 이는 6단계 앞을 내다보는 추론 능력이 필요한 과제로, GPT-5.2 등 타 모델과의 비교 테스트에서도 우수한 성과를 보임.",
+  "tags": [],
+  "impact_score": 4.0,
+  "IS_Analysis": {
+    "Score_Commentary": "Tier 1(Google) 모델의 성능 시연(Corporate Scope). 기술적 검증(Validation) 단계이며 시장 파급력보다는 모델의 추론 능력 과시에 가까움. X=1, Y=2 조합으로 IE Scope 점수는 낮음.",
+    "Calculations": {
+      "IW_Analysis": {
+        "Inputs": {
+          "Pe_Selection_Rule": "P4",
+          "Pe_Entity_Name": "Google",
+          "Pe_Tier": 1,
+          "Se_Entity_Name": "None",
+          "Se_Tier": 0,
+          "PE_SE_Reasoning": "모델(Gemini 3)의 개발사이자 주체인 Google을 P4로 선정. 비교 대상 모델들은 일방적 비교이므로 SE 제외."
+        },
+        "Tier_Score": 3,
+        "Gap_Score": 0,
+        "IW_Score": 3
+      },
+      "IE_Analysis": {
+        "Inputs": {
+          "X_Magnitude_Code": 1,
+          "Y_Evidence_Code": 2,
+          "Scope_Matrix_Score": 0,
+          "Criticality_C1_Provenness": 1,
+          "Criticality_C2_Societal_Weight": 0,
+          "Criticality_Total": 1,
+          "SOTA_Check_Result": "True"
+        },
+        "IE_Score": 1
+      }
+    }
+  },
+  "zero_echo_score": 7.0,
+  "ZES_Raw_Metrics": {
+    "Signal": {
+      "T1": 5,
+      "T2": 7,
+      "T3": 5,
+      "Rationale": "실험 조건과 모델별 결과 비교가 구체적임."
+    },
+    "Noise": {
+      "P1": 2,
+      "P2": 0,
+      "P3": 0,
+      "Rationale": "개인적인 테스트 결과에 기반함."
+    },
+    "Utility": {
+      "V1": 3,
+      "V2": 5,
+      "V3": 4,
+      "Rationale": "흥미로운 사례이나 산업적 즉시 효용은 제한적."
+    },
+    "Fine_Adjustment": {
+      "Score": 0,
+      "Reason": "보정 없음."
+    }
+  },
+  "schema_version": "V1.0",
+  "raw_analysis": {
+    "Article_ID": "ca9ff0db3abc",
+    "Meta": {
+      "Specification_Version": "v 1.0.0",
+      "Headline": "Google Gemini 3, 복잡한 '젤다의 전설' 퍼즐 해결… 추론 능력 입증",
+      "Summary": "Google의 Gemini 3 모델이 젤다의 전설 게임 내 색상 변경 퍼즐을 시각적 정보만으로 해결함. 이는 6단계 앞을 내다보는 추론 능력이 필요한 과제로, GPT-5.2 등 타 모델과의 비교 테스트에서도 우수한 성과를 보임.",
+      "Tags": [
+        "Gemini",
+        "Model",
+        "Vision"
+      ]
+    },
+    "IS_Analysis": {
+      "Score_Commentary": "Tier 1(Google) 모델의 성능 시연(Corporate Scope). 기술적 검증(Validation) 단계이며 시장 파급력보다는 모델의 추론 능력 과시에 가까움. X=1, Y=2 조합으로 IE Scope 점수는 낮음.",
+      "Calculations": {
+        "IW_Analysis": {
+          "Inputs": {
+            "Pe_Selection_Rule": "P4",
+            "Pe_Entity_Name": "Google",
+            "Pe_Tier": 1,
+            "Se_Entity_Name": "None",
+            "Se_Tier": 0,
+            "PE_SE_Reasoning": "모델(Gemini 3)의 개발사이자 주체인 Google을 P4로 선정. 비교 대상 모델들은 일방적 비교이므로 SE 제외."
+          },
+          "Tier_Score": 3,
+          "Gap_Score": 0,
+          "IW_Score": 3
+        },
+        "IE_Analysis": {
+          "Inputs": {
+            "X_Magnitude_Code": 1,
+            "Y_Evidence_Code": 2,
+            "Scope_Matrix_Score": 0,
+            "Criticality_C1_Provenness": 1,
+            "Criticality_C2_Societal_Weight": 0,
+            "Criticality_Total": 1,
+            "SOTA_Check_Result": "True"
+          },
+          "IE_Score": 1
+        }
+      }
+    },
+    "ZES_Raw_Metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "실험 조건과 모델별 결과 비교가 구체적임."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 0,
+        "P3": 0,
+        "Rationale": "개인적인 테스트 결과에 기반함."
+      },
+      "Utility": {
+        "V1": 3,
+        "V2": 5,
+        "V3": 4,
+        "Rationale": "흥미로운 사례이나 산업적 즉시 효용은 제한적."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "original_title": "A Zelda puzzle proves AI models can crack gaming riddles that require thinking six moves ahead",
+  "evidence": {
+    "breakdown": {
+      "Signal": {
+        "T1": 5.0,
+        "T2": 7.0,
+        "T3": 5.0,
+        "S_Avg": 5.67
+      },
+      "Noise": {
+        "P1": 2.0,
+        "P2": 0.0,
+        "P3": 0.0,
+        "N_Avg": 0.67
+      },
+      "Utility": {
+        "V1": 3.0,
+        "V2": 5.0,
+        "V3": 4.0,
+        "U_Avg": 4.0
+      },
+      "Fine_Adjustment": 0.0,
+      "ZS_Raw": 7.0,
+      "ZS_Final": 7.0
+    },
+    "raw_metrics": {
+      "Signal": {
+        "T1": 5,
+        "T2": 7,
+        "T3": 5,
+        "Rationale": "실험 조건과 모델별 결과 비교가 구체적임."
+      },
+      "Noise": {
+        "P1": 2,
+        "P2": 0,
+        "P3": 0,
+        "Rationale": "개인적인 테스트 결과에 기반함."
+      },
+      "Utility": {
+        "V1": 3,
+        "V2": 5,
+        "V3": 4,
+        "Rationale": "흥미로운 사례이나 산업적 즉시 효용은 제한적."
+      },
+      "Fine_Adjustment": {
+        "Score": 0,
+        "Reason": "보정 없음."
+      }
+    }
+  },
+  "impact_evidence": {
+    "calculations": {
+      "IW_Analysis": {
+        "Tier_Score": 3.0,
+        "Gap_Score": 0.0,
+        "IW_Total": 3.0
+      },
+      "IE_Analysis": {
+        "Scope_Total": 0.0,
+        "Criticality_Total": 1.0,
+        "IE_Total": 1.0
+      },
+      "IS_Raw": 4.0,
+      "IS_Final": 4.0,
+      "Score_Commentary": "Tier 1(Google) 모델의 성능 시연(Corporate Scope). 기술적 검증(Validation) 단계이며 시장 파급력보다는 모델의 추론 능력 과시에 가까움. X=1, Y=2 조합으로 IE Scope 점수는 낮음."
+    },
+    "raw_inputs": {
+      "Pe_Selection_Rule": "P4",
+      "Pe_Entity_Name": "Google",
+      "Pe_Tier": 1,
+      "Se_Entity_Name": "None",
+      "Se_Tier": 0,
+      "PE_SE_Reasoning": "모델(Gemini 3)의 개발사이자 주체인 Google을 P4로 선정. 비교 대상 모델들은 일방적 비교이므로 SE 제외."
+    },
+    "raw_ie_inputs": {
+      "X_Magnitude_Code": 1,
+      "Y_Evidence_Code": 2,
+      "Scope_Matrix_Score": 0,
+      "Criticality_C1_Provenness": 1,
+      "Criticality_C2_Societal_Weight": 0,
+      "Criticality_Total": 1,
+      "SOTA_Check_Result": "True"
+    }
+  },
+  "status": "reviewed",
+  "staged": true,
+  "saved": true,
+  "staged_at": "2025-12-26T06:23:21.899185+00:00"
 }

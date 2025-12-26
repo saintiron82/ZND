@@ -676,6 +676,116 @@ class HistoryStatus:
 
 
 # ==============================================================================
+# Stage Classification (Unified Pipeline)
+# ==============================================================================
+
+class Stage:
+    """
+    Unified stage values for article lifecycle.
+    All UIs (Inspector, Desk, CacheManager) use this single source of truth.
+    
+    NOTE: 'published' is NOT a stage - it's an independent flag.
+    An article can be staged + published, analyzed + published, etc.
+    """
+    INBOX = 'inbox'         # 미분석 - 수집 직후, 분석 전
+    ANALYZED = 'analyzed'   # 분석됨 - LLM 분석 완료, 분류 대기
+    STAGED = 'staged'       # 분류됨 - 분류 완료, 발행 가능
+    TRASH = 'trash'         # 휴지통 - 폐기됨
+    # PUBLISHED removed - now an independent flag
+
+
+# Statuses that indicate rejection/trash
+REJECTED_STATUSES = ['MLL_FAILED', 'INVALID', 'TRASH', 'CORRUPTED', 'SKIPPED', 'WORTHLESS', 'REJECTED']
+
+
+def get_stage(data: dict) -> str:
+    """
+    Determine the stage of an article based on its data.
+    This is the SINGLE SOURCE OF TRUTH for stage classification.
+    
+    NOTE: 'published' is checked separately, not part of stage.
+    
+    Priority order:
+    1. Explicit 'stage' field (if already set)
+    2. Derived from other fields (for backward compatibility)
+    
+    Args:
+        data: Article data dict
+        
+    Returns:
+        Stage value (inbox, analyzed, staged, trash)
+    """
+    # 1. If explicit stage is set, use it (unless it's 'published' from old data)
+    existing_stage = data.get('stage')
+    if existing_stage and existing_stage != 'published':
+        return existing_stage
+    
+    # 2. Derive from other fields (backward compatibility)
+    
+    # Check for rejection/trash
+    if data.get('rejected', False):
+        return Stage.TRASH
+    if data.get('status') in REJECTED_STATUSES:
+        return Stage.TRASH
+    
+    # Check for staged (saved/accepted) - regardless of published status
+    if data.get('saved', False) or data.get('status') == 'ACCEPTED':
+        return Stage.STAGED
+    
+    # Check for analyzed (has scores or ANALYZED status)
+    if (data.get('status') == 'ANALYZED' or
+        data.get('mll_status') == 'analyzed' or
+        data.get('impact_score') is not None or
+        data.get('zero_echo_score') is not None):
+        return Stage.ANALYZED
+    
+    # Default: inbox
+    return Stage.INBOX
+
+
+def set_stage(data: dict, stage: str) -> dict:
+    """
+    Set the stage of an article and update related fields.
+    
+    NOTE: 'published' is set separately via set_published().
+    
+    Args:
+        data: Article data dict
+        stage: Target stage value
+        
+    Returns:
+        Updated data dict
+    """
+    data['stage'] = stage
+    data['stage_updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    # Update related fields for backward compatibility
+    if stage == Stage.TRASH:
+        data['rejected'] = True
+    elif stage == Stage.STAGED:
+        data['saved'] = True
+    
+    return data
+
+
+def set_published(data: dict, published: bool = True) -> dict:
+    """
+    Set the published flag independently of stage.
+    
+    Args:
+        data: Article data dict
+        published: Whether the article is published
+        
+    Returns:
+        Updated data dict
+    """
+    data['published'] = published
+    if published:
+        data['published_at'] = datetime.now(timezone.utc).isoformat()
+    return data
+
+
+# ==============================================================================
 # Data File Naming
 # ==============================================================================
 

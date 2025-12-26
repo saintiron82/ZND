@@ -327,14 +327,14 @@
 
         <!-- 1. Group Pane -->
         <div id="pane-groups" class="pane">
-            <div class="pane-header">
-                <span>📊 분석 대상</span>
-                <div style="display:flex; gap:5px;">
-                    <button onclick="toggleViewMode()" id="btnViewMode" title="뷰 모드 변경 (New Only <-> Show All)"
-                        style="background:#17a2b8;">👁️ View: New</button>
-                    <button onclick="loadTargetList()" title="목록 새로고침">🔄 List</button>
-                    <button onclick="clearContentCache()" title="Clear Local Storage" style="background:#555;">🗑️
-                        Cache</button>
+            <div class="pane-header" style="flex-direction:column; align-items:flex-start; gap:8px;">
+                <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                    <span style="font-size:1.1em;">📊 분석 작업대</span>
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="loadTargetList()" title="목록 새로고침">🔄 Refresh</button>
+                        <button onclick="clearContentCache()" title="Clear Local Storage" style="background:#555;">🗑️
+                            Cache</button>
+                    </div>
                 </div>
             </div>
             <div class="pane-content" style="position:relative;">

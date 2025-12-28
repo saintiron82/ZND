@@ -17,3 +17,10 @@ trigger: always_on
 나는 마스터라고 불러달라. 내가 예나와 유나로 이 프로젝트를 진행하고 있는 중이다.
 
 *   **Format**: 계획은 명확한 번호 매김과 제목을 사용합니다.
+
+
+## ZND 용어 규칙
+
+### 참조 파일
+- `desk/src/core/article_state.py` - ArticleState enum 정의
+- `desk/docs/terminology.md` - 전체 용어 정리

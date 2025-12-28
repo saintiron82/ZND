@@ -23,8 +23,8 @@ if DESK_DIR not in sys.path:
 from core.logger import log_crawl_event
 from src.db_client import DBClient
 
-# Import from desk/crawler.py
-import crawler as desk_crawler
+# Import from desk/desk_crawler.py
+import desk_crawler as desk_crawler
 
 
 def collect_links() -> dict:
@@ -38,14 +38,18 @@ def collect_links() -> dict:
     db = DBClient()
     
     try:
-        targets = desk_crawler.load_targets()
+        # load_targets returns (settings, targets_list) tuple
+        settings, targets = desk_crawler.load_targets()
         all_links = []
         
         # 캐시 체크용 함수
         from src.core_logic import load_from_cache
         
         for target in targets:
+            print(f"📡 [Collect] Fetching from target: {target.get('id')} ({target.get('url')})")
             links = desk_crawler.fetch_links(target)
+            print(f"   found {len(links)} raw links")
+            
             limit = target.get('limit', 5)
             links = links[:limit]
             
@@ -54,24 +58,27 @@ def collect_links() -> dict:
             
             for link in links:
                 # 1. 히스토리 체크 (이미 처리된 것 제외: ACCEPTED, REJECTED 등)
-                if db.check_history(link):
+                is_in_history = db.check_history(link)
+                if is_in_history:
+                    # print(f"   [Skip] History: {link}")
                     skipped_history += 1
                     continue
                 
                 # 2. 캐시 체크 (이미 추출된 것 제외)
                 cached = load_from_cache(link)
                 if cached and cached.get('text'):
+                    # print(f"   [Skip] Cache: {link}")
                     skipped_cache += 1
                     continue
                 
+                print(f"   ✅ [New] Adding link: {link}")
                 all_links.append({
                     'url': link,
                     'source_id': target['id'],
                     'target_name': target.get('name', target['id'])
                 })
             
-            if skipped_history > 0 or skipped_cache > 0:
-                print(f"   ⏭️ [{target['id']}] Skip: History={skipped_history}, Cache={skipped_cache}")
+            print(f"   ⏭️ [{target['id']}] Result: Added={len(links)-skipped_history-skipped_cache}, SkipHistory={skipped_history}, SkipCache={skipped_cache}")
         
         # 중복 제거
         seen = set()

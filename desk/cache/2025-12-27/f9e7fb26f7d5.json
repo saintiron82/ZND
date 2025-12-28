@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "f9e7fb26f7d5",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-26T16:45:04.971186+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:11:18.925242+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:11:18.925242+00:00"
+  },
+  "_original": {
+    "title": "KAIST, MoE 아키텍처 보안 취약성 입증...\"전문가 모델 하나가 전체에 악영향\" - AI타임스",
+    "description": "현재 주요 대형언어모델(LLM)에 활용되는 ‘전문가 혼합(MoE)’ 아키텍처가 보안에 취약하다는 점이 지적됐다.한국과학기술원(KAIST, 총장 이광형)은 신승원",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205103_206592_80.png",
+    "text": "KAIST 연구팀이 제안한 ‘공격기술 개념도’를 AI로 생성한 이미지 (사진=KAIST) 현재 주요 대형언어모델(LLM)에 활용되는 ‘전문가 혼합(MoE)’ 아키텍처가 보안에 취약하다는 점이 지적됐다. 한국과학기술원(KAIST, 총장 이광형)은 신승원 전기및전자공학부 교수와 손수엘 전산학부 교수 공동연구팀이 세계 최초로 MoE 구조를 악용한 LLM 공격 기법을 공개한 연구로 정보보안 국제학회 ‘ACSAC 2025’에서 최우수 논문상을 수상했다고 26일 밝혔다. ACSAC는 정보보안 분야에서 영향력 있는 국제학술대회로, 올해 전체 논문 중 단 2편만이 최우수 논문으로 선정됐다. 특히, 국내 연구진이 AI 보안 분야에서 성과를 거둔 것은 이례적이라고 전했다. MoE는 거대한 모델 안에 여러개의 작은 '전문가' 모델을 두고, 입력 데이터에 가장 적합한 소수의 전문가만 선택적으로 활성화하여 처리하는 방식이다. 모델의 전체 매개변수를 늘려 지식 용량을 확장하면서도, 실제 계산 시에는 일부 전문가만 사용하기 때문에 연산량은 적게 유지해 효율성을 높이는 장점이 있다. 이 때문에 오픈AI의 GPT 계열과 구글의 '제미나이', 딥시크 등 주요 폐쇄형 및 오픈 소스 모델이 이를 채택하고 있다. 그러나 연구진은 악성 공격자가 LLM의 내부 구조에 직접 접근하지 않더라도 악의적으로 조작된 전문가 모델 하나만 오픈 소스로 유통하면, 이를 활용해 LLM 전체가 위험한 응답을 생성하도록 유도될 수 있다는 것을 입증했다. 이를 위해 ‘ 전문가 독극물 주입 공격(Expert Poisoning Attack) ’이라는 공격법을 개발했다. 전문가 모델이 유해한 출력을 선호하도록 학습하거나(Harmful Preference Learning), 라우팅 담당 모델이 유해한 전문가 모델을 선택하도록 유도하는 방법(Deceiving the Gating Networks)을 사용했다. 연구팀은 실험 과정에서 '라마'와 '큐원' 등에 공격법을 적용했으며, 강력한 결과를 냈다고 밝혔다. 연구팀의 공격은 모델의 유해 응답 발생률을 기존 0%에서 최대 80%까지 증가시킨 것으로 나타났다. 그중 라마를 활용하는 LLM은 유해성 점수(Harmfulness Score)가 0.58에서 79.42로 급증했다. 이는 기존의 공격 기법을 능가한 수치라고 강조했다. 이 방식을 통하면, 기존의 안전장치도 효과를 제대로 발휘하지 못한 것으로 나타났다. 이번 연구는 세계적으로 확산하는 오픈 소스 개발 환경에도 시사점이 크다고 전했다. 앞으로 AI 모델 개발 과정에서는 성능뿐만 아니라, 전문가 모델의 출처와 안전성 검증이 필수적일 것이라는 말이다. 신승원, 손수엘 KAIST 교수는 “효율성을 위해, 빠르게 확산 중인 MoE 구조가 새로운 보안 위협이 될 수 있음을 이번 연구를 통해 실증적으로 확인했다”라며 “이번 수상은 AI 보안의 중요성을 국제적으로 인정받은 의미 있는 성과”라고 말했다. 관련 기술은 깃허브에 오픈 소스로 공개된 상태다. 장세민 기자 semim99@aitimes.com",
+    "published_at": "2025-12-26T14:23:16+09:00",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205103",
+    "source_id": "aitimes",
+    "crawled_at": "2025-12-26T16:45:04.971186+00:00"
+  },
+  "_analysis": {
+    "title_ko": "KAIST, LLM '전문가 혼합(MoE)' 구조 보안 취약점 세계 최초 입증",
+    "summary": "KAIST 연구팀이 최신 LLM의 핵심 기술인 MoE 아키텍처의 보안 취약점을 발견했다. 악의적인 전문가 모델 하나만으로 전체 모델의 유해 응답을 유도할 수 있음을 입증하고 최우수 논문상을 수상했다.",
+    "tags": [
+      "Security",
+      "Model",
+      "Paper"
+    ],
+    "impact_score": 5.5,
+    "zero_echo_score": 4.4,
+    "analyzed_at": "2025-12-28T03:51:13.303493+00:00",
+    "mll_raw": {
+      "Article_ID": "f9e7fb26f7d5",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "KAIST, LLM '전문가 혼합(MoE)' 구조 보안 취약점 세계 최초 입증",
+        "Summary": "KAIST 연구팀이 최신 LLM의 핵심 기술인 MoE 아키텍처의 보안 취약점을 발견했다. 악의적인 전문가 모델 하나만으로 전체 모델의 유해 응답을 유도할 수 있음을 입증하고 최우수 논문상을 수상했다.",
+        "Tags": [
+          "Security",
+          "Model",
+          "Paper"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "MoE 아키텍처를 사용하는 모든 LLM(GPT-4, Gemini 등)에 영향을 미치는 산업적 발견(X3). PoC 단계(Y2)이나 보안/안전(Safety)과 직결되는 중요한 연구.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "KAIST",
+              "Pe_Tier": 3,
+              "Se_Entity_Name": "Google",
+              "Se_Tier": 1,
+              "PE/SE 선정이유": "연구 수행 및 발표 주체인 KAIST(Academic T3)를 PE로 선정. 해당 취약점의 영향을 받는 대표적 MoE 모델 보유사인 구글(Gemini 언급됨, Soft T1)을 잠재적 피해자/관련자로 SE 선정."
+            },
+            "Tier_Score": 1,
+            "Gap_Score": 0.5,
+            "IW_Score": 1.5
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 3,
+              "Y_Evidence_Code": 2,
+              "Scope_Matrix_Score": 2,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 1,
+              "Criticality_Total": 2,
+              "SOTA_Check_Result": "True"
+            },
+            "IE_Score": 4
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 7,
+          "T2": 8,
+          "T3": 6,
+          "Rationale": "공격 기법(전문가 독극물 주입)과 실험 결과(유해성 점수 변화)가 구체적임."
+        },
+        "Noise": {
+          "P1": 1,
+          "P2": 2,
+          "P3": 0,
+          "Rationale": "연구 성과 중심의 객관적 서술."
+        },
+        "Utility": {
+          "V1": 6,
+          "V2": 5,
+          "V3": 8,
+          "Rationale": "오픈소스 모델 보안에 대한 경각심과 대응책 필요성을 환기."
+        },
+        "Fine_Adjustment": {
+          "Score": 0.5,
+          "Reason": "보안 취약점에 대한 구체적 입증과 학술적 가치 반영."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "AI/ML",
+    "is_selected": true,
+    "classified_at": "2025-12-28T03:53:15.593958+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:07:12.111439+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

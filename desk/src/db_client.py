@@ -27,6 +27,24 @@ class DBClient:
         service_account_key = os.path.join(base_dir, key_filename)
         
         if not os.path.exists(service_account_key):
+            # [Fix] Fallback to zeroechodaily-serviceAccountKey.json
+            fallback_key = os.path.join(base_dir, 'zeroechodaily-serviceAccountKey.json')
+            if os.path.exists(fallback_key):
+                service_account_key = fallback_key
+                print(f"⚠️ [DB] Using fallback key: {service_account_key}")
+                
+                # Update credential with found key
+                try:
+                    cred = credentials.Certificate(service_account_key)
+                    try:
+                        firebase_admin.get_app()
+                    except ValueError:
+                        firebase_admin.initialize_app(cred)
+                    return firestore.client()
+                except Exception as e:
+                    print(f"❌ Firebase Init Failed with fallback: {e}")
+                    return None
+            
             print(f"⚠️ {service_account_key} not found. DB operations will be skipped.")
             return None
         
@@ -152,8 +170,8 @@ class DBClient:
             entry = self.history[url]
             status = entry.get('status')
             
-            # 영구 차단 상태
-            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS', 'MLL_FAILED']:
+            # 영구 차단 상태 (ANALYZED 포함)
+            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS', 'MLL_FAILED', 'ANALYZED']:
                 return True
             
             # EXTRACT_FAILED: 24시간 후 재시도 허용
@@ -206,7 +224,9 @@ class DBClient:
             print(f"⚠️ [History] URL not found in history: {url[:50]}...")
 
     def save_article(self, article_data):
+        """기사 저장 - Firestore 우선, 로컬 저장 제거"""
         from datetime import datetime, timezone
+        import hashlib
         
         # Ensure crawled_at is set
         crawled_at = article_data.get('crawled_at')
@@ -221,366 +241,78 @@ class DBClient:
             crawled_at_dt = datetime.now(timezone.utc)
             article_data['crawled_at'] = crawled_at_dt.isoformat()
 
-        # 1. Save to individual file AND get sanitized data
-        article_data['status'] = 'ACCEPTED'
-        publish_data = self._save_to_individual_file(article_data)
-        
-        # 2. Firestore 저장은 발행(publish) 시에만 수행 (비용 절감)
-        # 개별 기사 저장 시에는 로컬 파일만 저장
-
-        # 3. Update history as ACCEPTED
-        if 'url' in article_data:
-            self.save_history(article_data['url'], 'ACCEPTED', reason='high_score')
-
-    def _save_to_individual_file(self, article_data):
-        import json
-        import hashlib
-        from datetime import datetime, timezone
-        
-        # Ensure crawled_at is a datetime object or string
-        crawled_at = article_data.get('crawled_at')
-        if isinstance(crawled_at, str):
-            try:
-                crawled_at_dt = datetime.fromisoformat(crawled_at)
-            except ValueError:
-                crawled_at_dt = datetime.now(timezone.utc)
-        elif isinstance(crawled_at, datetime):
-            crawled_at_dt = crawled_at
-        else:
-            crawled_at_dt = datetime.now(timezone.utc)
-        
-        # Format: data/YYYY-MM-DD/{source_id}_{hash}.json (simplified)
-        date_str = crawled_at_dt.strftime('%Y-%m-%d')
-        
-        # Create directory: data/YYYY-MM-DD
-        data_dir = self._get_data_dir()
-        dir_path = os.path.join(data_dir, date_str)
-        os.makedirs(dir_path, exist_ok=True)
-        
-        # Generate hash for uniqueness (using URL)
+        # Generate article_id from URL
         url = article_data.get('url', '')
-        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
-        source_id = article_data.get('source_id') or 'unknown'  # Handle empty string too
+        article_id = article_data.get('article_id') or hashlib.md5(url.encode()).hexdigest()[:12]
+        now = datetime.now(timezone.utc).isoformat()
         
-        # Simplified filename: source_id_hash.json
-        filename = f"{source_id}_{url_hash}.json"
-        file_path = os.path.join(dir_path, filename)
-        
-        # Convert datetime objects to string for JSON serialization
-        if isinstance(article_data.get('crawled_at'), datetime):
-            article_data['crawled_at'] = article_data['crawled_at'].isoformat()
-            
-        # 발행용 필수 필드만 추출 (간결한 데이터 파일)
-        article_id = article_data.get('article_id', url_hash)
-        publish_fields = {
-            'id': article_id,  # WEB에서 id로 참조
-            'article_id': article_id,
-            'title_ko': article_data.get('title_ko') or article_data.get('title', ''),
-            'summary': article_data.get('summary', ''),
-            'url': article_data.get('url', ''),
-            'tags': article_data.get('tags', []),
-            'category': article_data.get('category', ''),
-            'zero_echo_score': article_data.get('zero_echo_score', 0),
-            'impact_score': article_data.get('impact_score', 0),
-            'published_at': article_data.get('published_at') or article_data.get('crawled_at', ''),
-            'source_id': source_id,
-            'original_title': article_data.get('original_title', ''),
-            'publish_id': article_data.get('publish_id', ''),
-            'edition_code': article_data.get('edition_code', ''),
-            'edition_name': article_data.get('edition_name', '')
+        # V2 Schema 변환
+        v2_article = {
+            '_header': {
+                'version': '2.0',
+                'article_id': article_id,
+                'state': 'ANALYZED',  # 저장 시 ANALYZED 상태
+                'created_at': article_data.get('crawled_at', now),
+                'updated_at': now,
+                'state_history': [
+                    {'state': 'COLLECTED', 'at': article_data.get('crawled_at', now), 'by': 'crawler'},
+                    {'state': 'ANALYZED', 'at': now, 'by': 'pipeline'}
+                ]
+            },
+            '_original': {
+                'url': url,
+                'title': article_data.get('original_title') or article_data.get('title', ''),
+                'text': article_data.get('text', '')[:5000],  # 텍스트 제한
+                'image': article_data.get('image'),
+                'source_id': article_data.get('source_id', 'unknown'),
+                'crawled_at': article_data.get('crawled_at', now),
+                'published_at': article_data.get('published_at')
+            },
+            '_analysis': {
+                'title_ko': article_data.get('title_ko') or article_data.get('title', ''),
+                'summary': article_data.get('summary', ''),
+                'tags': article_data.get('tags', []),
+                'impact_score': float(article_data.get('impact_score', 0) or 0),
+                'zero_echo_score': float(article_data.get('zero_echo_score', 0) or 0),
+                'analyzed_at': now,
+                'mll_raw': article_data.get('raw_analysis')
+            },
+            '_classification': None,
+            '_publication': None
         }
         
+        # Firestore 저장
         try:
-            with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(publish_fields, f, ensure_ascii=False, indent=2)
-            print(f"💾 Saved to {file_path}: {publish_fields.get('title_ko')}")
-            return publish_fields
+            self._get_collection('articles').document(article_id).set(v2_article, merge=True)
+            self._track_write()
+            print(f"✅ [Firestore] Saved article: {article_id}")
         except Exception as e:
-            print(f"❌ Error saving file: {e}")
-            return None
+            print(f"❌ [Firestore] Save failed: {e}")
+
+        # Update history as ANALYZED
+        if url:
+            self.save_history(url, 'ANALYZED', reason='mll_complete')
 
 
-    def find_article_by_url(self, url):
-        """
-        Attempts to find a saved JSON article file for the given URL.
-        Uses the same hash logic as _save_to_individual_file to predict filename.
-        """
-        import hashlib
-        import glob
-        import json
-        
-        # 1. Calculate Expected Hash
-        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
-        
-        # 2. Search pattern: data/YYYY-MM-DD/*_{hash}.json
-        search_pattern = os.path.join(self._get_data_dir(), "**", f"*_{url_hash}.json")
-        
-        files = glob.glob(search_pattern, recursive=True)
-        
-        if not files:
-            return None
-            
-        # If multiple files exist (duplicates?), return the latest one
-        # Sort by modification time
-        files.sort(key=os.path.getmtime, reverse=True)
-        latest_file = files[0]
-        
-        print(f"🔎 Found existing file for URL: {latest_file}")
-        
-        try:
-            with open(latest_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"⚠️ Error reading existing file {latest_file}: {e}")
-            return None
 
-    def inject_correction_with_backup(self, article_data, url):
-        """
-        Overwrites an existing file with new data, but first backs up the original
-        into a 'Back' subfolder.
-        """
-        import hashlib
-        import glob
-        import json
-        from datetime import datetime
-        import shutil
-        
-        # 1. Find the existing file
-        url_hash = hashlib.md5(url.encode('utf-8')).hexdigest()[:12]
-        search_pattern = os.path.join(self._get_data_dir(), "**", f"*_{url_hash}.json")
-        files = glob.glob(search_pattern, recursive=True)
-        
-        if not files:
-            # Fallback: If original not found, just save as new file
-            print(f"⚠️ [Inject] Original not found for {url}, saving as new.")
-            self._save_to_individual_file(article_data)
-            
-            # [Fix] Update History for new file too
-            if url:
-                self.save_history(url, 'ACCEPTED', reason='manual_correction_new')
-                
-            return True, "Created new file (Original not found)"
-            
-        # Use the most recent one
-        files.sort(key=os.path.getmtime, reverse=True)
-        target_file = files[0] # This is the EXISTING file (e.g. in 2025-12-09)
-        
-        # [NEW LOGIC] Check if we should move it to TODAY's folder?
-        # Since we updated crawled_at to NOW in manual_crawler.py, _save_to_individual_file 
-        # will target TODAY's folder.
-        # So we should Backup the OLD file, and then call _save_to_individual_file (which creates NEW file strings).
-        # We should NOT overwrite target_file if it's in a different folder.
-        
-        current_date_str = datetime.now().strftime('%Y-%m-%d')
-        existing_date_dir = os.path.basename(os.path.dirname(target_file))
-        
-        # 2. Prepare Backup
-        target_dir = os.path.dirname(target_file)
-        back_dir = os.path.join(target_dir, "Back")
-        os.makedirs(back_dir, exist_ok=True)
-        
-        filename = os.path.basename(target_file)
-        backup_filename = f"BACKUP_{int(datetime.now().timestamp())}_{filename}"
-        backup_path = os.path.join(back_dir, backup_filename)
-        
-        try:
-            # Move/Copy logic
-            shutil.copy2(target_file, backup_path)
-            print(f"📦 [Backup] Original saved to: {backup_path}")
-            
-            # 3. Save New Data:
-            # If the dates are different (e.g. Old=2025-12-09, New=2025-12-10 via crawled_at)
-            # We should probably SAVE AS NEW FILE in the new directory.
-            # And maybe LEAVE the old file as artifact? Or delete it?
-            # User wants "Run Date Basis". So let's create a NEW file in the NEW directory.
-            # We already backed up the old one.
-            
-            # Actually, just calling _save_to_individual_file(article_data) will do exactly what we want:
-            # It generates path based on article_data['crawled_at'] (which is NOW).
-            # So if that path is diff from target_file, we get a new file.
-            
-            self._save_to_individual_file(article_data)
-            
-            # 4. Update History
-            if url:
-                self.save_history(url, 'ACCEPTED', reason='manual_correction')
-                
-            # SPECIAL: If we saved to a NEW location, should we delete the old file to avoid dupes?
-            # Or keep it as history?
-            # Usually keep it, but it might confuse the crawler if it finds multiple.
-            # find_article_by_url looks for ALL matches and takes latest.
-            # So having 2 files (09 and 10) is fine, the 10 will be latest.
-            
-            return True, f"Injected into current date folder. Backup at {backup_filename}"
-            
-        except Exception as e:
-            return False, f"Backup/Write failed: {str(e)}"
+
+
+
+
 
     # ============================================
     # Firestore CRUD Operations
     # ============================================
     
-    def get_article(self, doc_id):
-        """
-        Firestore에서 특정 문서 조회
-        Returns: dict (article data) or None
-        """
-        if not self.db:
-            print("⚠️ [Firestore] DB not connected")
-            return None
-            
-        try:
-            doc = self._get_collection('articles').document(doc_id).get()
-            self._track_read()  # 통계 추적
-            if doc.exists:
-                data = doc.to_dict()
-                data['id'] = doc.id  # 문서 ID 포함
-                return data
-            else:
-                print(f"⚠️ [Firestore] Document not found: {doc_id}")
-                return None
-        except Exception as e:
-            print(f"❌ [Firestore] Get Failed: {e}")
-            return None
+
     
-    def get_article_by_url(self, url):
-        """
-        URL로 Firestore 문서 조회
-        Returns: dict (article data with id) or None
-        """
-        if not self.db:
-            print("⚠️ [Firestore] DB not connected")
-            return None
-            
-        try:
-            docs = self._get_collection('articles').where('url', '==', url).limit(1).stream()
-            for doc in docs:
-                data = doc.to_dict()
-                data['id'] = doc.id
-                return data
-            return None
-        except Exception as e:
-            print(f"❌ [Firestore] Query Failed: {e}")
-            return None
-    
-    def update_article(self, doc_id, update_data):
-        """
-        Firestore 문서 수정
-        Args:
-            doc_id: 문서 ID
-            update_data: 업데이트할 필드 딕셔너리
-        Returns: (bool success, str message)
-        """
-        if not self.db:
-            return False, "DB not connected"
-            
-        try:
-            from datetime import datetime, timezone
-            update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
-            
-            self._get_collection('articles').document(doc_id).update(update_data)
-            self._track_write()  # 통계 추적
-            print(f"✏️ [Firestore] Updated: {doc_id}")
-            return True, f"Updated document: {doc_id}"
-        except Exception as e:
-            print(f"❌ [Firestore] Update Failed: {e}")
-            return False, str(e)
-    
-    def delete_article(self, doc_id):
-        """
-        Firestore 문서 삭제
-        Args:
-            doc_id: 삭제할 문서 ID
-        Returns: (bool success, str message)
-        """
-        if not self.db:
-            return False, "DB not connected"
-            
-        try:
-            self._get_collection('articles').document(doc_id).delete()
-            self._track_delete()  # 통계 추적
-            print(f"🗑️ [Firestore] Deleted: {doc_id}")
-            return True, f"Deleted document: {doc_id}"
-        except Exception as e:
-            print(f"❌ [Firestore] Delete Failed: {e}")
-            return False, str(e)
-    
-    def list_articles(self, limit=50, order_by='crawled_at', descending=True):
-        """
-        Firestore에서 기사 목록 조회
-        Args:
-            limit: 최대 조회 개수
-            order_by: 정렬 기준 필드
-            descending: 내림차순 여부
-        Returns: list of dicts
-        """
-        if not self.db:
-            print("⚠️ [Firestore] DB not connected")
-            return []
-            
-        try:
-            from google.cloud.firestore_v1 import Query
-            
-            query = self._get_collection('articles')
-            
-            if descending:
-                query = query.order_by(order_by, direction=Query.DESCENDING)
-            else:
-                query = query.order_by(order_by)
-                
-            query = query.limit(limit)
-            
-            articles = []
-            for doc in query.stream():
-                data = doc.to_dict()
-                data['id'] = doc.id
-                articles.append(data)
-                
-            print(f"📋 [Firestore] Listed {len(articles)} articles")
-            return articles
-        except Exception as e:
-            print(f"❌ [Firestore] List Failed: {e}")
-            return []
-    
-    def list_articles_by_date(self, date_str):
-        """
-        특정 날짜의 기사 목록 조회
-        Args:
-            date_str: 'YYYY-MM-DD' 형식
-        Returns: list of dicts
-        """
-        if not self.db:
-            print("⚠️ [Firestore] DB not connected")
-            return []
-            
-        try:
-            # edition_code 필드가 'YYMMDD_'로 시작하는 것으로 필터링
-            yy = date_str[2:4]
-            mm = date_str[5:7]
-            dd = date_str[8:10]
-            edition_prefix = f"{yy}{mm}{dd}_"
-            
-            docs = self._get_collection('articles')\
-                .where('edition_code', '>=', edition_prefix)\
-                .where('edition_code', '<', edition_prefix + 'z')\
-                .stream()
-            
-            articles = []
-            for doc in docs:
-                data = doc.to_dict()
-                data['id'] = doc.id
-                articles.append(data)
-                
-            print(f"📅 [Firestore] Found {len(articles)} articles for {date_str}")
-            return articles
-        except Exception as e:
-            print(f"❌ [Firestore] Date Query Failed: {e}")
-            return []
+
 
     
     # ============================================
     # Publication History Operations (New)
     # ============================================
+
 
     def create_publication_record(self, summary_data):
         """

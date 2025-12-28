@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "d37f54f2a08e",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-26T16:45:17.173692+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:11:01.278257+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:11:01.278257+00:00"
+  },
+  "_original": {
+    "title": "HTC, 원하는 모델 골라 탑재하는 '개방형' AI 안경 출시 - AI타임스",
+    "description": "대만 HTC가 급성장하는 스마트 안경 시장에서 ‘오픈 플랫폼’ 전략을 내세웠다. 원하는 모델을 안경에서 사용할 수 있도록 했다.HTC는 22일 특정 AI에 종속되",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205116_206608_2713.jpg",
+    "text": "대만 HTC가 급성장하는 스마트 안경 시장에서 ‘오픈 플랫폼’ 전략을 내세웠다. 원하는 모델을 안경에서 사용할 수 있도록 했다. HTC는 22일 특정 AI에 종속되지 않고 다양한 대형언어모델(LLM)을 선택해 사용할 수 있는 AI 스마트 안경을 출시했다. 단일 AI 중심의 폐쇄형 생태계를 구축하는 경쟁사들과 차별화를 위한 것이라는 설명이다. 찰스 황 HTC 글로벌 세일즈·마케팅 수석 부사장은 “AI는 매우 빠르게 발전하고 있고, LLM 개발사들은 막대한 자원이 필요한 군비 경쟁을 벌이고 있다”라며 “하나의 닫힌 생태계를 만드는 대신 각 플랫폼의 강점을 활용하는 전략을 택했다”라고 말했다. HTC가 출시한 ‘바이브 이글(VIVE Eagle)’ 스마트 안경은 구글의 '제미나이'와 오픈AI 모델 등 복수의 AI 플랫폼을 지원한다. 휴대폰에 제미나이와 같은 AI 앱을 설치하고, 이를 안경과 페어링하는 방식이다. 이를 통해 사용자는 특정 기업의 AI에 묶이지 않고, 각 모델의 성능 개선 혜택을 동시에 누릴 수 있다는 설명이다. 반면, 메타의 스마트 안경은 '메타 AI'를 중심으로 설계돼 있으며, 샤오미·알리바바 등 중국 업체들의 스마트 안경도 자체 모델을 기반으로 한다. 바이브 이글은 이달 초 홍콩에서 약 3988홍콩달러(약 73만원)에 출시됐다. HTC는 내년 1분기 일본과 동남아 시장으로 판매를 확대하고, 2026년 이후 유럽과 미국 진출을 계획하고 있다. 아시아 시장을 먼저 공략한 배경에 대해 황 부사장은 “시중의 많은 스마트 안경이 서구권 얼굴형에 맞춰 설계돼 아시아 사용자에게는 불편할 수 있다”라며 동양인에 맞춘 디자인라는 점을 강조했다. 하지만, 중국 시장 진출 가능성에 대해서는 신중한 입장이다. 황 부사장은 “중국은 해외 AI 서비스에 대한 제한이 있고, 데이터 규제로 인해 현지 서버를 요구하는 등 시장 구조가 복잡하다”라며 “준비에 시간이 필요하다”라고 말했다. 시장조사 전문 카운터포인트에 따르면, 올해 상반기 글로벌 스마트안경 출하량은 전년 대비 110% 급증했다. 메타가 73%의 점유율로 시장을 주도하고 있다. 2023년 출시된 메타와 에실로룩소티카의 레이밴·오클리 스마트 안경은 통화, 사진 촬영, 음악 재생 기능으로 인기를 얻었다. 이번 바이브 AI 스마트 안경 출시는 HTC가 소비자용 하드웨어 시장에 다시 힘을 싣는 신호로도 해석된다. HTC는 앞서 올해 초 확장현실(XR) 헤드셋과 안경 사업 일부를 2억5000만달러(약 3600억원)에 구글에 매각한 바 있다. 박찬 기자 cpark@aitimes.com",
+    "published_at": "2025-12-26T18:00:00+09:00",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205116",
+    "source_id": "aitimes",
+    "crawled_at": "2025-12-26T16:45:17.173692+00:00"
+  },
+  "_analysis": {
+    "title_ko": "HTC, LLM 선택 가능한 개방형 AI 스마트 안경 '바이브 이글' 출시",
+    "summary": "대만 HTC가 특정 AI에 종속되지 않고 구글 제미나이, 오픈AI 등 다양한 LLM을 선택해 사용할 수 있는 개방형 AI 스마트 안경 '바이브 이글'을 출시했다. 이는 메타의 폐쇄형 생태계와 차별화된 전략으로, 홍콩 선출시 후 글로벌 확장을 계획 중이다.",
+    "tags": [
+      "Hardware",
+      "Launch",
+      "Model"
+    ],
+    "impact_score": 2.0,
+    "zero_echo_score": 6.1,
+    "analyzed_at": "2025-12-28T03:51:06.871370+00:00",
+    "mll_raw": {
+      "Article_ID": "d37f54f2a08e",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "HTC, LLM 선택 가능한 개방형 AI 스마트 안경 '바이브 이글' 출시",
+        "Summary": "대만 HTC가 특정 AI에 종속되지 않고 구글 제미나이, 오픈AI 등 다양한 LLM을 선택해 사용할 수 있는 개방형 AI 스마트 안경 '바이브 이글'을 출시했다. 이는 메타의 폐쇄형 생태계와 차별화된 전략으로, 홍콩 선출시 후 글로벌 확장을 계획 중이다.",
+        "Tags": [
+          "Hardware",
+          "Launch",
+          "Model"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "HTC는 전성기 대비 영향력이 축소되었으나 여전히 하드웨어 제조 역량을 보유한 기업으로 Tier 4로 유추함. X1(Corporate) 등급의 개별 제품 출시이나, Tier 4 기업의 Corporate 이벤트이므로 Hard Filter 1이 적용되어 Scope 점수는 0점 처리됨.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "HTC",
+              "Pe_Tier": 4,
+              "Se_Entity_Name": "Meta",
+              "Se_Tier": 2,
+              "PE/SE 선정이유": "HTC가 제품 출시의 실행 주체(P4)이며, 기사 내에서 경쟁사 메타(Tier 2)의 폐쇄형 정책과 명확히 대조(Rule 2)됨. HTC는 Tier Map에 없으나 '기타 하드웨어/과거 주요 기업'으로 판단하여 Tier 4 적용(GIP)."
+            },
+            "Tier_Score": 0.5,
+            "Gap_Score": 0.5,
+            "IW_Score": 1
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 1,
+              "Y_Evidence_Code": 3,
+              "Scope_Matrix_Score": 0,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 0,
+              "Criticality_Total": 1,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 1
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 6,
+          "T2": 5,
+          "T3": 5,
+          "Rationale": "가격(3988홍콩달러), 출시 일정, 지원 모델 등 구체적 정보 포함."
+        },
+        "Noise": {
+          "P1": 2,
+          "P2": 4,
+          "P3": 1,
+          "Rationale": "자사 임원의 전략적 발언 비중이 높으나 과장된 수식어는 적음."
+        },
+        "Utility": {
+          "V1": 4,
+          "V2": 8,
+          "V3": 6,
+          "Rationale": "시장 주도권은 약하나, 개방형 하드웨어라는 대안적 효용 존재."
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "표준적인 제품 출시 기사로 보정 없음."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "Engineering",
+    "is_selected": true,
+    "classified_at": "2025-12-28T03:53:17.110079+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:06:56.478082+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

@@ -1,22 +1,57 @@
-
+# Agent directories (keep these)
+!.agent/
 !.agent/rules/
 
-!.agent/
+# ===================
+# Python
+# ===================
+# 가상 환경
+venv/
+.venv/
+env/
+.env/
 supplier/venv/
+desk/venv/
+
+# 바이트 코드 캐시
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# ===================
+# Environment & Secrets
+# ===================
+.env
+desk/.env
 *serviceAccountKey*.json
+
+# ===================
+# Supplier (Python Crawler)
+# ===================
 supplier/data/
 supplier/cache/
 supplier/staging/
 supplier/*.json
 supplier/*.txt
-desk/.env
-*.pyc
-desk/venv/Lib/
-desk/venv
 
-# Next.js build output (dev cache only - production build is included)
-web/.next/dev/
-node_modules/
-
-# Desk debug logs
+# ===================
+# Desk (Flask Backend)
+# ===================
 desk/debug_*.log
+
+# ===================
+# Web (Next.js Frontend)
+# ===================
+node_modules/
+web/.next/dev/
+
+# ===================
+# IDE & OS
+# ===================
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

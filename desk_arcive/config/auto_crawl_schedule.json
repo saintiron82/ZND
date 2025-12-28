@@ -1,0 +1,36 @@
+{
+    "schedules": [
+        {
+            "id": "morning",
+            "name": "아침 수집",
+            "cron": "30 6 * * *",
+            "enabled": true,
+            "description": "매일 06:30 실행"
+        },
+        {
+            "id": "noon",
+            "name": "점심 수집",
+            "cron": "30 12 * * *",
+            "enabled": true,
+            "description": "매일 12:30 실행"
+        },
+        {
+            "id": "evening",
+            "name": "저녁 수집",
+            "cron": "30 18 * * *",
+            "enabled": true,
+            "description": "매일 18:30 실행"
+        },
+        {
+            "id": "midnight",
+            "name": "자정 수집",
+            "cron": "30 0 * * *",
+            "enabled": true,
+            "description": "매일 00:30 실행"
+        }
+    ],
+    "crawl_settings": {
+        "skip_mll_analysis": true,
+        "skip_mll_description": "자동 크롤링 시 MLL 분석 스킵 (Desk에서 수동 처리)"
+    }
+}

@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "f085741718db",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-26T16:45:36.783256+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:11:26.230945+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:11:26.230945+00:00"
+  },
+  "_original": {
+    "title": "The ARC benchmark's fall marks another casualty of relentless AI optimization",
+    "description": "For years, the ARC benchmark was considered a nearly insurmountable obstacle for AI systems, a true test of fluid intelligence rather than simple memorization. But new results show that even this barrier is crumbling under the relentless optimization machinery of modern AI labs.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/11/LLM-Optimization-Wall.webp",
+    "text": "Poetiq emphasizes that GPT-5.2 didn't receive any special training or model-specific adjustments. The company calls it a remarkable improvement in a short time, both in accuracy and cost compared to earlier models. If the pattern from previous tests holds, GPT-5.2 X-High with the Poetiq system could also perform significantly better than all previous configurations on the ARC Prize's official semi-private tests. Poetiq says the X-High variant is likely cheaper per task than the High variant because the model reaches correct answers faster. Achieving this result required tweaks to both the prompt and the code, what the company calls the \"reasoning strategy.\" The company plans to release the code soon. Poetiq has raised the bar even higher on the ARC-AGI-2 benchmark. The AI startup achieved a 75 percent accuracy rate on the public test dataset using OpenAI's GPT-5.2 X-High. That's roughly 15 percentage points above the previous best score (see below) and well beyond human level performance. The cost came in under $8 per task, significantly cheaper than before. When one observer pointed out that the approach is specific to ARC-AGI and may not transfer to real world applications, Poetiq responded that while the ARC-AGI solver is specialized, the broader Poetiq meta system behind it is designed for general use. The Poetiq solver guides the underlying model (GPT-5.2 in this case) to write code that solves each individual task. The system then runs the code, checks it for correctness, and fixes any errors. Multiple independent runs are combined to improve the reliability of the final results. Original article from November 29: For years, the ARC benchmark was considered a nearly insurmountable obstacle for AI systems, a true test of fluid intelligence rather than simple memorization. But new results show that even this barrier is crumbling under the relentless optimization machinery of modern AI labs. The \"Abstraction and Reasoning Corpus\"—later renamed ARC-AGI—was originally designed to separate true learning from statistical parroting. Now, it faces the same fate as many benchmarks before it: newer methods are simply overpowering it. New results from AI company Poetiq suggest the original ARC-AGI-1 benchmark is effectively solved. In a recent announcement, the company claims its systems, built on models like OpenAI's and Google's, have maxed out performance on the first dataset. More notably, the system reportedly beat the human average of 60 percent on the significantly harder ARC-AGI-2 dataset. Poetiq’s approach combines advanced language models, including Gemini 3 and GPT-5.1, with open-source models integrated into a custom architecture. According to Poetiq, the system operates in an iterative loop: it generates proposed solutions, evaluates feedback, and refines answers through a self-audit before finalizing the result. Specialized models turn abstraction into an optimization problem When AI researcher and Keras creator François Chollet introduced ARC in 2019, he pitched it as an antidote to the deep learning paradigm. The goal was to measure \"skill acquisition efficiency\"—how well a system learns new tasks—rather than how much data it could memorize. Researchers struggled with these colorful grid puzzles for years. While language models crushed other benchmarks, ARC success rates remained low. For some, it became the \"North Star\" of AGI research; for others, it highlighted the limitations of scaling large models. That dynamic shifted with the arrival of specialized reasoning models and techniques like Test-Time Training (TTT). A major turning point occurred in December 2024, when OpenAI's o3-preview suddenly scored over 75 percent on ARC-AGI-1. What began as a test of human-like abstraction is fast becoming an optimization target for reinforcement learning and search algorithms. Labs are now tuning their systems to master ARC's specific logic. Efficiency is improving alongside performance. According to Poetiq, its \"Poetiq (GPT-OSS-b)\" system, based on the open model GPT-OSS-120B, achieves over 40 percent accuracy on ARC-AGI-1 for less than a cent per task. The era of ARC solutions requiring massive compute appears to be ending, a trend further supported by the non-LLM \"Tiny Recursive Model.\" Performance drops suggest models are still memorizing public data These high scores currently apply only to \"public\" datasets, not the \"semi-private\" sets held back by ARC administrators. In its own analysis, Poetiq notes that many underlying LLMs perform significantly worse when switching from public evaluation sets to semi-private ones. The culprit is likely \"data contamination\": public benchmarks often end up in the training data for large models. True generalization is only proven on tasks a model has definitely never seen. Poetiq expects its own systems to see a similar performance dip on ARC-AGI-1 for this reason. However, the newer ARC-AGI-2 might be more resistant to this effect. Poetiq describes the sets as \"more tightly calibrated\" and claims its system was never trained on ARC-AGI-2 tasks, although the foundation models it uses, might be. The industry shifts focus toward test-time adaptation Chollet has watched this evolution closely. He views recent successes as evidence of a fundamental strategic shift in AI development. Describing results from reasoning models like o3 as a \"a surprising and important step-function increase in AI capabilities,\" Chollet argues that the old strategy of scaling intelligence via larger models and more data is hitting a wall with tasks like ARC. Instead, the field has entered the era of test-time adaptation. Models are no longer static responders. They adapt at runtime, using techniques similar to program synthesis and chain-of-thought reasoning to reconfigure themselves for specific problems. For Chollet, this validates his theory that intelligence is a process of adaptation, not a static knowledge warehouse. He maintains that solving ARC is a necessary step toward AGI, but not AGI itself. Current models still fail basic tasks and lack a profound understanding of the world. The benchmark's purpose was to push research toward better systems. And it worked. The industry responded, though perhaps more pragmatically than cognitive scientists hoped. Instead of \"general intelligence,\" we got specialized reasoning machines that tackle puzzles through iterative loops and code generation. With ARC-AGI-1 effectively saturated, even the tougher ARC-AGI-2 is now falling. Poetiq's system beat the human average despite never training on those specific tasks. Solving the benchmark proves its value as a catalyst ARC-AGI is experiencing the typical lifecycle of a benchmark: it becomes a metric for marketing departments. Once a target is defined and incentives exist, like the ARC Prize's million-dollar purse, labs will optimize until they hit the number. This doesn't mean AI is thinking like a human. It demonstrates the adaptability of modern AI research, which can hit almost any abstract target by combining compute, synthetic data, and sophisticated search methods. ARC-AGI-1 and ARC-AGI-2 succeeded by forcing a focus on reasoning and adaptation. That they are now being \"solved\" isn't a failure of the test but proof of its effectiveness in driving development. It remains to be seen whether these methods lead to true fluid intelligence. Many people, including Chollet, believe that something is still missing. He is already looking ahead to ARC-AGI-3, which will use interactive environments to test model \"agency\"—the ability to act. Poetiq has released its code and results on GitHub.",
+    "published_at": "2025-12-25T16:52:26+00:00",
+    "url": "https://the-decoder.com/the-arc-benchmarks-fall-marks-another-casualty-of-relentless-ai-optimization/",
+    "source_id": "the_decoder",
+    "crawled_at": "2025-12-26T16:45:36.783256+00:00"
+  },
+  "_analysis": {
+    "title_ko": "Poetiq, ARC-AGI 벤치마크 정복 주장... AI 최적화의 승리인가",
+    "summary": "AI 스타트업 Poetiq이 난공불락으로 여겨지던 ARC-AGI 벤치마크에서 인간 수준을 뛰어넘는 성과를 냈다고 주장했다. GPT-5.2 기반의 시스템을 통해 추론 능력을 획기적으로 향상시켰으나, 단순 최적화라는 지적도 있다.",
+    "tags": [
+      "Benchmark",
+      "Startup",
+      "Deep Dive"
+    ],
+    "impact_score": 3.5,
+    "zero_echo_score": 6.6,
+    "analyzed_at": "2025-12-27T19:40:12.195406+00:00",
+    "mll_raw": {
+      "Article_ID": "f085741718db",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "Poetiq, ARC-AGI 벤치마크 정복 주장... AI 최적화의 승리인가",
+        "Summary": "AI 스타트업 Poetiq이 난공불락으로 여겨지던 ARC-AGI 벤치마크에서 인간 수준을 뛰어넘는 성과를 냈다고 주장했다. GPT-5.2 기반의 시스템을 통해 추론 능력을 획기적으로 향상시켰으나, 단순 최적화라는 지적도 있다.",
+        "Tags": [
+          "Benchmark",
+          "Startup",
+          "Deep Dive"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "스타트업(T4)이 AGI의 척도인 ARC를 해결했다고 주장(Scope: Paradigm). 그러나 아직 '주장' 단계이며 대중적 검증(Realization) 전이므로 Y=2(Prototype) 적용. 낮은 Tier로 인해 IS 총점은 제한적.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "Poetiq",
+              "Pe_Tier": 4,
+              "Se_Entity_Name": "None",
+              "Se_Tier": 0,
+              "PE/SE_Reason": "PE: 성과를 발표한 실행 주체(Startup). SE: 벤치마크는 대상물이므로 제외."
+            },
+            "Tier_Score": 0.5,
+            "Gap_Score": 0,
+            "IW_Score": 0.5
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 4,
+              "Y_Evidence_Code": 2,
+              "Scope_Matrix_Score": 2.5,
+              "Criticality_C1_Provenness": 0,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Criticality_Total": 0.5,
+              "SOTA_Check_Result": "True"
+            },
+            "IE_Score": 3
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 7,
+          "T2": 7,
+          "T3": 5,
+          "Rationale": "정확도 75%, 비용 8달러 등 구체적 수치 제시."
+        },
+        "Noise": {
+          "P1": 5,
+          "P2": 6,
+          "P3": 3,
+          "Rationale": "업체의 일방적 주장과 '혁신적' 등의 자화자찬적 표현 포함 가능성."
+        },
+        "Utility": {
+          "V1": 8,
+          "V2": 5,
+          "V3": 7,
+          "Rationale": "AGI 도달 가능성을 시사하는 흥미로운 정보."
+        },
+        "Fine_Adjustment": {
+          "Score": -0.5,
+          "Reason": "검증되지 않은 스타트업의 주장이므로 신뢰도 감점."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "AI/ML",
+    "is_selected": true,
+    "classified_at": "2025-12-28T03:53:15.593446+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:07:18.351127+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

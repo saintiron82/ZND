@@ -158,11 +158,9 @@ def load_from_cache(url: str) -> dict | None:
     Searches ALL date folders, not just today.
     Auto-deletes corrupted (invalid JSON) cache files.
     
-    Args:
-        url: The URL to find in cache
-    
-    Returns:
-        Cached data dict or None if not found
+    [MODIFIED] Supports V2.0 5-section schema.
+    If V2.0 schema is detected, it FLATTENS the structure for backward compatibility
+    with aggregators and legacy logic.
     """
     url_hash = get_url_hash(url)
     filename = f'{url_hash}.json'
@@ -181,17 +179,32 @@ def load_from_cache(url: str) -> dict | None:
                 try:
                     with open(cache_path, 'r', encoding='utf-8') as f:
                         data = json.load(f)
-                        print(f"📦 [Cache] Loaded from cache ({date_folder}): {url[:50]}...")
+                        
+                        # [NEW] V2.0 Schema Logic: Flatten for legacy code
+                        # If _header and _original exist, this is V2 data.
+                        if '_header' in data and '_original' in data:
+                            flattened = {}
+                            # Copy from _original (content)
+                            flattened.update(data['_original'])
+                            # Copy from _analysis (enriched) - overwrite original
+                            if '_analysis' in data:
+                                flattened.update(data['_analysis'])
+                            # Copy _header metadata
+                            flattened['article_id'] = data['_header'].get('article_id')
+                            flattened['schema_version'] = data['_header'].get('version')
+                            
+                            print(f"📦 [Cache] Loaded V2.0 data (Flattened): {url[:50]}...")
+                            return flattened
+                        
+                        print(f"📦 [Cache] Loaded legacy data: {url[:50]}...")
                         return data
                 except json.JSONDecodeError as e:
                     # Auto-delete corrupted cache file
                     print(f"🗑️ [Cache] Corrupted JSON detected, auto-deleting: {cache_path}")
-                    print(f"   Error: {e}")
                     try:
                         os.remove(cache_path)
-                        print(f"   ✅ Deleted corrupted file")
-                    except Exception as del_err:
-                        print(f"   ❌ Failed to delete: {del_err}")
+                    except Exception:
+                        pass
                 except Exception as e:
                     print(f"⚠️ [Cache] Error reading cache: {e}")
     return None
@@ -200,52 +213,69 @@ def load_from_cache(url: str) -> dict | None:
 def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
     """
     Save content to cache for URL.
-    Auto-generates article_id and cached_at if not present.
-    [MODIFIED] If date_str is None, it tries to find an existing file across ALL date folders first.
-               If found, it overwrites that file (preserving original date).
-               If not found, it defaults to Today's folder.
     
-    Args:
-        url: The URL to cache
-        content: Content dict to save
-        date_str: Optional date string (defaults to today)
-    
-    Returns:
-        Path to saved cache file
+    [MODIFIED] Enforces V2.0 5-section schema defined in implementation_plan.md.
+    Wraps raw content into '_original' and creates '_header'.
     """
-    url_hash = get_url_hash(url)
-    cache_path = None
-    
-    # 1. If date is NOT specified, try to find existing file to update in-place
     if date_str is None:
-        # Search all folders
+        date_str = datetime.now().strftime('%Y-%m-%d')
+    
+    url_hash = get_url_hash(url)
+    cache_dir = os.path.join(CACHE_DIR, date_str)
+    
+    # 기존 파일 확인 (업데이트인 경우)
+    existing_path = None
+    if date_str is None:
+        # 날짜 미지정 시 전체 검색
         search_pattern = os.path.join(CACHE_DIR, '*', f'{url_hash}.json')
         found_paths = glob.glob(search_pattern)
-        
         if found_paths:
-            # Sort by modification time (latest first) to pick the most active one if duplicates exist
             found_paths.sort(key=os.path.getmtime, reverse=True)
-            cache_path = found_paths[0]
-            # print(f"♻️ [Cache] Found existing file, updating in-place: {cache_path}")
+            existing_path = found_paths[0]
+            cache_dir = os.path.dirname(existing_path) # 기존 디렉토리 사용
     
-    # 2. If not found or date explicit, calculate target path
-    if not cache_path:
-        cache_path = get_cache_path(url, date_str)
+    cache_path = existing_path if existing_path else os.path.join(cache_dir, f'{url_hash}.json')
+    
+    # --- V2.0 Schema Transformation ---
+    # content가 이미 섹션 구조인지 확인
+    if '_header' in content:
+        # 이미 구조화됨 -> 그대로 저장
+        final_data = content
+    else:
+        # Flat data -> V2.0 구조로 변환
+        article_id = content.get('article_id') or get_article_id(url)
+        now_iso = datetime.now(timezone.utc).isoformat()
         
-    cache_dir = os.path.dirname(cache_path)
+        # 1. Header
+        header = {
+            "version": "2.0",
+            "article_id": article_id,
+            "state": "COLLECTED", # Default for new saves
+            "state_history": [
+                {"state": "COLLECTED", "at": now_iso, "by": "crawler"}
+            ]
+        }
+        
+        # 2. Original (Raw Content)
+        # 중요: content의 모든 키를 _original로 이동
+        original = {}
+        # 복사하되, 메타데이터성 키 제외 가능하지만 일단 안전하게 다 복사
+        for k, v in content.items():
+            original[k] = v
+            
+        # 필수 필드 보장
+        if 'url' not in original: original['url'] = url
+        if 'crawled_at' not in original: original['crawled_at'] = now_iso
+        
+        final_data = {
+            "_header": header,
+            "_original": original,
+            "_analysis": {},
+            "_classification": {},
+            "_publication": {}
+        }
     
-    # Auto-generate article_id if not present (using 6-char convention)
-    if 'article_id' not in content:
-        content['article_id'] = get_article_id(url)
-    
-    # Auto-add cached_at timestamp if not present
-    if 'cached_at' not in content:
-        content['cached_at'] = datetime.now(timezone.utc).isoformat()
-    
-    # [NEW] Always update 'updated_at' for sync comparison
-    content['updated_at'] = datetime.now(timezone.utc).isoformat()
-    
-    # [FIX] Convert any datetime objects to ISO strings for JSON serialization
+    # [FIX] Serialize Datetimes
     def _serialize_datetimes(obj):
         if isinstance(obj, dict):
             return {k: _serialize_datetimes(v) for k, v in obj.items()}
@@ -255,13 +285,14 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
             return obj.isoformat()
         return obj
     
-    content = _serialize_datetimes(content)
+    final_data = _serialize_datetimes(final_data)
     
     try:
         os.makedirs(cache_dir, exist_ok=True)
         with open(cache_path, 'w', encoding='utf-8') as f:
-            json.dump(content, f, ensure_ascii=False, indent=2)
-        print(f"💾 [Cache] Saved to {'existing' if date_str is None and glob.glob(os.path.join(CACHE_DIR, '*', f'{url_hash}.json')) else 'new'} path: {cache_path}")
+            json.dump(final_data, f, ensure_ascii=False, indent=2)
+            
+        print(f"💾 [Cache] Saved V2.0 schema: {cache_path}")
         return cache_path
     except Exception as e:
         print(f"⚠️ [Cache] Error saving cache: {e}")
@@ -673,6 +704,7 @@ class HistoryStatus:
     SKIPPED = 'SKIPPED'
     WORTHLESS = 'WORTHLESS'
     MLL_FAILED = 'MLL_FAILED'  # NEW: LLM response failed
+    ANALYZED = 'ANALYZED'      # NEW: Analysis complete, pending review
 
 
 # ==============================================================================

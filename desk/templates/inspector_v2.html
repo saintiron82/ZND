@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZND 분석</title>
+    <link rel="stylesheet" href="/static/css/desk.css">
+    <style>
+        /* Inspector Specific Overrides */
+        body {
+            overflow: hidden;
+            /* App-like feel */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inspector-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 60px);
+            /* Subtract header height */
+            overflow: hidden;
+        }
+
+        .pane {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+
+        .pane-header {
+            padding: 10px 15px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .pane-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            position: relative;
+        }
+
+        /* Pane 1: Groups (Left) */
+        #pane-groups {
+            width: 300px;
+            min-width: 250px;
+        }
+
+        /* Pane 2: Prompt (Center) */
+        #pane-prompt {
+            flex: 1;
+            min-width: 350px;
+        }
+
+        /* Pane 3: Process (Right) */
+        #pane-process {
+            flex: 1;
+            min-width: 350px;
+            border-right: none;
+        }
+
+        /* Textareas */
+        .code-editor {
+            width: 100%;
+            height: 100%;
+            background: #1e1e1e;
+            /* VSCode-like dark */
+            color: #d4d4d4;
+            border: none;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+        }
+
+        .group-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .group-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .group-item.active {
+            background: var(--accent-secondary);
+            color: white;
+        }
+
+        .badge-new {
+            background: var(--accent-primary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        /* Controls */
+        .control-bar {
+            padding: 10px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-full {
+            flex: 1;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Simple Header -->
+    <nav class="nav-tabs">
+        <span class="tab active" style="font-weight: bold;">🔍 분석</span>
+        <a href="/board" class="tab">Go Back to Desk</a>
+        <div class="nav-right">
+            <span id="status-text">Ready</span>
+        </div>
+    </nav>
+
+    <div class="inspector-container">
+        <!-- 1. Selection Pane -->
+        <div id="pane-groups" class="pane">
+            <div class="pane-header">
+                <span>Targets</span>
+                <button id="btn-refresh-list" class="btn btn-sm">🔄 Refresh</button>
+            </div>
+            <div class="pane-content" id="group-list">
+                <!-- Group Items injected here -->
+                <div style="padding: 20px; text-align: center; color: #888;">Loading...</div>
+            </div>
+            <div class="control-bar">
+                <button id="btn-select-all" class="btn btn-secondary" style="width: 100%;">Select All</button>
+            </div>
+        </div>
+
+        <!-- 2. Prompt Pane -->
+        <div id="pane-prompt" class="pane">
+            <div class="pane-header">
+                <span>1. Copy Prompt</span>
+                <span id="prompt-count" style="font-size: 0.8em; color: var(--accent-warning);">0 items</span>
+            </div>
+            <div class="pane-content">
+                <textarea id="prompt-area" class="code-editor" readonly
+                    placeholder="Select targets on the left to generate prompt..."></textarea>
+            </div>
+            <div class="control-bar">
+                <div style="display:flex; align-items:center; gap:5px; flex:1;">
+                    <span style="font-size:0.8em; white-space:nowrap;">Limit:</span>
+                    <input type="number" id="batch-limit" value="10" min="1" max="50"
+                        style="width:50px; padding:5px; background:#1e1e1e; color:white; border:1px solid #444;">
+                </div>
+                <button id="btn-copy-prompt" class="btn btn-primary" style="flex:2;">📋 Copy Prompt</button>
+                <a href="https://gemini.google.com/gem/d0df709db734" target="_blank" class="btn btn-secondary"
+                    style="padding: 12px;">🤖 Open Gemini</a>
+            </div>
+        </div>
+
+        <!-- 3. Process Pane -->
+        <div id="pane-process" class="pane">
+            <div class="pane-header">
+                <span>2. Paste Result</span>
+            </div>
+            <div class="pane-content">
+                <textarea id="result-area" class="code-editor"
+                    placeholder="Paste the JSON response from LLM here..."></textarea>
+            </div>
+            <div class="control-bar">
+                <button id="btn-process-result" class="btn btn-success btn-full">⚡ Process & Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/constants.js"></script>
+    <script src="/static/js/inspector_v2.js"></script>
+</body>
+
+</html>

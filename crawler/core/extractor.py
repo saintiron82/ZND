@@ -79,6 +79,8 @@ def extract_content(links: list = None) -> dict:
                     if content and len(content.get('text', '')) >= 200:
                         content['source_id'] = source_id
                         save_to_cache(url, content)
+                        # [FIX] Save to history to prevent re-crawling
+                        db.save_history(url, 'ACCEPTED', reason='crawled')
                         extracted_count += 1
                     else:
                         # 추출 실패 - 히스토리에 EXTRACT_FAILED 저장 (24시간 후 재시도 가능)
@@ -169,4 +171,4 @@ def run_full_pipeline(schedule_name: str = "Scheduled"):
     except Exception as e:
         print(f"⚠️ [Discord] Notification failed: {e}")
     
-    return extract_result
+    return final_result

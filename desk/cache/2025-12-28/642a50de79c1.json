@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "642a50de79c1",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-28T06:51:19.168633+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:10:54.476577+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:10:54.476577+00:00"
+  },
+  "_original": {
+    "title": "OpenAI seeks new \"Head of Preparedness\" for AI risks like cyberattacks and mental health",
+    "description": "OpenAI is looking for a new \"Head of Preparedness.\" The challenges are daunting: AI's impact on mental health, cybersecurity risks, biological knowledge leaks, and self-improving systems.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/11/openai_logo_wall-3.png",
+    "text": "OpenAI is hiring a Head of Preparedness. The position focuses on safety risks posed by AI models. OpenAI CEO Sam Altman points to the now well-documented effects of AI models on mental health as one example. Beyond that, the models have become so capable at cybersecurity that they can find critical vulnerabilities on their own. This is a critical role at an important time; models are improving quickly and are now capable of many great things, but they are also starting to present some real challenges. One of the key challenges for the new leader will be making sure cybersecurity defenders can use the latest AI capabilities while keeping attackers locked out. The role also covers safe handling of biological capabilities—meaning how AI models release biological knowledge—and self-improving systems. Ad OpenAI has faced criticism recently, particularly from former employees, for neglecting model safety in favor of shipping products. Many safety researchers have left the company.",
+    "published_at": "2025-12-27T16:52:57+00:00",
+    "url": "https://the-decoder.com/openai-seeks-new-head-of-preparedness-for-ai-risks-like-cyberattacks-and-mental-health/",
+    "source_id": "the_decoder",
+    "crawled_at": "2025-12-28T06:51:19.168633+00:00"
+  },
+  "_analysis": {
+    "title_ko": "OpenAI, 사이버 위협 및 정신 건강 대응 '준비성 책임자' 채용",
+    "summary": "OpenAI가 AI 모델의 사이버 보안, 생물학적 위협, 정신 건강 문제 등을 전담할 '준비성 책임자'를 채용하고 있다. 이는 모델의 능력이 향상됨에 따라 발생하는 안전 위험을 관리하기 위한 조치다.",
+    "tags": [
+      "OpenAI",
+      "Safety",
+      "Job Market"
+    ],
+    "impact_score": 5.5,
+    "zero_echo_score": 8.4,
+    "analyzed_at": "2025-12-28T07:01:28.884845+00:00",
+    "mll_raw": {
+      "Article_ID": "642a50de79c1",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "OpenAI, 사이버 위협 및 정신 건강 대응 '준비성 책임자' 채용",
+        "Summary": "OpenAI가 AI 모델의 사이버 보안, 생물학적 위협, 정신 건강 문제 등을 전담할 '준비성 책임자'를 채용하고 있다. 이는 모델의 능력이 향상됨에 따라 발생하는 안전 위험을 관리하기 위한 조치다.",
+        "Tags": [
+          "OpenAI",
+          "Safety",
+          "Job Market"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "OpenAI(Tier 1)의 채용 공고는 기업 활동(X1)이지만, 해당 직책이 다루는 '안전/생존' 이슈가 사회적 중요도(C2)에서 필수적(Essential) 영역으로 분류되어 가산점을 받음.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P1",
+              "Pe_Entity_Name": "OpenAI",
+              "Pe_Tier": 1,
+              "Se_Entity_Name": "None",
+              "Se_Tier": 0,
+              "PE/SE 선정이유": "안전 책임의 주체(P1)이자 채용 실행 주체인 OpenAI."
+            },
+            "Tier_Score": 3,
+            "Gap_Score": 0,
+            "IW_Score": 3
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 1,
+              "Y_Evidence_Code": 4,
+              "Scope_Matrix_Score": 0.5,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 1,
+              "Criticality_Total": 2,
+              "SOTA_Check_Result": "True"
+            },
+            "IE_Score": 2.5
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 4,
+          "T2": 4,
+          "T3": 6,
+          "Rationale": "채용 공고 내용 기반으로 구체적 데이터는 적음."
+        },
+        "Noise": {
+          "P1": 1,
+          "P2": 1,
+          "P3": 0,
+          "Rationale": "담백한 사실 전달."
+        },
+        "Utility": {
+          "V1": 3,
+          "V2": 2,
+          "V3": 2,
+          "Rationale": "구직자 외에는 정보 가치가 제한적임."
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "보정 없음."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "Business",
+    "is_selected": true,
+    "classified_at": "2025-12-28T07:59:56.919843+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:06:46.738428+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

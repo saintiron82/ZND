@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZND Desk - 보드</title>
+    <link rel="stylesheet" href="/static/css/desk.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <a href="/board" class="tab active">📋 보드</a>
+        <a href="/publisher" class="tab">📢 발행</a>
+
+        <div class="nav-right">
+            <div class="tool-bar">
+                <span class="tool-label">🛠️ 도구:</span>
+                <button id="btn-collect" class="btn-tool" title="뉴스 즉시 수집" onclick="collectNow()">📥 수집</button>
+                <button id="btn-tool-classify" class="btn-tool" title="AI 분류기" onclick="openClassifyModal(null)">📂
+                    분류</button>
+                <div class="divider"></div>
+                <button onclick="window.open('/inspector', 'inspector', 'width=1400,height=900')" class="btn-tool"
+                    title="AI 심층 검사기">🔍 분석</button>
+                <div class="divider"></div>
+                <button id="btn-recover-orphans" class="btn-tool" title="발행 이력 없는 기사 복구" onclick="checkOrphans()">🔧
+                    복구</button>
+            </div>
+            <div class="divider"></div>
+            <span id="stats">로딩 중...</span>
+            <button id="btn-open-settings" class="btn-settings">📅 스케줄</button>
+        </div>
+    </nav>
+
+    <!-- Time Range Filter -->
+    <div class="time-filter-bar">
+        <span class="filter-label">🕐 기간:</span>
+        <div class="filter-buttons">
+            <button class="filter-btn" data-hours="6" onclick="setTimeRange(6)">6시간</button>
+            <button class="filter-btn" data-hours="12" onclick="setTimeRange(12)">12시간</button>
+            <button class="filter-btn active" data-hours="24" onclick="setTimeRange(24)">24시간</button>
+            <button class="filter-btn" data-hours="48" onclick="setTimeRange(48)">2일</button>
+            <button class="filter-btn" data-hours="168" onclick="setTimeRange(168)">1주일</button>
+            <button class="filter-btn" data-hours="0" onclick="setTimeRange(0)">전체</button>
+        </div>
+        <div class="divider"></div>
+        <div class="custom-range">
+            <label>시작:</label>
+            <input type="datetime-local" id="custom-start-time" onchange="setCustomTimeRange()">
+            <span class="range-hint">~ 현재</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container board-container">
+        <!-- Kanban Board -->
+        <div class="kanban-board">
+            <!-- COLLECTED Column -->
+            <div class="kanban-column" data-state="collected">
+                <div class="column-header">
+                    <h3>📥 수집됨</h3>
+                    <span class="column-count" id="count-collected">0</span>
+                    <div class="column-menu-wrapper">
+                        <button class="btn-column-menu" onclick="toggleColumnMenu('collected')">⋯</button>
+                        <div class="column-menu hidden" id="menu-collected">
+                            <button onclick="columnAction('collected', 'reject-all')">🗑️ 전체 폐기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-cards" id="cards-collected">
+                    <!-- 동적으로 로드 -->
+                </div>
+            </div>
+
+            <!-- ANALYZED Column -->
+            <div class="kanban-column" data-state="analyzed">
+                <div class="column-header">
+                    <h3>🔬 분석완료</h3>
+                    <span class="column-count" id="count-analyzed">0</span>
+                    <div class="column-menu-wrapper">
+                        <button class="btn-column-menu" onclick="toggleColumnMenu('analyzed')">⋯</button>
+                        <div class="column-menu hidden" id="menu-analyzed">
+                            <button onclick="columnAction('analyzed', 'recalculate-scores')">🔢 점수 재계산</button>
+                            <button onclick="columnAction('analyzed', 'reject-all')">🗑️ 전체 폐기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-cards" id="cards-analyzed">
+                    <!-- 동적으로 로드 -->
+                </div>
+            </div>
+
+            <!-- CLASSIFIED Column -->
+            <div class="kanban-column" data-state="classified">
+                <div class="column-header">
+                    <h3>📂 분류됨</h3>
+                    <span class="column-count" id="count-classified">0</span>
+                    <div class="column-menu-wrapper">
+                        <button class="btn-column-menu" onclick="toggleColumnMenu('classified')">⋯</button>
+                        <div class="column-menu hidden" id="menu-classified">
+                            <button onclick="columnAction('classified', 'reject-all')">🗑️ 전체 폐기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-cards" id="cards-classified">
+                    <!-- 동적으로 로드 -->
+                </div>
+            </div>
+
+            <!-- PUBLISHED Column -->
+            <div class="kanban-column" data-state="published">
+                <div class="column-header">
+                    <h3>📢 발행됨</h3>
+                    <span class="column-count" id="count-published">0</span>
+                </div>
+                <div class="column-cards" id="cards-published">
+                    <!-- 동적으로 로드 -->
+                </div>
+            </div>
+
+            <!-- REJECTED Column -->
+            <div class="kanban-column column-rejected" data-state="rejected">
+                <div class="column-header">
+                    <h3>🗑️ 폐기됨</h3>
+                    <span class="column-count" id="count-rejected">0</span>
+                    <div class="column-menu-wrapper">
+                        <button class="btn-column-menu" onclick="toggleColumnMenu('rejected')">⋯</button>
+                        <div class="column-menu hidden" id="menu-rejected">
+                            <button onclick="columnAction('rejected', 'empty-trash')">🚮 휴지통 비우기</button>
+                            <button onclick="columnAction('rejected', 'restore-all')">♻️ 전체 복원</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-cards" id="cards-rejected">
+                    <!-- 동적으로 로드 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Raw Viewer Modal -->
+        <div id="raw-viewer-modal" class="modal hidden">
+            <div class="modal-content"
+                style="max-width: 800px; width: 90%; max-height: 90vh; display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3>📄 기사 원본 데이터 (JSON)</h3>
+                    <div>
+                        <button id="btn-raw-open" class="btn"
+                            style="margin-right: 10px; background: var(--bg-card); border-color: var(--border-color);">🔗
+                            원본</button>
+                        <button id="btn-raw-classify" class="btn btn-primary" style="margin-right: 10px;">📂 분류</button>
+
+                        <button id="btn-raw-reject" class="btn btn-danger" style="margin-right: 10px;">🗑️ 폐기</button>
+                        <button id="btn-raw-reset-pub" class="btn"
+                            style="margin-right: 10px; background: #8e44ad; border-color: #9b59b6;">🔄 발행초기화</button>
+                        <button id="btn-raw-close" class="btn">닫기</button>
+                    </div>
+                </div>
+                <!-- Time Info Area -->
+                <div id="raw-time-info"
+                    style="margin-bottom: 1rem; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px; display: flex; flex-wrap: wrap; gap: 2rem; font-size: 0.9rem; color: #e0e0e0;">
+                </div>
+                <div
+                    style="flex: 1; overflow: auto; background: #1e1e1e; padding: 1rem; border-radius: 4px; color: #d4d4d4;">
+                    <div id="raw-content"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Classification Modal (AI Assisted) -->
+        <div id="classification-modal" class="modal hidden">
+            <div class="modal-content"
+                style="max-width: 1200px; width: 98%; max-height: 95vh; display: flex; flex-direction: column;">
+                <h3>🤖 AI 기사 분류 (Classification)</h3>
+                <p style="color: #888; font-size: 0.9em; margin-bottom: 15px;">AI를 사용하여 제목, 요약문, 카테고리를 생성하고 분류합니다.</p>
+
+                <div style="display: flex; gap: 20px; flex: 1; overflow: hidden; min-height: 450px;">
+                    <!-- Left: Prompt -->
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <label style="color: #aaa; margin-bottom: 5px;">1. 프롬프트 복사</label>
+                        <textarea id="classify-prompt" readonly
+                            style="flex: 1; min-height: 350px; background: #2d3436; color: #a4b0be; border: 1px solid #636e72; padding: 10px; resize: none; font-family: monospace; font-size: 12px;"></textarea>
+                        <div style="display: flex; gap: 8px; margin-top: 10px;">
+                            <button id="btn-copy-prompt" class="btn btn-secondary" style="flex: 1;">📋 프롬프트 복사</button>
+                            <button id="btn-add-context" class="btn btn-secondary" style="font-size: 11px;">🔄
+                                Context</button>
+                        </div>
+                        <a href="https://gemini.google.com/gem/53a17c8f33da" target="_blank" class="btn btn-primary"
+                            style="margin-top: 8px; text-align: center; text-decoration: none;">🤖 Gemini (분류 전용)
+                            열기</a>
+                    </div>
+
+                    <!-- Right: Result -->
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <label style="color: #aaa; margin-bottom: 5px;">2. 결과 붙여넣기 (JSON)</label>
+                        <textarea id="classify-result" placeholder="[ ... ]"
+                            style="flex: 1; min-height: 350px; background: #2d3436; color: white; border: 1px solid #636e72; padding: 10px; resize: none; font-family: monospace; font-size: 12px;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Batch Stats Display -->
+                <div id="batch-stats-display"
+                    style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; min-height: 80px;">
+                    <p style="color: #aaa; text-align: center; margin-top: 20px;">결과 JSON을 붙여넣으면 통계가 표시됩니다.</p>
+                </div>
+
+                <div class="modal-actions"
+                    style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 10px;">
+                    <button id="btn-classify-cancel" class="btn">취소</button>
+                    <button id="btn-classify-confirm" class="btn btn-primary">확인 (저장 및 분류)</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Loading Overlay -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>로딩 중...</p>
+        </div>
+    </main>
+
+    <script src="/static/js/constants.js?v=20241229"></script>
+    <script src="/static/js/desk.js?v=20241229"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initBoardPage();
+        });
+    </script>
+</body>
+
+</html>

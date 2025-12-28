@@ -1,0 +1,77 @@
+{
+    "_comment": "ZED 자동 크롤링 자동화 설정 파일",
+    "mll": {
+        "api_url": "http://localhost:8000/",
+        "project_key": "3262CF87",
+        "username": "제성철",
+        "timeout_seconds": 30,
+        "retry_count": 3,
+        "enabled": true
+    },
+    "crawler": {
+        "max_concurrency": 5,
+        "use_playwright": true,
+        "headless": true,
+        "article_age_limit_days": 3,
+        "min_text_length": 200,
+        "max_text_length_for_analysis": 3000,
+        "cache_text_length": 5000,
+        "request_timeout_seconds": 30,
+        "page_load_timeout_seconds": 60,
+        "request_delay_seconds": 2,
+        "_comment_delay": "새로운 요청 사이 대기 시간 (서버 부하 방지)"
+    },
+    "scoring": {
+        "high_noise_threshold": 7.0,
+        "auto_reject_high_noise": true,
+        "latest_schema_version": "V1.0",
+        "default_schema_version": "V0.9-Hybrid",
+        "schema_registry": {
+            "V1.0": {
+                "type": "standard",
+                "description": "Standard MLL V1.0 Schema (IS_Analysis, ZES_Raw_Metrics)"
+            },
+            "V0.9-Hybrid": {
+                "type": "hybrid",
+                "description": "Manual Batch Simple Format (impact_entity, impact_events)"
+            },
+            "V0.9": {
+                "type": "legacy_std",
+                "description": "Legacy MLL V0.9 Schema (Impact_Analysis_IS)"
+            },
+            "Legacy": {
+                "type": "fallback",
+                "description": "Unstructured or unknown format"
+            }
+        }
+    },
+    "dedup_categories": {
+        "_comment": "중복 제거 LLM에 전달할 분류 카테고리 목록",
+        "categories": [
+            "AI/ML",
+            "Engineering",
+            "Community",
+            "Business"
+        ]
+    },
+    "history": {
+        "max_entries": 5000,
+        "valid_statuses": [
+            "ACCEPTED",
+            "REJECTED",
+            "SKIPPED",
+            "WORTHLESS",
+            "MLL_FAILED"
+        ]
+    },
+    "schedule": {
+        "enabled": false,
+        "cron": "0 */6 * * *",
+        "_comment_cron": "매 6시간마다 실행 (00:00, 06:00, 12:00, 18:00)"
+    },
+    "notifications": {
+        "enabled": false,
+        "slack_webhook": "",
+        "email": ""
+    }
+}

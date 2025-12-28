@@ -1,0 +1,164 @@
+{
+    "properties": {
+        "article_id": {
+            "description": "Keep original ID",
+            "type": "string"
+        },
+        "overall_review": {
+            "description": "under 100 chars",
+            "type": "string"
+        },
+        "raw_analysis": {
+            "properties": {
+                "credits": {
+                    "items": {
+                        "properties": {
+                            "id": {
+                                "description": "RULE_ID",
+                                "type": "string"
+                            },
+                            "reasoning": {
+                                "description": "0.1 ~ Max",
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "value",
+                            "reasoning"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "impact_entity": {
+                    "properties": {
+                        "id": {
+                            "description": "ENTITY_ID",
+                            "type": "string"
+                        },
+                        "reasoning": {
+                            "description": "Type A: Match ID based on Profile",
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "value",
+                        "reasoning"
+                    ],
+                    "type": "object"
+                },
+                "impact_events": {
+                    "items": {
+                        "properties": {
+                            "id": {
+                                "description": "EVENT_ID",
+                                "type": "string"
+                            },
+                            "reasoning": {
+                                "description": "Type A: Match ID based on Profile",
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "value",
+                            "reasoning"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "modifiers": {
+                    "items": {
+                        "properties": {
+                            "id": {
+                                "description": "MOD_ID",
+                                "type": "string"
+                            },
+                            "reasoning": {
+                                "description": "Signed Float Allowed",
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "value",
+                            "reasoning"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "penalties": {
+                    "items": {
+                        "properties": {
+                            "id": {
+                                "description": "RULE_ID",
+                                "type": "string"
+                            },
+                            "reasoning": {
+                                "description": "0.1 ~ Max",
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "value",
+                            "reasoning"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "impact_entity",
+                "impact_events",
+                "penalties",
+                "credits",
+                "modifiers"
+            ],
+            "type": "object"
+        },
+        "summary": {
+            "description": "3-sentence summary",
+            "type": "string"
+        },
+        "tags": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "title": {
+            "description": "Rule: If the target language matches the source language, use the original title verbatim. Otherwise, provide a literal translation.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "title",
+        "article_id",
+        "summary",
+        "tags",
+        "raw_analysis",
+        "overall_review"
+    ],
+    "type": "object"
+}

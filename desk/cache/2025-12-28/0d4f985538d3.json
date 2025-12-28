@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "0d4f985538d3",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-28T06:51:22.874593+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:10:57.861891+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:10:57.861891+00:00"
+  },
+  "_original": {
+    "title": "Resemble AI drops Chatterbox Turbo, an open-source text-to-speech model that clones voices in five seconds",
+    "description": "Chatterbox Turbo, a new open-source text-to-speech model from Resemble AI, clones voices from five seconds of audio and generates speech in under 150 milliseconds. The startup claims it outperforms Elevenlabs.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/12/Chatterbox-Turbo-scaled.jpg",
+    "text": "AI startup Resemble AI is taking on Elevenlabs with \"Chatterbox Turbo,\" an open text-to-speech model that can clone voices from just five seconds of audio. The company claims its new model beats both Elevenlabs and Cartesia on voice quality while delivering first audio output in under 150 milliseconds. That speed could make it attractive for developers building real-time agents, customer support systems, games, avatars, and social platforms. Companies in regulated industries might also find the model's built-in \"PerTh\" watermark useful for verifying that speech was AI-generated. Resemble AI released Chatterbox Turbo under an MIT license, meaning anyone can use, tweak, and redistribute it for free, even for commercial projects. The model is available to try on Hugging Face, RunPod, Modal, Replicate, and Fal, with the full code available on GitHub. Resemble AI also offers a hosted service, with a low-latency version on the way. Ad DEC_D_Incontent-1",
+    "published_at": "2025-12-27T16:26:53+00:00",
+    "url": "https://the-decoder.com/resemble-ai-drops-chatterbox-turbo-an-open-source-text-to-speech-model-that-clones-voices-in-five-seconds/",
+    "source_id": "the_decoder",
+    "crawled_at": "2025-12-28T06:51:22.874593+00:00"
+  },
+  "_analysis": {
+    "title_ko": "Resemble AI, 오픈소스 음성 복제 모델 'Chatterbox Turbo' 공개",
+    "summary": "Resemble AI가 5초 오디오 샘플로 음성을 복제하는 오픈소스 모델 'Chatterbox Turbo'를 공개했다. 150ms 미만의 빠른 처리 속도를 내세우며 Elevenlabs와 경쟁한다. MIT 라이선스로 상업적 이용이 가능하다.",
+    "tags": [
+      "Open Source",
+      "Startup",
+      "Audio"
+    ],
+    "impact_score": 1.5,
+    "zero_echo_score": 5.0,
+    "analyzed_at": "2025-12-28T07:01:28.487569+00:00",
+    "mll_raw": {
+      "Article_ID": "0d4f985538d3",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "Resemble AI, 오픈소스 음성 복제 모델 'Chatterbox Turbo' 공개",
+        "Summary": "Resemble AI가 5초 오디오 샘플로 음성을 복제하는 오픈소스 모델 'Chatterbox Turbo'를 공개했다. 150ms 미만의 빠른 처리 속도를 내세우며 Elevenlabs와 경쟁한다. MIT 라이선스로 상업적 이용이 가능하다.",
+        "Tags": [
+          "Open Source",
+          "Startup",
+          "Audio"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "스타트업(Tier 4)의 제품 공개(Y4)이나, 기업 단위의 제품 출시(X1)에 해당하여 Hard Filter(PE T4 & X1) 적용으로 Scope 점수는 0점. 그러나 기술 실체(Y4)와 확정성(C1) 점수는 확보.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "Resemble AI",
+              "Pe_Tier": 4,
+              "Se_Entity_Name": "Elevenlabs",
+              "Se_Tier": 4,
+              "PE/SE 선정이유": "제품 출시 주체(P4)와 기사 내에서 직접 비교 대상으로 명시된 경쟁사(Rule 2)."
+            },
+            "Tier_Score": 0.5,
+            "Gap_Score": 0,
+            "IW_Score": 0.5
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 1,
+              "Y_Evidence_Code": 4,
+              "Scope_Matrix_Score": 0,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 0,
+              "Criticality_Total": 1,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 1
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 7,
+          "T2": 5,
+          "T3": 7,
+          "Rationale": "구체적인 성능 지표(150ms)와 라이선스 정보 제공."
+        },
+        "Noise": {
+          "P1": 2,
+          "P2": 1,
+          "P3": 1,
+          "Rationale": "경쟁사 대비 우위 주장(Claims)이 포함됨."
+        },
+        "Utility": {
+          "V1": 4,
+          "V2": 9,
+          "V3": 5,
+          "Rationale": "오픈소스 및 상업 이용 가능으로 개발자 효용 매우 높음."
+        },
+        "Fine_Adjustment": {
+          "Score": 0.5,
+          "Reason": "오픈소스 생태계 기여도 인정."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "AI/ML",
+    "is_selected": true,
+    "classified_at": "2025-12-28T07:59:56.918304+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:06:53.083225+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

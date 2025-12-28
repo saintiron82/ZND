@@ -1,0 +1,972 @@
+"""
+Core Logic Module for ZED Crawler System
+
+This module contains shared logic between auto-crawler and manual-crawler.
+All crawler components should import from this module to ensure consistency.
+"""
+
+import os
+import json
+import glob
+import hashlib
+from datetime import datetime, timezone
+
+# Base directories (relative to supplier folder)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+CACHE_DIR = os.path.join(BASE_DIR, 'cache')
+CONFIG_DIR = os.path.join(BASE_DIR, 'config')
+
+# Configuration file path
+AUTOMATION_CONFIG_PATH = os.path.join(CONFIG_DIR, 'automation_config.json')
+
+# Cached config (loaded once)
+_automation_config = None
+
+
+def load_automation_config(force_reload: bool = False) -> dict:
+    """
+    Load automation configuration from JSON file.
+    Caches the config after first load for performance.
+    
+    Args:
+        force_reload: If True, reload from disk even if cached
+    
+    Returns:
+        Configuration dict
+    """
+    global _automation_config
+    
+    if _automation_config is not None and not force_reload:
+        return _automation_config
+    
+    try:
+        if os.path.exists(AUTOMATION_CONFIG_PATH):
+            with open(AUTOMATION_CONFIG_PATH, 'r', encoding='utf-8') as f:
+                _automation_config = json.load(f)
+                print(f"✅ [Config] Loaded automation config from {AUTOMATION_CONFIG_PATH}")
+        else:
+            print(f"⚠️ [Config] No automation config found, using defaults")
+            _automation_config = get_default_config()
+    except Exception as e:
+        print(f"❌ [Config] Error loading config: {e}, using defaults")
+        _automation_config = get_default_config()
+    
+    return _automation_config
+
+
+def get_default_config() -> dict:
+    """Return default configuration values."""
+    return {
+        "mll": {
+            "api_url": "http://localhost:8000/",
+            "timeout_seconds": 30,
+            "retry_count": 3,
+            "enabled": True
+        },
+        "crawler": {
+            "max_concurrency": 5,
+            "use_playwright": True,
+            "headless": True,
+            "article_age_limit_days": 3,
+            "min_text_length": 200,
+            "max_text_length_for_analysis": 3000
+        },
+        "scoring": {
+            "high_noise_threshold": 7.0,
+            "auto_reject_high_noise": True
+        },
+        "history": {
+            "max_entries": 5000
+        }
+    }
+
+
+def get_config(section: str, key: str, default=None):
+    """
+    Get a specific config value.
+    
+    Args:
+        section: Config section (e.g., 'mll', 'crawler', 'scoring')
+        key: Config key within section
+        default: Default value if not found
+    
+    Returns:
+        Config value or default
+    """
+    config = load_automation_config()
+    return config.get(section, {}).get(key, default)
+
+
+# ==============================================================================
+# URL Hash & Article ID Generation
+# ==============================================================================
+
+def get_url_hash(url: str, length: int = 12) -> str:
+    """
+    Generate a hash from URL for cache/data filename.
+    
+    Args:
+        url: The URL to hash
+        length: Length of hash to return (default 12)
+    
+    Returns:
+        MD5 hash string truncated to specified length
+    """
+    return hashlib.md5(url.encode()).hexdigest()[:length]
+
+
+def get_article_id(url: str) -> str:
+    """
+    Generate article_id from URL.
+    Uses 12-character hash for collision prevention.
+    
+    Args:
+        url: The article URL
+    
+    Returns:
+        12-character article ID
+    """
+    return get_url_hash(url, length=12)
+
+
+# ==============================================================================
+# Cache Management
+# ==============================================================================
+
+def get_cache_path(url: str, date_str: str = None) -> str:
+    """
+    Get cache file path for URL.
+    
+    Args:
+        url: The URL to get cache path for
+        date_str: Date string in YYYY-MM-DD format. Defaults to today.
+    
+    Returns:
+        Full path to cache file
+    """
+    if date_str is None:
+        date_str = datetime.now().strftime('%Y-%m-%d')
+    url_hash = get_url_hash(url)
+    cache_dir = os.path.join(CACHE_DIR, date_str)
+    return os.path.join(cache_dir, f'{url_hash}.json')
+
+
+def load_from_cache(url: str) -> dict | None:
+    """
+    Load cached content for URL.
+    Searches ALL date folders, not just today.
+    Auto-deletes corrupted (invalid JSON) cache files.
+    
+    Args:
+        url: The URL to find in cache
+    
+    Returns:
+        Cached data dict or None if not found
+    """
+    url_hash = get_url_hash(url)
+    filename = f'{url_hash}.json'
+    
+    # Search all date folders for this URL's cache (Newest first)
+    if os.path.exists(CACHE_DIR):
+        # [FIX] Sort folders by date descending to ensure we load the latest cache
+        date_folders = sorted(os.listdir(CACHE_DIR), reverse=True)
+        
+        for date_folder in date_folders:
+            date_path = os.path.join(CACHE_DIR, date_folder)
+            if not os.path.isdir(date_path):
+                continue
+            cache_path = os.path.join(date_path, filename)
+            if os.path.exists(cache_path):
+                try:
+                    with open(cache_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        print(f"📦 [Cache] Loaded from cache ({date_folder}): {url[:50]}...")
+                        return data
+                except json.JSONDecodeError as e:
+                    # Auto-delete corrupted cache file
+                    print(f"🗑️ [Cache] Corrupted JSON detected, auto-deleting: {cache_path}")
+                    print(f"   Error: {e}")
+                    try:
+                        os.remove(cache_path)
+                        print(f"   ✅ Deleted corrupted file")
+                    except Exception as del_err:
+                        print(f"   ❌ Failed to delete: {del_err}")
+                except Exception as e:
+                    print(f"⚠️ [Cache] Error reading cache: {e}")
+    return None
+
+
+def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
+    """
+    Save content to cache for URL.
+    Auto-generates article_id and cached_at if not present.
+    [MODIFIED] If date_str is None, it tries to find an existing file across ALL date folders first.
+               If found, it overwrites that file (preserving original date).
+               If not found, it defaults to Today's folder.
+    
+    Args:
+        url: The URL to cache
+        content: Content dict to save
+        date_str: Optional date string (defaults to today)
+    
+    Returns:
+        Path to saved cache file
+    """
+    url_hash = get_url_hash(url)
+    cache_path = None
+    
+    # 1. If date is NOT specified, try to find existing file to update in-place
+    if date_str is None:
+        # Search all folders
+        search_pattern = os.path.join(CACHE_DIR, '*', f'{url_hash}.json')
+        found_paths = glob.glob(search_pattern)
+        
+        if found_paths:
+            # Sort by modification time (latest first) to pick the most active one if duplicates exist
+            found_paths.sort(key=os.path.getmtime, reverse=True)
+            cache_path = found_paths[0]
+            # print(f"♻️ [Cache] Found existing file, updating in-place: {cache_path}")
+    
+    # 2. If not found or date explicit, calculate target path
+    if not cache_path:
+        cache_path = get_cache_path(url, date_str)
+        
+    cache_dir = os.path.dirname(cache_path)
+    
+    # Auto-generate article_id if not present (using 6-char convention)
+    if 'article_id' not in content:
+        content['article_id'] = get_article_id(url)
+    
+    # Auto-add cached_at timestamp if not present
+    if 'cached_at' not in content:
+        content['cached_at'] = datetime.now(timezone.utc).isoformat()
+    
+    # [NEW] Always update 'updated_at' for sync comparison
+    content['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    # [FIX] Convert any datetime objects to ISO strings for JSON serialization
+    def _serialize_datetimes(obj):
+        if isinstance(obj, dict):
+            return {k: _serialize_datetimes(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [_serialize_datetimes(i) for i in obj]
+        elif isinstance(obj, datetime):
+            return obj.isoformat()
+        return obj
+    
+    content = _serialize_datetimes(content)
+    
+    try:
+        os.makedirs(cache_dir, exist_ok=True)
+        with open(cache_path, 'w', encoding='utf-8') as f:
+            json.dump(content, f, ensure_ascii=False, indent=2)
+        print(f"💾 [Cache] Saved to {'existing' if date_str is None and glob.glob(os.path.join(CACHE_DIR, '*', f'{url_hash}.json')) else 'new'} path: {cache_path}")
+        return cache_path
+    except Exception as e:
+        print(f"⚠️ [Cache] Error saving cache: {e}")
+        return None
+
+
+# ==============================================================================
+# Field Normalization
+# ==============================================================================
+
+def normalize_field_names(data: dict) -> dict:
+    """
+    Normalize field names to handle case variations and nested structures.
+    Supports:
+    1. V1.0: IS_Analysis, ZES_Raw_Metrics -> 점수 계산 (score_engine 사용)
+    2. V0.9: Impact_Analysis_IS, Evidence_Analysis_ZES -> 점수 계산
+    3. Legacy raw_analysis -> 점수 계산
+    4. Nested 'Impact' object -> top-level 'impact_score', 'impact_evidence'
+    5. Nested 'ZeroEcho' object -> top-level 'zero_echo_score', 'evidence'
+    6. Case variations (Zero_Echo_Score -> zero_echo_score)
+    7. Legacy field migration (zero_noise_score -> zero_echo_score)
+    
+    Args:
+        data: Input data dict
+    
+    Returns:
+        Normalized flat data dict
+    """
+    if not isinstance(data, dict):
+        return data
+    
+    normalized = dict(data)
+    
+    # --- V1.0 Schema Support (IS_Analysis, ZES_Raw_Metrics) ---
+    if 'IS_Analysis' in normalized or 'ZES_Raw_Metrics' in normalized:
+        try:
+            from src.score_engine import process_raw_analysis
+            
+            # Calculate scores using V1.0 engine
+            scores = process_raw_analysis(normalized)
+            
+            if scores:
+                normalized['impact_score'] = scores.get('impact_score', 0)
+                normalized['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
+                normalized['evidence'] = scores.get('evidence', {})
+                normalized['impact_evidence'] = scores.get('impact_evidence', {})
+                normalized['schema_version'] = scores.get('schema_version', 'V1.0')
+                
+                print(f"✅ [Normalize] V1.0 Calculated: IS={normalized['impact_score']}, ZES={normalized['zero_echo_score']}")
+        except Exception as e:
+            print(f"⚠️ [Normalize] Error processing V1.0 Analysis: {e}")
+        
+        # V1.0 Meta Data Mapping
+        if 'Meta' in normalized and isinstance(normalized['Meta'], dict):
+            meta = normalized['Meta']
+            if 'Headline' in meta:
+                normalized['title_ko'] = meta['Headline']
+            if 'Summary' in meta:
+                normalized['summary'] = meta['Summary']
+            # Tags는 V1.0에서 'Tags', V0.9에서 'Tag'로 키가 다름
+            # MLL이 문자열로 반환할 수 있으므로 배열로 변환 처리
+            tags_raw = meta.get('Tags') or meta.get('Tag')
+            if tags_raw:
+                if isinstance(tags_raw, str):
+                    # 콤마로 구분된 문자열을 배열로 변환
+                    normalized['tags'] = [t.strip() for t in tags_raw.split(',') if t.strip()]
+                elif isinstance(tags_raw, list):
+                    normalized['tags'] = tags_raw
+                else:
+                    normalized['tags'] = []
+        
+        # V1.0 Article_ID Mapping
+        if 'Article_ID' in normalized and 'article_id' not in normalized:
+            normalized['article_id'] = normalized['Article_ID']
+    
+    # --- V0.9 Schema Support (Impact_Analysis_IS) ---
+    elif 'Impact_Analysis_IS' in normalized or 'Evidence_Analysis_ZES' in normalized:
+        try:
+            from src.score_engine import process_raw_analysis
+            
+            # Calculate scores using the engine
+            scores = process_raw_analysis(normalized)
+            
+            if scores:
+                normalized['impact_score'] = scores.get('impact_score', 0)
+                normalized['zero_echo_score'] = scores.get('zero_echo_score', 0)
+                normalized['evidence'] = scores.get('evidence', {})
+                normalized['impact_evidence'] = scores.get('impact_evidence', {})
+                
+                print(f"✅ [Normalize] V0.9 Calculated: IS={normalized['impact_score']}, ZES={normalized['zero_echo_score']}")
+        except Exception as e:
+            print(f"⚠️ [Normalize] Error processing V0.9 Analysis: {e}")
+
+        # V0.9 Meta Data Mapping
+        if 'Meta' in normalized and isinstance(normalized['Meta'], dict):
+            meta = normalized['Meta']
+            if 'Headline' in meta:
+                normalized['title_ko'] = meta['Headline']
+            if 'summary' in meta:
+                normalized['summary'] = meta['summary']
+            # Tags 처리: 문자열인 경우 배열로 변환
+            tags_raw = meta.get('Tags') or meta.get('Tag')
+            if tags_raw:
+                if isinstance(tags_raw, str):
+                    normalized['tags'] = [t.strip() for t in tags_raw.split(',') if t.strip()]
+                elif isinstance(tags_raw, list):
+                    normalized['tags'] = tags_raw
+                else:
+                    normalized['tags'] = []
+            
+    # --- Legacy raw_analysis 처리 (v6.2 - 바로 계산) ---
+    elif 'raw_analysis' in normalized:
+        try:
+            from src.score_engine import process_raw_analysis
+            
+            raw = normalized.get('raw_analysis')
+            scores = process_raw_analysis(raw)
+            
+            if scores:
+                # 바로 계산된 점수 적용 (기존값 체크 없이)
+                normalized['impact_score'] = scores.get('impact_score', 0)
+                normalized['zero_echo_score'] = scores.get('zero_echo_score', 5.0)
+                normalized['evidence'] = scores.get('evidence', {})
+                normalized['impact_evidence'] = scores.get('impact_evidence', {})
+                
+                print(f"✅ [Normalize] Calculated: IS={scores.get('impact_score')}, ZES={scores.get('zero_echo_score')}")
+        except Exception as e:
+            print(f"⚠️ [Normalize] Error processing raw_analysis: {e}")
+    
+    # --- 0. Unwrap 'response_schema' if present (Support for structured output) ---
+    if 'response_schema' in normalized and isinstance(normalized['response_schema'], dict):
+        print(f"[Normalize] Unwrapped 'response_schema' layer")
+        # Merge schema content into top level
+        # We prioritize schema content, but keep existing top-level keys if not in schema
+        schema_content = normalized.pop('response_schema')
+        for k, v in schema_content.items():
+            normalized[k] = v
+            
+    # --- 1. Flatten 'Impact' Object (Legacy) ---
+    if 'Impact' in normalized and isinstance(normalized['Impact'], dict):
+        impact_obj = normalized['Impact']
+        # Extract impact_score
+        if 'impact_score' not in normalized and 'impact_score' in impact_obj:
+            normalized['impact_score'] = impact_obj['impact_score']
+        
+        # Extract evidence/review if needed
+        if 'impact_evidence' in impact_obj:
+            # If compatible with top-level format, move it
+            if 'impact_evidence' not in normalized:
+                normalized['impact_evidence'] = impact_obj['impact_evidence']
+        
+        # Extract reviews
+        if 'impact_review_ko' in impact_obj:
+            normalized['impact_review_ko'] = impact_obj['impact_review_ko']
+        if 'impact_review_en' in impact_obj:
+            normalized['impact_review_en'] = impact_obj['impact_review_en']
+            
+    # --- 2. Flatten 'ZeroEcho' Object (Legacy) ---
+    if 'ZeroEcho' in normalized and isinstance(normalized['ZeroEcho'], dict):
+        ze_obj = normalized['ZeroEcho']
+        
+        # Extract ZeroEchoScore (handle case variations inside object)
+        ze_score = ze_obj.get('ZeroEchoScore') or ze_obj.get('zero_echo_score') or ze_obj.get('Zero_Echo_Score')
+        if ze_score is not None:
+            normalized['zero_echo_score'] = ze_score
+            
+        # Extract Evidence (penalties, credits, modifiers)
+        # We need to construct the 'evidence' object expected by the system
+        evidence_structure = {
+            "penalties": ze_obj.get('penalties', []),
+            "credits": ze_obj.get('credits', []),
+            "modifiers": ze_obj.get('modifiers', [])
+        }
+        
+        # Only set if not already present (or if present is empty)
+        if 'evidence' not in normalized or not normalized['evidence']:
+            normalized['evidence'] = evidence_structure
+            
+        # Extract reviews
+        if 'zeroechoscore_review_ko' in ze_obj:
+            normalized['zeroechoscore_review_ko'] = ze_obj['zeroechoscore_review_ko']
+        if 'zeroechoscore_review_en' in ze_obj:
+            normalized['zeroechoscore_review_en'] = ze_obj['zeroechoscore_review_en']
+
+    # --- 3. Top-level Normalization & Cleanup ---
+    keys_to_check = list(normalized.keys())
+    for key in keys_to_check:
+        key_lower = key.lower()
+        
+        # Handle zero_echo_score variations
+        if key_lower in ['zero_echo_score', 'zeroechoscore', 'zero_echo'] and key != 'zero_echo_score':
+            if 'zero_echo_score' not in normalized:
+                normalized['zero_echo_score'] = normalized.pop(key)
+                print(f"[Normalize] Renamed '{key}' to 'zero_echo_score'")
+            else:
+                # Duplicate, just remove the non-standard one
+                normalized.pop(key)
+                
+        # Handle legacy zero_noise_score
+        elif key_lower == 'zero_noise_score':
+            if 'zero_echo_score' not in normalized:
+                normalized['zero_echo_score'] = normalized.pop(key)
+                print(f"[Normalize] Migrated '{key}' to 'zero_echo_score'")
+            else:
+                normalized.pop(key)
+
+        # Handle Impact Score variations
+        elif key_lower == 'impact_score' and key != 'impact_score':
+             if 'impact_score' not in normalized:
+                normalized['impact_score'] = normalized.pop(key)
+
+    # Ensure scores are float/int
+    if 'impact_score' in normalized:
+        try:
+            normalized['impact_score'] = float(normalized['impact_score'])
+        except:
+            pass
+            
+    if 'zero_echo_score' in normalized:
+        try:
+            normalized['zero_echo_score'] = float(normalized['zero_echo_score'])
+        except:
+            pass
+
+    # --- 4. Root-level Headline -> title_ko mapping (V1.1 Support) ---
+    # LLM 응답에서 Headline이 Meta 없이 루트에 올 경우 대응
+    if 'Headline' in normalized and 'title_ko' not in normalized:
+        normalized['title_ko'] = normalized['Headline']
+        print(f"[Normalize] Mapped root 'Headline' -> 'title_ko'")
+
+    return normalized  # recalculate_scores 제거 - raw_analysis에서 직접 계산함
+
+
+def recalculate_scores(data: dict) -> dict:
+    """
+    Recalculate scores based on evidence to ensure integrity.
+    
+    Logic:
+    - Zero Echo Score:
+        - Base: 5.0
+        - Credits: Add values
+        - Penalties: Subtract values
+        - Limit: 0.0 ~ 10.0
+        
+    Args:
+        data: Normalized data dict
+        
+    Returns:
+        Data dict with validated stores
+    """
+    # 1. Zero Echo Score Validation
+    if 'evidence' in data and isinstance(data['evidence'], dict):
+        evidence = data['evidence']
+        
+        # Calculate calculated_score
+        # Base Score is 5.0 (Standard starting point)
+        calculated_score = 5.0
+        
+        # Add Credits
+        credits_list = evidence.get('credits', [])
+        if isinstance(credits_list, list):
+            for item in credits_list:
+                val = float(item.get('value', 0))
+                calculated_score += val
+                
+        # Subtract Penalties
+        penalties_list = evidence.get('penalties', [])
+        if isinstance(penalties_list, list):
+            for item in penalties_list:
+                val = float(item.get('value', 0))
+                calculated_score -= val
+                
+        # Clamp to 0.0 - 10.0
+        calculated_score = max(0.0, min(10.0, calculated_score))
+        calculated_score = round(calculated_score, 1)
+        
+        # Compare with existing score
+        original_score = float(data.get('zero_echo_score', 0))
+        
+        if abs(original_score - calculated_score) > 0.1:
+            print(f"⚠️ [Score Correction] ZeroEcho: {original_score} -> {calculated_score} (Based on Evidence)")
+            data['zero_echo_score'] = calculated_score
+            data['score_corrected'] = True
+            
+        # Ensure it's set if missing
+        if 'zero_echo_score' not in data:
+            data['zero_echo_score'] = calculated_score
+
+    return data
+
+
+# ==============================================================================
+# Manifest (index.json) Management
+# ==============================================================================
+
+def update_manifest(date_str: str) -> bool:
+    """
+    Updates or creates index.json for the given date directory.
+    Aggregates all .json files (excluding index.json, daily_summary.json) 
+    and saves them as a list sorted by impact_score.
+    
+    Args:
+        date_str: Date string in YYYY-MM-DD format
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        dir_path = os.path.join(DATA_DIR, date_str)
+        if not os.path.exists(dir_path):
+            return False
+            
+        json_files = glob.glob(os.path.join(dir_path, '*.json'))
+        articles = []
+        
+        for json_file in json_files:
+            basename = os.path.basename(json_file)
+            if basename in ['index.json', 'daily_summary.json']:
+                continue
+                
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                    # Extract article_id from data or filename
+                    article_id = data.get('article_id')
+                    if not article_id:
+                        parts = basename.replace('.json', '').split('_')
+                        article_id = parts[-1] if len(parts) > 1 else basename.replace('.json', '')
+                    
+                    # Get impact_score for sorting
+                    impact_score = data.get('impact_score', 0)
+                    
+                    # Lightweight index entry: only article_id and filename
+                    articles.append({
+                        "article_id": article_id,
+                        "filename": basename,
+                        "impact_score": impact_score  # Keep for sorting, can be used for quick filtering
+                    })
+            except Exception as e:
+                print(f"Error reading {json_file}: {e}")
+
+        # Sort by Impact Score Descending
+        articles.sort(key=lambda x: x.get('impact_score', 0), reverse=True)
+
+        manifest = {
+            "date": date_str,
+            "updated_at": datetime.now().isoformat(),
+            "count": len(articles),
+            "articles": articles
+        }
+
+        manifest_path = os.path.join(dir_path, 'index.json')
+        with open(manifest_path, 'w', encoding='utf-8') as f:
+            json.dump(manifest, f, ensure_ascii=False, indent=2)
+            
+        print(f"✅ [Manifest] Updated index.json for {date_str}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ [Manifest] Error updating manifest: {e}")
+        return False
+
+
+# ==============================================================================
+# URL Normalization (for deduplication)
+# ==============================================================================
+
+def normalize_url_for_dedupe(url: str) -> str:
+    """
+    Normalize URL for deduplication check.
+    Ignores scheme (http/https) and trailing slash.
+    
+    Args:
+        url: URL to normalize
+    
+    Returns:
+        Normalized URL string
+    """
+    if not url:
+        return ""
+    
+    try:
+        norm = url.strip()
+        
+        # Remove scheme
+        if norm.startswith('https://'):
+            norm = norm[8:]
+        elif norm.startswith('http://'):
+            norm = norm[7:]
+            
+        # Remove trailing slash
+        if norm.endswith('/'):
+            norm = norm[:-1]
+            
+        return norm
+    except:
+        return url
+
+
+# ==============================================================================
+# History Status Constants
+# ==============================================================================
+
+class HistoryStatus:
+    """Valid history status values."""
+    ACCEPTED = 'ACCEPTED'
+    REJECTED = 'REJECTED'
+    SKIPPED = 'SKIPPED'
+    WORTHLESS = 'WORTHLESS'
+    MLL_FAILED = 'MLL_FAILED'  # NEW: LLM response failed
+
+
+# ==============================================================================
+# Stage Classification (Unified Pipeline)
+# ==============================================================================
+
+class Stage:
+    """
+    Unified stage values for article lifecycle.
+    All UIs (Inspector, Desk, CacheManager) use this single source of truth.
+    
+    NOTE: 'published' is NOT a stage - it's an independent flag.
+    An article can be staged + published, analyzed + published, etc.
+    """
+    INBOX = 'inbox'         # 미분석 - 수집 직후, 분석 전
+    ANALYZED = 'analyzed'   # 분석됨 - LLM 분석 완료, 분류 대기
+    STAGED = 'staged'       # 분류됨 - 분류 완료, 발행 가능
+    TRASH = 'trash'         # 휴지통 - 폐기됨
+    # PUBLISHED removed - now an independent flag
+
+
+# Statuses that indicate rejection/trash
+REJECTED_STATUSES = ['MLL_FAILED', 'INVALID', 'TRASH', 'CORRUPTED', 'SKIPPED', 'WORTHLESS', 'REJECTED']
+
+
+def get_stage(data: dict) -> str:
+    """
+    Determine the stage of an article based on its data.
+    This is the SINGLE SOURCE OF TRUTH for stage classification.
+    
+    NOTE: 'published' is checked separately, not part of stage.
+    
+    Priority order:
+    1. Explicit 'stage' field (if already set)
+    2. Derived from other fields (for backward compatibility)
+    
+    Args:
+        data: Article data dict
+        
+    Returns:
+        Stage value (inbox, analyzed, staged, trash)
+    """
+    # 1. If explicit stage is set, use it (unless it's 'published' from old data)
+    existing_stage = data.get('stage')
+    if existing_stage and existing_stage != 'published':
+        return existing_stage
+    
+    # 2. Derive from other fields (backward compatibility)
+    
+    # Check for rejection/trash
+    if data.get('rejected', False):
+        return Stage.TRASH
+    if data.get('status') in REJECTED_STATUSES:
+        return Stage.TRASH
+    
+    # Check for staged (saved/accepted) - regardless of published status
+    if data.get('saved', False) or data.get('status') == 'ACCEPTED':
+        return Stage.STAGED
+    
+    # [FIX] Check for category (Implicit Staging)
+    # 카테고리가 지정되어 있고, '미분류'가 아니면 Staged로 간주
+    category = data.get('category')
+    if category and category != '미분류' and category != 'Uncategorized':
+        return Stage.STAGED
+    
+    # Check for analyzed (has scores or ANALYZED status)
+    if (data.get('status') == 'ANALYZED' or
+        data.get('mll_status') == 'analyzed' or
+        data.get('impact_score') is not None or
+        data.get('zero_echo_score') is not None):
+        return Stage.ANALYZED
+    
+    # Default: inbox
+    return Stage.INBOX
+
+
+def classify_article(data: dict) -> dict:
+    """
+    Unified classification function for articles.
+    Returns a dict with 'stage', 'is_published', 'category_key' for consistent
+    classification across Desk and Crawler.
+    
+    Returns:
+        {
+            'stage': Stage value (inbox, analyzed, staged, trash),
+            'is_published': bool,
+            'category_key': str - Which bucket this belongs to for stats
+        }
+    """
+    stage = get_stage(data)
+    is_published = data.get('published', False) is True
+    
+    # Determine category key for stats counting
+    # Priority: Published > Trash > Staged > Analyzed > Inbox
+    if is_published:
+        category_key = 'published'
+    elif stage == Stage.TRASH:
+        category_key = 'rejected'
+    elif stage == Stage.STAGED:
+        category_key = 'staged'
+    elif stage == Stage.ANALYZED:
+        category_key = 'analyzed'
+    else:
+        category_key = 'unanalyzed'
+    
+    return {
+        'stage': stage,
+        'is_published': is_published,
+        'category_key': category_key
+    }
+
+
+def set_stage(data: dict, stage: str) -> dict:
+    """
+    Set the stage of an article and update related fields.
+    
+    NOTE: 'published' is set separately via set_published().
+    
+    Args:
+        data: Article data dict
+        stage: Target stage value
+        
+    Returns:
+        Updated data dict
+    """
+    data['stage'] = stage
+    data['stage_updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    # Update related fields for backward compatibility
+    if stage == Stage.TRASH:
+        data['rejected'] = True
+    elif stage == Stage.STAGED:
+        data['saved'] = True
+    
+    return data
+
+
+def set_published(data: dict, published: bool = True) -> dict:
+    """
+    Set the published flag independently of stage.
+    
+    Args:
+        data: Article data dict
+        published: Whether the article is published
+        
+    Returns:
+        Updated data dict
+    """
+    data['published'] = published
+    if published:
+        data['published_at'] = datetime.now(timezone.utc).isoformat()
+    return data
+
+
+# ==============================================================================
+# Data File Naming
+# ==============================================================================
+
+def get_data_filename(source_id: str, url: str) -> str:
+    """
+    Generate data filename using source_id and URL hash.
+    Format: {source_id}_{url_hash_8}.json
+    
+    Args:
+        source_id: Source identifier (e.g., 'aitimes', 'venturebeat')
+        url: Article URL
+    
+    Returns:
+        Filename string
+    """
+    url_hash = get_url_hash(url, length=8)
+    return f"{source_id}_{url_hash}.json"
+
+
+# ==============================================================================
+# Utility & Logic Functions (Moved from manual_crawler.py)
+# ==============================================================================
+
+import aiohttp
+import asyncio
+
+async def check_url_quality(urls: list) -> list:
+    """
+    Check quality of multiple URLs asynchronously.
+    Checks reachability and minimum content length.
+    
+    Args:
+        urls: List of URL strings
+    
+    Returns:
+        List of dicts [{'url': url, 'status': 'valid'|'invalid'}]
+    """
+    results = []
+    if not urls:
+        return results
+        
+    async def _check(session, url):
+        try:
+            async with session.get(url, timeout=5, ssl=False) as response:
+                if response.status != 200:
+                    return {'url': url, 'status': 'invalid'}
+                
+                content = await response.content.read(10240)
+                text = content.decode('utf-8', errors='ignore')
+                
+                if len(text) < 500:
+                    return {'url': url, 'status': 'invalid'}
+                return {'url': url, 'status': 'valid'}
+        except Exception:
+            return {'url': url, 'status': 'invalid'}
+
+    async with aiohttp.ClientSession() as session:
+        tasks = [_check(session, url) for url in urls]
+        # Gather results (they come back in order if we use gather, but we don't strictly assume order)
+        results = await asyncio.gather(*tasks)
+    
+    return results
+
+
+def find_duplicate_files(data_dir: str = DATA_DIR) -> dict:
+    """
+    Find duplicate data files across all date folders based on URL.
+    
+    Args:
+        data_dir: Root data directory to search
+    
+    Returns:
+        Dict containing stats and duplicates list
+    """
+    url_to_files = {}
+    
+    if os.path.exists(data_dir):
+        for date_folder in os.listdir(data_dir):
+            date_path = os.path.join(data_dir, date_folder)
+            if not os.path.isdir(date_path):
+                continue
+            
+            for filename in os.listdir(date_path):
+                if not filename.endswith('.json') or filename in ['daily_summary.json', 'index.json']:
+                    continue
+                
+                filepath = os.path.join(date_path, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        url = data.get('url', '')
+                        if url:
+                            norm_url = normalize_url_for_dedupe(url)
+                            if norm_url not in url_to_files:
+                                url_to_files[norm_url] = []
+                            url_to_files[norm_url].append({
+                                'filename': filename,
+                                'date': date_folder,
+                                'path': filepath,
+                                'crawled_at': data.get('crawled_at', ''),
+                                'article_id': data.get('article_id', ''),
+                                'original_url': url
+                            })
+                except:
+                    pass
+    
+    duplicates = {k: v for k, v in url_to_files.items() if len(v) > 1}
+    
+    for _, files in duplicates.items():
+        files.sort(key=lambda x: x.get('crawled_at', ''), reverse=True)
+    
+    return {
+        'duplicates': duplicates,
+        'total_duplicate_urls': len(duplicates),
+        'total_duplicate_files': sum(len(f) - 1 for f in duplicates.values())
+    }
+
+
+def reset_article_cache(url: str, db_client=None) -> bool:
+    """
+    Reset cache fields and remove from history DB to allow re-crawling.
+    
+    Args:
+        url: Article URL
+        db_client: Optional DBClient instance. If None, safe to pass None but history won't remove if not provided outside.
+                  (Ideally passed in, or we assume caller handled db removal)
+                  Actually for this util we can handle db if we import it, but circular imports...
+                  Let's keep DB part outside or lazy import.
+    
+    Returns:
+        True if cache found and updated, False otherwise
+    """
+    # Note: DB removal handled by caller usually or lazy import here
+    cached = load_from_cache(url)
+    if cached:
+        # Clear analysis-related fields
+        for field in ['mll_status', 'raw_analysis', 'zero_echo_score', 'impact_score', 
+                     'staged', 'staged_at', 'published', 'published_at', 'rejected']:
+            cached.pop(field, None)
+        save_to_cache(url, cached)
+        return True
+    return False

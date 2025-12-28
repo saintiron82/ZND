@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZND Desk - 설정</title>
+    <link rel="stylesheet" href="/static/css/desk.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <a href="/analyzer" class="tab">🔬 AI 분석</a>
+        <a href="/publisher" class="tab">📢 발행</a>
+        <a href="/board" class="tab">📋 보드</a>
+        <div class="nav-right">
+            <a href="/settings" class="btn-settings active">⚙️ 설정</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h1>설정</h1>
+
+        <!-- Schedule Section -->
+        <section class="settings-section">
+            <div class="section-header">
+                <h2>📅 수집 스케줄링</h2>
+                <button id="btn-add-schedule" class="btn btn-primary">+ 스케줄 추가</button>
+            </div>
+
+            <div class="schedule-list" id="schedule-list">
+                <!-- 동적으로 로드 -->
+            </div>
+        </section>
+
+        <!-- Firebase Usage Section -->
+        <section class="settings-section">
+            <div class="section-header">
+                <h2>🔥 Firebase 사용량</h2>
+                <button id="btn-reset-stats" class="btn">리셋</button>
+            </div>
+
+            <div class="stats-grid" id="firebase-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-reads">-</div>
+                    <div class="stat-label">읽기</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-writes">-</div>
+                    <div class="stat-label">쓰기</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-deletes">-</div>
+                    <div class="stat-label">삭제</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Schedule Modal -->
+        <div id="schedule-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="modal-title">스케줄 추가</h3>
+                <input type="hidden" id="edit-schedule-id">
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" id="schedule-name" class="input" placeholder="스케줄 이름">
+                </div>
+                <div class="form-group">
+                    <label>Cron 표현식</label>
+                    <input type="text" id="schedule-cron" class="input" placeholder="30 6 * * *">
+                    <small class="hint">형식: 분 시 일 월 요일 (예: 30 6 * * * = 매일 6:30)</small>
+                </div>
+                <div class="modal-actions">
+                    <button id="btn-modal-save" class="btn btn-primary">저장</button>
+                    <button id="btn-modal-cancel" class="btn">취소</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>처리 중...</p>
+        </div>
+    </main>
+
+    <script src="/static/js/desk.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initSettingsPage();
+        });
+
+        async function initSettingsPage() {
+            await loadSchedules();
+            await loadFirebaseStats();
+            setupSettingsEvents();
+        }
+
+        async function loadSchedules() {
+            try {
+                const result = await fetchAPI('/api/settings/schedules');
+                if (result.success) {
+                    renderSchedules(result.schedules);
+                }
+            } catch (e) {
+                console.error('Failed to load schedules:', e);
+            }
+        }
+
+        function renderSchedules(schedules) {
+            const container = document.getElementById('schedule-list');
+            if (!container) return;
+
+            container.innerHTML = schedules.map(s => `
+                <div class="schedule-item" data-id="${s.id}">
+                    <div class="schedule-info">
+                        <label class="toggle">
+                            <input type="checkbox" class="schedule-toggle" ${s.enabled ? 'checked' : ''}>
+                            <span class="slider"></span>
+                        </label>
+                        <span class="schedule-name">${s.name}</span>
+                        <code class="schedule-cron">${s.cron}</code>
+                    </div>
+                    <div class="schedule-actions">
+                        <button class="btn btn-edit" onclick="editSchedule('${s.id}')">✏️</button>
+                        <button class="btn btn-danger btn-delete" onclick="deleteSchedule('${s.id}')">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Toggle events
+            container.querySelectorAll('.schedule-toggle').forEach(toggle => {
+                toggle.addEventListener('change', async (e) => {
+                    const item = e.target.closest('.schedule-item');
+                    const id = item.dataset.id;
+                    await fetchAPI(`/api/settings/schedules/${id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ enabled: e.target.checked })
+                    });
+                });
+            });
+        }
+
+        async function loadFirebaseStats() {
+            try {
+                const result = await fetchAPI('/api/settings/firebase-stats');
+                if (result.success) {
+                    document.getElementById('stat-reads').textContent = result.stats.reads;
+                    document.getElementById('stat-writes').textContent = result.stats.writes;
+                    document.getElementById('stat-deletes').textContent = result.stats.deletes;
+                }
+            } catch (e) {
+                console.error('Failed to load stats:', e);
+            }
+        }
+
+        function setupSettingsEvents() {
+            // Add schedule
+            document.getElementById('btn-add-schedule')?.addEventListener('click', () => {
+                document.getElementById('modal-title').textContent = '스케줄 추가';
+                document.getElementById('edit-schedule-id').value = '';
+                document.getElementById('schedule-name').value = '';
+                document.getElementById('schedule-cron').value = '';
+                document.getElementById('schedule-modal').classList.remove('hidden');
+            });
+
+            // Modal save
+            document.getElementById('btn-modal-save')?.addEventListener('click', async () => {
+                const id = document.getElementById('edit-schedule-id').value;
+                const name = document.getElementById('schedule-name').value;
+                const cron = document.getElementById('schedule-cron').value;
+
+                if (!name || !cron) {
+                    alert('이름과 Cron 표현식을 입력해주세요.');
+                    return;
+                }
+
+                showLoading();
+                try {
+                    if (id) {
+                        await fetchAPI(`/api/settings/schedules/${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify({ name, cron })
+                        });
+                    } else {
+                        await fetchAPI('/api/settings/schedules', {
+                            method: 'POST',
+                            body: JSON.stringify({ name, cron })
+                        });
+                    }
+                    document.getElementById('schedule-modal').classList.add('hidden');
+                    await loadSchedules();
+                } finally {
+                    hideLoading();
+                }
+            });
+
+            // Modal cancel
+            document.getElementById('btn-modal-cancel')?.addEventListener('click', () => {
+                document.getElementById('schedule-modal').classList.add('hidden');
+            });
+
+            // Reset stats
+            document.getElementById('btn-reset-stats')?.addEventListener('click', async () => {
+                await fetchAPI('/api/settings/firebase-stats/reset', { method: 'POST' });
+                await loadFirebaseStats();
+            });
+        }
+
+        function editSchedule(id) {
+            const item = document.querySelector(`.schedule-item[data-id="${id}"]`);
+            const name = item.querySelector('.schedule-name').textContent;
+            const cron = item.querySelector('.schedule-cron').textContent;
+
+            document.getElementById('modal-title').textContent = '스케줄 수정';
+            document.getElementById('edit-schedule-id').value = id;
+            document.getElementById('schedule-name').value = name;
+            document.getElementById('schedule-cron').value = cron;
+            document.getElementById('schedule-modal').classList.remove('hidden');
+        }
+
+        async function deleteSchedule(id) {
+            if (!confirm('이 스케줄을 삭제하시겠습니까?')) return;
+
+            showLoading();
+            try {
+                await fetchAPI(`/api/settings/schedules/${id}`, { method: 'DELETE' });
+                await loadSchedules();
+            } finally {
+                hideLoading();
+            }
+        }
+    </script>
+
+    <style>
+        .settings-section {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .schedule-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .schedule-cron {
+            background: var(--bg-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .schedule-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--accent-success);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group .input {
+            width: 100%;
+        }
+
+        .hint {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+    </style>
+</body>
+
+</html>

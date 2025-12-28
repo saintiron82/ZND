@@ -180,23 +180,67 @@ def save_article(data: dict, source_id: str = None, skip_evaluation: bool = Fals
 def mark_worthless(url: str, reason: str) -> dict:
     """
     Mark an article as worthless (unified for auto/manual).
-    
-    Args:
-        url: Article URL
-        reason: Reason for marking worthless
-    
-    Returns:
-        Result dict
+    Saves to DB as REJECTED so it appears in Publisher.
     """
     db = get_db()
+    # Update history
     db.save_history(url, HistoryStatus.WORTHLESS, reason=reason)
     
-    # Update cache if exists
+    # Load content from cache to save to DB
+    from src.core.article_state import ArticleState
     cached = load_from_cache(url)
-    if cached:
-        save_to_cache(url, {**cached, 'status': 'worthless', 'reason': reason})
     
-    print(f"🚫 [Worthless] Marked: {url[:50]}... ({reason})")
+    if cached:
+        # Save cache update
+        save_to_cache(url, {**cached, 'status': 'worthless', 'reason': reason})
+        
+        # Determine source_id
+        source_id = cached.get('source_id', 'unknown')
+        
+        # Construct DB Article
+        article_id = get_article_id(url)
+        now = datetime.now(timezone.utc).isoformat()
+        
+        article_data = {
+            '_header': {
+                'version': '1.0',
+                'article_id': article_id,
+                'state': ArticleState.REJECTED.value,
+                'created_at': now,
+                'updated_at': now,
+                'state_history': [
+                    {'state': ArticleState.REJECTED.value, 'at': now, 'by': 'pipeline', 'reason': reason}
+                ]
+            },
+            '_original': {
+                'url': url,
+                'title': cached.get('title', ''),
+                'text': cached.get('text', ''),
+                'image': cached.get('image'),
+                'source_id': source_id,
+                'crawled_at': cached.get('crawled_at', now)
+            },
+            '_analysis': {
+                'reason': reason,
+                'status': 'worthless',
+                # Keep scores if available
+                'zero_echo_score': cached.get('zero_echo_score', 0),
+                'impact_score': cached.get('impact_score', 0)
+            },
+            '_classification': None,
+            '_publication': None
+        }
+        
+        # Save to Firestore
+        try:
+            db.save_article(article_id, article_data)
+            print(f"🚫 [Worthless] Saved as REJECTED: {url[:50]}... ({reason})")
+        except Exception as e:
+            print(f"❌ [Worthless] Failed to save DB: {e}")
+
+    else:
+        print(f"🚫 [Worthless] Marked (No Cache): {url[:50]}... ({reason})")
+        
     return {'status': 'worthless', 'reason': reason}
 
 
@@ -335,6 +379,7 @@ async def process_article(
         except Exception as e:
             return mark_mll_failed(url, f'error: {str(e)[:50]}')
 
+
     
     # 6. Prepare final document
     final_doc = {
@@ -347,13 +392,13 @@ async def process_article(
         'mll_status': 'analyzed',
     }
     
-    # 7. Save to cache (NOT data folder - data is created only on publish)
-    save_to_cache(url, final_doc)
+    # 7. Save to Firestore (로컬 캐시 저장 제거)
+    db.save_article(final_doc)
     
     return {
         'status': 'analyzed',
         'article_id': get_article_id(url),
-        'message': 'Analysis complete. Use publish to create data file.'
+        'message': 'Analysis complete. Saved to Firestore.'
     }
 
 

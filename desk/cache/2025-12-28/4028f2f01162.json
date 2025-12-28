@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "4028f2f01162",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-28T06:51:01.655829+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:10:52.824292+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:10:52.824292+00:00"
+  },
+  "_original": {
+    "title": "중국, 20조 규모 '기술 독립 펀드' 출범...\"하드 테크에 20년 장기 투자\" - AI타임스",
+    "description": "중국이 기술 경쟁력을 강화하기 위해 대규모 국가 차원의 벤처캐피털 펀드와 3개의 지역 펀드를 공식 출범했다. 26일(현지시간) 신화통신과 중국중앙TV(CCTV)에",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205127_206632_300.jpg",
+    "text": "(사진=셔터스톡) 중국이 기술 경쟁력을 강화하기 위해 대규모 국가 차원의 벤처캐피털 펀드와 3개의 지역 펀드를 공식 출범했다. 26일(현지시간) 신화통신과 중국중앙TV(CCTV)에 따르면, 중국 정부는 국가 창업투자 유도 펀드와 함께 징진지(베이징·톈진·허베이), 양쯔강 삼각주, 대만만 지역을 아우르는 3개의 대형 지역 벤처펀드 공식 운영에 들어갔다고 발표했다. 이번 펀드는 인터넷 서비스 등 소프트 기술이 아니라, 반도체와 양자 기술, 바이오의약, 뇌-컴퓨터 인터페이스, 항공우주 등 이른바 ‘하드 테크’와 전략적 신흥·미래 산업에 집중 투자된다. 미국과의 기술 경쟁 심화에 대응하고 자국 기술 자립을 가속하려는 의도다. 중국 재정부가 1000억위안(약 20조원)을 출자했으며, 초장기 특별 국채 발행을 통해 재원을 마련했다. 이 국가 펀드는 지분 투자 방식으로 지역 펀드 조성에 참여하며, 각 지역 펀드는 최종적으로 500억위안(약 10조원) 이상 규모로 성장할 것으로 예상된다. 투자 대상은 주로 초기·창업 단계 스타트업이다. 개별 기업의 기업가치는 5억위안 이하, 단일 투자 금액은 5000만위안 이하로 제한된다. 특히 국가 펀드 전체 투자금의 70% 이상이 시드 및 초기 기업에 배정될 예정이다. 바이징위 국가발전개혁위원회(NDRC) 국장은 “신흥 산업과 미래 산업은 여전히 투자와 혁신 자원이 부족하다”라며 “장기적인 비전으로 자본을 공급하는 것이 이번 펀드의 목적”이라고 밝혔다. 또 “투자 결정은 시장 원칙에 따라 전문 운용진이 맡게 될 것”이라고 강조했다. 이번 국가 펀드는 총 20년간 운용된다. 처음 10년은 투자, 이후 10년은 회수에 집중한다. 이를 통해 중국 정부는 핵심 기술 분야의 중소 혁신기업, 이른바 ‘리틀 자이언트’와 유니콘 기업을 장기적으로 육성한다는 계획이다. 미국 등의 제재에 취약하지 않은 자체 공급망을 구축할 핵심 기업들이 여기에 포함된다. 박찬 기자 cpark@aitimes.com",
+    "published_at": "2025-12-27T20:13:58+09:00",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205127",
+    "source_id": "aitimes",
+    "crawled_at": "2025-12-28T06:51:01.655829+00:00"
+  },
+  "_analysis": {
+    "title_ko": "중국, 20조원 규모 '하드 테크' 육성 국가 펀드 출범",
+    "summary": "중국 정부가 기술 자립을 위해 20조원 규모의 국가 벤처캐피털 펀드를 출범. 반도체, 양자 기술 등 하드 테크 분야 스타트업에 20년간 장기 투자하여 미국의 제재에 대응하고자 함.",
+    "tags": [
+      "Regulation",
+      "Investment",
+      "Hardware"
+    ],
+    "impact_score": 5.5,
+    "zero_echo_score": 5.8,
+    "analyzed_at": "2025-12-28T06:58:02.822121+00:00",
+    "mll_raw": {
+      "Article_ID": "4028f2f01162",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "중국, 20조원 규모 '하드 테크' 육성 국가 펀드 출범",
+        "Summary": "중국 정부가 기술 자립을 위해 20조원 규모의 국가 벤처캐피털 펀드를 출범. 반도체, 양자 기술 등 하드 테크 분야 스타트업에 20년간 장기 투자하여 미국의 제재에 대응하고자 함.",
+        "Tags": [
+          "Regulation",
+          "Investment",
+          "Hardware"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "국가(China, Tier 2) 주도의 거시 경제 정책이자 전략적 자금 투입. 기술 패권 경쟁(Strategic)의 일환이며, 국가 인프라 및 산업 생태계 전반(X2)에 영향을 미치는 확정된(Y4) 사건.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "China",
+              "Pe_Tier": 2,
+              "Se_Entity_Name": "None",
+              "Se_Tier": 0,
+              "PE/SE_Rationale": "자금 투입 및 펀드 조성의 주체인 중국 정부(P4). 대외적으로 미국 견제이나 직접적 분쟁 행위는 아니므로 SE None."
+            },
+            "Tier_Score": 2,
+            "Gap_Score": 0,
+            "IW_Score": 2
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 2,
+              "Y_Evidence_Code": 4,
+              "Scope_Matrix_Score": 2,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Criticality_Total": 1.5,
+              "SOTA_Check_Result": "Par"
+            },
+            "IE_Score": 3.5
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 7,
+          "T2": 6,
+          "T3": 8,
+          "Rationale": "펀드 규모, 운영 기간, 투자 대상 등 구체적 정보 포함."
+        },
+        "Noise": {
+          "P1": 3,
+          "P2": 4,
+          "P3": 2,
+          "Rationale": "관영 매체 인용으로 인한 정부 입장 대변 성향 존재."
+        },
+        "Utility": {
+          "V1": 7,
+          "V2": 6,
+          "V3": 5,
+          "Rationale": "중국 시장 투자 및 기술 규제 환경 이해에 중요."
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "팩트 위주의 정책 보도."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "Business",
+    "is_selected": true,
+    "classified_at": "2025-12-28T07:59:57.624187+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:06:45.157971+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

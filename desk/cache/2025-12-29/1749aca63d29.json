@@ -1,0 +1,212 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "1749aca63d29",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-28T17:19:41.903669+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-28T17:23:52.174995+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-28T18:18:50.522963+00:00",
+        "by": "user_classification"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T18:20:12.315936+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T18:20:12.315936+00:00"
+  },
+  "_original": {
+    "title": "중국 ‘국민 방송’ 춘절 갈라에 AI·클라우드 기업 후원 경쟁 치열 - AI타임스",
+    "description": "중국 최대 명절 방송인 춘절(음력 설)의 '갈라' 쇼를 둘러싸고 빅테크와 신흥 기술 기업 간의 후원 경쟁이 치열해지고 있다는 소식이다. AI 경쟁이 격화되며, 중",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205135_206656_116.png",
+    "text": "지난 1월 춘제 갈라쇼 무대에 오르는 유니트리의 'H1' 휴머노이드 로봇 (사진=유니트리) 중국 최대 명절 방송인 춘절(음력 설)의 '갈라' 쇼를 둘러싸고 빅테크와 신흥 기술 기업 간의 후원 경쟁이 치열해지고 있다는 소식이다. AI 경쟁이 격화되며, 중국에서 가장 많은 시청자를 확보한 이 방송 프로그램이 AI와 클라우드 기업의 기술 마케팅 격전지로 떠올랐다는 내용이다. 사우스차이나모닝포스트(SCMP)는 26일 바이트댄스와 텐센트, 알리바바 등 중국 빅테크 기업들이 춘절 갈라 방송을 앞두고 국영 방송사 중국중앙TV(CCTV)와 고가의 파트너십 패키지를 놓고 논의를 진행 중이라고 보도했다. 특히, 바이트댄스의 클라우드 부문인 볼케이노 엔진(Volcano Engine)은 독점 AI 클라우드 파트너로 거론됐고, 자체 AI 앱 ‘더우바오(Doubao)’를 통해 방송 중 새로운 인터랙티브 기능을 선보일 가능성도 제기됐다. 아직 후원은 확정되지 않은 상태다. 바이트댄스가 경쟁사 클라우드 및 AI 소프트웨어의 언급이나 사용을 사실상 차단하는 AI 분야 독점 조건을 요구하면서 협상이 복잡해졌기 때문이다. 이는 경쟁사인 텐센트 등을 견제하려는 의도다. 한 관계자는 “이번 경쟁은 단순한 로고 노출을 넘어, 제품 기능을 단숨에 대중화할 기회를 둘러싼 전쟁”이라고 전했다. 춘절 갈라는 세계 최대 규모의 단일 방송 프로그램 중 하나로 꼽힌다. 시청자 규모는 10억명 내외로 알려져 있다. 이전부터 신기술 확산의 중요한 역할을 맡아왔다. 2015년 위챗은 갈라의 독점 인터랙티브 플랫폼으로 참여해 ‘디지털 홍바오(세뱃돈)’ 캠페인을 선보였고, 이는 모바일 결제 대중화를 이끌며 알리페이의 아성에 도전하는 계기가 됐다. 이후 알리페이, 알리바바, 바이두, 콰이쇼우, 더우인(틱톡 중국판) 등 인터넷 기업들이 번갈아 가며 후원에 나섰다. 최근에는 로봇과 스마트 기기 기업들이 주목하고 있다. 지난 1월 갈라에서는 유니트리 로보틱스가 약 1억위안(약 200억원)을 들여 파트너십을 확보, 6대의 휴머노이드 로봇이 군무를 선보이며 세계적인 화제를 모았다. 이후 유니트리는 중국을 대표하는 로봇 기업으로 떠올랐다. 이 때문에 경쟁 로봇 스타트업 애지봇도 내년 갈라 후원 참여를 검토한 것으로 알려졌다. 이런 성공 사례에 힘입어, 신흥 소비자 전자 브랜드들도 노출을 노리고 있다. 항저우의 스마트 안경 업체 로키드와 로봇청소기로 유명한 가전 브랜드 드리미 등이 대표적이다. 음력 설 전날인 2026년 2월16일 방영 예정인 2026년 춘절 갈라에는 이처럼 중국이 강조하는 데이터, AI, 바이오 등 ‘신질생산력(新质生产力)’과 연관된 기업들의 공격적인 입찰이 이어지고 있다. 과거 시계·주류·가전 브랜드가 주를 이뤘던 후원사 면면이 인터넷과 AI·로봇 기업으로 바뀐 점은 중국 산업 우선순위의 변화를 상징적으로 보여준다는 평이다. 박찬 기자 cpark@aitimes.com",
+    "published_at": "2025-12-28T19:13:05+09:00",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205135",
+    "source_id": "aitimes",
+    "crawled_at": "2025-12-28T17:19:41.903669+00:00"
+  },
+  "_analysis": {
+    "title_ko": "中 춘절 갈라, 빅테크 AI·클라우드 마케팅 격전지로 부상",
+    "summary": "중국 최대 명절 방송인 춘절 갈라쇼의 후원권을 놓고 바이트댄스, 텐센트 등 빅테크 기업들의 경쟁이 치열하다. 특히 바이트댄스는 경쟁사 AI 노출 배제 조건을 내걸며 공격적인 마케팅을 펼치고 있다. 이는 AI 기술이 중국 내 대중화 단계에 진입했음을 보여주는 상징적 현상이다.",
+    "tags": [
+      "Marketing",
+      "Event",
+      "China"
+    ],
+    "impact_score": 1.5,
+    "zero_echo_score": 8.5,
+    "analyzed_at": "2025-12-28T17:23:51.768139+00:00",
+    "mll_raw": {
+      "Article_ID": "1749aca63d29",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "中 춘절 갈라, 빅테크 AI·클라우드 마케팅 격전지로 부상",
+        "Summary": "중국 최대 명절 방송인 춘절 갈라쇼의 후원권을 놓고 바이트댄스, 텐센트 등 빅테크 기업들의 경쟁이 치열하다. 특히 바이트댄스는 경쟁사 AI 노출 배제 조건을 내걸며 공격적인 마케팅을 펼치고 있다. 이는 AI 기술이 중국 내 대중화 단계에 진입했음을 보여주는 상징적 현상이다.",
+        "Tags": [
+          "Marketing",
+          "Event",
+          "China"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "마케팅 이벤트(Corporate)에 불과하며, 아직 협상 중인 단계(Y=1)로 실체적 영향력은 미미하다. 다만 중국 빅테크 간의 치열한 경쟁 구도를 보여준다.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "ByteDance",
+              "Pe_Tier": 2,
+              "Se_Entity_Name": "CCTV",
+              "Se_Tier": 4,
+              "PE/SE_Selection_Reason": "후원 경쟁을 주도하며 조건을 제시하는 능동적 주체(P4). CCTV는 협상 대상(SE)."
+            },
+            "Tier_Score": 2,
+            "Gap_Score": -0.5,
+            "IW_Score": 1.5
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 1,
+              "Y_Evidence_Code": 1,
+              "Scope_Matrix_Score": 0,
+              "Criticality_C1_Provenness": 0,
+              "Criticality_C2_Societal_Weight": 0,
+              "Criticality_Total": 0,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 0
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 4,
+          "T2": 2,
+          "T3": 4,
+          "Rationale": "협상 중인 내용으로 확정된 팩트가 적음."
+        },
+        "Noise": {
+          "P1": 4,
+          "P2": 3,
+          "P3": 3,
+          "Rationale": "마케팅 관련 추측성 보도."
+        },
+        "Utility": {
+          "V1": 4,
+          "V2": 2,
+          "V3": 3,
+          "Rationale": "마케터 외에는 큰 효용이 없음."
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "보정 없음."
+        }
+      }
+    },
+    "impact_evidence": {
+      "calculations": {
+        "IW_Analysis": {
+          "Tier_Score": 2.0,
+          "Gap_Score": -0.5,
+          "IW_Total": 1.5
+        },
+        "IE_Analysis": {
+          "Scope_Total": 0.0,
+          "Criticality_Total": 0.0,
+          "IE_Total": 0.0
+        },
+        "IS_Raw": 1.5,
+        "IS_Final": 1.5,
+        "Score_Commentary": "마케팅 이벤트(Corporate)에 불과하며, 아직 협상 중인 단계(Y=1)로 실체적 영향력은 미미하다. 다만 중국 빅테크 간의 치열한 경쟁 구도를 보여준다."
+      },
+      "raw_inputs": {
+        "Pe_Selection_Rule": "P4",
+        "Pe_Entity_Name": "ByteDance",
+        "Pe_Tier": 2,
+        "Se_Entity_Name": "CCTV",
+        "Se_Tier": 4,
+        "PE/SE_Selection_Reason": "후원 경쟁을 주도하며 조건을 제시하는 능동적 주체(P4). CCTV는 협상 대상(SE)."
+      },
+      "raw_ie_inputs": {
+        "X_Magnitude_Code": 1,
+        "Y_Evidence_Code": 1,
+        "Scope_Matrix_Score": 0,
+        "Criticality_C1_Provenness": 0,
+        "Criticality_C2_Societal_Weight": 0,
+        "Criticality_Total": 0,
+        "SOTA_Check_Result": "False"
+      }
+    },
+    "evidence": {
+      "breakdown": {
+        "Signal": {
+          "T1": 4.0,
+          "T2": 2.0,
+          "T3": 4.0,
+          "S_Avg": 3.33
+        },
+        "Noise": {
+          "P1": 4.0,
+          "P2": 3.0,
+          "P3": 3.0,
+          "N_Avg": 3.33
+        },
+        "Utility": {
+          "V1": 4.0,
+          "V2": 2.0,
+          "V3": 3.0,
+          "U_Avg": 3.0
+        },
+        "Fine_Adjustment": 0.0,
+        "ZS_Raw": 8.5,
+        "ZS_Final": 8.5
+      },
+      "raw_metrics": {
+        "Signal": {
+          "T1": 4,
+          "T2": 2,
+          "T3": 4,
+          "Rationale": "협상 중인 내용으로 확정된 팩트가 적음."
+        },
+        "Noise": {
+          "P1": 4,
+          "P2": 3,
+          "P3": 3,
+          "Rationale": "마케팅 관련 추측성 보도."
+        },
+        "Utility": {
+          "V1": 4,
+          "V2": 2,
+          "V3": 3,
+          "Rationale": "마케터 외에는 큰 효용이 없음."
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "보정 없음."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "Business"
+  },
+  "_publication": {
+    "edition_code": "251229_7",
+    "edition_name": "제7호",
+    "published_at": "2025-12-28T18:20:11.931113+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

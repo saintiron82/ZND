@@ -1,5 +1,6 @@
 """
 ZED Scoring Engine v9.0 (V1.0 Only)
+Ported from desk_arcive for Desk V2 Inspector.
 
 Supports:
 - V1.0.0 Schema (IS_Analysis, ZES_Raw_Metrics)
@@ -27,34 +28,6 @@ def safe_float(value: Union[str, int, float, None], default: float = 0.0) -> flo
         except ValueError:
             return default
     return default
-
-
-def detect_schema_version(data: dict) -> str:
-    """
-    Detect schema version from 'version' field.
-    
-    Returns:
-        SCHEMA_V1_0 if version contains '1.0'
-        SCHEMA_LEGACY otherwise
-    """
-    if not data or not isinstance(data, dict):
-        return SCHEMA_LEGACY
-    
-    # Check version fields (multiple locations)
-    meta = data.get('Meta', {})
-    version = (
-        data.get('version', '') or  # 캐시에 저장된 버전 필드 (우선)
-        meta.get('Specification_Version', '') or 
-        data.get('Specification_Version', '') or
-        data.get('schema_version', '')
-    )
-    
-    if version and '1.0' in str(version):
-        print(f"✅ [ScoreEngine] Detected V1.0: {version}")
-        return SCHEMA_V1_0
-    
-    print(f"⚠️ [ScoreEngine] Version not found: '{version}' → Legacy")
-    return SCHEMA_LEGACY
 
 
 def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
@@ -109,6 +82,8 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     t2 = safe_float(signal.get('T2'))
     t3 = safe_float(signal.get('T3'))
     s = (t1 + t2 + t3) / 3.0
+    # Note: If T3 is missing in user input, it counts as 0, lowering average.
+    # User's example only had T1 or T2. Logic implies T3=0 if missing.
     
     # Extract Noise (P1, P2, P3)
     noise = zes_raw_metrics.get('Noise', {})
@@ -144,125 +119,3 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     }
     
     return zero_echo_score, breakdown
-
-
-def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
-    """
-    Process raw_analysis data to generate final scores.
-    Supports V1.0 and Legacy only.
-    
-    Args:
-        raw: Analysis data dict
-        force_schema_version: Optional. Force a specific schema version
-    """
-    if not raw or not isinstance(raw, dict):
-        return {}
-    
-    # Unwrap 'raw_analysis' wrapper if present
-    data = raw.get('raw_analysis', raw)
-    
-    # Handle V1.0.0 'articles' array wrapper
-    if 'articles' in data and isinstance(data['articles'], list) and len(data['articles']) > 0:
-        data = data['articles'][0]
-        print(f"📦 [ScoreEngine] Extracted article from 'articles' array: {data.get('Article_ID', 'unknown')}")
-    
-    # Detect schema version
-    if force_schema_version:
-        schema_version = force_schema_version
-        print(f"👉 [ScoreEngine] Forced schema version: {schema_version}")
-    else:
-        schema_version = detect_schema_version(data)
-    
-    # V1.0 Schema
-    if schema_version == SCHEMA_V1_0:
-        result = {'version': 'V1.0'}
-        
-        # Meta Fields
-        meta = data.get('Meta', {})
-        if meta.get('Headline'): 
-            result['title_ko'] = meta['Headline']
-        elif data.get('Headline'):
-            result['title_ko'] = data['Headline']
-        elif data.get('title_ko'):
-            result['title_ko'] = data['title_ko']
-            
-        if meta.get('Summary'): 
-            result['summary'] = meta['Summary']
-        elif data.get('summary'):
-            result['summary'] = data['summary']
-            
-        if data.get('Article_ID'): 
-            result['article_id'] = data['Article_ID']
-            
-        # [NEW] Extract Category if present
-        if data.get('Category'):
-            result['category'] = data['Category']
-        elif data.get('category'):
-            result['category'] = data['category']
-        elif meta.get('Category'):
-            result['category'] = meta['Category']
-        
-        # IS Calculation
-        is_analysis = data.get('IS_Analysis', {})
-        if is_analysis:
-            impact_score, is_breakdown = calculate_is_v1(is_analysis)
-            result['impact_score'] = impact_score
-            result['impact_evidence'] = {
-                'calculations': is_breakdown,
-                'raw_inputs': is_analysis.get('Calculations', {}).get('IW_Analysis', {}).get('Inputs', {}),
-                'raw_ie_inputs': is_analysis.get('Calculations', {}).get('IE_Analysis', {}).get('Inputs', {})
-            }
-        else:
-            result['impact_score'] = 0.0
-            result['impact_evidence'] = {}
-            
-        # ZES Calculation
-        zes_raw_metrics = data.get('ZES_Raw_Metrics', {})
-        if zes_raw_metrics:
-            zero_echo_score, zes_breakdown = calculate_zes_v1(zes_raw_metrics)
-            result['zero_echo_score'] = zero_echo_score
-            result['evidence'] = {
-                'breakdown': zes_breakdown,
-                'raw_metrics': zes_raw_metrics
-            }
-        else:
-            result['zero_echo_score'] = 5.0
-            result['evidence'] = {}
-            
-        print(f"✅ [ScoreEngine] V1.0 Calculated: IS={result['impact_score']}, ZES={result['zero_echo_score']}")
-        return result
-    
-    # Legacy Schema (fallback)
-    else:
-        print("⚠️ [ScoreEngine] Using Legacy fallback")
-        result = {
-            'version': 'Legacy',
-            'impact_score': safe_float(data.get('impact_score')),
-            'zero_echo_score': safe_float(data.get('zero_echo_score', 5.0)),
-            'evidence': data.get('evidence', {}),
-            'impact_evidence': data.get('impact_evidence', {})
-        }
-        
-        # Meta Fields (title_ko, summary)
-        meta = data.get('Meta', {})
-        if meta.get('Headline'):
-            result['title_ko'] = meta['Headline']
-        elif data.get('Headline'):
-            result['title_ko'] = data['Headline']
-        elif data.get('title_ko'):
-            result['title_ko'] = data['title_ko']
-            
-        if meta.get('Summary') or meta.get('summary'):
-            result['summary'] = meta.get('Summary') or meta.get('summary')
-        elif data.get('summary'):
-            result['summary'] = data['summary']
-            
-        # [NEW] Extract Category if present
-        if data.get('Category'):
-            result['category'] = data['Category']
-        elif data.get('category'):
-            result['category'] = data['category']
-        elif meta.get('Category'):
-            result['category'] = meta['Category']
-        
-        return result

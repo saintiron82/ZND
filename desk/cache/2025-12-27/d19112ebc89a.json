@@ -1,0 +1,126 @@
+{
+  "_header": {
+    "version": "2.0",
+    "article_id": "d19112ebc89a",
+    "state": "PUBLISHED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-26T16:45:09.884756+00:00",
+        "by": "crawler"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-28T17:11:22.567973+00:00",
+        "by": "publisher"
+      }
+    ],
+    "updated_at": "2025-12-28T17:11:22.567973+00:00"
+  },
+  "_original": {
+    "title": "엔비디아 로보틱스 책임자, 테슬라 자율주행 극찬...\"물리적 튜링 테스트 통과한 최초의 AI\" - AI타임스",
+    "description": "엔비디아 로보틱스 책임자가 테슬라의 자율주행 소프트웨어 ‘FSD(완전자율주행) v14’를 두고, 인간과 구별하기 어려운 수준의 물리적 지능을 보여준 첫 사례라며",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205098_206591_213.jpg",
+    "text": "(사진=셔터스톡) 엔비디아 로보틱스 책임자가 테슬라의 자율주행 소프트웨어 ‘FSD(완전자율주행) v14’를 두고, 인간과 구별하기 어려운 수준의 물리적 지능을 보여준 첫 사례라며 극찬했다. 짐 팬 엔비디아 로보틱스 디렉터는 24일(현지시간) X(트위터)를 통해 FSD v14가 자신이 정의한 ‘물리적 튜링 테스트(Physical Turing Test)’를 통과한 최초의 AI라고 평했다. 그는 “긴 일과를 마치고 버튼 하나 누른 뒤 몸을 기대고 있으면, 집까지 나를 데려다준 것이 신경망인지 인간 운전자인지 구분할 수 없었다”라고 말했다. 이어 자신이 FSD v14 초기 사용자 중 한명이었다고 전했다. 그는 “처음에는 마법처럼 느껴지지만, 곧 일상이 된다”라며 “스마트폰과 마찬가지로, 한번 익숙해지면 이를 빼앗는 것이 불편하고 고통스럽다”라고 말했다. “이것이 인류가 ‘신적인 기술’에 점점 의존하게 되는 방식”이라고 덧붙였다. 즉, '물리적 튜링 테스트'라는 명확히 정의되지 않은 주관적 기준을 통해 현실 세계 지능을 높이 평가한 것이다. 하지만, 그는 엔비디아에서 피지컬 AI를 이끌고 있으며, 휴머노이드 로봇 개발 ‘프로젝트 그루트(GR00T)’를 이끄는 세계적인 체화 AI(embodied AI) 연구자다. I was very late to own a Tesla but among the earliest to try out FSD v14. It's perhaps the first time I experience an AI that passes the Physical Turing Test: after a long day at work, you press a button, lay back, and couldn't tell if a neural net or a human drove you home.… https://t.co/PDOn6ZFTZA — Jim Fan (@DrJimFan) December 23, 2025 튜링 테스트는 1950년 앨런 튜링이 제안한 개념으로, 기계가 인간과 구별할 수 없는 행동을 보이는지를 평가하는 기준이다. 기존 튜링 테스트는 텍스트 기반 대화를 중심으로 설계돼 자연어 처리 능력을 평가해 왔으며, 오늘날의 대형언어모델(LLM)은 사실상 이 기준을 충족한 것으로 간주된다. 그러나, 팬 디렉터는 인간과 유사한 대화 능력과 실제 물리 세계에서의 행동은 전혀 다른 차원이라고 지적했다. 이에 따라 AI가 실제 환경에서 인간처럼 판단하고 행동할 수 있는지를 묻는 ‘물리적 튜링 테스트’라는 개념을 이전부터 제시해 왔다. 그리고 그의 평가에 따르면, 테슬라 FSD v14는 실제 도로 주행이라는 물리적 환경에서 이런 기준을 충족했다는 것이다. 일론 머스크 CEO도 여기에 동의했다. X를 통해 “FSD v14에서는 ‘감각(sense)’이 성숙해 가는 것을 느낄 수 있다”라며, 테슬라의 AI가 현존하는 최고의 ‘현실 세계(real-world) AI’라고 치켜세웠다. 박찬 기자 cpark@aitimes.com",
+    "published_at": "2025-12-26T18:00:00+09:00",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205098",
+    "source_id": "aitimes",
+    "crawled_at": "2025-12-26T16:45:09.884756+00:00"
+  },
+  "_analysis": {
+    "title_ko": "엔비디아 로보틱스 수장, 테슬라 FSD v14 '물리적 튜링 테스트' 통과 극찬",
+    "summary": "엔비디아의 짐 팬 디렉터가 테슬라 FSD v14를 사용 후, 이를 '물리적 튜링 테스트'를 통과한 최초의 AI라고 평가했다. 신경망과 인간 운전자를 구분할 수 없는 수준의 현실 세계 지능을 보여준다는 찬사다.",
+    "tags": [
+      "Opinion",
+      "Hardware",
+      "Sam Altman"
+    ],
+    "impact_score": 8.0,
+    "zero_echo_score": 8.6,
+    "analyzed_at": "2025-12-28T03:51:11.018632+00:00",
+    "mll_raw": {
+      "Article_ID": "d19112ebc89a",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "엔비디아 로보틱스 수장, 테슬라 FSD v14 '물리적 튜링 테스트' 통과 극찬",
+        "Summary": "엔비디아의 짐 팬 디렉터가 테슬라 FSD v14를 사용 후, 이를 '물리적 튜링 테스트'를 통과한 최초의 AI라고 평가했다. 신경망과 인간 운전자를 구분할 수 없는 수준의 현실 세계 지능을 보여준다는 찬사다.",
+        "Tags": [
+          "Opinion",
+          "Hardware",
+          "Sam Altman"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "엔비디아(PE)의 고위 인사가 테슬라(SE) 기술을 공개 검증/찬양함. 단순 코멘트지만 PE의 영향력이 막대하고 '물리적 튜링 테스트'라는 화두를 던짐. 테슬라의 Tier는 Tech Giant로서의 영향력을 고려해 Tier 2로 유추(GIP).",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P5",
+              "Pe_Entity_Name": "Nvidia",
+              "Pe_Tier": 1,
+              "Se_Entity_Name": "Tesla",
+              "Se_Tier": 2,
+              "PE/SE 선정이유": "기사의 주된 내용은 엔비디아(Hardware T1) 책임자의 평가(P5-간접/영향력)임. 평가 대상이자 수혜자인 테슬라를 SE로 선정. 테슬라는 T1(Tech)에 준하나 Hardware T1(칩셋)과는 구별되어 T2로 설정."
+            },
+            "Tier_Score": 3,
+            "Gap_Score": 1,
+            "IW_Score": 4
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 3,
+              "Y_Evidence_Code": 3,
+              "Scope_Matrix_Score": 2.5,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Criticality_Total": 1.5,
+              "SOTA_Check_Result": "True"
+            },
+            "IE_Score": 4
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 2,
+          "T2": 4,
+          "T3": 5,
+          "Rationale": "주관적 경험담 위주이며 정량적 데이터 부족."
+        },
+        "Noise": {
+          "P1": 8,
+          "P2": 7,
+          "P3": 0,
+          "Rationale": "'마법', '신적인 기술' 등 과장된 수식어와 찬양이 매우 많음."
+        },
+        "Utility": {
+          "V1": 6,
+          "V2": 3,
+          "V3": 4,
+          "Rationale": "업계 주요 인물의 시각을 보여주나 실질적 기술 정보는 적음."
+        },
+        "Fine_Adjustment": {
+          "Score": -0.5,
+          "Reason": "지나치게 주관적이고 감정적인 표현(Noise)으로 인한 감점."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "AI/ML",
+    "is_selected": true,
+    "classified_at": "2025-12-28T03:53:15.593958+00:00",
+    "classified_by": "desk_user",
+    "edition_code": null,
+    "edition_name": null,
+    "published_at": null,
+    "released_at": null
+  },
+  "_publication": {
+    "edition_code": "251228_6",
+    "edition_name": "제6호",
+    "published_at": "2025-12-28T12:07:15.236029+00:00",
+    "released_at": null,
+    "firestore_synced": true
+  }
+}

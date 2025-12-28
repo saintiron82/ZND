@@ -1,0 +1,45 @@
+{
+  "settings": {
+    "max_consecutive_duplicates": 3,
+    "max_article_age_hours": 48
+  },
+  "targets": [
+    {
+      "id": "aitimes",
+      "type": "html",
+      "url": "https://www.aitimes.com/",
+      "selector": "div.auto-content a",
+      "limit": 10
+    },
+    {
+      "id": "techcrunch_ai",
+      "type": "rss",
+      "url": "https://techcrunch.com/tag/artificial-intelligence/feed/",
+      "limit": 10
+    },
+    {
+      "id": "venturebeat",
+      "type": "rss",
+      "url": "https://venturebeat.com/feed/",
+      "limit": 10
+    },
+    {
+      "id": "deepmind",
+      "type": "rss",
+      "url": "https://www.deepmind.com/blog/rss.xml",
+      "limit": 10
+    },
+    {
+      "id": "the_decoder",
+      "type": "rss",
+      "url": "https://the-decoder.com/feed/",
+      "limit": 10
+    },
+    {
+      "id": "techneedle",
+      "type": "rss",
+      "url": "https://techneedle.com/feed",
+      "limit": 10
+    }
+  ]
+}

@@ -88,7 +88,8 @@ cd ..
 
 # 4. Restart PM2
 echo "🔄 Restarting PM2 services..."
-pm2 restart all
+echo "🔄 request PM2 start/reload..."
+pm2 start ecosystem.config.js --update-env
 
 echo "✅ Deployment complete!"
 echo "📊 PM2 Status:"

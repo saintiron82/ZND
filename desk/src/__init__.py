@@ -2,7 +2,7 @@
 """
 ZND Desk src 패키지
 """
-from .db_client import DBClient
+from .core.firestore_client import FirestoreClient
 from .core_logic import (
     load_from_cache,
     save_to_cache,
@@ -14,7 +14,7 @@ from .core_logic import (
 )
 
 __all__ = [
-    'DBClient',
+    'FirestoreClient',
     'load_from_cache',
     'save_to_cache',
     'get_url_hash',

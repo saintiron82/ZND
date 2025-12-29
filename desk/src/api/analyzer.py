@@ -10,7 +10,7 @@ from src.core_logic import get_article_id
 from src.core.article_manager import ArticleManager
 from src.core.article_state import ArticleState
 from src.mll_client import MLLClient
-from src.score_engine import calculate_zes_v1 # Import score logic
+from src.core.score_engine import calculate_zes_v1 # Import score logic
 
 analyzer_bp = Blueprint('analyzer', __name__)
 manager = ArticleManager()

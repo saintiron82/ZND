@@ -329,7 +329,7 @@ def normalize_field_names(data: dict) -> dict:
     # --- V1.0 Schema Support (IS_Analysis, ZES_Raw_Metrics) ---
     if 'IS_Analysis' in normalized or 'ZES_Raw_Metrics' in normalized:
         try:
-            from src.score_engine import process_raw_analysis
+            from src.core.score_engine import process_raw_analysis
             
             # Calculate scores using V1.0 engine
             scores = process_raw_analysis(normalized)
@@ -371,7 +371,7 @@ def normalize_field_names(data: dict) -> dict:
     # --- V0.9 Schema Support (Impact_Analysis_IS) ---
     elif 'Impact_Analysis_IS' in normalized or 'Evidence_Analysis_ZES' in normalized:
         try:
-            from src.score_engine import process_raw_analysis
+            from src.core.score_engine import process_raw_analysis
             
             # Calculate scores using the engine
             scores = process_raw_analysis(normalized)
@@ -406,7 +406,7 @@ def normalize_field_names(data: dict) -> dict:
     # --- Legacy raw_analysis 처리 (v6.2 - 바로 계산) ---
     elif 'raw_analysis' in normalized:
         try:
-            from src.score_engine import process_raw_analysis
+            from src.core.score_engine import process_raw_analysis
             
             raw = normalized.get('raw_analysis')
             scores = process_raw_analysis(raw)

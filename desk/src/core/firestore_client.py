@@ -34,6 +34,9 @@ class FirestoreClient:
             return
         self.db = self._initialize_firebase()
         self._initialized = True
+        self.db = self._initialize_firebase()
+        self._initialized = True
+        self.history = self._load_history()  # Load history on init
         FirestoreClient._usage_stats['session_start'] = datetime.now(timezone.utc).isoformat()
     
     def _initialize_firebase(self):
@@ -77,6 +80,41 @@ class FirestoreClient:
         env = self._get_env()
         return self.db.collection(env).document('data').collection(collection_name)
     
+    # =========================================================================
+    # Helpers
+    # =========================================================================
+
+    def _get_data_dir(self):
+        """데이터 디렉토리 경로 반환"""
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        return os.path.join(base_dir, 'data')
+
+    def _load_history(self):
+        """crawling_history.json 로드"""
+        import json
+        file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception:
+                return {}
+        return {}
+
+    def _save_history_file(self):
+        """crawling_history.json 저장 (최근 5000개 유지)"""
+        import json
+        file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        # Limit to last 5000 entries
+        if len(self.history) > 5000:
+            keys_to_keep = list(self.history.keys())[-5000:]
+            self.history = {k: self.history[k] for k in keys_to_keep}
+
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(self.history, f, ensure_ascii=False, indent=2)
+
     # =========================================================================
     # Usage Tracking
     # =========================================================================
@@ -528,6 +566,136 @@ class FirestoreClient:
         """URL을 Firestore 키로 변환 (특수문자 제거)"""
         import hashlib
         return hashlib.md5(url.encode()).hexdigest()[:12]
+    
+    # =========================================================================
+    # Local History Management (Ported from DBClient)
+    # =========================================================================
+
+    def check_history(self, url: str) -> bool:
+        """
+        URL 처리 여부 확인 (ACCEPT, REJECT 등 완료 상태 확인)
+        For EXTRACT_FAILED: allows retry after 24 hours.
+        """
+        from datetime import datetime, timezone, timedelta
+        
+        if url in self.history:
+            entry = self.history[url]
+            status = entry.get('status')
+            
+            # 완료된 상태들
+            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS', 'MLL_FAILED', 'ANALYZED']:
+                return True
+            
+            # EXTRACT_FAILED: 24시간 후 재시도 허용
+            if status == 'EXTRACT_FAILED':
+                timestamp = entry.get('timestamp')
+                if timestamp:
+                    try:
+                        failed_at = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+                        if datetime.now(timezone.utc) - failed_at < timedelta(hours=24):
+                            return True  # 24시간 안됨, 스킵
+                        return False  # 24시간 지남, 재시도
+                    except:
+                        pass
+                return True  # 타임스탬프 없으면 스킵
+                
+        return False
+
+    def get_history_status(self, url: str) -> Optional[str]:
+        """URL의 히스토리 상태 반환"""
+        if url in self.history:
+            return self.history[url].get('status')
+        return None
+
+    def save_history(self, url: str, status: str, reason: str = None):
+        """히스토리 저장"""
+        self.history[url] = {
+            'status': status,
+            'reason': reason,
+            'timestamp': datetime.now(timezone.utc).isoformat()
+        }
+        self._save_history_file()
+
+    def remove_from_history(self, url: str):
+        """히스토리에서 제거 (재처리용)"""
+        if url in self.history:
+            del self.history[url]
+            self._save_history_file()
+            print(f"🗑️ [History] Removed from history: {url[:50]}...")
+        else:
+            print(f"⚠️ [History] URL not found in history: {url[:50]}...")
+
+    # =========================================================================
+    # Crawler Support (Ported from DBClient)
+    # =========================================================================
+
+    def save_crawled_article(self, article_data: Dict[str, Any]):
+        """
+        크롤러 수집 데이터 저장 (V2 Schema 변환 및 저장)
+        DBClient.save_article 로직 이식
+        """
+        import hashlib
+        
+        # Ensure crawled_at
+        crawled_at = article_data.get('crawled_at')
+        now = datetime.now(timezone.utc).isoformat()
+        if not crawled_at:
+             crawled_at = now
+             article_data['crawled_at'] = now
+
+        # Generate ID
+        url = article_data.get('url', '')
+        article_id = article_data.get('article_id') or hashlib.md5(url.encode()).hexdigest()[:12]
+        
+        # V2 Schema Construction
+        v2_article = {
+            '_header': {
+                'version': '2.0',
+                'article_id': article_id,
+                'state': 'ANALYZED',  # 저장 시 ANALYZED 상태 (pipeline 흐름상)
+                'created_at': crawled_at,
+                'updated_at': now,
+                'state_history': [
+                    {'state': 'COLLECTED', 'at': crawled_at, 'by': 'crawler'},
+                    {'state': 'ANALYZED', 'at': now, 'by': 'pipeline'}
+                ]
+            },
+            '_original': {
+                'url': url,
+                'title': article_data.get('original_title') or article_data.get('title', ''),
+                'text': article_data.get('text', '')[:5000],
+                'image': article_data.get('image'),
+                'source_id': article_data.get('source_id', 'unknown'),
+                'crawled_at': crawled_at,
+                'published_at': article_data.get('published_at')
+            },
+            '_analysis': {
+                'title_ko': article_data.get('title_ko') or article_data.get('title', ''),
+                'summary': article_data.get('summary', ''),
+                'tags': article_data.get('tags', []),
+                'impact_score': float(article_data.get('impact_score', 0) or 0),
+                'zero_echo_score': float(article_data.get('zero_echo_score', 0) or 0),
+                'analyzed_at': now,
+                'mll_raw': article_data.get('raw_analysis')
+            },
+            '_classification': None,
+            '_publication': None
+        }
+        
+        # Save to Firestore (via existing upsert logic for consistency)
+        # Using upsert_article_state might be tricky for full replace/create of structure.
+        # Direct set is better for new articles.
+        try:
+            self._get_collection('articles').document(article_id).set(v2_article, merge=True)
+            self._track_write()
+            print(f"✅ [FirestoreClient] Saved crawled article: {article_id}")
+            
+            # Update History
+            if url:
+                self.save_history(url, 'ANALYZED', reason='mll_complete')
+                
+        except Exception as e:
+            print(f"❌ [FirestoreClient] Save crawled article failed: {e}")
     
     # =========================================================================
     # Publications Collection

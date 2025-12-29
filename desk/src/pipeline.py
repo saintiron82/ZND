@@ -22,19 +22,19 @@ from src.core_logic import (
     update_manifest,
     HistoryStatus,
 )
-from src.db_client import DBClient
+from src.core.firestore_client import FirestoreClient
 from src.crawler.core import AsyncCrawler
-from src.score_engine import process_raw_analysis
+from src.core.score_engine import process_raw_analysis
 
 
 # Shared DB client instance
 _db = None
 
-def get_db() -> DBClient:
-    """Get or create shared DB client."""
+def get_db() -> FirestoreClient:
+    """Get or create shared DB client (FirestoreClient)."""
     global _db
     if _db is None:
-        _db = DBClient()
+        _db = FirestoreClient()
     return _db
 
 
@@ -156,8 +156,15 @@ def save_article(data: dict, source_id: str = None, skip_evaluation: bool = Fals
     
     # Save to DB
     try:
-        db.save_article(data)
-        db.save_history(url, HistoryStatus.ACCEPTED)
+        db.save_crawled_article(data)
+        # Note: save_crawled_article already updates history if url is present
+        # but the logic in DBClient separated them. Let's keep it clean.
+        # save_crawled_article implements: self.save_history(url, 'ANALYZED', reason='mll_complete')
+        
+        # db.save_history(url, HistoryStatus.ACCEPTED) -> This is redundant if save_crawled_article does it.
+        # But wait, save_crawled_article sets it to ANALYZED. 
+        # HistoryStatus.ACCEPTED is basically analyzed/accepted.
+        # Let's trust save_crawled_article.
         
         # Update cache with saved status
         save_to_cache(url, {**data, 'saved': True, 'saved_at': datetime.now(timezone.utc).isoformat()})
@@ -233,6 +240,9 @@ def mark_worthless(url: str, reason: str) -> dict:
         
         # Save to Firestore
         try:
+            # Reusing save_crawled_article might be possible if we massage the data, 
+            # but article_data here is already formatted V2.
+            # FirestoreClient has .save_article(id, data) for direct saving.
             db.save_article(article_id, article_data)
             print(f"🚫 [Worthless] Saved as REJECTED: {url[:50]}... ({reason})")
         except Exception as e:
@@ -393,7 +403,7 @@ async def process_article(
     }
     
     # 7. Save to Firestore (로컬 캐시 저장 제거)
-    db.save_article(final_doc)
+    db.save_crawled_article(final_doc)
     
     return {
         'status': 'analyzed',

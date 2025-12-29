@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 # Import custom clients
 from src.mll_client import MLLClient
-from src.db_client import DBClient
+
 from src.crawler.utils import RobotsChecker
 
 # Import shared core logic (source of truth for all crawlers)

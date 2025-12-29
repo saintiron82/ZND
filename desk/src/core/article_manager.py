@@ -488,27 +488,7 @@ class ArticleManager:
             }
         )
     
-    def update_analysis(self, article_id: str, analysis_data: Dict[str, Any]) -> bool:
-        """
-        분석 데이터 부분 업데이트
-        (기존 데이터를 덮어쓰지 않고 제공된 필드만 병합)
-        """
-        updates = {}
-        for k, v in analysis_data.items():
-            updates[f'_analysis.{k}'] = v
-        
-        return self.db.upsert_article_state(article_id, updates)
 
-    def update_classification(self, article_id: str, category: str) -> bool:
-        """
-        분류 확인 및 상태 변경 (ANALYZED -> CLASSIFIED)
-        """
-        # 1. Update Category
-        if not self.db.upsert_article_state(article_id, {'_classification.category': category}):
-            return False
-            
-        # 2. Update State to CLASSIFIED
-        return self.update_state(article_id, ArticleState.CLASSIFIED, by='user_classification')
     
     # =========================================================================
     # Query Operations

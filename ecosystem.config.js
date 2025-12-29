@@ -44,7 +44,7 @@ try {
 module.exports = {
     apps: [
         {
-            name: 'zed-web',
+            name: 'znd-web',
             script: 'node',
             args: './node_modules/next/dist/bin/next start -p 8080',
             cwd: './web',
@@ -56,13 +56,26 @@ module.exports = {
             },
         },
         {
-            name: 'zed-crawler',
-            script: 'auto_crawl.py',
+            name: 'znd-backend',
+            script: 'app.py',
             cwd: './desk',
-            interpreter: isWin ? 'python' : '/home/saintiron82/ZED/desk/venv/bin/python3',
+            interpreter: isWin ? 'python' : '/home/saintiron82/ZND/desk/venv/bin/python3',
+            instances: 1,
+            autorestart: true,
+            watch: false,
+            env: {
+                DESK_PORT: 5500,
+                ZND_ENV: 'release'
+            }
+        },
+        {
+            name: 'znd-scheduler',
+            script: 'desk_crawler.py', // auto_crawl.py 대신 desk_crawler.py 사용 추정
+            cwd: './desk',
+            interpreter: isWin ? 'python' : '/home/saintiron82/ZND/desk/venv/bin/python3',
             instances: 1,
             autorestart: false,
-            cron_restart: crawlSchedule, // config/auto_crawl_schedule.json에서 로드
+            cron_restart: crawlSchedule,
             watch: false,
         },
     ],

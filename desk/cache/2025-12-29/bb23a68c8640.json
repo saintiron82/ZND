@@ -2,14 +2,40 @@
   "_header": {
     "version": "2.0",
     "article_id": "bb23a68c8640",
-    "state": "COLLECTED",
+    "state": "PUBLISHED",
     "state_history": [
       {
         "state": "COLLECTED",
         "at": "2025-12-29T06:29:24.922745+00:00",
         "by": "crawler"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:21:01.062487+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:22:35.480273+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:23:38.587785+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:24:22.010407+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-29T08:35:25.563662+00:00",
+        "by": "publisher"
       }
-    ]
+    ],
+    "updated_at": "2025-12-29T08:35:25.563662+00:00"
   },
   "_original": {
     "title": "카카오엔터프, 몽골 과기대 엣지 클라우드 테스트베드 구축 완료 - AI타임스",
@@ -21,7 +47,97 @@
     "source_id": "aitimes",
     "crawled_at": "2025-12-29T06:29:24.922745+00:00"
   },
-  "_analysis": {},
-  "_classification": {},
-  "_publication": {}
+  "_analysis": {
+    "title_ko": "카카오엔터프라이즈, 몽골 과기대에 엣지 클라우드 테스트베드 구축",
+    "summary": "카카오엔터프라이즈가 KOICA 사업의 일환으로 몽골 국립과학기술대학교에 엣지 클라우드 테스트베드 구축을 완료했다. 서버 등 하드웨어 설치와 기술 검증을 마쳤으며, 향후 몽골 클라우드 데이터센터 마스터플랜 수립을 위한 협력을 이어갈 예정이다.",
+    "tags": [
+      "Cloud",
+      "Partnership",
+      "Global"
+    ],
+    "impact_score": 2.0,
+    "zero_echo_score": 8.5,
+    "analyzed_at": "2025-12-29T07:21:00.459062+00:00",
+    "mll_raw": {
+      "Article_ID": "bb23a68c8640",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "카카오엔터프라이즈, 몽골 과기대에 엣지 클라우드 테스트베드 구축",
+        "Summary": "카카오엔터프라이즈가 KOICA 사업의 일환으로 몽골 국립과학기술대학교에 엣지 클라우드 테스트베드 구축을 완료했다. 서버 등 하드웨어 설치와 기술 검증을 마쳤으며, 향후 몽골 클라우드 데이터센터 마스터플랜 수립을 위한 협력을 이어갈 예정이다.",
+        "Tags": [
+          "Cloud",
+          "Partnership",
+          "Global"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "카카오 계열사(Tier 3)가 해외(Tier 5 국가)에 기술을 수출/구축한 사례. PE와 SE 간의 Tier 격차로 인해 Gap Score가 발생했다. 완료된 프로젝트이나 규모가 '테스트베드' 수준(X1)이라 Scope 점수는 제한적이다.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "Kakao Enterprise",
+              "Pe_Tier": 3,
+              "Se_Entity_Name": "MUST (Mongolia)",
+              "Se_Tier": 5,
+              "PE/SE_Reason": "실행 주체인 카카오엔터(모기업 Tier 3 준용)를 PE로, 협력 대상인 몽골 대학(Tier 5)을 SE로 선정."
+            },
+            "Tier_Score": 1,
+            "Gap_Score": -0.5,
+            "IW_Score": 0.5
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 1,
+              "Y_Evidence_Code": 4,
+              "Scope_Matrix_Score": 0.5,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 0,
+              "Criticality_Total": 1,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 1.5
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 5,
+          "T2": 6,
+          "T3": 5,
+          "Rationale": "엣지 클라우드의 정의와 장점, 구축 범위(서버, UPS 등)가 명시됨."
+        },
+        "Noise": {
+          "P1": 3,
+          "P2": 4,
+          "P3": 0,
+          "Rationale": "홍보성 기사이나 기술적 사실 위주로 서술됨."
+        },
+        "Utility": {
+          "V1": 2,
+          "V2": 3,
+          "V3": 2,
+          "Rationale": "특정 해외 협력 사례로 일반 독자나 시장에 미치는 직접적 효용은 낮음."
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "기업의 해외 CSR/사업 성과 홍보 이상의 깊이는 부족함."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "Cloud/Infra",
+    "is_selected": true,
+    "classified_at": "2025-12-29T07:24:21.609428+00:00",
+    "classified_by": "desk_user"
+  },
+  "_publication": {
+    "edition_code": "251229_10",
+    "edition_name": "제10호",
+    "published_at": "2025-12-29T08:35:24.608515+00:00",
+    "released_at": null,
+    "status": "preview",
+    "firestore_synced": true
+  }
 }

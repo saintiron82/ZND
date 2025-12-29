@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "cce3749eb226",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:04.749856+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:25.987917+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:04.749856+00:00"
+    "updated_at": "2025-12-29T09:03:25.987917+00:00"
   },
   "_original": {
     "title": "Salesforce executives signal declining trust in large language models",

@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "5993b23cabac",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:10:44.443122+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:21.535828+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:10:44.443122+00:00"
+    "updated_at": "2025-12-29T09:03:21.535828+00:00"
   },
   "_original": {
     "title": "[AI의 역사] 98 인류를 위한 공개되고 안전한 AI라는 약속 – 오픈AI의 변화와 쿠테타 과정 - AI타임스",

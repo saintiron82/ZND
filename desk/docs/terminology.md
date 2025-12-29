@@ -16,7 +16,7 @@
 - 코드에서 상태를 참조할 때 `ArticleState.CLASSIFIED.value`처럼 enum을 사용합니다.
 - 문자열 비교 시 반드시 대문자인지 확인합니다.
 
-## Article Schema (V2)
+## Article Schema (V3)
 | 섹션 | 용도 | 불변 |
 |------|------|------|
 | `_header` | 메타 (state, version, updated_at) | 가변 |

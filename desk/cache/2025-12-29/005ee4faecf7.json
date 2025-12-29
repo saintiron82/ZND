@@ -2,14 +2,40 @@
   "_header": {
     "version": "2.0",
     "article_id": "005ee4faecf7",
-    "state": "COLLECTED",
+    "state": "REJECTED",
     "state_history": [
       {
         "state": "COLLECTED",
         "at": "2025-12-29T06:29:22.816916+00:00",
         "by": "crawler"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:20:59.189564+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:22:35.491341+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:23:38.192834+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:24:22.137366+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "REJECTED",
+        "at": "2025-12-29T08:35:14.709951+00:00",
+        "by": "publisher"
       }
-    ]
+    ],
+    "updated_at": "2025-12-29T08:35:14.709951+00:00"
   },
   "_original": {
     "title": "장동혁, 전남 신재생에너지 단지 방문 - AI타임스",
@@ -21,7 +47,95 @@
     "source_id": "aitimes",
     "crawled_at": "2025-12-29T06:29:22.816916+00:00"
   },
-  "_analysis": {},
-  "_classification": {},
-  "_publication": {}
+  "_analysis": {
+    "title_ko": "장동혁 국민의힘 대표, 전남 솔라시도 방문해 AI 센터 지원 약속",
+    "summary": "국민의힘 장동혁 대표가 전남 해남의 '솔라시도' 신재생에너지 단지를 방문하여 국가 AI 컴퓨팅센터 조성 지원을 약속했다. 그는 호남 발전을 위한 입법 및 예산 지원, 규제 혁파를 강조했다. 이번 방문은 호남 민심 청취 행보의 일환으로 진행되었다.",
+    "tags": [
+      "Infrastructure",
+      "Regulation",
+      "Event"
+    ],
+    "impact_score": 2.5,
+    "zero_echo_score": 10.0,
+    "analyzed_at": "2025-12-29T07:20:58.266980+00:00",
+    "mll_raw": {
+      "Article_ID": "005ee4faecf7",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "장동혁 국민의힘 대표, 전남 솔라시도 방문해 AI 센터 지원 약속",
+        "Summary": "국민의힘 장동혁 대표가 전남 해남의 '솔라시도' 신재생에너지 단지를 방문하여 국가 AI 컴퓨팅센터 조성 지원을 약속했다. 그는 호남 발전을 위한 입법 및 예산 지원, 규제 혁파를 강조했다. 이번 방문은 호남 민심 청취 행보의 일환으로 진행되었다.",
+        "Tags": [
+          "Infrastructure",
+          "Regulation",
+          "Event"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "국내 정당 대표의 지역 방문 및 정치적 약속(Promise)에 불과하여 실체적 영향력은 제한적이다. PE는 한국(Tier 2)의 입법부 구성원으로 설정했으나, 사건의 본질이 정치적 행보이므로 IE 점수가 매우 낮다.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P5",
+              "Pe_Entity_Name": "PPP (Jang Dong-hyeok)",
+              "Pe_Tier": 2,
+              "Se_Entity_Name": "None",
+              "Se_Tier": 0,
+              "PE/SE_Reason": "정책 지원 및 예산을 언급하는 정당 대표(국가기관에 준함, Tier 2 Korea)를 PE로 선정. 단순 방문 대상인 지역 단지는 SE 선정 기준 미달."
+            },
+            "Tier_Score": 2,
+            "Gap_Score": 0,
+            "IW_Score": 2
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 2,
+              "Y_Evidence_Code": 1,
+              "Scope_Matrix_Score": 0,
+              "Criticality_C1_Provenness": 0,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Criticality_Total": 0.5,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 0.5
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 1,
+          "T2": 0,
+          "T3": 5,
+          "Rationale": "구체적인 지원 금액이나 확정된 계획 없이 정치적 수사만 존재함."
+        },
+        "Noise": {
+          "P1": 8,
+          "P2": 9,
+          "P3": 0,
+          "Rationale": "'국가의 명운', '파격적인' 등 전형적인 정치적 수식어가 매우 많음."
+        },
+        "Utility": {
+          "V1": 1,
+          "V2": 1,
+          "V3": 1,
+          "Rationale": "단순 동정 기사로 정보로서의 효용은 거의 없음."
+        },
+        "Fine_Adjustment": {
+          "Score": -1,
+          "Reason": "정보 가치가 매우 낮은 정치 홍보성 기사."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "AI/ML",
+    "is_selected": true,
+    "classified_at": "2025-12-29T07:24:21.608007+00:00",
+    "classified_by": "desk_user"
+  },
+  "_publication": {},
+  "_rejection": {
+    "reason": "cutline",
+    "rejected_at": "2025-12-29T08:35:13.750392+00:00",
+    "rejected_by": "publisher"
+  }
 }

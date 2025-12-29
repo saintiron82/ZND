@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "1a6317267d2f",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:06.491947+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:26.366434+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:06.491947+00:00"
+    "updated_at": "2025-12-29T09:03:26.366434+00:00"
   },
   "_original": {
     "title": "Australia's financial regulator warns banks against flooding it with AI-generated suspicious activity reports",

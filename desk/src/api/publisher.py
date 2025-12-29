@@ -63,6 +63,19 @@ def list_articles():
         # 응답 형식 변환 (ArticleInfo -> dict)
         result = []
         for article in articles:
+            # Registry에 점수가 없는 경우(0.0) full data 조회
+            impact_score = article.impact_score
+            zero_echo_score = article.zero_echo_score
+            summary = ""
+            
+            if impact_score == 0.0 and zero_echo_score == 0.0:
+                # Full data 조회
+                from src.core.article_manager import ArticleManager
+                full_data = ArticleManager().get(article.article_id)
+                if full_data:
+                    result.append(_format_article_for_list(full_data))
+                    continue
+            
             result.append({
                 'article_id': article.article_id,
                 'title': article.title,
@@ -70,8 +83,9 @@ def list_articles():
                 'source_id': article.source_id,
                 'state': article.state,
                 'category': article.category,
-                'impact_score': article.impact_score,
-                'zero_echo_score': article.zero_echo_score,
+                'impact_score': impact_score,
+                'zero_echo_score': zero_echo_score,
+                'summary': summary,
                 'created_at': article.created_at,
                 'updated_at': article.updated_at,
             })

@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "e270d968cd7e",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:10:49.446166+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:22.648101+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:10:49.446166+00:00"
+    "updated_at": "2025-12-29T09:03:22.648101+00:00"
   },
   "_original": {
     "title": "구글의 최근 성장 주역으로 꼽힌 '제미나이' 담당 부사장은 - AI타임스",

@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "d37f54f2a08e",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:01.278257+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:25.248690+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:01.278257+00:00"
+    "updated_at": "2025-12-29T09:03:25.248690+00:00"
   },
   "_original": {
     "title": "HTC, 원하는 모델 골라 탑재하는 '개방형' AI 안경 출시 - AI타임스",

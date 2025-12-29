@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "45a269f25258",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:20.732832+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:29.263789+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:20.732832+00:00"
+    "updated_at": "2025-12-29T09:03:29.263789+00:00"
   },
   "_original": {
     "title": "﻿\"AI로 로봇 ‘위험 상황’ 미리 가르친다\"...에임인텔리전스, ‘비디오투로봇’ 공개 - AI타임스",

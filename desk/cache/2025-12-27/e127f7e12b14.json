@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "e127f7e12b14",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:15.343661+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:28.193099+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:15.343661+00:00"
+    "updated_at": "2025-12-29T09:03:28.193099+00:00"
   },
   "_original": {
     "title": "Nvidia's $20 billion Groq deal is really about blocking Google's TPU momentum",

@@ -1,112 +1,53 @@
 import HomePageClient from '@/components/HomePageClient';
+import { fetchPublishedIssues, fetchArticlesByIssueId, Issue, Article } from '@/lib/firestoreService';
 import { optimizeArticleOrder } from '@/utils/layoutOptimizer';
 
 // No caching for preview - always fresh
 export const dynamic = 'force-dynamic';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5500';
-
-interface Issue {
-    id: string;
-    edition_code: string;
-    edition_name: string;
-    article_count: number;
-    published_at: string;
-    released_at?: string;
-    status: 'preview' | 'released';
-    date: string;
-}
-
-interface Article {
-    article_id?: string;
-    id?: string;
-    title_ko?: string;
-    summary?: string;
-    url?: string;
-    impact_score?: number;
-    zero_echo_score?: number;
-    published_at?: string;
-    [key: string]: any;
-}
+export const revalidate = 0;
 
 /**
- * Preview 회차 목록 조회
+ * 숨겨진 Preview 모드 페이지
+ * 접속: /preview
+ * released + preview 상태 모두 표시
  */
-async function getPreviewIssues(): Promise<Issue[]> {
-    try {
-        const res = await fetch(`${BACKEND_URL}/api/publications/list?status=preview`, {
-            cache: 'no-store',
-        });
+export default async function PreviewPage() {
+    console.log('🔓 [Preview Mode] Loading all issues including preview...');
 
-        if (!res.ok) {
-            console.error('Failed to fetch preview issues:', res.status);
-            return [];
-        }
-
-        const data = await res.json();
-        return data.success ? data.issues : [];
-    } catch (error) {
-        console.error('Error fetching preview issues:', error);
-        return [];
-    }
-}
-
-/**
- * 특정 회차의 기사 조회
- */
-async function getArticlesByIssue(publishId: string): Promise<Article[]> {
-    try {
-        const res = await fetch(`${BACKEND_URL}/api/publications/view?publish_id=${publishId}`, {
-            cache: 'no-store',
-        });
-
-        if (!res.ok) {
-            console.error('Failed to fetch articles:', res.status);
-            return [];
-        }
-
-        const data = await res.json();
-        if (!data.success) return [];
-
-        const articles = data.articles || [];
-        return optimizeArticleOrder(articles);
-    } catch (error) {
-        console.error('Error fetching articles:', error);
-        return [];
-    }
-}
-
-/**
- * 모든 preview 회차의 기사를 가져와서 합침
- */
-async function getAllPreviewArticles(): Promise<{ issues: Issue[]; articles: Article[] }> {
-    const issues = await getPreviewIssues();
+    // preview 모드로 데이터 조회 (includePreview: true)
+    const { issues } = await fetchPublishedIssues(true);
 
     if (issues.length === 0) {
-        return { issues: [], articles: [] };
+        return (
+            <div className="min-h-screen flex items-center justify-center text-white">
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold mb-4">No Issues Found</h1>
+                    <p className="text-muted-foreground">No published or preview issues available.</p>
+                </div>
+            </div>
+        );
     }
 
-    const articlePromises = issues.map(issue => getArticlesByIssue(issue.id));
-    const articlesArrays = await Promise.all(articlePromises);
-
-    const allArticles: Article[] = [];
-    issues.forEach((issue, idx) => {
-        const issueArticles = articlesArrays[idx] || [];
-        issueArticles.forEach(article => {
-            allArticles.push({
+    // 각 회차의 기사 조회 (병렬)
+    const articlePromises = issues.map(async (issue: Issue) => {
+        try {
+            const articles = await fetchArticlesByIssueId(issue.id);
+            return optimizeArticleOrder(articles).map((article: Article) => ({
                 ...article,
                 publish_id: issue.id,
                 edition_name: issue.edition_name,
                 edition_code: issue.edition_code,
-            });
-        });
+            }));
+        } catch (err) {
+            console.error(`[Preview] Failed to fetch articles for issue ${issue.id}`, err);
+            return [];
+        }
     });
 
-    return { issues, articles: allArticles };
-}
+    const articlesArrays = await Promise.all(articlePromises);
+    const allArticles = articlesArrays.flat();
 
-export default async function PreviewPage() {
-    const { issues, articles } = await getAllPreviewArticles();
+    console.log(`🔓 [Preview Mode] Loaded ${issues.length} issues, ${allArticles.length} articles`);
 
     return (
         <div>
@@ -125,11 +66,11 @@ export default async function PreviewPage() {
                 zIndex: 9999,
                 boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
             }}>
-                ⚠️ PREVIEW MODE - 이 페이지는 아직 공개되지 않은 미리보기입니다
+                ⚠️ PREVIEW MODE - 이 페이지는 아직 공개되지 않은 미리보기입니다 ({issues.length}개 회차)
             </div>
             {/* Add top padding to prevent content overlap */}
             <div style={{ paddingTop: '40px' }}>
-                <HomePageClient articles={articles} issues={issues} />
+                <HomePageClient articles={allArticles} issues={issues} />
             </div>
         </div>
     );

@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "7cb387c141b0",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:10:51.138825+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:23.015700+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:10:51.138825+00:00"
+    "updated_at": "2025-12-29T09:03:23.015700+00:00"
   },
   "_original": {
     "title": "IDC \"데이터센터 증가에 따른 메모리 부족으로 스마트폰·PC 가격 6~8%대 급등\" - AI타임스",

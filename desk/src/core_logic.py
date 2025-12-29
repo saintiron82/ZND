@@ -248,7 +248,7 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
         
         # 1. Header
         header = {
-            "version": "2.0",
+            "version": os.getenv('SCHEMA_VERSION', '3.0'),
             "article_id": article_id,
             "state": "COLLECTED", # Default for new saves
             "state_history": [

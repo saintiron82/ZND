@@ -63,7 +63,7 @@ def inspector_page():
 @app.route('/health')
 def health():
     """헬스 체크"""
-    return {'status': 'ok', 'version': '2.0'}
+    return {'status': 'ok', 'version': os.getenv('SCHEMA_VERSION', '3.0')}
 
 
 # =============================================================================

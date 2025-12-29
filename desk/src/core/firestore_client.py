@@ -71,6 +71,11 @@ class FirestoreClient:
     def get_env_name(self) -> str:
         """환경 설정 반환 (dev 또는 release)"""
         return os.getenv('ZND_ENV', 'dev')
+    
+    @staticmethod
+    def get_schema_version() -> str:
+        """스키마 버전 반환 (환경변수에서 읽음)"""
+        return os.getenv('SCHEMA_VERSION', '3.0')
 
     def _get_env(self) -> str:
         return self.get_env_name()
@@ -650,7 +655,7 @@ class FirestoreClient:
         # V2 Schema Construction
         v2_article = {
             '_header': {
-                'version': '2.0',
+                'version': self.get_schema_version(),
                 'article_id': article_id,
                 'state': 'ANALYZED',  # 저장 시 ANALYZED 상태 (pipeline 흐름상)
                 'created_at': crawled_at,

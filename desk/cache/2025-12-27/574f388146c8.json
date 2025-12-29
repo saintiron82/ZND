@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "574f388146c8",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:24.394672+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:29.973520+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:24.394672+00:00"
+    "updated_at": "2025-12-29T09:03:29.973520+00:00"
   },
   "_original": {
     "title": "스탠포드·하버드, 에이전트의 실제 환경 적응 돕는 프레임워크 소개 - AI타임스",

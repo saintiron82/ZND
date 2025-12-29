@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "4028f2f01162",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:10:52.824292+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:23.373659+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:10:52.824292+00:00"
+    "updated_at": "2025-12-29T09:03:23.373659+00:00"
   },
   "_original": {
     "title": "중국, 20조 규모 '기술 독립 펀드' 출범...\"하드 테크에 20년 장기 투자\" - AI타임스",

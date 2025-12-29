@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "0d4f985538d3",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:10:57.861891+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:24.481582+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:10:57.861891+00:00"
+    "updated_at": "2025-12-29T09:03:24.481582+00:00"
   },
   "_original": {
     "title": "Resemble AI drops Chatterbox Turbo, an open-source text-to-speech model that clones voices in five seconds",

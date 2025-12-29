@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "32b3f8db9c67",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:10.008302+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:27.107995+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:10.008302+00:00"
+    "updated_at": "2025-12-29T09:03:27.107995+00:00"
   },
   "_original": {
     "title": "미국, 중국 DJI 포함한 모든 외국산 드론 수입 금지 - AI타임스",

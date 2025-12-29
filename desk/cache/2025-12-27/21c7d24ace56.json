@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "21c7d24ace56",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:03.008084+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:25.620608+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:03.008084+00:00"
+    "updated_at": "2025-12-29T09:03:25.620608+00:00"
   },
   "_original": {
     "title": "Waymo's leaked system prompt reveals a 1,200-line rulebook for its in-car Gemini assistant",

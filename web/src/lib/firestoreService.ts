@@ -1,5 +1,11 @@
 ﻿﻿import { db } from './firebase';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import {
+    PublicationSchemaParser,
+    NormalizedIssue,
+    NormalizedArticle,
+    normalizeArticles
+} from './schemaParser';
 
 // Environment: dev or release
 const ZND_ENV = process.env.NEXT_PUBLIC_ZND_ENV || 'release';
@@ -46,17 +52,11 @@ export interface Article {
     [key: string]: any;
 }
 
-// _meta document structure
-interface MetaIssue {
-    code: string;
-    name: string;
-    count: number;
-    updated_at: string;
-    status: 'preview' | 'released';
-}
+// Note: MetaIssue/MetaDoc are raw Firestore types
+// Use PublicationSchemaParser for normalized output
 
 interface MetaDoc {
-    issues: MetaIssue[];
+    issues: any[];  // Raw issues from Firestore
     latest_updated_at: string;
 }
 
@@ -64,11 +64,12 @@ const COLLECTION_PUBLICATIONS = 'publications';
 
 /**
  * Get released issues list
- * [NEW] Query directly from _meta document (1 READ, lightweight)
+ * [REFACTORED] Uses PublicationSchemaParser for version-agnostic parsing
+ * @param includePreview - true이면 preview 상태도 포함 (숨겨진 미리보기 모드)
  */
-export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
+export async function fetchPublishedIssues(includePreview: boolean = false): Promise<{ issues: Issue[], latestUpdatedAt: string | null }> {
     try {
-        console.log('📖 [Firestore] Fetching _meta document...');
+        console.log(`📖 [Firestore] Fetching _meta document... (includePreview: ${includePreview})`);
 
         // Query from _meta document (1 READ)
         const metaDoc = await getDoc(getDocRef(COLLECTION_PUBLICATIONS, '_meta'));
@@ -81,28 +82,31 @@ export async function fetchPublishedIssues(): Promise<{ issues: Issue[], latestU
         const metaData = metaDoc.data() as MetaDoc;
         const latestUpdate = metaData.latest_updated_at || null;
 
-        // Filter only released status
-        const releasedMeta = (metaData.issues || []).filter(i => i.status === 'released');
+        // Filter by status (released only, or include preview)
+        const filteredMeta = (metaData.issues || []).filter((i: any) =>
+            i.status === 'released' || (includePreview && i.status === 'preview')
+        );
 
-        // Convert to Issue format (detailed info from issue document if needed)
-        const issues: Issue[] = releasedMeta.map(meta => ({
-            id: meta.code,
-            edition_code: meta.code,
-            edition_name: meta.name,
-            article_count: meta.count,
-            published_at: meta.updated_at,
-            updated_at: meta.updated_at,
-            status: meta.status,
-            date: meta.code.replace(/_\d+$/, '').replace(/(\d{2})(\d{2})(\d{2})/, '20$1-$2-$3')
+        // Use SchemaParser for version-agnostic parsing
+        const normalizedIssues = PublicationSchemaParser.parseMetaIssues(filteredMeta);
+
+        // Convert NormalizedIssue to Issue (for backward compatibility)
+        const issues: Issue[] = normalizedIssues.map(ni => ({
+            id: ni.id,
+            edition_code: ni.edition_code,
+            edition_name: ni.edition_name,
+            article_count: ni.article_count,
+            published_at: ni.published_at,
+            updated_at: ni.updated_at,
+            released_at: ni.released_at,
+            status: ni.status,
+            date: ni.date
         }));
 
         // Sort by edition_code descending (higher issue number is latest)
-        // edition_code format: YYMMDD_N (e.g. 241224_1, 241224_2)
-        issues.sort((a, b) => {
-            return b.edition_code.localeCompare(a.edition_code);
-        });
+        issues.sort((a, b) => b.edition_code.localeCompare(a.edition_code));
 
-        console.log(`✅ [Firestore] Found ${issues.length} released issues from _meta`);
+        console.log(`✅ [Firestore] Found ${issues.length} released issues from _meta (Schema versions detected)`);
         return { issues, latestUpdatedAt: latestUpdate };
 
     } catch (error) {
@@ -159,12 +163,10 @@ async function fetchPublishedIssuesFallback(): Promise<{ issues: Issue[], latest
 
 /**
  * Fetch articles for a specific issue (issueId)
- * [NEW] Use embedded articles array in publications document (1 READ)
+ * [REFACTORED] Uses PublicationSchemaParser for version-agnostic parsing
  */
 export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]> {
     try {
-        // console.log(`📖 [Firestore] Fetching articles for issue: ${issueId}`);
-
         // Read articles array directly from issue document (1 READ)
         const pubDoc = await getDoc(getDocRef(COLLECTION_PUBLICATIONS, issueId));
 
@@ -174,13 +176,29 @@ export async function fetchArticlesByIssueId(issueId: string): Promise<Article[]
         }
 
         const pubData = pubDoc.data();
-        const articles: Article[] = pubData.articles || [];
+        const rawArticles = pubData.articles || [];
 
-        // Ensure article_id field exists
-        return articles.map(art => ({
-            ...art,
-            article_id: art.id || art.article_id,
-            id: art.id || art.article_id
+        // Use SchemaParser for version-agnostic article parsing
+        const normalizedArticles = PublicationSchemaParser.parseArticles(rawArticles);
+
+        // Convert to Article interface (for backward compatibility)
+        return normalizedArticles.map(na => ({
+            id: na.id,
+            article_id: na.article_id,
+            title: na.title,
+            title_ko: na.title_ko,
+            title_en: na.title_en,
+            summary: na.summary,
+            url: na.url,
+            source_id: na.source_id,
+            category: na.category,
+            layout_type: na.layout_type,
+            impact_score: na.impact_score,
+            zero_echo_score: na.zero_echo_score,
+            tags: na.tags,
+            published_at: na.published_at,
+            date: na.date,
+            filename: na.filename
         }));
 
     } catch (error) {

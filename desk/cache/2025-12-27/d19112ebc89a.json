@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "d19112ebc89a",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:22.567973+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:29.616410+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:22.567973+00:00"
+    "updated_at": "2025-12-29T09:03:29.616410+00:00"
   },
   "_original": {
     "title": "엔비디아 로보틱스 책임자, 테슬라 자율주행 극찬...\"물리적 튜링 테스트 통과한 최초의 AI\" - AI타임스",

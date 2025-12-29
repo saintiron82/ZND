@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "f9e7fb26f7d5",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:18.925242+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:28.913431+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:18.925242+00:00"
+    "updated_at": "2025-12-29T09:03:28.913431+00:00"
   },
   "_original": {
     "title": "KAIST, MoE 아키텍처 보안 취약성 입증...\"전문가 모델 하나가 전체에 악영향\" - AI타임스",

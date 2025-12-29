@@ -3,6 +3,7 @@
 Article Manager - 기사 중앙 관리 시스템
 모든 기사 CRUD 및 상태 전이의 단일 진입점
 """
+import os
 import hashlib
 from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
@@ -23,7 +24,9 @@ class ArticleManager:
     - _publication: 발행 정보 (Publisher가 작성)
     """
     
-    SCHEMA_VERSION = "2.0"
+    @property
+    def SCHEMA_VERSION(self) -> str:
+        return os.getenv('SCHEMA_VERSION', '3.0')
     
     def __init__(self):
         self.db = FirestoreClient()
@@ -354,7 +357,7 @@ class ArticleManager:
                     'published_at': now,
                     'updated_at': now,
                     'status': 'preview',
-                    'schema_version': '2.0.0',
+                    'schema_version': os.getenv('SCHEMA_VERSION', '3.0'),
                     'article_count': 0,
                     'article_ids': [],
                     'articles': [],
@@ -397,7 +400,7 @@ class ArticleManager:
                     'updated_at': now,
                     'article_count': pub_doc['article_count'],
                     'status': pub_doc.get('status', 'preview'),
-                    'schema_version': '2.0.0',
+                    'schema_version': os.getenv('SCHEMA_VERSION', '3.0'),
                     # Legacy fields for compatibility if needed, but user emphasized NEW schema structure
                     'code': edition_code,
                     'name': edition_name,
@@ -626,6 +629,9 @@ class ArticleManager:
         target_issue['status'] = 'released'
         target_issue['released_at'] = now
         issues[target_idx] = target_issue
+        
+        # IMPORTANT: Update latest_updated_at so Web can detect the change
+        meta['latest_updated_at'] = now
         
         self.db.update_publications_meta(meta)
         

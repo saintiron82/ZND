@@ -2,14 +2,40 @@
   "_header": {
     "version": "2.0",
     "article_id": "55cf5457f1b1",
-    "state": "COLLECTED",
+    "state": "PUBLISHED",
     "state_history": [
       {
         "state": "COLLECTED",
         "at": "2025-12-29T06:29:16.849497+00:00",
         "by": "crawler"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:21:00.457642+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:22:35.422624+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:23:39.714051+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:24:21.990805+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-29T08:35:27.631133+00:00",
+        "by": "publisher"
       }
-    ]
+    ],
+    "updated_at": "2025-12-29T08:35:27.631133+00:00"
   },
   "_original": {
     "title": "카카오, 안산 데이터센터에 GPU 2040장 구축...”내년부터 최신 컴퓨팅 제공” - AI타임스",
@@ -21,7 +47,97 @@
     "source_id": "aitimes",
     "crawled_at": "2025-12-29T06:29:16.849497+00:00"
   },
-  "_analysis": {},
-  "_classification": {},
-  "_publication": {}
+  "_analysis": {
+    "title_ko": "카카오, 안산 데이터센터에 정부 지원용 GPU 2040장 구축 완료",
+    "summary": "카카오가 정부 'GPU 확보 사업'의 일환으로 데이터센터 안산에 2040장의 최신 GPU 인프라 구축을 완료했다. 이는 목표 대비 4배 규모로, 내년부터 국내 산학연 연구 과제에 컴퓨팅 자원과 '쿠브플로우' 플랫폼을 제공할 예정이다. 안정적 운영을 위한 전력 및 냉각 시스템도 완비되었다.",
+    "tags": [
+      "Cloud",
+      "Hardware",
+      "Infrastructure"
+    ],
+    "impact_score": 4.5,
+    "zero_echo_score": 4.2,
+    "analyzed_at": "2025-12-29T07:20:59.821474+00:00",
+    "mll_raw": {
+      "Article_ID": "55cf5457f1b1",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "카카오, 안산 데이터센터에 정부 지원용 GPU 2040장 구축 완료",
+        "Summary": "카카오가 정부 'GPU 확보 사업'의 일환으로 데이터센터 안산에 2040장의 최신 GPU 인프라 구축을 완료했다. 이는 목표 대비 4배 규모로, 내년부터 국내 산학연 연구 과제에 컴퓨팅 자원과 '쿠브플로우' 플랫폼을 제공할 예정이다. 안정적 운영을 위한 전력 및 냉각 시스템도 완비되었다.",
+        "Tags": [
+          "Cloud",
+          "Hardware",
+          "Infrastructure"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "PE(카카오, Tier 3)가 국가 차원(X2)의 인프라를 실질적으로 구축 완료(Y4)하여 높은 IE 점수를 획득했다. 2000장 이상의 GPU는 국내 연구 환경에 유의미한 영향을 미치는 규모이며, 즉시 가동 가능한 상태임이 입증되었다.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "Kakao",
+              "Pe_Tier": 3,
+              "Se_Entity_Name": "None",
+              "Se_Tier": 0,
+              "PE/SE_Reason": "실제 인프라를 구축하고 운영하는 주체인 카카오(Tier 3)를 PE로 선정. 정부는 발주처이나 기사의 초점은 카카오의 실행 능력에 있으므로 SE는 None."
+            },
+            "Tier_Score": 1,
+            "Gap_Score": 0,
+            "IW_Score": 1
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 2,
+              "Y_Evidence_Code": 4,
+              "Scope_Matrix_Score": 2,
+              "Criticality_C1_Provenness": 1,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Criticality_Total": 1.5,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 3.5
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 9,
+          "T2": 7,
+          "T3": 6,
+          "Rationale": "GPU 수량(2040장), 노드 수(255), 달성률(84%), 제공 플랫폼(쿠브플로우) 등 구체적 데이터가 매우 풍부함."
+        },
+        "Noise": {
+          "P1": 2,
+          "P2": 3,
+          "P3": 0,
+          "Rationale": "사실 위주의 건조한 서술로 과장된 표현이 적음."
+        },
+        "Utility": {
+          "V1": 6,
+          "V2": 8,
+          "V3": 5,
+          "Rationale": "국내 AI 연구자들이 즉시 신청 및 활용 가능한 인프라 정보로 실용성이 높음."
+        },
+        "Fine_Adjustment": {
+          "Score": 0.8,
+          "Reason": "구체적인 수치 데이터와 즉시 활용 가능한 인프라 정보를 제공하는 고품질 기사."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "Cloud/Infra",
+    "is_selected": true,
+    "classified_at": "2025-12-29T07:24:21.610471+00:00",
+    "classified_by": "desk_user"
+  },
+  "_publication": {
+    "edition_code": "251229_10",
+    "edition_name": "제10호",
+    "published_at": "2025-12-29T08:35:27.251569+00:00",
+    "released_at": null,
+    "status": "preview",
+    "firestore_synced": true
+  }
 }

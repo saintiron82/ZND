@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "356899285f3a",
-    "state": "PUBLISHED",
+    "state": "RELEASED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -13,9 +13,14 @@
         "state": "PUBLISHED",
         "at": "2025-12-28T17:11:28.063422+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "RELEASED",
+        "at": "2025-12-29T09:03:30.684631+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-28T17:11:28.063422+00:00"
+    "updated_at": "2025-12-29T09:03:30.684631+00:00"
   },
   "_original": {
     "title": "구글, '젬마 3' 내부 동작 파악할 수 있는 도구 오픈 소스 출시 - AI타임스",

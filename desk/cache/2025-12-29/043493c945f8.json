@@ -2,14 +2,40 @@
   "_header": {
     "version": "2.0",
     "article_id": "043493c945f8",
-    "state": "COLLECTED",
+    "state": "REJECTED",
     "state_history": [
       {
         "state": "COLLECTED",
         "at": "2025-12-29T06:29:18.592473+00:00",
         "by": "crawler"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:20:58.265313+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:22:35.444437+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T07:23:39.346960+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T07:24:22.157514+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "REJECTED",
+        "at": "2025-12-29T08:35:13.748651+00:00",
+        "by": "publisher"
       }
-    ]
+    ],
+    "updated_at": "2025-12-29T08:35:13.748651+00:00"
   },
   "_original": {
     "title": "\"SNS 이어 AI 챗봇 접속 막아야\"...미국서 청소년 AI 제한 목소리 높아져 - AI타임스",
@@ -21,7 +47,95 @@
     "source_id": "aitimes",
     "crawled_at": "2025-12-29T06:29:18.592473+00:00"
   },
-  "_analysis": {},
-  "_classification": {},
-  "_publication": {}
+  "_analysis": {
+    "title_ko": "미국 상원, SNS 이어 청소년 대상 AI 챗봇 이용 제한 법안 추진",
+    "summary": "버니 샌더스와 케이티 브릿 등 미국 상원의원들이 청소년의 정신 건강 보호를 위해 AI 챗봇 이용을 제한해야 한다고 주장했다. 브릿 의원은 미성년자에게 AI 동반자 제공을 금지하는 'AI 관계 후견인 법'을 발의했으며, 샌더스 의원은 AI가 초래할 경제적 격차와 정서적 영향에 대해 우려를 표명했다. 이는 SNS 규제에 이은 기술 규제 확대 움직임이다.",
+    "tags": [
+      "Regulation",
+      "Safety",
+      "Ethics"
+    ],
+    "impact_score": 4.0,
+    "zero_echo_score": 9.1,
+    "analyzed_at": "2025-12-29T07:20:57.465926+00:00",
+    "mll_raw": {
+      "Article_ID": "043493c945f8",
+      "Meta": {
+        "Specification_Version": "v 1.0.0",
+        "Headline": "미국 상원, SNS 이어 청소년 대상 AI 챗봇 이용 제한 법안 추진",
+        "Summary": "버니 샌더스와 케이티 브릿 등 미국 상원의원들이 청소년의 정신 건강 보호를 위해 AI 챗봇 이용을 제한해야 한다고 주장했다. 브릿 의원은 미성년자에게 AI 동반자 제공을 금지하는 'AI 관계 후견인 법'을 발의했으며, 샌더스 의원은 AI가 초래할 경제적 격차와 정서적 영향에 대해 우려를 표명했다. 이는 SNS 규제에 이은 기술 규제 확대 움직임이다.",
+        "Tags": [
+          "Regulation",
+          "Safety",
+          "Ethics"
+        ]
+      },
+      "IS_Analysis": {
+        "Score_Commentary": "Tier 1 국가 주체(미국 상원)에 의한 규제 논의로 IW 점수가 높게 책정되었다. 그러나 아직 법안 발의 및 '주장' 단계(Y1: Promise)에 머물러 있어 Scope 점수는 0점 처리되었으며, 아동 안전(Safety)이라는 사회적 중요도(C2)만이 IE 점수에 반영되었다.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P1",
+              "Pe_Entity_Name": "US Congress (Senators)",
+              "Pe_Tier": 1,
+              "Se_Entity_Name": "None",
+              "Se_Tier": 0,
+              "PE/SE_Reason": "법안 발의 및 규제 도입의 주체인 미국 상원(국가기관)을 PE로 선정. 특정 기업과의 분쟁이 아닌 일반적인 산업 규제이므로 SE는 None."
+            },
+            "Tier_Score": 3,
+            "Gap_Score": 0,
+            "IW_Score": 3
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "X_Magnitude_Code": 2,
+              "Y_Evidence_Code": 1,
+              "Scope_Matrix_Score": 0,
+              "Criticality_C1_Provenness": 0,
+              "Criticality_C2_Societal_Weight": 1,
+              "Criticality_Total": 1,
+              "SOTA_Check_Result": "False"
+            },
+            "IE_Score": 1
+          }
+        }
+      },
+      "ZES_Raw_Metrics": {
+        "Signal": {
+          "T1": 4,
+          "T2": 2,
+          "T3": 8,
+          "Rationale": "구체적인 법안명(Guard Act)과 발언자가 명시되었으나, 구체적인 규제 스펙이나 기술적 메커니즘은 부재함."
+        },
+        "Noise": {
+          "P1": 7,
+          "P2": 6,
+          "P3": 2,
+          "Rationale": "'두렵다', '참담한' 등 정치적/감정적 수사(Rhetoric)가 다수 포함되어 있으며, 정치인의 주장이 주를 이룸."
+        },
+        "Utility": {
+          "V1": 4,
+          "V2": 2,
+          "V3": 3,
+          "Rationale": "법안 통과 여부가 불투명하여 즉각적인 시장 영향력이나 실행 가능성은 낮음."
+        },
+        "Fine_Adjustment": {
+          "Score": -0.5,
+          "Reason": "정치적 선언 성격이 강해 실질적 정보 가치는 낮음."
+        }
+      }
+    }
+  },
+  "_classification": {
+    "category": "AI/ML",
+    "is_selected": true,
+    "classified_at": "2025-12-29T07:24:21.608490+00:00",
+    "classified_by": "desk_user"
+  },
+  "_publication": {},
+  "_rejection": {
+    "reason": "cutline",
+    "rejected_at": "2025-12-29T08:35:12.804594+00:00",
+    "rejected_by": "publisher"
+  }
 }

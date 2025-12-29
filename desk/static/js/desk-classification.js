@@ -365,23 +365,41 @@ function renderScoreBreakdown(article) {
     }
 
     // ---------------------------------------------------------
-    // 2. ZES Breakdown (V1: 10 - Weighted)
+    // 2. ZES Breakdown (V1.1: 10 - Weighted, supports nested Items structure)
     // ---------------------------------------------------------
     const breakdown = zsEvidence.breakdown || {};
-    const signal = breakdown.Signal || breakdown.Signal_Components || {};
-    const noise = breakdown.Noise || breakdown.Noise_Components || {};
-    const util = breakdown.Utility || breakdown.Utility_Multipliers || {};
+    const rawSignal = breakdown.Signal || breakdown.Signal_Components || {};
+    const rawNoise = breakdown.Noise || breakdown.Noise_Components || {};
+    const rawUtil = breakdown.Utility || breakdown.Utility_Multipliers || {};
 
-    if (Object.keys(signal).length > 0) {
-        // Calculate Averages
-        const sAvg = ((parseFloat(signal.T1 || signal.T1_Freshness || 0) + parseFloat(signal.T2 || signal.T2_Global_Factor || 0) + parseFloat(signal.T3 || signal.T3_Detailed_Specifics || 0)) / 3.0);
-        const nAvg = ((parseFloat(noise.P1 || noise.P_Series_Sum || 0) + parseFloat(noise.P2 || noise.P_Series_Sum || 0) + parseFloat(noise.P3 || noise.P_Series_Sum || 0)) / 3.0);
+    // Helper to extract score from nested Items structure or flat structure
+    const getScore = (obj, key) => {
+        if (!obj) return 0;
+        // Check nested Items structure first (new schema v1.1.0)
+        if (obj.Items && obj.Items[key]) {
+            const item = obj.Items[key];
+            return parseFloat(typeof item === 'object' ? item.Score : item) || 0;
+        }
+        // Fallback to flat structure (legacy)
+        const val = obj[key];
+        return parseFloat(typeof val === 'object' ? val.Score : val) || 0;
+    };
+
+    // Extract individual scores
+    const t1 = getScore(rawSignal, 'T1'), t2 = getScore(rawSignal, 'T2'), t3 = getScore(rawSignal, 'T3'), t4 = getScore(rawSignal, 'T4');
+    const p1 = getScore(rawNoise, 'P1'), p2 = getScore(rawNoise, 'P2'), p3 = getScore(rawNoise, 'P3'), p4 = getScore(rawNoise, 'P4');
+    const v1 = getScore(rawUtil, 'V1'), v2 = getScore(rawUtil, 'V2'), v3 = getScore(rawUtil, 'V3'), v4 = getScore(rawUtil, 'V4');
+
+    if (t1 > 0 || t2 > 0 || t3 > 0 || t4 > 0 || Object.keys(rawSignal).length > 0) {
+        // Calculate Averages (V1.1: 4 items per category)
+        const sAvg = (t1 + t2 + t3 + t4) / 4.0;
+        const nAvg = (p1 + p2 + p3 + p4) / 4.0;
 
         let uAvg = 1.0;
-        if (util.V1 !== undefined) {
-            uAvg = (parseFloat(util.V1) + parseFloat(util.V2) + parseFloat(util.V3)) / 3.0;
-        } else if (util.Combined_Multiplier !== undefined) {
-            uAvg = parseFloat(util.Combined_Multiplier);
+        if (v1 > 0 || v2 > 0 || v3 > 0 || v4 > 0) {
+            uAvg = (v1 + v2 + v3 + v4) / 4.0;
+        } else if (rawUtil.Combined_Multiplier !== undefined) {
+            uAvg = parseFloat(rawUtil.Combined_Multiplier);
         }
         uAvg = Math.max(1.0, uAvg);
 
@@ -398,17 +416,17 @@ function renderScoreBreakdown(article) {
                     <tr>
                         <td>Signal (S)</td>
                         <td style="text-align:center; font-weight:bold; color: #74b9ff;">${sAvg.toFixed(1)}</td>
-                        <td style="text-align:right; font-size: 0.8em; color: #aaa;">T: ${(signal.T1 || 0)}, ${(signal.T2 || 0)}, ${(signal.T3 || 0)}</td>
+                        <td style="text-align:right; font-size: 0.75em; color: #aaa;">T: ${t1}, ${t2}, ${t3}, ${t4}</td>
                     </tr>
                     <tr>
                         <td>Noise (N)</td>
                         <td style="text-align:center; font-weight:bold; color: #ff7675;">${nAvg.toFixed(1)}</td>
-                        <td style="text-align:right; font-size: 0.8em; color: #aaa;">P: ${(noise.P1 || 0)}, ${(noise.P2 || 0)}, ${(noise.P3 || 0)}</td>
+                        <td style="text-align:right; font-size: 0.75em; color: #aaa;">P: ${p1}, ${p2}, ${p3}, ${p4}</td>
                     </tr>
                     <tr>
                         <td>Utility (U)</td>
                         <td style="text-align:center; font-weight:bold; color: #a29bfe;">${uAvg.toFixed(1)}</td>
-                        <td style="text-align:right; font-size: 0.8em; color: #aaa;">V: ${(util.V1 || 0)}, ${(util.V2 || 0)}, ${(util.V3 || 0)}</td>
+                        <td style="text-align:right; font-size: 0.75em; color: #aaa;">V: ${v1}, ${v2}, ${v3}, ${v4}</td>
                     </tr>
                 </table>
 
@@ -424,6 +442,7 @@ function renderScoreBreakdown(article) {
             </div>
         `;
     }
+
 
     html += `</div></div>`;
     return html;

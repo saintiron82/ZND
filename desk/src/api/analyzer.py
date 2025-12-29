@@ -268,25 +268,25 @@ def get_article_detail(article_id: str):
 # =============================================================================
 
 def _format_article_for_list(article: dict, include_text: bool = False) -> dict:
-    """기사 데이터를 목록 표시용으로 변환"""
-    header = article.get('_header', {})
-    original = article.get('_original', {})
-    analysis = article.get('_analysis') or {}
+    """기사 데이터를 목록 표시용으로 변환 (SchemaAdapter 사용)"""
+    from src.core.schema_adapter import SchemaAdapter
+    adapter = SchemaAdapter(article, auto_upgrade=True)
     
     data = {
-        'article_id': header.get('article_id'),
-        'id': header.get('article_id'), # Add 'id' alias for convenience
-        'state': header.get('state'),
-        'title': analysis.get('title_ko') or original.get('title', ''),
-        'source_id': original.get('source_id', 'unknown'),
-        'url': original.get('url', ''),
-        'crawled_at': original.get('crawled_at'),
-        'impact_score': analysis.get('impact_score'),
-        'zero_echo_score': analysis.get('zero_echo_score'),
-        'tags': analysis.get('tags', [])
+        'article_id': adapter.article_id,
+        'id': adapter.article_id,  # alias for convenience
+        'state': adapter.state,
+        'title': adapter.title,
+        'source_id': adapter.source_id,
+        'url': adapter.url,
+        'crawled_at': adapter.crawled_at,
+        'impact_score': adapter.impact_score,
+        'zero_echo_score': adapter.zero_echo_score,
+        'tags': adapter.tags
     }
     
     if include_text:
-        data['_original'] = original # Include full original data (text, raw title, etc.)
+        data['_original'] = article.get('_original', {})
         
     return data
+

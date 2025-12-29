@@ -457,14 +457,17 @@ class ArticleRegistry:
             return info
         return None
     
-    def update_state(self, article_id: str, new_state: str, by: str = 'system') -> bool:
+    def update_state(self, article_id: str, new_state: str, by: str = 'system', updates: Dict[str, Any] = None) -> bool:
         """
-        기사 상태 변경 (레지스트리 + 저장소 동시 업데이트)
+        기사 상태 변경 및 데이터 업데이트 (레지스트리 + 저장소 동시 업데이트)
         
         Args:
             article_id: 기사 ID
             new_state: 새 상태
             by: 변경 주체
+            updates: 추가로 업데이트할 데이터 (예: 분류 정보, 분석 결과 등)
+                     형식: {'field': value} or {'section.field': value}
+
             
         Returns:
             성공 여부
@@ -491,10 +494,11 @@ class ArticleRegistry:
             self._by_state[new_state] = set()
         self._by_state[new_state].add(article_id)
         
-        # 2. Firestore 업데이트 (로컬 캐시 쓰기 제거)
-        firestore_success = self._update_firestore(article_id, new_state, by, now)
+        # 2. 데이터 저장 (Update = Save Full Data)
+        # 단순히 상태만 바꾸는 게 아니라, 전체 데이터를 갱신하여 정본 유지
+        save_success = self._save_full_state(info, new_state, by, now, updates)
         
-        if firestore_success:
+        if save_success:
             print(f"✅ [Registry] State changed: {article_id} ({old_state} → {new_state})")
             return True
         else:
@@ -507,59 +511,92 @@ class ArticleRegistry:
             print(f"❌ [Registry] State change failed, rolled back: {article_id}")
             return False
     
-    def _update_local_cache(self, article_id: str, new_state: str, by: str, timestamp: str) -> bool:
-        """로컬 캐시 파일 업데이트"""
-        info = self._articles.get(article_id)
-        if not info or not info.cache_path:
-            return False
+    def _save_full_state(self, info: ArticleInfo, new_state: str, by: str, timestamp: str, updates: Dict[str, Any] = None) -> bool:
+        """
+        전체 기사 데이터를 로드하고 갱신하여 저장소(DB, Local)에 저장 (SSOT 유지)
+        """
+        import json
         
-        try:
-            if os.path.exists(info.cache_path):
+        full_data = None
+        
+        # 1. Load Full Data (Local prioritized)
+        if info.cache_path and os.path.exists(info.cache_path):
+            try:
                 with open(info.cache_path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                
-                # V2 Schema 업데이트
-                if '_header' in data:
-                    data['_header']['state'] = new_state
-                    data['_header']['updated_at'] = timestamp
-                    
-                    # state_history 추가
-                    if 'state_history' not in data['_header']:
-                        data['_header']['state_history'] = []
-                    data['_header']['state_history'].append({
-                        'state': new_state,
-                        'at': timestamp,
-                        'by': by
-                    })
-                else:
-                    # V1 Schema
-                    data['state'] = new_state
-                    data['updated_at'] = timestamp
-                
-                with open(info.cache_path, 'w', encoding='utf-8') as f:
-                    json.dump(data, f, ensure_ascii=False, indent=2)
-                
-                return True
-        except Exception as e:
-            print(f"⚠️ [Registry] Local cache update failed: {e}")
+                    full_data = json.load(f)
+            except Exception as e:
+                print(f"⚠️ [Registry] Failed to load local cache: {e}")
         
+        if not full_data:
+            print(f"❌ [Registry] Cannot Save: Source data not found for {info.article_id}")
+            return False
+
+        # 2. Update In-Memory Data
+        # V2 Schema Update
+        if '_header' not in full_data:
+             full_data = {
+                 '_header': {
+                     'article_id': full_data.get('article_id', info.article_id),
+                     'state': new_state,
+                     'created_at': full_data.get('crawled_at', timestamp),
+                     'updated_at': timestamp,
+                 },
+                 '_original': full_data,
+             }
+        
+        # Standard Header Update
+        full_data['_header']['state'] = new_state
+        full_data['_header']['updated_at'] = timestamp
+        
+        # Apply Extra Updates (with dot notation support)
+        if updates:
+            for key, value in updates.items():
+                if '.' in key:
+                    section, field = key.split('.', 1)
+                    if section not in full_data:
+                        full_data[section] = {}
+                    if isinstance(full_data[section], dict):
+                        full_data[section][field] = value
+                else:
+                    full_data[key] = value
+        
+        # History
+        if 'state_history' not in full_data['_header']:
+            full_data['_header']['state_history'] = []
+            
+        full_data['_header']['state_history'].append({
+            'state': new_state,
+            'at': timestamp,
+            'by': by
+        })
+        
+        # 3. Save to Local (Atomic Write Update)
+        try:
+            if info.cache_path:
+                with open(info.cache_path, 'w', encoding='utf-8') as f:
+                    json.dump(full_data, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"⚠️ [Registry] Local save failed: {e}")
+            return False
+            
+        # 4. Save to Firestore (Full Overwrite)
+        if self._db:
+            try:
+                # Use set(merge=True) to be safe, but practically it's overwriting with full data
+                self._db.save_article(info.article_id, full_data)
+            except Exception as e:
+                print(f"⚠️ [Registry] Firestore save failed: {e}")
+                return False
+                
+        return True
+
+    def _update_local_cache(self, article_id: str, new_state: str, by: str, timestamp: str) -> bool:
+        """(Deprecated) Use _save_full_state instead"""
         return False
     
     def _update_firestore(self, article_id: str, new_state: str, by: str, timestamp: str) -> bool:
-        """Firestore 업데이트"""
-        if not self._db:
-            return False
-        
-        try:
-            updates = {
-                '_header.state': new_state,
-                '_header.updated_at': timestamp
-            }
-            self._db.update_article(article_id, updates)
-            return True
-        except Exception as e:
-            print(f"⚠️ [Registry] Firestore update failed: {e}")
-            return False
+        """(Deprecated) Use _save_full_state instead"""
+        return False
     
     # =========================================================================
     # Utility

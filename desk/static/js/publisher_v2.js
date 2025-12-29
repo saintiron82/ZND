@@ -557,15 +557,13 @@ const PublisherV2 = {
         if (!container) return;
 
         const articlesHtml = this.state.historyArticles.map((art, idx) => {
-            // Use common card renderer, but with custom onclick to open viewer
-            // We need to ensure the click handler calls PublisherV2.openArticleViewer(idx)
+            // Use common card renderer, allowing default onClick (showArticleRaw)
             return renderArticleCard(art, {
                 selectable: false,
                 selected: false,
                 showCategory: true,
-                showSummary: false,
-                enlarged: false,
-                onClickHandler: `PublisherV2.openArticleViewer(${idx})`
+                showSummary: true, // 요약도 보여주면 더 꽉 차 보임
+                enlarged: true     // 카드 확대 모드
             });
         }).join('');
 
@@ -577,7 +575,7 @@ const PublisherV2 = {
                      <button class="btn btn-success" onclick="PublisherV2.releaseCurrentEdition()">🌐 전체 공개 (Release)</button>
                 </div>
             </div>
-            <div class="kanban-cards" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+            <div class="kanban-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
                 ${articlesHtml}
             </div>
         `;
@@ -647,44 +645,7 @@ const PublisherV2 = {
     // viewArticle removed in favor of global showArticleRaw
 
     // For History cards - find by index
-    openArticleViewer(idx) {
-        const art = this.state.historyArticles[idx];
-        if (!art) return;
 
-        this.state.viewingArticle = art;
-
-        const contentHtml = `
-            <div style="margin-bottom: 1rem;">
-                <h2 style="color: #fff; margin-bottom: 0.5rem;">${art.title || 'No Title'}</h2>
-                <div style="color: #888; font-size: 0.9rem;">
-                    <span style="font-family: monospace; background: #333; padding: 2px 6px; border-radius: 3px; margin-right: 10px;">${art.article_id || '-'}</span>
-                    <span>📰 ${art.source_id || 'unknown'}</span> ·
-                    <span>📂 ${art.category || 'N/A'}</span> ·
-                    <span>🎯 IS: ${art.impact_score || '-'}</span> ·
-                    <span>🔕 ZS: ${art.zero_echo_score || '-'}</span>
-                </div>
-            </div>
-            <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 4px;">
-                <strong style="color: #aaa;">요약:</strong>
-                <p style="margin-top: 0.5rem; line-height: 1.6;">${art.summary || '요약 없음'}</p>
-            </div>
-            <div style="margin-bottom: 1rem;">
-                <strong style="color: #aaa;">태그:</strong>
-                <span style="margin-left: 0.5rem;">${(art.tags || []).map(t => `<span style="background: #333; padding: 2px 8px; border-radius: 4px; margin-right: 5px; font-size: 0.85rem;">${t}</span>`).join('')}</span>
-            </div>
-        `;
-
-        document.getElementById('viewer-content').innerHTML = contentHtml;
-        document.getElementById('article-viewer-modal').classList.remove('hidden');
-
-        // Setup buttons
-        document.getElementById('btn-viewer-open-url').onclick = () => {
-            if (art.url) window.open(art.url, '_blank');
-        };
-        document.getElementById('btn-viewer-close').onclick = () => {
-            document.getElementById('article-viewer-modal').classList.add('hidden');
-        };
-    },
 
     // =========================================================================
     // Cutline Filter Functions

@@ -1,0 +1,221 @@
+{
+  "_classification": {
+    "classified_at": "2025-12-30T00:49:51.379793+09:00",
+    "is_selected": true,
+    "classified_by": "desk_user",
+    "category": "Robotics"
+  },
+  "_original": {
+    "source_id": "aitimes",
+    "description": "스위스 과학자들이 죽은 바닷가재의 신체 일부를 로봇 부품으로 재활용하는 데 성공했다. 해양 갑각류의 가볍고 강하면서도 유연한 외골격을 로봇 팔과 그리퍼(gripp",
+    "published_at": "2025-12-29T18:00:00+09:00",
+    "crawled_at": "2025-12-29T22:49:31.084877+09:00",
+    "text": "스위스 과학자들이 죽은 바닷가재의 신체 일부를 로봇 부품으로 재활용하는 데 성공했다. 해양 갑각류의 가볍고 강하면서도 유연한 외골격을 로봇 팔과 그리퍼(grippers), 수중 추진 장치로 활용한 것으로, 식품 산업에서 버려지는 껍질을 이용한 지속가능한 ‘네크로보틱스(necrobotics)’의 새로운 사례로 주목받고 있다. 스위스 연방공과대학 로잔(EPFL) 연구진은 26일(현지시간) 노르웨이 랍스터(Norway lobster)로 불리는 '랑구스틴(langoustine)'의 꼬리 외골격을 로봇 부품으로 재활용하는 실험 결과를 공개했다. 연구진은 랍스터의 외골격이 초당 최대 8회까지 자연스럽게 굽혀지며, 로봇용 그리퍼와 매니퓰레이터(manipulators)는 물론, 수영·추진용 플래퍼(flappers)로도 활용 가능하다는 점을 확인했다. 특히 무게는 3g에 불과하지만, 최대 680g에 달하는 하중을 견뎌냈다. 자연을 모방하는 데서 한 걸음 더 나아가, 이미 자연이 완성해 둔 구조를 직접 활용한 사례다. 이를 '생체 하이브리드 로봇 공학'으로도 부른다. 연구진은 “갑각류 외골격은 광물화된 껍질과 관절막이 결합해 강도와 유연성의 균형을 이룬다”라며 “물속에서의 고토크·고속 움직임을 가능하게 하는 이 구조는 로봇공학에서도 매우 유용하다”라고 설명했다. 이어 “식품 폐기물을 재활용함으로써, 재사용과 순환을 전제로 한 지속가능한 설계가 가능하다”라고 덧붙였다. 영상에서는 랑구스틴 꼬리 두개가 로봇 그리퍼처럼 토마토와 같은 연약한 물체를 손상 없이 집어 올리는 장면이 공개됐다. 또 공기 중에서는 빠른 플래핑 동작을, 물속에서는 효율적인 추진 움직임을 구현해 생물학적 구조의 우수성을 그대로 보여줬다. (사진=EPFL) 핵심 소재는 키틴(chitin)이다. 키틴은 갑각류와 곤충의 외골격을 이루는 천연 고분자로, 가볍고 강하며 유연한 동시에 생분해성과 생체적합성을 갖춘다. 연구진은 외골격의 내구성과 수명을 늘리기 위해 실리콘 코팅을 추가했고, 내부에는 엘라스토머를 삽입해 모터 구동부와 연결했다. 연구진은 “식품 폐기물을 로봇 시스템에 통합해 지속가능한 설계와 재사용·재활용을 결합한 개념 증명은 우리가 처음”이라고 강조했다. 앞으로는 생물 구조마다 다른 자연적 편차를 보정할 수 있도록 조절형 컨트롤러 등 진보된 합성 보강 기술을 적용할 계획이다. 이번 연구는 ‘자연이 여전히 많은 인공 시스템을 능가한다’는 점을 보여준 것으로 평가된다. 이전에는 죽은 모기의 침을 초미세 3D 프린터 노즐로 활용한 사례나 죽은 거미를 로봇 집게로 활용한 사례 등이 알려진 바 있다. 이처럼, 동물의 사체를 활용한 네크로보틱스는 로봇공학의 새로운 축으로 자리 잡고 있다는 평이다. 박찬 기자 cpark@aitimes.com",
+    "title": "‘죽은 바닷가재’로 만든 로봇 팔 등장...\"네크로보틱스의 좋은 예\" - AI타임스",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205153_206694_5431.png",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205153"
+  },
+  "id": "c9a4ad3192ab",
+  "_publication": {
+    "edition_name": "제10호",
+    "edition_code": "251230_10",
+    "released_at": null,
+    "published_at": "2025-12-30T01:11:08.476335+09:00",
+    "status": "preview",
+    "firestore_synced": true
+  },
+  "_analysis": {
+    "mll_raw": {
+      "ZES_Raw_Metrics": {
+        "Noise": {
+          "Items": {
+            "P4": {
+              "Rationale": "광고 목적 아님",
+              "Score": 0
+            },
+            "P3": {
+              "Rationale": "왜곡 없음",
+              "Score": 0
+            },
+            "P2": {
+              "Rationale": "편향 없음",
+              "Score": 0
+            },
+            "P1": {
+              "Rationale": "'네크로보틱스의 좋은 예' 등 긍정적 프레이밍",
+              "Score": 3
+            }
+          },
+          "Description": "인위적 잡음 (0~10점)"
+        },
+        "Signal": {
+          "Items": {
+            "T4": {
+              "Rationale": "EPFL의 연구 권위 인정",
+              "Score": 7
+            },
+            "T2": {
+              "Rationale": "키틴 소재 활용 및 구동 원리 상세 설명",
+              "Score": 9
+            },
+            "T3": {
+              "Rationale": "대학 연구 결과 인용",
+              "Score": 7
+            },
+            "T1": {
+              "Rationale": "3g 무게, 680g 하중 등 구체적 스펙 명시",
+              "Score": 6
+            }
+          },
+          "Description": "정보의 실체 (0~10점)"
+        },
+        "Utility": {
+          "Items": {
+            "V2": {
+              "Rationale": "상용화까지는 거리 있음",
+              "Score": 3
+            },
+            "V1": {
+              "Rationale": "로봇 소재 분야의 새로운 아이디어 제시",
+              "Score": 4
+            },
+            "V3": {
+              "Rationale": "독특한 소재(사체) 활용으로 희소성 높음",
+              "Score": 8
+            },
+            "V4": {
+              "Rationale": "특수 목적 로봇에 적용 가능",
+              "Score": 4
+            }
+          },
+          "Description": "실질적 효용 (0~10점)"
+        },
+        "Fine_Adjustment": {
+          "Reason": "연구의 독창성과 구체적인 메커니즘 설명 우수",
+          "Score": 0.5
+        }
+      },
+      "Article_ID": "c9a4ad3192ab",
+      "IS_Analysis": {
+        "Score_Commentary": "자연 소재를 재활용하는 새로운 로봇 공학 접근법(Necrobotics)을 제시하였으나, 아직 연구실 단계의 프로토타입임.",
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Entity_Name": "EPFL (스위스 연방공과대학 로잔)",
+              "Se_Tier": 0,
+              "Selection_Reason": "연구 개발의 주체이자 실행 기관. Academic Tier 2 (World Class).",
+              "Se_Entity_Name": "None",
+              "Pe_Selection_Rule": "P4",
+              "Pe_Tier": 2
+            },
+            "IW_Score": 2,
+            "Tier_Score": 2,
+            "Gap_Score": 0
+          },
+          "IE_Analysis": {
+            "Inputs": {
+              "Criticality_Total": 1.5,
+              "Criticality_C1_Provenness": 1,
+              "SOTA_Check_Result": "False",
+              "Scope_Matrix_Score": 0,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Y_Evidence_Code": 2,
+              "X_Magnitude_Code": 1
+            },
+            "IE_Score": 1.5
+          }
+        }
+      },
+      "Meta": {
+        "Tags": [
+          "Research",
+          "Robot",
+          "Hardware",
+          "Environment"
+        ],
+        "Summary": "스위스 EPFL 연구진이 바닷가재 외골격을 재활용한 로봇 부품 개발에 성공. 키틴 소재의 내구성/유연성을 활용한 지속가능한 로봇 공학 사례.",
+        "Headline": "EPFL, 죽은 바닷가재 껍질 활용 '네크로보틱스' 로봇 팔 개발",
+        "Specification_Version": "v 1.0.0"
+      }
+    },
+    "tags": [
+      "Research",
+      "Robot",
+      "Hardware",
+      "Environment"
+    ],
+    "summary": "스위스 EPFL 연구진이 바닷가재 외골격을 재활용한 로봇 부품 개발에 성공. 키틴 소재의 내구성/유연성을 활용한 지속가능한 로봇 공학 사례.",
+    "title_ko": "EPFL, 죽은 바닷가재 껍질 활용 '네크로보틱스' 로봇 팔 개발",
+    "impact_score": 3.5,
+    "analyzed_at": "2025-12-29T23:50:34.164928+09:00",
+    "zero_echo_score": 5.6
+  },
+  "_header": {
+    "state": "RELEASED",
+    "updated_at": "2025-12-29T16:43:27.607974+00:00",
+    "article_id": "c9a4ad3192ab",
+    "state_history": [
+      {
+        "by": "crawler",
+        "at": "2025-12-29T22:49:31.084877+09:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:11:38.677388+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "analyzer",
+        "at": "2025-12-29T14:11:57.027514+00:00",
+        "state": "ANALYZED"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:17:13.567207+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "analyzer",
+        "at": "2025-12-29T14:17:30.085437+00:00",
+        "state": "ANALYZED"
+      },
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-29T14:19:09.144692+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T14:23:49.868437+00:00",
+        "by": "analyzer"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:48:19.886012+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "analyzer",
+        "at": "2025-12-29T14:50:34.585868+00:00",
+        "state": "ANALYZED"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T15:49:51.709956+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-29T16:11:08.802912+00:00",
+        "by": "publisher"
+      },
+      {
+        "by": "publisher",
+        "at": "2025-12-29T16:43:27.607974+00:00",
+        "state": "RELEASED"
+      }
+    ],
+    "version": "3.0"
+  }
+}

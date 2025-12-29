@@ -1,0 +1,212 @@
+{
+  "_classification": {
+    "classified_at": "2025-12-30T00:49:51.732201+09:00",
+    "is_selected": true,
+    "classified_by": "desk_user",
+    "category": "Mobility"
+  },
+  "_original": {
+    "source_id": "aitimes",
+    "description": "자율주행 전문 라이드플럭스(대표 박중희)는 총 200억원 규모의 프리 IPO 투자를 유치했다고 29일 밝혔다. 이번 투자 유치로 누적 투자 금액은 752억원을 달",
+    "published_at": "2025-12-29T17:16:05+09:00",
+    "crawled_at": "2025-12-29T22:49:20.452584+09:00",
+    "text": "(사진=라이드플럭스) 자율주행 전문 라이드플럭스(대표 박중희)는 총 200억원 규모의 프리 IPO 투자를 유치했다고 29일 밝혔다. 이번 투자 유치로 누적 투자 금액은 752억원을 달성했다. 이번 투자는 기존 주주인 에이티넘인베스트먼트와 신규 투자사로 산업은행이 각각 100억원씩 참여했다. 라이드플럭스는 내년 초 프리 IPO 투자를 마무리하고 하반기 코스닥 상장을 목표로 한다. 이번 라운드에는 자율주행 무인화 기술력과 상용화 가능성이 높은 자율주행 트럭 시장에 선제적으로 진출한 것이 주효했다고 전했다. 라이드플럭스는 현재 서울 상암 일대에서 무인 허가를 받아 자율주행 시험운행을 진행하고 있다. 누적 2300시간 이상의 자율주행 데이터를 확보했으며, 주행 중 사고는 한건도 발생하지 않았다고 강조했다. 내년에는 자체 실증을 넘어서 공개 서비스 운행을 목표로 하고 있다. 여객 운송 분야에서는 서울, 부산, 제주 등 주요 도시에서 자율주행 대중교통 상용화 경험을 축적했다. 최근에는 국책 과제인 '레벨4 자율주행 카셰어링 실증 서비스'에 돌입했다. 화물 운송 분야는 내년 상반기 국내 주요 물류·제조 기업과 '미들마일 자율주행 유상 화물운송'을 시작할 예정이다. 고속도로는 물론, 톨게이트 전후 물류 거점 인근 도심 도로까지 자율주행 트럭 운행이 가능하다. 라이드플럭스는 이번 투자 유치를 통해 E2E(End-to-End) AI 기반 무인 자율주행 기술 고도화와 국토교통부 자율주행 실증도시 사업 상용화 등 사업 확장에 박차를 가한다는 방침이다. 박중희 라이드플럭스 대표는 “무인 자율주행 상용화를 현실로 구현해 국내 자율주행 산업의 새로운 기준을 제시해 나가겠다”라고 말했다. 김해원 기자 hwkim@aitimes.com",
+    "title": "﻿라이드플럭스, 자율주행 기술로 200억 프리 IPO 투자 유치 - AI타임스",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205160_206692_4857.jpg",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205160"
+  },
+  "_publication": {},
+  "id": "0f8e3be67d25",
+  "_analysis": {
+    "mll_raw": {
+      "ZES_Raw_Metrics": {
+        "Noise": {
+          "Items": {
+            "P4": {
+              "Rationale": "투자 유치 홍보 성격 강함",
+              "Score": 6
+            },
+            "P3": {
+              "Rationale": "왜곡 없음",
+              "Score": 0
+            },
+            "P2": {
+              "Rationale": "특이 사항 없음",
+              "Score": 0
+            },
+            "P1": {
+              "Rationale": "사고 0건, 기술력 강조 등 홍보성 문구",
+              "Score": 4
+            }
+          },
+          "Description": "인위적 잡음 (0~10점)"
+        },
+        "Signal": {
+          "Items": {
+            "T4": {
+              "Rationale": "스타트업 자체 발표",
+              "Score": 3
+            },
+            "T2": {
+              "Rationale": "기술적 상세 내용은 부족함",
+              "Score": 2
+            },
+            "T3": {
+              "Rationale": "기업 보도자료 기반",
+              "Score": 5
+            },
+            "T1": {
+              "Rationale": "200억, 2300시간 등 구체적 수치 포함",
+              "Score": 7
+            }
+          },
+          "Description": "정보의 실체 (0~10점)"
+        },
+        "Utility": {
+          "Items": {
+            "V2": {
+              "Rationale": "일반인 이용 불가 (실증 단계)",
+              "Score": 1
+            },
+            "V1": {
+              "Rationale": "국내 자율주행 업계 동향",
+              "Score": 3
+            },
+            "V3": {
+              "Rationale": "흔한 투자 소식",
+              "Score": 2
+            },
+            "V4": {
+              "Rationale": "기술 적용 불가",
+              "Score": 0
+            }
+          },
+          "Description": "실질적 효용 (0~10점)"
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "표준적인 투자 유치 기사"
+        }
+      },
+      "Article_ID": "0f8e3be67d25",
+      "IS_Analysis": {
+        "Score_Commentary": "스타트업(Tier 4)의 투자 유치 및 개별 기업 뉴스(Corporate Scope)로 Hard Filter 적용 대상.",
+        "Calculations": {
+          "IE_Analysis": {
+            "Inputs": {
+              "Criticality_Total": 2,
+              "Criticality_C1_Provenness": 1,
+              "SOTA_Check_Result": "False",
+              "Scope_Matrix_Score": 0,
+              "Criticality_C2_Societal_Weight": 1,
+              "Y_Evidence_Code": 3,
+              "X_Magnitude_Code": 1
+            },
+            "IE_Score": 2
+          },
+          "IW_Analysis": {
+            "Inputs": {
+              "Se_Tier": 0,
+              "Pe_Entity_Name": "RideFlux",
+              "Selection_Reason": "자금 유치 및 사업 실행 주체(국내 스타트업).",
+              "Se_Entity_Name": "None",
+              "Pe_Selection_Rule": "P4",
+              "Pe_Tier": 4
+            },
+            "IW_Score": 0.5,
+            "Tier_Score": 0.5,
+            "Gap_Score": 0
+          }
+        }
+      },
+      "Meta": {
+        "Tags": [
+          "Investment",
+          "Autonomous Driving",
+          "Startup"
+        ],
+        "Summary": "자율주행 스타트업 라이드플럭스가 200억 투자를 유치하며 누적 752억 달성. 상암 무인 실증 및 트럭 시장 진출 계획.",
+        "Headline": "라이드플럭스, 200억 프리 IPO 투자 유치 및 무인 주행 실증",
+        "Specification_Version": "v 1.0.0"
+      }
+    },
+    "tags": [
+      "Investment",
+      "Autonomous Driving",
+      "Startup"
+    ],
+    "summary": "자율주행 스타트업 라이드플럭스가 200억 투자를 유치하며 누적 752억 달성. 상암 무인 실증 및 트럭 시장 진출 계획.",
+    "title_ko": "라이드플럭스, 200억 프리 IPO 투자 유치 및 무인 주행 실증",
+    "impact_score": 2.5,
+    "analyzed_at": "2025-12-29T23:50:35.854894+09:00",
+    "zero_echo_score": 9.1
+  },
+  "_header": {
+    "state": "REJECTED",
+    "updated_at": "2025-12-29T16:10:57.263034+00:00",
+    "article_id": "0f8e3be67d25",
+    "state_history": [
+      {
+        "by": "crawler",
+        "at": "2025-12-29T22:49:20.452584+09:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:11:37.163892+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "analyzer",
+        "at": "2025-12-29T14:11:58.549346+00:00",
+        "state": "ANALYZED"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:17:12.022208+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T14:17:31.665053+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-29T14:19:07.638832+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "by": "analyzer",
+        "at": "2025-12-29T14:23:51.563539+00:00",
+        "state": "ANALYZED"
+      },
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-29T14:48:18.375181+00:00",
+        "by": "board-send-back"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T14:50:36.254578+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T15:49:52.064866+00:00",
+        "by": "desk"
+      },
+      {
+        "by": "publisher",
+        "at": "2025-12-29T16:10:57.263034+00:00",
+        "state": "REJECTED"
+      }
+    ],
+    "version": "3.0"
+  },
+  "_rejection": {
+    "rejected_by": "publisher",
+    "reason": "cutline",
+    "rejected_at": "2025-12-30T01:10:56.937900+09:00"
+  }
+}

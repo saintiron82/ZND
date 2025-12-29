@@ -130,19 +130,21 @@ function renderKanbanBoard(overview) {
         const isSelectionMode = selectionModeState === state;
 
         if (cardsEl) {
-            cardsEl.innerHTML = data.articles.map(article =>
-                renderArticleCard(article, {
+            cardsEl.innerHTML = data.articles.map(article => {
+                const articleId = article.article_id || article.id;
+                return renderArticleCard(article, {
                     selectable: isSelectionMode,
-                    selected: selectedArticles.has(article.article_id),
+                    selected: selectedArticles.has(articleId),
                     onClickHandler: isSelectionMode ?
-                        `toggleArticleSelection('${article.article_id}')` :
+                        `toggleArticleSelection('${articleId}')` :
                         null
-                })
-            ).join('');
+                });
+            }).join('');
         }
 
         // Update Header Controls
         updateColumnHeader(state, isSelectionMode);
+
     });
 }
 
@@ -225,25 +227,42 @@ function updateColumnHeader(state, isSelectionMode) {
 
 function toggleSelectAll(state, forceSelect) {
     const data = kanbanData[state];
-    if (!data) return;
+    console.log('[toggleSelectAll] state:', state, 'data:', data);
+    if (!data || !data.articles) {
+        console.warn('[toggleSelectAll] No data found for state:', state);
+        return;
+    }
+
+    // Debug: Show first article structure
+    if (data.articles.length > 0) {
+        console.log('[toggleSelectAll] First article sample:', JSON.stringify(data.articles[0], null, 2));
+    }
 
     if (forceSelect) {
-        // If all already selected, consider deselecting? 
-        // Or just specialized 'Select All' button implies selecting all.
-        // Let's check current selection count.
-        const currentInCol = data.articles.filter(a => selectedArticles.has(a.article_id)).length;
+        // Get article ID (support both article_id and id)
+        const getArticleId = (a) => a.article_id || a.id;
+
+        const currentInCol = data.articles.filter(a => selectedArticles.has(getArticleId(a))).length;
         const totalInCol = data.articles.length;
+
+        console.log('[toggleSelectAll] currentInCol:', currentInCol, 'totalInCol:', totalInCol);
 
         if (currentInCol === totalInCol) {
             // Deselect all in this column
-            data.articles.forEach(a => selectedArticles.delete(a.article_id));
+            data.articles.forEach(a => selectedArticles.delete(getArticleId(a)));
         } else {
             // Select all
-            data.articles.forEach(a => selectedArticles.add(a.article_id));
+            data.articles.forEach(a => {
+                const id = getArticleId(a);
+                if (id) selectedArticles.add(id);
+            });
         }
+
+        console.log('[toggleSelectAll] selectedArticles after:', Array.from(selectedArticles));
     }
     renderKanbanBoard(kanbanData);
 }
+
 
 function toggleArticleSelection(articleId) {
     if (selectedArticles.has(articleId)) {

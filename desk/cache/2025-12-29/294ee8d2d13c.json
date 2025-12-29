@@ -1,18 +1,195 @@
 {
+  "state": "ANALYZED",
+  "_original": {
+    "source_id": "the_decoder",
+    "description": "Microsoft CEO Satya Nadella reportedly called Copilot's Gmail and Outlook integrations \"not smart\" and is now personally stepping into product development. The worry: despite its strong starting position in AI software, Microsoft is falling behind.",
+    "published_at": "2025-12-28T10:01:58+00:00",
+    "crawled_at": "2025-12-28T17:19:54.077345+00:00",
+    "url": "https://the-decoder.com/microsoft-ceo-nadella-tells-managers-copilots-gmail-and-outlook-integrations-dont-really-work-and-steps-in-to-fix-them/",
+    "text": "Ask about this article… Search Microsoft CEO Satya Nadella is reportedly slamming the company's AI assistant behind closed doors and stepping in to fix it himself. A few weeks ago, Nadella emailed engineering managers working on the consumer version of Copilot. According to a report by The Information, he didn't mince words: the integrations connecting Copilot with Gmail and Outlook \"don't really work\" for the most part and are \"not smart.\" This wasn't a one-off complaint. Over the past few months, Microsoft's CEO has essentially become the company's top product manager. In September, he announced he would delegate some responsibilities to focus on AI product development. He handed off many business functions to Head of Sales Judson Althoff, who got the new title \"Commercial CEO.\" Ad Nadella grills top engineers in weekly meetings Nadella is now deeply involved in technical work, according to The Information. He's highly active in an internal Teams channel with about 100 top engineers, posting detailed critiques when AI products fall short. In weekly hour-long meetings, he questions employees about their work and issues specific instructions, like consolidating post-training processes across teams. Ad DEC_D_Incontent-1 Nadella reportedly sent bug reports directly to product groups working on the consumer chatbot. Over the summer, he vented frustration in a Teams channel that Microsoft hadn't shipped new features for complex Excel functions like financial models fast enough. Copilot's \"digital worker\" promise isn't paying off yet Nadella and his deputies, including Executive Vice President Rajesh Jha, worry that AI in Office 365 isn't delivering on its promise to meaningfully automate work, The Information reports. The goal: Copilot subscriptions should function as \"digital workers\" handling tasks like those of administrative assistants. Ad To close the technical gaps, Nadella is personally investing in recruiting. He calls potential hires himself and approves unusually high salaries to poach top talent from OpenAI and Google DeepMind. He's also more involved in partnerships with AI developers like Anthropic, whose technology could improve Microsoft products. Internally, Nadella reminds employees of Microsoft's past strategic blunders: stumbling in internet search and squandering its lead in smartphones and tablets. The message: this is a pivotal moment that could determine the company's future. Ad DEC_D_Incontent-2 Signs of dissatisfaction with Copilot have been visible for a while. The company has been vague about business metrics, and Copilot's actual contribution to the bottom line remains unclear.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/04/microsoft_copilot_logo-1200x800.png",
+    "title": "Microsoft CEO Nadella tells managers Copilot's Gmail and Outlook integrations ‘don't really work’ and steps in to fix them"
+  },
+  "updated_at": "2025-12-28T17:23:49.248813+00:00",
+  "_classification": {
+    "category": "Business"
+  },
+  "_analysis": {
+    "summary": "MS 사티아 나델라 CEO가 코파일럿의 아웃룩·지메일 통합 기능이 제대로 작동하지 않는다며 강하게 비판하고 직접 제품 개선을 지휘하고 있다. 그는 엔지니어링 미팅을 주재하고 인재 영입에 나서는 등 '제품 관리자' 역할을 자처하고 있다. 이는 MS가 AI 소프트웨어 경쟁에서 뒤쳐질 수 있다는 위기감을 반영한다.",
+    "title_ko": "MS 나델라 CEO, 코파일럿 성능 혹평하며 제품 개발 직접 개입",
+    "tags": [
+      "Microsoft",
+      "Copilot",
+      "Sam Altman"
+    ],
+    "mll_raw": {
+      "ZES_Raw_Metrics": {
+        "Noise": {
+          "P3": 2,
+          "P2": 4,
+          "Rationale": "'격노했다' 등의 주관적 표현이 일부 섞여 있으나 전달력을 해치지 않음.",
+          "P1": 3
+        },
+        "Signal": {
+          "T2": 6,
+          "T3": 6,
+          "Rationale": "내부 이메일 및 회의 내용 등 구체적인 정황 묘사가 포함됨.",
+          "T1": 7
+        },
+        "Utility": {
+          "V2": 6,
+          "V1": 7,
+          "Rationale": "MS 생태계 의존 기업들에게 코파일럿 전략 변화를 예고하는 중요 신호.",
+          "V3": 6
+        },
+        "Fine_Adjustment": {
+          "Reason": "보정 없음.",
+          "Score": 0
+        }
+      },
+      "Article_ID": "294ee8d2d13c",
+      "IS_Analysis": {
+        "Calculations": {
+          "IE_Analysis": {
+            "Inputs": {
+              "SOTA_Check_Result": "Par",
+              "Criticality_C1_Provenness": 1,
+              "Scope_Matrix_Score": 0.5,
+              "Criticality_Total": 1.5,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Y_Evidence_Code": 4,
+              "X_Magnitude_Code": 1
+            },
+            "IE_Score": 2
+          },
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Entity_Name": "Microsoft",
+              "Pe_Tier": 2,
+              "Se_Tier": 0,
+              "Se_Entity_Name": "None",
+              "Pe_Selection_Rule": "P4",
+              "PE/SE_Selection_Reason": "나델라 CEO가 직접 실행 및 개입(P4)하는 주체이며, 특정 경쟁사와의 대립보다는 내부 혁신에 초점."
+            },
+            "IW_Score": 2,
+            "Tier_Score": 2,
+            "Gap_Score": 0
+          }
+        },
+        "Score_Commentary": "Global Tier 2(MS)의 내부 제품 이슈이나, CEO가 직접 '실패'를 언급하고 개입(Intervention)했다는 점에서 기업 전략의 중대한 수정(Pivot)을 의미한다. 다만 영향 범위는 아직 기업 내부(Corporate)에 머문다."
+      },
+      "Meta": {
+        "Tags": [
+          "Microsoft",
+          "Copilot",
+          "Sam Altman"
+        ],
+        "Summary": "MS 사티아 나델라 CEO가 코파일럿의 아웃룩·지메일 통합 기능이 제대로 작동하지 않는다며 강하게 비판하고 직접 제품 개선을 지휘하고 있다. 그는 엔지니어링 미팅을 주재하고 인재 영입에 나서는 등 '제품 관리자' 역할을 자처하고 있다. 이는 MS가 AI 소프트웨어 경쟁에서 뒤쳐질 수 있다는 위기감을 반영한다.",
+        "Headline": "MS 나델라 CEO, 코파일럿 성능 혹평하며 제품 개발 직접 개입",
+        "Specification_Version": "v 1.0.0"
+      }
+    },
+    "evidence": {
+      "raw_metrics": {
+        "Noise": {
+          "P3": 2,
+          "P2": 4,
+          "Rationale": "'격노했다' 등의 주관적 표현이 일부 섞여 있으나 전달력을 해치지 않음.",
+          "P1": 3
+        },
+        "Utility": {
+          "V2": 6,
+          "V1": 7,
+          "Rationale": "MS 생태계 의존 기업들에게 코파일럿 전략 변화를 예고하는 중요 신호.",
+          "V3": 6
+        },
+        "Signal": {
+          "T2": 6,
+          "T3": 6,
+          "Rationale": "내부 이메일 및 회의 내용 등 구체적인 정황 묘사가 포함됨.",
+          "T1": 7
+        },
+        "Fine_Adjustment": {
+          "Score": 0,
+          "Reason": "보정 없음."
+        }
+      },
+      "breakdown": {
+        "Noise": {
+          "P3": 2.0,
+          "N_Avg": 3.0,
+          "P2": 4.0,
+          "P1": 3.0
+        },
+        "ZS_Final": 5.8,
+        "Signal": {
+          "T2": 6.0,
+          "S_Avg": 6.33,
+          "T3": 6.0,
+          "T1": 7.0
+        },
+        "Utility": {
+          "V2": 6.0,
+          "V1": 7.0,
+          "U_Avg": 6.33,
+          "V3": 6.0
+        },
+        "Fine_Adjustment": 0.0,
+        "ZS_Raw": 5.78
+      }
+    },
+    "zero_echo_score": 5.8,
+    "impact_score": 4.0,
+    "analyzed_at": "2025-12-28T17:23:49.247811+00:00",
+    "impact_evidence": {
+      "raw_inputs": {
+        "Pe_Tier": 2,
+        "PE/SE_Selection_Reason": "나델라 CEO가 직접 실행 및 개입(P4)하는 주체이며, 특정 경쟁사와의 대립보다는 내부 혁신에 초점.",
+        "Se_Tier": 0,
+        "Se_Entity_Name": "None",
+        "Pe_Selection_Rule": "P4",
+        "Pe_Entity_Name": "Microsoft"
+      },
+      "calculations": {
+        "IS_Raw": 4.0,
+        "IS_Final": 4.0,
+        "Score_Commentary": "Global Tier 2(MS)의 내부 제품 이슈이나, CEO가 직접 '실패'를 언급하고 개입(Intervention)했다는 점에서 기업 전략의 중대한 수정(Pivot)을 의미한다. 다만 영향 범위는 아직 기업 내부(Corporate)에 머문다.",
+        "IE_Analysis": {
+          "Criticality_Total": 1.5,
+          "Scope_Total": 0.5,
+          "IE_Total": 2.0
+        },
+        "IW_Analysis": {
+          "Tier_Score": 2.0,
+          "IW_Total": 2.0,
+          "Gap_Score": 0.0
+        }
+      },
+      "raw_ie_inputs": {
+        "SOTA_Check_Result": "Par",
+        "Criticality_C1_Provenness": 1,
+        "Criticality_Total": 1.5,
+        "Y_Evidence_Code": 4,
+        "Criticality_C2_Societal_Weight": 0.5,
+        "Scope_Matrix_Score": 0.5,
+        "X_Magnitude_Code": 1
+      }
+    }
+  },
   "_header": {
-    "version": "2.0",
-    "article_id": "294ee8d2d13c",
     "state": "PUBLISHED",
+    "updated_at": "2025-12-28T18:20:15.596252+00:00",
+    "article_id": "294ee8d2d13c",
     "state_history": [
       {
-        "state": "COLLECTED",
+        "by": "crawler",
         "at": "2025-12-28T17:19:54.077345+00:00",
-        "by": "crawler"
+        "state": "COLLECTED"
       },
       {
-        "state": "ANALYZED",
+        "by": "analyzer",
         "at": "2025-12-28T17:23:49.660290+00:00",
-        "by": "analyzer"
+        "state": "ANALYZED"
       },
       {
         "state": "CLASSIFIED",
@@ -20,193 +197,19 @@
         "by": "user_classification"
       },
       {
-        "state": "PUBLISHED",
+        "by": "publisher",
         "at": "2025-12-28T18:20:15.596252+00:00",
-        "by": "publisher"
+        "state": "PUBLISHED"
       }
     ],
-    "updated_at": "2025-12-28T18:20:15.596252+00:00"
-  },
-  "_original": {
-    "title": "Microsoft CEO Nadella tells managers Copilot's Gmail and Outlook integrations ‘don't really work’ and steps in to fix them",
-    "description": "Microsoft CEO Satya Nadella reportedly called Copilot's Gmail and Outlook integrations \"not smart\" and is now personally stepping into product development. The worry: despite its strong starting position in AI software, Microsoft is falling behind.",
-    "image": "https://the-decoder.com/wp-content/uploads/2025/04/microsoft_copilot_logo-1200x800.png",
-    "text": "Ask about this article… Search Microsoft CEO Satya Nadella is reportedly slamming the company's AI assistant behind closed doors and stepping in to fix it himself. A few weeks ago, Nadella emailed engineering managers working on the consumer version of Copilot. According to a report by The Information, he didn't mince words: the integrations connecting Copilot with Gmail and Outlook \"don't really work\" for the most part and are \"not smart.\" This wasn't a one-off complaint. Over the past few months, Microsoft's CEO has essentially become the company's top product manager. In September, he announced he would delegate some responsibilities to focus on AI product development. He handed off many business functions to Head of Sales Judson Althoff, who got the new title \"Commercial CEO.\" Ad Nadella grills top engineers in weekly meetings Nadella is now deeply involved in technical work, according to The Information. He's highly active in an internal Teams channel with about 100 top engineers, posting detailed critiques when AI products fall short. In weekly hour-long meetings, he questions employees about their work and issues specific instructions, like consolidating post-training processes across teams. Ad DEC_D_Incontent-1 Nadella reportedly sent bug reports directly to product groups working on the consumer chatbot. Over the summer, he vented frustration in a Teams channel that Microsoft hadn't shipped new features for complex Excel functions like financial models fast enough. Copilot's \"digital worker\" promise isn't paying off yet Nadella and his deputies, including Executive Vice President Rajesh Jha, worry that AI in Office 365 isn't delivering on its promise to meaningfully automate work, The Information reports. The goal: Copilot subscriptions should function as \"digital workers\" handling tasks like those of administrative assistants. Ad To close the technical gaps, Nadella is personally investing in recruiting. He calls potential hires himself and approves unusually high salaries to poach top talent from OpenAI and Google DeepMind. He's also more involved in partnerships with AI developers like Anthropic, whose technology could improve Microsoft products. Internally, Nadella reminds employees of Microsoft's past strategic blunders: stumbling in internet search and squandering its lead in smartphones and tablets. The message: this is a pivotal moment that could determine the company's future. Ad DEC_D_Incontent-2 Signs of dissatisfaction with Copilot have been visible for a while. The company has been vague about business metrics, and Copilot's actual contribution to the bottom line remains unclear.",
-    "published_at": "2025-12-28T10:01:58+00:00",
-    "url": "https://the-decoder.com/microsoft-ceo-nadella-tells-managers-copilots-gmail-and-outlook-integrations-dont-really-work-and-steps-in-to-fix-them/",
-    "source_id": "the_decoder",
-    "crawled_at": "2025-12-28T17:19:54.077345+00:00"
-  },
-  "_analysis": {
-    "title_ko": "MS 나델라 CEO, 코파일럿 성능 혹평하며 제품 개발 직접 개입",
-    "summary": "MS 사티아 나델라 CEO가 코파일럿의 아웃룩·지메일 통합 기능이 제대로 작동하지 않는다며 강하게 비판하고 직접 제품 개선을 지휘하고 있다. 그는 엔지니어링 미팅을 주재하고 인재 영입에 나서는 등 '제품 관리자' 역할을 자처하고 있다. 이는 MS가 AI 소프트웨어 경쟁에서 뒤쳐질 수 있다는 위기감을 반영한다.",
-    "tags": [
-      "Microsoft",
-      "Copilot",
-      "Sam Altman"
-    ],
-    "impact_score": 4.0,
-    "zero_echo_score": 5.8,
-    "analyzed_at": "2025-12-28T17:23:49.247811+00:00",
-    "mll_raw": {
-      "Article_ID": "294ee8d2d13c",
-      "Meta": {
-        "Specification_Version": "v 1.0.0",
-        "Headline": "MS 나델라 CEO, 코파일럿 성능 혹평하며 제품 개발 직접 개입",
-        "Summary": "MS 사티아 나델라 CEO가 코파일럿의 아웃룩·지메일 통합 기능이 제대로 작동하지 않는다며 강하게 비판하고 직접 제품 개선을 지휘하고 있다. 그는 엔지니어링 미팅을 주재하고 인재 영입에 나서는 등 '제품 관리자' 역할을 자처하고 있다. 이는 MS가 AI 소프트웨어 경쟁에서 뒤쳐질 수 있다는 위기감을 반영한다.",
-        "Tags": [
-          "Microsoft",
-          "Copilot",
-          "Sam Altman"
-        ]
-      },
-      "IS_Analysis": {
-        "Score_Commentary": "Global Tier 2(MS)의 내부 제품 이슈이나, CEO가 직접 '실패'를 언급하고 개입(Intervention)했다는 점에서 기업 전략의 중대한 수정(Pivot)을 의미한다. 다만 영향 범위는 아직 기업 내부(Corporate)에 머문다.",
-        "Calculations": {
-          "IW_Analysis": {
-            "Inputs": {
-              "Pe_Selection_Rule": "P4",
-              "Pe_Entity_Name": "Microsoft",
-              "Pe_Tier": 2,
-              "Se_Entity_Name": "None",
-              "Se_Tier": 0,
-              "PE/SE_Selection_Reason": "나델라 CEO가 직접 실행 및 개입(P4)하는 주체이며, 특정 경쟁사와의 대립보다는 내부 혁신에 초점."
-            },
-            "Tier_Score": 2,
-            "Gap_Score": 0,
-            "IW_Score": 2
-          },
-          "IE_Analysis": {
-            "Inputs": {
-              "X_Magnitude_Code": 1,
-              "Y_Evidence_Code": 4,
-              "Scope_Matrix_Score": 0.5,
-              "Criticality_C1_Provenness": 1,
-              "Criticality_C2_Societal_Weight": 0.5,
-              "Criticality_Total": 1.5,
-              "SOTA_Check_Result": "Par"
-            },
-            "IE_Score": 2
-          }
-        }
-      },
-      "ZES_Raw_Metrics": {
-        "Signal": {
-          "T1": 7,
-          "T2": 6,
-          "T3": 6,
-          "Rationale": "내부 이메일 및 회의 내용 등 구체적인 정황 묘사가 포함됨."
-        },
-        "Noise": {
-          "P1": 3,
-          "P2": 4,
-          "P3": 2,
-          "Rationale": "'격노했다' 등의 주관적 표현이 일부 섞여 있으나 전달력을 해치지 않음."
-        },
-        "Utility": {
-          "V1": 7,
-          "V2": 6,
-          "V3": 6,
-          "Rationale": "MS 생태계 의존 기업들에게 코파일럿 전략 변화를 예고하는 중요 신호."
-        },
-        "Fine_Adjustment": {
-          "Score": 0,
-          "Reason": "보정 없음."
-        }
-      }
-    },
-    "impact_evidence": {
-      "calculations": {
-        "IW_Analysis": {
-          "Tier_Score": 2.0,
-          "Gap_Score": 0.0,
-          "IW_Total": 2.0
-        },
-        "IE_Analysis": {
-          "Scope_Total": 0.5,
-          "Criticality_Total": 1.5,
-          "IE_Total": 2.0
-        },
-        "IS_Raw": 4.0,
-        "IS_Final": 4.0,
-        "Score_Commentary": "Global Tier 2(MS)의 내부 제품 이슈이나, CEO가 직접 '실패'를 언급하고 개입(Intervention)했다는 점에서 기업 전략의 중대한 수정(Pivot)을 의미한다. 다만 영향 범위는 아직 기업 내부(Corporate)에 머문다."
-      },
-      "raw_inputs": {
-        "Pe_Selection_Rule": "P4",
-        "Pe_Entity_Name": "Microsoft",
-        "Pe_Tier": 2,
-        "Se_Entity_Name": "None",
-        "Se_Tier": 0,
-        "PE/SE_Selection_Reason": "나델라 CEO가 직접 실행 및 개입(P4)하는 주체이며, 특정 경쟁사와의 대립보다는 내부 혁신에 초점."
-      },
-      "raw_ie_inputs": {
-        "X_Magnitude_Code": 1,
-        "Y_Evidence_Code": 4,
-        "Scope_Matrix_Score": 0.5,
-        "Criticality_C1_Provenness": 1,
-        "Criticality_C2_Societal_Weight": 0.5,
-        "Criticality_Total": 1.5,
-        "SOTA_Check_Result": "Par"
-      }
-    },
-    "evidence": {
-      "breakdown": {
-        "Signal": {
-          "T1": 7.0,
-          "T2": 6.0,
-          "T3": 6.0,
-          "S_Avg": 6.33
-        },
-        "Noise": {
-          "P1": 3.0,
-          "P2": 4.0,
-          "P3": 2.0,
-          "N_Avg": 3.0
-        },
-        "Utility": {
-          "V1": 7.0,
-          "V2": 6.0,
-          "V3": 6.0,
-          "U_Avg": 6.33
-        },
-        "Fine_Adjustment": 0.0,
-        "ZS_Raw": 5.78,
-        "ZS_Final": 5.8
-      },
-      "raw_metrics": {
-        "Signal": {
-          "T1": 7,
-          "T2": 6,
-          "T3": 6,
-          "Rationale": "내부 이메일 및 회의 내용 등 구체적인 정황 묘사가 포함됨."
-        },
-        "Noise": {
-          "P1": 3,
-          "P2": 4,
-          "P3": 2,
-          "Rationale": "'격노했다' 등의 주관적 표현이 일부 섞여 있으나 전달력을 해치지 않음."
-        },
-        "Utility": {
-          "V1": 7,
-          "V2": 6,
-          "V3": 6,
-          "Rationale": "MS 생태계 의존 기업들에게 코파일럿 전략 변화를 예고하는 중요 신호."
-        },
-        "Fine_Adjustment": {
-          "Score": 0,
-          "Reason": "보정 없음."
-        }
-      }
-    }
-  },
-  "_classification": {
-    "category": "Business"
+    "version": "2.0"
   },
   "_publication": {
-    "edition_code": "251229_7",
     "edition_name": "제7호",
-    "published_at": "2025-12-28T18:20:15.240607+00:00",
+    "edition_code": "251229_7",
     "released_at": null,
+    "published_at": "2025-12-28T18:20:15.240607+00:00",
     "firestore_synced": true
-  }
+  },
+  "id": "294ee8d2d13c"
 }

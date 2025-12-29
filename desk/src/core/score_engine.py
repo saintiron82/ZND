@@ -101,28 +101,36 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
 
 def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     """
-    Calculate ZeroEcho Score using V1.0 formula.
+    Calculate ZeroEcho Score using V1.1 formula.
+    Supports 4 items per category (T1-T4, P1-P4, V1-V4).
     """
-    # Extract Signal (T1, T2, T3)
+    # Extract Signal (T1, T2, T3, T4)
     signal = zes_raw_metrics.get('Signal', {})
-    t1 = safe_float(signal.get('T1'))
-    t2 = safe_float(signal.get('T2'))
-    t3 = safe_float(signal.get('T3'))
-    s = (t1 + t2 + t3) / 3.0
+    # Handle nested Items structure (new schema) or flat structure (legacy)
+    signal_items = signal.get('Items', signal)
+    t1 = safe_float(signal_items.get('T1', {}).get('Score') if isinstance(signal_items.get('T1'), dict) else signal_items.get('T1'))
+    t2 = safe_float(signal_items.get('T2', {}).get('Score') if isinstance(signal_items.get('T2'), dict) else signal_items.get('T2'))
+    t3 = safe_float(signal_items.get('T3', {}).get('Score') if isinstance(signal_items.get('T3'), dict) else signal_items.get('T3'))
+    t4 = safe_float(signal_items.get('T4', {}).get('Score') if isinstance(signal_items.get('T4'), dict) else signal_items.get('T4'))
+    s = (t1 + t2 + t3 + t4) / 4.0
     
-    # Extract Noise (P1, P2, P3)
+    # Extract Noise (P1, P2, P3, P4)
     noise = zes_raw_metrics.get('Noise', {})
-    p1 = safe_float(noise.get('P1'))
-    p2 = safe_float(noise.get('P2'))
-    p3 = safe_float(noise.get('P3'))
-    n = (p1 + p2 + p3) / 3.0
+    noise_items = noise.get('Items', noise)
+    p1 = safe_float(noise_items.get('P1', {}).get('Score') if isinstance(noise_items.get('P1'), dict) else noise_items.get('P1'))
+    p2 = safe_float(noise_items.get('P2', {}).get('Score') if isinstance(noise_items.get('P2'), dict) else noise_items.get('P2'))
+    p3 = safe_float(noise_items.get('P3', {}).get('Score') if isinstance(noise_items.get('P3'), dict) else noise_items.get('P3'))
+    p4 = safe_float(noise_items.get('P4', {}).get('Score') if isinstance(noise_items.get('P4'), dict) else noise_items.get('P4'))
+    n = (p1 + p2 + p3 + p4) / 4.0
     
-    # Extract Utility (V1, V2, V3)
+    # Extract Utility (V1, V2, V3, V4)
     utility = zes_raw_metrics.get('Utility', {})
-    v1 = safe_float(utility.get('V1'))
-    v2 = safe_float(utility.get('V2'))
-    v3 = safe_float(utility.get('V3'))
-    u = max(1.0, (v1 + v2 + v3) / 3.0)
+    utility_items = utility.get('Items', utility)
+    v1 = safe_float(utility_items.get('V1', {}).get('Score') if isinstance(utility_items.get('V1'), dict) else utility_items.get('V1'))
+    v2 = safe_float(utility_items.get('V2', {}).get('Score') if isinstance(utility_items.get('V2'), dict) else utility_items.get('V2'))
+    v3 = safe_float(utility_items.get('V3', {}).get('Score') if isinstance(utility_items.get('V3'), dict) else utility_items.get('V3'))
+    v4 = safe_float(utility_items.get('V4', {}).get('Score') if isinstance(utility_items.get('V4'), dict) else utility_items.get('V4'))
+    u = max(1.0, (v1 + v2 + v3 + v4) / 4.0)
     
     # Extract Fine Adjustment
     fine_adj_obj = zes_raw_metrics.get('Fine_Adjustment', {})
@@ -135,15 +143,16 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     zero_echo_score = max(0.0, min(10.0, round(zs_raw, 1)))
     
     breakdown = {
-        'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'S_Avg': round(s, 2)},
-        'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'N_Avg': round(n, 2)},
-        'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'U_Avg': round(u, 2)},
+        'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'T4': t4, 'S_Avg': round(s, 2)},
+        'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'P4': p4, 'N_Avg': round(n, 2)},
+        'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'V4': v4, 'U_Avg': round(u, 2)},
         'Fine_Adjustment': fine_adjustment,
         'ZS_Raw': round(zs_raw, 2),
         'ZS_Final': zero_echo_score
     }
     
     return zero_echo_score, breakdown
+
 
 
 def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:

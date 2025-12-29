@@ -155,43 +155,130 @@ class FirestoreClient:
     # =========================================================================
     
     def get_article(self, article_id: str) -> Optional[Dict[str, Any]]:
-        """기사 조회 (Local Cache 우선, 후 Firestore)"""
+        """
+        기사 조회 (updated_at 기준 최신 데이터)
+        - 로컬/Firestore 둘 다 조회 후 updated_at 비교
+        - 최신 데이터가 정본
+        """
+        import glob
+        import json
         
-        # 1. Try Local Cache First
+        local_data = None
+        remote_data = None
+        
+        # 1. Local Cache 조회
         try:
-            import glob
-            import json
-            
-            # Resolve Cache Path
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             cache_root = os.path.join(base_dir, 'cache')
             
-            # fast search: check if we can guess the date? No, simple glob is fast enough for specific ID
             search_pattern = os.path.join(cache_root, '*', f'{article_id}.json')
             found_paths = glob.glob(search_pattern)
             
             if found_paths:
-                # Use the most recently modified one if multiple (unlikely with ID)
                 found_paths.sort(key=os.path.getmtime, reverse=True)
                 target_path = found_paths[0]
                 
                 with open(target_path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    print(f"📂 [FirestoreClient] Found in local cache: {article_id}")
-                    return data
+                    local_data = json.load(f)
         except Exception as e:
             print(f"⚠️ [FirestoreClient] Local cache lookup failed: {e}")
 
-        # 2. Fallback to Firestore
-        doc_ref = self._get_collection('articles').document(article_id)
-        doc = doc_ref.get()
-        self._track_read()
+        # 2. Firestore 조회
+        try:
+            doc_ref = self._get_collection('articles').document(article_id)
+            doc = doc_ref.get()
+            self._track_read()
+            
+            if doc.exists:
+                remote_data = doc.to_dict()
+                remote_data['id'] = doc.id
+        except Exception as e:
+            print(f"⚠️ [FirestoreClient] Firestore lookup failed: {e}")
         
-        if doc.exists:
-            data = doc.to_dict()
-            data['id'] = doc.id
-            return data
+        # 3. Smart Merge (지능형 병합)
+        # 단순히 최신 것을 선택하는 것이 아니라, "정보의 총량"을 보존하며 최신 상태를 반영
+        
+        if local_data and remote_data:
+            local_header = local_data.get('_header', {})
+            remote_header = remote_data.get('_header', {})
+            
+            local_time = local_header.get('updated_at', '')
+            remote_time = remote_header.get('updated_at', '')
+            
+            remote_is_newer = remote_time >= local_time
+            
+            # 데이터 완전성 체크 (_original 필수)
+            local_complete = bool(local_data.get('_original'))
+            remote_complete = bool(remote_data.get('_original'))
+            
+            # =========================================================
+            # Smart Sync: 뒤쳐진 쪽만 업데이트 (Optimization)
+            # =========================================================
+            
+            if remote_is_newer:
+                if remote_complete:
+                    # Case 1: Remote가 정본 -> Local만 업데이트 (Cache Refresh)
+                    try:
+                        if target_path:
+                            with open(target_path, 'w', encoding='utf-8') as f:
+                                json.dump(remote_data, f, ensure_ascii=False, indent=2)
+                            # print(f"📥 [Sync] Local cache updated from Firestore: {article_id}")
+                    except Exception as e:
+                        print(f"⚠️ [Sync] Local update failed: {e}")
+                    return remote_data
+                    
+                elif local_complete:
+                    # Case 2: Remote가 최신이나 불완전 -> Merge -> 둘 다 업데이트 (Repair & Sync)
+                    print(f"🛠️ [Sync] Reconstructing sparse data for {article_id}")
+                    merged = local_data.copy()
+                    
+                    if '_header' not in merged: merged['_header'] = {}
+                    merged['_header'].update(remote_header)
+                    
+                    for key, val in remote_data.items():
+                        if key not in ['_header', '_original'] and val:
+                            merged[key] = val
+                            
+                    # 1. Fix Firestore
+                    try:
+                        self.save_article(article_id, merged)
+                    except Exception as e:
+                        print(f"⚠️ [Sync] Firestore repair failed: {e}")
+                        
+                    # 2. Update Local
+                    try:
+                        if target_path:
+                            with open(target_path, 'w', encoding='utf-8') as f:
+                                json.dump(merged, f, ensure_ascii=False, indent=2)
+                    except Exception as e:
+                        print(f"⚠️ [Sync] Local update failed: {e}")
+                            
+                    return merged
+                else:
+                    # Case 3: 둘 다 불완전 -> Remote 사용 (복구 불가)
+                    return remote_data
+            else:
+                # Case 4: Local이 정본 -> Firestore만 업데이트 (Server Sync)
+                # 주의: 매번 읽을 때마다 쓰기를 하면 비용 문제 발생 가능.
+                # 하지만 데이터 일관성이 우선이라면 맞춰주는 게 맞음.
+                # 여기서는 '확실히 차이가 날 때'만 업데이트 하도록 필터링 가능하지만,
+                # updated_at이 Local > Remote 라면 확실히 서버가 뒤쳐진 것임.
+                
+                try:
+                    # print(f"📤 [Sync] Pushing local changes to Firestore: {article_id}")
+                    self.save_article(article_id, local_data)
+                except Exception as e:
+                    print(f"⚠️ [Sync] Firestore update failed: {e}")
+                    
+                return local_data
+                
+        elif local_data:
+            return local_data
+        elif remote_data:
+            return remote_data
+        
         return None
+
 
     def list_recent_articles(self, limit: int = 1000) -> List[Dict[str, Any]]:
         """최근 기사 목록 조회 (중복 검사용)"""
@@ -495,23 +582,42 @@ class FirestoreClient:
         except Exception as e:
             print(f"⚠️ Firestore search failed: {e}")
         
-        # 3. 병합: updated_at 기준 최신 데이터 우선
+        # 3. 병합: updated_at 기준 최신 데이터 우선 + 데이터 완전성 검사
         merged = {}
         all_ids = set(local_articles.keys()) | set(firestore_articles.keys())
+        
+        def is_complete(article):
+            """데이터 완전성 검사: _original.url 필수"""
+            if not article:
+                return False
+            original = article.get('_original', {})
+            return bool(original.get('url'))
         
         for aid in all_ids:
             local = local_articles.get(aid)
             remote = firestore_articles.get(aid)
             
             if local and remote:
-                # 둘 다 있으면 updated_at 비교
-                local_time = local.get('_header', {}).get('updated_at', '')
-                remote_time = remote.get('_header', {}).get('updated_at', '')
-                merged[aid] = remote if remote_time >= local_time else local
+                # 둘 다 있으면: 완전성과 updated_at 함께 고려
+                local_complete = is_complete(local)
+                remote_complete = is_complete(remote)
+                
+                if local_complete and not remote_complete:
+                    # Local만 완전 -> Local 사용
+                    merged[aid] = local
+                elif remote_complete and not local_complete:
+                    # Remote만 완전 -> Remote 사용
+                    merged[aid] = remote
+                else:
+                    # 둘 다 완전하거나 둘 다 불완전 -> updated_at 비교
+                    local_time = local.get('_header', {}).get('updated_at', '')
+                    remote_time = remote.get('_header', {}).get('updated_at', '')
+                    merged[aid] = remote if remote_time >= local_time else local
             elif remote:
                 merged[aid] = remote
             elif local:
                 merged[aid] = local
+
         
         # 4. 정렬 및 제한
         result = list(merged.values())

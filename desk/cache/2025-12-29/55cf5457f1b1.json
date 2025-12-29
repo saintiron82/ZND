@@ -1,8 +1,111 @@
 {
+  "_classification": {
+    "classified_at": "2025-12-29T07:24:21.610471+00:00",
+    "is_selected": true,
+    "classified_by": "desk_user",
+    "category": "Cloud/Infra"
+  },
+  "_original": {
+    "source_id": "aitimes",
+    "description": "카카오(대표 정신아)는 정부 주도 'GPU 확보 사업'의 최종 사업자 선정에 따라 데이터센터 안산에 최신 GPU 인프라 구축을 진행 중이라고 29일 밝혔다.GPU",
+    "published_at": "2025-12-29T13:03:28+09:00",
+    "crawled_at": "2025-12-29T06:29:16.849497+00:00",
+    "text": "(사진=카카오) 카카오(대표 정신아)는 정부 주도 'GPU 확보 사업'의 최종 사업자 선정에 따라 데이터센터 안산에 최신 GPU 인프라 구축을 진행 중이라고 29일 밝혔다. GPU 확보 사업은 핵심 인프라인 GPU를 민간에 지원하는 국책사업이다. 카카오는 지난 8월 최종 사업자로 선정, 총 2424장의 GPU를 확보하고 이를 5년간 위탁 운영하며 국내 AI 연구 및 개발 환경을 지원할 계획이다. 이에 경기도 안산시의 카카오 데이터센터 안산에 GPU 인프라 구축을 진행 중이라고 전했다. 현재는 전체 할당량의 약 84%에 해당하는 255노드(GPU 2040장)의 인프라 구축을 완료한 상태다. 이는 당초 제출했던 연내 구축 목표치인 64노드에 비해 4배를 넘는 규모다. 데이터센터 인프라 역량과 GPU 클러스터 구축 노하우 등을 바탕으로 계획 대비 구축 일정을 크게 앞당겼다는 설명이다. GPU 확보부터 구축, 운영 준비에 이르는 전 과정에 걸쳐 철저한 프로젝트 관리를 수행했다고 강조했다. 공급사와의 협력을 통해 핵심 장비를 조기에 확보했으며, 사전 기술 검증(PoC)을 통해 실제 가동 단계에서 발생할 수 있는 리스크를 점검하고 최소화해 구축 일정을 앞당겼다는 설명이다. 서버 운영에 필수적인 안정적인 전력 공급 시스템과 냉각 시스템도 마련했다고 밝혔다. 고성능 GPU 서버에서 발생하는 열을 효과적으로 관리하기 위해 뜨거운 공기를 격리, 냉각 장치로 순환하는 ‘열복도 밀폐시스템(Hot Aisle Containment System)’을 적용한 것이 특징이다. 카카오는 앞으로 인프라 제공뿐만 아니라, 이용자가 AI 모델 개발에 집중할 수 있는 소프트웨어 환경도 지원할 예정이다. 국가 AI 컴퓨팅 자원 지원 포털과 연동된 통합 플랫폼을 활용, 포털을 통해 카카오클라우드로 손쉽게 진입할 수 있다는 설명이다. 이때, 카카오클라우드 AI 플랫폼인 '쿠브플로우(Kubeflow)'를 제공할 예정이다. 쿠브플로우는 클라우드 네이티브 환경에서 쉽고 빠르게 머신러닝(ML) 워크플로우를 구축하고 실행할 수 있도록 지원하는 플랫폼이다. 한편, 카카오는 구축을 완료한 255노드에 대한 성능 테스트를 진행 중이다. 내년 1월 2일부터 과학기술정보통신부와 정보통신산업진흥원이 베타서비스 공모를 통해 선정한 산·학·연 과제에 최신 컴퓨팅 자원을 제공할 예정이다. 김세웅 카카오 AI시너지 성과리더는 “대규모 GPU 인프라를 안정적으로 구축, 운영하는 것은 AI 경쟁력의 핵심”이라며 “카카오 데이터센터 및 클라우드 역량을 바탕으로 안정적이고 효율적인 AI 개발 환경을 제공해 국내 AI 생태계 발전에 기여해 나가겠다”라고 말했다. 장세민 기자 semim99@aitimes.com",
+    "title": "카카오, 안산 데이터센터에 GPU 2040장 구축...”내년부터 최신 컴퓨팅 제공” - AI타임스",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205150_206679_5830.jpeg",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205150"
+  },
+  "_publication": {
+    "edition_name": "제10호",
+    "edition_code": "251229_10",
+    "released_at": null,
+    "published_at": "2025-12-29T08:35:27.251569+00:00",
+    "status": "preview",
+    "firestore_synced": true
+  },
+  "_analysis": {
+    "tags": [
+      "Cloud",
+      "Hardware",
+      "Infrastructure"
+    ],
+    "mll_raw": {
+      "ZES_Raw_Metrics": {
+        "Noise": {
+          "P3": 0,
+          "P2": 3,
+          "Rationale": "사실 위주의 건조한 서술로 과장된 표현이 적음.",
+          "P1": 2
+        },
+        "Utility": {
+          "V2": 8,
+          "V1": 6,
+          "V3": 5,
+          "Rationale": "국내 AI 연구자들이 즉시 신청 및 활용 가능한 인프라 정보로 실용성이 높음."
+        },
+        "Signal": {
+          "T2": 7,
+          "T3": 6,
+          "Rationale": "GPU 수량(2040장), 노드 수(255), 달성률(84%), 제공 플랫폼(쿠브플로우) 등 구체적 데이터가 매우 풍부함.",
+          "T1": 9
+        },
+        "Fine_Adjustment": {
+          "Score": 0.8,
+          "Reason": "구체적인 수치 데이터와 즉시 활용 가능한 인프라 정보를 제공하는 고품질 기사."
+        }
+      },
+      "Article_ID": "55cf5457f1b1",
+      "IS_Analysis": {
+        "Calculations": {
+          "IW_Analysis": {
+            "Inputs": {
+              "Se_Tier": 0,
+              "Pe_Entity_Name": "Kakao",
+              "Pe_Selection_Rule": "P4",
+              "Se_Entity_Name": "None",
+              "PE/SE_Reason": "실제 인프라를 구축하고 운영하는 주체인 카카오(Tier 3)를 PE로 선정. 정부는 발주처이나 기사의 초점은 카카오의 실행 능력에 있으므로 SE는 None.",
+              "Pe_Tier": 3
+            },
+            "IW_Score": 1,
+            "Tier_Score": 1,
+            "Gap_Score": 0
+          },
+          "IE_Analysis": {
+            "IE_Score": 3.5,
+            "Inputs": {
+              "SOTA_Check_Result": "False",
+              "Criticality_C1_Provenness": 1,
+              "Scope_Matrix_Score": 2,
+              "Criticality_Total": 1.5,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Y_Evidence_Code": 4,
+              "X_Magnitude_Code": 2
+            }
+          }
+        },
+        "Score_Commentary": "PE(카카오, Tier 3)가 국가 차원(X2)의 인프라를 실질적으로 구축 완료(Y4)하여 높은 IE 점수를 획득했다. 2000장 이상의 GPU는 국내 연구 환경에 유의미한 영향을 미치는 규모이며, 즉시 가동 가능한 상태임이 입증되었다."
+      },
+      "Meta": {
+        "Tags": [
+          "Cloud",
+          "Hardware",
+          "Infrastructure"
+        ],
+        "Summary": "카카오가 정부 'GPU 확보 사업'의 일환으로 데이터센터 안산에 2040장의 최신 GPU 인프라 구축을 완료했다. 이는 목표 대비 4배 규모로, 내년부터 국내 산학연 연구 과제에 컴퓨팅 자원과 '쿠브플로우' 플랫폼을 제공할 예정이다. 안정적 운영을 위한 전력 및 냉각 시스템도 완비되었다.",
+        "Headline": "카카오, 안산 데이터센터에 정부 지원용 GPU 2040장 구축 완료",
+        "Specification_Version": "v 1.0.0"
+      }
+    },
+    "summary": "카카오가 정부 'GPU 확보 사업'의 일환으로 데이터센터 안산에 2040장의 최신 GPU 인프라 구축을 완료했다. 이는 목표 대비 4배 규모로, 내년부터 국내 산학연 연구 과제에 컴퓨팅 자원과 '쿠브플로우' 플랫폼을 제공할 예정이다. 안정적 운영을 위한 전력 및 냉각 시스템도 완비되었다.",
+    "title_ko": "카카오, 안산 데이터센터에 정부 지원용 GPU 2040장 구축 완료",
+    "impact_score": 4.5,
+    "zero_echo_score": 4.2,
+    "analyzed_at": "2025-12-29T07:20:59.821474+00:00"
+  },
   "_header": {
-    "version": "2.0",
-    "article_id": "55cf5457f1b1",
     "state": "PUBLISHED",
+    "updated_at": "2025-12-29T08:35:27.631133+00:00",
+    "article_id": "55cf5457f1b1",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -15,9 +118,9 @@
         "by": "analyzer"
       },
       {
-        "state": "CLASSIFIED",
+        "by": "desk",
         "at": "2025-12-29T07:22:35.422624+00:00",
-        "by": "desk"
+        "state": "CLASSIFIED"
       },
       {
         "state": "ANALYZED",
@@ -25,119 +128,17 @@
         "by": "board-send-back"
       },
       {
-        "state": "CLASSIFIED",
+        "by": "desk",
         "at": "2025-12-29T07:24:21.990805+00:00",
-        "by": "desk"
+        "state": "CLASSIFIED"
       },
       {
-        "state": "PUBLISHED",
+        "by": "publisher",
         "at": "2025-12-29T08:35:27.631133+00:00",
-        "by": "publisher"
+        "state": "PUBLISHED"
       }
     ],
-    "updated_at": "2025-12-29T08:35:27.631133+00:00"
+    "version": "2.0"
   },
-  "_original": {
-    "title": "카카오, 안산 데이터센터에 GPU 2040장 구축...”내년부터 최신 컴퓨팅 제공” - AI타임스",
-    "description": "카카오(대표 정신아)는 정부 주도 'GPU 확보 사업'의 최종 사업자 선정에 따라 데이터센터 안산에 최신 GPU 인프라 구축을 진행 중이라고 29일 밝혔다.GPU",
-    "image": "https://cdn.aitimes.com/news/photo/202512/205150_206679_5830.jpeg",
-    "text": "(사진=카카오) 카카오(대표 정신아)는 정부 주도 'GPU 확보 사업'의 최종 사업자 선정에 따라 데이터센터 안산에 최신 GPU 인프라 구축을 진행 중이라고 29일 밝혔다. GPU 확보 사업은 핵심 인프라인 GPU를 민간에 지원하는 국책사업이다. 카카오는 지난 8월 최종 사업자로 선정, 총 2424장의 GPU를 확보하고 이를 5년간 위탁 운영하며 국내 AI 연구 및 개발 환경을 지원할 계획이다. 이에 경기도 안산시의 카카오 데이터센터 안산에 GPU 인프라 구축을 진행 중이라고 전했다. 현재는 전체 할당량의 약 84%에 해당하는 255노드(GPU 2040장)의 인프라 구축을 완료한 상태다. 이는 당초 제출했던 연내 구축 목표치인 64노드에 비해 4배를 넘는 규모다. 데이터센터 인프라 역량과 GPU 클러스터 구축 노하우 등을 바탕으로 계획 대비 구축 일정을 크게 앞당겼다는 설명이다. GPU 확보부터 구축, 운영 준비에 이르는 전 과정에 걸쳐 철저한 프로젝트 관리를 수행했다고 강조했다. 공급사와의 협력을 통해 핵심 장비를 조기에 확보했으며, 사전 기술 검증(PoC)을 통해 실제 가동 단계에서 발생할 수 있는 리스크를 점검하고 최소화해 구축 일정을 앞당겼다는 설명이다. 서버 운영에 필수적인 안정적인 전력 공급 시스템과 냉각 시스템도 마련했다고 밝혔다. 고성능 GPU 서버에서 발생하는 열을 효과적으로 관리하기 위해 뜨거운 공기를 격리, 냉각 장치로 순환하는 ‘열복도 밀폐시스템(Hot Aisle Containment System)’을 적용한 것이 특징이다. 카카오는 앞으로 인프라 제공뿐만 아니라, 이용자가 AI 모델 개발에 집중할 수 있는 소프트웨어 환경도 지원할 예정이다. 국가 AI 컴퓨팅 자원 지원 포털과 연동된 통합 플랫폼을 활용, 포털을 통해 카카오클라우드로 손쉽게 진입할 수 있다는 설명이다. 이때, 카카오클라우드 AI 플랫폼인 '쿠브플로우(Kubeflow)'를 제공할 예정이다. 쿠브플로우는 클라우드 네이티브 환경에서 쉽고 빠르게 머신러닝(ML) 워크플로우를 구축하고 실행할 수 있도록 지원하는 플랫폼이다. 한편, 카카오는 구축을 완료한 255노드에 대한 성능 테스트를 진행 중이다. 내년 1월 2일부터 과학기술정보통신부와 정보통신산업진흥원이 베타서비스 공모를 통해 선정한 산·학·연 과제에 최신 컴퓨팅 자원을 제공할 예정이다. 김세웅 카카오 AI시너지 성과리더는 “대규모 GPU 인프라를 안정적으로 구축, 운영하는 것은 AI 경쟁력의 핵심”이라며 “카카오 데이터센터 및 클라우드 역량을 바탕으로 안정적이고 효율적인 AI 개발 환경을 제공해 국내 AI 생태계 발전에 기여해 나가겠다”라고 말했다. 장세민 기자 semim99@aitimes.com",
-    "published_at": "2025-12-29T13:03:28+09:00",
-    "url": "https://www.aitimes.com/news/articleView.html?idxno=205150",
-    "source_id": "aitimes",
-    "crawled_at": "2025-12-29T06:29:16.849497+00:00"
-  },
-  "_analysis": {
-    "title_ko": "카카오, 안산 데이터센터에 정부 지원용 GPU 2040장 구축 완료",
-    "summary": "카카오가 정부 'GPU 확보 사업'의 일환으로 데이터센터 안산에 2040장의 최신 GPU 인프라 구축을 완료했다. 이는 목표 대비 4배 규모로, 내년부터 국내 산학연 연구 과제에 컴퓨팅 자원과 '쿠브플로우' 플랫폼을 제공할 예정이다. 안정적 운영을 위한 전력 및 냉각 시스템도 완비되었다.",
-    "tags": [
-      "Cloud",
-      "Hardware",
-      "Infrastructure"
-    ],
-    "impact_score": 4.5,
-    "zero_echo_score": 4.2,
-    "analyzed_at": "2025-12-29T07:20:59.821474+00:00",
-    "mll_raw": {
-      "Article_ID": "55cf5457f1b1",
-      "Meta": {
-        "Specification_Version": "v 1.0.0",
-        "Headline": "카카오, 안산 데이터센터에 정부 지원용 GPU 2040장 구축 완료",
-        "Summary": "카카오가 정부 'GPU 확보 사업'의 일환으로 데이터센터 안산에 2040장의 최신 GPU 인프라 구축을 완료했다. 이는 목표 대비 4배 규모로, 내년부터 국내 산학연 연구 과제에 컴퓨팅 자원과 '쿠브플로우' 플랫폼을 제공할 예정이다. 안정적 운영을 위한 전력 및 냉각 시스템도 완비되었다.",
-        "Tags": [
-          "Cloud",
-          "Hardware",
-          "Infrastructure"
-        ]
-      },
-      "IS_Analysis": {
-        "Score_Commentary": "PE(카카오, Tier 3)가 국가 차원(X2)의 인프라를 실질적으로 구축 완료(Y4)하여 높은 IE 점수를 획득했다. 2000장 이상의 GPU는 국내 연구 환경에 유의미한 영향을 미치는 규모이며, 즉시 가동 가능한 상태임이 입증되었다.",
-        "Calculations": {
-          "IW_Analysis": {
-            "Inputs": {
-              "Pe_Selection_Rule": "P4",
-              "Pe_Entity_Name": "Kakao",
-              "Pe_Tier": 3,
-              "Se_Entity_Name": "None",
-              "Se_Tier": 0,
-              "PE/SE_Reason": "실제 인프라를 구축하고 운영하는 주체인 카카오(Tier 3)를 PE로 선정. 정부는 발주처이나 기사의 초점은 카카오의 실행 능력에 있으므로 SE는 None."
-            },
-            "Tier_Score": 1,
-            "Gap_Score": 0,
-            "IW_Score": 1
-          },
-          "IE_Analysis": {
-            "Inputs": {
-              "X_Magnitude_Code": 2,
-              "Y_Evidence_Code": 4,
-              "Scope_Matrix_Score": 2,
-              "Criticality_C1_Provenness": 1,
-              "Criticality_C2_Societal_Weight": 0.5,
-              "Criticality_Total": 1.5,
-              "SOTA_Check_Result": "False"
-            },
-            "IE_Score": 3.5
-          }
-        }
-      },
-      "ZES_Raw_Metrics": {
-        "Signal": {
-          "T1": 9,
-          "T2": 7,
-          "T3": 6,
-          "Rationale": "GPU 수량(2040장), 노드 수(255), 달성률(84%), 제공 플랫폼(쿠브플로우) 등 구체적 데이터가 매우 풍부함."
-        },
-        "Noise": {
-          "P1": 2,
-          "P2": 3,
-          "P3": 0,
-          "Rationale": "사실 위주의 건조한 서술로 과장된 표현이 적음."
-        },
-        "Utility": {
-          "V1": 6,
-          "V2": 8,
-          "V3": 5,
-          "Rationale": "국내 AI 연구자들이 즉시 신청 및 활용 가능한 인프라 정보로 실용성이 높음."
-        },
-        "Fine_Adjustment": {
-          "Score": 0.8,
-          "Reason": "구체적인 수치 데이터와 즉시 활용 가능한 인프라 정보를 제공하는 고품질 기사."
-        }
-      }
-    }
-  },
-  "_classification": {
-    "category": "Cloud/Infra",
-    "is_selected": true,
-    "classified_at": "2025-12-29T07:24:21.610471+00:00",
-    "classified_by": "desk_user"
-  },
-  "_publication": {
-    "edition_code": "251229_10",
-    "edition_name": "제10호",
-    "published_at": "2025-12-29T08:35:27.251569+00:00",
-    "released_at": null,
-    "status": "preview",
-    "firestore_synced": true
-  }
+  "id": "55cf5457f1b1"
 }

@@ -591,25 +591,33 @@ def send_back_articles():
 # =============================================================================
 
 def _format_article_card(article: dict) -> dict:
-    """칸반 카드용 간략 형식"""
-    header = article.get('_header', {})
-    original = article.get('_original', {})
-    analysis = article.get('_analysis') or {}
-    classification = article.get('_classification') or {}
-    rejection = article.get('_rejection') or {}
+    """
+    칸반 카드용 간략 형식 
+    - 상세화면과 동일한 데이터를 사용하도록 보장
+    - 불완전한 데이터면 manager.get()으로 재조회
+    """
+    from src.core.schema_adapter import SchemaAdapter
     
-    return {
-        'article_id': header.get('article_id'),
-        'state': header.get('state'),
-        'title': analysis.get('title_ko') or original.get('title', '')[:50],
-        'summary': analysis.get('summary', ''),
-        'source_id': original.get('source_id', 'unknown'),
-        'impact_score': analysis.get('impact_score'),
-        'zero_echo_score': analysis.get('zero_echo_score'),
-        'category': classification.get('category'),
-        'rejected_reason': rejection.get('reason'),
-        'updated_at': header.get('updated_at')
-    }
+    # 데이터 완전성 검사
+    original = article.get('_original', {})
+    if not original.get('url'):
+        # 불완전한 데이터 - manager.get()으로 재조회
+        article_id = article.get('_header', {}).get('article_id') or article.get('id')
+        if article_id:
+            complete_article = manager.get(article_id)
+            if complete_article:
+                article = complete_article
+    
+    adapter = SchemaAdapter(article, auto_upgrade=True)
+    return adapter.to_card_format()
+
+
+
+
+
+
+
+
 
 
 # =============================================================================

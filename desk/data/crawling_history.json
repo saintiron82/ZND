@@ -253,5 +253,75 @@
     "status": "ACCEPTED",
     "reason": "crawled",
     "timestamp": "2025-12-29T06:29:24.923795+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205156": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:18.791606+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205160": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:20.454092+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205149": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:22.584051+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205161": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:24.758305+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205162": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:26.920200+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205128": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:29.056484+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205153": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:31.085385+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205152": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:32.771029+00:00"
+  },
+  "https://www.aitimes.com/news/articleView.html?idxno=205142": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:34.675670+00:00"
+  },
+  "https://the-decoder.com/ai-fraud-forces-worlds-largest-accounting-body-to-end-online-exams/": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:49:39.252207+00:00"
+  },
+  "https://the-decoder.com/oscar-winners-and-hollywood-a-listers-launch-coalition-to-set-ai-rules-for-entertainment-industry/": {
+    "status": "EXTRACT_FAILED",
+    "reason": "short_content",
+    "timestamp": "2025-12-29T13:50:09.902571+00:00"
+  },
+  "https://the-decoder.com/one-in-five-youtube-shorts-shown-to-new-users-is-ai-generated-slop-study-finds/": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:50:13.772650+00:00"
+  },
+  "https://the-decoder.com/ai-reasoning-models-think-harder-on-easy-problems-than-hard-ones-and-researchers-have-a-theory-for-why/": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T13:50:29.206619+00:00"
+  },
+  "https://the-decoder.com/zara-uses-ai-to-dress-models-virtually-instead-of-booking-new-photo-shoots/": {
+    "status": "ACCEPTED",
+    "reason": "crawled",
+    "timestamp": "2025-12-29T14:22:52.690922+00:00"
   }
 }

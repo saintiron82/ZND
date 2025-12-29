@@ -73,3 +73,7 @@
 {"timestamp": "2025-12-29T15:29:10.856285", "action": "Collect", "result": "Collected 5 new links", "duration": 3.87, "success": true}
 {"timestamp": "2025-12-29T15:29:24.993772", "action": "Extract", "result": "Extracted 5 (Skip:0, Fail:0)", "duration": 13.96, "success": true}
 {"timestamp": "2025-12-29T15:40:54.147437", "action": "Collect", "result": "Collected 0 new links", "duration": 3.72, "success": true}
+{"timestamp": "2025-12-29T22:49:08.248251", "action": "Collect", "result": "Collected 13 new links", "duration": 3.45, "success": true}
+{"timestamp": "2025-12-29T22:50:29.268788", "action": "Extract", "result": "Extracted 12 (Skip:0, Fail:1)", "duration": 81.02, "success": true}
+{"timestamp": "2025-12-29T23:22:35.543102", "action": "Collect", "result": "Collected 1 new links", "duration": 3.34, "success": true}
+{"timestamp": "2025-12-29T23:22:52.745660", "action": "Extract", "result": "Extracted 1 (Skip:0, Fail:0)", "duration": 17.2, "success": true}

@@ -1,0 +1,27 @@
+{
+  "_header": {
+    "version": "3.0",
+    "article_id": "fb158e211171",
+    "state": "COLLECTED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-29T22:49:39.251700+09:00",
+        "by": "crawler"
+      }
+    ]
+  },
+  "_original": {
+    "title": "AI fraud forces world's largest accounting body to end online exams",
+    "description": "The Association of Chartered Certified Accountants (ACCA), the world's largest accountancy organization, will stop offering online exams starting March 2026.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/01/generative_AI_office_illustration.png",
+    "text": "The Association of Chartered Certified Accountants (ACCA), the world's largest accountancy organization, will stop offering online exams starting March 2026. The decision comes as AI-powered cheating outpaces detection methods. \"We're seeing the sophistication of [cheating] systems outpacing what can be put in, [in] terms of safeguards,\" ACCA CEO Helen Brand told the Financial Times. The organization serves nearly 260,000 members and more than 500,000 students. Despite efforts to combat cheating, \"people who want to do bad things are probably working at a quicker pace,\" Brand said. One student told the FT that a friend photographed exam questions and fed them into an AI chatbot. A recent study found that current reasoning models can pass the demanding CFA certification. Online exams launched during the pandemic. The ACCA is now overhauling its qualification for the first time in a decade, adding focus on AI, blockchain, and data science. The ICAEW, another major accountancy body, still offers some online exams but reports rising fraud cases. Ad DEC_D_Incontent-1",
+    "published_at": "2025-12-29T13:43:27+00:00",
+    "url": "https://the-decoder.com/ai-fraud-forces-worlds-largest-accounting-body-to-end-online-exams/",
+    "source_id": "the_decoder",
+    "crawled_at": "2025-12-29T22:49:39.251700+09:00"
+  },
+  "_analysis": {},
+  "_classification": {},
+  "_publication": {}
+}

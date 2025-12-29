@@ -1,0 +1,214 @@
+{
+  "_classification": {
+    "classified_at": "2025-12-30T00:49:51.729807+09:00",
+    "is_selected": true,
+    "classified_by": "desk_user",
+    "category": "Business"
+  },
+  "_original": {
+    "source_id": "aitimes",
+    "description": "중국의 지푸 AI가 기업공개(IPO) 이후에도 AI 모델을 계속 오픈 소스로 공개하며, 2026년에는 인공일반지능(AGI) 개발을 본격화하겠다는 계획을 밝혔다.사",
+    "published_at": "2025-12-29T18:00:00+09:00",
+    "crawled_at": "2025-12-29T22:49:24.758305+09:00",
+    "text": "(사진=셔터스톡) 중국의 지푸 AI가 기업공개(IPO) 이후에도 AI 모델을 계속 오픈 소스로 공개하며, 2026년에는 인공일반지능(AGI) 개발을 본격화하겠다는 계획을 밝혔다. 사우스차이나모닝포스트는 26일(현지시간) 정친카이 지푸 연구원이 최근 미국 소셜미디어 레딧에서 열린 AMA(Ask Me Anything) 세션에서 “2026년에는 AGI 여정에 훨씬 더 실질적인 기여를 하게 될 것”이라고 밝혔다고 보도했다. 지푸는 최근 홍콩증권거래소 상장을 위한 규제 심사를 통과했다. IPO 이후에도 모델 가중치를 포함한 오픈 소스 공개를 지속할 것이냐는 질문에는 “계속 공개할 것”이라고 명확하게 밝혔다. 정아오헝 지푸 연구원은 “다른 오픈 시스템과 공개 기술 보고서로부터 많은 것을 배웠다”라며 “우리의 연구 성과와 기술적 결과를 계속 공유해 커뮤니티에 환원하겠다”라고 덧붙였다. 중국군과도 연결됐다는 의혹을 받는 지푸가 미국의 커뮤니티에서 소통에 나선 것은 상당히 이례적이다. 특히, 알리바바에 이어 지푸도 AGI를 반복적으로 강조했다는 것은 중국이 AI 분야를 국가 전략의 최우선 순위에 두고 있음을 확인해 준다. 또 레딧까지 진출한 것은 IPO를 앞두고 기업 가치와 글로벌 기술 신뢰도를 높이려는 시도일 수 있으며, 오픈 소스 커뮤니티를 통해 더 많은 피드백을 받으려는 목적일 수 있다. 여기에 중국의 오픈 소스 경쟁도 매우 치열하다. 지푸는 지난주 최신 플래그십 모델 ‘GLM-4.7’을 공개했지만, 경쟁사인 미니맥스는 몇시간 뒤 ‘M2.1’ 모델을 내놓았다. 양사는 모두 코딩 능력이 크게 향상돼 구글과 앤트로픽 같은 미국 경쟁사와의 격차를 좁혔다고 강조했다. 실제로 실무형 소프트웨어 엔지니어링 과제를 평가하는 'SWE-벤치'에서 앤트로픽은 올해 5월 ‘클로드 오퍼스 4’로 처음 정확도 70%를 넘겼다. 지푸의 GLM-4.7도 여기에 처음 달성했다. 지푸 연구진은 이번 토론에서 사전 학습 단계에 더 많은 컴퓨팅 자원을 투입하고 있다고도 밝혔다. 최근 '제미나이 3' 개발 중 드러난 것처럼 중국도 사전 학습을 여전히 모델 성능을 끌어올리는 효과적인 방법이라고 판단하는 것이다. 차기 플래그십 모델 공개 시점에 대해서는 “개선 폭이 충분히 클 때만 ‘GLM-5’라는 이름을 붙이겠다”라며 신중한 입장을 보였다. 박찬 기자 cpark@aitimes.com",
+    "title": "지푸AI “IPO 후에도 오픈 소스 유지...2026년 AGI 본격 도전” - AI타임스",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205161_206696_5842.jpg",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205161"
+  },
+  "_publication": {},
+  "id": "509ed87c4c4c",
+  "_analysis": {
+    "mll_raw": {
+      "ZES_Raw_Metrics": {
+        "Noise": {
+          "Items": {
+            "P4": {
+              "Rationale": "IPO 앞둔 홍보 목적 의심",
+              "Score": 3
+            },
+            "P3": {
+              "Rationale": "구글/앤트로픽과 경쟁 구도 강조하나 객관적 검증 부족",
+              "Score": 4
+            },
+            "P2": {
+              "Rationale": "자사 홍보성 발언 위주",
+              "Score": 5
+            },
+            "P1": {
+              "Rationale": "AGI, 2026년 등 실현되지 않은 미래에 대한 과장 가능성",
+              "Score": 7
+            }
+          },
+          "Description": "인위적 잡음 (0~10점)"
+        },
+        "Utility": {
+          "Items": {
+            "V2": {
+              "Rationale": "당장 사용 가능한 모델 없음(GLM-5 대기)",
+              "Score": 2
+            },
+            "V1": {
+              "Rationale": "중국 오픈소스 생태계 방향성 참고",
+              "Score": 5
+            },
+            "V3": {
+              "Rationale": "경쟁사 동향 파악 수준",
+              "Score": 4
+            },
+            "V4": {
+              "Rationale": "기술 적용 불가",
+              "Score": 0
+            }
+          },
+          "Description": "실질적 효용 (0~10점)"
+        },
+        "Signal": {
+          "Items": {
+            "T4": {
+              "Rationale": "스타트업 연구원 발언",
+              "Score": 4
+            },
+            "T2": {
+              "Rationale": "AGI 도달 방법에 대한 메커니즘 부재",
+              "Score": 2
+            },
+            "T3": {
+              "Rationale": "레딧 AMA 발언 인용",
+              "Score": 5
+            },
+            "T1": {
+              "Rationale": "구체적 성능 데이터보다 계획 위주",
+              "Score": 4
+            }
+          },
+          "Description": "정보의 실체 (0~10점)"
+        },
+        "Fine_Adjustment": {
+          "Reason": "전형적인 IPO 전 기대감 조성 기사",
+          "Score": -0.5
+        }
+      },
+      "Article_ID": "509ed87c4c4c",
+      "IS_Analysis": {
+        "Score_Commentary": "중국 주요 스타트업(T4)의 미래 계획(Y1)에 불과하며, Hard Filter(PE T4 & Y<2)에 의해 Scope 점수가 소거됨.",
+        "Calculations": {
+          "IE_Analysis": {
+            "Inputs": {
+              "SOTA_Check_Result": "False",
+              "Criticality_C1_Provenness": 0,
+              "Criticality_Total": 0.5,
+              "Y_Evidence_Code": 1,
+              "Criticality_C2_Societal_Weight": 0.5,
+              "Scope_Matrix_Score": 0,
+              "X_Magnitude_Code": 3
+            },
+            "IE_Score": 0.5
+          },
+          "IW_Analysis": {
+            "Inputs": {
+              "Se_Tier": 0,
+              "Pe_Tier": 4,
+              "Selection_Reason": "중국 유니콘 기업이나 글로벌 기준 Startup(Tier 4) 적용.",
+              "Se_Entity_Name": "None",
+              "Pe_Selection_Rule": "P4",
+              "Pe_Entity_Name": "Zhipu AI"
+            },
+            "IW_Score": 0.5,
+            "Tier_Score": 0.5,
+            "Gap_Score": 0
+          }
+        }
+      },
+      "Meta": {
+        "Tags": [
+          "IPO",
+          "Open Source",
+          "AGI",
+          "China"
+        ],
+        "Summary": "중국 지푸AI가 IPO 이후에도 오픈소스 정책 유지 및 2026년 AGI 개발 목표를 발표. 미국 레딧 AMA를 통해 소통 시도.",
+        "Headline": "지푸AI, IPO 후에도 오픈소스 유지 선언... 2026 AGI 도전",
+        "Specification_Version": "v 1.0.0"
+      }
+    },
+    "tags": [
+      "IPO",
+      "Open Source",
+      "AGI",
+      "China"
+    ],
+    "summary": "중국 지푸AI가 IPO 이후에도 오픈소스 정책 유지 및 2026년 AGI 개발 목표를 발표. 미국 레딧 AMA를 통해 소통 시도.",
+    "title_ko": "지푸AI, IPO 후에도 오픈소스 유지 선언... 2026 AGI 도전",
+    "impact_score": 1.0,
+    "analyzed_at": "2025-12-29T23:50:35.442257+09:00",
+    "zero_echo_score": 9.3
+  },
+  "_header": {
+    "state": "REJECTED",
+    "updated_at": "2025-12-29T16:10:56.672095+00:00",
+    "article_id": "509ed87c4c4c",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-29T22:49:24.758305+09:00",
+        "by": "crawler"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:11:37.548461+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T14:11:58.166262+00:00",
+        "by": "analyzer"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:17:12.394583+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "by": "analyzer",
+        "at": "2025-12-29T14:17:31.268380+00:00",
+        "state": "ANALYZED"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:19:08.000905+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T14:23:51.163689+00:00",
+        "by": "analyzer"
+      },
+      {
+        "by": "board-send-back",
+        "at": "2025-12-29T14:48:18.752487+00:00",
+        "state": "COLLECTED"
+      },
+      {
+        "state": "ANALYZED",
+        "at": "2025-12-29T14:50:35.844356+00:00",
+        "by": "analyzer"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T15:49:52.068446+00:00",
+        "by": "desk"
+      },
+      {
+        "state": "REJECTED",
+        "at": "2025-12-29T16:10:56.672095+00:00",
+        "by": "publisher"
+      }
+    ],
+    "version": "3.0"
+  },
+  "_rejection": {
+    "rejected_by": "publisher",
+    "reason": "cutline",
+    "rejected_at": "2025-12-30T01:10:56.484798+09:00"
+  }
+}

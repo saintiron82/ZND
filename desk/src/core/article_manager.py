@@ -5,7 +5,7 @@ Article Manager - 기사 중앙 관리 시스템
 """
 import os
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 
 from .article_state import ArticleState, can_transition
@@ -70,12 +70,16 @@ class ArticleManager:
             생성된 기사 데이터
         """
         article_id = self.generate_article_id(url)
+        source_id = original_data.get('source_id', 'unknown')
         now = get_kst_now() # [FIX] Use KST
         
+        # Schema v3.1: url, source_id를 _header에 저장 (불변 식별자)
         article = {
             '_header': {
-                'version': self.SCHEMA_VERSION,
+                'version': '3.1',  # Schema v3.1
                 'article_id': article_id,
+                'url': url,                    # 불변 - 헤더로 이동
+                'source_id': source_id,        # 불변 - 헤더로 이동
                 'state': ArticleState.COLLECTED.value,
                 'created_at': now,
                 'updated_at': now,
@@ -88,11 +92,11 @@ class ArticleManager:
                 ]
             },
             '_original': {
-                'url': url,
                 'title': original_data.get('title', ''),
                 'text': original_data.get('text', ''),
                 'image': original_data.get('image'),
-                'source_id': original_data.get('source_id', 'unknown'),
+                'description': original_data.get('description', ''),
+                'published_at': original_data.get('published_at'),
                 'crawled_at': now
             },
             '_analysis': None,
@@ -107,6 +111,7 @@ class ArticleManager:
         self.db.update_history(url, article_id, ArticleState.COLLECTED.value)
         
         return article
+
     
     def update_state(
         self, 
@@ -153,72 +158,51 @@ class ArticleManager:
             'by': by
         }
         
-        # 섹션 데이터 업데이트
+        # 섹션 데이터 업데이트 준비
+        section_updates = {}
         if section_data:
             section_map = {
                 ArticleState.ANALYZED: '_analysis',
                 ArticleState.CLASSIFIED: '_classification',
-                ArticleState.REJECTED: '_rejection',  # 폐기 정보는 별도 섹션
+                ArticleState.REJECTED: '_rejection',
                 ArticleState.PUBLISHED: '_publication',
                 ArticleState.RELEASED: '_publication',
             }
             if new_state in section_map:
                 section_name = section_map[new_state]
                 for key, value in section_data.items():
-                    updates[f'{section_name}.{key}'] = value
+                    # Registry용 점 표기법 (예: _analysis.summary)
+                    section_updates[f'{section_name}.{key}'] = value
         
-        # Firestore 업데이트 (state_history는 배열이라 별도 처리 필요)
         # [Log] Start
         try:
              with open('debug_manager.log', 'a', encoding='utf-8') as f:
                  f.write(f"{datetime.now(timezone.utc)}: [UpdateState] {article_id} -> {new_state.value}\n")
         except: pass
 
-        # Firestore 업데이트 (state_history는 배열이라 별도 처리 필요)
-        # [Fix] Update -> Upsert (문서 없으면 생성)
-        # 기존: self.db.update_article(article_id, updates)
-        success, msg = self.db.upsert_article_state(article_id, updates)
-        
-        # [Log] Result
-        try:
-             with open('debug_manager.log', 'a', encoding='utf-8') as f:
-                 f.write(f"  Firestore Upsert: {success} ({msg})\n")
-        except: pass
-        
-        # 히스토리 업데이트
-        url = article['_original']['url']
-        self.db.update_history(url, article_id, new_state.value)
-        
-        # Registry 인메모리 인덱스 업데이트 (SSOT 동기화)
+        # Registry 인메모리 인덱스 업데이트 + DB/Local 저장 (SSOT)
         try:
             from .article_registry import get_registry
             registry = get_registry()
             
-            info = registry.get(article_id)
-            if not info:
-                # [Lazy Load] Registry에 없으면 디스크에서 로드
-                info = registry.find_and_register(article_id)
-            
-            if info:
-                registry._update_article_state(info, new_state.value)
+            # Registry가 초기화되어 있으면 업데이트 위임 (권장)
+            if registry.is_initialized():
+                success = registry.update_state(article_id, new_state.value, by, updates=section_updates)
                 
-                # 로컬 캐시 파일도 상태 동기화
-                current_ts = datetime.now(timezone.utc).isoformat()
-                registry._update_local_cache(article_id, new_state.value, by, current_ts)
-                
-                print(f"✅ [Registry] State synced: {article_id} → {new_state.value}")
+                # 히스토리 업데이트 (URL 정보가 필요하지만 일단 생략하거나 추후 보강)
+                # self.db.update_history(...) 호출이 필요하다면 여기서 수행
+                    
+                return success
             else:
-                print(f"⚠️ [Registry] Article not found even after lazy load: {article_id}")
+                # Fallback: Registry 미사용 시 (예외적 상황 - 서버 시작 전 등)
+                print("⚠️ [ArticleManager] Registry not initialized, skipping update")
+                return False
                 
         except Exception as e:
-            print(f"⚠️ [Registry] Sync failed: {e}")
+            print(f"❌ [ArticleManager] State update failed: {e}")
             import traceback
             traceback.print_exc()
-
-        # [Note] Direct DB update removed to maintain centralized management via Registry.
-
-        
-        return True
+            return False
     
     def _flatten_article(self, article: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -499,8 +483,44 @@ class ArticleManager:
     # =========================================================================
     
     def find_by_state(self, state: ArticleState, limit: int = 100) -> List[Dict[str, Any]]:
-        """상태별 기사 목록 조회"""
-        return self.db.list_articles_by_state(state.value, limit)
+        """
+        상태별 기사 목록 조회
+        - Registry(메모리 인덱스) 우선 사용: 실행 시 결정된 정본 목록(SSOT) 준수
+        - 각 ID에 대해 get() 호출: 완전한 데이터 로드
+        """
+        from src.core.article_registry import get_registry
+        registry = get_registry()
+        
+        result = []
+        
+        # 1. Registry 사용 (초기화된 경우 - 권장)
+        if registry.is_initialized():
+            article_infos = registry.find_by_state(state.value, limit)
+            for info in article_infos:
+                # Registry가 이미 정본 ID를 알고 있음 -> get()으로 데이터 로드
+                article = self.get(info.article_id)
+                if article:
+                    result.append(article)
+            return result
+
+        # 2. Fallback (DB 직접 조회 - 초기화 전)
+        # 1. article_id 목록 조회 (병합된 목록)
+        raw_articles = self.db.list_articles_by_state(state.value, limit)
+        
+        # 2. 각 article에 대해 get()으로 완전한 데이터 조회
+        for raw in raw_articles:
+            article_id = raw.get('_header', {}).get('article_id') or raw.get('id')
+            if article_id:
+                complete = self.get(article_id)
+                if complete:
+                    result.append(complete)
+                else:
+                    result.append(raw)
+            else:
+                result.append(raw)
+        
+        return result
+
     
     def find_collected(self, limit: int = 100) -> List[Dict[str, Any]]:
         """수집된 기사 목록 (AI 분석 대기)"""

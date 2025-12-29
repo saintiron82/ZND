@@ -60,36 +60,29 @@ def list_articles():
             # 기본: ANALYZED + CLASSIFIED 모두 조회
             articles = registry.find_by_states(['ANALYZED', 'CLASSIFIED'], limit)
         
-        # 응답 형식 변환 (ArticleInfo -> dict)
         result = []
         for article in articles:
-            # Registry에 점수가 없는 경우(0.0) full data 조회
-            impact_score = article.impact_score
-            zero_echo_score = article.zero_echo_score
-            summary = ""
-            
-            if impact_score == 0.0 and zero_echo_score == 0.0:
-                # Full data 조회
-                from src.core.article_manager import ArticleManager
-                full_data = ArticleManager().get(article.article_id)
-                if full_data:
-                    result.append(_format_article_for_list(full_data))
-                    continue
-            
-            result.append({
-                'article_id': article.article_id,
-                'title': article.title,
-                'title_ko': article.title,  # 호환성
-                'source_id': article.source_id,
-                'state': article.state,
-                'category': article.category,
-                'impact_score': impact_score,
-                'zero_echo_score': zero_echo_score,
-                'summary': summary,
-                'created_at': article.created_at,
-                'updated_at': article.updated_at,
-            })
-        
+            # [Fix] Registry 정보는 경량화되어 있으므로 Full Data 로드 (Board와 동일한 패턴)
+            full_data = manager.get(article.article_id)
+            if full_data:
+                from src.core.schema_adapter import SchemaAdapter
+                adapter = SchemaAdapter(full_data, auto_upgrade=True)
+                result.append(adapter.to_publisher_format())
+            else:
+                # Fallback
+                result.append({
+                    'article_id': article.article_id,
+                    'title': article.title,
+                    'state': article.state,
+                    'summary': "데이터 없음",
+                    'source_id': article.source_id,
+                    # 최소한의 필수 필드 채움
+                    'category': article.category,
+                    'impact_score': article.impact_score,
+                    'zero_echo_score': article.zero_echo_score,
+                    'updated_at': article.updated_at
+                })
+
         return jsonify({
             'success': True,
             'articles': result,
@@ -127,8 +120,10 @@ def _list_articles_fallback(state_filter, limit):
         articles = analyzed + classified
     
     result = []
+    from src.core.schema_adapter import SchemaAdapter
     for article in articles:
-        result.append(_format_article_for_list(article))
+        adapter = SchemaAdapter(article, auto_upgrade=True)
+        result.append(adapter.to_publisher_format())
     
     return jsonify({
         'success': True,
@@ -409,18 +404,20 @@ def get_edition_detail(edition_code):
                 # Fetch full data to support rich rendering (summary, tags, etc)
                 full_data = manager.get(article.article_id)
                 if full_data:
-                    result.append(_format_article_for_list(full_data))
+                    from src.core.schema_adapter import SchemaAdapter
+                    adapter = SchemaAdapter(full_data, auto_upgrade=True)
+                    result.append(adapter.to_publisher_format())
                 else:
                     # Fallback if full data missing (should be rare)
                     result.append({
                         'article_id': article.article_id,
                         'title': article.title,
-                        'title_ko': article.title,
                         'source_id': article.source_id,
                         'state': article.state,
                         'category': article.category,
                         'impact_score': article.impact_score,
                         'zero_echo_score': article.zero_echo_score,
+                        'summary': "데이터 없음"
                     })
             return jsonify({
                 'success': True,
@@ -443,7 +440,25 @@ def get_edition_detail(edition_code):
     # 포맷팅
     result = []
     for article in articles:
-        result.append(_format_article_for_list(article))
+        # [Fix] Snapshot 데이터가 불완전할 수 있으므로 ID 추출 후 Full Data 로드
+        # Snapshot에서 ID 찾기 시도 (article_id or id or _header.article_id)
+        art_id = article.get('article_id') or article.get('id')
+        if not art_id and '_header' in article:
+            art_id = article['_header'].get('article_id')
+            
+        full_data = None
+        if art_id:
+            full_data = manager.get(art_id)
+            
+        if full_data:
+            from src.core.schema_adapter import SchemaAdapter
+            adapter = SchemaAdapter(full_data, auto_upgrade=True)
+            result.append(adapter.to_publisher_format())
+        else:
+            # Fallback: Snapshot 그대로 사용 (데이터가 정말 없을 경우)
+            from src.core.schema_adapter import SchemaAdapter
+            adapter = SchemaAdapter(article, auto_upgrade=True)
+            result.append(adapter.to_publisher_format())
         
     return jsonify({
         'success': True,
@@ -471,63 +486,14 @@ def release_articles():
             'error': 'edition_code required'
         }), 400
     
-    # 해당 회차의 모든 기사를 RELEASED 상태로 변경
-    published = manager.find_by_state(ArticleState.PUBLISHED)
+    # [Fix] Use Manager's release_edition to ensure Meta is updated
+    result = manager.release_edition(edition_code)
     
-    results = []
-    for article in published:
-        pub = article.get('_publication') or {}
-        if pub.get('edition_code') == edition_code:
-            article_id = article['_header']['article_id']
-            success = manager.update_state(
-                article_id,
-                ArticleState.RELEASED,
-                by='publisher',
-                section_data={
-                    'released_at': datetime.now(timezone.utc).isoformat()
-                }
-            )
-            results.append({
-                'article_id': article_id,
-                'success': success
-            })
-    
-    return jsonify({
-        'success': True,
-        'edition_code': edition_code,
-        'released_count': len(results),
-        'results': results
-    })
+    if result.get('success'):
+        return jsonify(result)
+    else:
+        return jsonify(result), 400
 
 
-# =============================================================================
-# Helper Functions
-# =============================================================================
 
-def _format_article_for_list(article: dict) -> dict:
-    """기사 데이터를 목록 표시용으로 변환 (V2 Schema 지원)"""
-    # V2 Schema: _header, _original, _analysis, _classification, _rejection 구조
-    header = article.get('_header', {})
-    original = article.get('_original', {})
-    analysis = article.get('_analysis', {}) or {}
-    classification = article.get('_classification', {}) or {}
-    rejection = article.get('_rejection', {}) or {}
-    publication = article.get('_publication', {}) or {}
-    
-    # Flat 구조도 fallback으로 지원 (publications 문서)
-    return {
-        'article_id': header.get('article_id') or article.get('id') or article.get('article_id'),
-        'state': header.get('state') or article.get('state', 'unknown'),
-        'title': analysis.get('title_ko') or original.get('title') or article.get('title_ko') or article.get('title', ''),
-        'summary': analysis.get('summary') or article.get('summary', ''),
-        'source_id': original.get('source_id') or article.get('source_id', 'unknown'),
-        'url': original.get('url') or article.get('url', ''),
-        'impact_score': analysis.get('impact_score') or article.get('impact_score'),
-        'zero_echo_score': analysis.get('zero_echo_score') or article.get('zero_echo_score'),
-        'tags': analysis.get('tags') or article.get('tags', []),
-        'category': classification.get('category') or article.get('category'),
-        'rejected_reason': rejection.get('reason') or article.get('rejected_reason'),
-        'edition_code': publication.get('edition_code') or article.get('edition_code'),
-        'published_at': publication.get('published_at') or article.get('published_at'),
-        'released_at': publication.get('released_at') or article.get('released_at')
-    }
+

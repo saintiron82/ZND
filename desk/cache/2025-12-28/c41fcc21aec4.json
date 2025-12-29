@@ -1,124 +1,134 @@
 {
-  "_header": {
-    "version": "2.0",
-    "article_id": "c41fcc21aec4",
-    "state": "REJECTED",
-    "state_history": [
-      {
-        "state": "COLLECTED",
-        "at": "2025-12-28T06:50:57.446379+00:00",
-        "by": "crawler"
-      },
-      {
-        "state": "REJECTED",
-        "at": "2025-12-28T16:09:52.984875+00:00",
-        "by": "publisher"
-      }
-    ],
-    "updated_at": "2025-12-28T16:09:52.984875+00:00"
+  "_rejection": {
+    "reason": "cutline"
   },
   "_original": {
-    "title": "[신년사] 모티프 “2026 주요 사업 AI 보안·최적화·B2C로 확장” - AI타임스",
-    "description": "올해 국내 대표 파운데이션 모델 스타트업 중 하나로 올라선 모티프테크놀로지스(대표 임정환)는 27일 신년사를 통해 2026 주요 사업 영역을 AI 보안, 최적화,",
-    "image": "https://cdn.aitimes.com/news/photo/202512/205121_206615_461.jpeg",
-    "text": "(사진=모티프테크놀로지스) 올해 국내 대표 파운데이션 모델 스타트업 중 하나로 올라선 모티프테크놀로지스(대표 임정환)는 27일 신년사를 통해 2026 주요 사업 영역을 AI 보안, 최적화, B2C 서비스를 중심으로 확장한다고 밝혔다. 임정환 모티프테크놀로지스 대표는 “최근, AI 모델 시장은 무작정 거대한 모델을 만드는 경쟁보다는 똑똑한 추론과 운영의 경제성을 확보하는 데 집중되고 있다”라며 “모든 것을 잘하는 '더 큰 범용 모델'을 지향하던 흐름은 이제 지능의 상향 평준화를 거쳐 '더 효율적인 추론'을 구현하는 쪽으로 방향을 완전히 선회했다”라고 말했다. 이어 “또, 텍스트를 넘어 이미지와 영상까지 처리할 수 있는 멀티모달 능력이 모델의 '기본 소양'이 되고 있다”라며 “과거에는 'AI가 무엇을 할 수 있는가'에 대한 호기심이 대부분이었다면, 이제는 단순 대화 수준을 넘어 사용자 업무 흐름에 침투하는 에이전트 중심 서비스가 핵심 경쟁력으로 떠오르고 있다”라고 말했다. 특히, 임정환 대표는 “보안 AI의 고도화, 지능의 범용화, 추론 비용의 획기적 절감이 '에이전트 경제(Agent Economy)'를 탄생시킬 핵심”이라며 “이제 AI는 단순 질의 응답을 넘어 이메일 작성, 데이터 분석, 보고서 발행 등 업무를 자율 수행하고 상호 협업하는 'AI 에이전트 생태계'로 진화하고 있다”라고 강조했다. 이에 다가올 2026년에는 기업의 데이터 주권을 지키는 ‘보안 인텔리전스’에 주력할 예정이라고 밝혔다. 기업 데이터 주권 및 보안을 완벽히 보장하는 관련 온프레미스 AI 솔루션을 내년 정식 출시할 계획이다. 특히, 외부 유출 걱정 없이 AI의 강력한 생산성을 사내에 내재화할 수 있도록 지원하겠다는 목표다. 또, 핵심 기술력인 ‘AI 모델 최적화’ 기술을 활용해 자체 모델 개발을 지속해 나갈 계획이다. 지난 6월에는 프롬 스크래치로 개발한 파운데이션 소형언어모델(sLM) ‘모티프(Motif) 2.6B’를 허깅페이스에 오픈소스로 공개한 바 있다. 이 모델은 동급뿐만 아니라 70억개 매개변수 모델의 성능도 능가해 주목을 받았다. 특히, 모델의 기숼 보고서는 허깅페이스 엔지니어와 오픈AI 출신 메타 엔지니어들에 의해 인정 받으며 AI 커뮤니티에서도 화제가 됐다. 이어 7월에는 T2I(Text to Image) 모델 '모티프-이미지-6B(Motif-Image-6B)'를 공개했다. 11월 공개한 자체 개발 대형언어모델(LLM) ‘모티프(Motif) 12.7B’는 아티피셜 애널리시스의 LLM 지적능력 평가지표(AAII)에서 국내 모델 중 1위를 기록했다. B2C 서비스도 확장할 계획이다. 지능형 자산 관리를 위한 서비스, 사용자와의 정서적 교감을 위한 캐릭터챗 등 실용적 편의와 정서적 만족을 모두 제공하는 라인업을 구상하고 준비 중다. 한편, 모티프테크놀로지스는 AI 모델만 개발하는 것이 아니라, 하드웨어 인프라소프트웨어(SW)부터 모델, 서비스까지 AI 생태계 전체를 아우르는 ‘풀 스택 엔지니어링' 역량을 갖췄다. AI 인프라 솔루션 기업 모레의 자회사로, 지난 2월 출범했다. 특히, 고성능 LLM과 대형멀티모달모델(LMM) 등 다방면의 파운데이션 모델을 개발한 유일한 스타트업이다. 현재는 LLM 외에도 국가유산진흥원의 한국형 이미지 생성 모델과 플랫폼에 채택된 이미지 생성 모델, 동영상 생성 모델 등 다양한 규모의 모델을 개발하고 있다. 동시에 기업용 AX 시장 공략에도 나서, 삼일회계법인과 MOU를 맺고 AI 디지털 혁신 협력을 모색 중이다. 임정환 모티프테크놀로지스 대표는 “기업에는 강력한 효율을 제공하고 개인에게는 새로운 즐거움과 전문적인 통찰을 제공해 일과 삶의 모든 순간에 AI가 닿도록 미래를 앞당기겠다”라고 말했다. 장세민 기자 semim99@aitimes.com",
-    "published_at": "2025-12-27T18:07:50+09:00",
-    "url": "https://www.aitimes.com/news/articleView.html?idxno=205121",
     "source_id": "aitimes",
-    "crawled_at": "2025-12-28T06:50:57.446379+00:00"
+    "description": "올해 국내 대표 파운데이션 모델 스타트업 중 하나로 올라선 모티프테크놀로지스(대표 임정환)는 27일 신년사를 통해 2026 주요 사업 영역을 AI 보안, 최적화,",
+    "published_at": "2025-12-27T18:07:50+09:00",
+    "crawled_at": "2025-12-28T06:50:57.446379+00:00",
+    "text": "(사진=모티프테크놀로지스) 올해 국내 대표 파운데이션 모델 스타트업 중 하나로 올라선 모티프테크놀로지스(대표 임정환)는 27일 신년사를 통해 2026 주요 사업 영역을 AI 보안, 최적화, B2C 서비스를 중심으로 확장한다고 밝혔다. 임정환 모티프테크놀로지스 대표는 “최근, AI 모델 시장은 무작정 거대한 모델을 만드는 경쟁보다는 똑똑한 추론과 운영의 경제성을 확보하는 데 집중되고 있다”라며 “모든 것을 잘하는 '더 큰 범용 모델'을 지향하던 흐름은 이제 지능의 상향 평준화를 거쳐 '더 효율적인 추론'을 구현하는 쪽으로 방향을 완전히 선회했다”라고 말했다. 이어 “또, 텍스트를 넘어 이미지와 영상까지 처리할 수 있는 멀티모달 능력이 모델의 '기본 소양'이 되고 있다”라며 “과거에는 'AI가 무엇을 할 수 있는가'에 대한 호기심이 대부분이었다면, 이제는 단순 대화 수준을 넘어 사용자 업무 흐름에 침투하는 에이전트 중심 서비스가 핵심 경쟁력으로 떠오르고 있다”라고 말했다. 특히, 임정환 대표는 “보안 AI의 고도화, 지능의 범용화, 추론 비용의 획기적 절감이 '에이전트 경제(Agent Economy)'를 탄생시킬 핵심”이라며 “이제 AI는 단순 질의 응답을 넘어 이메일 작성, 데이터 분석, 보고서 발행 등 업무를 자율 수행하고 상호 협업하는 'AI 에이전트 생태계'로 진화하고 있다”라고 강조했다. 이에 다가올 2026년에는 기업의 데이터 주권을 지키는 ‘보안 인텔리전스’에 주력할 예정이라고 밝혔다. 기업 데이터 주권 및 보안을 완벽히 보장하는 관련 온프레미스 AI 솔루션을 내년 정식 출시할 계획이다. 특히, 외부 유출 걱정 없이 AI의 강력한 생산성을 사내에 내재화할 수 있도록 지원하겠다는 목표다. 또, 핵심 기술력인 ‘AI 모델 최적화’ 기술을 활용해 자체 모델 개발을 지속해 나갈 계획이다. 지난 6월에는 프롬 스크래치로 개발한 파운데이션 소형언어모델(sLM) ‘모티프(Motif) 2.6B’를 허깅페이스에 오픈소스로 공개한 바 있다. 이 모델은 동급뿐만 아니라 70억개 매개변수 모델의 성능도 능가해 주목을 받았다. 특히, 모델의 기숼 보고서는 허깅페이스 엔지니어와 오픈AI 출신 메타 엔지니어들에 의해 인정 받으며 AI 커뮤니티에서도 화제가 됐다. 이어 7월에는 T2I(Text to Image) 모델 '모티프-이미지-6B(Motif-Image-6B)'를 공개했다. 11월 공개한 자체 개발 대형언어모델(LLM) ‘모티프(Motif) 12.7B’는 아티피셜 애널리시스의 LLM 지적능력 평가지표(AAII)에서 국내 모델 중 1위를 기록했다. B2C 서비스도 확장할 계획이다. 지능형 자산 관리를 위한 서비스, 사용자와의 정서적 교감을 위한 캐릭터챗 등 실용적 편의와 정서적 만족을 모두 제공하는 라인업을 구상하고 준비 중다. 한편, 모티프테크놀로지스는 AI 모델만 개발하는 것이 아니라, 하드웨어 인프라소프트웨어(SW)부터 모델, 서비스까지 AI 생태계 전체를 아우르는 ‘풀 스택 엔지니어링' 역량을 갖췄다. AI 인프라 솔루션 기업 모레의 자회사로, 지난 2월 출범했다. 특히, 고성능 LLM과 대형멀티모달모델(LMM) 등 다방면의 파운데이션 모델을 개발한 유일한 스타트업이다. 현재는 LLM 외에도 국가유산진흥원의 한국형 이미지 생성 모델과 플랫폼에 채택된 이미지 생성 모델, 동영상 생성 모델 등 다양한 규모의 모델을 개발하고 있다. 동시에 기업용 AX 시장 공략에도 나서, 삼일회계법인과 MOU를 맺고 AI 디지털 혁신 협력을 모색 중이다. 임정환 모티프테크놀로지스 대표는 “기업에는 강력한 효율을 제공하고 개인에게는 새로운 즐거움과 전문적인 통찰을 제공해 일과 삶의 모든 순간에 AI가 닿도록 미래를 앞당기겠다”라고 말했다. 장세민 기자 semim99@aitimes.com",
+    "url": "https://www.aitimes.com/news/articleView.html?idxno=205121",
+    "image": "https://cdn.aitimes.com/news/photo/202512/205121_206615_461.jpeg",
+    "title": "[신년사] 모티프 “2026 주요 사업 AI 보안·최적화·B2C로 확장” - AI타임스"
   },
+  "rejected_by": "publisher",
+  "updated_at": "2025-12-28T16:09:52.370984+00:00",
   "_analysis": {
-    "title_ko": "[신년사] 모티프 \"2026년 AI 보안·최적화·B2C 확장 주력\"",
-    "summary": "스타트업 모티프테크놀로지스가 신년사를 통해 AI 보안, 최적화 기술, B2C 서비스 확장을 2026년 목표로 제시함. 자체 sLM 및 LLM 개발 성과를 언급하며 온프레미스 솔루션 출시 계획을 밝힘.",
+    "mll_raw": {
+      "ZES_Raw_Metrics": {
+        "Noise": {
+          "P3": 0,
+          "P2": 8,
+          "Rationale": "대표이사 신년사의 전형적인 자화자찬식 서술(P1).",
+          "P1": 7
+        },
+        "Utility": {
+          "V2": 2,
+          "V1": 1,
+          "V3": 1,
+          "Rationale": "일반적인 스타트업 홍보 기사로 정보 가치 낮음."
+        },
+        "Signal": {
+          "T2": 2,
+          "T3": 1,
+          "Rationale": "자사 홍보성 멘트 위주.",
+          "T1": 3
+        },
+        "Fine_Adjustment": {
+          "Reason": "PR 자료의 단순 전재 수준.",
+          "Score": -1
+        }
+      },
+      "Article_ID": "c41fcc21aec4",
+      "IS_Analysis": {
+        "Calculations": {
+          "IE_Analysis": {
+            "Inputs": {
+              "SOTA_Check_Result": "False",
+              "Criticality_C1_Provenness": 0,
+              "Scope_Matrix_Score": 0,
+              "Criticality_Total": 0,
+              "Criticality_C2_Societal_Weight": 0,
+              "Y_Evidence_Code": 1,
+              "X_Magnitude_Code": 1
+            },
+            "IE_Score": 0
+          },
+          "IW_Analysis": {
+            "Inputs": {
+              "Pe_Selection_Rule": "P4",
+              "Pe_Tier": 4,
+              "Se_Tier": 0,
+              "Se_Entity_Name": "None",
+              "PE/SE_Rationale": "사업 계획 발표 주체(P4). Tier 4(스타트업). SE 없음.",
+              "Pe_Entity_Name": "Motif Technologies"
+            },
+            "IW_Score": 0.5,
+            "Tier_Score": 0.5,
+            "Gap_Score": 0
+          }
+        },
+        "Score_Commentary": "Tier 4 스타트업의 신년 계획(Promise) 발표. 기업 내부의 전략(X1)에 국한되며, 시장 전체에 미치는 영향력은 미미함. Hard Filter(Tier 4 & X1) 적용 대상."
+      },
+      "Meta": {
+        "Tags": [
+          "Startup",
+          "Model",
+          "Security"
+        ],
+        "Summary": "스타트업 모티프테크놀로지스가 신년사를 통해 AI 보안, 최적화 기술, B2C 서비스 확장을 2026년 목표로 제시함. 자체 sLM 및 LLM 개발 성과를 언급하며 온프레미스 솔루션 출시 계획을 밝힘.",
+        "Headline": "[신년사] 모티프 \"2026년 AI 보안·최적화·B2C 확장 주력\"",
+        "Specification_Version": "v 1.0.0"
+      }
+    },
     "tags": [
       "Startup",
       "Model",
       "Security"
     ],
-    "impact_score": 0.5,
-    "zero_echo_score": 10.0,
+    "summary": "스타트업 모티프테크놀로지스가 신년사를 통해 AI 보안, 최적화 기술, B2C 서비스 확장을 2026년 목표로 제시함. 자체 sLM 및 LLM 개발 성과를 언급하며 온프레미스 솔루션 출시 계획을 밝힘.",
     "analyzed_at": "2025-12-28T06:58:04.141209+00:00",
-    "mll_raw": {
-      "Article_ID": "c41fcc21aec4",
-      "Meta": {
-        "Specification_Version": "v 1.0.0",
-        "Headline": "[신년사] 모티프 \"2026년 AI 보안·최적화·B2C 확장 주력\"",
-        "Summary": "스타트업 모티프테크놀로지스가 신년사를 통해 AI 보안, 최적화 기술, B2C 서비스 확장을 2026년 목표로 제시함. 자체 sLM 및 LLM 개발 성과를 언급하며 온프레미스 솔루션 출시 계획을 밝힘.",
-        "Tags": [
-          "Startup",
-          "Model",
-          "Security"
-        ]
+    "impact_score": 0.5,
+    "title_ko": "[신년사] 모티프 \"2026년 AI 보안·최적화·B2C 확장 주력\"",
+    "zero_echo_score": 10.0
+  },
+  "_header": {
+    "state": "REJECTED",
+    "updated_at": "2025-12-28T16:09:52.984875+00:00",
+    "article_id": "c41fcc21aec4",
+    "state_history": [
+      {
+        "by": "crawler",
+        "at": "2025-12-28T06:50:57.446379+00:00",
+        "state": "COLLECTED"
       },
-      "IS_Analysis": {
-        "Score_Commentary": "Tier 4 스타트업의 신년 계획(Promise) 발표. 기업 내부의 전략(X1)에 국한되며, 시장 전체에 미치는 영향력은 미미함. Hard Filter(Tier 4 & X1) 적용 대상.",
-        "Calculations": {
-          "IW_Analysis": {
-            "Inputs": {
-              "Pe_Selection_Rule": "P4",
-              "Pe_Entity_Name": "Motif Technologies",
-              "Pe_Tier": 4,
-              "Se_Entity_Name": "None",
-              "Se_Tier": 0,
-              "PE/SE_Rationale": "사업 계획 발표 주체(P4). Tier 4(스타트업). SE 없음."
-            },
-            "Tier_Score": 0.5,
-            "Gap_Score": 0,
-            "IW_Score": 0.5
-          },
-          "IE_Analysis": {
-            "Inputs": {
-              "X_Magnitude_Code": 1,
-              "Y_Evidence_Code": 1,
-              "Scope_Matrix_Score": 0,
-              "Criticality_C1_Provenness": 0,
-              "Criticality_C2_Societal_Weight": 0,
-              "Criticality_Total": 0,
-              "SOTA_Check_Result": "False"
-            },
-            "IE_Score": 0
-          }
-        }
-      },
-      "ZES_Raw_Metrics": {
-        "Signal": {
-          "T1": 3,
-          "T2": 2,
-          "T3": 1,
-          "Rationale": "자사 홍보성 멘트 위주."
-        },
-        "Noise": {
-          "P1": 7,
-          "P2": 8,
-          "P3": 0,
-          "Rationale": "대표이사 신년사의 전형적인 자화자찬식 서술(P1)."
-        },
-        "Utility": {
-          "V1": 1,
-          "V2": 2,
-          "V3": 1,
-          "Rationale": "일반적인 스타트업 홍보 기사로 정보 가치 낮음."
-        },
-        "Fine_Adjustment": {
-          "Score": -1,
-          "Reason": "PR 자료의 단순 전재 수준."
-        }
+      {
+        "by": "publisher",
+        "at": "2025-12-28T16:09:52.984875+00:00",
+        "state": "REJECTED"
       }
-    }
+    ],
+    "version": "2.0"
   },
+  "state": "REJECTED",
   "_classification": {
-    "category": "Business",
-    "is_selected": true,
-    "classified_at": "2025-12-28T07:59:56.920411+00:00",
-    "classified_by": "desk_user",
-    "edition_code": null,
     "edition_name": null,
+    "released_at": null,
+    "edition_code": null,
+    "classified_by": "desk_user",
+    "category": "Business",
     "published_at": null,
-    "released_at": null
+    "is_selected": true,
+    "classified_at": "2025-12-28T07:59:56.920411+00:00"
   },
-  "_rejection": {
-    "reason": "cutline"
+  "_publication": {
+    "edition_name": "제6호",
+    "released_at": null,
+    "published_at": "2025-12-28T12:06:51.530302+00:00",
+    "edition_code": "251228_6",
+    "firestore_synced": true
   },
   "rejected_at": "2025-12-28T16:09:52.370467+00:00",
-  "rejected_by": "publisher"
+  "id": "c41fcc21aec4"
 }

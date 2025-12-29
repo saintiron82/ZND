@@ -710,18 +710,7 @@ def normalize_url_for_dedupe(url: str) -> str:
         return url
 
 
-# ==============================================================================
-# History Status Constants
-# ==============================================================================
 
-class HistoryStatus:
-    """Valid history status values."""
-    ACCEPTED = 'ACCEPTED'
-    REJECTED = 'REJECTED'
-    SKIPPED = 'SKIPPED'
-    WORTHLESS = 'WORTHLESS'
-    MLL_FAILED = 'MLL_FAILED'  # NEW: LLM response failed
-    ANALYZED = 'ANALYZED'      # NEW: Analysis complete, pending review
 
 
 # ==============================================================================
@@ -744,7 +733,7 @@ class Stage:
 
 
 # Statuses that indicate rejection/trash
-REJECTED_STATUSES = ['MLL_FAILED', 'INVALID', 'TRASH', 'CORRUPTED', 'SKIPPED', 'WORTHLESS', 'REJECTED']
+REJECTED_STATUSES = ['INVALID', 'TRASH', 'CORRUPTED', 'SKIPPED', 'WORTHLESS', 'REJECTED']
 
 
 def get_stage(data: dict) -> str:

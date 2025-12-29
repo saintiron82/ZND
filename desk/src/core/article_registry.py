@@ -14,7 +14,6 @@ from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Set, Any
 from enum import Enum
 
-from .db_gateway import get_db_gateway, init_db_gateway
 
 
 @dataclass
@@ -71,7 +70,6 @@ class ArticleRegistry:
         self._max_age_days = int(os.getenv('REGISTRY_MAX_AGE_DAYS', 7))
         self._cache_root = None
         self._db = None
-        self._gateway = None  # DB Gateway
         
         # 통계
         self._stats = {
@@ -109,9 +107,6 @@ class ArticleRegistry:
         
         self._db = db_client
         
-        # DB Gateway 초기화
-        if db_client:
-            self._gateway = init_db_gateway(db_client)
         
         # 1. 로컬 캐시 로드 (크롤링 원본 백업용)
         self._load_from_local_cache()
@@ -138,22 +133,28 @@ class ArticleRegistry:
     
     def _load_from_local_cache(self):
         """로컬 캐시에서 기사 로드 (시간 제한 적용)"""
+        print(f"🔍 [DEBUG] cache_root = '{self._cache_root}'")
+        print(f"🔍 [DEBUG] os.path.exists = {os.path.exists(self._cache_root)}")
+        
         if not os.path.exists(self._cache_root):
             print(f"⚠️ [Registry] Cache root not found: {self._cache_root}")
             return
         
         cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
         cutoff_str = cutoff_date.strftime('%Y-%m-%d')
+        print(f"🔍 [DEBUG] now = {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"🔍 [DEBUG] cutoff_str = '{cutoff_str}' (max_age_days={self._max_age_days})")
         
         # 날짜별 폴더 순회
         date_folders = glob.glob(os.path.join(self._cache_root, '*'))
+        print(f"🔍 [DEBUG] Found folders: {[os.path.basename(f) for f in date_folders]}")
         
         for folder in sorted(date_folders, reverse=True):  # 최신순
             folder_name = os.path.basename(folder)
             
             # 날짜 형식 체크 및 시간 제한 적용
             if folder_name < cutoff_str:
-                print(f"   ⏭️ [Registry] Skipping old folder: {folder_name}")
+                print(f"   ⏭️ [Registry] Skipping old folder: {folder_name} (< {cutoff_str})")
                 continue
             
             # 폴더 내 JSON 파일 로드
@@ -164,9 +165,9 @@ class ArticleRegistry:
                     with open(fpath, 'r', encoding='utf-8') as f:
                         data = json.load(f)
                     
-                    info = self._parse_article_data(data, cache_path=fpath)
+                    # register()로 로컬 + Firestore 둘 다 동기화
+                    info = self.register(data, cache_path=fpath)
                     if info:
-                        self._register_article(info, source='local')
                         self._stats['local_loaded'] += 1
                         
                 except Exception as e:
@@ -183,8 +184,8 @@ class ArticleRegistry:
         
         for state in states_to_load:
             try:
-                # DB Gateway를 통한 조회 (로깅 포함)
-                articles = self._gateway.query('articles_by_state', state=state, limit=500) or []
+                # FirestoreClient 직접 호출
+                articles = self._db.list_articles_by_state(state, limit=500) if self._db else []
                 
                 for data in articles:
                     # 시간 체크
@@ -390,11 +391,43 @@ class ArticleRegistry:
         return None
     
     def find_by_state(self, state: str, limit: int = 100) -> List[ArticleInfo]:
-        """상태별 기사 목록 조회"""
+        """상태별 기사 목록 조회 (+ 실시간 캐시 스캔)"""
+        # 1. 메모리 인덱스에서 조회
         article_ids = self._by_state.get(state, set())
-        
-        # 최신순 정렬
         articles = [self._articles[aid] for aid in article_ids if aid in self._articles]
+        
+        # 2. 최근 캐시 파일 스캔 (서버 시작 이후 추가된 파일)
+        try:
+            if self._cache_root and os.path.exists(self._cache_root):
+                cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
+                cutoff_str = cutoff_date.strftime('%Y-%m-%d')
+                
+                for folder in glob.glob(os.path.join(self._cache_root, '*')):
+                    folder_name = os.path.basename(folder)
+                    if not folder_name.startswith('20') or folder_name < cutoff_str:
+                        continue
+                    
+                    for fpath in glob.glob(os.path.join(folder, '*.json')):
+                        try:
+                            article_id = os.path.basename(fpath).replace('.json', '')
+                            if article_id in self._articles:
+                                continue  # 이미 인덱스에 있음
+                            
+                            with open(fpath, 'r', encoding='utf-8') as f:
+                                data = json.load(f)
+                            
+                            file_state = data.get('_header', {}).get('state')
+                            if file_state == state:
+                                # register()로 로컬 + Firestore 둘 다 저장
+                                info = self.register(data, cache_path=fpath)
+                                if info:
+                                    articles.append(info)
+                        except Exception:
+                            continue
+        except Exception as e:
+            print(f"⚠️ [Registry] Live scan error: {e}")
+        
+        # 3. 최신순 정렬
         articles.sort(key=lambda x: x.updated_at or '', reverse=True)
         
         return articles[:limit]
@@ -450,10 +483,28 @@ class ArticleRegistry:
     # =========================================================================
     
     def register(self, data: Dict[str, Any], cache_path: str = None) -> Optional[ArticleInfo]:
-        """새 기사 등록 (크롤링/분석 완료 시)"""
+        """
+        새 기사 등록 (크롤링/분석 완료 시)
+        - 수집도 상태 변화이므로 로컬 + Firestore 둘 다 저장
+        - 히스토리도 동기화
+        """
         info = self._parse_article_data(data, cache_path)
         if info:
             self._register_article(info, source='new')
+            
+            # Firestore에도 저장 (수집 = 상태 변화 = 저장)
+            if self._db:
+                try:
+                    self._db.save_article(info.article_id, data)
+                    
+                    # 히스토리도 저장 (URL이 있는 경우)
+                    url = info.url or data.get('_original', {}).get('url')
+                    if url:
+                        state = info.state or data.get('_header', {}).get('state', 'COLLECTED')
+                        self._db.save_history(url, status=state, article_id=info.article_id)
+                except Exception as e:
+                    print(f"⚠️ [Registry] Firestore save on register failed: {e}")
+            
             return info
         return None
     
@@ -613,6 +664,42 @@ class ArticleRegistry:
         self._by_url.clear()
         ArticleRegistry._initialized = False
         print("🔄 [Registry] Reset completed.")
+    
+    def refresh(self):
+        """
+        캐시 새로고침 - 새 캐시 수집 후 또는 휴지통 비운 후 호출
+        현재 시간 기준으로 캐시 폴더를 다시 스캔
+        """
+        if not self._cache_root or not os.path.exists(self._cache_root):
+            return
+        
+        cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
+        cutoff_str = cutoff_date.strftime('%Y-%m-%d')
+        new_count = 0
+        
+        for folder in glob.glob(os.path.join(self._cache_root, '*')):
+            folder_name = os.path.basename(folder)
+            if not folder_name.startswith('20') or folder_name < cutoff_str:
+                continue
+            
+            for fpath in glob.glob(os.path.join(folder, '*.json')):
+                try:
+                    article_id = os.path.basename(fpath).replace('.json', '')
+                    if article_id in self._articles:
+                        continue  # 이미 등록됨
+                    
+                    with open(fpath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    
+                    # register()를 사용해서 로컬 + Firestore 둘 다 저장
+                    info = self.register(data, cache_path=fpath)
+                    if info:
+                        new_count += 1
+                except Exception:
+                    continue
+        
+        if new_count > 0:
+            print(f"🔄 [Registry] Refreshed: {new_count} new articles added")
 
 
 # =========================================================================

@@ -1,0 +1,27 @@
+{
+  "_header": {
+    "version": "3.0",
+    "article_id": "f2b9bd2e3180",
+    "state": "COLLECTED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-30T04:11:44.397818+09:00",
+        "by": "crawler"
+      }
+    ]
+  },
+  "_original": {
+    "title": "Nvidia's $20 billion Groq deal sure looks like an acquisition as 90 percent of staff moves over",
+    "description": "Nvidia's $20 billion \"license deal\" with Groq has all the hallmarks of a takeover: 90 percent of staff and the CEO are moving to Nvidia, while shareholders cash out at nearly triple the startup's previous valuation.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/12/nvidia_logo_wall_cb-1.jpeg",
+    "text": "In case there was any doubt that Nvidia's Groq deal is anything but a takeover in disguise: according to Axios, roughly 90 percent of the workforce—including CEO Jonathan Ross and President Sunny Madra—is moving to Nvidia. Groq will continue as an independent company under new CEO Simon Edwards. Though officially a non-exclusive license agreement worth around $20 billion, employees and shareholders are walking away with significant payouts. Staff moving to Nvidia get cash for vested shares and Nvidia stock for unvested ones; even those at Groq for less than a year will have their vesting cliff waived for immediate liquidity. Shareholders receive about 85 percent upfront, another 10 percent in mid-2026, and the rest by year's end. Since 2016, Groq has raised around $3.3 billion from investors including Blackrock, Samsung, and Social Capital. They're now seeing substantial returns, as the deal pushed the startup's valuation from $7 billion to roughly $20 billion. For a more in-depth look at why Nvidia made this move, see my analysis. Ad DEC_D_Incontent-1",
+    "published_at": "2025-12-28T10:38:13+00:00",
+    "url": "https://the-decoder.com/nvidias-20-billion-groq-deal-sure-looks-like-an-acquisition-as-90-percent-of-staff-moves-over/",
+    "source_id": "the_decoder",
+    "crawled_at": "2025-12-30T04:11:44.397818+09:00"
+  },
+  "_analysis": {},
+  "_classification": {},
+  "_publication": {}
+}

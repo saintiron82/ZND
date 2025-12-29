@@ -95,10 +95,15 @@ class FirestoreClient:
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         return os.path.join(base_dir, 'data')
 
+    def _get_cache_dir(self):
+        """캐시 디렉토리 경로 반환"""
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        return os.path.join(base_dir, 'cache')
+
     def _load_history(self):
         """crawling_history.json 로드"""
         import json
-        file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
+        file_path = os.path.join(self._get_cache_dir(), 'crawling_history.json')
         if os.path.exists(file_path):
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
@@ -110,7 +115,7 @@ class FirestoreClient:
     def _save_history_file(self):
         """crawling_history.json 저장 (최근 5000개 유지)"""
         import json
-        file_path = os.path.join(self._get_data_dir(), 'crawling_history.json')
+        file_path = os.path.join(self._get_cache_dir(), 'crawling_history.json')
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         
         # Limit to last 5000 entries
@@ -173,6 +178,10 @@ class FirestoreClient:
             
             search_pattern = os.path.join(cache_root, '*', f'{article_id}.json')
             found_paths = glob.glob(search_pattern)
+            
+            # DEBUG
+            if not found_paths:
+                print(f"🔍 [DEBUG get_article] pattern='{search_pattern}', found={len(found_paths)}")
             
             if found_paths:
                 found_paths.sort(key=os.path.getmtime, reverse=True)
@@ -685,48 +694,29 @@ class FirestoreClient:
 
     def check_history(self, url: str) -> bool:
         """
-        URL 처리 여부 확인 (ACCEPT, REJECT 등 완료 상태 확인)
-        For EXTRACT_FAILED: allows retry after 24 hours.
+        URL 처리 여부 확인 (존재 여부만 체크)
+        단순히 히스토리에 키가 존재하면 이미 방문한 것으로 간주.
         """
-        from datetime import datetime, timezone, timedelta
-        
-        if url in self.history:
-            entry = self.history[url]
-            status = entry.get('status')
-            
-            # 완료된 상태들
-            if status in ['ACCEPTED', 'REJECTED', 'SKIPPED', 'WORTHLESS', 'MLL_FAILED', 'ANALYZED']:
-                return True
-            
-            # EXTRACT_FAILED: 24시간 후 재시도 허용
-            if status == 'EXTRACT_FAILED':
-                timestamp = entry.get('timestamp')
-                if timestamp:
-                    try:
-                        failed_at = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
-                        if datetime.now(timezone.utc) - failed_at < timedelta(hours=24):
-                            return True  # 24시간 안됨, 스킵
-                        return False  # 24시간 지남, 재시도
-                    except:
-                        pass
-                return True  # 타임스탬프 없으면 스킵
-                
-        return False
+        return url in self.history
 
     def get_history_status(self, url: str) -> Optional[str]:
-        """URL의 히스토리 상태 반환"""
+        """(Deprecated) 히스토리 상태 반환 - 호환성 유지용"""
         if url in self.history:
-            return self.history[url].get('status')
+            return "VISITED"
         return None
 
-    def save_history(self, url: str, status: str, reason: str = None):
-        """히스토리 저장"""
-        self.history[url] = {
-            'status': status,
-            'reason': reason,
-            'timestamp': datetime.now(timezone.utc).isoformat()
-        }
+    def save_history(self, url: str, status: str = None, reason: str = None, article_id: str = None):
+        """히스토리 저장 (URL 방문 기록) - 로컬 + Firestore 둘 다"""
+        # 로컬 히스토리 저장
+        self.history[url] = get_kst_now()
         self._save_history_file()
+        
+        # Firestore 히스토리도 동기화
+        if article_id:
+            try:
+                self.update_history(url, article_id, status or 'COLLECTED')
+            except Exception as e:
+                print(f"⚠️ [History] Firestore sync failed: {e}")
 
     def remove_from_history(self, url: str):
         """히스토리에서 제거 (재처리용)"""

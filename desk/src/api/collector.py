@@ -61,6 +61,14 @@ def run_collector():
         result = run_full_pipeline(schedule_name="즉시 수집")
         print(f"✅ [Collector] Pipeline result: {result}")
         
+        # 레지스트리 새로고침 (새 캐시 파일 인식)
+        try:
+            from src.core.article_registry import get_registry
+            registry = get_registry()
+            registry.refresh()
+        except Exception as e:
+            print(f"⚠️ [Collector] Registry refresh failed: {e}")
+        
         # 결과 추출
         collected = result.get('collected', 0) or result.get('total', 0)
         extracted = result.get('extracted', 0)

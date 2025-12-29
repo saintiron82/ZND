@@ -21,7 +21,7 @@ from src.core_logic import (
     save_to_cache,
     normalize_field_names,
     update_manifest,
-    HistoryStatus,
+    update_manifest,
 )
 from src.core.firestore_client import FirestoreClient
 from src.crawler.core import AsyncCrawler
@@ -192,7 +192,7 @@ def mark_worthless(url: str, reason: str) -> dict:
     """
     db = get_db()
     # Update history
-    db.save_history(url, HistoryStatus.WORTHLESS, reason=reason)
+    db.save_history(url)
     
     # Load content from cache to save to DB
     from src.core.article_state import ArticleState
@@ -267,7 +267,7 @@ def mark_skipped(url: str, reason: str) -> dict:
         Result dict
     """
     db = get_db()
-    db.save_history(url, HistoryStatus.SKIPPED, reason=reason)
+    db.save_history(url)
     print(f"⏭️ [Skip] Marked: {url[:50]}... ({reason})")
     return {'status': 'skipped', 'reason': reason}
 
@@ -284,7 +284,7 @@ def mark_mll_failed(url: str, reason: str = 'no_response') -> dict:
         Result dict
     """
     db = get_db()
-    db.save_history(url, HistoryStatus.MLL_FAILED, reason=reason)
+    db.save_history(url)
     
     # Update cache with mll_status
     cached = load_from_cache(url)
@@ -292,7 +292,7 @@ def mark_mll_failed(url: str, reason: str = 'no_response') -> dict:
         save_to_cache(url, {**cached, 'mll_status': reason})
     
     print(f"⚠️ [MLL Failed] Marked: {url[:50]}... ({reason})")
-    return {'status': 'mll_failed', 'reason': reason}
+    return {'status': 'collected', 'reason': reason}
 
 
 # ==============================================================================
@@ -329,9 +329,8 @@ async def process_article(
     
     # 1. Check if already processed
     if db.check_history(url):
-        status = db.get_history_status(url)
-        print(f"⏭️ [Skip] Already processed ({status}): {url[:50]}...")
-        return {'status': 'already_processed', 'history_status': status}
+        print(f"⏭️ [Skip] Already visited: {url[:50]}...")
+        return {'status': 'already_processed', 'history_status': 'VISITED'}
     
     # 2. Check cache
     cached = load_from_cache(url)

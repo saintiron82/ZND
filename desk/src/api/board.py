@@ -435,6 +435,15 @@ def column_action():
                 if aid:
                     manager.delete(aid)
                     count += 1
+            
+            # 레지스트리 새로고침
+            try:
+                from src.core.article_registry import get_registry
+                registry = get_registry()
+                registry.refresh()
+            except Exception as e:
+                print(f"⚠️ [Board] Registry refresh failed: {e}")
+            
             message = f'{count}개 기사 영구 삭제 완료'
             
         elif action == 'analyze-all':

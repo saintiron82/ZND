@@ -496,11 +496,15 @@ class ArticleManager:
         # 1. Registry 사용 (초기화된 경우 - 권장)
         if registry.is_initialized():
             article_infos = registry.find_by_state(state.value, limit)
+            print(f"🔍 [DEBUG] Registry.find_by_state('{state.value}'): {len(article_infos)} infos")
             for info in article_infos:
                 # Registry가 이미 정본 ID를 알고 있음 -> get()으로 데이터 로드
                 article = self.get(info.article_id)
                 if article:
                     result.append(article)
+                else:
+                    print(f"⚠️ [DEBUG] get('{info.article_id}') returned None!")
+            print(f"🔍 [DEBUG] Final result: {len(result)} articles")
             return result
 
         # 2. Fallback (DB 직접 조회 - 초기화 전)

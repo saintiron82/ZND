@@ -21,7 +21,6 @@ from src.core_logic import (
     save_to_cache,
     normalize_field_names,
     update_manifest,
-    HistoryStatus,
     get_data_filename,
 )
 

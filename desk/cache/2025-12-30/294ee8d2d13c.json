@@ -1,0 +1,27 @@
+{
+  "_header": {
+    "version": "3.0",
+    "article_id": "294ee8d2d13c",
+    "state": "COLLECTED",
+    "state_history": [
+      {
+        "state": "COLLECTED",
+        "at": "2025-12-30T04:11:48.406311+09:00",
+        "by": "crawler"
+      }
+    ]
+  },
+  "_original": {
+    "title": "Microsoft CEO Nadella tells managers Copilot's Gmail and Outlook integrations ‘don't really work’ and steps in to fix them",
+    "description": "Microsoft CEO Satya Nadella reportedly called Copilot's Gmail and Outlook integrations \"not smart\" and is now personally stepping into product development. The worry: despite its strong starting position in AI software, Microsoft is falling behind.",
+    "image": "https://the-decoder.com/wp-content/uploads/2025/04/microsoft_copilot_logo-1200x800.png",
+    "text": "Ask about this article… Search Microsoft CEO Satya Nadella is reportedly slamming the company's AI assistant behind closed doors and stepping in to fix it himself. A few weeks ago, Nadella emailed engineering managers working on the consumer version of Copilot. According to a report by The Information, he didn't mince words: the integrations connecting Copilot with Gmail and Outlook \"don't really work\" for the most part and are \"not smart.\" This wasn't a one-off complaint. Over the past few months, Microsoft's CEO has essentially become the company's top product manager. In September, he announced he would delegate some responsibilities to focus on AI product development. He handed off many business functions to Head of Sales Judson Althoff, who got the new title \"Commercial CEO.\" Ad Nadella grills top engineers in weekly meetings Nadella is now deeply involved in technical work, according to The Information. He's highly active in an internal Teams channel with about 100 top engineers, posting detailed critiques when AI products fall short. In weekly hour-long meetings, he questions employees about their work and issues specific instructions, like consolidating post-training processes across teams. Ad DEC_D_Incontent-1 Nadella reportedly sent bug reports directly to product groups working on the consumer chatbot. Over the summer, he vented frustration in a Teams channel that Microsoft hadn't shipped new features for complex Excel functions like financial models fast enough. Copilot's \"digital worker\" promise isn't paying off yet Nadella and his deputies, including Executive Vice President Rajesh Jha, worry that AI in Office 365 isn't delivering on its promise to meaningfully automate work, The Information reports. The goal: Copilot subscriptions should function as \"digital workers\" handling tasks like those of administrative assistants. Ad To close the technical gaps, Nadella is personally investing in recruiting. He calls potential hires himself and approves unusually high salaries to poach top talent from OpenAI and Google DeepMind. He's also more involved in partnerships with AI developers like Anthropic, whose technology could improve Microsoft products. Internally, Nadella reminds employees of Microsoft's past strategic blunders: stumbling in internet search and squandering its lead in smartphones and tablets. The message: this is a pivotal moment that could determine the company's future. Ad DEC_D_Incontent-2 Signs of dissatisfaction with Copilot have been visible for a while. The company has been vague about business metrics, and Copilot's actual contribution to the bottom line remains unclear.",
+    "published_at": "2025-12-28T10:01:58+00:00",
+    "url": "https://the-decoder.com/microsoft-ceo-nadella-tells-managers-copilots-gmail-and-outlook-integrations-dont-really-work-and-steps-in-to-fix-them/",
+    "source_id": "the_decoder",
+    "crawled_at": "2025-12-30T04:11:48.406311+09:00"
+  },
+  "_analysis": {},
+  "_classification": {},
+  "_publication": {}
+}

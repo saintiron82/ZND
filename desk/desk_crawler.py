@@ -54,24 +54,52 @@ def load_targets():
         return {}, data  # 레거시 배열 형식
 
 def is_recent(date_obj, max_age_hours=48):
-    """Checks if a date is within the specified hours."""
+    """Checks if a date is within the specified hours (KST Aware)."""
     if not date_obj:
-        return True # Keep if no date found (benefit of the doubt) but log warning? Actually standard usually is keep.
+        return True # Keep if no date found
     
-    now = datetime.now(timezone.utc)
+    # 1. Base time: Now (KST)
+    kst_tz = timezone(timedelta(hours=9))
+    now = datetime.now(kst_tz)
     
-    # Handle struct_time (from feedparser)
-    if isinstance(date_obj, time.struct_time):
-        dt = datetime.fromtimestamp(time.mktime(date_obj), tz=timezone.utc)
-    elif isinstance(date_obj, datetime):
-        if date_obj.tzinfo is None:
-            date_obj = date_obj.replace(tzinfo=timezone.utc)
-        dt = date_obj
-    else:
-        return True # Unknown format, keep it
+    # 2. Convert date_obj to KST
+    try:
+        # Handle struct_time (from feedparser)
+        if isinstance(date_obj, time.struct_time):
+             # feedparser dates are usually UTC struct_time, convert to aware datetime
+            dt = datetime.fromtimestamp(time.mktime(date_obj), tz=timezone.utc)
+            # Convert UTC -> KST
+            dt = dt.astimezone(kst_tz)
+            
+        elif isinstance(date_obj, datetime):
+            if date_obj.tzinfo is None:
+                # Naive datetime: Assume it's KST (since most targets are Korean)
+                # or assume it's UTC and convert? 
+                # User problem: "09:00 KST incoming as naive -> interpreted as current time"
+                # If naive, we assume it matches the 'now' timezone (KST) for comparison logic
+                dt = date_obj.replace(tzinfo=kst_tz)
+            else:
+                # Aware datetime: Convert to KST
+                dt = date_obj.astimezone(kst_tz)
+        else:
+            return True # Unknown format
+            
+        # 3. Calculate Delta
+        # If dt is in future (e.g. publisher misconfig), clamp it? or allow it?
+        # Just check if it's too old. Future dates are "recent" by definition.
+        delta = now - dt
         
-    delta = now - dt
-    return delta <= timedelta(hours=max_age_hours)
+        # 4. Check age
+        # allow future dates (delta negative) up to 24 hours (clock skew protection)
+        if delta.total_seconds() < -24 * 3600:
+             # Too far in future? Suspicious but let's accept for now.
+             pass
+             
+        return delta <= timedelta(hours=max_age_hours)
+        
+    except Exception as e:
+        print(f"⚠️ Date parsing error: {e}")
+        return True # Default to keep
 
 def fetch_links(target, max_age_hours=48):
     """Fetches links based on target type (rss or html)."""

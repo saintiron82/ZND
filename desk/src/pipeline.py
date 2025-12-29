@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from src.core_logic import (
+    get_kst_now, # [IMPORTS]
     get_article_id,
     get_config,
     load_from_cache,
@@ -397,7 +398,7 @@ async def process_article(
         'url': url,
         'source_id': source_id,
         'article_id': get_article_id(url),
-        'crawled_at': datetime.now(timezone.utc).isoformat(),
+        'crawled_at': get_kst_now().isoformat(),
         'original_title': content.get('title', content.get('original_title', '')),
         'mll_status': 'analyzed',
     }

@@ -9,7 +9,24 @@ import os
 import json
 import glob
 import hashlib
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+
+# ==============================================================================
+# Timezone Helper (KST)
+# ==============================================================================
+
+def get_kst_now() -> str:
+    """
+    Get current time in KST (UTC+09:00).
+    Returns ISO format string.
+    """
+    kst_tz = timezone(timedelta(hours=9))
+    return datetime.now(kst_tz).isoformat()
+
+
+# ==============================================================================
+# Base directories (relative to supplier folder)
+# ==============================================================================
 
 # Base directories (relative to supplier folder)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -244,7 +261,7 @@ def save_to_cache(url: str, content: dict, date_str: str = None) -> str:
     else:
         # Flat data -> V2.0 구조로 변환
         article_id = content.get('article_id') or get_article_id(url)
-        now_iso = datetime.now(timezone.utc).isoformat()
+        now_iso = get_kst_now() # [FIX] Use KST
         
         # 1. Header
         header = {

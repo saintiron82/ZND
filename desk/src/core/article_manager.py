@@ -5,11 +5,12 @@ Article Manager - 기사 중앙 관리 시스템
 """
 import os
 import hashlib
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Optional, List, Dict, Any
 
 from .article_state import ArticleState, can_transition
 from .firestore_client import FirestoreClient
+from src.core_logic import get_kst_now
 
 
 class ArticleManager:
@@ -69,7 +70,7 @@ class ArticleManager:
             생성된 기사 데이터
         """
         article_id = self.generate_article_id(url)
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now() # [FIX] Use KST
         
         article = {
             '_header': {
@@ -137,7 +138,7 @@ class ArticleManager:
             print(f"⚠️ Invalid state transition: {current_state} → {new_state}")
             return False
         
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         # 헤더 업데이트
         updates = {
@@ -265,7 +266,7 @@ class ArticleManager:
             article_id: 기사 ID
             analysis_data: 분석 결과 (title_ko, summary, tags, scores, mll_raw)
         """
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         section_data = {
             'title_ko': analysis_data.get('title_ko', ''),
@@ -293,7 +294,7 @@ class ArticleManager:
             category: 카테고리
             is_selected: 선택 여부 (중복 제거용)
         """
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         section_data = {
             'category': category,
@@ -318,7 +319,7 @@ class ArticleManager:
             edition_code: 회차 코드 (예: 251226_5)
             edition_name: 회차 이름 (예: 5호)
         """
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         section_data = {
             'edition_code': edition_code,
@@ -478,7 +479,7 @@ class ArticleManager:
             reason: 폐기 사유 (cutline: 커트라인, duplicate: 중복, manual: 수동)
             by: 폐기 주체
         """
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         return self.update_state(
             article_id,
@@ -602,7 +603,7 @@ class ArticleManager:
         1. 메타 데이터 상태 변경
         2. 소속 기사 상태 일괄 변경 (PUBLISHED -> RELEASED)
         """
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         # 1. 메타 데이터 확인 및 업데이트
         meta = self.db.get_publications_meta()

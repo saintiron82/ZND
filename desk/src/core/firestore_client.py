@@ -9,6 +9,7 @@ from typing import Optional, List, Dict, Any
 
 import firebase_admin
 from firebase_admin import credentials, firestore
+from src.core_logic import get_kst_now # [IMPORTS]
 
 
 class FirestoreClient:
@@ -146,7 +147,7 @@ class FirestoreClient:
             'reads': 0,
             'writes': 0,
             'deletes': 0,
-            'session_start': datetime.now(timezone.utc).isoformat()
+            'session_start': get_kst_now().isoformat() # [FIX] Use KST
         }
     
     # =========================================================================

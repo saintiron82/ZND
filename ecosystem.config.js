@@ -44,7 +44,7 @@ try {
 module.exports = {
     apps: [
         {
-            name: 'znd-web',
+            name: 'zed-web',
             script: 'node',
             args: './node_modules/next/dist/bin/next start -p 8080',
             cwd: './web',
@@ -56,7 +56,7 @@ module.exports = {
             },
         },
         {
-            name: 'znd-backend',
+            name: 'zed-desk',
             script: 'app.py',
             cwd: './desk',
             interpreter: isWin ? 'python' : '/home/saintiron82/ZND/desk/venv/bin/python3',
@@ -69,7 +69,7 @@ module.exports = {
             }
         },
         {
-            name: 'znd-scheduler',
+            name: 'zed-scheduler',
             script: 'desk_crawler.py', // auto_crawl.py 대신 desk_crawler.py 사용 추정
             cwd: './desk',
             interpreter: isWin ? 'python' : '/home/saintiron82/ZND/desk/venv/bin/python3',

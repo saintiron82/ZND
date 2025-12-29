@@ -13,16 +13,19 @@ CORE_DIR = os.path.dirname(os.path.abspath(__file__))
 CRAWLER_DIR = os.path.dirname(CORE_DIR)
 ZND_ROOT = os.path.dirname(CRAWLER_DIR)
 DESK_DIR = os.path.join(ZND_ROOT, 'desk')
+DESK_SRC_CORE_DIR = os.path.join(DESK_DIR, 'src', 'core')  # firestore_client.py 위치
 
 # Add to sys.path
 if CRAWLER_DIR not in sys.path:
     sys.path.insert(0, CRAWLER_DIR)
 if DESK_DIR not in sys.path:
     sys.path.insert(0, DESK_DIR)
+if DESK_SRC_CORE_DIR not in sys.path:
+    sys.path.insert(0, DESK_SRC_CORE_DIR)  # firestore_client 임포트용
 
 from core.logger import log_crawl_event
 from core.collector import collect_links
-from src.db_client import DBClient
+from firestore_client import FirestoreClient
 from src.crawler.core import AsyncCrawler
 from src.core_logic import (
     load_from_cache as _core_load_from_cache,
@@ -46,7 +49,7 @@ def extract_content(links: list = None) -> dict:
         dict: {success: bool, extracted: int, skipped: int, failed: int}
     """
     start_time = time.time()
-    db = DBClient()  # 히스토리 저장용
+    db = FirestoreClient()  # 히스토리 저장용
     
     # 링크가 없으면 자동 수집
     if not links:

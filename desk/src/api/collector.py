@@ -4,6 +4,7 @@ Collector API - 수집 관련 API
 """
 import os
 import sys
+from datetime import datetime
 from flask import Blueprint, jsonify
 
 collector_bp = Blueprint('collector', __name__)

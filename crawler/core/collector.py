@@ -13,15 +13,18 @@ CORE_DIR = os.path.dirname(os.path.abspath(__file__))
 CRAWLER_DIR = os.path.dirname(CORE_DIR)
 ZND_ROOT = os.path.dirname(CRAWLER_DIR)
 DESK_DIR = os.path.join(ZND_ROOT, 'desk')
+DESK_SRC_CORE_DIR = os.path.join(DESK_DIR, 'src', 'core')  # firestore_client.py 위치
 
 # Add to sys.path
 if CRAWLER_DIR not in sys.path:
     sys.path.insert(0, CRAWLER_DIR)
 if DESK_DIR not in sys.path:
     sys.path.insert(0, DESK_DIR)
+if DESK_SRC_CORE_DIR not in sys.path:
+    sys.path.insert(0, DESK_SRC_CORE_DIR)  # firestore_client 임포트용
 
 from core.logger import log_crawl_event
-from src.db_client import DBClient
+from firestore_client import FirestoreClient
 
 # Import from desk/desk_crawler.py
 import desk_crawler as desk_crawler
@@ -35,7 +38,7 @@ def collect_links() -> dict:
         dict: {success: bool, links: list, message: str}
     """
     start_time = time.time()
-    db = DBClient()
+    db = FirestoreClient()
     
     try:
         # load_targets returns (settings, targets_list) tuple

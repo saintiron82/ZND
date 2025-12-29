@@ -2,7 +2,7 @@
   "_header": {
     "version": "2.0",
     "article_id": "b61bdb434bd7",
-    "state": "CLASSIFIED",
+    "state": "PUBLISHED",
     "state_history": [
       {
         "state": "COLLECTED",
@@ -18,9 +18,14 @@
         "state": "CLASSIFIED",
         "at": "2025-12-29T01:56:16.049642+00:00",
         "by": "desk"
+      },
+      {
+        "state": "PUBLISHED",
+        "at": "2025-12-29T06:33:55.299527+00:00",
+        "by": "publisher"
       }
     ],
-    "updated_at": "2025-12-29T01:56:16.049642+00:00"
+    "updated_at": "2025-12-29T06:33:55.299527+00:00"
   },
   "_original": {
     "title": "﻿SKT, 국내 최대 5000억 매개변수 모델 'A.X K1' 공개 - AI타임스",
@@ -166,5 +171,12 @@
     "classified_at": "2025-12-29T01:56:15.669863+00:00",
     "classified_by": "desk_user"
   },
-  "_publication": {}
+  "_publication": {
+    "edition_code": "251229_9",
+    "edition_name": "제9호",
+    "published_at": "2025-12-29T06:33:54.903863+00:00",
+    "released_at": null,
+    "status": "preview",
+    "firestore_synced": true
+  }
 }

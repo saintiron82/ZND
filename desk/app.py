@@ -71,7 +71,7 @@ def health():
 # =============================================================================
 
 if __name__ == '__main__':
-    port = int(os.getenv('DESK_PORT', 5001))
+    port = int(os.getenv('DESK_PORT', 5500))
     debug = os.getenv('FLASK_DEBUG', 'true').lower() == 'true'
     
     # Initialize Article Registry (SSOT for article metadata)

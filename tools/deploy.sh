@@ -50,6 +50,20 @@ echo "🐍 Updating Python Backend..."
 cd desk
 source venv/bin/activate
 pip install -r requirements.txt --quiet
+
+# Force Release Environment for Desk
+if grep -q "ZND_ENV=" .env; then
+    # Modify existing
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' 's/ZND_ENV=.*/ZND_ENV=release/' .env
+    else
+        sed -i 's/ZND_ENV=.*/ZND_ENV=release/' .env
+    fi
+else
+    # Append if missing
+    echo "ZND_ENV=release" >> .env
+fi
+echo "✅ Configured Desk for RELEASE environment."
 deactivate
 cd ..
 
@@ -63,6 +77,7 @@ npm install
 read -p "Do you want to build on VM? (y/N): " BUILD_CONFIRM
 if [[ "$BUILD_CONFIRM" =~ ^[Yy]$ ]]; then
     echo "⚡ Building Next.js..."
+    export NEXT_PUBLIC_ZND_ENV=release
     npm run build
 else
     echo "⏭️ Skipping build (using pre-built from local)..."

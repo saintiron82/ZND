@@ -96,6 +96,7 @@ if %errorlevel% neq 0 (
 )
 
 echo [정보] Next.js 빌드 중... (시간이 걸릴 수 있습니다)
+set NEXT_PUBLIC_ZND_ENV=release
 call npm run build
 if %errorlevel% neq 0 (
     echo [오류] 빌드 실패!

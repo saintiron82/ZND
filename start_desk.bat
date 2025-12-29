@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title ZED Manual Crawler
+title ZND Desk Server
 
 :: Move to the script's directory (Project Root)
 cd /d "%~dp0"
@@ -62,7 +62,7 @@ if "%DESK_VENV%"=="" (
     exit /b
 )
 
-echo [ZED] Starting Manual Crawler Server... (using %DESK_VENV%)
-.\%DESK_VENV%\Scripts\python.exe manual_crawler.py
+echo [ZED] Starting Desk Server... (using %DESK_VENV%)
+.\%DESK_VENV%\Scripts\python.exe app.py
 
 pause

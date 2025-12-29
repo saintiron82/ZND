@@ -21,6 +21,7 @@ echo 현재 버전: %RAW_VERSION%
 
 :: 빌드 실행
 echo [*] npm run build 실행 중...
+set NEXT_PUBLIC_ZND_ENV=release
 call npm run build
 
 if %ERRORLEVEL% NEQ 0 (

@@ -23,9 +23,19 @@
         "state": "REJECTED",
         "at": "2025-12-28T18:20:01.953192+00:00",
         "by": "publisher"
+      },
+      {
+        "state": "CLASSIFIED",
+        "at": "2025-12-29T05:27:12.021321+00:00",
+        "by": "reset-pub"
+      },
+      {
+        "state": "REJECTED",
+        "at": "2025-12-29T05:27:24.831145+00:00",
+        "by": "board"
       }
     ],
-    "updated_at": "2025-12-28T18:20:01.953192+00:00"
+    "updated_at": "2025-12-29T05:27:24.831145+00:00"
   },
   "_original": {
     "title": "AI 붐에 웃은 미국 테크 억만장자들...올해 자산 793조 증가 - AI타임스",
@@ -203,8 +213,9 @@
     "category": "Business"
   },
   "_rejection": {
-    "reason": "cutline",
-    "rejected_at": "2025-12-28T18:20:01.552579+00:00",
-    "rejected_by": "publisher"
-  }
+    "reason": "manual",
+    "rejected_at": "2025-12-29T05:27:24.412255+00:00",
+    "rejected_by": "desk_user"
+  },
+  "_publication": null
 }

@@ -813,119 +813,14 @@ function setupBoardEvents() {
 }
 
 // =============================================================================
-// Unlinked Article Recovery Functions (발행이력없는 기사 복구)
+// Unlinked Article Recovery Functions
+// [MOVED] → desk-recovery.js
 // =============================================================================
-
-async function checkOrphans() {
-    showLoading();
-    try {
-        const result = await fetchAPI('/api/board/orphans');
-
-        if (result.success) {
-            if (result.count === 0) {
-                alert('✅ 발행이력없는 기사가 없습니다!');
-            } else {
-                const confirmed = confirm(
-                    `🔧 발행이력없는 기사 ${result.count}개 발견\n\n` +
-                    `발행대기(CLASSIFIED) 상태로 복구하시겠습니까?\n\n` +
-                    `(유효한 발행 회차: ${result.valid_editions.length}개)`
-                );
-
-                if (confirmed) {
-                    await recoverOrphans();
-                }
-            }
-        } else {
-            showError(result.error);
-        }
-    } catch (e) {
-        showError(e.message);
-    } finally {
-        hideLoading();
-    }
-}
-
-async function recoverOrphans() {
-    showLoading();
-    try {
-        const result = await fetchAPI('/api/board/recover-orphans', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ recover_all: true })
-        });
-
-        if (result.success) {
-            alert(`✅ ${result.recovered_count}개 기사 복구 완료!`);
-            loadBoardData(); // 보드 새로고침
-        } else {
-            showError(result.error);
-        }
-    } catch (e) {
-        showError(e.message);
-    } finally {
-        hideLoading();
-    }
-}
-
-// Make global
-window.checkOrphans = checkOrphans;
-window.recoverOrphans = recoverOrphans;
-
+// =============================================================================
 // =============================================================================
 // Column Menu Functions
+// [MOVED] → desk-ui-columns.js
 // =============================================================================
-
-function toggleColumnMenu(state) {
-    const menu = document.getElementById(`menu-${state}`);
-    if (!menu) return;
-
-    // Close all other menus first
-    document.querySelectorAll('.column-menu').forEach(m => {
-        if (m.id !== `menu-${state}`) m.classList.add('hidden');
-    });
-
-    menu.classList.toggle('hidden');
-}
-
-async function columnAction(state, action) {
-    // Close menu
-    document.getElementById(`menu-${state}`)?.classList.add('hidden');
-
-    // Confirmation
-    const actionLabels = {
-        'analyze-all': '전체 분석',
-        'classify-all': '전체 분류',
-        'publish-all': '전체 발행',
-        'release-all': '전체 공개',
-        'reject-all': '전체 폐기',
-        'empty-trash': '휴지통 비우기',
-        'restore-all': '전체 복원',
-        'recalculate-scores': '점수 재계산'
-    };
-
-    if (!confirm(`[${state}] 열의 "${actionLabels[action]}" 작업을 실행하시겠습니까?`)) {
-        return;
-    }
-
-    showLoading();
-    try {
-        const result = await fetchAPI('/api/board/column-action', {
-            method: 'POST',
-            body: JSON.stringify({ state, action })
-        });
-
-        if (result.success) {
-            alert(`완료: ${result.message || action}`);
-            await loadBoardData();
-        } else {
-            alert('오류: ' + (result.error || '알 수 없는 오류'));
-        }
-    } catch (err) {
-        alert('요청 실패: ' + err.message);
-    } finally {
-        hideLoading();
-    }
-}
 
 // =============================================================================
 // Settings Popup

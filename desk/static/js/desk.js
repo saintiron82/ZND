@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ZND Desk - JavaScript
  */
 
@@ -14,51 +14,12 @@ let kanbanData = {}; // Cache for Board Data
 
 // =============================================================================
 // Common Functions
+// [MOVED] → desk-common.js
 // =============================================================================
 
-function showLoading() {
-    document.getElementById('loading')?.classList.remove('hidden');
-}
+/**
 
-function hideLoading() {
-    document.getElementById('loading')?.classList.add('hidden');
-}
 
-function showError(message) {
-    alert('오류: ' + message);
-}
-
-function formatScore(score) {
-    if (score === null || score === undefined) return '-';
-    const num = parseFloat(score);
-    if (num >= 7) return `<span class="score-high">${num.toFixed(1)}</span>`;
-    if (num >= 4) return `<span class="score-mid">${num.toFixed(1)}</span>`;
-    return `<span class="score-low">${num.toFixed(1)}</span>`;
-}
-
-function getStateBadge(state) {
-    const labels = {
-        [ArticleState.COLLECTED]: '수집됨',
-        [ArticleState.ANALYZING]: '분석중',
-        [ArticleState.ANALYZED]: '분석완료',
-        [ArticleState.REJECTED]: '폐기됨',
-        [ArticleState.CLASSIFIED]: '분류됨',
-        [ArticleState.PUBLISHED]: '발행됨',
-        [ArticleState.RELEASED]: '공개됨'
-    };
-    return `<span class="state-badge state-${state}">${labels[state] || state}</span>`;
-}
-
-async function fetchAPI(url, options = {}) {
-    const response = await fetch(url, {
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-    return response.json();
-}
 
 /**
  * Shared function to render article card HTML

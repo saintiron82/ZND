@@ -20,6 +20,10 @@ set "RAW_VERSION=%RAW_VERSION: =%"
 echo 현재 버전: %RAW_VERSION%
 
 :: 빌드 실행
+echo [*] 기존 빌드 결과물 삭제 중... (.next)
+if exist ".next" rmdir /s /q ".next"
+timeout /t 1 > nul
+
 echo [*] npm run build 실행 중...
 set NEXT_PUBLIC_ZND_ENV=release
 call npm run build

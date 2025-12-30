@@ -1,10 +1,10 @@
-﻿﻿import React from 'react';
+﻿﻿import React, { useState } from 'react';
 import Header from './Header';
 
 import Footer from './Footer';
 import TrendingKeywords from './TrendingKeywords';
 import IssueSelector, { IssueItem } from './IssueSelector';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 
 interface PageFrameProps {
     children: React.ReactNode;
@@ -39,6 +39,7 @@ export default function PageFrame({
     currentIssueId = null,
     onIssueSelect
 }: PageFrameProps) {
+    const [isMobileSelectorOpen, setIsMobileSelectorOpen] = useState(false);
 
     // Date format utility ("12월 21일" format)
     const formatDateKo = (dateStr: string) => {
@@ -127,7 +128,11 @@ export default function PageFrame({
             </div>
 
             {/* Mobile: Bottom Fixed Navigation */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border z-50 px-4 py-3 safe-area-inset-bottom">
+            <div
+                className="lg:hidden fixed bottom-0 left-0 right-0 border-t border-border z-50 px-4 py-1.5 safe-area-inset-bottom backdrop-blur-md bg-transparent"
+            >
+                {/* 다크모드 배경용 (absolute overlay) */}
+                <div className="absolute inset-0 bg-white/75 dark:bg-zinc-950/75 -z-10" />
                 <div className="flex items-center justify-between max-w-lg mx-auto">
                     {/* 이전 버튼 */}
                     <button
@@ -139,14 +144,65 @@ export default function PageFrame({
                         <span className="text-[10px] font-medium">이전</span>
                     </button>
 
-                    {/* 현재 호수 표시 */}
-                    <div className="flex flex-col items-center">
-                        <span className="text-xs font-bold text-teal-600 dark:text-teal-400">
-                            {editionName || ''}
-                        </span>
-                        <span className="text-[10px] text-muted-foreground">
-                            {currentDate ? formatDateKo(currentDate) : ''}
-                        </span>
+                    {/* 현재 호수 표시 (클릭하여 선택기 열기) */}
+                    <div className="relative">
+                        {/* Selector Popup (opens upwards) */}
+                        {isMobileSelectorOpen && (
+                            <>
+                                {/* Backdrop */}
+                                <div
+                                    className="fixed inset-0 bg-black/50 z-40"
+                                    onClick={() => setIsMobileSelectorOpen(false)}
+                                    style={{ margin: 0 }} // Prevent inheritance
+                                />
+
+                                {/* List Container */}
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-64 max-h-80 bg-white dark:bg-zinc-900 border border-border rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50 overflow-y-auto flex flex-col p-1 scrollbar-hide ring-1 ring-black/5">
+                                    <div className="px-3 py-2 text-xs font-bold text-muted-foreground border-b border-border/50 mb-1 sticky top-0 bg-white dark:bg-zinc-900 z-10">
+                                        회차 목록
+                                    </div>
+                                    {issues.map((issue) => {
+                                        const isActive = issue.id === currentIssueId;
+                                        return (
+                                            <button
+                                                key={issue.id}
+                                                onClick={() => {
+                                                    if (onIssueSelect) onIssueSelect(issue.id);
+                                                    setIsMobileSelectorOpen(false);
+                                                }}
+                                                className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors flex items-center justify-between shrink-0 ${isActive
+                                                    ? 'bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-bold'
+                                                    : 'text-foreground hover:bg-secondary'
+                                                    }`}
+                                            >
+                                                <span>{formatEditionLabel(issue.date, issue.edition_name)}</span>
+                                                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </>
+                        )}
+
+                        <button
+                            onClick={() => setIsMobileSelectorOpen(!isMobileSelectorOpen)}
+                            className="flex flex-col items-center justify-center gap-1.5 py-1 active:scale-95 transition-transform"
+                        >
+                            <div className="flex flex-col items-center leading-none gap-0.5">
+                                <span className="text-xs font-bold text-teal-600 dark:text-teal-400">
+                                    {editionName || ''}
+                                </span>
+                                <span className="text-[10px] text-muted-foreground">
+                                    {currentDate ? formatDateKo(currentDate) : ''}
+                                </span>
+                            </div>
+
+                            {/* 가로 가이드 바 (Teal Color Indicator) */}
+                            <div className={`h-1.5 rounded-full transition-all duration-300 mt-1 ${isMobileSelectorOpen
+                                ? 'bg-teal-600 w-20 shadow-[0_0_8px_rgba(13,148,136,0.8)]'
+                                : 'bg-teal-500 w-12 opacity-80 animate-pulse'
+                                }`} />
+                        </button>
                     </div>
 
                     {/* 다음 버튼 */}

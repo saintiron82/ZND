@@ -5,7 +5,7 @@ ZND Desk - Flask Application Entry Point
 """
 import os
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request, Response
 
 # 환경 변수 로드
 base_dir = os.path.dirname(__file__)
@@ -33,6 +33,44 @@ app.register_blueprint(publisher_bp)
 app.register_blueprint(board_bp)
 app.register_blueprint(settings_bp)
 app.register_blueprint(collector_bp)
+
+
+# =============================================================================
+# Authentication
+# =============================================================================
+
+def check_auth(username, password):
+    """Check if a username / password combination is valid."""
+    expected_username = os.getenv('DESK_USERNAME')
+    expected_password = os.getenv('DESK_PASSWORD')
+    
+    # 환경 변수가 설정되지 않은 경우 (보안을 위해 차단)
+    if not expected_username or not expected_password:
+        return False
+        
+    return username == expected_username and password == expected_password
+
+def authenticate():
+    """Sends a 401 response that enables basic auth"""
+    return Response(
+    'Could not verify your access level for that URL.\n'
+    'You have to login with proper credentials', 401,
+    {'WWW-Authenticate': 'Basic realm="ZND Desk Login Required"'})
+
+@app.before_request
+def require_auth():
+    """모든 요청에 대해 인증 확인 (Health Check 제외)"""
+    # Health Check는 로드밸런서/모니터링을 위해 제외
+    if request.path == '/health':
+        return
+    
+    # 정적 파일도 보호할지 여부는 선택사항이나, "모든 사이트 차단" 요청이므로 포함.
+    # 단, 브라우저가 favicon 등을 요청할 때 인증 prompt가 중복으로 뜰 수 있으므로
+    # 이미 인증된 세션(브라우저가 헤더 저장)을 사용하므로 큰 문제 없음.
+    
+    auth = request.authorization
+    if not auth or not check_auth(auth.username, auth.password):
+        return authenticate()
 
 
 # =============================================================================

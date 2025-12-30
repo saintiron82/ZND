@@ -1,15 +1,44 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ThemeToggle from './ThemeToggle';
-import CategoryNav from './CategoryNav';
+import { Sparkles } from 'lucide-react';
+// import CategoryNav from './CategoryNav'; // 단일 카테고리(AI)로 인해 제거됨
 
 interface HeaderProps {
     currentDate?: string | null;
-    editionName?: string | null;  // 회차명 (예: "1호", "2호")
+    editionName?: string | null;
 }
 
 export default function Header({ currentDate, editionName }: HeaderProps) {
+    const [isHelpOpen, setIsHelpOpen] = useState(false);
+    const helpRef = useRef<HTMLDivElement>(null);
+
+    // 외부 클릭 및 스크롤 감지하여 툴팁 닫기
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+            if (helpRef.current && !helpRef.current.contains(event.target as Node)) {
+                setIsHelpOpen(false);
+            }
+        };
+
+        const handleScroll = () => {
+            if (isHelpOpen) {
+                setIsHelpOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside); // 모바일 터치 대응
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [isHelpOpen]);
+
     // 날짜 포맷팅 함수
     const formatDate = (dateStr: string) => {
         const [year, month, day] = dateStr.split('-').map(Number);
@@ -19,15 +48,18 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
         return `${year}년 ${month}월 ${day}일 ${weekday}`;
     };
 
-    // 회차 표시 - edition_name은 백엔드에서 이미 완성된 형태("제1호")로 저장됨
+    // 회차 표시
     const formatEdition = (name: string) => name;
+
+    const toggleHelp = (e: React.MouseEvent) => {
+        e.stopPropagation(); // 버블링 방지
+        setIsHelpOpen(!isHelpOpen);
+    };
 
     return (
         <header
             className="relative md:sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-4 pb-2 border-b border-border/40 shadow-sm transition-all duration-300 ease-in-out"
         >
-            {/* 로고는 Footer로 이동됨 */}
-
             {/* 테마 토글 버튼 - 우측 상단 고정 */}
             <div className="absolute right-4 top-4">
                 <ThemeToggle />
@@ -46,24 +78,39 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                         {editionName && currentDate && <span className="mx-2">•</span>}
                         {currentDate ? formatDate(currentDate) : '불러오는 중...'}
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-widest font-sans relative group/slogan cursor-help inline-flex items-center gap-1">
-                        Pure Signal, Zero Echo
-                        <span className="text-teal-500/60 hover:text-teal-500 transition-colors">?</span>
+                    <div className="relative mt-1 flex items-center gap-1.5" ref={helpRef}>
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-sans">
+                            Pure Signal, Zero Echo
+                        </p>
+                        <button
+                            onClick={toggleHelp}
+                            className={`flex items-center justify-center rounded-full p-1 transition-all duration-300 focus:outline-none shadow-sm ${isHelpOpen
+                                    ? 'bg-teal-600 text-white ring-2 ring-teal-200 dark:ring-teal-800 scale-110'
+                                    : 'bg-teal-500 text-white hover:bg-teal-600 hover:scale-105 hover:shadow-md animate-[pulse_3s_ease-in-out_infinite]'
+                                }`}
+                            aria-label="What is ZS?"
+                        >
+                            <Sparkles className="w-3 h-3" strokeWidth={3} />
+                        </button>
+
                         {/* What ZS? 통합 설명 툴팁 */}
-                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-4 py-3 bg-white/95 dark:bg-zinc-900/95 text-foreground text-[11px] font-normal normal-case tracking-normal rounded-xl shadow-2xl border border-border w-64 opacity-0 invisible group-hover/slogan:opacity-100 group-hover/slogan:visible transition-all duration-200 z-[100] text-center leading-relaxed">
+                        <div
+                            className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 px-4 py-3 bg-white/95 dark:bg-zinc-900/95 text-foreground text-[11px] font-normal normal-case tracking-normal rounded-xl shadow-2xl border border-border w-64 text-center leading-relaxed z-[100] transition-all duration-200 ${isHelpOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                                }`}
+                        >
                             <span className="font-bold text-teal-600 dark:text-teal-400 block mb-1">What&apos;s ZS (Zero Score)?</span>
                             기사의 노이즈 억제 점수입니다.<br />
                             <span className="text-emerald-500 font-semibold">낮을수록</span> 기존 미디어에서 반복되지 않은<br />
                             <span className="text-teal-600 dark:text-teal-400 font-semibold">신선하고 독창적인 정보</span>예요 ✨
                             <span className="absolute left-1/2 -translate-x-1/2 bottom-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-white dark:border-b-zinc-900"></span>
-                        </span>
-                    </p>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Category Navigation inside Header Frame */}
-                <div className="mt-2 pt-0 border-t border-border/40">
+                {/* Category Navigation Removed */}
+                {/* <div className="mt-2 pt-0 border-t border-border/40">
                     <CategoryNav />
-                </div>
+                </div> */}
             </div>
         </header>
     );

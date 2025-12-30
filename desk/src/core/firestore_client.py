@@ -35,9 +35,14 @@ class FirestoreClient:
             return
         self.db = self._initialize_firebase()
         self._initialized = True
-        self.db = self._initialize_firebase()
-        self._initialized = True
-        self.history = self._load_history()  # Load history on init
+        
+        # History Setup
+        self.history = self._load_history()  # Local: URL -> timestamp
+        self._remote_hashes = set()          # Remote: Hash set
+        self._load_remote_history_hashes()   # Load remote hashes
+        
+        # Initialize usage stats
+        self.reset_usage_stats()
         FirestoreClient._usage_stats['session_start'] = datetime.now(timezone.utc).isoformat()
     
     def _initialize_firebase(self):
@@ -90,18 +95,16 @@ class FirestoreClient:
     # Helpers
     # =========================================================================
 
-    def _get_data_dir(self):
-        """데이터 디렉토리 경로 반환"""
-        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        return os.path.join(base_dir, 'data')
+
 
     def _get_cache_dir(self):
-        """캐시 디렉토리 경로 반환"""
+        """캐시 디렉토리 경로 반환 (환경별 분리)"""
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        return os.path.join(base_dir, 'cache')
+        env = os.getenv('ZND_ENV', 'dev')
+        return os.path.join(base_dir, 'cache', env)
 
     def _load_history(self):
-        """crawling_history.json 로드"""
+        """crawling_history.json 로드 (로컬 전용)"""
         import json
         file_path = os.path.join(self._get_cache_dir(), 'crawling_history.json')
         if os.path.exists(file_path):
@@ -111,6 +114,21 @@ class FirestoreClient:
             except Exception:
                 return {}
         return {}
+    
+    def _load_remote_history_hashes(self):
+        """Firestore 히스토리 인덱스 로드 (Hash Set)"""
+        try:
+            doc_ref = self._get_collection('history').document('_index')
+            doc = doc_ref.get()
+            self._track_read()
+            
+            if doc.exists:
+                data = doc.to_dict()
+                urls_map = data.get('urls', {})
+                self._remote_hashes = set(urls_map.keys())
+                print(f"📥 [History] Loaded {len(self._remote_hashes)} remote hashes")
+        except Exception as e:
+            print(f"⚠️ [History] Remote hash load failed: {e}")
 
     def _save_history_file(self):
         """crawling_history.json 저장 (최근 5000개 유지)"""
@@ -145,14 +163,12 @@ class FirestoreClient:
     @classmethod
     def get_usage_stats(cls) -> Dict[str, Any]:
         return cls._usage_stats.copy()
-    
-    @classmethod
     def reset_usage_stats(cls):
         cls._usage_stats = {
             'reads': 0,
             'writes': 0,
             'deletes': 0,
-            'session_start': get_kst_now().isoformat() # [FIX] Use KST
+            'session_start': get_kst_now() # [FIX] Use KST
         }
     
     # =========================================================================
@@ -174,7 +190,8 @@ class FirestoreClient:
         # 1. Local Cache 조회
         try:
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            cache_root = os.path.join(base_dir, 'cache')
+            env = os.getenv('ZND_ENV', 'dev')
+            cache_root = os.path.join(base_dir, 'cache', env)
             
             search_pattern = os.path.join(cache_root, '*', f'{article_id}.json')
             found_paths = glob.glob(search_pattern)
@@ -324,7 +341,8 @@ class FirestoreClient:
             import json
             
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            cache_root = os.path.join(base_dir, 'cache')
+            env = os.getenv('ZND_ENV', 'dev')
+            cache_root = os.path.join(base_dir, 'cache', env)
             
             # Robust search pattern
             search_pattern = os.path.join(cache_root, '**', f'*{article_id}.json')
@@ -399,7 +417,8 @@ class FirestoreClient:
             import json
             
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            cache_root = os.path.join(base_dir, 'cache')
+            env = os.getenv('ZND_ENV', 'dev')
+            cache_root = os.path.join(base_dir, 'cache', env)
             
             # Robust search pattern (With or without underscore prefix)
             search_pattern = os.path.join(cache_root, '**', f'*{article_id}.json')
@@ -489,7 +508,8 @@ class FirestoreClient:
             from datetime import datetime
             
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            cache_root = os.path.join(base_dir, 'cache')
+            env = os.getenv('ZND_ENV', 'dev')
+            cache_root = os.path.join(base_dir, 'cache', env)
             
             search_pattern = os.path.join(cache_root, '*', f'{article_id}.json')
             files = glob.glob(search_pattern)
@@ -551,7 +571,8 @@ class FirestoreClient:
                 import json
                 
                 base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                cache_root = os.path.join(base_dir, 'cache')
+                env = os.getenv('ZND_ENV', 'dev')
+                cache_root = os.path.join(base_dir, 'cache', env)
                 
                 if os.path.exists(cache_root):
                     files = glob.glob(os.path.join(cache_root, '*', '*.json'))
@@ -694,10 +715,18 @@ class FirestoreClient:
 
     def check_history(self, url: str) -> bool:
         """
-        URL 처리 여부 확인 (존재 여부만 체크)
-        단순히 히스토리에 키가 존재하면 이미 방문한 것으로 간주.
+        URL 처리 여부 확인 (로컬 + 원격 해시 체크)
         """
-        return url in self.history
+        # 1. Local Check (Frequency: High, Cost: Low)
+        if url in self.history:
+            return True
+            
+        # 2. Remote Hash Check (Frequency: Low, Cost: Low - InMemory Set)
+        url_hash = self._url_to_key(url)
+        if url_hash in self._remote_hashes:
+            return True
+            
+        return False
 
     def get_history_status(self, url: str) -> Optional[str]:
         """(Deprecated) 히스토리 상태 반환 - 호환성 유지용"""

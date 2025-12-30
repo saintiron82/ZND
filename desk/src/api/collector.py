@@ -4,8 +4,11 @@ Collector API - 수집 관련 API
 """
 import os
 import sys
+import json
+import threading
+import queue
 from datetime import datetime
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, Response, stream_with_context
 
 collector_bp = Blueprint('collector', __name__)
 
@@ -18,10 +21,6 @@ def _setup_paths():
     project_root = os.path.dirname(desk_dir)
     crawler_path = os.path.join(project_root, 'crawler')
     src_path = os.path.join(desk_dir, 'src')  # src 폴더도 추가
-    
-    print(f"🔧 [Collector] desk_dir: {desk_dir}")
-    print(f"🔧 [Collector] crawler_path: {crawler_path}")
-    print(f"🔧 [Collector] src_path: {src_path}")
     
     # 경로 추가 (desk 먼저, 그 다음 src, 그 다음 crawler)
     paths_to_add = [desk_dir, src_path, crawler_path]
@@ -36,68 +35,75 @@ def _setup_paths():
 @collector_bp.route('/api/collector/run', methods=['POST'])
 def run_collector():
     """
-    즉시 수집 실행
+    즉시 수집 실행 (Streaming Response)
     """
-    print("🚀 [Collector] API called - starting collection...")
+    print("🚀 [Collector] API called - starting async collection...")
     
-    try:
-        desk_dir, crawler_path = _setup_paths()
+    q = queue.Queue()
+    
+    def progress_callback(data):
+        """Worker 스레드에서 호출하여 메인 스레드로 데이터 전달"""
+        q.put(data)
         
-        # .env 로드 (새 desk 폴더에서)
-        env_file = os.path.join(desk_dir, '.env')
-        print(f"🔧 [Collector] Loading .env from: {env_file}")
-        if os.path.exists(env_file):
-            from dotenv import load_dotenv
-            load_dotenv(env_file)
-            print("✅ [Collector] .env loaded")
-        else:
-            print("⚠️ [Collector] .env not found")
-        
-        # 크롤러 실행
-        print("🔧 [Collector] Importing run_full_pipeline...")
-        from core.extractor import run_full_pipeline
-        
-        print("🔧 [Collector] Calling run_full_pipeline...")
-        result = run_full_pipeline(schedule_name="즉시 수집")
-        print(f"✅ [Collector] Pipeline result: {result}")
-        
-        # 레지스트리 새로고침 (새 캐시 파일 인식)
+    def worker():
         try:
-            from src.core.article_registry import get_registry
-            registry = get_registry()
-            registry.refresh()
-        except Exception as e:
-            print(f"⚠️ [Collector] Registry refresh failed: {e}")
-        
-        # 결과 추출
-        collected = result.get('collected', 0) or result.get('total', 0)
-        extracted = result.get('extracted', 0)
-        
-        return jsonify({
-            'success': True,
-            'collected': collected,
-            'extracted': extracted,
-            'message': f'수집 {collected}개, 추출 {extracted}개 완료'
-        })
+            desk_dir, crawler_path = _setup_paths()
             
-    except ImportError as e:
-        print(f"❌ [Collector] Import error: {e}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({
-            'success': False,
-            'error': f'Crawler module import failed: {e}'
-        }), 500
-    except Exception as e:
-        print(f"❌ [Collector] Error: {e}")
-        import traceback
-        with open('debug_collector.log', 'a', encoding='utf-8') as f:
-            f.write(f"\n[{datetime.now()}] Error:\n")
-            traceback.print_exc(file=f)
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
+            # .env 로드
+            env_file = os.path.join(desk_dir, '.env')
+            if os.path.exists(env_file):
+                from dotenv import load_dotenv
+                load_dotenv(env_file)
+            
+            # Initial Status
+            progress_callback({'status': 'collecting', 'message': '🔍 링크 수집 시작...'})
+            
+            from core.extractor import run_full_pipeline
+            
+            # Run Pipeline with Callback
+            result = run_full_pipeline(schedule_name="즉시 수집", progress_callback=progress_callback)
+            
+            # Registry Refresh
+            try:
+                from src.core.article_registry import get_registry
+                registry = get_registry()
+                registry.refresh()
+            except Exception as e:
+                print(f"⚠️ [Collector] Registry refresh failed: {e}")
+            
+            # Final Result
+            collected = result.get('collected', 0)
+            extracted = result.get('extracted', 0)
+            
+            progress_callback({
+                'status': 'completed',
+                'collected': collected,
+                'extracted': extracted,
+                'message': f'완료: 수집 {collected}, 추출 {extracted}'
+            })
+            
+        except ImportError as e:
+            q.put({'status': 'error', 'error': f'Import Failed: {e}'})
+        except Exception as e:
+            q.put({'status': 'error', 'error': str(e)})
+            import traceback
+            traceback.print_exc()
+        finally:
+            q.put(None) # Sentinel to stop generator
+
+    # Start Worker Thread
+    thread = threading.Thread(target=worker)
+    thread.start()
+    
+    def generate():
+        """Queue에서 데이터를 꺼내 클라이언트로 스트리밍"""
+        while True:
+            item = q.get()
+            if item is None:
+                break
+            yield json.dumps(item) + '\n'
+            
+    return Response(stream_with_context(generate()), mimetype='application/json')
 
 
 @collector_bp.route('/api/collector/status', methods=['GET'])

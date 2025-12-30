@@ -61,7 +61,8 @@ class ArticleRegistry:
             return
         
         # 인덱스 구조
-        self._articles: Dict[str, ArticleInfo] = {}  # article_id -> ArticleInfo
+        self._articles: Dict[str, ArticleInfo] = {}  # article_id -> ArticleInfo (메타데이터)
+        self._full_data: Dict[str, Dict] = {}         # article_id -> 전체 JSON 데이터 (캐시)
         self._by_state: Dict[str, Set[str]] = {}     # state -> Set[article_id]
         self._by_url: Dict[str, str] = {}            # url_hash -> article_id
         self._by_edition: Dict[str, Set[str]] = {}   # edition_code -> Set[article_id]
@@ -103,7 +104,8 @@ class ArticleRegistry:
             self._cache_root = cache_root
         else:
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            self._cache_root = os.path.join(base_dir, 'cache')
+            env = os.getenv('ZND_ENV', 'dev')
+            self._cache_root = os.path.join(base_dir, 'cache', env)
         
         self._db = db_client
         
@@ -188,9 +190,11 @@ class ArticleRegistry:
                 articles = self._db.list_articles_by_state(state, limit=500) if self._db else []
                 
                 for data in articles:
-                    # 시간 체크
+                    # 시간 체크 (published_at 우선, 없으면 created_at)
+                    published_at = data.get('_original', {}).get('published_at', '')
                     created_at = data.get('_header', {}).get('created_at', '')
-                    if created_at and created_at < cutoff_iso:
+                    date_source = published_at or created_at
+                    if date_source and date_source < cutoff_iso:
                         continue  # 오래된 기사 스킵
                     
                     info = self._parse_article_data(data)
@@ -211,7 +215,17 @@ class ArticleRegistry:
                             
                             self._stats['duplicates_merged'] += 1
                         else:
+                            # Firestore에만 있는 데이터 → 로컬에도 저장
                             info.firestore_synced = True
+                            
+                            # 전체 데이터 캐시에 저장 (메모리)
+                            self._full_data[info.article_id] = data
+                            
+                            # 로컬 캐시에 저장
+                            cache_path = self._save_to_local_cache(data, info.article_id)
+                            if cache_path:
+                                info.cache_path = cache_path
+                            
                             self._register_article(info, source='firestore')
                             self._stats['firestore_loaded'] += 1
                             
@@ -329,13 +343,45 @@ class ArticleRegistry:
             self._by_state[new_state] = set()
         self._by_state[new_state].add(info.article_id)
     
+    def _save_to_local_cache(self, data: Dict, article_id: str) -> Optional[str]:
+        """Firestore 데이터를 로컬 캐시에 저장"""
+        try:
+            # 날짜 폴더 결정 (published_at 우선, 없으면 created_at, 최후에 오늘)
+            published_at = data.get('_original', {}).get('published_at', '')
+            created_at = data.get('_header', {}).get('created_at', '')
+            
+            date_source = published_at or created_at
+            if date_source:
+                date_str = date_source.split('T')[0]
+            else:
+                date_str = datetime.now().strftime('%Y-%m-%d')
+            
+            # 캐시 경로 생성
+            cache_folder = os.path.join(self._cache_root, date_str)
+            os.makedirs(cache_folder, exist_ok=True)
+            
+            cache_path = os.path.join(cache_folder, f'{article_id}.json')
+            
+            with open(cache_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            
+            print(f"   💾 [Registry] Saved to local: {cache_path}")
+            return cache_path
+        except Exception as e:
+            print(f"   ⚠️ [Registry] Local save failed: {e}")
+            return None
+    
     # =========================================================================
     # Query Operations
     # =========================================================================
     
     def get(self, article_id: str) -> Optional[ArticleInfo]:
-        """기사 조회 (ID로)"""
+        """기사 메타데이터 조회 (ID로)"""
         return self._articles.get(article_id)
+    
+    def get_full_data(self, article_id: str) -> Optional[Dict[str, Any]]:
+        """전체 기사 데이터 반환 (메모리 캐시)"""
+        return self._full_data.get(article_id)
 
     def find_and_register(self, article_id: str) -> Optional[ArticleInfo]:
         """
@@ -351,7 +397,8 @@ class ArticleRegistry:
             cache_root = self._cache_root
         else:
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            cache_root = os.path.join(base_dir, 'cache')
+            env = os.getenv('ZND_ENV', 'dev')
+            cache_root = os.path.join(base_dir, 'cache', env)
             
         if not os.path.exists(cache_root):
             return None
@@ -492,6 +539,9 @@ class ArticleRegistry:
         if info:
             self._register_article(info, source='new')
             
+            # 전체 데이터 캐시에 저장 (메모리)
+            self._full_data[info.article_id] = data
+            
             # Firestore에도 저장 (수집 = 상태 변화 = 저장)
             if self._db:
                 try:
@@ -570,8 +620,10 @@ class ArticleRegistry:
         
         full_data = None
         
-        # 1. Load Full Data (Local prioritized)
-        if info.cache_path and os.path.exists(info.cache_path):
+        # 1. Load Full Data (Memory Priority -> Local File)
+        if info.article_id in self._full_data:
+             full_data = self._full_data[info.article_id]
+        elif info.cache_path and os.path.exists(info.cache_path):
             try:
                 with open(info.cache_path, 'r', encoding='utf-8') as f:
                     full_data = json.load(f)
@@ -620,6 +672,9 @@ class ArticleRegistry:
             'at': timestamp,
             'by': by
         })
+
+        # [Important] Update Memory Cache
+        self._full_data[info.article_id] = full_data
         
         # 3. Save to Local (Atomic Write Update)
         try:
@@ -640,14 +695,6 @@ class ArticleRegistry:
                 return False
                 
         return True
-
-    def _update_local_cache(self, article_id: str, new_state: str, by: str, timestamp: str) -> bool:
-        """(Deprecated) Use _save_full_state instead"""
-        return False
-    
-    def _update_firestore(self, article_id: str, new_state: str, by: str, timestamp: str) -> bool:
-        """(Deprecated) Use _save_full_state instead"""
-        return False
     
     # =========================================================================
     # Utility

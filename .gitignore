@@ -55,3 +55,4 @@ web/.next/dev/
 *.swo
 .DS_Store
 Thumbs.db
+desk/cache/

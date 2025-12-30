@@ -501,9 +501,15 @@ const PublisherV2 = {
             const edName = ed.name || ed.edition_name || 'N/A';
             const edDate = (ed.updated_at || ed.published_at || '').substring(0, 10);
             const edCount = ed.count || ed.article_count || 0;
+            const status = ed.status || 'preview'; // Get status, default to 'preview'
+            const statusBadge = status === 'released'
+                ? '<span class="badge-released">🟢 Released</span>'
+                : '<span class="badge-preview">🟠 Preview</span>';
+
+            const statusClass = status === 'released' ? 'status-released' : 'status-preview';
 
             return `
-            <div class="edition-item ${this.state.selectedEditionCode === edCode ? 'active' : ''}" 
+            <div class="edition-item ${this.state.selectedEditionCode === edCode ? 'active' : ''} ${statusClass}" 
                  onclick="PublisherV2.goToHistoryEdition('${edCode}')">
                 <div class="edition-header">
                     <span class="edition-name">${edName}</span>
@@ -511,6 +517,9 @@ const PublisherV2 = {
                 </div>
                 <div class="edition-meta">
                     Code: ${edCode} | Articles: ${edCount}
+                </div>
+                <div class="edition-status" style="margin-top: 4px; font-size: 11px;">
+                    ${statusBadge}
                 </div>
             </div>
         `;

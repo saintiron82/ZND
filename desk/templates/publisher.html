@@ -78,7 +78,8 @@
                             </div>
                         </div>
                         <div class="labeled-input" style="display: flex; align-items: flex-end;">
-                            <button id="btn-publish-now" type="button" class="btn btn-primary">📢 발행 (Publish)</button>
+                            <button id="btn-publish-now" type="button" class="btn btn-primary">📢 Preview 발행
+                                (Draft)</button>
                         </div>
                     </div>
                 </div>
@@ -320,6 +321,50 @@
             border-radius: 4px;
             font-size: 0.8rem;
         }
+
+        .badge-preview {
+            background: transparent;
+            color: #ff9800;
+            border: 1px solid #ff9800;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-released {
+            background: transparent;
+            color: #4caf50;
+            border: 1px solid #4caf50;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Status Border Indicators */
+        /* [Fix] Explicitly set background to transparent to avoid conflict with generic .status-released class */
+        .edition-item.status-preview {
+            border-left: 3px solid #ff9800;
+            background: transparent;
+        }
+
+        .edition-item.status-released {
+            border-left: 3px solid #4caf50;
+            background: transparent;
+        }
+
+        /* Ensure active item background is visible but keeps status border */
+        .edition-item.active {
+            background: var(--bg-active) !important;
+            /* Force active background */
+            /* border-left is handled by status classes if present */
+        }
+
+        /* Fallback for items without status class if any */
+        .edition-item.active:not(.status-preview):not(.status-released) {
+            border-left: 4px solid var(--accent-primary);
+        }
     </style>
 
     <script src="/static/js/constants.js"></script>
@@ -328,6 +373,7 @@
     <script src="/static/js/desk-viewer.js?v=20241229"></script>
     <script src="/static/js/desk-classification.js?v=20241229"></script>
     <script src="/static/js/desk-publisher.js?v=20241229"></script>
+    <script src="/static/js/desk-collector.js?v={{ now_ts }}"></script>
     <script src="/static/js/publisher_v2.js?ver={{ now_ts }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

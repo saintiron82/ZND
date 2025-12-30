@@ -21,35 +21,127 @@ async function collectNow() {
     showCollectionProgress();
 
     try {
-        const res = await fetch('/api/collector/run', { method: 'POST' });
-        const data = await res.json();
+        const response = await fetch('/api/collector/run', { method: 'POST' });
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
 
-        hideCollectionProgress();
+        const logEl = document.getElementById('collection-log');
+        const progressBar = document.querySelector('.modal-progress-fill');
+        const descEl = document.querySelector('.modal-desc');
 
-        if (data.success) {
-            // Show success message briefly
-            showCollectionResult(`✅ 수집 완료! (수집: ${data.collected}건, 추출: ${data.extracted}건)`);
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-            // Auto-refresh list after 1 second
-            setTimeout(() => {
-                if (typeof loadArticles === 'function') {
-                    loadArticles(); // Board
-                } else if (typeof PublisherV2 !== 'undefined' && PublisherV2.loadDraftArticles) {
-                    PublisherV2.loadDraftArticles(); // Publisher
-                } else if (window.location.pathname === '/board' || window.location.pathname === '/analyzer') {
-                    window.location.reload();
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop(); // Keep incomplete line
+
+            for (const line of lines) {
+                if (!line.trim()) continue;
+                try {
+                    const msg = JSON.parse(line);
+
+                    if (msg.status === 'error') {
+                        throw new Error(msg.error);
+                    }
+
+                    if (msg.status === 'collecting') {
+                        updateCollectionStep('collect');
+                        if (msg.message && descEl) descEl.textContent = msg.message;
+
+                        // Log (Also show in log box)
+                        if (msg.message && logEl) {
+                            const p = document.createElement('div');
+                            p.className = 'log-line';
+                            p.textContent = msg.message; // collecting 단계는 current/total이 없을 수 있음
+                            logEl.appendChild(p);
+                            logEl.scrollTop = logEl.scrollHeight;
+                        }
+                    }
+                    else if (msg.status === 'extracting') {
+                        updateCollectionStep('analyze'); // UI상 '분석' 단계로 매핑
+                        if (msg.message && descEl) descEl.textContent = msg.message;
+
+                        // Progress Bar Update
+                        if (msg.total > 0 && progressBar) {
+                            const percent = Math.round((msg.current / msg.total) * 100);
+                            progressBar.style.width = `${percent}%`;
+                        }
+
+                        // Log
+                        if (msg.message && logEl) {
+                            const p = document.createElement('div');
+                            p.className = 'log-line';
+                            p.textContent = `[${msg.current}/${msg.total}] ${msg.message}`;
+                            logEl.appendChild(p);
+                            logEl.scrollTop = logEl.scrollHeight;
+                        }
+                    }
+                    else if (msg.status === 'completed') {
+                        updateCollectionStep('save');
+                        if (progressBar) progressBar.style.width = '100%';
+                        if (descEl) descEl.textContent = msg.message;
+
+                        // Short delay then finish
+                        await new Promise(r => setTimeout(r, 1000));
+
+                        hideCollectionProgress();
+                        showCollectionResult(`✅ 수집 완료! (수집: ${msg.collected}건, 추출: ${msg.extracted}건)`);
+
+                        setTimeout(() => {
+                            if (typeof loadArticles === 'function') loadArticles();
+                            else if (window.location.reload) window.location.reload();
+                        }, 1000);
+                        return; // Exit function
+                    }
+                } catch (e) {
+                    console.error('JSON Parse Error:', e);
                 }
-            }, 1000);
-        } else {
-            showCollectionResult('❌ 수집 실패: ' + data.error, true);
+            }
         }
     } catch (e) {
         hideCollectionProgress();
-        showCollectionResult('❌ 네트워크 오류: ' + e.message, true);
+        showCollectionResult('❌ 오류: ' + e.message, true);
     } finally {
         btn.innerHTML = originalText;
         btn.disabled = false;
     }
+}
+
+/**
+ * 단계 표시 업데이트 (UI 재생성 없이 상태만 변경)
+ */
+function updateCollectionStep(step) {
+    const steps = ['collect', 'analyze', 'save'];
+    const icons = {
+        'collect': '📥',
+        'analyze': '🤖',
+        'save': '💾'
+    };
+    const titles = {
+        'collect': '뉴스 수집 중...',
+        'analyze': '콘텐츠 추출 중...',
+        'save': '저장 중...'
+    };
+
+    const container = document.querySelector('.modal-steps');
+    if (!container) return; // UI가 없으면 무시
+
+    // Update active class in steps
+    const spans = container.querySelectorAll('span:not(.arrow)');
+    steps.forEach((s, idx) => {
+        if (spans[idx]) {
+            spans[idx].className = s === step ? 'active' : '';
+        }
+    });
+
+    // Update Icon & Title
+    const iconEl = document.querySelector('.modal-icon');
+    const titleEl = document.querySelector('.modal-title');
+    if (iconEl && icons[step]) iconEl.textContent = icons[step];
+    if (titleEl && titles[step]) titleEl.textContent = titles[step];
 }
 
 /**
@@ -60,9 +152,9 @@ function showCollectionProgress(step = 'collect') {
     hideCollectionProgress();
 
     const steps = {
-        'collect': { icon: '📥', title: '뉴스 수집 중...', desc: '대상 사이트에서 기사를 가져오고 있습니다' },
-        'analyze': { icon: '🤖', title: 'AI 분석 중...', desc: '기사 내용을 분석하고 있습니다' },
-        'save': { icon: '💾', title: '저장 중...', desc: '데이터를 저장하고 있습니다' },
+        'collect': { icon: '📥', title: '뉴스 수집 중...', desc: '대상 사이트 검색 중...' },
+        'analyze': { icon: '🤖', title: '콘텐츠 추출 중...', desc: '기사 본문을 가져오고 있습니다' },
+        'save': { icon: '💾', title: '완료 처리 중...', desc: '데이터 저장 중...' },
     };
 
     const current = steps[step] || steps['collect'];
@@ -78,10 +170,11 @@ function showCollectionProgress(step = 'collect') {
                 <div class="modal-progress-fill"></div>
             </div>
             <div class="modal-desc">${current.desc}</div>
+            <div id="collection-log" class="modal-log-box"></div> 
             <div class="modal-steps">
                 <span class="${step === 'collect' ? 'active' : ''}">📥 수집</span>
                 <span class="arrow">→</span>
-                <span class="${step === 'analyze' ? 'active' : ''}">🤖 분석</span>
+                <span class="${step === 'analyze' ? 'active' : ''}">🤖 추출</span>
                 <span class="arrow">→</span>
                 <span class="${step === 'save' ? 'active' : ''}">💾 저장</span>
             </div>
@@ -89,133 +182,47 @@ function showCollectionProgress(step = 'collect') {
     `;
 
     // Add styles
-    const style = document.createElement('style');
-    style.id = 'collection-progress-style';
-    style.textContent = `
-        #collection-progress-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .collection-modal-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-        }
-        .collection-modal-box {
-            position: relative;
-            background: var(--bg-secondary, #1a1a2e);
-            border: 2px solid var(--accent-primary, #00d4ff);
-            border-radius: 16px;
-            padding: 40px 60px;
-            text-align: center;
-            box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
-            animation: modalFadeIn 0.3s ease;
-        }
-        @keyframes modalFadeIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .modal-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            animation: bounce 1s ease infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .modal-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--text-primary, #fff);
-            margin-bottom: 20px;
-        }
-        .modal-progress-bar {
-            width: 300px;
-            height: 8px;
-            background: var(--bg-tertiary, #252545);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 0 auto 16px;
-        }
-        .modal-progress-fill {
-            width: 30%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary, #00d4ff), var(--accent-secondary, #ff6b6b));
-            border-radius: 4px;
-            animation: progressPulse 1.5s ease-in-out infinite;
-        }
-        @keyframes progressPulse {
-            0% { width: 20%; }
-            50% { width: 80%; }
-            100% { width: 20%; }
-        }
-        .modal-desc {
-            font-size: 14px;
-            color: var(--text-secondary, #888);
-            margin-bottom: 24px;
-        }
-        .modal-steps {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--text-tertiary, #666);
-        }
-        .modal-steps span.active {
-            color: var(--accent-primary, #00d4ff);
-            font-weight: bold;
-        }
-        .modal-steps .arrow {
-            color: var(--text-tertiary, #666);
-        }
-        .collection-result-modal {
-            position: relative;
-            background: var(--bg-secondary, #1a1a2e);
-            border: 2px solid var(--accent-success, #00ff88);
-            border-radius: 16px;
-            padding: 40px 60px;
-            text-align: center;
-            box-shadow: 0 8px 40px rgba(0, 255, 136, 0.4);
-            animation: modalFadeIn 0.3s ease;
-        }
-        .collection-result-modal.error {
-            border-color: var(--accent-error, #ff4444);
-            box-shadow: 0 8px 40px rgba(255, 68, 68, 0.4);
-        }
-        .result-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-        .result-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--text-primary, #fff);
-        }
-    `;
+    if (!document.getElementById('collection-progress-style')) {
+        const style = document.createElement('style');
+        style.id = 'collection-progress-style';
+        style.textContent = `
+            #collection-progress-overlay {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+                display: flex; align-items: center; justify-content: center;
+            }
+            .collection-modal-backdrop {
+                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px);
+            }
+            .collection-modal-box {
+                position: relative; background: var(--bg-secondary, #1a1a2e);
+                border: 2px solid var(--accent-primary, #00d4ff);
+                border-radius: 16px; padding: 40px 60px; text-align: center;
+                box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
+                width: 500px; max-width: 90%;
+            }
+            .modal-log-box {
+                width: 100%; height: 120px; background: rgba(0,0,0,0.3);
+                border-radius: 8px; margin-bottom: 20px; padding: 10px;
+                text-align: left; overflow-y: auto; font-family: monospace; font-size: 12px; color: #aaa;
+            }
+            .log-line { margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 2px; }
+            .modal-icon { font-size: 48px; margin-bottom: 16px; animation: bounce 1s ease infinite; }
+            @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+            .modal-title { font-size: 24px; font-weight: bold; color: var(--text-primary, #fff); margin-bottom: 20px; }
+            .modal-progress-bar { width: 100%; height: 8px; background: var(--bg-tertiary, #252545); border-radius: 4px; overflow: hidden; margin: 0 auto 16px; }
+            .modal-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-primary, #00d4ff), var(--accent-secondary, #ff6b6b)); transition: width 0.3s ease; }
+            .modal-desc { font-size: 14px; color: var(--text-secondary, #888); margin-bottom: 24px; min-height: 20px; }
+            .modal-steps { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--text-tertiary, #666); }
+            .modal-steps span.active { color: var(--accent-primary, #00d4ff); font-weight: bold; }
+        `;
+        document.head.appendChild(style);
+    }
 
-    document.head.appendChild(style);
     document.body.appendChild(overlay);
 }
 
-/**
- * 수집 단계 업데이트
- */
-function updateCollectionStep(step) {
-    showCollectionProgress(step);
-}
+
 
 /**
  * 수집 프로그래스바 숨김

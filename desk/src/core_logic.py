@@ -31,7 +31,8 @@ def get_kst_now() -> str:
 # Base directories (relative to supplier folder)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-CACHE_DIR = os.path.join(BASE_DIR, 'cache')
+ZND_ENV = os.getenv('ZND_ENV', 'dev')  # 환경별 캐시 분리
+CACHE_DIR = os.path.join(BASE_DIR, 'cache', ZND_ENV)
 CONFIG_DIR = os.path.join(BASE_DIR, 'config')
 
 # Configuration file path
@@ -930,7 +931,7 @@ async def check_url_quality(urls: list) -> list:
     return results
 
 
-def find_duplicate_files(data_dir: str = DATA_DIR) -> dict:
+def find_duplicate_files(data_dir: str = None) -> dict:
     """
     Find duplicate data files across all date folders based on URL.
     
@@ -940,6 +941,9 @@ def find_duplicate_files(data_dir: str = DATA_DIR) -> dict:
     Returns:
         Dict containing stats and duplicates list
     """
+    if data_dir is None:
+        data_dir = DATA_DIR
+
     url_to_files = {}
     
     if os.path.exists(data_dir):

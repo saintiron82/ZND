@@ -40,7 +40,7 @@ def save_to_cache(url, content):
     return _core_save_to_cache(url, content)
 
 
-def extract_content(links: list = None) -> dict:
+def extract_content(links: list = None, progress_callback=None) -> dict:
     """
     수집된 링크에서 콘텐츠를 추출합니다.
     links가 없으면 자동으로 collect_links() 호출
@@ -78,6 +78,15 @@ def extract_content(links: list = None) -> dict:
                     continue
                 
                 try:
+                    if progress_callback:
+                        progress_callback({
+                            'status': 'extracting',
+                            'current': extracted_count + skipped_count + failed_count + 1,
+                            'total': len(links),
+                            'url': url,
+                            'message': f'Processing: {source_id}'
+                        })
+
                     content = await crawler.process_url(url)
                     if content and len(content.get('text', '')) >= 200:
                         content['source_id'] = source_id
@@ -121,7 +130,7 @@ def extract_content(links: list = None) -> dict:
         return {'success': False, 'error': str(e)}
 
 
-def run_full_pipeline(schedule_name: str = "Scheduled"):
+def run_full_pipeline(schedule_name: str = "Scheduled", progress_callback=None):
     """
     전체 파이프라인 실행: Collect -> Extract -> Discord 알림
     스케줄러에서 호출용
@@ -143,7 +152,7 @@ def run_full_pipeline(schedule_name: str = "Scheduled"):
     }
     
     # 1. Collect
-    collect_result = collect_links()
+    collect_result = collect_links(progress_callback=progress_callback)
     final_result['collected'] = collect_result.get('total', 0)
     
     if not collect_result['success'] or collect_result['total'] == 0:
@@ -160,7 +169,7 @@ def run_full_pipeline(schedule_name: str = "Scheduled"):
         return collect_result
     
     # 2. Extract
-    extract_result = extract_content(collect_result['links'])
+    extract_result = extract_content(collect_result['links'], progress_callback=progress_callback)
     final_result['extracted'] = extract_result.get('extracted', 0)
     final_result['cached'] = extract_result.get('extracted', 0)  # 추출된 것 = 캐시됨
     final_result['failed'] = extract_result.get('failed', 0)

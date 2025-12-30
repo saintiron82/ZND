@@ -30,7 +30,7 @@ from firestore_client import FirestoreClient
 import desk_crawler as desk_crawler
 
 
-def collect_links() -> dict:
+def collect_links(progress_callback=None) -> dict:
     """
     모든 활성 타겟에서 새 링크를 수집합니다.
     
@@ -43,13 +43,27 @@ def collect_links() -> dict:
     try:
         # load_targets returns (settings, targets_list) tuple
         settings, targets = desk_crawler.load_targets()
+        time_condition = settings.get('hours', 24)
         all_links = []
         
         # 캐시 체크용 함수
         from src.core_logic import load_from_cache
         
-        for target in targets:
-            print(f"📡 [Collect] Fetching from target: {target.get('id')} ({target.get('url')})")
+        for idx, target in enumerate(targets):
+            target_id = target.get('id')
+            target_name = target.get('name', target_id) # 이름이 있으면 이름 사용
+            
+            # UX를 위해 검색 정보 노출 (UI에서 볼 수 있도록 시간차 둠)
+            if progress_callback:
+                progress_callback({
+                    'status': 'collecting',
+                    'message': f"🔍 [{idx+1}/{len(targets)}] '{target_name}' 검색 중... ({time_condition}h)"
+                })
+            
+            # 메시지가 UI에 렌더링될 시간을 줌
+            time.sleep(0.5)
+
+            print(f"📡 [Collect] Fetching from target: {target_id} ({target.get('url')})")
             links = desk_crawler.fetch_links(target)
             print(f"   found {len(links)} raw links")
             

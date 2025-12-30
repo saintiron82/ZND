@@ -70,6 +70,11 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                     <span className="text-teal-500">Z</span>eroEcho
                     <span className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-teal-500 inline-flex self-end mb-1 md:mb-2"></span>
                     <span className="font-light italic text-muted-foreground tracking-normal font-serif text-2xl md:text-4xl">Daily</span>
+                    {process.env.NODE_ENV === 'development' && (
+                        <span className="ml-2 text-xs md:text-lg text-teal-500 font-bold border border-teal-500 rounded px-1 self-start mt-1 select-none">
+                            dev
+                        </span>
+                    )}
                 </h1>
 
                 <div className="flex flex-col items-center mt-2">
@@ -85,8 +90,8 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                         <button
                             onClick={toggleHelp}
                             className={`flex items-center justify-center rounded-full p-1 transition-all duration-300 focus:outline-none shadow-sm ${isHelpOpen
-                                    ? 'bg-teal-600 text-white ring-2 ring-teal-200 dark:ring-teal-800 scale-110'
-                                    : 'bg-teal-500 text-white hover:bg-teal-600 hover:scale-105 hover:shadow-md animate-[pulse_3s_ease-in-out_infinite]'
+                                ? 'bg-teal-600 text-white ring-2 ring-teal-200 dark:ring-teal-800 scale-110'
+                                : 'bg-teal-500 text-white hover:bg-teal-600 hover:scale-105 hover:shadow-md animate-[pulse_3s_ease-in-out_infinite]'
                                 }`}
                             aria-label="What is ZS?"
                         >

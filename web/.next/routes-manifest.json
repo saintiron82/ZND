@@ -53,6 +53,12 @@
       "namedRegex": "^/api/debug/schema(?:/)?$"
     },
     {
+      "page": "/api/ping",
+      "regex": "^/api/ping(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/ping(?:/)?$"
+    },
+    {
       "page": "/api/publications/check",
       "regex": "^/api/publications/check(?:/)?$",
       "routeKeys": {},

@@ -129,16 +129,18 @@ const PublisherV2 = {
 
         let nextNum = 1;
 
-        if (latestEdition && (latestEdition.code || latestEdition.edition_code)) {
-            const editionCode = latestEdition.code || latestEdition.edition_code;
+        if (latestEdition && (latestEdition.edition_code || latestEdition.code)) {
+            const editionCode = latestEdition.edition_code || latestEdition.code;
             const parts = editionCode.split('_');
 
             // Expected format check (2 parts: YYMMDD, N)
             // e.g. 251227_5
             if (parts.length === 2) {
                 const editionDateStr = parts[0];
+                // 최근 발행의 index 직접 사용 (파싱보다 신뢰성 높음)
+                const lastIndex = latestEdition.index || parseInt(parts[1]) || 1;
                 if (editionDateStr === dateStr) {
-                    nextNum = parseInt(parts[1]) + 1;
+                    nextNum = lastIndex + 1;
                 }
             }
         }
@@ -497,10 +499,11 @@ const PublisherV2 = {
         const headerHtml = `<div class="edition-list-header">Current Env: <span class="badge-${envName}">${envName}</span></div>`;
 
         const itemsHtml = this.state.historyEditions.map(ed => {
-            const edCode = ed.code || ed.edition_code || 'N/A';
-            const edName = ed.name || ed.edition_name || 'N/A';
+            const edCode = ed.edition_code || ed.code || 'N/A';
+            const edName = ed.edition_name || ed.name || 'N/A';
             const edDate = (ed.updated_at || ed.published_at || '').substring(0, 10);
-            const edCount = ed.count || ed.article_count || 0;
+            const edCount = ed.article_count || ed.count || 0;
+            const edIndex = ed.index || 1;  // 호수
             const status = ed.status || 'preview'; // Get status, default to 'preview'
             const statusBadge = status === 'released'
                 ? '<span class="badge-released">🟢 Released</span>'
@@ -565,6 +568,13 @@ const PublisherV2 = {
         const container = document.getElementById('history-detail');
         if (!container) return;
 
+        // 현재 선택된 회차 정보 가져오기
+        const currentEdition = this.state.historyEditions.find(
+            ed => (ed.edition_code || ed.code) === this.state.selectedEditionCode
+        );
+        const editionName = currentEdition?.edition_name || currentEdition?.name || '(이름 없음)';
+        const editionIndex = currentEdition?.index || 1;
+
         const articlesHtml = this.state.historyArticles.map((art, idx) => {
             // Use common card renderer, allowing default onClick (showArticleRaw)
             return renderArticleCard(art, {
@@ -577,17 +587,82 @@ const PublisherV2 = {
         }).join('');
 
         container.innerHTML = `
-            <div class="detail-header" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <h3>${this.state.selectedEditionCode} 상세</h3>
-                <div class="actions">
-                     <button class="btn btn-danger" style="margin-right: 8px;" onclick="PublisherV2.deleteCurrentEdition()">🗑️ 파기 (Delete)</button>
-                     <button class="btn btn-success" onclick="PublisherV2.releaseCurrentEdition()">🌐 전체 공개 (Release)</button>
+            <div class="detail-header" style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3>${this.state.selectedEditionCode} 상세</h3>
+                    <div class="actions">
+                         <button class="btn" style="background: #3498db; margin-right: 8px;" onclick="PublisherV2.editCurrentEdition()">✏️ 수정</button>
+                         <button class="btn btn-danger" style="margin-right: 8px;" onclick="PublisherV2.deleteCurrentEdition()">🗑️ 파기 (Delete)</button>
+                         <button class="btn btn-success" onclick="PublisherV2.releaseCurrentEdition()">🌐 전체 공개 (Release)</button>
+                    </div>
+                </div>
+                <div class="edition-info" style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 6px; font-size: 14px;">
+                    <span style="margin-right: 20px;"><strong>호수:</strong> ${editionName}</span>
+                    <span style="margin-right: 20px;"><strong>인덱스:</strong> ${editionIndex}</span>
+                    <span><strong>기사 수:</strong> ${this.state.historyArticles.length}개</span>
                 </div>
             </div>
             <div class="kanban-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
                 ${articlesHtml}
             </div>
         `;
+    },
+
+    async editCurrentEdition() {
+        const code = this.state.selectedEditionCode;
+        if (!code) return;
+
+        // 현재 회차 정보 가져오기
+        const currentEdition = this.state.historyEditions.find(
+            ed => (ed.edition_code || ed.code) === code
+        );
+
+        const currentName = currentEdition?.edition_name || currentEdition?.name || '';
+        const currentIndex = currentEdition?.index || 1;
+
+        // 프롬프트로 새 값 입력받기
+        const newName = prompt('회차 이름을 입력하세요:', currentName);
+        if (newName === null) return; // 취소됨
+
+        const newIndexStr = prompt('발행 번호(index)를 입력하세요:', String(currentIndex));
+        if (newIndexStr === null) return; // 취소됨
+
+        const newIndex = parseInt(newIndexStr, 10);
+        if (isNaN(newIndex) || newIndex < 1) {
+            alert('유효한 번호를 입력하세요.');
+            return;
+        }
+
+        // 변경사항이 없으면 종료
+        if (newName === currentName && newIndex === currentIndex) {
+            alert('변경사항이 없습니다.');
+            return;
+        }
+
+        this.showLoading();
+        try {
+            const result = await fetchAPI(`/api/publisher/edition/${code}`, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    edition_name: newName,
+                    index: newIndex
+                })
+            });
+
+            if (result.success) {
+                alert(`수정 완료! (${Object.keys(result.updated).join(', ')})`);
+                // 목록 새로고침
+                await this.loadHistoryEditions();
+                // 상세 새로고침
+                await this.selectEdition(code);
+            } else {
+                alert('Error: ' + (result.error || 'Unknown error'));
+            }
+        } catch (e) {
+            alert('수정 중 오류: ' + e.message);
+        } finally {
+            this.hideLoading();
+        }
     },
 
     async deleteCurrentEdition() {

@@ -384,6 +384,82 @@ def list_editions():
     })
 
 
+@publisher_bp.route('/api/publisher/edition/<edition_code>', methods=['PATCH'])
+def update_edition(edition_code):
+    """
+    발행 정보 수정 (호, 이름, 인덱스 등)
+    
+    Body:
+        edition_name: 새 회차 이름 (예: "제2호")
+        index: 새 발행 번호 (예: 2)
+    
+    Returns:
+        수정된 발행 정보
+    """
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({'success': False, 'error': 'No data provided'}), 400
+    
+    try:
+        # 1. 기존 발행 문서 조회
+        pub_doc = manager.db.get_publication(edition_code)
+        if not pub_doc:
+            return jsonify({'success': False, 'error': f'Edition not found: {edition_code}'}), 404
+        
+        # 2. 허용된 필드만 업데이트
+        allowed_fields = ['edition_name', 'index']
+        updated_fields = {}
+        
+        for field in allowed_fields:
+            if field in data:
+                pub_doc[field] = data[field]
+                updated_fields[field] = data[field]
+        
+        if not updated_fields:
+            return jsonify({'success': False, 'error': 'No valid fields to update'}), 400
+        
+        # 3. 업데이트 시간 기록
+        now = datetime.now(timezone.utc).isoformat()
+        pub_doc['updated_at'] = now
+        
+        # 4. 발행 문서 저장
+        manager.db.save_publication(edition_code, pub_doc)
+        
+        # 5. _meta 동기화 (issues 배열 업데이트)
+        meta = manager.db.get_publications_meta()
+        if meta:
+            issues = meta.get('issues', [])
+            for i, issue in enumerate(issues):
+                if issue.get('edition_code') == edition_code or issue.get('code') == edition_code:
+                    # 변경된 필드 반영
+                    for field, value in updated_fields.items():
+                        issues[i][field] = value
+                        # 레거시 호환성: edition_name -> name
+                        if field == 'edition_name':
+                            issues[i]['name'] = value
+                    issues[i]['updated_at'] = now
+                    break
+            
+            meta['issues'] = issues
+            meta['latest_updated_at'] = now
+            manager.db.update_publications_meta(meta)
+        
+        print(f"✅ [Publisher] Edition updated: {edition_code} -> {updated_fields}")
+        
+        return jsonify({
+            'success': True,
+            'edition_code': edition_code,
+            'updated': updated_fields,
+            'updated_at': now
+        })
+        
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @publisher_bp.route('/api/publisher/edition/<edition_code>', methods=['GET'])
 def get_edition_detail(edition_code):
     """

@@ -882,26 +882,23 @@ class FirestoreClient:
         # edition_code 기준 내림차순 정렬 (발행순 유지)
         issues.sort(key=lambda x: x.get('edition_code') or x.get('code', ''), reverse=True)
         
-        # API 응답 형식에 맞게 변환 (id 필드 추가, 호환성 보장)
+        # API 응답 형식에 맞게 변환 (새 스키마 우선)
         result = []
         for iss in issues:
             code = iss.get('edition_code') or iss.get('code')  # edition_code 우선
             name = iss.get('edition_name') or iss.get('name')  # edition_name 우선
-            count = iss.get('count', 0)
-            if 'article_count' in iss: # fallback if count missing
-                 count = iss.get('article_count', count)
+            count = iss.get('article_count') or iss.get('count', 0)
+            index = iss.get('index', 1)  # 호수
 
             result.append({
-                'id': code,
-                'code': code,
                 'edition_code': code,
-                'name': name,
                 'edition_name': name,
-                'count': count,
+                'index': index,  # 호수 (새 필드)
                 'article_count': count,
+                'published_at': iss.get('published_at'),
                 'updated_at': iss.get('updated_at'),
                 'status': iss.get('status', 'preview'),
-                'schema_version': iss.get('schema_version')
+                'schema_version': iss.get('schema_version', '3.1')
             })
         
         print(f"📋 [Firestore] Loaded {len(result)} issues from _meta (1 READ)")

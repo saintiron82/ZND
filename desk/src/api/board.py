@@ -498,7 +498,7 @@ def column_action():
                             print(f"      ✅ 업데이트됨")
                             
                             # 자동 상태 복원: 데이터 기반으로 최적 상태 결정
-                            from src.core.article_state import get_best_restorable_state, ArticleState
+                            from src.core.article_state import get_best_restorable_state
                             current_state = art.get('_header', {}).get('state') or art.get('state')
                             best_state = get_best_restorable_state(art)
                             

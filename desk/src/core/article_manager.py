@@ -365,14 +365,23 @@ class ArticleManager:
             pub_doc = self.db.get_publication(edition_code)
             
             if not pub_doc:
+                # Parse index from edition_code (YYMMDD_INDEX format)
+                edition_index = 1
+                if '_' in edition_code:
+                    try:
+                        edition_index = int(edition_code.split('_')[1])
+                    except (ValueError, IndexError):
+                        edition_index = 1
+                
                 # Initialize new publication document
                 pub_doc = {
                     'edition_code': edition_code,
                     'edition_name': edition_name,
+                    'index': edition_index,  # 발행 번호 (누락 수정)
                     'published_at': now,
                     'updated_at': now,
                     'status': 'preview',
-                    'schema_version': os.getenv('SCHEMA_VERSION', '3.0'),
+                    'schema_version': '3.1',  # 하드코딩 (환경변수 파싱 오류 방지)
                     'article_count': 0,
                     'article_ids': [],
                     'articles': [],
@@ -411,15 +420,12 @@ class ArticleManager:
                 issue_summary = {
                     'edition_code': edition_code,
                     'edition_name': edition_name,
+                    'index': pub_doc.get('index', 1),  # 호수 (= 발행 번호)
                     'published_at': pub_doc['published_at'],
                     'updated_at': now,
                     'article_count': pub_doc['article_count'],
                     'status': pub_doc.get('status', 'preview'),
-                    'schema_version': os.getenv('SCHEMA_VERSION', '3.0'),
-                    # Legacy fields for compatibility if needed, but user emphasized NEW schema structure
-                    'code': edition_code,
-                    'name': edition_name,
-                    'count': pub_doc['article_count']
+                    'schema_version': '3.1'  # 하드코딩 (환경변수 파싱 오류 방지)
                 }
                 
                 if existing_idx >= 0:

@@ -19,14 +19,8 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
         return `${year}년 ${month}월 ${day}일 ${weekday}`;
     };
 
-    // 회차 표시 (edition_name이 "1호" 형태면 "제 1호"로 변환)
-    const formatEdition = (name: string) => {
-        if (name.endsWith('호')) {
-            const num = name.replace('호', '');
-            return `제 ${num}호`;
-        }
-        return name;
-    };
+    // 회차 표시 - edition_name은 백엔드에서 이미 완성된 형태("제1호")로 저장됨
+    const formatEdition = (name: string) => name;
 
     return (
         <header

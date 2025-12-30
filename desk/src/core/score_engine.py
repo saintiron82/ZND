@@ -62,8 +62,12 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
     Calculate Impact Score using V1.0 formula.
     """
     calculations = is_analysis.get('Calculations', {})
+    
+    # [FIX] IW_Analysis is always inside Calculations
     iw_analysis = calculations.get('IW_Analysis', {})
-    ie_analysis = calculations.get('IE_Analysis', {})
+    
+    # [FIX] IE_Analysis can be at root (is_analysis) OR inside Calculations depending on LLM output
+    ie_analysis = is_analysis.get('IE_Analysis') or calculations.get('IE_Analysis', {})
     
     # IW = Tier_Score + Gap_Score
     tier_score = safe_float(iw_analysis.get('Tier_Score'))

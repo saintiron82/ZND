@@ -46,8 +46,26 @@ class ArticleManager:
     # =========================================================================
     
     def get(self, article_id: str) -> Optional[Dict[str, Any]]:
-        """기사 조회"""
-        """기사 조회"""
+        """
+        기사 조회
+        
+        우선순위:
+        1. Registry 메모리 캐시 (비용: 0)
+        2. Firestore 조회 (비용 발생)
+        """
+        # 1. Registry 캐시 우선 조회 (Firestore 비용 절감)
+        try:
+            from .article_registry import get_registry
+            registry = get_registry()
+            
+            if registry.is_initialized():
+                cached = registry.get_full_data(article_id)
+                if cached:
+                    return self._flatten_article(cached)
+        except Exception:
+            pass  # Fallback to Firestore
+        
+        # 2. Firestore 조회 (초기화 전 또는 캐시 미스)
         article = self.db.get_article(article_id)
         if article:
             return self._flatten_article(article)
@@ -249,18 +267,30 @@ class ArticleManager:
         Args:
             article_id: 기사 ID
             analysis_data: 분석 결과 (title_ko, summary, tags, scores, mll_raw)
+            - 명시적으로 전달된 필드만 업데이트됨 (기존 데이터 보존)
         """
         now = get_kst_now()
         
-        section_data = {
-            'title_ko': analysis_data.get('title_ko', ''),
-            'summary': analysis_data.get('summary', ''),
-            'tags': analysis_data.get('tags', []),
-            'impact_score': analysis_data.get('impact_score', 0),
-            'zero_echo_score': analysis_data.get('zero_echo_score', 0),
-            'analyzed_at': now,
-            'mll_raw': analysis_data.get('mll_raw')
+        # 명시적으로 전달된 필드만 section_data에 포함 (기존 데이터 보존)
+        section_data = {}
+        
+        field_mapping = {
+            'title_ko': 'title_ko',
+            'summary': 'summary',
+            'tags': 'tags',
+            'impact_score': 'impact_score',
+            'zero_echo_score': 'zero_echo_score',
+            'mll_raw': 'mll_raw',
+            'impact_evidence': 'impact_evidence',
+            'evidence': 'evidence'
         }
+        
+        for key, field_name in field_mapping.items():
+            if key in analysis_data:
+                section_data[field_name] = analysis_data[key]
+        
+        # 업데이트 시간은 항상 추가
+        section_data['analyzed_at'] = now
         
         return self.update_state(
             article_id, 
@@ -676,14 +706,17 @@ class ArticleManager:
             current_state = art.get('_header', {}).get('state')  # P2 Fix: Use only _header.state
             
             if art_id and current_state != 'RELEASED':
-                # Update State to RELEASED
-                # Note: 'publisher' is the actor
-                self.update_state(art_id, ArticleState.RELEASED, by='publisher')
-                
-                # Update _publication section explicitly if needed?
-                # update_state mainly handles header. 
-                # Ideally, we should add 'released_at' to _publication section too.
-                # But for now, let's trust state change is enough.
+                # Update State to RELEASED with _publication section data
+                release_section_data = {
+                    'status': 'released',
+                    'released_at': now
+                }
+                self.update_state(
+                    art_id, 
+                    ArticleState.RELEASED, 
+                    by='publisher',
+                    section_data=release_section_data
+                )
                 updated_count += 1
                 
         # 3. Warmup Cache
@@ -743,23 +776,25 @@ class ArticleManager:
         
         # 4. 기사 상태 원복 (Revert Articles)
         reverted_count = 0
-        empty_pub_data = {
-            'edition_code': None,
-            'edition_name': None,
-            'published_at': None,
-            'released_at': None
-        }
+        
+        print(f"📂 [DeleteEdition] Reverting {len(target_article_ids)} articles to CLASSIFIED")
             
         for art_id in target_article_ids:
-            # 강제로 CLASSIFIED (분류됨/발행대기)로 변경
-            # _publication 정보 초기화
-            self.update_state(
+            print(f"   🔄 Reverting {art_id}...")
+            
+            # 상태만 CLASSIFIED로 변경 (section_data 없이! _classification 보존)
+            success = self.update_state(
                 art_id, 
                 ArticleState.CLASSIFIED, 
-                by='publisher',
-                section_data=empty_pub_data
+                by='publisher'
+                # section_data 제거 - _classification 데이터를 덮어쓰지 않음
             )
-            reverted_count += 1
+            
+            if success:
+                reverted_count += 1
+                print(f"      ✅ Reverted to CLASSIFIED")
+            else:
+                print(f"      ❌ Failed to revert")
             
         # Cache Warmup
         self._warmup_cache()

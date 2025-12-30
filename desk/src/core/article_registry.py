@@ -437,6 +437,17 @@ class ArticleRegistry:
             return self._articles.get(article_id)
         return None
     
+    def get_full_data(self, article_id: str) -> Optional[dict]:
+        """
+        기사 전체 데이터 조회 (메모리 캐시)
+        
+        Firestore 비용 절감을 위해 ArticleManager.get()에서 우선 호출
+        
+        Returns:
+            캐시된 전체 기사 데이터 또는 None (캐시 미스)
+        """
+        return self._full_data.get(article_id)
+    
     def find_by_state(self, state: str, limit: int = 100) -> List[ArticleInfo]:
         """상태별 기사 목록 조회 (+ 실시간 캐시 스캔)"""
         # 1. 메모리 인덱스에서 조회

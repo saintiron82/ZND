@@ -185,6 +185,7 @@ function updateColumnHeader(state, isSelectionMode) {
             `;
         } else if (state === ArticleState.ANALYZED) {
             options = `
+                <option value="${ArticleState.CLASSIFIED}">분류됨</option>
                 <option value="${ArticleState.COLLECTED}">수집됨</option>
             `;
         } else if (state === ArticleState.REJECTED) {

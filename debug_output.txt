@@ -1,0 +1,93 @@
+=== mll_raw Structure ===
+{
+  "ZES_Raw_Metrics": {
+    "Noise": {
+      "Items": {
+        "P1": {
+          "Rationale": "네크로보틱스에 대한 긍정적 수식어 일부 포함",
+          "Score": 2
+        }
+      },
+      "Description": "인위적 잡음 (0~10점, 높을수록 부정적)"
+    },
+    "Signal": {
+      "Items": {
+        "T2": {
+          "Rationale": "키틴 성분 활용 및 실리콘 코팅, 엘라스토머 삽입 등 기술적 메커니즘 상세 설명",
+          "Score": 9
+        },
+        "T3": {
+          "Rationale": "EPFL 공식 발표 및 실험 결과 기반의 객관적 정보",
+          "Score": 8
+        },
+        "T1": {
+          "Rationale": "무게(3g), 가용 하중(680g), 굴곡 횟수 등 구체적 수치 제시",
+          "Score": 8
+        }
+      },
+      "Description": "정보의 실체 (0~10점)"
+    },
+    "Utility": {
+      "Items": {
+        "V2": {
+          "Rationale": "개념 증명이 완료된 프로토타입 상태로 즉시 상용화는 제한적",
+          "Score": 5
+        },
+        "V1": {
+          "Rationale": "로봇 공학의 새로운 패러다임 제시하나 산업적 파급력은 초기 단계",
+          "Score": 4
+        },
+        "V3": {
+          "Rationale": "바닷가재 사체 활용이라는 독창적이고 희소한 정보 가치",
+          "Score": 9
+        }
+      },
+      "Description": "실질적 효용 (0~10점)"
+    },
+    "Fine_Adjustment": {
+      "Score": 0.5,
+      "Reason": "생체 모방을 넘어선 생체 직접 활용의 혁신성을 고려하여 소폭 가점"
+    }
+  },
+  "Article_ID": "c9a4ad3192ab",
+  "IS_Analysis": {
+    "IE_Analysis": {
+      "Inputs": {
+        "SOTA_Check_Result": "False",
+        "Criticality_C1_Provenness": 1,
+        "Y_Evidence_Code": 2,
+        "Criticality_Total": 1.5,
+        "Criticality_C2_Societal_Weight": 0.5,
+        "Scope_Matrix_Score": 0,
+        "X_Magnitude_Code": 1
+      },
+      "IE_Score": 1.5
+    },
+    "Score_Commentary": "스위스 EPFL(연방공과대학)은 Academic_Research 도메인의 최상위 기관들과 유사한 연구 역량을 보유한 것으로 유추(Inference)하여 Tier 2로 분류합니다. 사건은 연구 단계의 개념 증명(PoC) 성격이 강하므로 X1(Corporate), Y2(Prototype)를 적용합니다.",
+    "Calculations": {
+      "IW_Score": 2,
+      "IW_Analysis": {
+        "Pe_Entity_Name": "EPFL (스위스 연방공과대학)",
+        "Se_Tier": 5,
+        "Selection_Reason": "실질적인 연구 및 개발을 수행한 주체로 P4 규칙 적용. 비교 대상이 없어 SE는 None.",
+        "Se_Entity_Name": "None",
+        "Pe_Selection_Rule": "P4",
+        "Pe_Tier": 2
+      },
+      "Tier_Score": 2,
+      "Gap_Score": 0
+    }
+  },
+  "Meta": {
+    "Tags": [
+      "News",
+      "Hardware",
+      "Research",
+      "Sustainability",
+      "Bio-robotics"
+    ],
+    "Summary": "스위스 EPFL 연구진이 죽은 바닷가재(랑구스틴)의 외골격을 재활용한 '네크로보틱스' 기술을 선보였습니다. 연구팀은 랍스터 껍질의 키틴 성분이 가진 강도와 유연성을 활용해 3g의 무게로 680g을 견디는 로봇 그리퍼와 추진 장치를 제작했습니다. 이는 자연의 구조를 직접 로봇 부품으로 사용하는 '생체 하이브리드 로봇 공학'의 사례로, 식품 폐기물 재활용과 지속 가능한 로봇 설계의 가능성을 제시하며 학계의 주목을 받고 있습니다.",
+    "Headline": "‘죽은 바닷가재’로 만든 로봇 팔 등장...\"네크로보틱스의 좋은 예\"",
+    "Specification_Version": "v 1.0.1"
+  }
+}

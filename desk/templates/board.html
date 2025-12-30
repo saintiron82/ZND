@@ -24,6 +24,8 @@
                 <div class="divider"></div>
                 <button onclick="window.open('/inspector', 'inspector', 'width=1400,height=900')" class="btn-tool"
                     title="AI 심층 검사기">🔍 분석</button>
+                <button id="btn-recalc-all" class="btn-tool" title="분석완료/분류됨 기사 점수 재계산"
+                    onclick="recalculateAllScores()">🔢 재계산</button>
                 <div class="divider"></div>
                 <button id="btn-recover-orphans" class="btn-tool" title="발행 이력 없는 기사 복구" onclick="checkOrphans()">🔧
                     복구</button>

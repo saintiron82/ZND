@@ -451,40 +451,62 @@ def column_action():
             message = f'전체 분석 기능은 Inspector를 사용해주세요 (현재 {len(articles)}개)'
             
         elif action == 'recalculate-scores':
-            # 점수 재계산 (mll_raw 데이터가 있는 경우)
+            # 점수 재계산 (분석완료/분류됨 상태만 허용)
+            allowed_states = ['ANALYZED', 'CLASSIFIED']
+            if state.upper() not in allowed_states:
+                return jsonify({'success': False, 'error': f'재계산은 분석완료/분류됨 상태에서만 가능합니다. (현재: {state.upper()})'})
+            
             from src.core.score_engine import process_raw_analysis
             
             scanned = 0
             updated = 0
             
             for art in articles:
-                aid = art.get('_header', {}).get('article_id')
+                # article_id는 여러 위치에 있을 수 있음
+                aid = art.get('_header', {}).get('article_id') or art.get('article_id')
+                
+                # mll_raw는 _analysis 안에 있거나 flatten되어 최상위에 있을 수 있음
                 analysis = art.get('_analysis') or {}
-                mll_raw = analysis.get('mll_raw')
-                old_score = analysis.get('impact_score')
+                mll_raw = analysis.get('mll_raw') or art.get('mll_raw')
+                old_score = analysis.get('impact_score') or art.get('impact_score')
                 
                 if aid and mll_raw:
                     scanned += 1
                     # 점수 재계산
                     recalc = process_raw_analysis(mll_raw)
                     new_score = recalc.get('impact_score')
+                    new_zes = recalc.get('zero_echo_score', 5.0)
+                    
+                    print(f"   📊 [{aid}] IS: {old_score} → {new_score}, ZES: {new_zes}")
                     
                     if new_score is not None:
-                        # 분석 데이터 업데이트
-                        update_data = {
-                            'impact_score': new_score,
-                            'zero_echo_score': recalc.get('zero_echo_score', 5.0),
-                            'impact_evidence': recalc.get('impact_evidence', {}),
-                            'evidence': recalc.get('evidence', {})
-                        }
+                        # 점수가 변경된 경우에만 업데이트
+                        old_zes = analysis.get('zero_echo_score') or art.get('zero_echo_score') or 0
                         
-                        # Only update if changed or force update requested (currently always update for consistency)
-                        # But count as 'updated' essentially. To be strict about "changed":
-                        if old_score != new_score:
-                             updated += 1
-                        
-                        manager.update_analysis(aid, update_data)
-                        count += 1 # Total Processed count for generic message
+                        if old_score != new_score or abs(old_zes - new_zes) > 0.01:
+                            updated += 1
+                            
+                            update_data = {
+                                'impact_score': new_score,
+                                'zero_echo_score': new_zes,
+                                'impact_evidence': recalc.get('impact_evidence', {}),
+                                'evidence': recalc.get('evidence', {})
+                            }
+                            
+                            manager.update_analysis(aid, update_data)
+                            count += 1
+                            print(f"      ✅ 업데이트됨")
+                            
+                            # 자동 상태 복원: 데이터 기반으로 최적 상태 결정
+                            from src.core.article_state import get_best_restorable_state, ArticleState
+                            current_state = art.get('_header', {}).get('state') or art.get('state')
+                            best_state = get_best_restorable_state(art)
+                            
+                            if current_state != best_state.value:
+                                manager.update_state(aid, best_state, by='auto-restore')
+                                print(f"      🔄 {best_state.value}로 자동 복원됨")
+                        else:
+                            print(f"      ⏭️ 변경 없음 - 스킵")
             
             message = f'재계산 완료: 총 {scanned}개 검사, {updated}개 점수 변동됨 (전체 처리: {count}개)'
             
@@ -637,7 +659,7 @@ def _format_article_card(article: dict) -> dict:
 def get_orphan_articles():
     """
     발행이력없는 기사 목록 조회
-    발행 회차(edition)에 없는 PUBLISHED 상태 기사들
+    PUBLISHED 또는 RELEASED 상태이지만 유효한 발행 회차에 속하지 않는 기사들
     """
     try:
         # 1. 유효한 발행 회차 목록 조회
@@ -649,26 +671,37 @@ def get_orphan_articles():
                 if code:
                     valid_editions.add(code)
         
-        # 2. PUBLISHED 기사 조회
+        # 2. PUBLISHED + RELEASED 기사 조회
         published = manager.find_by_state(ArticleState.PUBLISHED, limit=500)
+        released = manager.find_by_state(ArticleState.RELEASED, limit=500)
+        all_articles = published + released
         
         # 3. 발행이력없는 기사 필터링
         unlinked = []
-        for article in published:
+        for article in all_articles:
             pub = article.get('_publication') or {}
             edition_code = pub.get('edition_code')
             
             if not edition_code or edition_code not in valid_editions:
-                unlinked.append(_format_article_card(article))
+                # 데이터 무결성 기반 복구 대상 상태 계산
+                from src.core.article_state import get_best_restorable_state
+                best_state = get_best_restorable_state(article)
+                
+                card = _format_article_card(article)
+                card['current_state'] = article.get('_header', {}).get('state', 'UNKNOWN')
+                card['recoverable_to'] = best_state.value
+                unlinked.append(card)
         
         return jsonify({
             'success': True,
-            'orphans': unlinked,  # API 응답 키는 유지 (JS 호환성)
+            'orphans': unlinked,
             'count': len(unlinked),
             'valid_editions': list(valid_editions)
         })
     
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({
             'success': False,
             'error': str(e)
@@ -678,16 +711,19 @@ def get_orphan_articles():
 @board_bp.route('/api/board/recover-orphans', methods=['POST'])
 def recover_orphan_articles():
     """
-    발행이력없는 기사 복구 (PUBLISHED -> CLASSIFIED)
+    발행이력없는 기사 복구
+    데이터 무결성에 따라 COLLECTED/ANALYZED/CLASSIFIED 상태로 복구
     """
-    from datetime import datetime, timezone
+    from src.core.article_state import get_best_restorable_state
     
     data = request.get_json()
     article_ids = data.get('article_ids', [])
     recover_all = data.get('recover_all', False)
     
     try:
-        # recover_all이면 고아 목록 자동 조회
+        # recover_all이면 고아 목록 자동 조회 (PUBLISHED + RELEASED)
+        orphan_articles = []
+        
         if recover_all:
             valid_editions = set()
             meta = manager.db.get_publications_meta()
@@ -697,44 +733,67 @@ def recover_orphan_articles():
                     if code:
                         valid_editions.add(code)
             
+            # PUBLISHED + RELEASED 모두 조회
             published = manager.find_by_state(ArticleState.PUBLISHED, limit=500)
-            article_ids = []
-            for article in published:
+            released = manager.find_by_state(ArticleState.RELEASED, limit=500)
+            all_articles = published + released
+            
+            for article in all_articles:
                 pub = article.get('_publication') or {}
                 edition_code = pub.get('edition_code')
                 if not edition_code or edition_code not in valid_editions:
-                    article_ids.append(article.get('_header', {}).get('article_id'))
+                    orphan_articles.append(article)
+        else:
+            # 특정 article_ids로 조회
+            for aid in article_ids:
+                article = manager.get(aid)
+                if article:
+                    orphan_articles.append(article)
         
-        if not article_ids:
+        if not orphan_articles:
             return jsonify({
                 'success': False,
                 'error': 'No articles to recover'
             }), 400
         
-        # 복구 실행
+        # 복구 실행 (데이터 무결성 기반 상태 결정)
         recovered = []
         failed = []
         
-        for article_id in article_ids:
+        for article in orphan_articles:
+            article_id = article.get('_header', {}).get('article_id') or article.get('article_id')
+            if not article_id:
+                continue
+            
             try:
+                # 데이터 무결성에 따라 복구 대상 상태 결정
+                best_state = get_best_restorable_state(article)
+                
+                print(f"🔧 [Recovery] {article_id}: {article.get('_header', {}).get('state')} → {best_state.value}")
+                
                 success = manager.update_state(
                     article_id,
-                    ArticleState.CLASSIFIED,
-                    by='orphan_recovery',
-                    section_data={
-                        'edition_code': None,
-                        'edition_name': None,
-                        'published_at': None,
-                        'released_at': None
-                    }
+                    best_state,
+                    by='orphan_recovery'
+                    # section_data 없음 - 기존 데이터 보존
                 )
+                
                 if success:
-                    recovered.append(article_id)
+                    recovered.append({
+                        'id': article_id,
+                        'to_state': best_state.value
+                    })
                 else:
-                    failed.append(article_id)
+                    failed.append({
+                        'id': article_id,
+                        'reason': 'update_state failed'
+                    })
             except Exception as e:
                 print(f"⚠️ Recovery failed for {article_id}: {e}")
-                failed.append(article_id)
+                failed.append({
+                    'id': article_id,
+                    'reason': str(e)
+                })
         
         return jsonify({
             'success': True,
@@ -745,7 +804,10 @@ def recover_orphan_articles():
         })
     
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({
             'success': False,
             'error': str(e)
         }), 500
+

@@ -59,6 +59,45 @@ async function columnAction(state, action) {
     }
 }
 
+async function recalculateAllScores() {
+    if (!confirm('분석완료/분류됨 기사의 점수를 재계산하시겠습니까?\n\n* 분석 데이터가 없는 기사는 건너뜁니다.')) {
+        return;
+    }
+
+    showLoading();
+    try {
+        // 분석완료/분류됨 상태만 재계산
+        const states = ['analyzed', 'classified'];
+        let details = [];
+
+        for (const state of states) {
+            try {
+                const result = await fetchAPI('/api/board/column-action', {
+                    method: 'POST',
+                    body: JSON.stringify({ state, action: 'recalculate-scores' })
+                });
+
+                if (result.success) {
+                    details.push(`[${state.toUpperCase()}] ${result.message}`);
+                } else {
+                    details.push(`[${state.toUpperCase()}] ${result.error || '오류'}`);
+                }
+            } catch (e) {
+                details.push(`[${state.toUpperCase()}] 오류: ${e.message}`);
+            }
+        }
+
+        alert('✅ 재계산 완료\n\n' + details.join('\n'));
+        await loadBoardData();
+
+    } catch (err) {
+        alert('재계산 중 오류: ' + err.message);
+    } finally {
+        hideLoading();
+    }
+}
+
 // Export to Global Scope
 window.toggleColumnMenu = toggleColumnMenu;
 window.columnAction = columnAction;
+window.recalculateAllScores = recalculateAllScores;

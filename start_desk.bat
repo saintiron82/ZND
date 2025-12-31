@@ -5,6 +5,22 @@ title ZND Desk Server
 :: Move to the script's directory (Project Root)
 cd /d "%~dp0"
 
+echo ==========================================
+echo       ZND Desk Server Launcher
+echo ==========================================
+echo 1. Development (Local Data, dev)
+echo 2. Release (Live Firestore Data, release)
+echo ==========================================
+set /p mode="Select Mode (1/2): "
+
+if "%mode%"=="2" (
+    set ZND_ENV=release
+    echo [INFO] Starting in RELEASE mode...
+) else (
+    set ZND_ENV=dev
+    echo [INFO] Starting in DEV mode...
+)
+
 :: Check for virtual environment in multiple locations (fallback order)
 set VENV_PATH=
 if exist desk\venv (

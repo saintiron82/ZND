@@ -409,6 +409,52 @@ function setupBoardEvents() {
             document.querySelectorAll('.column-menu').forEach(m => m.classList.add('hidden'));
         }
     });
+
+    // Mobile Accordion Init
+    initMobileAccordion();
+}
+
+function initMobileAccordion() {
+    // Only apply if we are in a context where columns exist.
+    // Logic: Attach click to headers to toggle 'expanded' class on column.
+
+    const columns = document.querySelectorAll('.kanban-column');
+    if (columns.length === 0) return;
+
+    // Default: Expand first column if on mobile
+    if (window.innerWidth <= 768) {
+        columns[0].classList.add('expanded');
+    }
+
+    columns.forEach(col => {
+        const header = col.querySelector('.column-header');
+        if (!header) return;
+
+        header.addEventListener('click', (e) => {
+            // Don't toggle if clicking a button inside header (menu, etc)
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+
+            // Only effective on mobile (check css media query or just toggle class always? 
+            // CSS handles display:none for desktop so toggling class is safe always, 
+            // but the accordion behavior (closing others) matches mobile expectation).
+            if (window.innerWidth > 768) return;
+
+            const wasExpanded = col.classList.contains('expanded');
+
+            // Exclusive Accordion: Close others
+            columns.forEach(c => c.classList.remove('expanded'));
+
+            if (!wasExpanded) {
+                col.classList.add('expanded');
+                // Smooth scroll to header
+                setTimeout(() => {
+                    header.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+                    // Adjust for sticky header
+                    window.scrollBy(0, -120);
+                }, 100);
+            }
+        });
+    });
 }
 
 // Export to Global Scope

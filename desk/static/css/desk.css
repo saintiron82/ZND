@@ -67,6 +67,20 @@ body.env-release::before {
     box-shadow: 0 2px 10px rgba(0, 184, 148, 0.5);
 }
 
+/* 모바일에서 환경 마크 축소 및 우측 이동 */
+@media (max-width: 768px) {
+
+    body.env-dev::before,
+    body.env-release::before {
+        left: auto;
+        right: 5px;
+        transform: none;
+        padding: 2px 8px;
+        font-size: 9px;
+        border-radius: 0 0 4px 4px;
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -803,17 +817,13 @@ a:hover {
     letter-spacing: -0.01em;
 }
 
--webkit-line-clamp: 2;
-line-clamp: 2;
-}
-
 /* =============================================================================
    Mobile Responsive Styles (Sticky & Compact & Accordion)
    ============================================================================= */
 @media (max-width: 768px) {
     body {
-        padding-top: 110px;
-        /* Space for the fixed header */
+        padding-top: 135px;
+        /* Space for the fixed header (nav 55px + filter bar ~80px) */
     }
 
     /* Fixed Header Container */
@@ -841,17 +851,20 @@ line-clamp: 2;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Row 2: Time Filter */
+    /* Row 2: Time Filter - 2줄 구성 */
     .time-filter-bar {
         top: 55px;
-        height: 50px;
+        height: auto !important;
+        min-height: 50px;
         flex-direction: row;
+        flex-wrap: wrap !important;
         align-items: center;
-        overflow-x: auto;
-        white-space: nowrap;
+        overflow-x: visible !important;
+        white-space: normal !important;
         background: var(--bg-secondary);
         border-bottom: 1px solid var(--border-color);
-        padding: 4px 10px;
+        padding: 6px 10px !important;
+        gap: 6px;
     }
 
     /* Compact Typography */
@@ -889,44 +902,51 @@ line-clamp: 2;
     }
 
     .filter-buttons {
-        flex-wrap: nowrap;
+        display: flex;
+        flex-wrap: wrap !important;
         gap: 4px;
     }
 
     .custom-range {
         flex-direction: row;
         align-items: center;
-        gap: 5px;
-        font-size: 0.75rem;
+        gap: 8px;
+        font-size: 0.85rem;
+        width: 100%;
+        margin-top: 4px;
     }
 
     .custom-range input {
-        font-size: 0.75rem;
-        padding: 2px 5px;
-        width: 130px;
+        font-size: 0.9rem !important;
+        padding: 8px 12px !important;
+        flex: 1;
+        width: 100% !important;
+        max-width: none !important;
+        border-radius: 6px;
     }
 
     /* Kanban Board (Vertical Accordion) */
     .board-container {
-        padding: 0.5rem;
+        padding: 0.5rem !important;
     }
 
     .kanban-board {
-        flex-direction: column;
+        display: flex !important;
+        flex-direction: column !important;
         /* Stack vertically */
-        overflow-x: hidden;
+        overflow-x: hidden !important;
         /* Remove horizontal scroll */
-        gap: 10px;
-        padding-bottom: 2rem;
+        gap: 10px !important;
+        padding-bottom: 2rem !important;
     }
 
     .kanban-column {
-        flex: none;
-        width: 100%;
-        max-height: none;
-        margin-bottom: 5px;
-        background: var(--bg-secondary);
-        border-radius: 8px;
+        flex: none !important;
+        width: 100% !important;
+        max-height: none !important;
+        margin-bottom: 5px !important;
+        background: var(--bg-secondary) !important;
+        border-radius: 8px !important;
     }
 
     /* Accordion Logic */

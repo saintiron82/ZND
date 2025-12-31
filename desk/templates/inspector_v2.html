@@ -122,6 +122,76 @@
             font-weight: bold;
             font-size: 1em;
         }
+
+        /* =============================================================================
+           Mobile Responsive - 세로 배열
+           ============================================================================= */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto !important;
+                padding-top: 0 !important;
+            }
+
+            .nav-tabs {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                padding: 8px !important;
+            }
+
+            .inspector-container {
+                flex-direction: column !important;
+                height: auto !important;
+                min-height: calc(100vh - 50px);
+                overflow: visible !important;
+            }
+
+            .pane {
+                width: 100% !important;
+                min-width: 100% !important;
+                border-right: none !important;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            #pane-groups {
+                max-height: 200px;
+            }
+
+            #pane-groups .pane-content {
+                max-height: 120px;
+            }
+
+            #pane-prompt,
+            #pane-process {
+                min-height: 300px;
+            }
+
+            .pane-content {
+                min-height: 150px;
+            }
+
+            .code-editor {
+                min-height: 180px !important;
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            .control-bar {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .control-bar .btn {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+            }
+
+            .pane-header {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 

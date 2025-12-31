@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZND Desk - 보드</title>
-    <link rel="stylesheet" href="/static/css/desk.css">
+    <link rel="stylesheet" href="/static/css/desk.css?v=20241231">
 </head>
 
 <body class="env-{{ znd_env }}">
@@ -22,8 +22,7 @@
                 <button id="btn-tool-classify" class="btn-tool" title="AI 분류기" onclick="openClassifyModal(null)">📂
                     분류</button>
                 <div class="divider"></div>
-                <button onclick="window.open('/inspector', 'inspector', 'width=1400,height=900')" class="btn-tool"
-                    title="AI 심층 검사기">🔍 분석</button>
+                <button onclick="openInspectorModal()" class="btn-tool" title="AI 심층 검사기">🔍 분석</button>
                 <button id="btn-recalc-all" class="btn-tool" title="분석완료/분류됨 기사 점수 재계산"
                     onclick="recalculateAllScores()">🔢 재계산</button>
                 <div class="divider"></div>
@@ -218,6 +217,19 @@
 
 
 
+        <!-- Inspector Modal (iframe-based) -->
+        <div id="inspector-modal" class="modal hidden">
+            <div class="modal-content"
+                style="max-width: 95vw; width: 95vw; height: 90vh; max-height: 90vh; padding: 0; display: flex; flex-direction: column;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-card); border-bottom: 1px solid var(--border-color);">
+                    <h3 style="margin: 0;">🔍 분석 (Inspector)</h3>
+                    <button onclick="closeInspectorModal()" class="btn" style="padding: 6px 12px;">✕ 닫기</button>
+                </div>
+                <iframe id="inspector-iframe" src="" style="flex: 1; border: none; width: 100%; height: 100%;"></iframe>
+            </div>
+        </div>
+
         <!-- Loading Overlay -->
         <div id="loading" class="loading hidden">
             <div class="spinner"></div>
@@ -225,16 +237,16 @@
         </div>
     </main>
 
-    <script src="/static/js/constants.js?v=20241229"></script>
-    <script src="/static/js/desk-common.js?v=20241229"></script>
-    <script src="/static/js/desk-recovery.js?v=20241229"></script>
-    <script src="/static/js/desk-ui-columns.js?v=20241229"></script>
-    <script src="/static/js/desk.js?v=20241229"></script>
-    <script src="/static/js/desk-board.js?v=20241229"></script>
-    <script src="/static/js/desk-classification.js?v=20241229"></script>
-    <script src="/static/js/desk-viewer.js?v=20241229"></script>
-    <script src="/static/js/desk-collector.js?v=20241229"></script>
-    <script src="/static/js/desk-settings.js?v=20241229"></script>
+    <script src="/static/js/constants.js?v=20241231"></script>
+    <script src="/static/js/desk-common.js?v=20241231"></script>
+    <script src="/static/js/desk-recovery.js?v=20241231"></script>
+    <script src="/static/js/desk-ui-columns.js?v=20241231"></script>
+    <script src="/static/js/desk.js?v=20241231"></script>
+    <script src="/static/js/desk-board.js?v=20241231"></script>
+    <script src="/static/js/desk-classification.js?v=20241231"></script>
+    <script src="/static/js/desk-viewer.js?v=20241231"></script>
+    <script src="/static/js/desk-collector.js?v=20241231"></script>
+    <script src="/static/js/desk-settings.js?v=20241231"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             initBoardPage();

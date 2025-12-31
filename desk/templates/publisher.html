@@ -20,8 +20,7 @@
                 <span class="tool-label">🛠️ 도구:</span>
                 <button id="btn-collect" class="btn-tool" title="뉴스 즉시 수집" onclick="collectNow()">📥 수집</button>
                 <div class="divider"></div>
-                <button onclick="window.open('/inspector', 'inspector', 'width=1400,height=900')" class="btn-tool"
-                    title="AI 심층 검사기">🔍 분석</button>
+                <button onclick="openInspectorModal()" class="btn-tool" title="AI 심층 검사기">🔍 분석</button>
             </div>
             <div class="divider"></div>
             <span id="stats">로딩 중...</span>
@@ -205,6 +204,18 @@
         <p>Processing...</p>
     </div>
 
+    <!-- Inspector Modal (iframe-based) -->
+    <div id="inspector-modal" class="modal hidden">
+        <div class="modal-content"
+            style="max-width: 95vw; width: 95vw; height: 90vh; max-height: 90vh; padding: 0; display: flex; flex-direction: column;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-card); border-bottom: 1px solid var(--border-color);">
+                <h3 style="margin: 0;">🔍 분석 (Inspector)</h3>
+                <button onclick="closeInspectorModal()" class="btn" style="padding: 6px 12px;">✕ 닫기</button>
+            </div>
+            <iframe id="inspector-iframe" src="" style="flex: 1; border: none; width: 100%; height: 100%;"></iframe>
+        </div>
+    </div>
 
 
     <!-- Publishing Progress Modal -->
@@ -365,14 +376,126 @@
         .edition-item.active:not(.status-preview):not(.status-released) {
             border-left: 4px solid var(--accent-primary);
         }
+
+        /* =============================================================================
+           Mobile Responsive - 세로 배열
+           ============================================================================= */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 0 !important;
+            }
+
+            .nav-tabs {
+                position: relative !important;
+                height: auto !important;
+                flex-wrap: wrap;
+                padding: 8px !important;
+            }
+
+            .sub-nav {
+                flex-wrap: wrap;
+                gap: 5px;
+                padding: 8px 10px;
+            }
+
+            .tab-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
+            /* Main Content - 세로 배열 */
+            #view-draft,
+            #view-history {
+                flex-direction: column !important;
+                padding: 10px !important;
+                gap: 15px !important;
+            }
+
+            /* 사이드바 */
+            .sidebar-panel {
+                width: 100% !important;
+                border-right: none !important;
+                border-bottom: 1px solid var(--border-color);
+                max-height: 150px;
+                overflow-y: auto;
+            }
+
+            .sidebar-panel h3 {
+                font-size: 0.9rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* 툴바 - 세로 배열 */
+            .toolbar {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+
+            .toolbar-left,
+            .toolbar-right {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .edition-input-group {
+                flex-direction: column !important;
+                gap: 10px !important;
+                width: 100%;
+            }
+
+            .labeled-input {
+                width: 100%;
+            }
+
+            .labeled-input input,
+            .labeled-input button {
+                width: 100% !important;
+            }
+
+            #btn-publish-now {
+                padding: 12px !important;
+                font-size: 1rem !important;
+            }
+
+            /* 커트라인 패널 */
+            .cutline-panel {
+                padding: 10px !important;
+            }
+
+            .cutline-panel>div[style*="display: flex; gap: 20px"] {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+
+            /* 카드 그리드 - 1열 */
+            #draft-cards,
+            #rejected-cards {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* 상세 패널 */
+            .detail-panel {
+                width: 100% !important;
+            }
+
+            /* 프로그레스 모달 */
+            #progress-modal>div[style*="width: 300px"] {
+                width: 90% !important;
+            }
+
+            #progress-log {
+                width: 100% !important;
+                max-width: 300px;
+            }
+        }
     </style>
 
-    <script src="/static/js/constants.js"></script>
-    <script src="/static/js/desk-common.js?v=20241229"></script>
-    <script src="/static/js/desk.js?v=20241229"></script>
-    <script src="/static/js/desk-viewer.js?v=20241229"></script>
-    <script src="/static/js/desk-classification.js?v=20241229"></script>
-    <script src="/static/js/desk-publisher.js?v=20241229"></script>
+    <script src="/static/js/constants.js?v=20241231"></script>
+    <script src="/static/js/desk-common.js?v=20241231"></script>
+    <script src="/static/js/desk.js?v=20241231"></script>
+    <script src="/static/js/desk-viewer.js?v=20241231"></script>
+    <script src="/static/js/desk-classification.js?v=20241231"></script>
+    <script src="/static/js/desk-publisher.js?v=20241231"></script>
     <script src="/static/js/desk-collector.js?v={{ now_ts }}"></script>
     <script src="/static/js/publisher_v2.js?ver={{ now_ts }}"></script>
     <script>

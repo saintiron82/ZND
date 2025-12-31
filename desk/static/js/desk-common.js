@@ -23,6 +23,28 @@ function closeModal(modalId) {
     document.getElementById(modalId)?.classList.add('hidden');
 }
 
+// Inspector Modal (iframe-based)
+function openInspectorModal() {
+    const modal = document.getElementById('inspector-modal');
+    const iframe = document.getElementById('inspector-iframe');
+    if (modal && iframe) {
+        iframe.src = '/inspector';
+        modal.classList.remove('hidden');
+    }
+}
+
+function closeInspectorModal() {
+    const modal = document.getElementById('inspector-modal');
+    const iframe = document.getElementById('inspector-iframe');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+    // Clear iframe to stop any processes
+    if (iframe) {
+        iframe.src = '';
+    }
+}
+
 // =============================================================================
 // Data Formatters
 // =============================================================================
@@ -71,6 +93,8 @@ window.showLoading = showLoading;
 window.hideLoading = hideLoading;
 window.showError = showError;
 window.closeModal = closeModal;
+window.openInspectorModal = openInspectorModal;
+window.closeInspectorModal = closeInspectorModal;
 window.formatScore = formatScore;
 window.getStateBadge = getStateBadge;
 window.fetchAPI = fetchAPI;

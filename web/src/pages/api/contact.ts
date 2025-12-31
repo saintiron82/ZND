@@ -12,13 +12,10 @@ type Data = {
     error?: string;
 };
 
-console.log('[Contact API] Module Loaded');
-
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
-    console.log('[Contact API] Handler Triggered', req.method);
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }

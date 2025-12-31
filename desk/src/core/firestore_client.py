@@ -285,16 +285,25 @@ class FirestoreClient:
                     return remote_data
             else:
                 # Case 4: Local이 정본 -> Firestore만 업데이트 (Server Sync)
-                # 주의: 매번 읽을 때마다 쓰기를 하면 비용 문제 발생 가능.
-                # 하지만 데이터 일관성이 우선이라면 맞춰주는 게 맞음.
-                # 여기서는 '확실히 차이가 날 때'만 업데이트 하도록 필터링 가능하지만,
-                # updated_at이 Local > Remote 라면 확실히 서버가 뒤쳐진 것임.
+                # [최적화] 실제로 데이터가 다를 때만 쓰기 수행
+                # updated_at 차이가 미미하거나 상태가 같으면 스킵
                 
-                try:
-                    # print(f"📤 [Sync] Pushing local changes to Firestore: {article_id}")
-                    self.save_article(article_id, local_data)
-                except Exception as e:
-                    print(f"⚠️ [Sync] Firestore update failed: {e}")
+                local_state = local_header.get('state', '')
+                remote_state = remote_header.get('state', '')
+                
+                # 상태가 같고 시간 차이가 1초 미만이면 쓰기 스킵 (불필요한 동기화 방지)
+                time_diff_negligible = abs(len(local_time) - len(remote_time)) < 2 if local_time and remote_time else False
+                same_state = local_state == remote_state
+                
+                if same_state and (local_time == remote_time or time_diff_negligible):
+                    # 이미 동기화됨 - 쓰기 스킵
+                    pass
+                else:
+                    try:
+                        print(f"📤 [Sync] Pushing local changes to Firestore: {article_id} ({remote_state} -> {local_state})")
+                        self.save_article(article_id, local_data)
+                    except Exception as e:
+                        print(f"⚠️ [Sync] Firestore update failed: {e}")
                     
                 return local_data
                 
@@ -864,7 +873,7 @@ class FirestoreClient:
         _meta 문서에서 회차 목록 조회 (1 READ로 최적화)
         Args:
             status_filter: 'preview' 또는 'released' (None이면 전체)
-        Returns: list of issue dicts [{code, name, count, updated_at, status}, ...]
+        Returns: list of issue dicts
         """
         meta = self.get_publications_meta()
         if not meta:
@@ -877,24 +886,19 @@ class FirestoreClient:
             issues = [i for i in issues if i.get('status') == status_filter]
         
         # 시스템 문서 필터링 (edition_code가 '_'로 시작하는 항목 제외)
-        issues = [i for i in issues if not (i.get('edition_code') or i.get('code', '')).startswith('_')]
+        issues = [i for i in issues if not i.get('edition_code', '').startswith('_')]
         
         # edition_code 기준 내림차순 정렬 (발행순 유지)
-        issues.sort(key=lambda x: x.get('edition_code') or x.get('code', ''), reverse=True)
+        issues.sort(key=lambda x: x.get('edition_code', ''), reverse=True)
         
-        # API 응답 형식에 맞게 변환 (새 스키마 우선)
+        # API 응답 형식에 맞게 변환 (레거시 필드 제거됨)
         result = []
         for iss in issues:
-            code = iss.get('edition_code') or iss.get('code')  # edition_code 우선
-            name = iss.get('edition_name') or iss.get('name')  # edition_name 우선
-            count = iss.get('article_count') or iss.get('count', 0)
-            index = iss.get('index', 1)  # 호수
-
             result.append({
-                'edition_code': code,
-                'edition_name': name,
-                'index': index,  # 호수 (새 필드)
-                'article_count': count,
+                'edition_code': iss.get('edition_code'),
+                'edition_name': iss.get('edition_name'),
+                'index': iss.get('index', 1),
+                'article_count': iss.get('article_count', 0),
                 'published_at': iss.get('published_at'),
                 'updated_at': iss.get('updated_at'),
                 'status': iss.get('status', 'preview'),

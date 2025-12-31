@@ -109,3 +109,5 @@
 {"timestamp": "2025-12-30T13:14:21.970470", "action": "Collect", "result": "Collected 0 new links", "duration": 6.72, "success": true}
 {"timestamp": "2025-12-31T08:22:29.377202", "action": "Collect", "result": "Collected 15 new links", "duration": 6.84, "success": true}
 {"timestamp": "2025-12-31T08:23:05.705099", "action": "Extract", "result": "Extracted 14 (Skip:0, Fail:1)", "duration": 36.32, "success": true}
+{"timestamp": "2025-12-31T10:47:26.434996", "action": "Collect", "result": "Collected 2 new links", "duration": 7.85, "success": true}
+{"timestamp": "2025-12-31T10:47:34.565099", "action": "Extract", "result": "Extracted 1 (Skip:0, Fail:1)", "duration": 8.13, "success": true}

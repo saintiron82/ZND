@@ -110,7 +110,7 @@ class ArticleRegistry:
         self._db = db_client
         
         
-        # 1. 로컬 캐시 로드 (크롤링 원본 백업용)
+        # 1. 로컬 캐시 로드 (메모리에만, Firestore 동기화는 아직 안 함)
         self._load_from_local_cache()
         
         # 2. Firestore에서 미발행 기사 동기화 (필수)
@@ -120,6 +120,9 @@ class ArticleRegistry:
         
         if self._db and not skip_firestore:
             self._load_from_firestore()
+            
+            # 3. 로컬에만 있는 기사 → Firestore에 동기화 (양방향 동기화 완성)
+            self._sync_local_only_to_firestore()
         
         # 완료
         elapsed = (datetime.now() - start_time).total_seconds()
@@ -128,10 +131,11 @@ class ArticleRegistry:
         ArticleRegistry._initialized = True
         
         print(f"✅ [Registry] Initialized in {elapsed:.2f}s")
-        print(f"   📂 Local: {self._stats['local_loaded']} articles")
-        print(f"   ☁️ Firestore: {self._stats['firestore_loaded']} articles")
+        print(f"   📂 Local Cache: {self._stats['local_loaded']} articles")
+        print(f"   ☁️ Firestore (unpublished only): {self._stats['firestore_loaded']} synced")
+        print(f"   📤 Synced to Firestore: {self._stats.get('synced_to_firestore', 0)} articles")
         print(f"   🔄 Merged Duplicates: {self._stats['duplicates_merged']}")
-        print(f"   📊 Total: {len(self._articles)} unique articles")
+        print(f"   📊 Total in Registry: {len(self._articles)} unique articles")
     
     def _load_from_local_cache(self):
         """로컬 캐시에서 기사 로드 (시간 제한 적용)"""
@@ -167,8 +171,9 @@ class ArticleRegistry:
                     with open(fpath, 'r', encoding='utf-8') as f:
                         data = json.load(f)
                     
-                    # register()로 로컬 + Firestore 둘 다 동기화
-                    info = self.register(data, cache_path=fpath)
+                    # [최적화] 초기화 시 Firestore 저장 스킵 (로컬 캐시 → 메모리만)
+                    # 실제 상태 변경 시에만 Firestore에 저장
+                    info = self.register(data, cache_path=fpath, skip_firestore=True)
                     if info:
                         self._stats['local_loaded'] += 1
                         
@@ -231,6 +236,43 @@ class ArticleRegistry:
                             
             except Exception as e:
                 print(f"⚠️ [Registry] Firestore load error for {state}: {e}")
+    
+    def _sync_local_only_to_firestore(self):
+        """
+        로컬에만 있는 기사를 Firestore에 동기화 (양방향 동기화 3단계)
+        - firestore_synced=False인 기사만 대상
+        - 상태가 PUBLISHED/RELEASED가 아닌 기사만 (미발행 기사)
+        """
+        sync_count = 0
+        unpublished_states = {'COLLECTED', 'ANALYZED', 'CLASSIFIED', 'REJECTED'}
+        
+        for article_id, info in self._articles.items():
+            # Firestore에 이미 있으면 스킵
+            if info.firestore_synced:
+                continue
+            
+            # 발행된 기사는 스킵 (PUBLISHED/RELEASED는 별도 관리)
+            if info.state not in unpublished_states:
+                continue
+            
+            # Firestore에 저장
+            full_data = self._full_data.get(article_id)
+            if full_data and self._db:
+                try:
+                    self._db.save_article(article_id, full_data)
+                    info.firestore_synced = True
+                    sync_count += 1
+                    
+                    # 히스토리도 동기화
+                    url = info.url or full_data.get('_original', {}).get('url')
+                    if url:
+                        self._db.save_history(url, status=info.state, article_id=article_id)
+                except Exception as e:
+                    print(f"⚠️ [Registry] Sync to Firestore failed for {article_id}: {e}")
+        
+        self._stats['synced_to_firestore'] = sync_count
+        if sync_count > 0:
+            print(f"   📤 [Registry] Synced {sync_count} local-only articles to Firestore")
     
     def _parse_article_data(self, data: Dict, cache_path: str = None) -> Optional[ArticleInfo]:
         """원시 데이터를 ArticleInfo로 변환"""
@@ -476,8 +518,8 @@ class ArticleRegistry:
                             
                             file_state = data.get('_header', {}).get('state')
                             if file_state == state:
-                                # register()로 로컬 + Firestore 둘 다 저장
-                                info = self.register(data, cache_path=fpath)
+                                # [최적화] 조회 시 Firestore 저장 스킵 (읽기 작업에서 쓰기 방지)
+                                info = self.register(data, cache_path=fpath, skip_firestore=True)
                                 if info:
                                     articles.append(info)
                         except Exception:
@@ -540,11 +582,17 @@ class ArticleRegistry:
     # Write Operations
     # =========================================================================
     
-    def register(self, data: Dict[str, Any], cache_path: str = None) -> Optional[ArticleInfo]:
+    def register(self, data: Dict[str, Any], cache_path: str = None, skip_firestore: bool = False) -> Optional[ArticleInfo]:
         """
         새 기사 등록 (크롤링/분석 완료 시)
         - 수집도 상태 변화이므로 로컬 + Firestore 둘 다 저장
         - 히스토리도 동기화
+        
+        Args:
+            data: 기사 데이터
+            cache_path: 로컬 캐시 경로
+            skip_firestore: True이면 Firestore 저장 스킵 
+                           (초기화 시 사용 - 3단계 _sync_local_only_to_firestore에서 일괄 동기화)
         """
         info = self._parse_article_data(data, cache_path)
         if info:
@@ -554,7 +602,8 @@ class ArticleRegistry:
             self._full_data[info.article_id] = data
             
             # Firestore에도 저장 (수집 = 상태 변화 = 저장)
-            if self._db:
+            # [최적화] skip_firestore=True면 저장 스킵 (초기화 시 비용 절감)
+            if self._db and not skip_firestore:
                 try:
                     self._db.save_article(info.article_id, data)
                     
@@ -749,8 +798,8 @@ class ArticleRegistry:
                     with open(fpath, 'r', encoding='utf-8') as f:
                         data = json.load(f)
                     
-                    # register()를 사용해서 로컬 + Firestore 둘 다 저장
-                    info = self.register(data, cache_path=fpath)
+                    # [최적화] 새로고침 시 Firestore 저장 스킵
+                    info = self.register(data, cache_path=fpath, skip_firestore=True)
                     if info:
                         new_count += 1
                 except Exception:

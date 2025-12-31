@@ -123,17 +123,25 @@ if __name__ == '__main__':
     port = int(os.getenv('DESK_PORT', 5500))
     debug = os.getenv('FLASK_DEBUG', 'true').lower() == 'true'
     
-    # Initialize Article Registry (SSOT for article metadata)
-    from src.core.article_registry import init_registry
-    from src.core.firestore_client import FirestoreClient
+    # Flask reloader 중복 초기화 방지
+    # debug 모드에서 reloader가 프로세스를 두 번 시작함 (parent + child)
+    # WERKZEUG_RUN_MAIN이 설정된 프로세스(child)에서만 초기화 실행
+    is_reloader_process = os.environ.get('WERKZEUG_RUN_MAIN') == 'true'
     
-    print("📦 Initializing Article Registry...")
-    db_client = FirestoreClient()
-    init_registry(db_client=db_client)
-    
-    print(f"🚀 ZND Desk v2.0 starting on port {port}...")
-    print(f"📍 Analyzer: http://localhost:{port}/analyzer")
-    print(f"📍 Publisher: http://localhost:{port}/publisher")
-    print(f"📍 Board: http://localhost:{port}/board")
+    if not debug or is_reloader_process:
+        # Initialize Article Registry (SSOT for article metadata)
+        from src.core.article_registry import init_registry
+        from src.core.firestore_client import FirestoreClient
+        
+        print("📦 Initializing Article Registry...")
+        db_client = FirestoreClient()
+        init_registry(db_client=db_client)
+        
+        print(f"🚀 ZND Desk v2.0 starting on port {port}...")
+        print(f"📍 Analyzer: http://localhost:{port}/analyzer")
+        print(f"📍 Publisher: http://localhost:{port}/publisher")
+        print(f"📍 Board: http://localhost:{port}/board")
+    else:
+        print("⏳ Flask reloader starting... (initialization will run in child process)")
     
     app.run(host='0.0.0.0', port=port, debug=debug)

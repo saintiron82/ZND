@@ -431,13 +431,10 @@ def update_edition(edition_code):
         if meta:
             issues = meta.get('issues', [])
             for i, issue in enumerate(issues):
-                if issue.get('edition_code') == edition_code or issue.get('code') == edition_code:
-                    # 변경된 필드 반영
+                if issue.get('edition_code') == edition_code:
+                    # 변경된 필드 반영 (레거시 필드 동기화 제거)
                     for field, value in updated_fields.items():
                         issues[i][field] = value
-                        # 레거시 호환성: edition_name -> name
-                        if field == 'edition_name':
-                            issues[i]['name'] = value
                     issues[i]['updated_at'] = now
                     break
             

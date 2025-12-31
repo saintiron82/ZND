@@ -51,7 +51,7 @@ class ArticleManager:
         
         우선순위:
         1. Registry 메모리 캐시 (비용: 0)
-        2. Firestore 조회 (비용 발생)
+        2. Firestore 조회 (비용 발생) → Registry에 캐시
         """
         # 1. Registry 캐시 우선 조회 (Firestore 비용 절감)
         try:
@@ -68,6 +68,22 @@ class ArticleManager:
         # 2. Firestore 조회 (초기화 전 또는 캐시 미스)
         article = self.db.get_article(article_id)
         if article:
+            # [NEW] Lazy Load: Firestore에서 조회한 기사를 Registry에 캐시
+            # PUBLISHED/RELEASED 기사도 한 번 조회하면 이후 비용 절감
+            try:
+                from .article_registry import get_registry
+                registry = get_registry()
+                if registry.is_initialized():
+                    # Register to memory cache (without re-saving to Firestore)
+                    info = registry._parse_article_data(article)
+                    if info and info.article_id not in registry._articles:
+                        info.firestore_synced = True
+                        registry._register_article(info, source='lazy_firestore')
+                        registry._full_data[info.article_id] = article
+                        print(f"📥 [Lazy Load] Cached from Firestore: {article_id}")
+            except Exception as e:
+                print(f"⚠️ [Lazy Load] Cache failed: {e}")
+            
             return self._flatten_article(article)
         return None
     
@@ -417,15 +433,16 @@ class ArticleManager:
                 # Check existing
                 existing_idx = next((i for i, x in enumerate(issues) if x.get('edition_code') == edition_code), -1)
                 
+                # pub_doc에서 필요한 필드만 추출 (중복 필드 제거: code, name, count)
                 issue_summary = {
                     'edition_code': edition_code,
                     'edition_name': edition_name,
-                    'index': pub_doc.get('index', 1),  # 호수 (= 발행 번호)
+                    'index': pub_doc.get('index', 1),
+                    'article_count': pub_doc['article_count'],
                     'published_at': pub_doc['published_at'],
                     'updated_at': now,
-                    'article_count': pub_doc['article_count'],
                     'status': pub_doc.get('status', 'preview'),
-                    'schema_version': '3.1'  # 하드코딩 (환경변수 파싱 오류 방지)
+                    'schema_version': '3.1'
                 }
                 
                 if existing_idx >= 0:
@@ -702,28 +719,24 @@ class ArticleManager:
         pub_doc['released_at'] = now
         self.db.save_publication(edition_code, pub_doc)
         
-        # 2. Update Articles
+        # 2. Update Articles' _publication.status (상태는 PUBLISHED 유지)
+        # 기사 상태(PUBLISHED→RELEASED)는 변경하지 않음
+        # 발행정보(_publication.status)만 preview→released로 변경
         articles = self.get_edition_articles(edition_code)
         updated_count = 0
         
         for art in articles:
-            # article_id, header.state check
             art_id = art.get('article_id') or art.get('id')
-            current_state = art.get('_header', {}).get('state')  # P2 Fix: Use only _header.state
-            
-            if art_id and current_state != 'RELEASED':
-                # Update State to RELEASED with _publication section data
-                release_section_data = {
-                    'status': 'released',
-                    'released_at': now
-                }
-                self.update_state(
-                    art_id, 
-                    ArticleState.RELEASED, 
-                    by='publisher',
-                    section_data=release_section_data
-                )
-                updated_count += 1
+            if art_id:
+                # _publication.status만 업데이트 (기사 상태는 PUBLISHED 유지)
+                try:
+                    self.db.update_article(art_id, {
+                        '_publication.status': 'released',
+                        '_publication.released_at': now
+                    })
+                    updated_count += 1
+                except Exception as e:
+                    print(f"⚠️ [Release] Failed to update article {art_id}: {e}")
                 
         # 3. Warmup Cache
         self._warmup_cache()

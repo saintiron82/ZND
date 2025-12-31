@@ -47,19 +47,15 @@ export interface NormalizedArticle {
 // =============================================================================
 
 interface RawMetaIssue {
-    // v3.0.0 fields
+    // v3.x fields only
     edition_code?: string;
     edition_name?: string;
     article_count?: number;
+    index?: number;
     published_at?: string;
-    schema_version?: string;
-    // v2.0.0 fields (legacy)
-    code?: string;
-    name?: string;
-    count?: number;
-    // Common fields
     updated_at?: string;
     status?: 'preview' | 'released';
+    schema_version?: string;
 }
 
 interface RawArticle {
@@ -102,21 +98,16 @@ interface RawPublicationDoc {
 
 export class PublicationSchemaParser {
     /**
-     * 스키마 버전 감지
+     * 스키마 버전 감지 (schema_version 필드 기반)
      */
     static detectVersion(data: RawMetaIssue | RawPublicationDoc): string {
         if (data.schema_version) {
             return data.schema_version;
         }
 
-        // edition_code가 있으면 3.0.0 이상
+        // schema_version이 없으면 edition_code 존재 여부로 추정
         if ('edition_code' in data && data.edition_code) {
-            return '3.0.0';
-        }
-
-        // code가 있으면 2.0.0
-        if ('code' in data && (data as RawMetaIssue).code) {
-            return '2.0.0';
+            return '3.0';
         }
 
         return 'unknown';
@@ -131,19 +122,53 @@ export class PublicationSchemaParser {
 
     /**
      * 개별 _meta issue 항목을 정규화
+     * schema_version 기반 명시적 분기 처리
+     * 해당 버전 파서가 없으면 하위 버전으로 폴백
      */
     static parseMetaIssue(raw: RawMetaIssue): NormalizedIssue {
-        const version = this.detectVersion(raw);
+        const version = raw.schema_version || 'unknown';
 
-        // 필드 추출 (v3.0.0 우선, v2.0.0 폴백)
-        const editionCode = raw.edition_code || raw.code || '';
-        const editionName = raw.edition_name || raw.name || '';
-        const articleCount = raw.article_count ?? raw.count ?? 0;
-        const publishedAt = raw.published_at || raw.updated_at || '';
+        // 지원 버전 목록 (내림차순)
+        const supportedVersions = ['3.1', '3.0'];
+
+        // 정확히 일치하는 버전 찾기
+        let targetVersion = supportedVersions.find(v => version === v);
+
+        // 없으면 메이저.마이너 파싱 후 폴백
+        if (!targetVersion && version !== 'unknown') {
+            const [major, minor] = version.split('.').map(Number);
+
+            // 같은 메이저 버전 중 지원되는 가장 높은 버전으로 폴백
+            targetVersion = supportedVersions.find(v => {
+                const [vMajor] = v.split('.').map(Number);
+                return vMajor === major;
+            });
+
+            if (targetVersion) {
+                console.info(`[SchemaParser] v${version} → v${targetVersion} fallback`);
+            }
+        }
+
+        // v3.x 파서 (3.0, 3.1 공통)
+        if (targetVersion?.startsWith('3.')) {
+            return this._parseV3Issue(raw, version);
+        }
+
+        // 지원되지 않는 버전
+        console.warn(`[SchemaParser] Unsupported schema version: ${version}`);
+        return this._emptyIssue(version);
+    }
+
+    /**
+     * v3.x 파서 (edition_code, edition_name, article_count)
+     */
+    private static _parseV3Issue(raw: RawMetaIssue, version: string): NormalizedIssue {
+        const editionCode = raw.edition_code || '';
+        const editionName = raw.edition_name || '';
+        const articleCount = raw.article_count ?? 0;
+        const publishedAt = raw.published_at || '';
         const updatedAt = raw.updated_at || '';
         const status = raw.status || 'preview';
-
-        // 날짜 파싱 (YYMMDD_N → YYYY-MM-DD)
         const date = this.parseEditionCodeToDate(editionCode);
 
         return {
@@ -155,6 +180,23 @@ export class PublicationSchemaParser {
             updated_at: updatedAt,
             status: status,
             date: date,
+            schema_version: version
+        };
+    }
+
+    /**
+     * 빈 이슈 반환 (지원되지 않는 버전용)
+     */
+    private static _emptyIssue(version: string): NormalizedIssue {
+        return {
+            id: '',
+            edition_code: '',
+            edition_name: '',
+            article_count: 0,
+            published_at: '',
+            updated_at: '',
+            status: 'preview',
+            date: '',
             schema_version: version
         };
     }

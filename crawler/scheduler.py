@@ -5,6 +5,8 @@ APScheduler 기반 독립 스케줄러
 
 실행: python scheduler.py
 PM2: pm2 start ecosystem.config.js
+
+[V2] desk 코어 기반 통합 파이프라인 사용
 """
 import os
 import sys
@@ -16,17 +18,23 @@ from datetime import datetime
 # 경로 설정
 CRAWLER_DIR = os.path.dirname(os.path.abspath(__file__))
 ZND_ROOT = os.path.dirname(CRAWLER_DIR)
+DESK_DIR = os.path.join(ZND_ROOT, 'desk')
 
 # Add paths for imports
 sys.path.insert(0, CRAWLER_DIR)  # for core.xxx
 sys.path.insert(0, ZND_ROOT)     # for crawler.xxx (when called from outside)
-sys.path.insert(0, os.path.join(ZND_ROOT, 'desk'))  # for desk modules
+sys.path.insert(0, DESK_DIR)     # for desk modules
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-# Use relative imports (core.xxx) since we're inside crawler directory
-from core.extractor import run_full_pipeline
+# [V2] desk 통합 파이프라인 사용 (기존 extractor 대체)
+from src.scheduler_pipeline import (
+    run_pipeline, 
+    PipelinePhase,
+    PHASES_COLLECT_ONLY,
+    PHASES_UNTIL_PUBLISH
+)
 from core.logger import log_crawl_event
 
 # 설정 파일 경로
@@ -54,16 +62,36 @@ def save_schedules(schedules: list):
         json.dump({'schedules': schedules}, f, indent=2, ensure_ascii=False)
 
 
-def run_scheduled_crawl(schedule_name: str = "Scheduled"):
-    """스케줄에 의해 호출되는 크롤링 작업"""
+def run_scheduled_crawl(schedule_name: str = "Scheduled", phases: list = None):
+    """
+    스케줄에 의해 호출되는 크롤링 작업
+    
+    [V2] desk 통합 파이프라인 사용
+    """
     print(f"\n{'='*50}")
     print(f"⏰ [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Scheduled crawl triggered")
     print(f"📋 Schedule: {schedule_name}")
     print(f"{'='*50}\n")
     
     try:
-        result = run_full_pipeline(schedule_name)
-        log_crawl_event("Scheduled", f"Pipeline completed: {result.get('message', 'OK')}", 0, success=result.get('success', True))
+        # [V2] 새 파이프라인 사용 (desk 코어 직접 호출)
+        if phases is None:
+            phases = PHASES_COLLECT_ONLY  # 기본: 수집만
+        
+        result = run_pipeline(phases=phases, schedule_name=schedule_name)
+        log_crawl_event("Scheduled", f"Pipeline completed: {result.message}", 0, success=result.success)
+        
+        # 디스코드 알림
+        if result.collected > 0 or result.extracted > 0:
+            try:
+                from core.discord_notifier import send_simple_message
+                send_simple_message(
+                    f"📡 {schedule_name} 완료\n{result.message}",
+                    "🕐 스케줄 수집"
+                )
+            except Exception as e:
+                print(f"⚠️ [Discord] Notification failed: {e}")
+                
     except Exception as e:
         log_crawl_event("Scheduled", f"Pipeline failed: {str(e)}", 0, success=False)
         print(f"❌ Scheduled crawl error: {e}")
@@ -197,6 +225,18 @@ def create_scheduler() -> BlockingScheduler:
             cron = sched.get('cron', '0 8 * * *')  # 기본: 매일 8시
             parts = cron.split()
             
+            # [V2] phases 파싱 (schedules.json에서 지정 가능)
+            phases_config = sched.get('phases', ['collect', 'extract'])
+            phases = []
+            for phase_name in phases_config:
+                try:
+                    phases.append(PipelinePhase(phase_name.lower()))
+                except ValueError:
+                    print(f"⚠️ Unknown phase: {phase_name}")
+            
+            if not phases:
+                phases = PHASES_COLLECT_ONLY
+            
             try:
                 trigger = CronTrigger(
                     minute=parts[0] if len(parts) > 0 else '0',
@@ -206,14 +246,15 @@ def create_scheduler() -> BlockingScheduler:
                     day_of_week=parts[4] if len(parts) > 4 else '*'
                 )
                 
+                # [V2] phases 인자 추가
                 scheduler.add_job(
                     run_scheduled_crawl,
                     trigger,
-                    args=[sched.get('name', 'Unnamed')],  # 스케줄 이름 전달
+                    args=[sched.get('name', 'Unnamed'), phases],
                     id=sched.get('id', f"job_{sched.get('name', 'unknown')}"),
                     name=sched.get('name', 'Unnamed')
                 )
-                print(f"✅ Registered: {sched.get('name')} ({cron})")
+                print(f"✅ Registered: {sched.get('name')} ({cron}) - phases: {[p.value for p in phases]}")
             except Exception as e:
                 print(f"⚠️ Failed to register schedule '{sched.get('name')}': {e}")
     

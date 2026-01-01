@@ -123,17 +123,25 @@ function renderScheduleList(schedules) {
     const container = document.getElementById('schedule-list');
     if (!container) return;
 
-    container.innerHTML = schedules.map(s => `
+    container.innerHTML = schedules.map(s => {
+        const phasesStr = (s.phases || ['collect', 'extract']).join(', ');
+        const phasesBadge = getPhaseBadge(s.phases || ['collect', 'extract']);
+        return `
         <div class="schedule-item" data-id="${s.id}">
             <label class="toggle">
                 <input type="checkbox" class="schedule-toggle" ${s.enabled ? 'checked' : ''}>
                 <span class="slider"></span>
             </label>
-            <span class="schedule-name">${s.name}</span>
+            <div class="schedule-info">
+                <span class="schedule-name">${s.name}</span>
+                <span class="schedule-phases">${phasesBadge}</span>
+            </div>
             <code class="schedule-cron">${s.cron}</code>
+            <button class="btn btn-sm btn-edit" onclick="editSchedule('${s.id}')">✏️</button>
             <button class="btn btn-sm btn-delete" onclick="deleteSchedule('${s.id}')">🗑️</button>
         </div>
-    `).join('');
+    `;
+    }).join('');
 
     // Toggle events
     container.querySelectorAll('.schedule-toggle').forEach(toggle => {
@@ -190,12 +198,11 @@ function setupSettingsEvents() {
 
     // 스케줄 추가
     document.getElementById('btn-add-schedule')?.addEventListener('click', async () => {
-        const name = prompt('스케줄 이름:');
-        const cron = prompt('Cron 표현식 (예: 30 6 * * *):');
-        if (name && cron) {
+        const result = await showScheduleDialog();
+        if (result) {
             await fetchAPI('/api/settings/schedules', {
                 method: 'POST',
-                body: JSON.stringify({ name, cron })
+                body: JSON.stringify(result)
             });
             await loadSettingsData();
         }
@@ -355,3 +362,167 @@ document.addEventListener('DOMContentLoaded', () => {
 window.initSettingsPopup = initSettingsPopup;
 window.openSettingsPopup = openSettingsPopup;
 window.deleteSchedule = deleteSchedule;
+window.editSchedule = editSchedule;
+
+// =============================================================================
+// Helper Functions for Phases
+// =============================================================================
+
+const AVAILABLE_PHASES = [
+    { id: 'collect', name: '수집', icon: '📡' },
+    { id: 'extract', name: '추출', icon: '📄' },
+    { id: 'analyze', name: '분석', icon: '🤖', disabled: true },
+    { id: 'score', name: '점수', icon: '📊', disabled: true },
+    { id: 'classify', name: '분류', icon: '🏷️' },
+    { id: 'reject', name: '배제', icon: '🗑️' },
+    { id: 'publish', name: '발행', icon: '📤' },
+    { id: 'release', name: '릴리즈', icon: '🚀', disabled: true }
+];
+
+function getPhaseBadge(phases) {
+    if (!phases || phases.length === 0) return '<span class="phase-badge">수집만</span>';
+
+    const icons = phases.map(p => {
+        const phase = AVAILABLE_PHASES.find(ap => ap.id === p);
+        return phase ? phase.icon : '❓';
+    });
+
+    // 간단한 프리셋 이름
+    const phasesStr = phases.join(',');
+    if (phasesStr === 'collect,extract') return '<span class="phase-badge phase-collect">📡 수집</span>';
+    if (phasesStr === 'classify,reject,publish') return '<span class="phase-badge phase-publish">📤 발행</span>';
+    if (phases.includes('publish')) return '<span class="phase-badge phase-publish">' + icons.join('') + '</span>';
+
+    return '<span class="phase-badge">' + icons.join('') + '</span>';
+}
+
+async function showScheduleDialog(existingData = null) {
+    return new Promise((resolve) => {
+        const isEdit = !!existingData;
+        const name = existingData?.name || '';
+        const cron = existingData?.cron || '0 8 * * *';
+        const phases = existingData?.phases || ['collect', 'extract'];
+        const description = existingData?.description || '';
+
+        // 다이얼로그 HTML
+        const dialog = document.createElement('div');
+        dialog.className = 'modal schedule-dialog';
+        dialog.innerHTML = `
+            <div class="modal-content" style="max-width: 450px;">
+                <h3>${isEdit ? '스케줄 수정' : '새 스케줄 추가'}</h3>
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" id="sched-name" class="input" value="${name}" placeholder="오전 수집">
+                </div>
+                <div class="form-group">
+                    <label>Cron 표현식</label>
+                    <input type="text" id="sched-cron" class="input" value="${cron}" placeholder="30 6 * * *">
+                    <small style="color:var(--text-secondary)">분 시 일 월 요일 (예: 30 6 * * * = 매일 6:30)</small>
+                </div>
+                <div class="form-group">
+                    <label>실행 단계</label>
+                    <div class="phase-selector" id="phase-selector">
+                        ${AVAILABLE_PHASES.map(p => `
+                            <label class="phase-option ${p.disabled ? 'disabled' : ''}" title="${p.disabled ? '준비 중' : p.name}">
+                                <input type="checkbox" value="${p.id}" 
+                                    ${phases.includes(p.id) ? 'checked' : ''} 
+                                    ${p.disabled ? 'disabled' : ''}>
+                                <span>${p.icon} ${p.name}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>설명 (선택)</label>
+                    <input type="text" id="sched-desc" class="input" value="${description}" placeholder="메모">
+                </div>
+                <div class="dialog-buttons">
+                    <button class="btn" id="sched-cancel">취소</button>
+                    <button class="btn btn-primary" id="sched-save">저장</button>
+                </div>
+            </div>
+        `;
+
+        // 스타일 추가
+        if (!document.getElementById('schedule-dialog-styles')) {
+            const style = document.createElement('style');
+            style.id = 'schedule-dialog-styles';
+            style.textContent = `
+                .schedule-dialog .modal-content { padding: 1.5rem; }
+                .phase-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+                .phase-option { 
+                    display: flex; align-items: center; gap: 0.3rem;
+                    padding: 0.4rem 0.6rem; border-radius: 4px;
+                    background: var(--bg-secondary); cursor: pointer;
+                    border: 1px solid var(--border-color);
+                }
+                .phase-option:has(input:checked) { 
+                    background: var(--accent-primary); 
+                    border-color: var(--accent-primary);
+                    color: white;
+                }
+                .phase-option.disabled { opacity: 0.5; cursor: not-allowed; }
+                .phase-option input { display: none; }
+                .dialog-buttons { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem; }
+                .schedule-info { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; }
+                .schedule-phases { font-size: 0.75rem; }
+                .phase-badge { 
+                    padding: 0.15rem 0.4rem; border-radius: 3px;
+                    background: var(--bg-secondary); font-size: 0.75rem;
+                }
+                .phase-badge.phase-collect { background: #3498db22; color: #3498db; }
+                .phase-badge.phase-publish { background: #2ecc7122; color: #2ecc71; }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.appendChild(dialog);
+
+        // 이벤트
+        dialog.querySelector('#sched-cancel').onclick = () => {
+            dialog.remove();
+            resolve(null);
+        };
+
+        dialog.querySelector('#sched-save').onclick = () => {
+            const selectedPhases = Array.from(dialog.querySelectorAll('#phase-selector input:checked'))
+                .map(cb => cb.value);
+
+            const result = {
+                name: dialog.querySelector('#sched-name').value || '새 스케줄',
+                cron: dialog.querySelector('#sched-cron').value || '0 8 * * *',
+                phases: selectedPhases.length > 0 ? selectedPhases : ['collect', 'extract'],
+                description: dialog.querySelector('#sched-desc').value
+            };
+
+            dialog.remove();
+            resolve(result);
+        };
+
+        // 배경 클릭으로 닫기
+        dialog.onclick = (e) => {
+            if (e.target === dialog) {
+                dialog.remove();
+                resolve(null);
+            }
+        };
+    });
+}
+
+async function editSchedule(id) {
+    // 현재 스케줄 데이터 가져오기
+    const result = await fetchAPI('/api/settings/schedules');
+    if (!result.success) return;
+
+    const schedule = result.schedules.find(s => s.id === id);
+    if (!schedule) return;
+
+    const updated = await showScheduleDialog(schedule);
+    if (updated) {
+        await fetchAPI(`/api/settings/schedules/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(updated)
+        });
+        await loadSettingsData();
+    }
+}

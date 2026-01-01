@@ -79,16 +79,16 @@ def evaluate_article(data: dict) -> dict:
     # Normalize field names first
     data = normalize_field_names(data)
     
-    zero_echo_score = float(data.get('zero_echo_score', 0))
-    # [MODIFIED] Correct Logic: High Score is GOOD (Not Noise).
-    # ZS >= 7.0 is High Value (Low Noise).
-    # ZS < 4.0 is worthless (High Noise).
-    min_score_threshold = 4.0
+    zero_echo_score = float(data.get('zero_echo_score', 10))  # Default to worst (10)
+    # [v1.2.0] ZES is LOWER = BETTER (Zero Echo = No Noise)
+    # ZES <= 3.0 is Excellent (Almost no noise)
+    # ZES > 6.0 is worthless (Too much noise)
+    max_acceptable_zes = 6.0
     
-    if zero_echo_score < min_score_threshold:
+    if zero_echo_score > max_acceptable_zes:
         return {
             'status': 'worthless',
-            'reason': f'low_score ({zero_echo_score} < {min_score_threshold})',
+            'reason': f'high_noise ({zero_echo_score} > {max_acceptable_zes})',
             'data': data
         }
     

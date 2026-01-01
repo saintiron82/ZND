@@ -198,46 +198,21 @@ def reject_articles():
 @publisher_bp.route('/api/publisher/next-edition', methods=['GET'])
 def get_next_edition():
     """
-    다음 발행 회차 정보 제안
+    다음 발행 회차 정보 제안 (lastIndex 기반)
     """
-    # 1. 최근 발행 회차 조회
-    editions = manager.get_editions(limit=1)
-    
     now = datetime.now(timezone.utc)
-    # KST 보정 (UTC+9) - 단순화: 9시간 더함
-    # 실제 프로덕션에서는 pytz 사용 권장하지만, 외부 의존성 최소화
+    # KST 보정 (UTC+9)
     from datetime import timedelta
     now_kst = now + timedelta(hours=9)
     date_str = now_kst.strftime('%y%m%d')
     
-    next_code = f"{date_str}_1"
-    next_name = "제1호"
+    # Get lastIndex from meta (단일값 조회 - 효율적)
+    meta = manager.db.get_publications_meta() or {}
+    last_idx = meta.get('lastIndex', 0)
     
-    if editions:
-        last = editions[0]
-        last_code = last.get('edition_code') or last.get('code')
-        last_name = last.get('edition_name') or last.get('name')
-        
-        # Code Logic (YYMMDD_Index) - 날짜는 오늘, 인덱스는 마지막+1
-        if last_code and '_' in last_code:
-            parts = last_code.split('_')
-            try:
-                last_idx = int(parts[1])
-                # 날짜와 상관없이 마지막 인덱스 + 1
-                next_code = f"{date_str}_{last_idx + 1}"
-                
-                # Name Logic: 마지막 호수 + 1
-                if last_name:
-                    import re
-                    match = re.search(r'(\d+)', last_name)
-                    if match:
-                        last_num = int(match.group(1))
-                        next_name = f"제{last_num + 1}호"
-
-            except ValueError:
-                # 파싱 실패시 기본값
-                next_code = f"{date_str}_1"
-                next_name = "제1호"
+    next_idx = last_idx + 1
+    next_code = f"{date_str}_{next_idx}"
+    next_name = f"제{next_idx}호"
     
     edition_name_format = os.getenv('EDITION_NAME_FORMAT', '제{N}호')
 
@@ -245,6 +220,8 @@ def get_next_edition():
         'success': True,
         'next_edition_code': next_code,
         'next_edition_name': next_name,
+        'next_index': next_idx,
+        'lastIndex': last_idx,
         'edition_name_format': edition_name_format
     })
 

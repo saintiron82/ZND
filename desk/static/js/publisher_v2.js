@@ -89,66 +89,39 @@ const PublisherV2 = {
 
 
     suggestNextEdition() {
-        // Force calculation always
-
-        // Fetch format & history if needed
-        fetchAPI('/api/publisher/editions?limit=1')
+        // Use dedicated next-edition API (lastIndex 기반)
+        fetchAPI('/api/publisher/next-edition')
             .then(res => {
                 if (!res.success) {
                     console.error('API Error:', res);
-                    // Fallback calculation
-                    this._calcAndSetNext(null, '{N}호');
+                    this._setEditionInputs(1, '제1호');
                     return;
                 }
 
                 const format = res.edition_name_format || '{N}호';
-                this.state.editionFormat = format; // Store for publish
+                this.state.editionFormat = format;
 
-                // historyEditions가 로드되지 않았으면 res에서 사용
-                const latest = (this.state.historyEditions.length > 0)
-                    ? this.state.historyEditions[0]
-                    : (res.editions && res.editions.length > 0 ? res.editions[0] : null);
+                // API가 이미 계산한 값 사용
+                const nextIdx = res.next_index || 1;
+                const nextCode = res.next_edition_code;
 
-                this._calcAndSetNext(latest, format);
+                this._setEditionInputs(nextIdx, format, nextCode);
             })
             .catch(err => {
                 console.error('Fetch Error:', err);
-                // Fallback on error
-                this._calcAndSetNext(null, '{N}호');
+                this._setEditionInputs(1, '제1호');
             });
     },
 
-    _calcAndSetNext(latestEdition, format = '{N}호') {
+    _setEditionInputs(nextNum, format, nextCode = null) {
         const today = new Date();
-        const yy = String(today.getFullYear()).slice(2); // YYYY -> YY
+        const yy = String(today.getFullYear()).slice(2);
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
-
-        // Target Format: YYMMDD_N (e.g. 251227_1)
         const dateStr = `${yy}${mm}${dd}`;
 
-        let nextNum = 1;
+        const code = nextCode || `${dateStr}_${nextNum}`;
 
-        if (latestEdition && (latestEdition.edition_code || latestEdition.code)) {
-            const editionCode = latestEdition.edition_code || latestEdition.code;
-            const parts = editionCode.split('_');
-
-            // Expected format check (2 parts: YYMMDD, N)
-            // e.g. 251227_5
-            if (parts.length === 2) {
-                const editionDateStr = parts[0];
-                // 최근 발행의 index 직접 사용 (파싱보다 신뢰성 높음)
-                const lastIndex = latestEdition.index || parseInt(parts[1]) || 1;
-                if (editionDateStr === dateStr) {
-                    nextNum = lastIndex + 1;
-                }
-            }
-        }
-
-        const nextCode = `${dateStr}_${nextNum}`;
-        // const nextName = format.replace('{N}', nextNum); // Old logic
-
-        // Update UI logic for Split Format
         const parts = format.split('{N}');
         const prefix = parts[0] || '';
         const suffix = parts[1] || '';
@@ -161,20 +134,15 @@ const PublisherV2 = {
         if (prefixEl) prefixEl.textContent = prefix;
         if (suffixEl) suffixEl.textContent = suffix;
         if (numberInput) numberInput.value = nextNum;
-        if (codeInput) codeInput.value = nextCode;
+        if (codeInput) codeInput.value = code;
 
-        // Add listener to auto-update code when number changes (optional but good for consistency)
+        // Add listener to auto-update code when number changes
         if (numberInput && !numberInput.dataset.listenerAdded) {
             numberInput.dataset.listenerAdded = 'true';
             numberInput.addEventListener('input', (e) => {
                 const val = e.target.value;
                 if (codeInput && val) {
-                    // Keep date part, update index
-                    const currentCode = codeInput.value;
-                    if (currentCode.includes('_')) {
-                        const datePart = currentCode.split('_')[0];
-                        codeInput.value = `${datePart}_${val}`;
-                    }
+                    codeInput.value = `${dateStr}_${val}`;
                 }
             });
         }
@@ -473,6 +441,42 @@ const PublisherV2 = {
         });
     },
 
+    async rejectSelected() {
+        if (this.state.selectedDraftIds.size === 0) {
+            alert('폐기할 기사를 선택하세요.');
+            return;
+        }
+
+        const count = this.state.selectedDraftIds.size;
+        if (!confirm(`선택한 ${count}건의 기사를 폐기하시겠습니까?`)) return;
+
+        this.showLoading();
+        try {
+            const result = await fetchAPI('/api/publisher/reject', {
+                method: 'POST',
+                body: JSON.stringify({
+                    article_ids: Array.from(this.state.selectedDraftIds),
+                    reason: 'manual'
+                })
+            });
+
+            if (result.success) {
+                const successCount = result.results.filter(r => r.success).length;
+                alert(`${successCount}건 폐기 완료`);
+
+                // 선택 초기화 및 목록 새로고침
+                this.state.selectedDraftIds.clear();
+                await this.loadDraftArticles();
+            } else {
+                alert('Error: ' + (result.error || 'Unknown error'));
+            }
+        } catch (e) {
+            alert('폐기 중 오류: ' + e.message);
+        } finally {
+            this.hideLoading();
+        }
+    },
+
     updateDraftToolbar() {
         const span = document.getElementById('selected-count');
         if (span) span.textContent = `${this.state.selectedDraftIds.size}개 선택됨`;
@@ -751,7 +755,7 @@ const PublisherV2 = {
 
         container.querySelectorAll('.kanban-card').forEach(card => {
             const artIS = parseFloat(card.dataset.is) || 0;
-            const artZS = parseFloat(card.dataset.zs) || 10;
+            const artZS = Number.isNaN(parseFloat(card.dataset.zs)) ? 10 : parseFloat(card.dataset.zs);  // [FIX] 0도 유효한 값
 
             const isScoreSpan = card.querySelector('.score-is');
             const zsScoreSpan = card.querySelector('.score-zs');

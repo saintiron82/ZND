@@ -76,7 +76,9 @@
                                 <span id="edition-suffix" style="color: var(--text-secondary);">호</span>
                             </div>
                         </div>
-                        <div class="labeled-input" style="display: flex; align-items: flex-end;">
+                        <div class="labeled-input" style="display: flex; align-items: flex-end; gap: 8px;">
+                            <button id="btn-reject-selected" type="button" class="btn btn-danger"
+                                onclick="PublisherV2.rejectSelected()">🗑️ 선택 폐기</button>
                             <button id="btn-publish-now" type="button" class="btn btn-primary">📢 Preview 발행
                                 (Draft)</button>
                         </div>
@@ -183,7 +185,7 @@
                         style="margin-right: 10px; background: var(--bg-card); border-color: var(--border-color);">🔗
                         원본</button>
                     <!-- <button id="btn-raw-classify" class="btn btn-primary" style="margin-right: 10px;">📂 분류</button> -->
-                    <!-- <button id="btn-raw-reject" class="btn btn-danger" style="margin-right: 10px;">🗑️ 폐기</button> -->
+                    <button id="btn-raw-reject" class="btn btn-danger" style="margin-right: 10px;">🗑️ 폐기</button>
                     <button id="btn-raw-close" class="btn">닫기</button>
                 </div>
             </div>

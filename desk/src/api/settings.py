@@ -63,6 +63,10 @@ def update_schedule(schedule_id: str):
                     schedule['cron'] = data['cron']
                 if 'name' in data:
                     schedule['name'] = data['name']
+                if 'phases' in data:
+                    schedule['phases'] = data['phases']
+                if 'description' in data:
+                    schedule['description'] = data['description']
                 break
         else:
             return jsonify({
@@ -98,6 +102,7 @@ def create_schedule():
             'name': data.get('name', '새 스케줄'),
             'cron': data.get('cron', '0 12 * * *'),
             'enabled': data.get('enabled', True),
+            'phases': data.get('phases', ['collect', 'extract']),
             'description': data.get('description', '')
         }
         

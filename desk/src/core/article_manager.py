@@ -427,8 +427,14 @@ class ArticleManager:
             # 3. Update _meta (Summary)
             print(f"📝 [Publish] Updating publications meta...")
             try:
-                meta = self.db.get_publications_meta() or {'issues': []}
+                meta = self.db.get_publications_meta() or {'issues': [], 'lastIndex': 0}
                 issues = meta.get('issues', [])
+                
+                # Get current index from pub_doc
+                current_index = pub_doc.get('index', 1)
+                
+                # Update lastIndex (항상 최대값 유지)
+                meta['lastIndex'] = max(meta.get('lastIndex', 0), current_index)
                 
                 # Check existing
                 existing_idx = next((i for i, x in enumerate(issues) if x.get('edition_code') == edition_code), -1)
@@ -437,7 +443,7 @@ class ArticleManager:
                 issue_summary = {
                     'edition_code': edition_code,
                     'edition_name': edition_name,
-                    'index': pub_doc.get('index', 1),
+                    'index': current_index,
                     'article_count': pub_doc['article_count'],
                     'published_at': pub_doc['published_at'],
                     'updated_at': now,

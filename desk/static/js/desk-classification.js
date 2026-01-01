@@ -391,53 +391,77 @@ function renderScoreBreakdown(article) {
     const v1 = getScore(rawUtil, 'V1'), v2 = getScore(rawUtil, 'V2'), v3 = getScore(rawUtil, 'V3'), v4 = getScore(rawUtil, 'V4');
 
     if (t1 > 0 || t2 > 0 || t3 > 0 || t4 > 0 || Object.keys(rawSignal).length > 0) {
-        // Calculate Averages (V1.1: 4 items per category)
-        const sAvg = (t1 + t2 + t3 + t4) / 4.0;
-        const nAvg = (p1 + p2 + p3 + p4) / 4.0;
+        // Calculate Boosted Max Aggregation (V1.2.0: MAX + AVG * 0.25)
+        const getBoosted = (arr) => {
+            const max = Math.max(...arr);
+            const avg = arr.reduce((a, b) => a + b, 0) / arr.length;
+            return Math.min(10.0, max + avg * 0.25);
+        };
 
-        let uAvg = 1.0;
+        const sAgg = getBoosted([t1, t2, t3, t4]);
+        const nAgg = getBoosted([p1, p2, p3, p4]);
+
+        let uAgg = 1.0;
         if (v1 > 0 || v2 > 0 || v3 > 0 || v4 > 0) {
-            uAvg = (v1 + v2 + v3 + v4) / 4.0;
+            uAgg = getBoosted([v1, v2, v3, v4]);
         } else if (rawUtil.Combined_Multiplier !== undefined) {
-            uAvg = parseFloat(rawUtil.Combined_Multiplier);
+            uAgg = parseFloat(rawUtil.Combined_Multiplier);
         }
-        uAvg = Math.max(1.0, uAvg);
+
+        // Calculate Purity (V1.2.1: 허용치 2→1)
+        const noisePenalty = Math.max(0, nAgg - 1) / 10;
+        const purity = sAgg * (1 - noisePenalty);
+
+        // Quality Score = (Purity × 0.7) + (U × 0.3)
+        const qualityScore = (purity * 0.7) + (uAgg * 0.3);
+
+        // ZES = 10 - Quality Score (낮을수록 좋음!)
+        const zesCalc = 10 - qualityScore;
 
         html += `
             <div style="flex: 1; min-width: 300px; background: #2f3640; padding: 10px; border-radius: 6px;">
                 <div style="color: #00cec9; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #555; padding-bottom:5px;">
-                    Zero Echo Score (ZES)
+                    ZS (Zero Echo Score) - v1.2.0 ⬇️낮을수록 좋음
                 </div>
                 
                 <table style="width: 100%; font-size: 0.9em; border-collapse: collapse;">
                     <!-- Components -->
-                    <tr style="border-bottom: 1px solid #555;"><th style="text-align:left; color:#aaa;">Factor</th><th style="text-align: center; color:#aaa;">Avg</th><th style="text-align:right; color:#ddd;">Inputs</th></tr>
+                    <tr style="border-bottom: 1px solid #555;"><th style="text-align:left; color:#aaa;">Factor</th><th style="text-align: center; color:#aaa;">Agg</th><th style="text-align:right; color:#ddd;">Inputs</th></tr>
                     
                     <tr>
                         <td>Signal (S)</td>
-                        <td style="text-align:center; font-weight:bold; color: #74b9ff;">${sAvg.toFixed(1)}</td>
+                        <td style="text-align:center; font-weight:bold; color: #74b9ff;">${sAgg.toFixed(2)}</td>
                         <td style="text-align:right; font-size: 0.75em; color: #aaa;">T: ${t1}, ${t2}, ${t3}, ${t4}</td>
                     </tr>
                     <tr>
                         <td>Noise (N)</td>
-                        <td style="text-align:center; font-weight:bold; color: #ff7675;">${nAvg.toFixed(1)}</td>
+                        <td style="text-align:center; font-weight:bold; color: #ff7675;">${nAgg.toFixed(2)}</td>
                         <td style="text-align:right; font-size: 0.75em; color: #aaa;">P: ${p1}, ${p2}, ${p3}, ${p4}</td>
                     </tr>
                     <tr>
                         <td>Utility (U)</td>
-                        <td style="text-align:center; font-weight:bold; color: #a29bfe;">${uAvg.toFixed(1)}</td>
+                        <td style="text-align:center; font-weight:bold; color: #a29bfe;">${uAgg.toFixed(2)}</td>
                         <td style="text-align:right; font-size: 0.75em; color: #aaa;">V: ${v1}, ${v2}, ${v3}, ${v4}</td>
+                    </tr>
+                    <tr style="border-top: 1px dashed #555;">
+                        <td>Purity</td>
+                        <td colspan="2" style="text-align:right; font-weight:bold; color: #55efc4;">${purity.toFixed(2)} <span style="font-size:0.75em; color:#888;">(S × (1 - penalty))</span></td>
+                    </tr>
+                    <tr>
+                        <td>Quality</td>
+                        <td colspan="2" style="text-align:right; font-weight:bold; color: #ffeaa7;">${qualityScore.toFixed(2)} <span style="font-size:0.75em; color:#888;">(Purity×0.7 + U×0.3)</span></td>
                     </tr>
                 </table>
 
                 <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 4px; font-size: 0.85em; font-family: monospace; color: #dfe6e9;">
-                    Formula:<br>
-                    10 - [ ((S + 10 - N)/2) * (U/10) ]
+                    Formula (v1.2.0):<br>
+                    Quality = (Purity × 0.7) + (U × 0.3)<br>
+                    <strong>ZS = 10 - Quality</strong> (낮을수록 좋음)
                 </div>
                 
                 <div style="margin-top: 10px; border-top: 1px solid #777; padding-top: 5px; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight:bold; color: #fff;">Final ZES</span>
-                    <span style="font-weight:bold; color: #00cec9; font-size: 1.2em;">${analysis.zero_echo_score?.toFixed(1) ?? '-'}</span>
+                    <span style="font-weight:bold; color: #fff;">Final ZS</span>
+                    <span style="font-weight:bold; color: #00cec9; font-size: 1.2em;">${analysis.zero_echo_score?.toFixed(2) ?? zesCalc.toFixed(2)}</span>
                 </div>
             </div>
         `;

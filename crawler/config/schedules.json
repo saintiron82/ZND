@@ -4,27 +4,57 @@
       "id": "morning_crawl",
       "name": "오전 수집",
       "cron": "30 6 * * *",
-      "enabled": true
+      "phases": [
+        "collect",
+        "extract"
+      ],
+      "enabled": true,
+      "description": "오전 6:30 수집"
+    },
+    {
+      "id": "noon_crawl",
+      "name": "점심 수집",
+      "cron": "30 12 * * *",
+      "phases": [
+        "collect",
+        "extract"
+      ],
+      "enabled": true,
+      "description": "점심 12:30 수집"
     },
     {
       "id": "evening_crawl",
       "name": "오후 수집",
       "cron": "30 18 * * *",
-      "enabled": true
-    },
-    {
-      "id": "7594d174",
-      "name": "점심수집",
-      "cron": "30 12 * * *",
+      "phases": [
+        "collect",
+        "extract"
+      ],
       "enabled": true,
-      "description": ""
+      "description": "오후 6:30 수집"
     },
     {
-      "id": "718b26df",
-      "name": "새벽수집",
+      "id": "midnight_crawl",
+      "name": "새벽 수집",
       "cron": "30 0 * * *",
+      "phases": [
+        "collect",
+        "extract"
+      ],
       "enabled": true,
-      "description": ""
+      "description": "새벽 0:30 수집"
+    },
+    {
+      "id": "daily_publish",
+      "name": "저녁 발행",
+      "cron": "0 20 * * *",
+      "phases": [
+        "classify",
+        "reject",
+        "publish"
+      ],
+      "enabled": false,
+      "description": "저녁 8시 분류→배제→발행 (분석 구현 후 활성화)"
     }
   ]
 }

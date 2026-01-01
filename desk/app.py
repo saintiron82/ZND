@@ -94,6 +94,12 @@ def index():
     return redirect('/board')
 
 
+@app.route('/desk')
+def desk_redirect():
+    """Desk 진입점 - Board로 리다이렉트 (Nginx 호환성)"""
+    return redirect('/board')
+
+
 @app.route('/settings')
 def settings():
     """설정 페이지 (추후 구현)"""

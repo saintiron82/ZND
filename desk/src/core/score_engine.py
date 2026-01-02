@@ -1,9 +1,9 @@
 """
-ZED Scoring Engine v10.0 (ZES v1.2.0)
+ZED Scoring Engine v10.0 (ZES v1.2.1)
 
 Supports:
 - V1.0.0 Schema (IS_Analysis, ZES_Raw_Metrics)
-- ZES v1.2.0 Formula: 70% Purity + 30% Utility
+- ZES v1.2.1 Formula: 70% Purity + 30% Utility (항목 레벨 노이즈 필터링)
 - Legacy fallback for backwards compatibility
 """
 
@@ -106,12 +106,13 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
 
 def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     """
-    Calculate ZeroEcho Score using V1.2.0 formula.
+    Calculate ZeroEcho Score using V1.2.1 formula.
     
     Philosophy: 70% Reliability (Purity) + 30% Utility
-    - Purity = S × (1 - max(0, N-2)/10)  # Noise 2점까지 허용
-    - ZES = (Purity × 0.7) + (U × 0.3) - Fine_Adjustment
-    - Hard Cutoff: S < 4.0 → ZES = 0
+    - 항목 레벨 필터링: P1~P4 중 ≤1점은 0으로 처리 (1점 이하 노이즈 무시)
+    - Purity = S × (1 - N/10)
+    - ZES = 10 - ((Purity × 0.7) + (U × 0.3) + Fine_Adjustment)
+    - Hard Cutoff: S < 4.0 → ZES = 10 (worst)
     """
     # --- Extract Signal (T1, T2, T3, T4) ---
     signal = zes_raw_metrics.get('Signal', {})
@@ -129,10 +130,16 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     # --- Extract Noise (P1, P2, P3, P4) ---
     noise = zes_raw_metrics.get('Noise', {})
     noise_items = noise.get('Items', noise)
-    p1 = safe_float(noise_items.get('P1', {}).get('Score') if isinstance(noise_items.get('P1'), dict) else noise_items.get('P1'))
-    p2 = safe_float(noise_items.get('P2', {}).get('Score') if isinstance(noise_items.get('P2'), dict) else noise_items.get('P2'))
-    p3 = safe_float(noise_items.get('P3', {}).get('Score') if isinstance(noise_items.get('P3'), dict) else noise_items.get('P3'))
-    p4 = safe_float(noise_items.get('P4', {}).get('Score') if isinstance(noise_items.get('P4'), dict) else noise_items.get('P4'))
+    p1_raw = safe_float(noise_items.get('P1', {}).get('Score') if isinstance(noise_items.get('P1'), dict) else noise_items.get('P1'))
+    p2_raw = safe_float(noise_items.get('P2', {}).get('Score') if isinstance(noise_items.get('P2'), dict) else noise_items.get('P2'))
+    p3_raw = safe_float(noise_items.get('P3', {}).get('Score') if isinstance(noise_items.get('P3'), dict) else noise_items.get('P3'))
+    p4_raw = safe_float(noise_items.get('P4', {}).get('Score') if isinstance(noise_items.get('P4'), dict) else noise_items.get('P4'))
+    
+    # [v1.2.1] 항목 레벨 필터링: ≤1 → 0 (1점 이하 노이즈는 무시)
+    p1 = 0.0 if p1_raw <= 1.0 else p1_raw
+    p2 = 0.0 if p2_raw <= 1.0 else p2_raw
+    p3 = 0.0 if p3_raw <= 1.0 else p3_raw
+    p4 = 0.0 if p4_raw <= 1.0 else p4_raw
     
     # Aggregation: MAX + AVG * 0.25
     noise_scores = [p1, p2, p3, p4]
@@ -156,16 +163,16 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     fine_adj_obj = zes_raw_metrics.get('Fine_Adjustment', {})
     fine_adjustment = safe_float(fine_adj_obj.get('Score'))
     
-    # --- ZES v1.2.0 Formula ---
+    # --- ZES v1.2.1 Formula ---
     # 1. Hard Cutoff: S < 4.0 → ZES = 10 (worst score)
     if s < 4.0:
         zero_echo_score = 10.0  # 최악의 점수 (낮을수록 좋음이므로 10이 최악)
         purity = 0.0
         quality_score = 0.0
-        print(f"⚠️ [ZES v1.2.0] Hard Cutoff: S={s:.2f} < 4.0 → ZES=10 (worst)")
+        print(f"⚠️ [ZES v1.2.1] Hard Cutoff: S={s:.2f} < 4.0 → ZES=10 (worst)")
     else:
-        # 2. Purity = S × (1 - max(0, N-1)/10)  [v1.2.1: 허용치 2→1]
-        noise_penalty = max(0.0, n - 1.0) / 10.0
+        # 2. Purity = S × (1 - N/10)  [v1.2.1: 항목 레벨에서 이미 ≤1 필터링됨]
+        noise_penalty = n / 10.0
         purity = s * (1.0 - noise_penalty)
         
         # 3. Quality Score = (Purity × 0.7) + (U × 0.3) + Fine_Adjustment
@@ -179,16 +186,20 @@ def calculate_zes_v1(zes_raw_metrics: dict) -> tuple[float, dict]:
     
     breakdown = {
         'Signal': {'T1': t1, 'T2': t2, 'T3': t3, 'T4': t4, 'S_Agg': round(s, 2)},
-        'Noise': {'P1': p1, 'P2': p2, 'P3': p3, 'P4': p4, 'N_Agg': round(n, 2)},
+        'Noise': {
+            'P1_Raw': p1_raw, 'P2_Raw': p2_raw, 'P3_Raw': p3_raw, 'P4_Raw': p4_raw,
+            'P1': p1, 'P2': p2, 'P3': p3, 'P4': p4, 
+            'N_Agg': round(n, 2)
+        },
         'Utility': {'V1': v1, 'V2': v2, 'V3': v3, 'V4': v4, 'U_Agg': round(u, 2)},
         'Purity': round(purity, 2),
         'Fine_Adjustment': fine_adjustment,
         'Quality_Score': round(quality_score, 2) if s >= 4.0 else 0.0,
         'ZES_Final': zero_echo_score,
-        'Formula': 'v1.2.0'
+        'Formula': 'v1.2.1'
     }
     
-    print(f"✅ [ZES v1.2.0] S={s:.2f}, N={n:.2f}, U={u:.2f} → Purity={purity:.2f} → Quality={quality_score:.2f} → ZES={zero_echo_score} (lower=better)")
+    print(f"✅ [ZES v1.2.1] S={s:.2f}, N={n:.2f}, U={u:.2f} → Purity={purity:.2f} → Quality={quality_score:.2f} → ZES={zero_echo_score} (lower=better)")
     
     return zero_echo_score, breakdown
 

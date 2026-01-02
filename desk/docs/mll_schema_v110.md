@@ -1,11 +1,11 @@
-# MLL Schema v1.1.0 - ZND News Factory
+# MLL Schema v1.2.1 - ZND News Factory
 
 ## 개요
 이 문서는 MLL(Machine Learning Layer) 분석 결과의 JSON 스키마 구조를 정의합니다.
 
-**버전**: v1.1.0  
-**업데이트 날짜**: 2025-12-29  
-**변경 사항**: Signal/Noise/Utility 각 카테고리 3항목 → 4항목 확장
+**버전**: v1.2.1  
+**업데이트 날짜**: 2026-01-02  
+**변경 사항**: ZES 공식 개선 - 항목 레벨 노이즈 필터링 (≤1 → 0)
 
 ---
 
@@ -88,21 +88,46 @@
 
 ---
 
-## ZES (Zero Echo Score) 계산 공식
+## ZES (Zero Echo Score) 계산 공식 (v1.2.1)
 
-### 평균 계산 (V1.1.0)
+### 1단계: 항목 레벨 노이즈 필터링
 ```
-S_avg = (T1 + T2 + T3 + T4) / 4.0
-N_avg = (P1 + P2 + P3 + P4) / 4.0
-U_avg = max(1.0, (V1 + V2 + V3 + V4) / 4.0)
-```
-
-### 최종 점수
-```
-ZES = 10 - (((S_avg + 10 - N_avg) / 2) × (U_avg / 10) + Fine_Adjustment)
+# 1점 이하 노이즈는 무시 (≤1 → 0)
+P1' = 0 if P1 ≤ 1 else P1
+P2' = 0 if P2 ≤ 1 else P2
+P3' = 0 if P3 ≤ 1 else P3
+P4' = 0 if P4 ≤ 1 else P4
 ```
 
-**범위**: 0.0 ~ 10.0 (소수점 1자리)
+### 2단계: 집계 (Aggregation)
+```
+# 공식: MAX + AVG × 0.25 (최댓값 10.0)
+S = min(10, max(T1~T4) + avg(T1~T4) × 0.25)
+N = min(10, max(P1'~P4') + avg(P1'~P4') × 0.25)  # 필터링된 값 사용
+U = min(10, max(V1~V4) + avg(V1~V4) × 0.25)
+```
+
+### 3단계: Purity 계산
+```
+Purity = S × (1 - N/10)
+```
+
+### 4단계: Quality Score
+```
+Quality = (Purity × 0.7) + (U × 0.3) + Fine_Adjustment
+```
+
+### 5단계: 최종 ZES
+```
+ZES = 10 - Quality
+```
+
+### Hard Cutoff
+```
+S < 4.0 → ZES = 10 (최악의 점수)
+```
+
+**범위**: 0.0 ~ 10.0 (소수점 2자리, **낮을수록 좋음**)
 
 ---
 

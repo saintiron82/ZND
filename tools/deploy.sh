@@ -12,8 +12,7 @@ TARGET_BRANCH=$1
 # If no argument provided, ask user
 if [ -z "$TARGET_BRANCH" ]; then
     echo "Current branch is: $CURRENT_BRANCH"
-    read -p "Enter branch to deploy (default: $CURRENT_BRANCH): " INPUT_BRANCH
-    TARGET_BRANCH=${INPUT_BRANCH:-$CURRENT_BRANCH}
+    read -e -i "$CURRENT_BRANCH" -p "Enter branch to deploy: " TARGET_BRANCH
 fi
 
 echo ""

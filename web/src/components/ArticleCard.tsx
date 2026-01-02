@@ -36,7 +36,6 @@ interface ArticleCardProps {
     className?: string;
     hideSummary?: boolean;
     cols?: number;
-    rows?: number;
     currentDate?: string;
     showFeedback?: boolean;
     trendingTags?: string[];
@@ -67,7 +66,7 @@ const getTrendingTagStyle = (rank: number): string => {
     }
 };
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, rows = 2, currentDate, showFeedback = true, trendingTags = [] }) => {
+const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hideSummary = false, cols = 4, currentDate, showFeedback = true, trendingTags = [] }) => {
     const { id, title_ko, summary, tags, url, crawled_at, published_at, source_id, impact_score, zero_echo_score, awards, layout_type } = article;
 
     // Use zero_echo_score for quality indication
@@ -136,14 +135,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
             rel="noopener noreferrer"
             onClick={handleArticleClick}
             className={cn(
-                "group flex flex-col h-full p-5 transition-all duration-300 rounded-xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm border border-zinc-300 dark:border-zinc-700 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-500/10",
+                "group flex flex-col justify-between h-full p-5 transition-all duration-300 rounded-xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm border border-zinc-300 dark:border-zinc-700 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-500/10",
                 className
             )}
         >
-            <div className={cn(
-                "flex flex-col gap-3 flex-1 min-h-0",
-                cols === 10 && "items-center text-center max-w-4xl mx-auto"
-            )}>
+            <div className="flex flex-col gap-3 flex-1 justify-center">
                 {/* Award Badges */}
                 {awards && awards.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 shrink-0">
@@ -175,7 +171,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                 </h3>
 
                 {!hideSummary && (
-                    <p className="text-muted-foreground leading-relaxed font-sans text-sm break-keep">
+                    <p className="text-muted-foreground leading-relaxed font-sans text-sm break-keep mt-4 px-4">
                         {summary}
                     </p>
                 )}

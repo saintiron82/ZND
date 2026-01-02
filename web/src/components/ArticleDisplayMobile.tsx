@@ -72,9 +72,7 @@ export default function ArticleDisplayMobile({ articles, loading, error, current
                             article={article}
                             className="w-full"
                             hideSummary={false}
-                            // Mobile doesn't use cols/rows for layout, but we pass defaults
                             cols={6}
-                            rows={10}
                             currentDate={currentDate}
                         />
                     </div>
@@ -126,10 +124,9 @@ export default function ArticleDisplayMobile({ articles, loading, error, current
                                 >
                                     <ArticleCard
                                         article={article}
-                                        className="h-full w-full"
+                                        className="w-full"
                                         hideSummary={false}
                                         cols={6}
-                                        rows={10}
                                         currentDate={currentDate}
                                     />
                                 </div>

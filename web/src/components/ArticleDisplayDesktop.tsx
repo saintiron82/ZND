@@ -3,7 +3,6 @@
 import React, { useMemo } from 'react';
 import ArticleCard, { Article } from './ArticleCard';
 import { Calendar } from 'lucide-react';
-import { LAYOUT_CONFIG } from '../config/layoutConfig';
 import { optimizeArticleOrder } from '../utils/layoutOptimizer';
 
 interface ArticleDisplayProps {
@@ -13,91 +12,93 @@ interface ArticleDisplayProps {
     currentDate?: string;
 }
 
-// Deterministic hash to keep layout stable
-const getHash = (str: string) => {
-    if (!str) return 0;
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
+// Award style by type
+const getAwardStyle = (award: string) => {
+    switch (award) {
+        case "Today's Headline":
+            return "bg-gradient-to-r from-amber-400 to-orange-500 text-white";
+        case "Zero Echo Award":
+            return "bg-gradient-to-r from-emerald-400 to-teal-500 text-white";
+        case "Hot Topic":
+            return "bg-gradient-to-r from-rose-400 to-pink-500 text-white";
+        default:
+            return "bg-teal-500 text-white";
     }
-    return Math.abs(hash);
 };
 
-// Physics-Based Layout Calculator (High-Res 10px Grid + Random Width)
-// NO MINIMUM HEIGHT CONSTRAINTS - Cards shrink to fit content exactly
-const getSizeFromScore = (score: number, id: string, summary: string = '', title: string = ''): { className: string, cols: number, rows: number } => {
-    const { constraints, physics, grid } = LAYOUT_CONFIG;
+// 레이아웃 패턴 종류
+type LayoutPattern = 'L-shape' | 'reverse-L' | 'T-shape' | 'reverse-T' | 'three-equal' | 'two-one' | 'one-two';
 
-    const textLength = summary.length;
-    const minW = constraints.minWidth;
-    const maxW = constraints.maxWidth;
-
-    // 1. Determine WIDTH (Random + Score Bias for Variety)
-    const hash = getHash(id);
-    const widthRange = maxW - minW + 1;
-    let cols = minW + (hash % widthRange);
-
-    // Bias: High Impact articles (Score > 7) get wider cards
-    if (score >= 7.0) {
-        cols = Math.max(cols, 6);
-    }
-    cols = Math.min(cols, maxW);
-
-    // 2. Physics Calculation - Exact Pixel Height Needed
-    const availableWidthPx = (cols * physics.colWidthPx) - physics.paddingPx - ((cols - 1) * grid.gap);
-    const charsPerLine = availableWidthPx / physics.charWidthPx;
-    const estimatedLines = Math.ceil(textLength / charsPerLine);
-
-    // RequiredHeight = Header(Title+Meta) + TextBody + Padding
-    const requiredHeightPx = physics.headerHeightPx + (estimatedLines * physics.lineHeightPx) + physics.paddingPx;
-
-    // 3. High-Res Grid Quantization (10px steps)
-    const gapPx = 16;
-    const trackPx = grid.cellHeight; // 10
-
-    let rows = Math.ceil((requiredHeightPx + gapPx) / (trackPx + gapPx));
-
-    // MINIMAL floor only - just prevent degenerate tiny cards
-    const MIN_ROWS = 5;
-    rows = Math.max(rows, MIN_ROWS);
-
-    // Max cap for very long articles
-    rows = Math.min(rows, 80);
-
-    // Column class mappings for Tailwind
-    const colMap: Record<number, string> = {
-        3: "md:col-span-3",
-        4: "md:col-span-4",
-        5: "md:col-span-5",
-        6: "md:col-span-6",
-        7: "md:col-span-7",
-        8: "md:col-span-8",
-        9: "md:col-span-9",
-        10: "md:col-span-10"
-    };
-
-    const colClass = colMap[cols] || "md:col-span-4";
-
-    return { className: colClass, cols, rows };
+// 패턴별 기사 수
+const PATTERN_ARTICLE_COUNT: Record<LayoutPattern, number> = {
+    'L-shape': 3,
+    'reverse-L': 3,
+    'T-shape': 3,
+    'reverse-T': 3,
+    'three-equal': 3,
+    'two-one': 3,
+    'one-two': 3,
 };
+
+// 패턴 순서 (다양성을 위해 순환)
+const PATTERN_SEQUENCE: LayoutPattern[] = [
+    'L-shape',      // ㄱ자: 왼쪽 세로 + 오른쪽 2개
+    'reverse-T',    // 역T: 상단 2개 + 하단 넓게
+    'reverse-L',    // ㄴ자: 왼쪽 2개 + 오른쪽 세로
+    'T-shape',      // T자: 상단 넓게 + 하단 2개
+    'three-equal',  // 3등분
+    'two-one',      // 상단 2개 작게 + 하단 1개 넓게
+    'one-two',      // 상단 1개 넓게 + 하단 2개 작게
+];
 
 export default function ArticleDisplayDesktop({ articles, loading, error, currentDate }: ArticleDisplayProps) {
-    // Optimization Logic:
-    // If articles already have layout data (cols, rows) from server-side baking, use them directly.
-    // Otherwise, generate layout client-side (fallback).
     const optimizedArticles = useMemo(() => {
         if (!articles || articles.length === 0) return [];
-
-        // Check if first article already has layout info (fast check)
-        // If so, assume entire list is pre-baked (view_model.json)
         if (articles[0].cols && articles[0].rows) {
             return articles;
         }
-
         return optimizeArticleOrder(articles);
     }, [articles]);
+
+    // 어워드 기사와 일반 기사 분리
+    const { awardArticles, normalArticles } = useMemo(() => {
+        const awarded: Article[] = [];
+        const normal: Article[] = [];
+        const awardedIds = new Set<string>();
+
+        for (const article of optimizedArticles) {
+            if (article.awards && article.awards.length > 0 && !awardedIds.has(article.id)) {
+                awarded.push(article);
+                awardedIds.add(article.id);
+            } else if (!awardedIds.has(article.id)) {
+                normal.push(article);
+            }
+        }
+
+        return { awardArticles: awarded, normalArticles: normal };
+    }, [optimizedArticles]);
+
+    // 일반 기사들을 패턴에 따라 그룹화
+    const articleGroups = useMemo(() => {
+        const groups: { pattern: LayoutPattern; articles: Article[] }[] = [];
+        let idx = 0;
+        let patternIdx = 0;
+
+        while (idx < normalArticles.length) {
+            const pattern = PATTERN_SEQUENCE[patternIdx % PATTERN_SEQUENCE.length];
+            const count = PATTERN_ARTICLE_COUNT[pattern];
+            const groupArticles = normalArticles.slice(idx, idx + count);
+
+            if (groupArticles.length > 0) {
+                groups.push({ pattern, articles: groupArticles });
+            }
+
+            idx += count;
+            patternIdx++;
+        }
+
+        return groups;
+    }, [normalArticles]);
 
     if (loading) {
         return (
@@ -126,71 +127,202 @@ export default function ArticleDisplayDesktop({ articles, loading, error, curren
     }
 
     return (
-        <div className="w-full">
-            {/* 10-Column Grid with High-Res 10px Rows */}
-            <div className="grid grid-cols-2 md:grid-cols-10 gap-4 auto-rows-[10px] grid-flow-dense">
-                {optimizedArticles.map((article, index) => {
-                    const key = article.id || `article-${index}`;
+        <div className="w-full space-y-8">
+            {/* 어워드 기사들 각각 풀 와이드로 단독 배치 */}
+            {awardArticles.length > 0 && (
+                <section className="space-y-6">
+                    {awardArticles.map((article, idx) => (
+                        <AwardCard key={article.id || `award-${idx}`} article={article} />
+                    ))}
+                </section>
+            )}
 
-                    // Headline article - special handling
-                    if (index === 0) {
-                        // Use pre-calculated size from optimizer if available, otherwise calculate
-                        const cols = article.cols || 6;
-                        const rows = article.rows ? Math.max(article.rows, 15) : 15;
+            {/* 구분선 */}
+            {normalArticles.length > 0 && awardArticles.length > 0 && (
+                <div className="border-t border-border/30" />
+            )}
 
-                        return (
-                            <React.Fragment key={key}>
-                                <div className="hidden md:block md:col-start-1 md:col-span-2 md:row-start-1 pointer-events-none" style={{ gridRowEnd: `span ${rows}` }} />
-                                <div className="md:col-start-3 md:col-span-6 md:row-start-1 flex flex-col" style={{ gridRowEnd: `span ${rows}` }}>
-                                    <ArticleCard
-                                        article={article}
-                                        className="h-full font-sans"
-                                        hideSummary={false}
-                                        cols={6}
-                                        rows={rows}
-                                        currentDate={currentDate}
-                                    />
-                                </div>
-                                <div className="hidden md:block md:col-start-9 md:col-span-2 md:row-start-1 pointer-events-none" style={{ gridRowEnd: `span ${rows}` }} />
-                            </React.Fragment>
-                        );
-                    }
+            {/* 일반 기사들 - 다양한 패턴으로 배치 */}
+            {articleGroups.map((group, groupIdx) => (
+                <LayoutSection
+                    key={`group-${groupIdx}`}
+                    pattern={group.pattern}
+                    articles={group.articles}
+                    currentDate={currentDate}
+                />
+            ))}
+        </div>
+    );
+}
 
-                    // Use pre-calculated sizes from optimizer directly (no recalculation!)
-                    // The optimizer already calculated optimal sizes for gap-filling
-                    const cols = article.cols || 4;
-                    const rows = article.rows || 10;
+// 레이아웃 섹션 컴포넌트
+interface LayoutSectionProps {
+    pattern: LayoutPattern;
+    articles: Article[];
+    currentDate?: string;
+}
 
-                    // Column class mapping
-                    const colMap: Record<number, string> = {
-                        3: "md:col-span-3",
-                        4: "md:col-span-4",
-                        5: "md:col-span-5",
-                        6: "md:col-span-6",
-                        7: "md:col-span-7",
-                        8: "md:col-span-8",
-                        9: "md:col-span-9",
-                        10: "md:col-span-10"
-                    };
-                    const colClass = colMap[cols] || "md:col-span-4";
+function LayoutSection({ pattern, articles, currentDate }: LayoutSectionProps) {
+    // 기사가 부족하면 균등 분할로 폴백
+    if (articles.length < 3) {
+        return (
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {articles.map((article, idx) => (
+                    <ArticleCard
+                        key={article.id || `article-${idx}`}
+                        article={article}
+                        className="font-sans"
+                        hideSummary={false}
+                        cols={5}
+                        currentDate={currentDate}
+                    />
+                ))}
+            </section>
+        );
+    }
 
-                    return (
-                        <div
-                            key={key}
-                            className={`${colClass} flex flex-col`}
-                            style={{ gridRowEnd: `span ${rows}` }}
-                        >
-                            <ArticleCard
-                                article={article}
-                                className="h-full font-sans"
-                                hideSummary={false}
-                                cols={cols}
-                                rows={rows}
-                                currentDate={currentDate}
-                            />
+    const [a1, a2, a3] = articles;
+
+    switch (pattern) {
+        case 'L-shape':
+            // ㄱ자: 왼쪽 세로 긴 기사 + 오른쪽 2개 가로
+            return (
+                <section className="flex flex-col md:flex-row gap-4">
+                    <div className="md:w-2/5">
+                        <ArticleCard article={a1} className="font-sans h-full" hideSummary={false} cols={4} currentDate={currentDate} />
+                    </div>
+                    <div className="md:w-3/5 flex flex-col gap-4">
+                        <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={6} currentDate={currentDate} />
+                        <ArticleCard article={a3} className="font-sans" hideSummary={false} cols={6} currentDate={currentDate} />
+                    </div>
+                </section>
+            );
+
+        case 'reverse-L':
+            // ㄴ자: 왼쪽 2개 가로 + 오른쪽 세로 긴 기사
+            return (
+                <section className="flex flex-col md:flex-row gap-4">
+                    <div className="md:w-3/5 flex flex-col gap-4">
+                        <ArticleCard article={a1} className="font-sans" hideSummary={false} cols={6} currentDate={currentDate} />
+                        <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={6} currentDate={currentDate} />
+                    </div>
+                    <div className="md:w-2/5">
+                        <ArticleCard article={a3} className="font-sans h-full" hideSummary={false} cols={4} currentDate={currentDate} />
+                    </div>
+                </section>
+            );
+
+        case 'T-shape':
+            // T자: 상단 넓게 + 하단 2개
+            return (
+                <section className="flex flex-col gap-4">
+                    <ArticleCard article={a1} className="font-sans" hideSummary={false} cols={10} currentDate={currentDate} />
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="md:w-1/2">
+                            <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={5} currentDate={currentDate} />
                         </div>
-                    );
-                })}
+                        <div className="md:w-1/2">
+                            <ArticleCard article={a3} className="font-sans" hideSummary={false} cols={5} currentDate={currentDate} />
+                        </div>
+                    </div>
+                </section>
+            );
+
+        case 'reverse-T':
+            // 역T자: 상단 2개 + 하단 넓게
+            return (
+                <section className="flex flex-col gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="md:w-1/2">
+                            <ArticleCard article={a1} className="font-sans" hideSummary={false} cols={5} currentDate={currentDate} />
+                        </div>
+                        <div className="md:w-1/2">
+                            <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={5} currentDate={currentDate} />
+                        </div>
+                    </div>
+                    <ArticleCard article={a3} className="font-sans" hideSummary={false} cols={10} currentDate={currentDate} />
+                </section>
+            );
+
+        case 'three-equal':
+            // 3등분 균일
+            return (
+                <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <ArticleCard article={a1} className="font-sans" hideSummary={false} cols={3} currentDate={currentDate} />
+                    <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={3} currentDate={currentDate} />
+                    <ArticleCard article={a3} className="font-sans" hideSummary={false} cols={3} currentDate={currentDate} />
+                </section>
+            );
+
+        case 'two-one':
+            // 상단 2개 작게 + 하단 1개 넓게
+            return (
+                <section className="flex flex-col gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="md:w-2/5">
+                            <ArticleCard article={a1} className="font-sans" hideSummary={false} cols={4} currentDate={currentDate} />
+                        </div>
+                        <div className="md:w-3/5">
+                            <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={6} currentDate={currentDate} />
+                        </div>
+                    </div>
+                    <ArticleCard article={a3} className="font-sans" hideSummary={false} cols={10} currentDate={currentDate} />
+                </section>
+            );
+
+        case 'one-two':
+            // 상단 1개 넓게 + 하단 2개 작게
+            return (
+                <section className="flex flex-col gap-4">
+                    <ArticleCard article={a1} className="font-sans" hideSummary={false} cols={10} currentDate={currentDate} />
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="md:w-3/5">
+                            <ArticleCard article={a2} className="font-sans" hideSummary={false} cols={6} currentDate={currentDate} />
+                        </div>
+                        <div className="md:w-2/5">
+                            <ArticleCard article={a3} className="font-sans" hideSummary={false} cols={4} currentDate={currentDate} />
+                        </div>
+                    </div>
+                </section>
+            );
+
+        default:
+            return null;
+    }
+}
+
+// 어워드 카드 컴포넌트
+function AwardCard({ article }: { article: Article }) {
+    return (
+        <div className="bg-white/5 dark:bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-zinc-300 dark:border-zinc-700 p-6 md:p-8">
+            {/* Award Badges */}
+            <div className="flex flex-wrap gap-1.5 mb-4">
+                {article.awards?.map((award: string) => (
+                    <span key={award} className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${getAwardStyle(award)}`}>
+                        🏆 {award}
+                    </span>
+                ))}
+            </div>
+
+            <a href={article.url} target="_blank" rel="noopener noreferrer" className="block group">
+                <span className="text-[11px] font-bold text-teal-600 dark:text-teal-400">
+                    ZS {(article.zero_echo_score || 0).toFixed(1)}
+                </span>
+                <h2 className="text-2xl md:text-3xl font-black leading-tight group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors mt-2 mb-4">
+                    {article.title_ko}
+                </h2>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    {article.summary}
+                </p>
+            </a>
+
+            <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-3 flex-wrap">
+                <span className="text-[11px] font-bold text-teal-600 dark:text-teal-400">{article.source_id}</span>
+                {article.tags?.slice(0, 4).map((tag: string) => (
+                    <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-secondary/50 text-muted-foreground">
+                        {tag}
+                    </span>
+                ))}
             </div>
         </div>
     );

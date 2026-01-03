@@ -1,6 +1,6 @@
 ﻿﻿'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ArticleDisplay from '@/components/ArticleDisplay';
 import PageFrame from '@/components/PageFrame';
 import { RefreshCcw, ArrowRight, ChevronDown } from 'lucide-react';
@@ -143,12 +143,33 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
     const prevIssue = prevIssueId ? groupedByIssue[prevIssueId]?.issue : null;
     const nextIssue = nextIssueId ? groupedByIssue[nextIssueId]?.issue : null;
 
+    // 첫 페이지 로드 시 뷰 카운터 증가
+    useEffect(() => {
+        if (currentIssue?.edition_code) {
+            fetch('/api/stats/view', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ edition_code: currentIssue.edition_code })
+            }).catch(() => { }); // 실패해도 무시
+        }
+    }, []); // 첫 마운트 시에만 실행
+
     // Issue change handler
     const handleIssueChange = (issueId: string) => {
         const newIndex = sortedIssueIds.indexOf(issueId);
         if (newIndex !== -1) {
             setCurrentIssueIndex(newIndex);
             setIsDropdownOpen(false);
+
+            // Firestore 뷰 카운터 (비동기, fire-and-forget)
+            const issue = groupedByIssue[issueId]?.issue;
+            if (issue?.edition_code) {
+                fetch('/api/stats/view', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ edition_code: issue.edition_code })
+                }).catch(() => { }); // 실패해도 무시
+            }
         }
     };
 

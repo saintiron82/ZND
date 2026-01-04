@@ -144,6 +144,15 @@ class ArticleManager:
         # 히스토리에 URL 등록
         self.db.update_history(url, article_id, ArticleState.COLLECTED.value)
         
+        # Registry에도 등록 (메모리 캐시 동기화)
+        try:
+            from .article_registry import get_registry
+            registry = get_registry()
+            if registry.is_initialized():
+                registry.register(article, skip_firestore=True)  # 이미 Firestore에 저장했으므로 스킵
+        except Exception as e:
+            print(f"⚠️ [ArticleManager] Registry sync failed: {e}")
+        
         return article
 
     

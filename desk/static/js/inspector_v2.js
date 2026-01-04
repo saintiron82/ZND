@@ -204,6 +204,9 @@ async function processResult() {
             document.getElementById('result-area').value = ''; // clear
             selectedGroups.clear(); // clear selection
             loadArticles(); // reload list
+
+            // 칸반보드 탭에 갱신 알림 (Cross-Tab Communication)
+            localStorage.setItem('board_refresh_trigger', Date.now().toString());
         } else {
             alert('Error saving results: ' + data.error);
         }

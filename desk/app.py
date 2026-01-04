@@ -141,6 +141,7 @@ if __name__ == '__main__':
         
         print("📦 Initializing Article Registry...")
         db_client = FirestoreClient()
+        db_client.refresh_remote_hashes()  # 사이트 오픈 시 히스토리 동기화!
         init_registry(db_client=db_client)
         
         print(f"🚀 ZND Desk v2.0 starting on port {port}...")

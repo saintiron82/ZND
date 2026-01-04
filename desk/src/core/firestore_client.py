@@ -745,16 +745,29 @@ class FirestoreClient:
 
     def save_history(self, url: str, status: str = None, reason: str = None, article_id: str = None):
         """히스토리 저장 (URL 방문 기록) - 로컬 + Firestore 둘 다"""
+        import hashlib
+        
         # 로컬 히스토리 저장
         self.history[url] = get_kst_now()
         self._save_history_file()
         
-        # Firestore 히스토리도 동기화
-        if article_id:
-            try:
-                self.update_history(url, article_id, status or 'COLLECTED')
-            except Exception as e:
-                print(f"⚠️ [History] Firestore sync failed: {e}")
+        # [FIX] article_id 없으면 자동 생성
+        if not article_id:
+            article_id = hashlib.md5(url.encode()).hexdigest()[:12]
+        
+        # Firestore 히스토리 항상 동기화 (조건 제거)
+        try:
+            self.update_history(url, article_id, status or 'VISITED')
+            # 런타임 해시셋도 갱신
+            url_hash = self._url_to_key(url)
+            self._remote_hashes.add(url_hash)
+        except Exception as e:
+            print(f"⚠️ [History] Firestore sync failed: {e}")
+
+    def refresh_remote_hashes(self):
+        """원격 히스토리 해시 강제 새로고침 (사이트 재오픈 시)"""
+        self._load_remote_history_hashes()
+        print(f"🔄 [History] Refreshed: {len(self._remote_hashes)} remote hashes")
 
     def remove_from_history(self, url: str):
         """히스토리에서 제거 (재처리용)"""

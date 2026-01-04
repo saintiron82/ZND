@@ -10,6 +10,10 @@
 // Time Range Filter State
 let currentTimeRangeHours = parseInt(localStorage.getItem('boardTimeRangeHours')) || 24; // Default: 24 hours
 
+// Auto Refresh State
+let autoRefreshInterval = null;
+const AUTO_REFRESH_MS = 15000; // 15초
+
 async function initBoardPage() {
     // Restore saved time range and update UI
     const savedHours = parseInt(localStorage.getItem('boardTimeRangeHours')) || 24;
@@ -32,6 +36,9 @@ async function initBoardPage() {
 
     await loadBoardData();
     setupBoardEvents();
+
+    // 자동 갱신 시작
+    startAutoRefresh();
 }
 
 async function loadBoardData() {
@@ -457,6 +464,54 @@ function initMobileAccordion() {
     });
 }
 
+// =============================================================================
+// Auto Refresh (15초 폴링)
+// =============================================================================
+
+function startAutoRefresh() {
+    // 기존 인터벌 정리
+    stopAutoRefresh();
+
+    autoRefreshInterval = setInterval(async () => {
+        console.log('🔄 [AutoRefresh] 칸반보드 갱신 중...');
+        try {
+            await loadBoardData();
+        } catch (e) {
+            console.warn('[AutoRefresh] 갱신 실패:', e);
+        }
+    }, AUTO_REFRESH_MS);
+
+    console.log(`✅ [AutoRefresh] 시작됨 (${AUTO_REFRESH_MS / 1000}초 간격)`);
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+        console.log('⏹️ [AutoRefresh] 중지됨');
+    }
+}
+
+// 페이지 이탈 시 자동 정리
+window.addEventListener('beforeunload', stopAutoRefresh);
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopAutoRefresh();
+    } else {
+        // 페이지 다시 보이면 즉시 갱신 + 폴링 재시작
+        loadBoardData();
+        startAutoRefresh();
+    }
+});
+
+// 다른 탭에서 분석 저장 시 즉시 갱신 (Cross-Tab Communication)
+window.addEventListener('storage', (e) => {
+    if (e.key === 'board_refresh_trigger') {
+        console.log('🔔 [CrossTab] 다른 탭에서 변경 감지, 칸반보드 갱신!');
+        loadBoardData();
+    }
+});
+
 // Export to Global Scope
 window.initBoardPage = initBoardPage;
 window.loadBoardData = loadBoardData;
@@ -467,3 +522,6 @@ window.toggleSelectAll = toggleSelectAll;
 window.toggleArticleSelection = toggleArticleSelection;
 window.toggleSelectionMode = toggleSelectionMode;
 window.sendBackSelected = sendBackSelected;
+window.startAutoRefresh = startAutoRefresh;
+window.stopAutoRefresh = stopAutoRefresh;
+

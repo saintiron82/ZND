@@ -37,6 +37,11 @@ def get_overview():
         각 상태별 기사 목록 및 개수
     """
     from datetime import datetime
+    from src.core.firestore_client import FirestoreClient
+    
+    # 페이지 오픈 시 다중 시스템 동기화
+    db = FirestoreClient()
+    db.refresh_remote_hashes()
     
     limit = int(request.args.get('limit', 50))
     since_str = request.args.get('since')

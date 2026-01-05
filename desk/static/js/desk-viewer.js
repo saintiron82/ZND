@@ -21,6 +21,19 @@ async function showArticleRaw(articleId) {
             const rejectBtn = document.getElementById('btn-raw-reject');
             if (rejectBtn) rejectBtn.dataset.id = articleId;
 
+            // [NEW] Set ID for restore button and toggle visibility based on state
+            const restoreBtn = document.getElementById('btn-raw-restore');
+            if (restoreBtn) {
+                restoreBtn.dataset.id = articleId;
+                if (article._header?.state === 'REJECTED') {
+                    restoreBtn.classList.remove('hidden');
+                    rejectBtn?.classList.add('hidden'); // 이미 폐기된 상태면 폐기 버튼 숨김
+                } else {
+                    restoreBtn.classList.add('hidden');
+                    rejectBtn?.classList.remove('hidden');
+                }
+            }
+
             // Set ID for classify button
             const classifyBtn = document.getElementById('btn-raw-classify');
             if (classifyBtn) {
@@ -155,6 +168,36 @@ document.getElementById('btn-raw-reject')?.addEventListener('click', async (e) =
             if (typeof loadBoardData === 'function') loadBoardData();
         } else {
             alert('폐기 실패: ' + result.error);
+        }
+    } catch (e) {
+        alert('오류: ' + e.message);
+    } finally {
+        hideLoading();
+    }
+});
+
+// [NEW] Restore Article (복원)
+document.getElementById('btn-raw-restore')?.addEventListener('click', async (e) => {
+    const articleId = e.target.dataset.id;
+    if (!articleId) return;
+
+    if (!confirm('이 기사를 복원하시겠습니까?')) return;
+
+    showLoading();
+    try {
+        const result = await fetchAPI('/api/publisher/restore', {
+            method: 'POST',
+            body: JSON.stringify({ article_ids: [articleId] })
+        });
+
+        if (result.success && result.results?.[0]?.success) {
+            const restoredTo = result.results[0].restored_to || 'CLASSIFIED';
+            alert(`복원 완료 (${restoredTo} 상태로)`);
+            document.getElementById('raw-viewer-modal').classList.add('hidden');
+            if (typeof loadBoardData === 'function') loadBoardData();
+            if (typeof PublisherV2 !== 'undefined' && PublisherV2.loadDraftArticles) PublisherV2.loadDraftArticles();
+        } else {
+            alert('복원 실패: ' + (result.error || result.results?.[0]?.error || 'Unknown'));
         }
     } catch (e) {
         alert('오류: ' + e.message);

@@ -457,9 +457,10 @@ def column_action():
             
         elif action == 'recalculate-scores':
             # 점수 재계산 (분석완료/분류됨 상태만 허용)
+            # [FIX] PUBLISHED/RELEASED 제외 - 발행 완료된 기사는 재계산 대상 아님
             allowed_states = ['ANALYZED', 'CLASSIFIED']
             if state.upper() not in allowed_states:
-                return jsonify({'success': False, 'error': f'재계산은 분석완료/분류됨 상태에서만 가능합니다. (현재: {state.upper()})'})
+                return jsonify({'success': False, 'error': f'재계산은 분석완료/분류됨 상태에서만 가능합니다. (현재: {state.upper()}) - PUBLISHED/RELEASED는 제외됩니다.'})
             
             from src.core.score_engine import process_raw_analysis
             

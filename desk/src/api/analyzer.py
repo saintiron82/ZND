@@ -95,21 +95,27 @@ def save_analysis_results():
     print(f"💾 [Analyzer] Saving {len(results)} analysis results...")
     
     for item in results:
-        # Flexible ID Lookup
-        article_id = (
-            item.get('Article_ID') or
-            item.get('article_id') or
-            item.get('id') or
-            item.get('ArticleID') or
-            item.get('Article ID')
-        )
-        print(f"🔹 [Analyzer] Processing Article ID: {article_id}")
-        
-        if not article_id:
-            errors.append("Skipped item: Missing Article_ID field")
+        # [FIX] Validate item type (skip " " or strings from LLM)
+        if not isinstance(item, dict):
+            # errors.append(f"Skipped invalid item type: {type(item)}")
             continue
-            
+
         try:
+            # Flexible ID Lookup
+            article_id = (
+                item.get('Article_ID') or
+                item.get('article_id') or
+                item.get('id') or
+                item.get('ArticleID') or
+                item.get('Article ID')
+            )
+            
+            print(f"🔹 [Analyzer] Processing Article ID: {article_id}")
+            
+            if not article_id:
+                errors.append("Skipped item: Missing Article_ID field")
+                continue
+
             # 1. Parse Nested Structure (V1 / Inspector Style)
             meta = item.get('Meta', {})
             is_analysis = item.get('IS_Analysis', {})
@@ -162,8 +168,13 @@ def save_analysis_results():
                 errors.append(f"Failed to update {article_id}")
                 
         except Exception as e:
-            print(f"❌ [Analyzer] Error saving {article_id}: {e}")
-            errors.append(f"{article_id}: {str(e)}") # Corrected this line
+            # article_id might be undefined if error occurs before assignment, but here logic ensures it's safeish
+            # or we initialize it. Safe to use 'item' for identifier if needed.
+            # actually article_id is defined inside try, if it fails before, we catch it.
+            # but for logging, we need to be careful if article_id is not yet bound.
+            aid = locals().get('article_id', 'unknown')
+            print(f"❌ [Analyzer] Error saving {aid}: {e}")
+            errors.append(f"{aid}: {str(e)}")
             
     print(f"📊 [Analyzer] Save complete. Success: {saved_count}, Errors: {len(errors)}")
     if errors:

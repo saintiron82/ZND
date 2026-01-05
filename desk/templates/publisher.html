@@ -144,12 +144,18 @@
             <!-- Rejected Articles Section (Compact Footer) -->
             <div id="rejected-section"
                 style="clear: both; width: 100%; margin-top: 30px; border-top: 2px solid #555; padding-top: 10px;">
-                <button id="rejected-toggle-btn" class="btn" onclick="PublisherV2.toggleRejectedVisibility()"
-                    style="width: 100%; padding: 10px; background: transparent; color: #6c757d; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    🗑️ 폐기된 기사 <span id="rejected-count"
-                        style="background: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.85em;">0</span>
-                    <span id="rejected-toggle-icon" style="font-size: 0.8em;">▼ 펼치기</span>
-                </button>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <button id="rejected-toggle-btn" class="btn" onclick="PublisherV2.toggleRejectedVisibility()"
+                        style="flex: 1; padding: 10px; background: transparent; color: #6c757d; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        🗑️ 폐기된 기사 <span id="rejected-count"
+                            style="background: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.85em;">0</span>
+                        <span id="rejected-toggle-icon" style="font-size: 0.8em;">▼ 펼치기</span>
+                    </button>
+                    <button id="btn-restore-all" class="btn" onclick="PublisherV2.restoreAllRejected()"
+                        style="background: #10b981; color: white; padding: 6px 12px; font-size: 0.85em; border-radius: 4px;">
+                        ↩️ 전체 복구
+                    </button>
+                </div>
                 <div id="rejected-cards" class="kanban-cards hidden"
                     style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 10px 0; opacity: 0.7;">
                     <!-- Loaded via JS -->
@@ -185,6 +191,8 @@
                         style="margin-right: 10px; background: var(--bg-card); border-color: var(--border-color);">🔗
                         원본</button>
                     <!-- <button id="btn-raw-classify" class="btn btn-primary" style="margin-right: 10px;">📂 분류</button> -->
+                    <button id="btn-raw-restore" class="btn hidden"
+                        style="margin-right: 10px; background: #10b981; color: white;">↩️ 복원</button>
                     <button id="btn-raw-reject" class="btn btn-danger" style="margin-right: 10px;">🗑️ 폐기</button>
                     <button id="btn-raw-close" class="btn">닫기</button>
                 </div>

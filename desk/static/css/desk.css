@@ -462,6 +462,42 @@ a:hover {
     color: var(--accent-danger);
 }
 
+/* Award Badges */
+.award-badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.award-badge {
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.award-headline {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border: 1px solid #d35400;
+}
+
+.award-zeroecho {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    border: 1px solid #00b894;
+}
+
+.award-hottopic {
+    background: linear-gradient(135deg, #ff7675, #d63031);
+    border: 1px solid #c0392b;
+}
+
 /* =============================================================================
    Kanban Board Styles
    ============================================================================= */

@@ -187,6 +187,11 @@ async function processResult() {
         results = [resultData];
     }
 
+    // [FIX] Sanitize results: Filter out invalid items (e.g., strings like "  " from LLM)
+    results = results.filter(item => {
+        return typeof item === 'object' && item !== null && !Array.isArray(item);
+    });
+
     if (results.length === 0) return alert('No valid results found in JSON.');
 
     updateStatus(`Saving ${results.length} results...`);

@@ -164,7 +164,10 @@ const PublisherV2 = {
         this.showLoading();
         try {
             // Only CLASSIFIED (발행 대기) + REJECTED (폐기) - ANALYZED는 Board에서 분류 필요
-            const url = `/api/publisher/list?state=classified,rejected`;
+            // [NEW] Board와 동일한 시간 필터 적용 (localStorage에서 공유)
+            const timeRangeHours = parseInt(localStorage.getItem('boardTimeRangeHours')) || 48;
+            const sinceTime = new Date(Date.now() - timeRangeHours * 60 * 60 * 1000);
+            const url = `/api/publisher/list?state=classified,rejected&since=${sinceTime.toISOString()}`;
             const result = await fetchAPI(url);
 
             if (result.success) {
@@ -184,6 +187,11 @@ const PublisherV2 = {
                     total: classified.length
                 };
 
+                // [NEW] Calculate Scores & Assign Awards & Sort (Web Logic Sync)
+                this.calculateDraftScores(classified);
+                this.assignDraftAwards(classified);
+                this.sortDraftArticles(classified);
+
                 // Draft = CLASSIFIED only (ANALYZED must be classified in Board first)
                 this.state.draftArticles = [...classified];
                 this.state.rejectedArticles = rejected;
@@ -198,6 +206,80 @@ const PublisherV2 = {
         } finally {
             this.hideLoading();
         }
+    },
+
+    // [NEW] Web Sync Logic: Calculate Combined Scores
+    calculateDraftScores(articles) {
+        articles.forEach(a => {
+            const isA = a.impact_score ?? 0;
+            const zeA = a.zero_echo_score ?? 10;
+
+            // Formula: (10 - ZS) + IS
+            a.combinedScore = (10 - zeA) + isA;
+
+            // Normalize for safety
+            a.impact_score = isA;
+            a.zero_echo_score = zeA;
+        });
+    },
+
+    // [NEW] Web Sync Logic: Assign Awards
+    assignDraftAwards(articles) {
+        // Clear existing
+        articles.forEach(a => { a.awards = []; });
+
+        if (articles.length === 0) return;
+
+        // 1. Today's Headline (Best Combined)
+        const byCombo = [...articles].sort((a, b) => b.combinedScore - a.combinedScore);
+
+        // 2. Zero Echo Award (Lowest ZS, Tie-break by IS)
+        const byZS = [...articles].sort((a, b) => {
+            const zsDiff = a.zero_echo_score - b.zero_echo_score;
+            if (Math.abs(zsDiff) < 0.01) return b.impact_score - a.impact_score;
+            return zsDiff;
+        });
+
+        // 3. Hot Topic (Highest IS)
+        const byIS = [...articles].sort((a, b) => b.impact_score - a.impact_score);
+
+        // Assign (Unique Logic)
+        if (byCombo.length > 0) byCombo[0].awards.push("Today's Headline");
+
+        if (byZS.length > 0) {
+            const winner = byZS[0];
+            if (!winner.awards.includes("Today's Headline")) {
+                winner.awards.push("Zero Echo Award");
+            } else if (byZS.length > 1) {
+                // If 1st place already has Headline, give to runner-up if possible (optional Web parity check needed, assuming strict slot logic)
+                // Web Logic: "Slot 2: Zero Echo Award (only if different from Headline)"
+                // So if same, we look for next best? No, usually distinct winners. Web logic just skips if same ID.
+                // Let's stick to simple logic: If already has headline, maybe just add it?
+                // Web: "addAward... if (byZS.length > 0) addAward..."
+                // Web allows multiple awards per article in candidates, BUT "Phase 0" placement extracts unique top 3.
+                // Here we just toggle badges.
+                if (!winner.awards.includes("Zero Echo Award")) winner.awards.push("Zero Echo Award");
+            }
+        }
+
+        if (byIS.length > 0) {
+            const winner = byIS[0];
+            if (!winner.awards.includes("Hot Topic")) winner.awards.push("Hot Topic");
+        }
+    },
+
+    // [NEW] Web Sync Logic: Sort for Display
+    sortDraftArticles(articles) {
+        articles.sort((a, b) => {
+            // 1. Award Count Descending (Any award puts it on top)
+            const aAwards = a.awards ? a.awards.length : 0;
+            const bAwards = b.awards ? b.awards.length : 0;
+
+            if (aAwards !== bAwards) return bAwards - aAwards;
+
+            // 2. Combined Score Descending
+            return b.combinedScore - a.combinedScore;
+        });
     },
 
     updateStats() {
@@ -234,6 +316,7 @@ const PublisherV2 = {
         // Use shared renderArticleCard with publisher options
         container.innerHTML = articles.map(article => {
             const isSelected = this.state.selectedDraftIds.has(article.article_id);
+            const articleId = article.article_id || article.id;
 
             // 폐기 사유 표시
             let displayCategory = article.category;
@@ -259,7 +342,19 @@ const PublisherV2 = {
             // Hack for display
             const displayArticle = { ...article, category: displayCategory };
 
-            return renderArticleCard(displayArticle, options);
+            // 기본 카드 HTML
+            let cardHtml = renderArticleCard(displayArticle, options);
+
+            // [NEW] 폐기된 기사에 복원 버튼 추가
+            if (isRejectedList) {
+                // 카드 끝 </div> 앞에 복원 버튼 삽입
+                const restoreBtn = `<button class="btn-restore" onclick="event.stopPropagation(); PublisherV2.restoreArticle('${articleId}')" style="position: absolute; bottom: 8px; right: 8px; background: #10b981; color: white; padding: 4px 10px; font-size: 0.75em; border-radius: 4px; border: none; cursor: pointer;">↩️ 복원</button>`;
+                // 카드에 position:relative 추가하고 버튼 삽입
+                cardHtml = cardHtml.replace('class="kanban-card', 'class="kanban-card" style="position: relative;');
+                cardHtml = cardHtml.slice(0, -6) + restoreBtn + '</div>';
+            }
+
+            return cardHtml;
         }).join('');
 
         // Card Events (Common)
@@ -310,6 +405,73 @@ const PublisherV2 = {
             if (icon) {
                 icon.textContent = container.classList.contains('hidden') ? '▼ 펼치기' : '▲ 접기';
             }
+        }
+    },
+
+    // [NEW] 폐기된 기사 전체 복구
+    async restoreAllRejected() {
+        const rejectedCount = this.state.rejectedArticles.length;
+
+        if (rejectedCount === 0) {
+            alert('복구할 기사가 없습니다.');
+            return;
+        }
+
+        if (!confirm(`폐기된 ${rejectedCount}건의 기사를 복구하시겠습니까?\n(분류됨 상태로 복원됩니다)`)) {
+            return;
+        }
+
+        const articleIds = this.state.rejectedArticles.map(a => a.article_id || a.id);
+
+        this.showLoading();
+        try {
+            const result = await fetchAPI('/api/publisher/restore', {
+                method: 'POST',
+                body: JSON.stringify({ article_ids: articleIds })
+            });
+
+            if (result.success) {
+                const successCount = result.results?.filter(r => r.success).length || 0;
+                alert(`${successCount}건 복구 완료`);
+
+                // 목록 새로고침
+                await this.loadDraftArticles();
+            } else {
+                alert('오류: ' + (result.error || 'Unknown error'));
+            }
+        } catch (e) {
+            alert('복구 중 오류: ' + e.message);
+        } finally {
+            this.hideLoading();
+        }
+    },
+
+    // [NEW] 개별 기사 복원
+    async restoreArticle(articleId) {
+        if (!confirm('이 기사를 복원하시겠습니까?')) {
+            return;
+        }
+
+        this.showLoading();
+        try {
+            const result = await fetchAPI('/api/publisher/restore', {
+                method: 'POST',
+                body: JSON.stringify({ article_ids: [articleId] })
+            });
+
+            if (result.success && result.results?.[0]?.success) {
+                const restoredTo = result.results[0].restored_to || 'CLASSIFIED';
+                alert(`복원 완료 (${restoredTo} 상태로)`);
+
+                // 목록 새로고침
+                await this.loadDraftArticles();
+            } else {
+                alert('오류: ' + (result.error || result.results?.[0]?.error || 'Unknown error'));
+            }
+        } catch (e) {
+            alert('복원 중 오류: ' + e.message);
+        } finally {
+            this.hideLoading();
         }
     },
 
@@ -475,6 +637,22 @@ const PublisherV2 = {
         } finally {
             this.hideLoading();
         }
+    },
+
+    // [NEW] Toggle draft article selection (called from checkbox onchange)
+    toggleDraftSelection(articleId, isChecked) {
+        const card = document.querySelector(`.kanban-card[data-id="${articleId}"]`);
+
+        if (isChecked) {
+            this.state.selectedDraftIds.add(articleId);
+            card?.classList.add('selected');
+        } else {
+            this.state.selectedDraftIds.delete(articleId);
+            card?.classList.remove('selected');
+        }
+
+        this.updateDraftToolbar();
+        console.log(`[Selection] ${articleId} ${isChecked ? 'selected' : 'deselected'}. Total: ${this.state.selectedDraftIds.size}`);
     },
 
     updateDraftToolbar() {

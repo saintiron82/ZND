@@ -52,7 +52,7 @@ function renderArticleCard(article, options = {}) {
     const selectedClass = selected ? 'selected' : '';
     const enlargedClass = enlarged ? 'card-enlarged' : '';
     const checkboxHtml = selectable
-        ? `<input type="checkbox" class="card-checkbox" value="${articleId}" ${selected ? 'checked' : ''} onclick="event.stopPropagation()">`
+        ? `<input type="checkbox" class="card-checkbox" value="${articleId}" ${selected ? 'checked' : ''} onclick="event.stopPropagation()" onchange="if(typeof PublisherV2 !== 'undefined') PublisherV2.toggleDraftSelection('${articleId}', this.checked)">`
         : '';
     const categoryHtml = showCategory && category
         ? `<span class="card-category">${category}</span>`
@@ -60,6 +60,32 @@ function renderArticleCard(article, options = {}) {
     const summaryHtml = showSummary && summary
         ? `<div class="card-summary">${summary}</div>`
         : '';
+
+    // Awards Rendering
+    let awardsHtml = '';
+    if (article.awards && article.awards.length > 0) {
+        awardsHtml = '<div class="award-badge-container">';
+        article.awards.forEach(award => {
+            let badgeClass = '';
+            let icon = '';
+
+            if (award === "Today's Headline") {
+                badgeClass = 'award-headline';
+                icon = '🏆';
+            } else if (award === "Zero Echo Award") {
+                badgeClass = 'award-zeroecho';
+                icon = '💎'; // or 🌿
+            } else if (award === "Hot Topic") {
+                badgeClass = 'award-hottopic';
+                icon = '🔥';
+            }
+
+            if (badgeClass) {
+                awardsHtml += `<span class="award-badge ${badgeClass}">${icon} ${award}</span>`;
+            }
+        });
+        awardsHtml += '</div>';
+    }
 
     // Use custom handler or default showArticleRaw
     const clickHandler = onClickHandler || `showArticleRaw('${articleId}')`;
@@ -73,6 +99,7 @@ function renderArticleCard(article, options = {}) {
                 </label>
                 ${categoryHtml}
             </div>` : ''}
+            ${awardsHtml}
             <div class="card-title">${title}</div>
             ${summaryHtml}
             <div class="card-meta">

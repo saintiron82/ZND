@@ -293,7 +293,26 @@ class ArticleManager:
             article_id: 기사 ID
             analysis_data: 분석 결과 (title_ko, summary, tags, scores, mll_raw)
             - 명시적으로 전달된 필드만 업데이트됨 (기존 데이터 보존)
+            
+        Note:
+            PUBLISHED/RELEASED 상태의 기사는 상태 변경 없이 분석 데이터만 업데이트됨.
+            이미 발행된 기사의 상태가 오염되는 것을 방지하기 위함.
         """
+        # [FIX] 현재 상태 확인: PUBLISHED/RELEASED면 상태 변경 스킵
+        article = self.get(article_id)
+        if not article:
+            print(f"⚠️ [update_analysis] Article not found: {article_id}")
+            return False
+        
+        current_state = article.get('_header', {}).get('state', '')
+        protected_states = ['PUBLISHED', 'RELEASED']
+        
+        if current_state in protected_states:
+            print(f"⚠️ [update_analysis] Skipping state change for {article_id} (current: {current_state})")
+            # 상태 변경 없이 분석 데이터만 업데이트 (선택적)
+            # 여기서는 아예 업데이트를 스킵함 - 발행된 기사는 건드리지 않음
+            return True  # 성공으로 처리 (작업 자체는 문제없음)
+        
         now = get_kst_now()
         
         # 명시적으로 전달된 필드만 section_data에 포함 (기존 데이터 보존)

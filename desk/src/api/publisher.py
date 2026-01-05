@@ -36,35 +36,60 @@ def list_articles():
     Query params:
         state: 상태 필터 (comma-separated, e.g., 'classified,rejected')
         limit: 최대 개수 (기본 100)
+        since: ISO 형식 시작 시간 (원본 발간시간 기준 필터) - Board와 동일
     """
     from src.core.article_registry import get_registry
     
     state_filter = request.args.get('state')
     limit = int(request.args.get('limit', 100))
+    since_str = request.args.get('since')
+    since_time = None
+    
+    # [NEW] 시간 필터 파싱 (Board와 동일한 로직)
+    if since_str:
+        try:
+            since_time = datetime.fromisoformat(since_str.replace('Z', '+00:00'))
+        except ValueError:
+            pass
     
     try:
         registry = get_registry()
         
         if not registry.is_initialized():
             # Fallback to manager if registry not ready
-            return _list_articles_fallback(state_filter, limit)
+            return _list_articles_fallback(state_filter, limit, since_time)
         
         if state_filter:
             # Comma-separated support
             if ',' in state_filter:
                 states = [s.strip().upper() for s in state_filter.split(',')]
-                articles = registry.find_by_states(states, limit)
+                articles = registry.find_by_states(states, limit * 2)  # 필터링 전 여유있게
             else:
-                articles = registry.find_by_state(state_filter.upper(), limit)
+                articles = registry.find_by_state(state_filter.upper(), limit * 2)
         else:
             # 기본: ANALYZED + CLASSIFIED 모두 조회
-            articles = registry.find_by_states(['ANALYZED', 'CLASSIFIED'], limit)
+            articles = registry.find_by_states(['ANALYZED', 'CLASSIFIED'], limit * 2)
         
         result = []
         for article in articles:
             # [Fix] Registry 정보는 경량화되어 있으므로 Full Data 로드 (Board와 동일한 패턴)
             full_data = manager.get(article.article_id)
             if full_data:
+                # [NEW] 시간 필터 적용 (원본 발간시간 기준)
+                if since_time:
+                    original = full_data.get('_original', {})
+                    pub_at = original.get('published_at') or original.get('crawled_at')
+                    if pub_at:
+                        try:
+                            if isinstance(pub_at, str):
+                                article_time = datetime.fromisoformat(pub_at.replace('Z', '+00:00'))
+                            else:
+                                article_time = pub_at
+                            if article_time < since_time:
+                                continue  # 오래된 기사 스킵
+                        except:
+                            pass  # 파싱 실패 시 포함
+                
                 from src.core.schema_adapter import SchemaAdapter
                 adapter = SchemaAdapter(full_data, auto_upgrade=True)
                 result.append(adapter.to_publisher_format())
@@ -82,12 +107,17 @@ def list_articles():
                     'zero_echo_score': article.zero_echo_score,
                     'updated_at': article.updated_at
                 })
+            
+            # limit 도달 시 중단
+            if len(result) >= limit:
+                break
 
         return jsonify({
             'success': True,
             'articles': result,
             'count': len(result),
-            'source': 'registry'
+            'source': 'registry',
+            'filtered_by_since': since_str is not None
         })
     
     except Exception as e:
@@ -187,6 +217,55 @@ def reject_articles():
         results.append({
             'article_id': article_id,
             'success': success
+        })
+    
+    return jsonify({
+        'success': True,
+        'results': results
+    })
+
+
+@publisher_bp.route('/api/publisher/restore', methods=['POST'])
+def restore_articles():
+    """
+    폐기된 기사 복구 (REJECTED -> 최적 상태)
+    데이터 무결성에 따라 CLASSIFIED/ANALYZED/COLLECTED 중 최상위 가능 단계로 복원
+    """
+    from src.core.article_state import ArticleState, get_best_restorable_state
+    
+    data = request.get_json()
+    article_ids = data.get('article_ids', [])
+    
+    if not article_ids:
+        return jsonify({
+            'success': False,
+            'error': 'article_ids required'
+        }), 400
+    
+    results = []
+    for article_id in article_ids:
+        # 기사 데이터 로드하여 최적 복구 상태 결정
+        article = manager.get(article_id)
+        if not article:
+            results.append({
+                'article_id': article_id,
+                'success': False,
+                'error': 'not_found'
+            })
+            continue
+        
+        # 데이터 무결성 기반 최적 상태 결정
+        best_state = get_best_restorable_state(article)
+        
+        success = manager.update_state(
+            article_id, 
+            best_state, 
+            by='recovery'  # 기록에 recovery로 표시
+        )
+        results.append({
+            'article_id': article_id,
+            'success': success,
+            'restored_to': best_state.value
         })
     
     return jsonify({

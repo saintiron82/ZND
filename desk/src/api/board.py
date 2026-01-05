@@ -108,6 +108,42 @@ def get_overview():
         }), 500
 
 
+@board_bp.route('/api/board/sync', methods=['POST'])
+def sync_registry():
+    """
+    Firestore와 동기화하여 다른 시스템에서 추가된 기사 가져오기
+    
+    UI에서 새로고침 버튼 클릭 시 호출
+    """
+    try:
+        from src.core.article_registry import get_registry
+        registry = get_registry()
+        
+        if not registry.is_initialized():
+            return jsonify({
+                'success': False,
+                'error': 'Registry not initialized'
+            }), 500
+        
+        # Firestore + 로컬 캐시 동기화
+        before_count = registry.count()
+        registry.refresh(include_firestore=True)
+        after_count = registry.count()
+        new_count = after_count - before_count
+        
+        return jsonify({
+            'success': True,
+            'message': f'동기화 완료: {new_count}개 새 기사 추가',
+            'new_count': new_count,
+            'total_count': after_count
+        })
+    
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @board_bp.route('/api/board/move', methods=['POST'])
 def move_article():
     """

@@ -11,6 +11,7 @@ import glob
 import json
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone, timedelta
+from src.core_logic import get_kst_now
 from typing import Dict, List, Optional, Set, Any
 from enum import Enum
 
@@ -126,7 +127,7 @@ class ArticleRegistry:
         
         # 완료
         elapsed = (datetime.now() - start_time).total_seconds()
-        self._stats['initialized_at'] = datetime.now(timezone.utc).isoformat()
+        self._stats['initialized_at'] = get_kst_now()
         
         ArticleRegistry._initialized = True
         
@@ -182,8 +183,8 @@ class ArticleRegistry:
     
     def _load_from_firestore(self):
         """Firestore에서 미발행 기사만 로드 (PUBLISHED는 Lazy Load)"""
-        cutoff_date = datetime.now(timezone.utc) - timedelta(days=self._max_age_days)
-        cutoff_iso = cutoff_date.isoformat()
+        cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
+        cutoff_iso = cutoff_date.strftime('%Y-%m-%dT%H:%M:%S+09:00')
         
         # 미발행 상태만 로드 (PUBLISHED는 요청 시 Lazy Load)
         states_to_load = ['COLLECTED', 'ANALYZED', 'CLASSIFIED', 'REJECTED']
@@ -639,7 +640,7 @@ class ArticleRegistry:
             return False
         
         old_state = info.state
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         
         # 1. 레지스트리 업데이트
         # 이전 상태 인덱스에서 제거
@@ -772,41 +773,101 @@ class ArticleRegistry:
         ArticleRegistry._initialized = False
         print("🔄 [Registry] Reset completed.")
     
-    def refresh(self):
+    def refresh(self, include_firestore: bool = True):
         """
         캐시 새로고침 - 새 캐시 수집 후 또는 휴지통 비운 후 호출
-        현재 시간 기준으로 캐시 폴더를 다시 스캔
+        현재 시간 기준으로 캐시 폴더를 다시 스캔 + Firestore 동기화
+        
+        Args:
+            include_firestore: True면 Firestore에서도 새 기사 가져옴
         """
-        if not self._cache_root or not os.path.exists(self._cache_root):
-            return
-        
-        cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
-        cutoff_str = cutoff_date.strftime('%Y-%m-%d')
         new_count = 0
+        firestore_count = 0
         
-        for folder in glob.glob(os.path.join(self._cache_root, '*')):
-            folder_name = os.path.basename(folder)
-            if not folder_name.startswith('20') or folder_name < cutoff_str:
-                continue
+        # 1. Firestore에서 새 기사 가져오기 (먼저!)
+        if include_firestore and self._db:
+            firestore_count = self._sync_new_from_firestore()
+        
+        # 2. 로컬 캐시 스캔
+        if self._cache_root and os.path.exists(self._cache_root):
+            cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
+            cutoff_str = cutoff_date.strftime('%Y-%m-%d')
             
-            for fpath in glob.glob(os.path.join(folder, '*.json')):
-                try:
-                    article_id = os.path.basename(fpath).replace('.json', '')
-                    if article_id in self._articles:
-                        continue  # 이미 등록됨
-                    
-                    with open(fpath, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                    
-                    # [최적화] 새로고침 시 Firestore 저장 스킵
-                    info = self.register(data, cache_path=fpath, skip_firestore=True)
-                    if info:
-                        new_count += 1
-                except Exception:
+            for folder in glob.glob(os.path.join(self._cache_root, '*')):
+                folder_name = os.path.basename(folder)
+                if not folder_name.startswith('20') or folder_name < cutoff_str:
                     continue
+                
+                for fpath in glob.glob(os.path.join(folder, '*.json')):
+                    try:
+                        article_id = os.path.basename(fpath).replace('.json', '')
+                        if article_id in self._articles:
+                            continue  # 이미 등록됨
+                        
+                        with open(fpath, 'r', encoding='utf-8') as f:
+                            data = json.load(f)
+                        
+                        # [최적화] 새로고침 시 Firestore 저장 스킵
+                        info = self.register(data, cache_path=fpath, skip_firestore=True)
+                        if info:
+                            new_count += 1
+                    except Exception:
+                        continue
         
-        if new_count > 0:
-            print(f"🔄 [Registry] Refreshed: {new_count} new articles added")
+        total = new_count + firestore_count
+        if total > 0:
+            print(f"🔄 [Registry] Refreshed: {new_count} from local, {firestore_count} from Firestore")
+    
+    def _sync_new_from_firestore(self) -> int:
+        """Firestore에서 Registry에 없는 새 기사만 가져오기"""
+        if not self._db:
+            return 0
+        
+        new_count = 0
+        cutoff_date = datetime.now() - timedelta(days=self._max_age_days)
+        cutoff_iso = cutoff_date.strftime('%Y-%m-%dT%H:%M:%S+09:00')
+        
+        states_to_load = ['COLLECTED', 'ANALYZED', 'CLASSIFIED', 'REJECTED']
+        
+        for state in states_to_load:
+            try:
+                articles = self._db.list_articles_by_state(state, limit=500)
+                
+                for data in articles:
+                    article_id = data.get('_header', {}).get('article_id')
+                    if not article_id:
+                        continue
+                    
+                    # 이미 Registry에 있으면 스킵
+                    if article_id in self._articles:
+                        continue
+                    
+                    # 시간 체크
+                    published_at = data.get('_original', {}).get('published_at', '')
+                    created_at = data.get('_header', {}).get('created_at', '')
+                    date_source = published_at or created_at
+                    if date_source and date_source < cutoff_iso:
+                        continue
+                    
+                    # 새 기사 등록
+                    info = self._parse_article_data(data)
+                    if info:
+                        info.firestore_synced = True
+                        self._full_data[info.article_id] = data
+                        
+                        # 로컬 캐시에도 저장
+                        cache_path = self._save_to_local_cache(data, info.article_id)
+                        if cache_path:
+                            info.cache_path = cache_path
+                        
+                        self._register_article(info, source='firestore_sync')
+                        new_count += 1
+                        print(f"   ☁️ [Sync] New from Firestore: {article_id}")
+                        
+            except Exception as e:
+                print(f"⚠️ [Registry] Firestore sync error for {state}: {e}")
+        
+        return new_count
 
 
 # =========================================================================

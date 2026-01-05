@@ -91,6 +91,16 @@ def extract_content(links: list = None, progress_callback=None) -> dict:
                     if content and len(content.get('text', '')) >= 200:
                         content['source_id'] = source_id
                         save_to_cache(url, content)
+                        
+                        # [HOTFIX] Firestore에도 저장 (파이프라인 통합 전 임시 조치)
+                        try:
+                            from src.core.article_manager import ArticleManager
+                            manager = ArticleManager()
+                            manager.create(url, content)
+                            print(f"✅ [Extract] Saved to Firestore: {url[:50]}...")
+                        except Exception as e:
+                            print(f"⚠️ [Extract] Firestore save failed: {e}")
+                        
                         # [FIX] Save to history to prevent re-crawling
                         db.save_history(url, 'ACCEPTED', reason='crawled')
                         extracted_count += 1

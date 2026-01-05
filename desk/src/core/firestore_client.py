@@ -43,7 +43,7 @@ class FirestoreClient:
         
         # Initialize usage stats
         self.reset_usage_stats()
-        FirestoreClient._usage_stats['session_start'] = datetime.now(timezone.utc).isoformat()
+        FirestoreClient._usage_stats['session_start'] = get_kst_now()
     
     def _initialize_firebase(self):
         """Firebase 초기화"""
@@ -459,7 +459,7 @@ class FirestoreClient:
                 
                 # Ensure updated_at exists
                 if '_header' in content:
-                    content['_header']['updated_at'] = datetime.now(timezone.utc).isoformat()
+                    content['_header']['updated_at'] = get_kst_now()
 
                 with open(target_file, 'w', encoding='utf-8') as f:
                     json.dump(content, f, ensure_ascii=False, indent=2)
@@ -702,7 +702,7 @@ class FirestoreClient:
             f'urls.{self._url_to_key(url)}': {
                 'article_id': article_id,
                 'status': status,
-                'updated_at': datetime.now(timezone.utc).isoformat()
+                'updated_at': get_kst_now()
             }
         }, merge=True)
         self._track_write()
@@ -791,7 +791,7 @@ class FirestoreClient:
         
         # Ensure crawled_at
         crawled_at = article_data.get('crawled_at')
-        now = datetime.now(timezone.utc).isoformat()
+        now = get_kst_now()
         if not crawled_at:
              crawled_at = now
              article_data['crawled_at'] = now

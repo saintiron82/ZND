@@ -31,7 +31,10 @@ async function initBoardPage() {
     const customInput = document.getElementById('custom-start-time');
     if (customInput && savedHours > 0) {
         const startTime = new Date(Date.now() - savedHours * 60 * 60 * 1000);
-        customInput.value = startTime.toISOString().slice(0, 16);
+        // 로컬 시간으로 포맷 (datetime-local 형식: YYYY-MM-DDTHH:MM)
+        const localTime = new Date(startTime.getTime() - startTime.getTimezoneOffset() * 60000)
+            .toISOString().slice(0, 16);
+        customInput.value = localTime;
     }
 
     await loadBoardData();
@@ -82,7 +85,10 @@ function setTimeRange(hours) {
     if (customInput) {
         if (hours > 0) {
             const startTime = new Date(Date.now() - hours * 60 * 60 * 1000);
-            customInput.value = startTime.toISOString().slice(0, 16);
+            // 로컬 시간으로 포맷
+            const localTime = new Date(startTime.getTime() - startTime.getTimezoneOffset() * 60000)
+                .toISOString().slice(0, 16);
+            customInput.value = localTime;
         } else {
             customInput.value = '';  // 전체 선택시 비움
         }

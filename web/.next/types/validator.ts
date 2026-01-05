@@ -78,6 +78,15 @@ type ApiRouteConfig = {
   type __Unused = __Check
 }
 
+// Validate ../../src/app/api/contact/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/contact">> = Specific
+  const handler = {} as typeof import("../../src/app/api/contact/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/api/dates/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/dates">> = Specific
@@ -160,15 +169,6 @@ type ApiRouteConfig = {
 }
 
 
-
-// Validate ../../src/pages/api/contact.ts
-{
-  type __IsExpected<Specific extends ApiRouteConfig> = Specific
-  const handler = {} as typeof import("../../src/pages/api/contact.js")
-  type __Check = __IsExpected<typeof handler>
-  // @ts-ignore
-  type __Unused = __Check
-}
 
 // Validate ../../src/pages/api/ping.ts
 {

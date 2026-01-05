@@ -1,6 +1,7 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
+  "/api/contact/route": "/api/contact",
   "/api/dates/route": "/api/dates",
   "/api/debug/schema/route": "/api/debug/schema",
   "/api/publications/check/route": "/api/publications/check",

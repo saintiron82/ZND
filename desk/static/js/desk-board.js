@@ -40,12 +40,15 @@ async function initBoardPage() {
     await loadBoardData();
     setupBoardEvents();
 
-    // 자동 갱신 시작
-    startAutoRefresh();
+    // 자동 갱신 비활성화 (Firestore 비용 절감)
+    // startAutoRefresh();
 }
 
-async function loadBoardData() {
-    showLoading();
+async function loadBoardData(silent = false) {
+    // silent=true: 자동 새로고침 시 로딩 표시 생략
+    if (!silent) {
+        showLoading();
+    }
     try {
         // Build URL with time filter
         let url = '/api/board/overview';
@@ -62,8 +65,71 @@ async function loadBoardData() {
         } else {
             showError(result.error);
         }
+
+        // Load inconsistent articles separately
+        await loadInconsistentColumn();
     } catch (e) {
         showError(e.message);
+    } finally {
+        hideLoading();
+    }
+}
+
+async function loadInconsistentColumn() {
+    try {
+        const result = await fetchAPI('/api/board/inconsistent-articles');
+
+        if (result.success) {
+            const count = result.count || 0;
+            const articles = result.articles || [];
+
+            // Update count
+            const countEl = document.getElementById('count-inconsistent');
+            if (countEl) countEl.textContent = count;
+
+            // Render cards
+            const cardsEl = document.getElementById('cards-inconsistent');
+            if (cardsEl) {
+                cardsEl.innerHTML = articles.map(article => {
+                    const articleId = article.article_id || article.id;
+                    // Add issue reason badge to card
+                    const issueHtml = article.issue_reason
+                        ? `<div class="card-issue-badge" style="background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-top: 4px;">${article.issue_reason}</div>
+                           <div style="font-size: 10px; color: #2ecc71; margin-top: 2px;">→ ${article.recoverable_to}</div>`
+                        : '';
+                    return `
+                        <div class="kanban-card" data-id="${articleId}" onclick="viewArticle('${articleId}')">
+                            <div class="card-title">${article.title || article.title_ko || '제목 없음'}</div>
+                            <div class="card-meta">${article.source || ''}</div>
+                            ${issueHtml}
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+    } catch (e) {
+        console.warn('[Inconsistent] Load failed:', e);
+    }
+}
+
+async function recoverAllInconsistent() {
+    if (!confirm('모든 불일치 데이터를 자동 복구하시겠습니까?\n각 기사는 실제 데이터에 맞는 상태로 조정됩니다.')) {
+        return;
+    }
+
+    showLoading();
+    try {
+        const result = await fetchAPI('/api/board/recover-inconsistent', {
+            method: 'POST',
+            body: JSON.stringify({ recover_all: true })
+        });
+
+        if (result.success) {
+            alert(`✅ ${result.recovered_count}개 복구 완료, ${result.failed_count}개 실패`);
+            await loadBoardData();
+        } else {
+            showError(result.error);
+        }
     } finally {
         hideLoading();
     }
@@ -481,7 +547,7 @@ function startAutoRefresh() {
     autoRefreshInterval = setInterval(async () => {
         console.log('🔄 [AutoRefresh] 칸반보드 갱신 중...');
         try {
-            await loadBoardData();
+            await loadBoardData(true); // silent=true: 로딩 표시 없이 갱신
         } catch (e) {
             console.warn('[AutoRefresh] 갱신 실패:', e);
         }
@@ -530,4 +596,6 @@ window.toggleSelectionMode = toggleSelectionMode;
 window.sendBackSelected = sendBackSelected;
 window.startAutoRefresh = startAutoRefresh;
 window.stopAutoRefresh = stopAutoRefresh;
+window.loadInconsistentColumn = loadInconsistentColumn;
+window.recoverAllInconsistent = recoverAllInconsistent;
 

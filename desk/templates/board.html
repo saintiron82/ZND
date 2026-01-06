@@ -121,6 +121,23 @@
                 </div>
             </div>
 
+            <!-- INCONSISTENT Column (데이터 불일치) -->
+            <div class="kanban-column column-inconsistent" data-state="inconsistent">
+                <div class="column-header">
+                    <h3>⚠️ 불일치</h3>
+                    <span class="column-count" id="count-inconsistent">0</span>
+                    <div class="column-menu-wrapper">
+                        <button class="btn-column-menu" onclick="toggleColumnMenu('inconsistent')">⋯</button>
+                        <div class="column-menu hidden" id="menu-inconsistent">
+                            <button onclick="recoverAllInconsistent()">🔧 전체 복구</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-cards" id="cards-inconsistent">
+                    <!-- 동적으로 로드 -->
+                </div>
+            </div>
+
             <!-- REJECTED Column -->
             <div class="kanban-column column-rejected" data-state="rejected">
                 <div class="column-header">

@@ -71,8 +71,16 @@ def calculate_is_v1(is_analysis: dict) -> tuple[float, dict]:
     ie_analysis = is_analysis.get('IE_Analysis') or calculations.get('IE_Analysis', {})
     
     # IW = Tier_Score + Gap_Score
-    tier_score = safe_float(iw_analysis.get('Tier_Score'))
-    gap_score = safe_float(iw_analysis.get('Gap_Score'))
+    tier_val = iw_analysis.get('Tier_Score')
+    if tier_val is None:
+        tier_val = calculations.get('Tier_Score')
+    tier_score = safe_float(tier_val)
+    
+    gap_val = iw_analysis.get('Gap_Score')
+    if gap_val is None:
+        gap_val = calculations.get('Gap_Score')
+    gap_score = safe_float(gap_val)
+
     iw_total = tier_score + gap_score
     
     # IE = Scope_Total + Criticality_Total
@@ -261,6 +269,14 @@ def process_raw_analysis(raw: dict, force_schema_version: str = None) -> dict:
         elif meta.get('Category'):
             result['category'] = meta['Category']
         
+        # [NEW] Extract Tags if present
+        if meta.get('Tags'):
+            result['tags'] = meta['Tags']
+        elif data.get('Tags'):
+            result['tags'] = data['Tags']
+        elif data.get('tags'):
+            result['tags'] = data['tags']
+
         # IS Calculation
         is_analysis = data.get('IS_Analysis', {})
         if is_analysis:

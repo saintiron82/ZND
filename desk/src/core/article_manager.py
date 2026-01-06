@@ -228,6 +228,11 @@ class ArticleManager:
             from .article_registry import get_registry
             registry = get_registry()
             
+            # [DEBUG] Log section_updates content
+            print(f"   🔍 [ArticleManager] section_updates keys: {list(section_updates.keys()) if section_updates else 'EMPTY'}")
+            if section_updates:
+                print(f"      Sample values: title_ko={section_updates.get('_analysis.title_ko', 'N/A')[:20] if section_updates.get('_analysis.title_ko') else 'N/A'}...")
+            
             # Registry가 초기화되어 있으면 업데이트 위임 (권장)
             if registry.is_initialized():
                 success = registry.update_state(article_id, new_state.value, by, updates=section_updates)
@@ -418,18 +423,22 @@ class ArticleManager:
                         edition_index = 1
                 
                 # Initialize new publication document
+                # [FIX] now가 datetime 객체일 수 있으므로 문자열로 변환
+                now_str = now if isinstance(now, str) else now.isoformat() if hasattr(now, 'isoformat') else str(now)
+                date_str = now_str[:10] if len(now_str) >= 10 else now_str
+                
                 pub_doc = {
                     'edition_code': edition_code,
                     'edition_name': edition_name,
                     'index': edition_index,  # 발행 번호 (누락 수정)
-                    'published_at': now,
-                    'updated_at': now,
+                    'published_at': now_str,
+                    'updated_at': now_str,
                     'status': 'preview',
                     'schema_version': '3.1',  # 하드코딩 (환경변수 파싱 오류 방지)
                     'article_count': 0,
                     'article_ids': [],
                     'articles': [],
-                    'date': now[:10]
+                    'date': date_str
                 }
             
             # Append new article if not exists
@@ -867,8 +876,21 @@ def _format_article_for_snapshot(article: dict) -> dict:
     """기사 데이터를 발행 스냅샷용으로 변환 (User Schema 준수)"""
     header = article.get('_header', {})
     original = article.get('_original', {})
-    analysis = article.get('_analysis', {})
-    classification = article.get('_classification', {})
+    analysis = article.get('_analysis', {}) or {}
+    classification = article.get('_classification', {}) or {}
+    
+    # [FIX] DatetimeWithNanoseconds를 문자열로 변환
+    def to_str(val):
+        if val is None:
+            return ''
+        if isinstance(val, str):
+            return val
+        if hasattr(val, 'isoformat'):
+            return val.isoformat()
+        return str(val)
+    
+    published_at = to_str(original.get('published_at')) or to_str(header.get('created_at'))
+    date_str = published_at[:10] if len(published_at) >= 10 else ''
     
     return {
         'id': header.get('article_id'),
@@ -877,13 +899,14 @@ def _format_article_for_snapshot(article: dict) -> dict:
         'title_ko': analysis.get('title_ko'),
         'title_en': analysis.get('title_en', ''),
         'url': original.get('url'),
-        'published_at': original.get('published_at') or header.get('created_at'),
+        'published_at': published_at,
         'category': classification.get('category'),
         'impact_score': analysis.get('impact_score'),
         'zero_echo_score': analysis.get('zero_echo_score'),
         'summary': analysis.get('summary'),
         'tags': analysis.get('tags', []),
         'layout_type': classification.get('layout_type', 'Standard'),
-        'date': (original.get('published_at') or '')[:10],
+        'date': date_str,
         'filename': f"{original.get('source_id')}_{header.get('article_id')}.json"
     }
+

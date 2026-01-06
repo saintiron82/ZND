@@ -205,7 +205,14 @@ async function processResult() {
         const data = await res.json();
 
         if (data.success) {
-            alert(`✅ Saved ${data.saved_count} articles successfully!`);
+            const savedCount = data.saved || 0;
+            const errorCount = data.errors ? data.errors.length : 0;
+
+            if (errorCount > 0) {
+                alert(`✅ Saved ${savedCount} articles! (${errorCount} failed)`);
+            } else {
+                alert(`✅ Saved ${savedCount} articles successfully!`);
+            }
             document.getElementById('result-area').value = ''; // clear
             selectedGroups.clear(); // clear selection
             loadArticles(); // reload list

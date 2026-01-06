@@ -116,40 +116,26 @@ def save_analysis_results():
                 errors.append("Skipped item: Missing Article_ID field")
                 continue
 
-            # 1. Parse Nested Structure (V1 / Inspector Style)
-            meta = item.get('Meta', {})
-            is_analysis = item.get('IS_Analysis', {})
-            calculations = is_analysis.get('Calculations', {})
-            iw_data = calculations.get('IW_Analysis', {})
-            ie_data = calculations.get('IE_Analysis', {})
+            # 1. Use ScoreEngine for unified parsing (handles V1.0/Legacy/Fallbacks)
+            from src.core.score_engine import process_raw_analysis
+            processed = process_raw_analysis(item)
             
-            # 2. Extract Fields (Priority: Nested > Flat)
-            title = meta.get('Headline') or item.get('Title_KO') or item.get('title_ko') or item.get('Title') or ''
-            summary = meta.get('Summary') or item.get('summary') or item.get('Description') or ''
-            tags = meta.get('Tags') or item.get('tags') or []
+            print(f"   📊 [Analyzer] Processed result for {article_id}:")
+            print(f"      - title_ko: {processed.get('title_ko', 'N/A')[:30] if processed.get('title_ko') else 'N/A'}...")
+            print(f"      - impact_score: {processed.get('impact_score', 'N/A')}")
+            print(f"      - zero_echo_score: {processed.get('zero_echo_score', 'N/A')}")
             
-            # 3. Calculate Scores
-            # Impact Score (IW + IE, typically max 10)
-            iw_score = float(iw_data.get('IW_Score') or 0)
-            ie_score = float(ie_data.get('IE_Score') or 0)
-            # If flat scores exist, use them fallback
-            if iw_score == 0 and ie_score == 0:
-                impact_score = float(item.get('Impact_Score') or item.get('impact_score') or 0)
-            else:
-                impact_score = iw_score + ie_score
-
-            # Zero Echo Score (Calculated from ZES_Raw_Metrics)
-            zes_raw_metrics = item.get('ZES_Raw_Metrics')
-            if zes_raw_metrics:
-                zero_echo_score, zes_breakdown = calculate_zes_v1(zes_raw_metrics)
-                evidence = {
-                    'breakdown': zes_breakdown,
-                    'raw_metrics': zes_raw_metrics
-                }
-            else:
-                # Fallback to direct value or default
-                zero_echo_score = float(item.get('Zero_Echo_Score') or item.get('zero_echo_score') or 0)
-                evidence = {}
+            # 2. Extract Fields from processed result
+            title = processed.get('title_ko', '')
+            summary = processed.get('summary', '')
+            tags = processed.get('tags', [])
+            category = processed.get('category', '')
+            
+            impact_score = processed.get('impact_score', 0.0)
+            zero_echo_score = processed.get('zero_echo_score', 0.0) # Note: 0 is better if trusted? No, usually 5 is default. Engine handles it.
+            
+            evidence = processed.get('evidence', {})
+            impact_evidence = processed.get('impact_evidence', {})
 
             analysis_data = {
                 'title_ko': title,
@@ -157,15 +143,23 @@ def save_analysis_results():
                 'tags': tags,
                 'impact_score': impact_score,
                 'zero_echo_score': zero_echo_score,
-                'evidence': evidence, # Save breakdown for UI
-                'mll_raw': item
+                'evidence': evidence, # ZES Breakdown
+                'impact_evidence': impact_evidence, # IS Breakdown
+                'mll_raw': item # Preserve original raw data
             }
+            
+            if category:
+                analysis_data['category'] = category
+            
+            print(f"   💾 [Analyzer] Calling update_analysis for {article_id}...")
             
             # Use Manager to update (Handles File + DB + State)
             if manager.update_analysis(article_id, analysis_data):
                 saved_count += 1
+                print(f"   ✅ [Analyzer] Successfully saved {article_id}")
             else:
                 errors.append(f"Failed to update {article_id}")
+                print(f"   ❌ [Analyzer] Failed to update {article_id}")
                 
         except Exception as e:
             # article_id might be undefined if error occurs before assignment, but here logic ensures it's safeish
@@ -174,6 +168,8 @@ def save_analysis_results():
             # but for logging, we need to be careful if article_id is not yet bound.
             aid = locals().get('article_id', 'unknown')
             print(f"❌ [Analyzer] Error saving {aid}: {e}")
+            import traceback
+            traceback.print_exc()
             errors.append(f"{aid}: {str(e)}")
             
     print(f"📊 [Analyzer] Save complete. Success: {saved_count}, Errors: {len(errors)}")

@@ -528,6 +528,15 @@ a:hover {
     border: 1px solid var(--accent-danger);
 }
 
+.kanban-column.column-inconsistent {
+    background: rgba(243, 156, 18, 0.1);
+    border: 1px solid #f39c12;
+}
+
+.kanban-column.column-inconsistent .column-header h3 {
+    color: #f39c12;
+}
+
 .column-header {
     display: flex;
     justify-content: space-between;

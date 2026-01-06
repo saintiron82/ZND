@@ -853,3 +853,353 @@ def recover_orphan_articles():
             'error': str(e)
         }), 500
 
+
+# =============================================================================
+# Data Integrity Issue Detection & Recovery API (불일치 데이터 복구)
+# =============================================================================
+
+@board_bp.route('/api/board/inconsistent-articles', methods=['GET'])
+def get_inconsistent_articles():
+    """
+    데이터 무결성 문제가 있는 기사 탐지 (Firestore 직접 조회)
+    
+    1. 상태-데이터 불일치: ANALYZED인데 _analysis 없음, CLASSIFIED인데 _classification 없음
+    2. 히스토리 불일치: history.urls의 status와 _header.state가 다름
+    """
+    from src.core.article_state import get_best_restorable_state
+    from src.core.firestore_client import FirestoreClient
+    
+    try:
+        inconsistent = []
+        db = FirestoreClient()
+        
+        # Firestore에서 직접 조회 (Registry 무시)
+        states_to_check = ['ANALYZED', 'CLASSIFIED', 'COLLECTED']
+        
+        print(f"🔍 [Inconsistent] Scanning Firestore directly for states: {states_to_check}")
+        
+        # 히스토리 상태 로드
+        history_statuses = {}
+        try:
+            history_doc = db._get_collection('history').document('urls').get()
+            if history_doc.exists:
+                urls_data = history_doc.to_dict() or {}
+                for key, val in urls_data.items():
+                    if isinstance(val, dict) and 'article_id' in val:
+                        history_statuses[val['article_id']] = val.get('status', '')
+            print(f"   📊 Loaded {len(history_statuses)} history records")
+        except Exception as e:
+            print(f"   ⚠️ History load failed: {e}")
+        
+        for state in states_to_check:
+            try:
+                articles = db.list_articles_by_state(state, limit=500)
+                print(f"   🔹 [{state}] Found {len(articles)} articles")
+                
+                for article in articles:
+                    article_id = article.get('_header', {}).get('article_id') or article.get('id')
+                    current_state = article.get('_header', {}).get('state', 'UNKNOWN')
+                    
+                    analysis = article.get('_analysis')
+                    classification = article.get('_classification')
+                    
+                    has_issue = False
+                    issue_reasons = []
+                    
+                    # 1. 상태-데이터 불일치 체크
+                    if current_state == 'ANALYZED' and not analysis:
+                        has_issue = True
+                        issue_reasons.append('ANALYZED 상태지만 _analysis 없음')
+                    elif current_state == 'CLASSIFIED' and not classification:
+                        has_issue = True
+                        issue_reasons.append('CLASSIFIED 상태지만 _classification 없음')
+                    elif current_state == 'CLASSIFIED' and not analysis:
+                        has_issue = True
+                        issue_reasons.append('CLASSIFIED 상태지만 _analysis 없음')
+                    
+                    # 2. 히스토리 불일치 체크
+                    history_status = history_statuses.get(article_id, '')
+                    if history_status and history_status != current_state:
+                        has_issue = True
+                        issue_reasons.append(f'History({history_status}) ≠ Article({current_state})')
+                    
+                    if has_issue:
+                        print(f"      ⚠️ [{article_id}] Issues: {', '.join(issue_reasons)}")
+                        best_state = get_best_restorable_state(article)
+                        card = _format_article_card(article)
+                        card['current_state'] = current_state
+                        card['history_status'] = history_status
+                        card['recoverable_to'] = best_state.value
+                        card['issue_reason'] = ' | '.join(issue_reasons)
+                        inconsistent.append(card)
+                        
+            except Exception as e:
+                print(f"   ⚠️ Error scanning {state}: {e}")
+        
+        # 3. 발행 누락 기사 체크 (PUBLISHED/RELEASED 상태지만 edition에 연결 안 됨)
+        print(f"🔍 [Inconsistent] Scanning for unlinked PUBLISHED/RELEASED articles...")
+        try:
+            # 유효한 발행 회차 목록 및 실제 article_ids 로드
+            valid_editions = set()
+            edition_article_ids = {}  # edition_code -> set of article_ids
+            
+            meta = manager.db.get_publications_meta()
+            if meta:
+                for issue in meta.get('issues', []):
+                    code = issue.get('edition_code') or issue.get('code')
+                    if code:
+                        valid_editions.add(code)
+                        # 각 edition의 실제 article_ids 로드
+                        try:
+                            pub_doc = manager.db.get_publication(code)
+                            if pub_doc:
+                                edition_article_ids[code] = set(pub_doc.get('article_ids', []))
+                        except Exception:
+                            edition_article_ids[code] = set()
+            
+            print(f"   📊 Valid editions: {len(valid_editions)}")
+            total_linked = sum(len(ids) for ids in edition_article_ids.values())
+            print(f"   📊 Total linked articles: {total_linked}")
+            
+            for state in ['PUBLISHED', 'RELEASED']:
+                try:
+                    articles = db.list_articles_by_state(state, limit=500)
+                    print(f"   🔹 [{state}] Found {len(articles)} articles")
+                    
+                    for article in articles:
+                        article_id = article.get('_header', {}).get('article_id') or article.get('id')
+                        current_state = article.get('_header', {}).get('state', 'UNKNOWN')
+                        
+                        pub = article.get('_publication') or {}
+                        edition_code = pub.get('edition_code')
+                        
+                        # 체크 1: edition_code가 없거나 유효하지 않음
+                        if not edition_code or edition_code not in valid_editions:
+                            best_state = get_best_restorable_state(article)
+                            card = _format_article_card(article)
+                            card['current_state'] = current_state
+                            card['history_status'] = ''
+                            card['recoverable_to'] = best_state.value
+                            card['issue_reason'] = f'{current_state} 상태지만 유효한 발행 회차 없음 (edition: {edition_code or "없음"})'
+                            inconsistent.append(card)
+                            print(f"      ⚠️ [{article_id}] No valid edition: {edition_code or 'None'}")
+                        # 체크 2: edition_code는 있지만 publication document에 article_id가 없음
+                        elif article_id not in edition_article_ids.get(edition_code, set()):
+                            best_state = get_best_restorable_state(article)
+                            card = _format_article_card(article)
+                            card['current_state'] = current_state
+                            card['history_status'] = ''
+                            card['recoverable_to'] = best_state.value
+                            card['issue_reason'] = f'{current_state} 상태이고 edition={edition_code}이지만 발행 문서에 없음'
+                            inconsistent.append(card)
+                            print(f"      ⚠️ [{article_id}] Not in edition document: {edition_code}")
+                except Exception as e:
+                    print(f"   ⚠️ Error scanning {state}: {e}")
+        except Exception as e:
+            print(f"   ⚠️ Error loading editions meta: {e}")
+        
+        print(f"✅ [Inconsistent] Total issues found: {len(inconsistent)}")
+        
+        return jsonify({
+            'success': True,
+            'articles': inconsistent,
+            'count': len(inconsistent)
+        })
+    
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+
+@board_bp.route('/api/board/recover-inconsistent', methods=['POST'])
+def recover_inconsistent_articles():
+    """
+    데이터 무결성 문제가 있는 기사 복구 (Firestore 직접 업데이트)
+    
+    1. 상태를 실제 데이터에 맞게 조정
+    2. History 컬렉션도 동기화
+    """
+    from src.core.article_state import get_best_restorable_state
+    from src.core.firestore_client import FirestoreClient
+    from datetime import datetime, timezone, timedelta
+    
+    def get_kst_now():
+        kst = timezone(timedelta(hours=9))
+        return datetime.now(kst).isoformat()
+    
+    data = request.get_json()
+    article_ids = data.get('article_ids', [])
+    recover_all = data.get('recover_all', False)
+    
+    try:
+        db = FirestoreClient()
+        target_articles = []
+        
+        if recover_all:
+            # Firestore에서 직접 불일치 기사 조회
+            states_to_check = ['ANALYZED', 'CLASSIFIED', 'COLLECTED']
+            
+            # 히스토리 상태 로드
+            history_statuses = {}
+            try:
+                history_doc = db._get_collection('history').document('urls').get()
+                if history_doc.exists:
+                    urls_data = history_doc.to_dict() or {}
+                    for key, val in urls_data.items():
+                        if isinstance(val, dict) and 'article_id' in val:
+                            history_statuses[val['article_id']] = val.get('status', '')
+            except Exception:
+                pass
+            
+            for state in states_to_check:
+                try:
+                    articles = db.list_articles_by_state(state, limit=500)
+                    
+                    for article in articles:
+                        article_id = article.get('_header', {}).get('article_id') or article.get('id')
+                        current_state = article.get('_header', {}).get('state', '')
+                        analysis = article.get('_analysis')
+                        classification = article.get('_classification')
+                        history_status = history_statuses.get(article_id, '')
+                        
+                        # 불일치 체크
+                        has_issue = False
+                        if current_state == 'ANALYZED' and not analysis:
+                            has_issue = True
+                        elif current_state == 'CLASSIFIED' and (not classification or not analysis):
+                            has_issue = True
+                        elif history_status and history_status != current_state:
+                            has_issue = True
+                        
+                        if has_issue:
+                            target_articles.append(article)
+                except Exception:
+                    continue
+            
+            # PUBLISHED/RELEASED 상태의 발행 누락 기사 조회
+            try:
+                # 유효한 발행 회차 및 article_ids 로드
+                valid_editions = set()
+                edition_article_ids = {}
+                
+                meta = manager.db.get_publications_meta()
+                if meta:
+                    for issue in meta.get('issues', []):
+                        code = issue.get('edition_code') or issue.get('code')
+                        if code:
+                            valid_editions.add(code)
+                            try:
+                                pub_doc = manager.db.get_publication(code)
+                                if pub_doc:
+                                    edition_article_ids[code] = set(pub_doc.get('article_ids', []))
+                            except Exception:
+                                edition_article_ids[code] = set()
+                
+                for state in ['PUBLISHED', 'RELEASED']:
+                    try:
+                        articles = db.list_articles_by_state(state, limit=500)
+                        
+                        for article in articles:
+                            article_id = article.get('_header', {}).get('article_id') or article.get('id')
+                            pub = article.get('_publication') or {}
+                            edition_code = pub.get('edition_code')
+                            
+                            # 발행 누락 체크
+                            is_unlinked = False
+                            if not edition_code or edition_code not in valid_editions:
+                                is_unlinked = True
+                            elif article_id not in edition_article_ids.get(edition_code, set()):
+                                is_unlinked = True
+                            
+                            if is_unlinked:
+                                target_articles.append(article)
+                                print(f"   🔍 [Recovery] Unlinked PUBLISHED article: {article_id}")
+                    except Exception:
+                        continue
+            except Exception as e:
+                print(f"   ⚠️ Error loading published articles: {e}")
+        else:
+            # 특정 article_ids 조회
+            for aid in article_ids:
+                article = db.get_article(aid)
+                if article:
+                    target_articles.append(article)
+        
+        if not target_articles:
+            return jsonify({
+                'success': False,
+                'error': '복구할 기사가 없습니다'
+            }), 400
+        
+        recovered = []
+        failed = []
+        
+        for article in target_articles:
+            article_id = article.get('_header', {}).get('article_id') or article.get('id')
+            if not article_id:
+                continue
+            
+            try:
+                best_state = get_best_restorable_state(article)
+                current_state = article.get('_header', {}).get('state', 'UNKNOWN')
+                now = get_kst_now()
+                
+                print(f"🔧 [DataIntegrity] {article_id}: {current_state} → {best_state.value}")
+                
+                # 1. Article 업데이트
+                article['_header']['state'] = best_state.value
+                article['_header']['updated_at'] = now
+                
+                # [FIX] PUBLISHED/RELEASED에서 복구 시 _publication 섹션 제거
+                if current_state in ['PUBLISHED', 'RELEASED']:
+                    if '_publication' in article:
+                        article['_publication'] = None  # 또는 del article['_publication']
+                        print(f"   🧹 Cleared _publication for {article_id}")
+                
+                if 'state_history' not in article['_header']:
+                    article['_header']['state_history'] = []
+                article['_header']['state_history'].append({
+                    'state': best_state.value,
+                    'at': now,
+                    'by': 'data_integrity_recovery'
+                })
+                
+                db.save_article(article_id, article)
+                
+                # 2. History 업데이트
+                url = article.get('_original', {}).get('url')
+                if url:
+                    db.save_history(url, status=best_state.value, article_id=article_id)
+                
+                recovered.append({
+                    'id': article_id,
+                    'from_state': current_state,
+                    'to_state': best_state.value
+                })
+                
+            except Exception as e:
+                print(f"⚠️ Recovery failed for {article_id}: {e}")
+                failed.append({
+                    'id': article_id,
+                    'reason': str(e)
+                })
+        
+        return jsonify({
+            'success': True,
+            'recovered': recovered,
+            'recovered_count': len(recovered),
+            'failed': failed,
+            'failed_count': len(failed)
+        })
+    
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500

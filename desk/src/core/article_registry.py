@@ -16,6 +16,24 @@ from typing import Dict, List, Optional, Set, Any
 from enum import Enum
 
 
+def _normalize_timestamp(value) -> str:
+    """
+    Firestore DatetimeWithNanoseconds를 ISO 문자열로 변환
+    이미 문자열이면 그대로 반환
+    """
+    if value is None:
+        return ''
+    if isinstance(value, str):
+        return value
+    # Firestore DatetimeWithNanoseconds 또는 datetime 객체
+    if hasattr(value, 'isoformat'):
+        try:
+            return value.isoformat()
+        except Exception:
+            return str(value)
+    return str(value)
+
+
 
 @dataclass
 class ArticleInfo:
@@ -189,19 +207,37 @@ class ArticleRegistry:
         # 미발행 상태만 로드 (PUBLISHED는 요청 시 Lazy Load)
         states_to_load = ['COLLECTED', 'ANALYZED', 'CLASSIFIED', 'REJECTED']
         print(f"   📡 [Registry] Loading unpublished from Firestore: {states_to_load}")
+        print(f"   📅 [Registry] Cutoff: {cutoff_iso}")
         
         for state in states_to_load:
             try:
                 # FirestoreClient 직접 호출
                 articles = self._db.list_articles_by_state(state, limit=500) if self._db else []
+                print(f"      🔹 [{state}] Firestore returned {len(articles)} articles")
+                
+                loaded_count = 0
+                skipped_count = 0
                 
                 for data in articles:
-                    # 시간 체크 (published_at 우선, 없으면 created_at)
-                    published_at = data.get('_original', {}).get('published_at', '')
-                    created_at = data.get('_header', {}).get('created_at', '')
+                    article_id = data.get('_header', {}).get('article_id') or data.get('id', 'unknown')
+                    
+                    # 시간 체크 (updated_at 확인 추가 - 롤백/수정된 기사 포함)
+                    # [Fix] Firestore DatetimeWithNanoseconds를 문자열로 변환
+                    published_at = _normalize_timestamp(data.get('_original', {}).get('published_at'))
+                    created_at = _normalize_timestamp(data.get('_header', {}).get('created_at'))
+                    updated_at = _normalize_timestamp(data.get('_header', {}).get('updated_at'))
+                    
+                    # 최근 수정되었으면 로드 (OR 조건)
+                    # [Fix] Rollback된 기사는 created_at이 오래되어도 updated_at이 최신임
+                    is_recent_update = updated_at and updated_at >= cutoff_iso
+                    
                     date_source = published_at or created_at
-                    if date_source and date_source < cutoff_iso:
-                        continue  # 오래된 기사 스킵
+                    is_recent_create = date_source and date_source >= cutoff_iso
+                    
+                    if not (is_recent_create or is_recent_update):
+                        skipped_count += 1
+                        print(f"         ⏭️ Skipped {article_id}: created={created_at[:16] if created_at else 'N/A'}, updated={updated_at[:16] if updated_at else 'N/A'}")
+                        continue  # 오래되고 최근 수정되지 않은 기사 스킵
                     
                     info = self._parse_article_data(data)
                     if info:
@@ -234,7 +270,10 @@ class ArticleRegistry:
                             
                             self._register_article(info, source='firestore')
                             self._stats['firestore_loaded'] += 1
-                            
+                            loaded_count += 1
+                
+                print(f"      ✅ [{state}] Loaded: {loaded_count}, Skipped: {skipped_count}")
+                        
             except Exception as e:
                 print(f"⚠️ [Registry] Firestore load error for {state}: {e}")
     
@@ -714,15 +753,35 @@ class ArticleRegistry:
         
         # Apply Extra Updates (with dot notation support)
         if updates:
+            print(f"   📝 [Registry] Applying updates: {list(updates.keys())}")
             for key, value in updates.items():
                 if '.' in key:
                     section, field = key.split('.', 1)
-                    if section not in full_data:
+                    # [FIX] 섹션이 없거나 None인 경우 빈 dict로 초기화
+                    if section not in full_data or full_data[section] is None:
                         full_data[section] = {}
                     if isinstance(full_data[section], dict):
                         full_data[section][field] = value
+                        print(f"      → {section}.{field} = {type(value).__name__}")
+                    else:
+                        print(f"      ⚠️ Cannot update {section}.{field}: section is {type(full_data[section])}")
                 else:
                     full_data[key] = value
+        else:
+            print(f"   ⚠️ [Registry] No updates provided for state change to {new_state}")
+        
+        # Validation: ANALYZED 상태로 변경 시 _analysis 섹션 확인
+        # [FIX] 데이터가 없으면 상태 변경 거부
+        if new_state == 'ANALYZED':
+            analysis_section = full_data.get('_analysis')
+            if not analysis_section or (isinstance(analysis_section, dict) and not analysis_section):
+                print(f"   ❌ [Registry] REJECTED: Cannot change to ANALYZED without _analysis data!")
+                return False
+        
+        if new_state == 'CLASSIFIED':
+            if not full_data.get('_classification'):
+                print(f"   ❌ [Registry] REJECTED: Cannot change to CLASSIFIED without _classification data!")
+                return False
         
         # History
         if 'state_history' not in full_data['_header']:
@@ -751,6 +810,12 @@ class ArticleRegistry:
             try:
                 # Use set(merge=True) to be safe, but practically it's overwriting with full data
                 self._db.save_article(info.article_id, full_data)
+                
+                # [Fix] History 컬렉션도 함께 업데이트 (URL 상태 동기화)
+                url = full_data.get('_original', {}).get('url')
+                if url:
+                    self._db.save_history(url, status=new_state, article_id=info.article_id)
+                    
             except Exception as e:
                 print(f"⚠️ [Registry] Firestore save failed: {e}")
                 return False

@@ -58,10 +58,16 @@ def run_collector():
             # Initial Status
             progress_callback({'status': 'collecting', 'message': '🔍 링크 수집 시작...'})
             
-            from core.extractor import run_full_pipeline
+            from src.scheduler_pipeline import SchedulerPipeline, PipelinePhase
             
             # Run Pipeline with Callback
-            result = run_full_pipeline(schedule_name="즉시 수집", progress_callback=progress_callback)
+            pipeline = SchedulerPipeline()
+            result_obj = pipeline.run(
+                phases=[PipelinePhase.COLLECT, PipelinePhase.EXTRACT],
+                schedule_name="즉시 수집",
+                progress_callback=progress_callback
+            )
+            result = result_obj.to_dict()
             
             # Registry Refresh
             try:

@@ -130,3 +130,4 @@
 {"timestamp": "2026-01-05T09:26:37.895091", "action": "Extract", "result": "Extracted 18 (Skip:0, Fail:0)", "duration": 52.99, "success": true}
 {"timestamp": "2026-01-05T23:50:35.251245", "action": "Collect", "result": "Collected 18 new links", "duration": 7.25, "success": true}
 {"timestamp": "2026-01-05T23:51:52.457265", "action": "Extract", "result": "Extracted 18 (Skip:0, Fail:0)", "duration": 77.21, "success": true}
+{"timestamp": "2026-01-06T12:40:09.987445", "action": "Collect", "result": "Collected 12 new links", "duration": 7.5, "success": true}

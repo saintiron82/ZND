@@ -894,11 +894,11 @@ def _format_article_for_snapshot(article: dict) -> dict:
     
     return {
         'id': header.get('article_id'),
-        'source_id': original.get('source_id'),
+        'source_id': header.get('source_id') or original.get('source_id'),
         'title': original.get('title'),
         'title_ko': analysis.get('title_ko'),
         'title_en': analysis.get('title_en', ''),
-        'url': original.get('url'),
+        'url': header.get('url') or original.get('url'),
         'published_at': published_at,
         'category': classification.get('category'),
         'impact_score': analysis.get('impact_score'),

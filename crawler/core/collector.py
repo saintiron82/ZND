@@ -49,6 +49,10 @@ def collect_links(progress_callback=None) -> dict:
         # 캐시 체크용 함수
         from src.core_logic import load_from_cache
         
+        total_found = 0
+        total_added = 0
+        total_skipped = 0
+        
         for idx, target in enumerate(targets):
             target_id = target.get('id')
             target_name = target.get('name', target_id) # 이름이 있으면 이름 사용
@@ -61,30 +65,31 @@ def collect_links(progress_callback=None) -> dict:
                 })
             
             # 메시지가 UI에 렌더링될 시간을 줌
-            time.sleep(0.5)
+            time.sleep(0.3)
 
             print(f"📡 [Collect] Fetching from target: {target_id} ({target.get('url')})")
             links = desk_crawler.fetch_links(target)
-            print(f"   found {len(links)} raw links")
+            found_count = len(links)
+            total_found += found_count
+            print(f"   found {found_count} raw links")
             
             limit = target.get('limit', 5)
             links = links[:limit]
             
             skipped_history = 0
             skipped_cache = 0
+            added_count = 0
             
             for link in links:
                 # 1. 히스토리 체크 (이미 처리된 것 제외: ACCEPTED, REJECTED 등)
                 is_in_history = db.check_history(link)
                 if is_in_history:
-                    # print(f"   [Skip] History: {link}")
                     skipped_history += 1
                     continue
                 
                 # 2. 캐시 체크 (이미 추출된 것 제외)
                 cached = load_from_cache(link)
                 if cached and cached.get('text'):
-                    # print(f"   [Skip] Cache: {link}")
                     skipped_cache += 1
                     continue
                 
@@ -94,8 +99,19 @@ def collect_links(progress_callback=None) -> dict:
                     'source_id': target['id'],
                     'target_name': target.get('name', target['id'])
                 })
+                added_count += 1
             
-            print(f"   ⏭️ [{target['id']}] Result: Added={len(links)-skipped_history-skipped_cache}, SkipHistory={skipped_history}, SkipCache={skipped_cache}")
+            total_added += added_count
+            total_skipped += skipped_history + skipped_cache
+            
+            print(f"   ⏭️ [{target['id']}] Result: Added={added_count}, SkipHistory={skipped_history}, SkipCache={skipped_cache}")
+            
+            # 각 타겟 완료 결과를 팝업에 표시
+            if progress_callback:
+                progress_callback({
+                    'status': 'collecting',
+                    'message': f"✅ [{idx+1}/{len(targets)}] '{target_name}': {found_count}개 발견 → {added_count}개 신규 (스킵: {skipped_history+skipped_cache})"
+                })
         
         # 중복 제거
         seen = set()
@@ -110,10 +126,20 @@ def collect_links(progress_callback=None) -> dict:
         log_crawl_event("Collect", msg, duration, success=True)
         
         print(f"📡 [Collect] 수집 완료: {len(unique_links)} 새 링크")
+        
+        # 최종 수집 결과 요약을 팝업에 표시
+        if progress_callback:
+            progress_callback({
+                'status': 'collecting',
+                'message': f"📊 수집 완료: {len(targets)}개 소스에서 {total_found}개 발견 → {len(unique_links)}개 신규 확보"
+            })
+        
         return {
             'success': True,
             'links': unique_links,
             'total': len(unique_links),
+            'total_found': total_found,
+            'total_skipped': total_skipped,
             'message': msg
         }
         

@@ -38,20 +38,52 @@ def list_articles():
     Query params:
         state: 상태 필터 (collected, analyzed, rejected)
         limit: 최대 개수 (기본 100)
+        since: ISO 형식 시작 시간 (원본 발간시간 기준 필터)
     """
     state_filter = request.args.get('state')
     limit = int(request.args.get('limit', 100))
     include_text = request.args.get('include_text', 'false').lower() == 'true'
+    since_str = request.args.get('since')
+    
+    # Parse time filter
+    since_time = None
+    if since_str:
+        try:
+            since_time = datetime.fromisoformat(since_str.replace('Z', '+00:00'))
+        except ValueError:
+            pass
     
     try:
         if state_filter:
             state = ArticleState(state_filter)
-            articles = manager.find_by_state(state, limit)
+            articles = manager.find_by_state(state, limit * 2)  # 필터링 전 여유있게 조회
         else:
             # 기본: COLLECTED + ANALYZED 모두 조회
             collected = manager.find_by_state(ArticleState.COLLECTED, limit)
             analyzed = manager.find_by_state(ArticleState.ANALYZED, limit)
             articles = collected + analyzed
+        
+        # Apply time filter if provided
+        if since_time:
+            filtered = []
+            for a in articles:
+                original = a.get('_original', {})
+                pub_at = original.get('published_at') or original.get('crawled_at')
+                if pub_at:
+                    try:
+                        if isinstance(pub_at, str):
+                            article_time = datetime.fromisoformat(pub_at.replace('Z', '+00:00'))
+                        else:
+                            article_time = pub_at  # Already datetime
+                        if article_time >= since_time:
+                            filtered.append(a)
+                    except:
+                        filtered.append(a)  # 파싱 실패 시 포함
+                else:
+                    filtered.append(a)  # 시간 정보 없으면 포함
+            articles = filtered[:limit]
+        else:
+            articles = articles[:limit]
         
         # 응답 형식 변환
         result = []

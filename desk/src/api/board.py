@@ -2,6 +2,7 @@
 """
 Board API - 칸반 보드 뷰용 API 라우트
 """
+from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request, jsonify, render_template
 
 from src.core import ArticleManager, ArticleState
@@ -449,7 +450,6 @@ def column_action():
             for art in articles:
                 aid = art.get('_header', {}).get('article_id')
                 if aid:
-                    from datetime import datetime, timezone
                     now = datetime.now(timezone.utc).isoformat()
                     manager.update_state(aid, ArticleState.REJECTED, by='column-action', 
                                         section_data={
@@ -497,6 +497,31 @@ def column_action():
             allowed_states = ['ANALYZED', 'CLASSIFIED']
             if state.upper() not in allowed_states:
                 return jsonify({'success': False, 'error': f'재계산은 분석완료/분류됨 상태에서만 가능합니다. (현재: {state.upper()}) - PUBLISHED/RELEASED는 제외됩니다.'})
+            
+            # Read time filter if provided
+            since_hours = data.get('since_hours', 0)
+            
+            # Apply time filter to articles
+            if since_hours > 0:
+                since_time = datetime.now(timezone.utc) - timedelta(hours=since_hours)
+                
+                filtered = []
+                for art in articles:
+                    original = art.get('_original', {})
+                    pub_at = original.get('published_at') or original.get('crawled_at')
+                    if pub_at:
+                        try:
+                            if isinstance(pub_at, str):
+                                article_time = datetime.fromisoformat(pub_at.replace('Z', '+00:00'))
+                            else:
+                                article_time = pub_at
+                            if article_time >= since_time:
+                                filtered.append(art)
+                        except:
+                            filtered.append(art)  # 파싱 실패 시 포함
+                    else:
+                        filtered.append(art)  # 시간 정보 없으면 포함
+                articles = filtered
             
             from src.core.score_engine import process_raw_analysis
             
@@ -550,7 +575,8 @@ def column_action():
                         else:
                             print(f"      ⏭️ 변경 없음 - 스킵")
             
-            message = f'재계산 완료: 총 {scanned}개 검사, {updated}개 점수 변동됨 (전체 처리: {count}개)'
+            time_msg = f' ({since_hours}h filter)' if since_hours > 0 else ''
+            message = f'재계산 완료{time_msg}: 총 {scanned}개 검사, {updated}개 점수 변동됨 (전체 처리: {count}개)'
             
         elif action == 'classify-all':
             # 전체 분류 - 분류 모달 필요하므로 메시지만 반환

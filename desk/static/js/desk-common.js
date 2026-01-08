@@ -28,7 +28,9 @@ function openInspectorModal() {
     const modal = document.getElementById('inspector-modal');
     const iframe = document.getElementById('inspector-iframe');
     if (modal && iframe) {
-        iframe.src = '/inspector';
+        // Pass current time filter to Inspector
+        const hours = typeof currentTimeRangeHours !== 'undefined' ? currentTimeRangeHours : 0;
+        iframe.src = `/inspector?hours=${hours}`;
         modal.classList.remove('hidden');
     }
 }

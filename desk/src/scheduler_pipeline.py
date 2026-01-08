@@ -121,6 +121,7 @@ class SchedulerPipeline:
             phases = list(PipelinePhase)
         
         self.result = PipelineResult()
+        self._progress_callback = progress_callback  # 저장하여 하위 메서드에서도 사용
         self._log(f"🚀 Pipeline starting: {schedule_name}")
         self._log(f"   Phases: {[p.value for p in phases]}")
         
@@ -176,17 +177,17 @@ class SchedulerPipeline:
         
         # crawler/core/collector.py 호출
         try:
-            # TODO: crawler 모듈에서 collect_links 가져오기
-            # 현재는 placeholder
             ZND_ROOT = os.path.dirname(DESK_DIR)
             sys.path.insert(0, os.path.join(ZND_ROOT, 'crawler'))
             from core.collector import collect_links
             
-            result = collect_links()
+            # progress_callback 전달
+            result = collect_links(progress_callback=self._progress_callback)
             if result.get('success'):
                 self._collected_links = result.get('links', [])
                 self.result.collected = len(self._collected_links)
-                self._log(f"   Collected {self.result.collected} links")
+                total_found = result.get('total_found', 0)
+                self._log(f"   Collected {self.result.collected} links (found {total_found})")
             else:
                 self._collected_links = []
                 self._log(f"   No links collected")
@@ -206,12 +207,25 @@ class SchedulerPipeline:
             return
         
         extracted_articles = []
+        total_links = len(links)
+        success_count = 0
+        fail_count = 0
         
         async def extract_all():
-            nonlocal extracted_articles
-            for item in links:
+            nonlocal extracted_articles, success_count, fail_count
+            for i, item in enumerate(links):
                 url = item['url'] if isinstance(item, dict) else item
                 source_id = item.get('source_id', 'unknown') if isinstance(item, dict) else 'unknown'
+                target_name = item.get('target_name', source_id) if isinstance(item, dict) else source_id
+                
+                # 진행 상황 콜백
+                if self._progress_callback:
+                    self._progress_callback({
+                        'status': 'extracting',
+                        'current': i + 1,
+                        'total': total_links,
+                        'message': f"📄 [{i+1}/{total_links}] {target_name}: 본문 추출 중..."
+                    })
                 
                 # desk 코어의 extract_article 직접 호출!
                 try:
@@ -227,14 +241,53 @@ class SchedulerPipeline:
                         article = self.manager.create(url, content)
                         if article:
                             extracted_articles.append(article)
+                            success_count += 1
+                            
+                            # 성공 메시지
+                            if self._progress_callback:
+                                title = content.get('title', url[:30])
+                                self._progress_callback({
+                                    'status': 'extracting',
+                                    'current': i + 1,
+                                    'total': total_links,
+                                    'message': f"✅ [{i+1}/{total_links}] 추출 성공: {title[:40]}..."
+                                })
+                        else:
+                            fail_count += 1
+                    else:
+                        fail_count += 1
+                        if self._progress_callback:
+                            self._progress_callback({
+                                'status': 'extracting',
+                                'current': i + 1,
+                                'total': total_links,
+                                'message': f"⚠️ [{i+1}/{total_links}] 본문 부족: {url[:40]}..."
+                            })
                             
                 except Exception as e:
+                    fail_count += 1
                     self._log(f"⚠️ Extract failed: {url[:50]}... - {e}")
+                    if self._progress_callback:
+                        self._progress_callback({
+                            'status': 'extracting',
+                            'current': i + 1,
+                            'total': total_links,
+                            'message': f"❌ [{i+1}/{total_links}] 추출 실패: {str(e)[:30]}"
+                        })
         
         asyncio.run(extract_all())
         self._extracted_articles = extracted_articles
         self.result.extracted = len(extracted_articles)
         self._log(f"   Extracted {self.result.extracted} articles")
+        
+        # 최종 추출 결과 요약
+        if self._progress_callback:
+            self._progress_callback({
+                'status': 'extracting',
+                'current': total_links,
+                'total': total_links,
+                'message': f"📊 추출 완료: {total_links}개 중 {success_count}개 성공, {fail_count}개 실패"
+            })
     
     def _phase_analyze(self):
         """Phase 3: AI 분석 (구현 예정)"""

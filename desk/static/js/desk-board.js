@@ -38,10 +38,44 @@ async function initBoardPage() {
     }
 
     await loadBoardData();
+    await loadInconsistentColumn(); // 초기 로딩 시에만 무결성 검사 실행
     setupBoardEvents();
 
     // 자동 갱신 비활성화 (Firestore 비용 절감)
     // startAutoRefresh();
+}
+
+async function syncAndReload() {
+    showLoading();
+    try {
+        console.log('🔄 [Sync] DB 동기화 및 새로고침 시작...');
+
+        // 1. 캐시 동기화 (Registry Sync)
+        const syncResult = await fetchAPI('/api/board/sync', { method: 'POST' });
+        if (syncResult.success) {
+            console.log(`✅ [Sync] 캐시 동기화 완료: ${syncResult.new_count}개 추가됨`);
+        }
+
+        // 2. 보드 데이터 다시 로드
+        await loadBoardData(true);
+
+        // 3. 무결성(Inconsistent) 컬럼 다시 로드 (무거운 작업)
+        await loadInconsistentColumn();
+
+        console.log('✅ [Sync] 전체 동기화 완료');
+
+        // 4. 마지막 업데이트 시간 표시 (Optional)
+        const statsEl = document.getElementById('stats');
+        if (statsEl) {
+            const now = new Date().toLocaleTimeString();
+            statsEl.textContent = `마지막 동기화: ${now}`;
+        }
+
+    } catch (e) {
+        showError('동기화 실패: ' + e.message);
+    } finally {
+        hideLoading();
+    }
 }
 
 async function loadBoardData(silent = false) {
@@ -66,8 +100,8 @@ async function loadBoardData(silent = false) {
             showError(result.error);
         }
 
-        // Load inconsistent articles separately
-        await loadInconsistentColumn();
+        // Load inconsistent articles separately -> [OPTIMIZATION] Removed from auto-refresh loop
+        // await loadInconsistentColumn();
     } catch (e) {
         showError(e.message);
     } finally {
@@ -570,9 +604,9 @@ document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
         stopAutoRefresh();
     } else {
-        // 페이지 다시 보이면 즉시 갱신 + 폴링 재시작
-        loadBoardData();
-        startAutoRefresh();
+        // 페이지 다시 보이면 즉시 갱신 (폴링은 재시작 안 함)
+        // loadBoardData(); // [OPTIMIZATION] 탭 전환 시 자동 갱신도 비활성화 (비용 절감)
+        // startAutoRefresh();
     }
 });
 
@@ -598,4 +632,5 @@ window.startAutoRefresh = startAutoRefresh;
 window.stopAutoRefresh = stopAutoRefresh;
 window.loadInconsistentColumn = loadInconsistentColumn;
 window.recoverAllInconsistent = recoverAllInconsistent;
+window.syncAndReload = syncAndReload;
 

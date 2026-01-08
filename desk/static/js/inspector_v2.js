@@ -22,9 +22,19 @@ async function loadArticles() {
     listEl.innerHTML = '<div style="padding:20px; text-align:center;">Loading...</div>';
 
     try {
-        // Fetch all articles that are valid for inspection (COLLECTED state)
-        // reusing list_articles API but filtering client-side or we can add a param later
-        const res = await fetch(`/api/analyzer/list?state=${ArticleState.COLLECTED}&limit=500&include_text=true`); // limit high
+        // Read time filter from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const hours = parseInt(urlParams.get('hours')) || 0;
+
+        // Build API URL with time filter
+        let apiUrl = `/api/analyzer/list?state=${ArticleState.COLLECTED}&limit=500&include_text=true`;
+
+        if (hours > 0) {
+            const sinceTime = new Date(Date.now() - hours * 60 * 60 * 1000);
+            apiUrl += `&since=${sinceTime.toISOString()}`;
+        }
+
+        const res = await fetch(apiUrl);
         const data = await res.json();
 
         if (!data.success) throw new Error(data.error);
@@ -50,7 +60,8 @@ async function loadArticles() {
         });
 
         renderGroupList();
-        updateStatus(`${allArticles.length} items loaded ready for inspection.`);
+        const filterMsg = hours > 0 ? ` (${hours}h filter)` : '';
+        updateStatus(`${allArticles.length} items loaded${filterMsg}`);
 
     } catch (e) {
         listEl.innerHTML = `<div style="padding:20px; color:red;">Error: ${e.message}</div>`;

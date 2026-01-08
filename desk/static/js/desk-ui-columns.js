@@ -66,15 +66,23 @@ async function recalculateAllScores() {
 
     showLoading();
     try {
+        // Read current time filter from board
+        const hours = typeof currentTimeRangeHours !== 'undefined' ? currentTimeRangeHours : 0;
+
         // 분석완료/분류됨 상태만 재계산
         const states = ['analyzed', 'classified'];
         let details = [];
 
         for (const state of states) {
             try {
+                const payload = { state, action: 'recalculate-scores' };
+                if (hours > 0) {
+                    payload.since_hours = hours;
+                }
+
                 const result = await fetchAPI('/api/board/column-action', {
                     method: 'POST',
-                    body: JSON.stringify({ state, action: 'recalculate-scores' })
+                    body: JSON.stringify(payload)
                 });
 
                 if (result.success) {

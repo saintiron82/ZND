@@ -1,0 +1,8 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/trends/route.js")
+R.c("server/chunks/[root-of-the-server]__8c4b6adf._.js")
+R.c("server/chunks/[root-of-the-server]__b036533d._.js")
+R.c("server/chunks/_8765842c._.js")
+R.c("server/chunks/[root-of-the-server]__f408c708._.js")
+R.c("server/chunks/_next-internal_server_app_api_trends_route_actions_66a134a0.js")
+R.m(52690)
+module.exports=R.m(52690).exports

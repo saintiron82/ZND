@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { Sparkles } from 'lucide-react';
 import CategoryNav from './CategoryNav';
+import version from '../../package.json';
 
 import Link from 'next/link';
 
@@ -75,6 +76,7 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                             <span className="text-teal-500">Z</span>eroEcho
                             <span className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-teal-500 inline-flex self-end mb-1 md:mb-2"></span>
                             <span className="font-light italic text-muted-foreground tracking-normal font-serif text-2xl md:text-4xl">Daily</span>
+                            <span className="ml-2 text-xs text-muted-foreground font-mono self-end mb-1">v{version.version}</span>
                             {process.env.NEXT_PUBLIC_ZND_ENV === 'dev' && (
                                 <span className="ml-2 text-xs md:text-lg text-teal-500 font-bold border border-teal-500 rounded px-1 self-start mt-1 select-none">
                                     dev

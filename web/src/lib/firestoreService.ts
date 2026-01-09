@@ -232,3 +232,87 @@ export async function checkLatestUpdate(): Promise<string | null> {
         return null;
     }
 }
+// ... (existing helper functions)
+
+const COLLECTION_TREND_REPORTS = 'trend_reports';
+
+export interface TrendReport {
+    id: string;
+    period: {
+        start: string;
+        end: string;
+    };
+    created_at: string;
+    top_trends: any[];
+    tag_rankings: any[];
+    weekly_insight: string;
+    next_week_outlook: string;
+}
+
+/**
+ * Fetch list of trend reports
+ * Uses correct ZND_ENV path via getCollectionRef
+ */
+export async function fetchTrendReports(limitCount: number = 20): Promise<TrendReport[]> {
+    try {
+        console.log(`📖 [Firestore] Fetching trend reports... (limit: ${limitCount})`);
+
+        // Import query functions dynamically or assume they are available from firebase/firestore imports
+        const { query, orderBy, limit: firestoreLimit } = await import('firebase/firestore');
+
+        const reportsRef = getCollectionRef(COLLECTION_TREND_REPORTS);
+        const q = query(reportsRef, orderBy('created_at', 'desc'), firestoreLimit(limitCount));
+
+        const snapshot = await getDocs(q);
+        const reports: TrendReport[] = [];
+
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            reports.push({
+                id: doc.id,
+                period: data.period || {},
+                created_at: data.created_at || '',
+                top_trends: data.top_trends || [],
+                tag_rankings: data.tag_rankings || [],
+                weekly_insight: data.weekly_insight || '',
+                next_week_outlook: data.next_week_outlook || ''
+            });
+        });
+
+        console.log(`✅ [Firestore] Found ${reports.length} trend reports`);
+        return reports;
+
+    } catch (error) {
+        console.error('❌ [Firestore] Failed to fetch trend reports:', error);
+        return [];
+    }
+}
+
+/**
+ * Fetch single trend report by ID
+ */
+export async function fetchTrendReportById(reportId: string): Promise<TrendReport | null> {
+    try {
+        const docRef = getDocRef(COLLECTION_TREND_REPORTS, reportId);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            return null;
+        }
+
+        const data = docSnap.data();
+        return {
+            id: docSnap.id,
+            period: data.period || {},
+            created_at: data.created_at || '',
+            top_trends: data.top_trends || [],
+            tag_rankings: data.tag_rankings || [],
+            weekly_insight: data.weekly_insight || '',
+            next_week_outlook: data.next_week_outlook || ''
+        };
+
+    } catch (error) {
+        console.error(`❌ [Firestore] Failed to fetch report ${reportId}:`, error);
+        return null;
+    }
+}

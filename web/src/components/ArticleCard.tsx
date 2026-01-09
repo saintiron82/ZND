@@ -7,6 +7,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { sendGAEvent } from '@next/third-parties/google';
 import ZSFeedbackButtons from './ZSFeedbackButtons';
+import { getTagColorClass } from '@/lib/tagColors';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -204,9 +205,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
                     {tags && tags.length > 0 && <span className="text-muted-foreground/50">·</span>}
                     {tags?.slice(0, 3).map(tag => {
                         const trendRank = trendingTags.indexOf(tag) + 1;
+                        // TOP 5 트렌드는 기존 gradient 스타일 유지, 나머지는 해시 기반 색상
+                        const tagColors = getTagColorClass(tag);
                         const tagStyle = trendRank > 0 && trendRank <= 5
                             ? getTrendingTagStyle(trendRank)
-                            : "bg-secondary/50 text-muted-foreground";
+                            : `${tagColors.bg} ${tagColors.text}`;
                         return (
                             <span
                                 key={tag}

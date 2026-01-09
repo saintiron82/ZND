@@ -3,6 +3,9 @@
 Board API - 칸반 보드 뷰용 API 라우트
 """
 from datetime import datetime, timezone, timedelta
+import os
+import json
+import subprocess
 from flask import Blueprint, request, jsonify, render_template
 
 from src.core import ArticleManager, ArticleState
@@ -19,6 +22,50 @@ manager = ArticleManager()
 def board_view():
     """칸반 보드 뷰"""
     return render_template('board.html')
+
+
+@board_bp.route('/api/version', methods=['GET'])
+def get_version():
+    """
+    배포 버전 정보 조회
+    VERSION.json이 있으면 사용, 없으면 Git에서 실시간 조회
+    """
+    try:
+        # 1. VERSION.json 파일 확인 (배포 시 생성됨)
+        desk_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        version_file = os.path.join(desk_root, 'VERSION.json')
+        
+        if os.path.exists(version_file):
+            with open(version_file, 'r', encoding='utf-8') as f:
+                version_info = json.load(f)
+                version_info['source'] = 'VERSION.json'
+                return jsonify(version_info)
+        
+        # 2. Git에서 실시간 조회 (개발 환경)
+        try:
+            commit = subprocess.check_output(
+                ['git', 'rev-parse', '--short', 'HEAD'],
+                cwd=desk_root, stderr=subprocess.DEVNULL
+            ).decode().strip()
+            
+            commit_time = subprocess.check_output(
+                ['git', 'log', '-1', '--format=%ci'],
+                cwd=desk_root, stderr=subprocess.DEVNULL
+            ).decode().strip()
+            
+            return jsonify({
+                'commit': commit,
+                'deployed_at': commit_time,
+                'branch': 'dev (live)',
+                'source': 'git'
+            })
+        except Exception:
+            pass
+        
+        return jsonify({'commit': 'unknown', 'source': 'fallback'})
+        
+    except Exception as e:
+        return jsonify({'error': str(e), 'commit': 'error'})
 
 
 # =============================================================================

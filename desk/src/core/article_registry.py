@@ -907,9 +907,9 @@ class ArticleRegistry:
                     if article_id in self._articles:
                         continue
                     
-                    # 시간 체크
-                    published_at = data.get('_original', {}).get('published_at', '')
-                    created_at = data.get('_header', {}).get('created_at', '')
+                    # 시간 체크 (Firestore DatetimeWithNanoseconds 대응)
+                    published_at = _normalize_timestamp(data.get('_original', {}).get('published_at', ''))
+                    created_at = _normalize_timestamp(data.get('_header', {}).get('created_at', ''))
                     date_source = published_at or created_at
                     if date_source and date_source < cutoff_iso:
                         continue

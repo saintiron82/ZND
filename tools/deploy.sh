@@ -85,7 +85,14 @@ fi
 # Return to root
 cd ..
 
-# 4. Restart PM2
+# 5. Generate VERSION.json for version tracking
+echo "📝 Generating VERSION.json..."
+COMMIT_HASH=$(git rev-parse --short HEAD)
+DEPLOY_TIME=$(date -Iseconds)
+echo "{\"commit\": \"$COMMIT_HASH\", \"deployed_at\": \"$DEPLOY_TIME\", \"branch\": \"$TARGET_BRANCH\"}" > desk/VERSION.json
+echo "✅ VERSION.json created: $COMMIT_HASH @ $DEPLOY_TIME"
+
+# 6. Restart PM2
 echo "🔄 Restarting PM2 services..."
 echo "🔄 request PM2 start/reload..."
 pm2 restart ecosystem.config.js --update-env

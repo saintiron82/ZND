@@ -37,12 +37,36 @@ async function initBoardPage() {
         customInput.value = localTime;
     }
 
+    // 버전 정보 로드
+    loadVersionBadge();
+
     await loadBoardData();
     await loadInconsistentColumn(); // 초기 로딩 시에만 무결성 검사 실행
     setupBoardEvents();
 
     // 자동 갱신 비활성화 (Firestore 비용 절감)
     // startAutoRefresh();
+}
+
+/**
+ * 버전 배지 로드 및 표시
+ */
+async function loadVersionBadge() {
+    const badge = document.getElementById('version-badge');
+    if (!badge) return;
+
+    try {
+        const result = await fetch('/api/version').then(r => r.json());
+        if (result.commit) {
+            badge.textContent = `v${result.commit}`;
+            badge.title = `배포: ${result.deployed_at || 'N/A'}\n브랜치: ${result.branch || 'N/A'}\n소스: ${result.source || 'N/A'}`;
+        } else {
+            badge.textContent = 'v?';
+        }
+    } catch (e) {
+        badge.textContent = 'v?';
+        console.warn('[Version] Failed to load:', e);
+    }
 }
 
 async function syncAndReload() {

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZND Desk - 주간 리포트</title>
+    <link rel="stylesheet" href="/static/css/desk.css?v=20241231">
+    <style>
+        .report-layout {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            height: calc(100vh - 60px);
+        }
+
+        /* 사이드바 - 리포트 목록 */
+        .report-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .report-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .report-item {
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            cursor: default;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .report-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .report-item.active {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .report-item .date-range {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .report-item .meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* 메인 영역 */
+        .report-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .section-card h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .prompt-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-controls select {
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        .prompt-area {
+            width: 100%;
+            min-height: 200px;
+            background: #1e1e1e;
+            color: #a4b0be;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+
+        .result-area {
+            width: 100%;
+            min-height: 150px;
+            background: #2d3436;
+            color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .trend-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .trend-rank {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .trend-topic {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0.3rem 0;
+        }
+
+        .trend-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 0.3rem 0;
+        }
+
+        .trend-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border-left: 4px solid var(--accent-color);
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .status-msg {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .status-msg.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-msg.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .new-report-btn {
+            width: 100%;
+            padding: 0.6rem;
+            background: var(--accent-color);
+        }
+
+        /* 프롬프트 통계 */
+        .prompt-stats {
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="env-{{ znd_env }}">
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <a href="/board" class="tab">📋 보드</a>
+        <a href="/publisher" class="tab">📢 발행</a>
+        <a href="/trend-report" class="tab active">📊 주간 리포트</a>
+        <span id="version-badge" class="version-badge" title="배포 버전">...</span>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="report-layout">
+        <!-- 사이드바: 리포트 목록 -->
+        <div class="report-sidebar">
+            <div class="sidebar-header">
+                <h3>📚 리포트 목록</h3>
+            </div>
+            <div style="padding: 0.5rem;">
+                <button class="btn new-report-btn" onclick="newReport()">➕ 새 리포트</button>
+            </div>
+            <div id="report-list" class="report-list">
+                <p style="color: #888; text-align: center; padding: 1rem;">로딩 중...</p>
+            </div>
+        </div>
+
+        <!-- 메인: 편집 영역 -->
+        <div class="report-main">
+            <!-- 프롬프트 생성 -->
+            <div class="section-card">
+                <h3>📋 1. 프롬프트 생성</h3>
+                <div id="prompt-status"
+                    style="padding: 0.5rem; margin-bottom: 0.5rem; background: rgba(99,102,241,0.1); border-radius: 4px; font-size: 0.9rem; display: none;">
+                </div>
+                <div class="prompt-controls">
+                    <label>시작일:</label>
+                    <input type="date" id="start-date"
+                        style="padding: 0.4rem; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 4px; color: var(--text-primary);">
+                    <label>종료일:</label>
+                    <input type="date" id="end-date"
+                        style="padding: 0.4rem; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 4px; color: var(--text-primary);">
+                    <button class="btn btn-primary" id="btn-generate" onclick="generatePrompt()">📝 생성</button>
+                    <button class="btn btn-secondary" onclick="copyPrompt()">📋 복사</button>
+                    <a href="https://gemini.google.com/" target="_blank" class="btn">🔗 Gemini</a>
+                </div>
+                <textarea id="prompt-text" class="prompt-area" readonly
+                    placeholder="날짜를 선택하고 '생성' 버튼을 클릭하세요..."></textarea>
+                <div id="prompt-stats" class="prompt-stats"></div>
+            </div>
+
+            <!-- 결과 입력 -->
+            <div class="section-card">
+                <h3>📝 2. 분석 결과 입력</h3>
+                <textarea id="result-json" class="result-area" placeholder='LLM 결과 JSON을 여기에 붙여넣으세요...'></textarea>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="saveReport()">💾 저장</button>
+                    <button class="btn btn-secondary" onclick="previewReport()">👁️ 미리보기</button>
+                </div>
+                <div id="save-status"></div>
+            </div>
+
+            <!-- 미리보기 -->
+            <div id="preview-section" class="section-card" style="display: none;">
+                <h3>📊 3. 미리보기</h3>
+                <div id="preview-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/constants.js?v=20241231"></script>
+    <script src="/static/js/desk-common.js?v=20241231"></script>
+    <script>
+        let currentPromptData = null;
+        let currentReportId = null;
+
+        // 새 리포트
+        function newReport() {
+            currentReportId = null;
+            document.getElementById('result-json').value = '';
+            document.getElementById('preview-section').style.display = 'none';
+            document.getElementById('save-status').innerHTML = '';
+
+            // 사이드바에서 active 제거
+            document.querySelectorAll('.report-item').forEach(el => el.classList.remove('active'));
+
+            // UI 상태: 새 리포트 모드
+            setPromptMode('new');
+            generatePrompt();
+        }
+
+        // 프롬프트 모드 설정 (new / loaded)
+        function setPromptMode(mode, period = null) {
+            const statusDiv = document.getElementById('prompt-status');
+            const btnGenerate = document.getElementById('btn-generate');
+            const promptArea = document.getElementById('prompt-text');
+
+            if (mode === 'loaded' && period) {
+                statusDiv.innerHTML = `📁 저장된 리포트 (${period.start} ~ ${period.end}). 태그 데이터를 갱신하려면 버튼을 클릭하세요.`;
+                statusDiv.style.display = 'block';
+
+                // 버튼 텍스트 변경
+                btnGenerate.textContent = '🔄 재생성';
+
+                // 날짜 입력창에 기간 설정
+                document.getElementById('start-date').value = period.start;
+                document.getElementById('end-date').value = period.end;
+
+                // 프롬프트 영역: 로드 상태 안내
+                promptArea.value = '';
+                promptArea.placeholder = '저장된 리포트입니다. [🔄 재생성] 버튼으로 태그 데이터를 갱신할 수 있습니다.';
+            } else {
+                statusDiv.style.display = 'none';
+
+                // 버튼 텍스트 복원
+                btnGenerate.textContent = '📝 생성';
+
+                // 프롬프트 영역: 새 리포트 안내
+                promptArea.placeholder = "날짜를 선택하고 '생성' 버튼을 클릭하세요...";
+            }
+        }
+
+        // 재생성 (로드된 리포트의 날짜로 프롬프트 재생성)
+        async function regeneratePrompt() {
+            await generatePrompt();
+        }
+
+        // 프롬프트 생성
+        async function generatePrompt() {
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            const promptArea = document.getElementById('prompt-text');
+            const statsArea = document.getElementById('prompt-stats');
+
+            if (!startDate || !endDate) {
+                promptArea.value = '시작일과 종료일을 선택하세요.';
+                return;
+            }
+
+            promptArea.value = '생성 중...';
+            statsArea.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/trend-reporter/generate-prompt?start=${startDate}&end=${endDate}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    currentPromptData = data;
+                    promptArea.value = data.prompt_text;
+                    statsArea.innerHTML = `📊 기사 ${data.article_count}개 | 회차 ${data.edition_count}개 | ${data.period.start} ~ ${data.period.end}`;
+
+                    // 태그 통계 즉시 표시 (데이터 구축 확인용)
+                    renderPreview({});
+                    document.getElementById('preview-section').style.display = 'block';
+
+                    // 상태 메시지 업데이트
+                    const statusDiv = document.getElementById('prompt-status');
+                    statusDiv.innerHTML = '✅ 프롬프트 및 태그 데이터가 생성되었습니다.';
+                    statusDiv.style.display = 'block';
+                } else {
+                    promptArea.value = '오류: ' + (data.error || '알 수 없는 오류');
+                }
+            } catch (e) {
+                promptArea.value = '오류: ' + e.message;
+            }
+        }
+
+        // 프롬프트 복사
+        function copyPrompt() {
+            const text = document.getElementById('prompt-text').value;
+            navigator.clipboard.writeText(text);
+            alert('프롬프트가 복사되었습니다!');
+        }
+
+        // 미리보기
+        function previewReport() {
+            const jsonText = document.getElementById('result-json').value.trim();
+            if (!jsonText) {
+                alert('JSON 결과를 입력하세요.');
+                return;
+            }
+
+            try {
+                const data = JSON.parse(jsonText);
+                renderPreview(data);
+                document.getElementById('preview-section').style.display = 'block';
+            } catch (e) {
+                alert('JSON 파싱 오류: ' + e.message);
+            }
+        }
+
+        // 미리보기 렌더링
+        function renderPreview(data) {
+            const container = document.getElementById('preview-content');
+            let html = '';
+
+            if (data.top_trends && data.top_trends.length > 0) {
+                html += '<h4>🔥 TOP 트렌드</h4>';
+                for (const trend of data.top_trends) {
+                    html += `
+                        <div class="trend-item">
+                            <span class="trend-rank">#${trend.rank}</span>
+                            <div class="trend-topic">${trend.topic}</div>
+                            <div class="trend-tags">
+                                ${(trend.tags || []).map(t => `<span class="trend-tag">${t}</span>`).join('')}
+                            </div>
+                            <p style="color: #ccc; font-size: 0.85rem; margin: 0.3rem 0;">${trend.summary || ''}</p>
+                            ${trend.key_players ? `<p style="color: #888; font-size: 0.8rem; margin: 0;">👥 ${trend.key_players.join(', ')}</p>` : ''}
+                        </div>
+                    `;
+                }
+            }
+
+            if (data.weekly_insight) {
+                html += `<div class="insight-box"><strong>💡 주간 인사이트</strong><p style="margin: 0.5rem 0 0;">${data.weekly_insight}</p></div>`;
+            }
+
+            if (data.next_week_outlook) {
+                html += `<div class="insight-box" style="border-left-color: #10b981;"><strong>🔮 다음 주 전망</strong><p style="margin: 0.5rem 0 0;">${data.next_week_outlook}</p></div>`;
+            }
+
+            // 태그 순위 (전체)
+            let tagRankings = data.tag_rankings;
+            console.log('[DEBUG] tag_rankings:', tagRankings);
+            console.log('[DEBUG] tag_stats:', JSON.stringify(data.tag_stats));
+            console.log('[DEBUG] tag_stats keys:', Object.keys(data.tag_stats || {}));
+
+            // 저장된 순위가 없거나 빈 배열이면 tag_stats에서 계산
+            if ((!tagRankings || tagRankings.length === 0) && (data.tag_stats || currentPromptData?.tag_stats)) {
+                const stats = data.tag_stats || currentPromptData.tag_stats;
+                tagRankings = Object.entries(stats)
+                    .sort((a, b) => b[1] - a[1])
+                    .map((item, index) => ({ rank: index + 1, tag: item[0], count: item[1] }));
+                console.log('[DEBUG] Calculated tagRankings from stats:', tagRankings.length);
+            }
+
+
+            if (tagRankings && tagRankings.length > 0) {
+                html += `<h4 style="margin-top: 1.5rem;">📈 태그 트렌드 (전체 ${tagRankings.length}개)</h4>`;
+                html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; max-height: 300px; overflow-y: auto; padding-right: 5px;">';
+                for (const item of tagRankings) {
+                    html += `
+                        <div style="background: rgba(255,255,255,0.03); padding: 0.5rem; border-radius: 4px; display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-weight: bold; color: var(--text-secondary); margin-right: 5px; min-width: 25px;">${item.rank}.</span>
+                            <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.tag}">${item.tag}</span>
+                            <span style="background: var(--bg-hover); padding: 2px 6px; border-radius: 10px; font-size: 0.8rem;">${item.count}</span>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+            }
+
+            container.innerHTML = html || '<p style="color: #888;">데이터 있음</p>';
+        }
+
+        // 리포트 저장
+        async function saveReport() {
+            const jsonText = document.getElementById('result-json').value.trim();
+            const statusDiv = document.getElementById('save-status');
+
+            if (!jsonText) {
+                statusDiv.innerHTML = '<div class="status-msg error">JSON 결과를 입력하세요.</div>';
+                return;
+            }
+
+            try {
+                const reportData = JSON.parse(jsonText);
+
+                // 기간 정보 추가
+                const startDate = document.getElementById('start-date').value;
+                const endDate = document.getElementById('end-date').value;
+                reportData.period = currentPromptData?.period || {
+                    start: startDate,
+                    end: endDate
+                };
+
+                // 태그 통계 추가 (주간 순위 추적용)
+                if (currentPromptData?.tag_stats) {
+                    reportData.tag_stats = currentPromptData.tag_stats;
+                }
+
+                const response = await fetch('/api/trend-reporter/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reportData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    statusDiv.innerHTML = `<div class="status-msg success">✅ 저장 완료! (${result.report_id})</div>`;
+                    currentReportId = result.report_id;
+                    loadReportList();
+                } else {
+                    statusDiv.innerHTML = `<div class="status-msg error">❌ 저장 실패: ${result.error}</div>`;
+                }
+            } catch (e) {
+                statusDiv.innerHTML = `<div class="status-msg error">❌ 오류: ${e.message}</div>`;
+            }
+        }
+
+        // 리포트 목록 로드
+        async function loadReportList() {
+            try {
+                const response = await fetch('/api/trend-reporter/list');
+                const data = await response.json();
+                const container = document.getElementById('report-list');
+
+                if (data.success && data.reports && data.reports.length > 0) {
+                    let html = '';
+                    for (const report of data.reports) {
+                        const isActive = currentReportId === report.id ? 'active' : '';
+                        html += `
+                            <div class="report-item ${isActive}">
+                                <div onclick="loadReport('${report.id}')" style="cursor: pointer; flex: 1;">
+                                    <div class="date-range">📊 ${report.period?.start || '?'} ~ ${report.period?.end || '?'}</div>
+                                    <div class="meta">${report.created_at?.slice(0, 10) || ''} 생성</div>
+                                </div>
+                                <button onclick="deleteReport('${report.id}', event)" style="background: rgba(239,68,68,0.2); color: #ef4444; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;" title="삭제">🗑️</button>
+                            </div>
+                        `;
+                    }
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p style="color: #888; text-align: center; padding: 1rem;">저장된 리포트가 없습니다.</p>';
+                }
+            } catch (e) {
+                console.error('Failed to load reports:', e);
+            }
+        }
+
+        // 리포트 로드
+        async function loadReport(reportId) {
+            try {
+                const response = await fetch(`/api/trend-reporter/get/${reportId}`);
+                const data = await response.json();
+
+                if (data.success && data.report) {
+                    currentReportId = reportId;
+                    document.getElementById('result-json').value = JSON.stringify(data.report, null, 2);
+                    renderPreview(data.report);
+                    document.getElementById('preview-section').style.display = 'block';
+                    document.getElementById('save-status').innerHTML = '';
+
+                    // UI 상태: 로드된 리포트 모드
+                    setPromptMode('loaded', data.report.period);
+
+                    // 사이드바 목록 갱신 (Active 표시)
+                    loadReportList();
+                }
+            } catch (e) {
+                alert('리포트 로드 실패: ' + e.message);
+            }
+        }
+
+        // 리포트 삭제
+        async function deleteReport(reportId, event) {
+            event.stopPropagation();  // 클릭 이벤트 버블링 방지
+
+            if (!confirm(`리포트 "${reportId}"를 삭제하시겠습니까?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/trend-reporter/delete/${reportId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('삭제 완료!');
+                    if (currentReportId === reportId) {
+                        currentReportId = null;
+                        document.getElementById('result-json').value = '';
+                        document.getElementById('preview-section').style.display = 'none';
+                    }
+                    loadReportList();
+                } else {
+                    alert('삭제 실패: ' + data.error);
+                }
+            } catch (e) {
+                alert('삭제 실패: ' + e.message);
+            }
+        }
+
+        // 초기화
+        document.addEventListener('DOMContentLoaded', () => {
+            // 기본 날짜 설정 (오늘 ~ 7일 전)
+            const today = new Date();
+            const weekAgo = new Date(today);
+            weekAgo.setDate(weekAgo.getDate() - 7);
+
+            document.getElementById('end-date').value = today.toISOString().slice(0, 10);
+            document.getElementById('start-date').value = weekAgo.toISOString().slice(0, 10);
+
+            loadReportList();
+            fetch('/api/version').then(r => r.json()).then(d => {
+                document.getElementById('version-badge').textContent = d.commit_short || 'dev';
+            }).catch(() => { });
+        });
+    </script>
+</body>
+
+</html>

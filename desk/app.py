@@ -38,12 +38,14 @@ from src.api.publisher import publisher_bp
 from src.api.board import board_bp
 from src.api.settings import settings_bp
 from src.api.collector import collector_bp
+from src.api.trend_reporter import trend_reporter_bp
 
 app.register_blueprint(analyzer_bp)
 app.register_blueprint(publisher_bp)
 app.register_blueprint(board_bp)
 app.register_blueprint(settings_bp)
 app.register_blueprint(collector_bp)
+app.register_blueprint(trend_reporter_bp)
 
 
 # =============================================================================

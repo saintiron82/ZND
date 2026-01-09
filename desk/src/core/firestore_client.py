@@ -961,3 +961,60 @@ class FirestoreClient:
             data['id'] = doc.id
             articles.append(data)
         return articles
+
+    # =========================================================================
+    # Trend Reports Collection
+    # =========================================================================
+    
+    def save_trend_report(self, report_id: str, data: Dict[str, Any]) -> bool:
+        """트렌드 리포트 저장"""
+        doc_ref = self._get_collection('trend_reports').document(report_id)
+        doc_ref.set(data, merge=True)
+        self._track_write()
+        print(f"✅ [FirestoreClient] Trend report saved: {report_id}")
+        return True
+    
+    def get_trend_report(self, report_id: str) -> Optional[Dict[str, Any]]:
+        """트렌드 리포트 조회"""
+        doc_ref = self._get_collection('trend_reports').document(report_id)
+        doc = doc_ref.get()
+        self._track_read()
+        
+        if doc.exists:
+            data = doc.to_dict()
+            data['id'] = doc.id
+            return data
+        return None
+    
+    def list_trend_reports(self, limit: int = 20) -> List[Dict[str, Any]]:
+        """트렌드 리포트 목록 조회 (최신순)"""
+        query = self._get_collection('trend_reports')\
+            .order_by('created_at', direction=firestore.Query.DESCENDING)\
+            .limit(limit)
+        
+        docs = query.stream()
+        self._track_read()
+        
+        reports = []
+        for doc in docs:
+            data = doc.to_dict()
+            data['id'] = doc.id
+            reports.append({
+                'id': data.get('id'),
+                'period': data.get('period', {}),
+                'created_at': data.get('created_at')
+            })
+        return reports
+    
+    def delete_trend_report(self, report_id: str) -> bool:
+        """트렌드 리포트 삭제"""
+        try:
+            doc_ref = self._get_collection('trend_reports').document(report_id)
+            doc_ref.delete()
+            self._track_delete()
+            print(f"🗑️ [FirestoreClient] Trend report deleted: {report_id}")
+            return True
+        except Exception as e:
+            print(f"❌ [FirestoreClient] Failed to delete report: {e}")
+            return False
+

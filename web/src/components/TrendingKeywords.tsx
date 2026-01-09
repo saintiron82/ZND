@@ -123,6 +123,14 @@ export default function TrendingKeywords({ articles, maxItems = 5 }: TrendingKey
                     </div>
                 ))}
             </div>
+
+            {/* 주간 리포트 링크 */}
+            <a
+                href="/reports"
+                className="mt-4 block text-center text-xs text-teal-500 hover:text-teal-400 hover:underline"
+            >
+                📊 주간 트렌드 리포트 보기 →
+            </a>
         </div>
     );
 }

@@ -131,6 +131,23 @@ a:hover {
     border-bottom-color: var(--accent-primary);
 }
 
+/* Version Badge */
+.version-badge {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    cursor: default;
+    transition: all 0.2s;
+}
+
+.version-badge:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+}
+
 .nav-right {
     margin-left: auto;
     display: flex;

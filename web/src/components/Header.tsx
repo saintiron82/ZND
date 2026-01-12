@@ -7,6 +7,7 @@ import CategoryNav from './CategoryNav';
 import version from '../../package.json';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
     currentDate?: string | null;
@@ -16,6 +17,11 @@ interface HeaderProps {
 export default function Header({ currentDate, editionName }: HeaderProps) {
     const [isHelpOpen, setIsHelpOpen] = useState(false);
     const helpRef = useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+
+    const isDev = process.env.NEXT_PUBLIC_ZND_ENV === 'dev';
+    const isPreview = process.env.NEXT_PUBLIC_ZND_ENV === 'preview' || process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview' || pathname?.startsWith('/preview');
+    const showVersion = isDev || isPreview;
 
     // 외부 클릭 및 스크롤 감지하여 툴팁 닫기
     useEffect(() => {
@@ -76,8 +82,11 @@ export default function Header({ currentDate, editionName }: HeaderProps) {
                             <span className="text-teal-500">Z</span>eroEcho
                             <span className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-teal-500 inline-flex self-end mb-1 md:mb-2"></span>
                             <span className="font-light italic text-muted-foreground tracking-normal font-serif text-2xl md:text-4xl">Daily</span>
-                            <span className="ml-2 text-xs text-muted-foreground font-mono self-end mb-1">v{version.version}</span>
-                            {process.env.NEXT_PUBLIC_ZND_ENV === 'dev' && (
+                            {showVersion && (
+                                <span className="ml-2 text-xs text-muted-foreground font-mono self-end mb-1">v{version.version}</span>
+                            )}
+                            {/* Dev badge only in dev environment */}
+                            {isDev && (
                                 <span className="ml-2 text-xs md:text-lg text-teal-500 font-bold border border-teal-500 rounded px-1 self-start mt-1 select-none">
                                     dev
                                 </span>

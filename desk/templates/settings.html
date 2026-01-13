@@ -63,14 +63,33 @@
             <div class="modal-content">
                 <h3 id="modal-title">스케줄 추가</h3>
                 <input type="hidden" id="edit-schedule-id">
+                <input type="hidden" id="edit-schedule-cron">
                 <div class="form-group">
                     <label>이름</label>
                     <input type="text" id="schedule-name" class="input" placeholder="스케줄 이름">
                 </div>
                 <div class="form-group">
-                    <label>Cron 표현식</label>
-                    <input type="text" id="schedule-cron" class="input" placeholder="30 6 * * *">
-                    <small class="hint">형식: 분 시 일 월 요일 (예: 30 6 * * * = 매일 6:30)</small>
+                    <label>실행 시간 (KST)</label>
+                    <div class="time-picker">
+                        <select id="schedule-hour" class="input time-select">
+                            <!-- 0-23 시간 옵션 -->
+                        </select>
+                        <span class="time-separator">:</span>
+                        <select id="schedule-minute" class="input time-select">
+                            <!-- 0-59 분 옵션 -->
+                        </select>
+                        <span class="time-label">KST</span>
+                    </div>
+                    <small class="hint">한국 시간 기준으로 입력하면 UTC로 자동 변환됩니다.</small>
+                </div>
+                <div class="form-group">
+                    <label class="toggle-label">
+                        <span class="toggle">
+                            <input type="checkbox" id="schedule-discord">
+                            <span class="slider"></span>
+                        </span>
+                        <span>디스코드 알림</span>
+                    </label>
                 </div>
                 <div class="modal-actions">
                     <button id="btn-modal-save" class="btn btn-primary">저장</button>
@@ -111,26 +130,50 @@
             }
         }
 
+        // KST <-> UTC 변환 함수
+        function kstToUtcCron(hour, minute) {
+            let utcHour = hour - 9;
+            if (utcHour < 0) utcHour += 24;
+            return `${minute} ${utcHour} * * *`;
+        }
+
+        function utcCronToKst(cron) {
+            const parts = cron.split(' ');
+            if (parts.length < 2) return { hour: 0, minute: 0, display: '00:00' };
+            const minute = parseInt(parts[0]) || 0;
+            const utcHour = parseInt(parts[1]) || 0;
+            let kstHour = (utcHour + 9) % 24;
+            return {
+                hour: kstHour,
+                minute: minute,
+                display: `${String(kstHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
+            };
+        }
+
         function renderSchedules(schedules) {
             const container = document.getElementById('schedule-list');
             if (!container) return;
 
-            container.innerHTML = schedules.map(s => `
-                <div class="schedule-item" data-id="${s.id}">
+            container.innerHTML = schedules.map(s => {
+                const kst = utcCronToKst(s.cron);
+                const discordIcon = s.discord ? '🔔' : '🔕';
+                return `
+                <div class="schedule-item" data-id="${s.id}" data-cron="${s.cron}" data-discord="${s.discord || false}">
                     <div class="schedule-info">
                         <label class="toggle">
                             <input type="checkbox" class="schedule-toggle" ${s.enabled ? 'checked' : ''}>
                             <span class="slider"></span>
                         </label>
                         <span class="schedule-name">${s.name}</span>
-                        <code class="schedule-cron">${s.cron}</code>
+                        <span class="schedule-time">${kst.display} KST</span>
+                        <span class="schedule-discord" title="디스코드 알림">${discordIcon}</span>
                     </div>
                     <div class="schedule-actions">
                         <button class="btn btn-edit" onclick="editSchedule('${s.id}')">✏️</button>
                         <button class="btn btn-danger btn-delete" onclick="deleteSchedule('${s.id}')">🗑️</button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
 
             // Toggle events
             container.querySelectorAll('.schedule-toggle').forEach(toggle => {
@@ -158,13 +201,36 @@
             }
         }
 
+        function initTimeSelectors() {
+            const hourSelect = document.getElementById('schedule-hour');
+            const minuteSelect = document.getElementById('schedule-minute');
+
+            // 시간 옵션 (0-23)
+            hourSelect.innerHTML = '';
+            for (let i = 0; i < 24; i++) {
+                hourSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+            }
+
+            // 분 옵션 (0-59)
+            minuteSelect.innerHTML = '';
+            for (let i = 0; i < 60; i++) {
+                minuteSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+            }
+        }
+
         function setupSettingsEvents() {
+            // 시간 선택기 초기화
+            initTimeSelectors();
+
             // Add schedule
             document.getElementById('btn-add-schedule')?.addEventListener('click', () => {
                 document.getElementById('modal-title').textContent = '스케줄 추가';
                 document.getElementById('edit-schedule-id').value = '';
+                document.getElementById('edit-schedule-cron').value = '';
                 document.getElementById('schedule-name').value = '';
-                document.getElementById('schedule-cron').value = '';
+                document.getElementById('schedule-hour').value = '6';
+                document.getElementById('schedule-minute').value = '30';
+                document.getElementById('schedule-discord').checked = false;
                 document.getElementById('schedule-modal').classList.remove('hidden');
             });
 
@@ -172,10 +238,15 @@
             document.getElementById('btn-modal-save')?.addEventListener('click', async () => {
                 const id = document.getElementById('edit-schedule-id').value;
                 const name = document.getElementById('schedule-name').value;
-                const cron = document.getElementById('schedule-cron').value;
+                const hour = parseInt(document.getElementById('schedule-hour').value);
+                const minute = parseInt(document.getElementById('schedule-minute').value);
+                const discord = document.getElementById('schedule-discord').checked;
 
-                if (!name || !cron) {
-                    alert('이름과 Cron 표현식을 입력해주세요.');
+                // KST -> UTC 변환
+                const cron = kstToUtcCron(hour, minute);
+
+                if (!name) {
+                    alert('스케줄 이름을 입력해주세요.');
                     return;
                 }
 
@@ -184,12 +255,12 @@
                     if (id) {
                         await fetchAPI(`/api/settings/schedules/${id}`, {
                             method: 'PUT',
-                            body: JSON.stringify({ name, cron })
+                            body: JSON.stringify({ name, cron, discord })
                         });
                     } else {
                         await fetchAPI('/api/settings/schedules', {
                             method: 'POST',
-                            body: JSON.stringify({ name, cron })
+                            body: JSON.stringify({ name, cron, discord })
                         });
                     }
                     document.getElementById('schedule-modal').classList.add('hidden');
@@ -214,12 +285,17 @@
         function editSchedule(id) {
             const item = document.querySelector(`.schedule-item[data-id="${id}"]`);
             const name = item.querySelector('.schedule-name').textContent;
-            const cron = item.querySelector('.schedule-cron').textContent;
+            const cron = item.dataset.cron;
+            const discord = item.dataset.discord === 'true';
+            const kst = utcCronToKst(cron);
 
             document.getElementById('modal-title').textContent = '스케줄 수정';
             document.getElementById('edit-schedule-id').value = id;
+            document.getElementById('edit-schedule-cron').value = cron;
             document.getElementById('schedule-name').value = name;
-            document.getElementById('schedule-cron').value = cron;
+            document.getElementById('schedule-hour').value = kst.hour;
+            document.getElementById('schedule-minute').value = kst.minute;
+            document.getElementById('schedule-discord').checked = discord;
             document.getElementById('schedule-modal').classList.remove('hidden');
         }
 
@@ -272,16 +348,53 @@
             gap: 1rem;
         }
 
-        .schedule-cron {
-            background: var(--bg-primary);
-            padding: 0.25rem 0.5rem;
+        .schedule-time {
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .schedule-discord {
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
         }
 
         .schedule-actions {
             display: flex;
             gap: 0.5rem;
+        }
+
+        /* Time Picker */
+        .time-picker {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .time-select {
+            width: 80px !important;
+            text-align: center;
+        }
+
+        .time-separator {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .time-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Toggle Label */
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
         }
 
         .stats-grid {

@@ -5,6 +5,7 @@
             "name": "아침 수집",
             "cron": "30 6 * * *",
             "enabled": true,
+            "discord": true,
             "description": "매일 06:30 실행"
         },
         {
@@ -12,6 +13,7 @@
             "name": "점심 수집",
             "cron": "30 12 * * *",
             "enabled": true,
+            "discord": false,
             "description": "매일 12:30 실행"
         },
         {
@@ -19,6 +21,7 @@
             "name": "저녁 수집",
             "cron": "30 18 * * *",
             "enabled": true,
+            "discord": true,
             "description": "매일 18:30 실행"
         },
         {
@@ -26,6 +29,7 @@
             "name": "자정 수집",
             "cron": "30 0 * * *",
             "enabled": true,
+            "discord": false,
             "description": "매일 00:30 실행"
         }
     ],

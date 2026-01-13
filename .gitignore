@@ -56,3 +56,4 @@ web/.next/dev/
 .DS_Store
 Thumbs.db
 desk/cache/
+tmpclaude-*

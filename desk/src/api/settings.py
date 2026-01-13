@@ -67,6 +67,8 @@ def update_schedule(schedule_id: str):
                     schedule['phases'] = data['phases']
                 if 'description' in data:
                     schedule['description'] = data['description']
+                if 'discord' in data:
+                    schedule['discord'] = data['discord']
                 break
         else:
             return jsonify({
@@ -103,7 +105,8 @@ def create_schedule():
             'cron': data.get('cron', '0 12 * * *'),
             'enabled': data.get('enabled', True),
             'phases': data.get('phases', ['collect', 'extract']),
-            'description': data.get('description', '')
+            'description': data.get('description', ''),
+            'discord': data.get('discord', False)
         }
         
         schedules.append(new_schedule)

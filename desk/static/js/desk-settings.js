@@ -119,15 +119,37 @@ async function loadSettingsData() {
     }
 }
 
+// KST <-> UTC 변환 함수
+function kstToUtcCron(hour, minute) {
+    let utcHour = hour - 9;
+    if (utcHour < 0) utcHour += 24;
+    return `${minute} ${utcHour} * * *`;
+}
+
+function utcCronToKst(cron) {
+    const parts = cron.split(' ');
+    if (parts.length < 2) return { hour: 0, minute: 0, display: '00:00' };
+    const minute = parseInt(parts[0]) || 0;
+    const utcHour = parseInt(parts[1]) || 0;
+    let kstHour = (utcHour + 9) % 24;
+    return {
+        hour: kstHour,
+        minute: minute,
+        display: `${String(kstHour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
+    };
+}
+
 function renderScheduleList(schedules) {
     const container = document.getElementById('schedule-list');
     if (!container) return;
 
     container.innerHTML = schedules.map(s => {
+        const kst = utcCronToKst(s.cron);
+        const discordIcon = s.discord ? '🔔' : '🔕';
         const phasesStr = (s.phases || ['collect', 'extract']).join(', ');
         const phasesBadge = getPhaseBadge(s.phases || ['collect', 'extract']);
         return `
-        <div class="schedule-item" data-id="${s.id}">
+        <div class="schedule-item" data-id="${s.id}" data-cron="${s.cron}" data-discord="${s.discord || false}">
             <label class="toggle">
                 <input type="checkbox" class="schedule-toggle" ${s.enabled ? 'checked' : ''}>
                 <span class="slider"></span>
@@ -136,7 +158,8 @@ function renderScheduleList(schedules) {
                 <span class="schedule-name">${s.name}</span>
                 <span class="schedule-phases">${phasesBadge}</span>
             </div>
-            <code class="schedule-cron">${s.cron}</code>
+            <span class="schedule-time">${kst.display} KST</span>
+            <span class="schedule-discord" title="디스코드 알림">${discordIcon}</span>
             <button class="btn btn-sm btn-edit" onclick="editSchedule('${s.id}')">✏️</button>
             <button class="btn btn-sm btn-delete" onclick="deleteSchedule('${s.id}')">🗑️</button>
         </div>
@@ -400,9 +423,21 @@ async function showScheduleDialog(existingData = null) {
     return new Promise((resolve) => {
         const isEdit = !!existingData;
         const name = existingData?.name || '';
-        const cron = existingData?.cron || '0 8 * * *';
+        const cron = existingData?.cron || '30 21 * * *'; // 06:30 KST = 21:30 UTC
+        const kst = utcCronToKst(cron);
         const phases = existingData?.phases || ['collect', 'extract'];
         const description = existingData?.description || '';
+        const discord = existingData?.discord || false;
+
+        // 시간 선택 옵션 생성
+        let hourOptions = '';
+        for (let i = 0; i < 24; i++) {
+            hourOptions += `<option value="${i}" ${kst.hour === i ? 'selected' : ''}>${String(i).padStart(2, '0')}</option>`;
+        }
+        let minuteOptions = '';
+        for (let i = 0; i < 60; i++) {
+            minuteOptions += `<option value="${i}" ${kst.minute === i ? 'selected' : ''}>${String(i).padStart(2, '0')}</option>`;
+        }
 
         // 다이얼로그 HTML
         const dialog = document.createElement('div');
@@ -415,9 +450,23 @@ async function showScheduleDialog(existingData = null) {
                     <input type="text" id="sched-name" class="input" value="${name}" placeholder="오전 수집">
                 </div>
                 <div class="form-group">
-                    <label>Cron 표현식</label>
-                    <input type="text" id="sched-cron" class="input" value="${cron}" placeholder="30 6 * * *">
-                    <small style="color:var(--text-secondary)">분 시 일 월 요일 (예: 30 6 * * * = 매일 6:30)</small>
+                    <label>실행 시간 (KST)</label>
+                    <div class="time-picker">
+                        <select id="sched-hour" class="input time-select">${hourOptions}</select>
+                        <span class="time-separator">:</span>
+                        <select id="sched-minute" class="input time-select">${minuteOptions}</select>
+                        <span class="time-label">KST</span>
+                    </div>
+                    <small style="color:var(--text-secondary)">한국 시간 기준으로 입력하면 UTC로 자동 변환됩니다.</small>
+                </div>
+                <div class="form-group">
+                    <label class="toggle-label">
+                        <span class="toggle">
+                            <input type="checkbox" id="sched-discord" ${discord ? 'checked' : ''}>
+                            <span class="slider"></span>
+                        </span>
+                        <span>디스코드 알림</span>
+                    </label>
                 </div>
                 <div class="form-group">
                     <label>실행 단계</label>
@@ -472,6 +521,16 @@ async function showScheduleDialog(existingData = null) {
                 }
                 .phase-badge.phase-collect { background: #3498db22; color: #3498db; }
                 .phase-badge.phase-publish { background: #2ecc7122; color: #2ecc71; }
+                .time-picker { display: flex; align-items: center; gap: 0.5rem; }
+                .time-select { width: 70px !important; text-align: center; }
+                .time-separator { font-size: 1.3rem; font-weight: bold; }
+                .time-label { color: var(--text-secondary); font-size: 0.9rem; }
+                .toggle-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+                .schedule-time { 
+                    background: var(--accent-primary); color: white;
+                    padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;
+                }
+                .schedule-discord { font-size: 1rem; }
             `;
             document.head.appendChild(style);
         }
@@ -488,11 +547,16 @@ async function showScheduleDialog(existingData = null) {
             const selectedPhases = Array.from(dialog.querySelectorAll('#phase-selector input:checked'))
                 .map(cb => cb.value);
 
+            const hour = parseInt(dialog.querySelector('#sched-hour').value);
+            const minute = parseInt(dialog.querySelector('#sched-minute').value);
+            const cronUtc = kstToUtcCron(hour, minute);
+
             const result = {
                 name: dialog.querySelector('#sched-name').value || '새 스케줄',
-                cron: dialog.querySelector('#sched-cron').value || '0 8 * * *',
+                cron: cronUtc,
                 phases: selectedPhases.length > 0 ? selectedPhases : ['collect', 'extract'],
-                description: dialog.querySelector('#sched-desc').value
+                description: dialog.querySelector('#sched-desc').value,
+                discord: dialog.querySelector('#sched-discord').checked
             };
 
             dialog.remove();

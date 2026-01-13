@@ -121,11 +121,22 @@ class FirestoreClient:
             doc_ref = self._get_collection('history').document('_index')
             doc = doc_ref.get()
             self._track_read()
-            
+
             if doc.exists:
                 data = doc.to_dict()
+
+                # Case 1: 중첩 객체 형태 {'urls': {'hash1': {...}, 'hash2': {...}}}
                 urls_map = data.get('urls', {})
-                self._remote_hashes = set(urls_map.keys())
+                if urls_map:
+                    self._remote_hashes = set(urls_map.keys())
+                else:
+                    # Case 2: 플랫 키 형태 {'urls.hash1': {...}, 'urls.hash2': {...}}
+                    self._remote_hashes = set()
+                    for key in data.keys():
+                        if key.startswith('urls.'):
+                            hash_part = key[5:]  # 'urls.' 제거
+                            self._remote_hashes.add(hash_part)
+
                 print(f"📥 [History] Loaded {len(self._remote_hashes)} remote hashes")
         except Exception as e:
             print(f"⚠️ [History] Remote hash load failed: {e}")
@@ -696,16 +707,26 @@ class FirestoreClient:
         return {'urls': {}}
     
     def update_history(self, url: str, article_id: str, status: str):
-        """히스토리 업데이트"""
+        """히스토리 업데이트 (Firestore + 런타임 캐시)"""
+        url_hash = self._url_to_key(url)
+
+        # 1. Firestore 업데이트
         doc_ref = self._get_collection('history').document('_index')
         doc_ref.set({
-            f'urls.{self._url_to_key(url)}': {
+            f'urls.{url_hash}': {
                 'article_id': article_id,
                 'status': status,
                 'updated_at': get_kst_now()
             }
         }, merge=True)
         self._track_write()
+
+        # 2. 런타임 해시 캐시에도 추가 (중복 수집 방지)
+        self._remote_hashes.add(url_hash)
+
+        # 3. 로컬 히스토리에도 추가 (세션 간 중복 방지)
+        self.history[url] = get_kst_now()
+        self._save_history_file()
     
     def check_url_exists(self, url: str) -> Optional[Dict[str, Any]]:
         """URL이 이미 처리되었는지 확인"""
@@ -714,9 +735,11 @@ class FirestoreClient:
         return history.get('urls', {}).get(url_key)
     
     def _url_to_key(self, url: str) -> str:
-        """URL을 Firestore 키로 변환 (특수문자 제거)"""
+        """URL을 Firestore 키로 변환 (정규화 후 해시)"""
         import hashlib
-        return hashlib.md5(url.encode()).hexdigest()[:12]
+        # URL 정규화: 끝 슬래시 제거하여 일관된 키 생성
+        normalized_url = url.rstrip('/')
+        return hashlib.md5(normalized_url.encode()).hexdigest()[:12]
     
     # =========================================================================
     # Local History Management (Ported from DBClient)

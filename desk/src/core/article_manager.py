@@ -39,7 +39,9 @@ class ArticleManager:
     @staticmethod
     def generate_article_id(url: str) -> str:
         """URL에서 article_id 생성 (12자리 MD5 해시)"""
-        return hashlib.md5(url.encode()).hexdigest()[:12]
+        # URL 정규화: 끝 슬래시 제거하여 일관된 ID 생성
+        normalized_url = url.rstrip('/')
+        return hashlib.md5(normalized_url.encode()).hexdigest()[:12]
     
     # =========================================================================
     # CRUD Operations
@@ -101,9 +103,17 @@ class ArticleManager:
             original_data: 원본 데이터 (title, text, image, source_id 등)
         
         Returns:
-            생성된 기사 데이터
+            생성된 기사 데이터, 이미 존재하면 None
         """
         article_id = self.generate_article_id(url)
+        
+        # [CRITICAL FIX] 기존 기사가 있으면 생성하지 않음 (발행 기사 보호)
+        existing = self.get(article_id)
+        if existing:
+            current_state = existing.get('_header', {}).get('state', 'unknown')
+            print(f"⚠️ [ArticleManager.create] Article already exists: {article_id} (state: {current_state})")
+            return None  # 기존 기사를 덮어쓰지 않음
+        
         source_id = original_data.get('source_id', 'unknown')
         now = get_kst_now() # [FIX] Use KST
         

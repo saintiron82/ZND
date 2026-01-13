@@ -71,13 +71,17 @@ module.exports = {
         },
         {
             name: 'zed-scheduler',
-            script: 'desk_crawler.py', // auto_crawl.py 대신 desk_crawler.py 사용 추정
+            script: 'auto_collect.py',
             cwd: './desk',
             interpreter: isWin ? 'python' : '/home/saintiron82/ZND/desk/venv/bin/python3',
             instances: 1,
             autorestart: false,
             cron_restart: crawlSchedule,
             watch: false,
+            env: {
+                ZND_ENV: 'release',
+                PYTHONIOENCODING: 'utf-8'
+            }
         },
     ],
 };

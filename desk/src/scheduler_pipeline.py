@@ -233,13 +233,13 @@ class SchedulerPipeline:
                     if content and len(content.get('text', '')) >= 200:
                         content['source_id'] = source_id
                         content['url'] = url
-                        
-                        # desk 코어의 save_to_cache 직접 호출!
-                        save_to_cache(url, content)
-                        
-                        # ArticleManager.create 호출하여 Firestore 저장
+
+                        # [FIX] Firestore 먼저 저장, 성공하면 로컬 캐시에 저장
+                        # (순서 중요: create()가 get()으로 중복 체크하므로 캐시가 먼저 있으면 실패)
                         article = self.manager.create(url, content)
                         if article:
+                            # Firestore 저장 성공 후 로컬 캐시에도 저장
+                            save_to_cache(url, content)
                             extracted_articles.append(article)
                             success_count += 1
                             

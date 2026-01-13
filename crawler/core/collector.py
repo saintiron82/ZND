@@ -26,9 +26,134 @@ if DESK_SRC_CORE_DIR not in sys.path:
 from core.logger import log_crawl_event
 from firestore_client import FirestoreClient
 
-# Import from desk/desk_crawler.py
-import desk_crawler as desk_crawler
+# Import dependencies directly
+import requests
+import feedparser
+from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
+from dateutil import parser as date_parser
 
+def normalize_url(url: str) -> str:
+    """
+    URL 정규화: UTM 파라미터만 제거, 필수 파라미터는 유지
+    """
+    if not url:
+        return ""
+
+    # 1. 공백 제거
+    url = url.strip()
+
+    # 2. UTM/추적 파라미터만 선택적으로 제거 (필수 파라미터는 유지)
+    if '?' in url:
+        from urllib.parse import urlparse, parse_qs, urlencode
+        parsed = urlparse(url)
+        params = parse_qs(parsed.query)
+
+        # 제거할 추적 파라미터 목록
+        tracking_params = {'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+                          'fbclid', 'gclid', 'ref', 'source', 'mc_cid', 'mc_eid'}
+
+        # 추적 파라미터만 제거, 나머지는 유지
+        filtered_params = {k: v[0] for k, v in params.items() if k.lower() not in tracking_params}
+
+        if filtered_params:
+            new_query = urlencode(filtered_params)
+            url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
+        else:
+            url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
+
+    # 3. 끝 슬래시 제거 (선택적)
+    if url.endswith('/'):
+        url = url[:-1]
+
+    return url
+
+def load_targets():
+    """타겟 설정 로드 (desk/config/targets.json)"""
+    config_path = os.path.join(DESK_DIR, 'config', 'targets.json')
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            return data.get('settings', {}), data.get('targets', [])
+    except Exception as e:
+        print(f"❌ [Collector] Failed to load targets: {e}")
+        return {}, []
+
+def is_recent(pub_date, days=2):
+    """최신 기사 여부 확인"""
+    if not pub_date:
+        return True # 날짜 없으면 일단 수집
+    
+    try:
+        if isinstance(pub_date, str):
+            dt = date_parser.parse(pub_date)
+        else:
+            dt = pub_date
+            
+        # Timezone unaware -> aware (assuming KST if local)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=datetime.now().astimezone().tzinfo)
+            
+        now = datetime.now(dt.tzinfo)
+        diff = now - dt
+        return diff.days <= days
+    except:
+        return True # 파싱 실패 시 안전하게 수집
+
+def fetch_links(target):
+    """링크 수집 (RSS/HTML) - URL 정규화 적용"""
+    t_type = target.get('type', 'rss')
+    url = target.get('url')
+    links = []
+    
+    if not url:
+        return []
+        
+    try:
+        if t_type == 'rss':
+            feed = feedparser.parse(url)
+            for entry in feed.entries:
+                link = entry.get('link')
+                if not link: continue
+                
+                # 날짜 필터링 (옵션)
+                pub_date = entry.get('published') or entry.get('updated')
+                if not is_recent(pub_date):
+                    continue
+                    
+                norm_link = normalize_url(link)
+                if norm_link:
+                    links.append(norm_link)
+                    
+        elif t_type == 'html':
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+            resp = requests.get(url, headers=headers, timeout=10)
+            resp.encoding = resp.apparent_encoding
+            
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            selector = target.get('selector', 'a')
+            
+            for tag in soup.select(selector):
+                href = tag.get('href')
+                if not href: continue
+                
+                # 상대 경로 처리
+                if href.startswith('/'):
+                    from urllib.parse import urljoin
+                    href = urljoin(url, href)
+                elif not href.startswith('http'):
+                    continue
+                    
+                norm_link = normalize_url(href)
+                if norm_link:
+                    links.append(norm_link)
+                    
+    except Exception as e:
+        print(f"⚠️ [Fetch] Error fetching {url}: {e}")
+        
+    return list(set(links)) # 중복 제거
 
 def collect_links(progress_callback=None) -> dict:
     """
@@ -41,8 +166,8 @@ def collect_links(progress_callback=None) -> dict:
     db = FirestoreClient()
     
     try:
-        # load_targets returns (settings, targets_list) tuple
-        settings, targets = desk_crawler.load_targets()
+        # Desk config/targets.json 로드
+        settings, targets = load_targets()
         time_condition = settings.get('hours', 24)
         all_links = []
         
@@ -55,20 +180,21 @@ def collect_links(progress_callback=None) -> dict:
         
         for idx, target in enumerate(targets):
             target_id = target.get('id')
-            target_name = target.get('name', target_id) # 이름이 있으면 이름 사용
+            target_name = target.get('name', target_id) 
             
-            # UX를 위해 검색 정보 노출 (UI에서 볼 수 있도록 시간차 둠)
             if progress_callback:
                 progress_callback({
                     'status': 'collecting',
-                    'message': f"🔍 [{idx+1}/{len(targets)}] '{target_name}' 검색 중... ({time_condition}h)"
+                    'message': f"🔍 [{idx+1}/{len(targets)}] '{target_name}' 검색 중..."
                 })
             
-            # 메시지가 UI에 렌더링될 시간을 줌
             time.sleep(0.3)
 
             print(f"📡 [Collect] Fetching from target: {target_id} ({target.get('url')})")
-            links = desk_crawler.fetch_links(target)
+            
+            # [Refactored] Use internal fetch_links
+            links = fetch_links(target)
+            
             found_count = len(links)
             total_found += found_count
             print(f"   found {found_count} raw links")
@@ -87,7 +213,7 @@ def collect_links(progress_callback=None) -> dict:
                     skipped_history += 1
                     continue
                 
-                # 2. 캐시 체크 (이미 추출된 것 제외)
+                # 2. 캐시 체크
                 cached = load_from_cache(link)
                 if cached and cached.get('text'):
                     skipped_cache += 1
@@ -106,14 +232,13 @@ def collect_links(progress_callback=None) -> dict:
             
             print(f"   ⏭️ [{target['id']}] Result: Added={added_count}, SkipHistory={skipped_history}, SkipCache={skipped_cache}")
             
-            # 각 타겟 완료 결과를 팝업에 표시
             if progress_callback:
                 progress_callback({
                     'status': 'collecting',
-                    'message': f"✅ [{idx+1}/{len(targets)}] '{target_name}': {found_count}개 발견 → {added_count}개 신규 (스킵: {skipped_history+skipped_cache})"
+                    'message': f"✅ [{idx+1}/{len(targets)}] '{target_name}': {found_count}개 발견 → {added_count}개 신규"
                 })
         
-        # 중복 제거
+        # 중복 제거 (전체)
         seen = set()
         unique_links = []
         for item in all_links:
@@ -127,11 +252,10 @@ def collect_links(progress_callback=None) -> dict:
         
         print(f"📡 [Collect] 수집 완료: {len(unique_links)} 새 링크")
         
-        # 최종 수집 결과 요약을 팝업에 표시
         if progress_callback:
             progress_callback({
                 'status': 'collecting',
-                'message': f"📊 수집 완료: {len(targets)}개 소스에서 {total_found}개 발견 → {len(unique_links)}개 신규 확보"
+                'message': f"📊 수집 완료: {len(unique_links)}개 신규 확보"
             })
         
         return {

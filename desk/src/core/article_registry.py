@@ -282,37 +282,52 @@ class ArticleRegistry:
         로컬에만 있는 기사를 Firestore에 동기화 (양방향 동기화 3단계)
         - firestore_synced=False인 기사만 대상
         - 상태가 PUBLISHED/RELEASED가 아닌 기사만 (미발행 기사)
+        - [FIX] Firestore에서 이미 PUBLISHED/RELEASED인 경우 덮어쓰지 않음
         """
         sync_count = 0
+        skip_count = 0
         unpublished_states = {'COLLECTED', 'ANALYZED', 'CLASSIFIED', 'REJECTED'}
-        
+        protected_states = {'PUBLISHED', 'RELEASED'}
+
         for article_id, info in self._articles.items():
             # Firestore에 이미 있으면 스킵
             if info.firestore_synced:
                 continue
-            
+
             # 발행된 기사는 스킵 (PUBLISHED/RELEASED는 별도 관리)
             if info.state not in unpublished_states:
                 continue
-            
+
             # Firestore에 저장
             full_data = self._full_data.get(article_id)
             if full_data and self._db:
                 try:
+                    # [FIX] Firestore 현재 상태 먼저 확인 - 상태 역전 방지
+                    existing_doc = self._db._get_collection('articles').document(article_id).get()
+                    if existing_doc.exists:
+                        existing_state = existing_doc.to_dict().get('_header', {}).get('state', '')
+                        if existing_state in protected_states:
+                            print(f"🛡️ [Registry] Sync blocked: {article_id} (Firestore={existing_state}, Local={info.state})")
+                            info.firestore_synced = True  # 동기화된 것으로 표시하여 재시도 방지
+                            skip_count += 1
+                            continue
+
                     self._db.save_article(article_id, full_data)
                     info.firestore_synced = True
                     sync_count += 1
-                    
+
                     # 히스토리도 동기화
                     url = info.url or full_data.get('_original', {}).get('url')
                     if url:
                         self._db.save_history(url, status=info.state, article_id=article_id)
                 except Exception as e:
                     print(f"⚠️ [Registry] Sync to Firestore failed for {article_id}: {e}")
-        
+
         self._stats['synced_to_firestore'] = sync_count
         if sync_count > 0:
             print(f"   📤 [Registry] Synced {sync_count} local-only articles to Firestore")
+        if skip_count > 0:
+            print(f"   🛡️ [Registry] Blocked {skip_count} state downgrades")
     
     def _parse_article_data(self, data: Dict, cache_path: str = None) -> Optional[ArticleInfo]:
         """원시 데이터를 ArticleInfo로 변환"""

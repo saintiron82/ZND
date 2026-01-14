@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ZND Data Structure: /{env}/data/{collectionName}/{document}
+    // env: 'dev' or 'release'
+    match /{env}/data/{collectionName}/{document=**} {
+      
+      // 1. Publications (Articles): Public Read Only
+      // Web app needs to read articles and issues.
+      allow read: if collectionName == 'publications';
+
+      // 2. Trend Reports: Public Read Only
+      // Web app needs to read trend reports.
+      allow read: if collectionName == 'trend_reports';
+
+      // 3. Stats (Clicks/Views): Public Read, Create, Update
+      // PERMISSION: Allow Create/Update (for counting), DENY Delete (to protect data).
+      allow read, create, update: if collectionName == 'stats';
+      allow delete: if false;
+
+      // Default: Deny all other access
+      // Note: Admin SDK (Python Supplier/Engine) bypasses these rules automatically.
+    }
+
+    // Default deny for any other root-level collections not matching the above structure
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

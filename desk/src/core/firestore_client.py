@@ -298,14 +298,31 @@ class FirestoreClient:
                 # Case 4: Local이 정본 -> Firestore만 업데이트 (Server Sync)
                 # [최적화] 실제로 데이터가 다를 때만 쓰기 수행
                 # updated_at 차이가 미미하거나 상태가 같으면 스킵
-                
+
                 local_state = local_header.get('state', '')
                 remote_state = remote_header.get('state', '')
-                
+
+                # [FIX] 상태 역전 방지: PUBLISHED/RELEASED를 낮은 상태로 덮어쓰지 않음
+                # 자동 동기화에서만 차단, 수동 UI 변경(update_state)은 별도 경로로 허용됨
+                protected_states = {'PUBLISHED', 'RELEASED'}
+                lower_states = {'COLLECTED', 'ANALYZED', 'CLASSIFIED', 'REJECTED'}
+
+                if remote_state in protected_states and local_state in lower_states:
+                    print(f"🛡️ [Sync] State downgrade blocked: {article_id} (Remote={remote_state}, Local={local_state})")
+                    # Remote 데이터 유지, Local 캐시만 업데이트
+                    try:
+                        if target_path:
+                            with open(target_path, 'w', encoding='utf-8') as f:
+                                json.dump(remote_data, f, ensure_ascii=False, indent=2)
+                            print(f"   📥 Local cache corrected to {remote_state}")
+                    except Exception as e:
+                        print(f"⚠️ [Sync] Local cache correction failed: {e}")
+                    return remote_data
+
                 # 상태가 같고 시간 차이가 1초 미만이면 쓰기 스킵 (불필요한 동기화 방지)
                 time_diff_negligible = abs(len(local_time) - len(remote_time)) < 2 if local_time and remote_time else False
                 same_state = local_state == remote_state
-                
+
                 if same_state and (local_time == remote_time or time_diff_negligible):
                     # 이미 동기화됨 - 쓰기 스킵
                     pass
@@ -315,7 +332,7 @@ class FirestoreClient:
                         self.save_article(article_id, local_data)
                     except Exception as e:
                         print(f"⚠️ [Sync] Firestore update failed: {e}")
-                    
+
                 return local_data
                 
         elif local_data:

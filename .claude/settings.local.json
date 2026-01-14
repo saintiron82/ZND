@@ -4,7 +4,14 @@
       "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe:*)",
       "Bash(ZND_ENV=release PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(python check_articles.py:*)",
+      "Bash(python:*)",
+      "Bash(pushd \"D:\\\\ZND\\\\desk\")",
+      "Bash(where:*)",
+      "Bash(/d/ZND/desk/.venv/Scripts/python.exe:*)",
+      "Bash(PYTHONIOENCODING=utf-8 /d/ZND/desk/.venv/Scripts/python.exe:*)",
+      "Bash(find:*)"
     ]
   }
 }

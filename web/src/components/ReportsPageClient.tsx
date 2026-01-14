@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import Header from '@/components/Header';
+import Header from './Header';
 import Footer from '@/components/Footer';
 import { TrendingUp, Calendar } from 'lucide-react';
 import { getTagColor } from '@/lib/tagColors';

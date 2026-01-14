@@ -115,29 +115,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', hide
         e.stopPropagation();
     };
 
-    // GA4 article click tracking + Firestore counter
+    // GA4 article click tracking
     const handleArticleClick = () => {
-        // Firestore 클릭 카운터 (sendBeacon으로 페이지 이탈 시에도 전송 보장)
-        if (id) {
-            console.log('📊 [Click] article_id:', id);
-            if (navigator.sendBeacon) {
-                navigator.sendBeacon(
-                    '/api/stats/click',
-                    JSON.stringify({ article_id: id })
-                );
-            } else {
-                // Fallback: fetch with keepalive
-                fetch('/api/stats/click', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ article_id: id }),
-                    keepalive: true
-                }).catch(() => { });
-            }
-        } else {
-            console.warn('⚠️ [Click] article_id is missing!', { title_ko });
-        }
-
         sendGAEvent('event', 'article_click', {
             article_id: id,
             article_title: title_ko.substring(0, 100),

@@ -5,6 +5,7 @@ import ArticleDisplay from '@/components/ArticleDisplay';
 import PageFrame from '@/components/PageFrame';
 import { RefreshCcw, ArrowRight, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { sendGAEvent } from '@next/third-parties/google';
 
 interface Issue {
     id: string;
@@ -143,14 +144,14 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
     const prevIssue = prevIssueId ? groupedByIssue[prevIssueId]?.issue : null;
     const nextIssue = nextIssueId ? groupedByIssue[nextIssueId]?.issue : null;
 
-    // 첫 페이지 로드 시 뷰 카운터 증가
+    // 첫 페이지 로드 시 GA4 뷰 이벤트 전송
     useEffect(() => {
         if (currentIssue?.edition_code) {
-            fetch('/api/stats/view', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ edition_code: currentIssue.edition_code })
-            }).catch(() => { }); // 실패해도 무시
+            sendGAEvent('event', 'edition_view', {
+                edition_code: currentIssue.edition_code,
+                edition_name: currentIssue.edition_name || '',
+                article_count: currentIssue.article_count || 0
+            });
         }
     }, []); // 첫 마운트 시에만 실행
 
@@ -161,14 +162,14 @@ export default function HomePageClient({ articles, issues = [] }: HomePageClient
             setCurrentIssueIndex(newIndex);
             setIsDropdownOpen(false);
 
-            // Firestore 뷰 카운터 (비동기, fire-and-forget)
+            // GA4 뷰 이벤트 전송
             const issue = groupedByIssue[issueId]?.issue;
             if (issue?.edition_code) {
-                fetch('/api/stats/view', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ edition_code: issue.edition_code })
-                }).catch(() => { }); // 실패해도 무시
+                sendGAEvent('event', 'edition_view', {
+                    edition_code: issue.edition_code,
+                    edition_name: issue.edition_name || '',
+                    article_count: issue.article_count || 0
+                });
             }
         }
     };

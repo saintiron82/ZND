@@ -11,7 +11,8 @@
       "Bash(where:*)",
       "Bash(/d/ZND/desk/.venv/Scripts/python.exe:*)",
       "Bash(PYTHONIOENCODING=utf-8 /d/ZND/desk/.venv/Scripts/python.exe:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

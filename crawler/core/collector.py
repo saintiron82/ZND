@@ -153,7 +153,7 @@ def fetch_links(target):
     except Exception as e:
         print(f"⚠️ [Fetch] Error fetching {url}: {e}")
         
-    return list(set(links)) # 중복 제거
+    return list(dict.fromkeys(links)) # 순서 보존 중복 제거
 
 def collect_links(progress_callback=None) -> dict:
     """

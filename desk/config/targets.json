@@ -8,8 +8,8 @@
       "id": "aitimes",
       "type": "html",
       "url": "https://www.aitimes.com/",
-      "selector": "div.auto-content a",
-      "limit": 10
+      "selector": "a[href*='articleView']",
+      "limit": 20
     },
     {
       "id": "techcrunch_ai",

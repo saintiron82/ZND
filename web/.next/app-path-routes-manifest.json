@@ -1,0 +1,19 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/contact/route": "/api/contact",
+  "/api/dates/route": "/api/dates",
+  "/api/debug/schema/route": "/api/debug/schema",
+  "/api/publications/check/route": "/api/publications/check",
+  "/api/publications/list/route": "/api/publications/list",
+  "/api/publications/release/route": "/api/publications/release",
+  "/api/publications/view/route": "/api/publications/view",
+  "/api/trends/route": "/api/trends",
+  "/api/visitor/route": "/api/visitor",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/preview/page": "/preview",
+  "/reports/page": "/reports",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml"
+}
